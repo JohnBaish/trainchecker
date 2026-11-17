@@ -56,6 +56,32 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: John's first look at the preview; the last train gone (branch `claude/epic-wright-wlwhvp`; Claude Code)
+
+- **Vercel:** the keys now reach the preview (John ticked Preview and redeployed); John tried
+  Reading to Cardiff Central and Cardiff Central to Reading at about 9.30pm.
+- **John's points, done:** (1) the gap beside "The last two hours" on a computer: it now runs
+  across the full width under "The next four hours" and "Platforms", which are the same height
+  (SPEC §8.1 said under Platforms); (2) "Both are expected on time", and "both" wherever two of
+  two would be "all" (`share()`); (3) the Mac smoothing: already in (dark mode only, house style
+  §2); (4) "Copy a link to this journey" quieter: the notes' grey, in the body font.
+- **The last train gone (John):** with no train in the next four hours but trains in the last
+  two, after 6pm or before 4am: "The last direct train from A to B seems to have gone: the
+  latest left at 7.33pm, and there isn't another in the next four hours." / "Trainchecker looks
+  four hours ahead, so check again later for the first trains tomorrow."; in the day: "The
+  latest direct train from A to B left at …" / "…so check again later." Share words to match.
+  With no train either way, the agreed wording stays (it can't tell "none tonight" from "no
+  direct trains at all" when the last one left more than two hours ago). Claude's drafts.
+- **Platforms with one or two known (Claude's drafts):** "At the moment, the train is going
+  from platform 15."; "one train … and the other from platform 9"; "both trains are going from
+  platform 8"; and when more trains are running than have platforms: "So far, a platform has
+  been announced for one train: platform 3." (was "most trains are going from platform 3").
+- **Checked:** `npm run check` 157 + 50 (new: both, two on time, one platform of many, the last
+  train gone on Kings Cross to Edinburgh at 8.59pm, none either way on Reading to Cambridge);
+  `tsc -b`, lint; pictures from the real saved answers (`design/previews/stage3/
+  from-snapshots.mjs`, as the key saved here is the stations one): `layout-*`,
+  `last-train-gone-*`, 1200px and 390px, light and dark: no errors, no sideways scroll.
+
 ### November 17th 2026: the full station list; a clue for Vercel's preview (branch `claude/epic-wright-wlwhvp`; Claude Code)
 
 - **Stations:** John subscribed to Knowledgebase Stations and gave its key (secure form) and its

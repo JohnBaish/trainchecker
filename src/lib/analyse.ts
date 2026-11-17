@@ -28,6 +28,9 @@ export type Analysis = {
   worse: boolean
   platList: [string, number][]
   platKnown: number
+  /** With no train in the next four hours: the latest that left in the last two, if any, so the
+   *  page can say the last one has gone (John, November 17th 2026). */
+  lastGone: Train | null
 }
 
 export const mins = (t: string) => { const [h, m] = t.split(':').map(Number); return h * 60 + m }
@@ -116,5 +119,6 @@ export function analyse(snap: Snap): Analysis {
     why: { twoOfThree, gap, noTrains },
     last: { byArrivals, tense, known: known.length, within3, lates, usual, worst, cancelled: pastCancelled },
     worse, platList, platKnown: platList.reduce((a, [, n]) => a + n, 0),
+    lastGone: ahead.length ? null : past.filter((s) => !s.cancelled).at(-1) ?? null,
   }
 }

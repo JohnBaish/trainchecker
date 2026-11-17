@@ -69,6 +69,8 @@ const SHARES: [number, number, string, 'in' | 'of'][] = [[1, 20, 'one in twenty'
 /** The phrase for "<share> trains" ("about half of the trains", "five of the nine trains",
  *  "all 19 trains") and the bare share ("about half", "five of the nine", "all"). */
 export function share(k: number, n: number): { trains: string; bare: string } {
+  // Two of two is "both" (John, November 17th 2026).
+  if (k === n && n === 2) return { trains: 'both trains', bare: 'both' }
   if (k === n) return { trains: `all ${num(n)} trains`, bare: 'all' }
   if (k === 0) return { trains: `none of the ${num(n)} trains`, bare: 'none' }
   if (n < 10) return { trains: `${num(k)} of the ${num(n)} trains`, bare: `${num(k)} of the ${num(n)}` }
@@ -108,6 +110,27 @@ export type Verdict = { kind: Analysis['verdict']; lines: Line[] }
 export function verdict(a: Analysis): Verdict {
   const when = partOfDay(a.now)
   const journey = `trains from ${a.from} to ${a.to}`
+  if (a.verdict === 'none' && a.lastGone) {
+    // Trains ran in the last two hours, and none in the next four. In the evening (6pm to 4am)
+    // the last one has gone for the night (John, November 17th 2026); in the day, on a quiet
+    // line, there may just be a long gap. Claude's draft wording, for John.
+    const h = Number(a.now.slice(0, 2))
+    const gone = t12(a.lastGone.std)
+    if (h >= 18 || h < 4) {
+      return {
+        kind: 'none', lines: [
+          { text: `The last direct train from ${a.from} to ${a.to} seems to have gone: the latest left at ${gone}, and there isn't another in the next four hours.` },
+          { text: 'Trainchecker looks four hours ahead, so check again later for the first trains tomorrow.' },
+        ],
+      }
+    }
+    return {
+      kind: 'none', lines: [
+        { text: `The latest direct train from ${a.from} to ${a.to} left at ${gone}, and there isn't another in the next four hours.` },
+        { text: 'Trainchecker looks four hours ahead, so check again later.' },
+      ],
+    }
+  }
   if (a.verdict === 'none') {
     return {
       kind: 'none', lines: [
@@ -157,7 +180,7 @@ export function nextFour(a: Analysis): NextFour | null {
   const lines = [n === 1 ? `There's one train from ${a.from} to ${a.to} in the next four hours.` : `There are ${num(n)} trains from ${a.from} to ${a.to} in the next four hours.`]
   const onTime = a.ahead.filter((s) => s.late !== null && s.late <= 3).length
   const little = a.ahead.filter((s) => s.late !== null && s.late > 3 && s.late <= 5)
-  if (onTime === n) lines.push(n === 1 ? "It's expected on time." : 'All are expected on time.')
+  if (onTime === n) lines.push(n === 1 ? "It's expected on time." : n === 2 ? 'Both are expected on time.' : 'All are expected on time.')
   else {
     const g: [number, string][] = []
     if (a.cancelled.length) g.push([a.cancelled.length, `${v(a.cancelled.length)} cancelled${because(a.cancelled)}`])
@@ -188,6 +211,14 @@ export function platforms(a: Analysis): string | null {
   if (!a.platKnown) return 'No platforms have been announced yet.'
   const [[p1, n1], ...rest] = a.platList
   const and = (xs: string[]) => xs.join(', ').replace(/, ([^,]*)$/, ' and $1')
+  // One or two platforms known: say each, not "most" (Claude's drafts, for John).
+  const running = a.ahead.filter((s) => !s.cancelled).length
+  if (a.platKnown <= 2 && a.platKnown === running) {
+    if (a.platKnown === 1) return `At the moment, the train is going from platform ${p1}.`
+    return rest.length ? `At the moment, one train is going from platform ${p1} and the other from platform ${rest[0][0]}.` : `At the moment, both trains are going from platform ${p1}.`
+  }
+  if (a.platKnown === 1) return `So far, a platform has been announced for one train: platform ${p1}.`
+  if (a.platKnown === 2) return rest.length ? `So far, platforms have been announced for two trains: platforms ${p1} and ${rest[0][0]}.` : `So far, platforms have been announced for two trains, both platform ${p1}.`
   if (n1 * 2 >= a.platKnown) {
     let s = `At the moment, most trains are going from platform ${p1}`
     if (rest.length === 1) s += `, and ${rest[0][1] === 1 ? 'one' : 'some'} from platform ${rest[0][0]}`
@@ -203,6 +234,7 @@ export function shareWords(a: Analysis): { text: string; title: string; hash: st
   const taken = new Date(a.taken)
   const at = `${t12(a.now)} on ${dateShort(taken)}`
   const title = `Trainchecker: ${a.from} to ${a.to}`, hash = `#${a.fromCrs}-${a.toCrs}`
+  if (a.verdict === 'none' && a.lastGone) return { text: `Here's what Trainchecker found at ${at}: the last direct train from ${a.from} to ${a.to} had gone, at ${t12(a.lastGone.std)}, with no other in the following four hours.`, title, hash }
   if (a.verdict === 'none') return { text: `Here's what Trainchecker found at ${at}: no direct train from ${a.from} to ${a.to} in the following four hours.`, title, hash }
   const lead = `Here's how the trains from ${a.from} to ${a.to} were looking at ${at}: `
   const was = (k: number) => (k === 1 ? 'was' : 'were')
@@ -302,7 +334,7 @@ export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind:
   if (n === 1) {
     return `${when}, the only train that left ${o.from} ${between} ${k ? 'reached' : "didn't reach"} ${o.to} within three minutes of the timetable.${k ? '' : ' ' + lastWeekOthers(n, c.w3, c.w10, c.w30, c.w120)}`
   }
-  const who = k === n ? `all ${num(n)} trains` : k === 0 ? `none of the ${num(n)} trains` : n < 10 ? `${num(k)} of the ${num(n)} trains` : `${share(k, n).bare} of the ${num(n)} trains`
+  const who = k === n && n === 2 ? 'both trains' : k === n ? `all ${num(n)} trains` : k === 0 ? `none of the ${num(n)} trains` : n < 10 ? `${num(k)} of the ${num(n)} trains` : `${share(k, n).bare} of the ${num(n)} trains`
   const first = `${when}, ${who} that left ${o.from} ${between} reached ${o.to} within three minutes of the timetable.`
   let rest = lastWeekOthers(n, c.w3, c.w10, c.w30, c.w120)
   // When none were within three minutes there are no "others" (Claude's draft, for John).

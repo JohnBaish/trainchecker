@@ -53,12 +53,14 @@ for (const f of files) {
   const a = analyse(snapOf(s))
   const m = M.analyse(s)
   eq(`${f}: verdict kind`, a.verdict, m.verdict)
-  eq(`${f}: verdict`, lineText(verdict(a).lines), S.verdict(m).lines)
+  // The last train gone (November 17th 2026) is new since the mock-ups.
+  if (!a.lastGone) eq(`${f}: verdict`, lineText(verdict(a).lines), S.verdict(m).lines)
   eq(`${f}: next four hours`, nextFour(a), S.nextFour(m))
-  eq(`${f}: platforms`, platforms(a), S.platforms(m))
+  // Platforms differ from the mock-ups only where one or two are known (November 17th 2026).
+  if (a.platKnown > 2) eq(`${f}: platforms`, platforms(a), S.platforms(m))
   eq(`${f}: last two hours`, lastTwoLines(a), S.lastTwoLines(m))
   const when = { time: t12(m.now), date: dayName(new Date(m.taken)).replace(/^\w+ /, '') }
-  eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text)
+  if (!a.lastGone) eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text)
   const bad = pageText(a).filter((t) => /undefined|null|NaN|\[object/.test(t))
   eq(`${f}: no undefined, null or NaN`, bad, [])
 }
@@ -128,6 +130,16 @@ eq('nothing running: badly disrupted', [allCancelled.why.noTrains, allCancelled.
 const oneVeryLate = changed('PAD-RDG', (sv, a) => { const t = sv.find((x) => x.id === ids(a)[0])!; t.etd = '23:59'; t.eta = '23:59' })
 eq('one very late train among frequent ones: not badly disrupted (Hereford example)', oneVeryLate.badly, false)
 eq('Manchester: disrupted, not badly', [manMia.verdict, manMia.badly], ['prepared', false])
+
+eq('platforms, one known of many', platforms(A('KGX-YRK')), 'So far, a platform has been announced for one train: platform 3.')
+eq('two on time (John)', nextFour(changed('PAD-RDG', (sv, a) => { const keep = new Set(ids(a).slice(0, 2)); for (let i = sv.length - 1; i >= 0; i--) if (a.ahead.some((t) => t.id === sv[i].id) && !keep.has(sv[i].id)) sv.splice(i, 1) }))!.lines[1], 'Both are expected on time.')
+eq('both (John)', [share(2, 2).trains, share(2, 2).bare, share(3, 3).trains], ['both trains', 'both', 'all three trains'])
+
+// The last train gone: Kings Cross to Edinburgh at 8.59pm (trains in the last two hours, none in
+// the next four); Reading to Cambridge at 6.24pm has none either way, so keeps the agreed words.
+const kgxEdb = analyse(snapOf(raw('20261117-2059-KGX-EDB.json')))
+eq('last train gone', lineText(verdict(kgxEdb).lines)[0], `The last direct train from London Kings Cross to Edinburgh seems to have gone: the latest left at ${t12(kgxEdb.lastGone!.std)}, and there isn't another in the next four hours.`)
+eq('no train either way', rdgCbg.lastGone, null)
 
 // The last week (O4, Q1), on the real answer for Reading to London Paddington, 5pm to 5.30pm.
 const nov17 = new Date('2026-11-17T18:24:00Z')

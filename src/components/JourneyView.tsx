@@ -1,7 +1,7 @@
 // A journey's page (SPEC §8.1), top to bottom: the strip "TRAINS TO CHECK" with Swap and Change;
 // the time fetched and Check again; the verdict; "The next four hours" with "Platforms" beside it
-// on a computer, and "The last two hours" under Platforms unless the verdict has given it; "The
-// last week"; Share. ("The days ahead" is stage 4's.)
+// on a computer, the two the same height; "The last two hours" across the full width under them,
+// unless the verdict has given it; "The last week"; Share. ("The days ahead" is stage 4's.)
 import { useEffect, useState } from 'react'
 import { analyse, type Analysis } from '../lib/analyse.ts'
 import { fetchLive } from '../lib/load.ts'
@@ -147,11 +147,11 @@ export function JourneyView({ journey }: { journey: Journey }) {
               {next!.lines.map((l) => <p key={l} className="lead">{l}</p>)}
               <Trains n={next!} />
             </section>
-            <div className="stack">
-              <section className="card sec"><h3>Platforms</h3><p>{platforms(an)}</p></section>
-              {!an.worse && <section className="card sec"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>}
-            </div>
+            <section className="card sec"><h3>Platforms</h3><p>{platforms(an)}</p></section>
           </div>
+          {/* Across the full width under the pair, so a computer shows no gap beside it (John,
+              November 17th 2026, after trying the preview). */}
+          {!an.worse && <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>}
           <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth} />
         </>
       )}

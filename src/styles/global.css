@@ -97,7 +97,7 @@ a { color: var(--color-accent-700); text-underline-offset: 3px; }
 .state-none { --edge: var(--s-none); }
 
 /* sections */
-.grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: var(--space-6); align-items: start; }
+.grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: var(--space-6); align-items: stretch; }
 .stack { display: grid; gap: var(--space-6); }
 .sec h3 { font-size: 20px; margin: 0; }
 .sec p { margin: 0; }
@@ -221,3 +221,6 @@ details.trains-fold { margin-top: var(--space-3); }
   .nav, .acts, .dateline .btn, .share-row, .hist-row, .qs2, .chooser { display: none !important; }
   html, body { background: #fff; }
 }
+/* "Copy a link to this journey" in the quieter grey of the small notes (John: "a bit bright"). */
+.share-row .btn-secondary { color: var(--color-neutral-700); font-family: var(--font-body); font-weight: 600; }
+.share-row .btn-secondary:hover { color: var(--color-text); }

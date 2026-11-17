@@ -1,0 +1,346 @@
+<title>Trainchecker mock-ups</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Figtree:wght@400;600;700&display=swap">
+<style>
+/* Trainchecker, stage 2 mock-ups. The house look: organic.css's tokens and parts and
+   Riverwatcher's global.css (top bar, strip, summary card, dark mode, the switch), trimmed.
+   The mock-up loads its fonts from Google Fonts; the app self-hosts them (house style §3). */
+:root {
+  --color-bg: #f5ead8; --color-surface: #ebddc5; --color-text: #201e1d; --color-accent: #c67139;
+  --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+  --color-neutral-100: #f9f4ed; --color-neutral-200: #eee7db; --color-neutral-300: #dcd3c4;
+  --color-neutral-700: #645c50; --color-neutral-800: #474238;
+  --color-accent-100: #fff2eb; --color-accent-300: #ffc6a5; --color-accent-600: #b2622d; --color-accent-700: #8c491a; --color-accent-800: #643312;
+  --color-accent-2-100: #f0fae1; --color-accent-2-800: #3d472b;
+  --font-heading: "Caprasimo", Georgia, serif; --font-body: "Figtree", system-ui, sans-serif;
+  --space-1: 4.4px; --space-2: 8.8px; --space-3: 13.2px; --space-4: 17.6px; --space-6: 26.4px; --space-8: 35.2px;
+  --radius-sm: 8px; --radius-md: 16px; --radius-lg: 28px;
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2e2b25 14%, transparent);
+  --raised: #f9f4ed;
+  /* State colours (Claude's draft): good olive, mixed terracotta, be prepared red; each at
+     least 3:1 against the card, and always with its words. */
+  --s-good: #56633f; --s-mixed: #b2622d; --s-prepared: #b3261e; --s-none: #82796a;
+  --s-good-bg: #f0fae1; --s-mixed-bg: #fff2eb; --s-prepared-bg: #fde8e4;
+  --mock-bg: #2e2b25; --mock-fg: #f5ead8;
+}
+@media screen {
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --color-bg: #24211e; --color-surface: #37332e; --color-text: #e8dfcf; --color-accent: #dd8a56;
+    --color-divider: color-mix(in srgb, #e8dfcf 16%, transparent);
+    --color-neutral-100: #423d36; --color-neutral-200: #4a443c; --color-neutral-300: #5a544b;
+    --color-neutral-700: #b0a593; --color-neutral-800: #e3d9c7;
+    --color-accent-100: #4a2a14; --color-accent-300: #b2622d; --color-accent-600: #e8935d; --color-accent-700: #f2a573; --color-accent-800: #ffc6a5;
+    --color-accent-2-100: #2f3a20; --color-accent-2-800: #d4e4b8;
+    --shadow-sm: 0 0 0 1px color-mix(in srgb, #e8dfcf 8%, transparent), 0 4px 14px #0009;
+    --raised: #403b35;
+    --s-good: #aebf92; --s-mixed: #dd8a56; --s-prepared: #f08a7e; --s-none: #b0a593;
+    --s-good-bg: #2f3a20; --s-mixed-bg: #4a2a14; --s-prepared-bg: #4d1f1a;
+    --mock-bg: #14120f; --mock-fg: #e8dfcf;
+  }
+  :root[data-theme="dark"] body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  :root[data-theme="dark"] .raised { --color-accent: #ea9862; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); font-size: 15px; line-height: 1.55; }
+h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 400; line-height: 1.12; letter-spacing: -0.015em; margin: 0 0 var(--space-2); }
+p { margin: 0 0 var(--space-3); }
+a { color: var(--color-accent-700); text-underline-offset: 3px; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; font-family: var(--font-heading); font-weight: 400; font-size: 14px; line-height: 1.2; color: var(--color-text); background: transparent; border: 1px solid transparent; padding: var(--space-2) calc(var(--space-3) * 1.2); border-radius: 999px; text-decoration: none; }
+.btn svg { width: 15px; height: 15px; display: block; }
+.btn-primary { background: var(--color-accent); color: var(--color-bg); }
+.btn-secondary { border-color: var(--color-divider); }
+.btn-ghost { color: var(--color-accent-700); padding-inline: var(--space-1); }
+.card { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-6); border-radius: calc(var(--radius-lg) * 1.15); background: var(--color-surface); box-shadow: var(--shadow-sm); }
+.card-kicker { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-700); font-weight: 600; }
+.input { width: 100%; min-height: 44px; padding: 6px 16px; font: inherit; font-size: 15px; color: var(--color-text); background: var(--color-bg); border: 1px solid var(--color-divider); border-radius: 999px; }
+.muted { color: var(--color-neutral-700); }
+.small { font-size: 12.5px; }
+
+/* the mock-up bar (not part of the design) */
+.mockbar { background: var(--mock-bg); color: var(--mock-fg); font-size: 12px; padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.mockbar b { font-weight: 700; letter-spacing: 0.04em; }
+.mockbar label { display: inline-flex; align-items: center; gap: 6px; }
+.mockbar select { font: inherit; font-size: 12px; background: #fff1; color: inherit; border: 1px solid #fff4; border-radius: 6px; padding: 3px 6px; max-width: 100%; }
+.mockbar select option { color: #201e1d; }
+.mockbar .note { opacity: 0.75; }
+
+/* page frame */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-6); background: var(--color-surface); }
+.nav-brand { font-family: var(--font-heading); font-size: 18px; color: inherit; text-decoration: none; }
+.theme-switch { display: inline-flex; align-items: center; gap: 8px; background: none; border: 0; padding: 4px 0; cursor: pointer; color: var(--color-neutral-700); font: inherit; }
+.theme-switch-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.theme-switch-track { position: relative; width: 46px; height: 26px; border-radius: 999px; background: color-mix(in srgb, var(--color-text) 18%, transparent); }
+.theme-switch-knob { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--color-bg); box-shadow: 0 1px 3px #0004; display: grid; place-items: center; color: var(--color-accent); transition: transform 0.2s; }
+.theme-switch[aria-checked="true"] .theme-switch-track { background: var(--color-accent); }
+.theme-switch[aria-checked="true"] .theme-switch-knob { transform: translateX(20px); }
+.theme-switch svg { width: 12px; height: 12px; }
+.col { max-width: 1100px; margin: 0 auto; }
+.screen { padding: 0 var(--space-6) var(--space-6); }
+
+/* the journey strip */
+.strip { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; padding: var(--space-4) var(--space-6); margin: var(--space-6) 0 0; }
+.strip h2 { margin: 2px 0 0; font-size: 26px; }
+.strip .acts { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.dateline { margin: var(--space-3) 0 var(--space-4); display: flex; gap: var(--space-2); align-items: baseline; flex-wrap: wrap; }
+.dateline p { margin: 0; }
+
+/* the chooser */
+.chooser { margin: var(--space-6) 0 0; }
+.chooser h2 { font-size: 28px; margin: 0; }
+.pick { display: grid; grid-template-columns: 1fr auto 1fr auto; gap: var(--space-3); align-items: end; }
+.pick label { display: block; font-size: 12px; margin-bottom: 5px; color: var(--color-neutral-700); font-weight: 600; }
+.swap { width: 44px; height: 44px; padding: 0; border-color: var(--color-divider); }
+.recent { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; margin-top: var(--space-2); }
+.chip { display: inline-flex; align-items: center; min-height: 36px; padding: 6px 14px; border-radius: 999px; background: var(--color-bg); border: 1px solid var(--color-divider); font-size: 13.5px; color: var(--color-text); text-decoration: none; }
+.intro { margin: var(--space-6) 0 0; max-width: 760px; }
+
+/* the verdict */
+.verdict { margin-bottom: var(--space-6); box-shadow: var(--shadow-sm), inset 7px 0 0 var(--edge, transparent); padding-left: calc(var(--space-6) + 10px); }
+.verdict p { margin: 0 0 var(--space-2); font-size: 18px; line-height: 1.5; }
+.verdict p:last-child { margin-bottom: 0; }
+.verdict b { font-weight: 700; }
+.state-good { --edge: var(--s-good); }
+.state-mixed { --edge: var(--s-mixed); }
+.state-prepared { --edge: var(--s-prepared); }
+.state-none { --edge: var(--s-none); }
+
+/* sections */
+.grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: var(--space-6); align-items: start; }
+.stack { display: grid; gap: var(--space-6); }
+.sec h3 { font-size: 20px; margin: 0; }
+.sec p { margin: 0; }
+.sec .lead { font-size: 16px; }
+.block { margin-top: var(--space-6); }
+.src { font-size: 12px; color: var(--color-neutral-700); margin: var(--space-2) 0 0; }
+
+/* trains that aren't on time */
+.trains { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: var(--space-2); }
+.trains th { text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-neutral-700); font-weight: 600; padding: 6px 10px; border-bottom: 1px solid var(--color-divider); }
+.trains td { padding: 9px 10px; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent); vertical-align: top; }
+.trains tr > td:first-child { box-shadow: inset 4px 0 0 var(--edge); padding-left: 16px; white-space: nowrap; font-weight: 700; font-variant-numeric: tabular-nums; }
+.t-cancelled { --edge: var(--s-prepared); }
+.t-late, .t-unknown { --edge: var(--s-mixed); }
+.t-cancelled .what { color: var(--s-prepared); font-weight: 700; }
+.t-late .what, .t-unknown .what { font-weight: 600; }
+.trow { padding: 10px 0 10px 16px; border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); box-shadow: inset 4px 0 0 var(--edge); }
+.trow:first-of-type { border-top: 0; }
+.trow .top { display: flex; justify-content: space-between; gap: var(--space-2); }
+.trow .time { font-weight: 700; font-variant-numeric: tabular-nums; }
+.trow .what { font-weight: 600; }
+.trow.t-cancelled .what { color: var(--s-prepared); font-weight: 700; }
+.trow p { margin: 2px 0 0; font-size: 13.5px; }
+.sub { margin-top: var(--space-4) !important; font-weight: 700; font-size: 14px; }
+
+/* the days ahead */
+.inc { border-top: 1px solid var(--color-divider); padding: var(--space-3) 0; }
+.inc:first-of-type { border-top: 0; }
+.inc .when { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; color: var(--color-accent-700); margin: 0 0 2px; }
+.inc .when.now { color: var(--s-prepared); }
+.inc h4 { font-family: var(--font-body); font-weight: 600; font-size: 15px; line-height: 1.4; margin: 0; letter-spacing: 0; }
+details.advice { margin-top: var(--space-2); }
+details.advice > summary { cursor: pointer; color: var(--color-accent-700); font-weight: 600; font-size: 14px; min-height: 44px; display: flex; align-items: center; }
+.raised { background: var(--raised); border-radius: var(--radius-md); padding: var(--space-4) var(--space-6); font-size: 14px; margin-top: var(--space-2); }
+.raised p { margin: 0 0 var(--space-2); }
+.raised ul { margin: 0 0 var(--space-2); padding-left: 20px; }
+.raised a { color: var(--color-accent); }
+.advice-now { box-shadow: inset 4px 0 0 var(--s-prepared); }
+
+/* the last week */
+.hist-row { display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center; margin-top: var(--space-3); }
+.hist-row select { min-height: 44px; font: inherit; font-size: 15px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--color-divider); background: var(--color-bg); color: var(--color-text); }
+.hist-result { margin-top: var(--space-3); }
+.hist-result .big { font-size: 17px; margin: 0 0 var(--space-2); }
+.spinner { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--color-accent-300); border-top-color: var(--color-accent); vertical-align: -2px; margin-right: 6px; }
+
+/* share, message of the day, about, footer */
+.share-row { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margin-top: var(--space-6); }
+.motd { margin-top: var(--space-6); }
+.motd p { font-size: 16px; margin: 0; }
+.placeholder { border: 1.5px dashed var(--color-divider); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); color: var(--color-neutral-700); font-style: italic; }
+.about { margin-top: var(--space-6); }
+.about h3 { font-size: 20px; margin: 0 0 var(--space-2); }
+.about p { font-size: 14px; margin: 0 0 var(--space-2); }
+.footer-notice { margin-top: 64px; padding-top: var(--space-3); border-top: 1px solid var(--color-divider); font-size: 12px; line-height: 1.6; color: var(--color-neutral-700); text-align: center; }
+.footer-notice p { margin: 0 0 6px; }
+
+@media (max-width: 720px) {
+  .nav { padding: var(--space-3) var(--space-4); }
+  .theme-switch { min-height: 44px; }
+  .theme-switch-label { display: none; }
+  .screen { padding: 0 var(--space-4) var(--space-6); }
+  .card { padding: var(--space-4); }
+  .verdict { padding-left: calc(var(--space-4) + 8px); }
+  .verdict p { font-size: 17px; }
+  .strip { padding: var(--space-4); }
+  .strip h2 { font-size: 22px; }
+  .grid { grid-template-columns: 1fr; gap: var(--space-4); }
+  .stack { gap: var(--space-4); }
+  .block { margin-top: var(--space-4); }
+  .pick { grid-template-columns: 1fr auto; }
+  .pick .to { grid-column: 1; }
+  .pick .swap { grid-row: 1 / span 2; grid-column: 2; align-self: center; }
+  .pick .go { grid-column: 1 / -1; }
+  .input, .hist-row select { font-size: 16px; }
+  .raised { padding: var(--space-3) var(--space-4); }
+  .chip { min-height: 44px; }
+  .strip .btn, .share-row .btn, .hist-row .btn, .go .btn { min-height: 44px; }
+}
+/* Touch screens of any width, and phones held sideways (short screens): 44px to tap. */
+@media (pointer: coarse), (max-width: 720px), (max-height: 500px) { .btn, .chip, .theme-switch { min-height: 44px; } }
+@media (pointer: coarse) { .input, .hist-row select { font-size: 16px; } }
+@media (max-height: 500px) and (min-width: 721px) { .strip h2 { font-size: 22px; } .strip { padding: var(--space-3) var(--space-6); } }
+</style>
+
+<div class="mockbar" id="mockbar"></div>
+<nav class="nav">
+  <a class="nav-brand" href="#">Trainchecker</a>
+  <button class="theme-switch" id="themeSwitch" role="switch" aria-checked="false" aria-label="Dark mode">
+    <span class="theme-switch-label">Dark</span>
+    <span class="theme-switch-track"><span class="theme-switch-knob" id="knob"></span></span>
+  </button>
+</nav>
+<main class="col screen" id="page"></main>
+
+<script>
+const DATA = /*MOCK*/null
+const $ = (s) => document.querySelector(s)
+const ICON = {
+  swap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>',
+  share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="m16 6-4-4-4 4"/><path d="M12 2v13"/></svg>',
+  refresh: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>',
+  sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>',
+}
+const narrow = () => window.innerWidth <= 720
+const touch = () => matchMedia('(pointer: coarse)').matches
+
+// State: journey, last-week state and theme, kept after "#" so pictures can be made.
+function readState() {
+  const [j, h, t] = decodeURIComponent(location.hash.slice(1)).split(';')
+  return { j: DATA.journeys.some((x) => x.id === j) || j === 'first' ? j : DATA.journeys[0].id, h: h || 'choose', t: t || 'device' }
+}
+let S = readState()
+function setState(p) { S = { ...S, ...p }; history.replaceState(null, '', '#' + [S.j, S.h, S.t].join(';')); render() }
+addEventListener('hashchange', () => { S = readState(); render() })
+addEventListener('resize', () => render())
+
+function applyTheme() {
+  const dark = S.t === 'dark' || (S.t === 'device' && matchMedia('(prefers-color-scheme: dark)').matches)
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+  $('#themeSwitch').setAttribute('aria-checked', String(dark))
+  $('#knob').innerHTML = dark ? ICON.moon : ICON.sun
+}
+$('#themeSwitch').onclick = () => setState({ t: document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark' })
+
+function mockbar() {
+  const opts = [['first', 'First visit (the chooser)'], ...DATA.journeys.map((x) => [x.id, x.tab])]
+  const j = DATA.journeys.find((x) => x.id === S.j)
+  $('#mockbar').innerHTML = `<b>MOCK-UP</b>
+    <label>Journey <select id="mj">${opts.map(([v, l]) => `<option value="${v}"${v === S.j ? ' selected' : ''}>${l}</option>`).join('')}</select></label>
+    ${j && j.history ? `<label>Last week <select id="mh">${[['choose', 'Not asked yet'], ['loading', 'Loading'], ...(j.history.result ? [['result', 'Result (real figures)']] : [])].map(([v, l]) => `<option value="${v}"${v === S.h ? ' selected' : ''}>${l}</option>`).join('')}</select></label>` : ''}
+    <label>Theme <select id="mt">${[['device', 'Follow the device'], ['light', 'Light'], ['dark', 'Dark']].map(([v, l]) => `<option value="${v}"${v === S.t ? ' selected' : ''}>${l}</option>`).join('')}</select></label>
+    <span class="note">Real figures from National Rail at ${DATA.takenLine}. Every sentence is a draft for John.</span>`
+  $('#mj').onchange = (e) => setState({ j: e.target.value, h: 'choose' })
+  if ($('#mh')) $('#mh').onchange = (e) => setState({ h: e.target.value })
+  $('#mt').onchange = (e) => setState({ t: e.target.value })
+}
+
+function chooser(j, first) {
+  const from = j ? j.from : '', to = j ? j.to : ''
+  return `<section class="card chooser">
+    ${first ? '<h2>How are the trains running?</h2>' : '<div class="card-kicker">Choose a journey</div>'}
+    <div class="pick">
+      <div class="from"><label for="from">From</label><input class="input" id="from" value="${from}" placeholder="A station" autocomplete="off"></div>
+      <button class="btn btn-secondary swap" aria-label="Swap the stations" title="Swap the stations">${ICON.swap}</button>
+      <div class="to"><label for="to">To</label><input class="input" id="to" value="${to}" placeholder="A station" autocomplete="off"></div>
+      <div class="go"><button class="btn btn-primary" style="width:100%">Show the trains</button></div>
+    </div>
+    <div class="recent"><span class="small muted">Recent:</span>${DATA.recent.map((r) => `<a class="chip" href="#${r.id};choose;${S.t}">${r.label}</a>`).join('')}</div>
+  </section>`
+}
+
+function trainsTable(n) {
+  if (!n.rows.length) return ''
+  if (narrow()) {
+    return `<p class="sub">${n.heading}</p>` + n.rows.map((r) => `<div class="trow t-${r.status}">
+      <div class="top"><span class="time">${r.time} to ${r.dest}</span></div>
+      <p class="what">${r.what}</p>
+      <p class="muted">${r.operator}${r.reason ? `. ${r.reason}` : ''}</p></div>`).join('')
+  }
+  return `<p class="sub">${n.heading}</p><table class="trains"><thead><tr><th>Leaves</th><th>To</th><th>What's happening</th><th>Why (from National Rail)</th></tr></thead><tbody>
+    ${n.rows.map((r) => `<tr class="t-${r.status}"><td>${r.time}</td><td>${r.dest}<div class="small muted">${r.operator}</div></td><td class="what">${r.what}</td><td>${r.reason || '<span class="muted">No reason given yet</span>'}</td></tr>`).join('')}
+  </tbody></table>`
+}
+
+function incident(i, open) {
+  return `<div class="inc">
+    <p class="when${i.planned ? '' : ' now'}">${i.when}${i.planned ? '' : ': happening now'}</p>
+    <h4>${i.summary}</h4>
+    ${open
+      ? `<div class="raised advice-now"><p><b>National Rail's advice</b></p>${i.advice}</div><p class="src"><a href="${i.link}" target="_blank" rel="noopener">More on National Rail's website</a></p>`
+      : `<details class="advice"><summary>National Rail's advice</summary><div class="raised">${i.advice}<p><a href="${i.link}" target="_blank" rel="noopener">More on National Rail's website</a></p></div></details>`}
+  </div>`
+}
+
+function history(j) {
+  const h = j.history
+  let body = ''
+  if (S.h === 'loading') body = `<p class="hist-result"><span class="spinner"></span>Fetching ${h.kindPlural} between ${h.chosenLabel} over the last week from National Rail. This usually takes less than a minute.</p>`
+  if (S.h === 'result' && h.result) body = `<div class="hist-result"><p class="big">${h.result}</p>${h.note ? `<p class="small muted">${h.note}</p>` : ''}</div>`
+  return `<section class="card sec block"><h3>The last week</h3>
+    <p>${h.intro}</p>
+    <div class="hist-row">
+      <select aria-label="An hour of departure">${h.hours.map((x) => `<option${x === h.chosenLabel ? ' selected' : ''}>${x}</option>`).join('')}</select>
+      <button class="btn btn-primary">Show the last week</button>
+    </div>
+    ${body}
+    <p class="src">${h.kindLine}</p>
+  </section>`
+}
+
+function journeyPage(j) {
+  const v = j.verdict
+  let out = `<section class="card strip"><div><div class="card-kicker">Your journey</div><h2>${j.from} to ${j.to}</h2></div>
+    <div class="acts"><a class="btn btn-ghost" href="#${j.swapId};choose;${S.t}">${ICON.swap} Swap</a><button class="btn btn-ghost" onclick="document.getElementById('chg').hidden=!document.getElementById('chg').hidden">Change</button></div></section>
+    <div id="chg" hidden>${chooser(j)}</div>
+    <div class="dateline"><p class="muted">${DATA.dateLine}, ${DATA.timeLabel}. Live from National Rail.</p><button class="btn btn-ghost">${ICON.refresh} Check again</button></div>
+    <section class="card verdict state-${v.kind}">${v.lines.map((l) => `<p>${l}</p>`).join('')}${v.kind === 'none' ? `<p><a href="https://www.nationalrail.co.uk/journey-planner/" target="_blank" rel="noopener">National Rail's journey planner</a></p>` : ''}</section>`
+  if (j.verdict.kind === 'none') return out + chooser(null) + tail(j)
+  const now = (j.ahead.items || []).filter((i) => !i.planned)
+  const later = (j.ahead.items || []).filter((i) => i.planned)
+  out += `<div class="grid">
+    <section class="card sec"><h3>The next four hours</h3>${j.next.lines.map((l) => `<p class="lead">${l}</p>`).join('')}${trainsTable(j.next)}</section>
+    <div class="stack">
+      <section class="card sec"><h3>Platforms</h3><p>${j.platforms}</p></section>
+      <section class="card sec"><h3>The last two hours</h3><p>${j.lastTwo}</p></section>
+    </div></div>`
+  out += `<section class="card sec block"><h3>${now.length ? 'Disruption now, and the days ahead' : 'The days ahead'}</h3>
+    ${now.map((i) => incident(i, false)).join('')}
+    ${later.length
+      ? `<p class="${now.length ? 'sub' : ''}">Planned engineering work and changes from National Rail, to the end of ${j.ahead.until}:</p>${later.map((i) => incident(i, false)).join('')}`
+      : `<p class="${now.length ? 'sub' : ''}">National Rail lists no planned engineering work for this journey between now and the end of ${j.ahead.until}.</p>`}
+  </section>`
+  out += history(j)
+  return out + tail(j)
+}
+
+function tail(j) {
+  return `${j ? `<div class="share-row"><button class="btn btn-secondary">${ICON.share} ${touch() ? 'Share this journey' : 'Copy a link to this journey'}</button></div>` : ''}
+  <section class="card motd"><div class="card-kicker">Message of the day</div><p class="placeholder">John's message for ${DATA.dateShort} goes here (one of 366, the same for everyone all day).</p></section>
+  <section class="card about"><h3>About these figures</h3>${DATA.about.map((p) => `<p>${p}</p>`).join('')}</section>
+  <footer class="footer-notice">${DATA.footer.map((p) => `<p>${p}</p>`).join('')}</footer>`
+}
+
+function render() {
+  applyTheme(); mockbar()
+  const j = DATA.journeys.find((x) => x.id === S.j)
+  $('#page').innerHTML = j ? journeyPage(j) : chooser(null, true) + `<p class="intro">${DATA.intro}</p>` + tail(null)
+}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', render)
+render()
+</script>

@@ -15,7 +15,8 @@ given its own branch). Before committing there, run
 
 ## Read these first
 
-0. `design/handover-stage-2-2026-11-17.md`: where things stand for stage 2.
+0. `design/mockups-2026-11-17.md`: the stage 2 mock-ups and John's questions M1 to M20
+   (then `design/handover-stage-2-2026-11-17.md`, where stage 2 started).
 1. `design/handover-2026-11-17.md`: John's brief, in his own words.
 2. `SPEC.md`: what the tool does, with the open questions.
 3. `PLAN.md`: the stages.
@@ -43,6 +44,26 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 17th 2026: stage 2 mock-ups, for John (Claude Code)
+
+- Branch `claude/trainchecker-stage-2-mockups-4v7pih` (the session's assigned branch, in
+  place of `PLAN.md`'s `stage-2-mockups`). Not merged: mock-ups and notes only.
+- Real snapshots at 6.24pm (`design/mockups/snapshots/`): Paddington to Reading (good),
+  Reading to Paddington (good, however), Bath Spa to Bristol Temple Meads (mixed),
+  Manchester Piccadilly to Manchester Airport (be prepared: Gatley signalling fault),
+  Reading to Cambridge (no direct train); incidents feed at 6.26pm.
+- The agreed rules in `design/mockups/analyse.mjs`, the sentences in `sentences.mjs`,
+  engineering-work matching in `incidents.mjs` (a first draft, for stage 4 to test).
+- Private page: https://claude.ai/artifact/QAUKZcDt6Xrhph1aPAUgAS (republish after
+  `node build-mockups.mjs <folder>`). Pictures `design/previews/stage2/`; favicon
+  options `design/favicon-options/`. Questions M1 to M20 in `design/mockups-2026-11-17.md`.
+- Found: the incidents feed also carries unplanned disruption with National Rail's full
+  advice, so the Disruptions API may not be needed (M11). Node's own fetch needs
+  `NODE_USE_ENV_PROXY=1` to reach the API from this environment.
+- Key saved here now: Knowledgebase Incidents (swapped through the secure form).
+- Checked: 48 views in Chromium (1200px, 390px and 844×390 with touch, light and dark): no
+  errors, no sideways scrolling, fonts loaded, tap targets 44px. Not checked: a real phone.
 
 ### November 17th 2026: stage 1 recommendation agreed (Claude Code)
 

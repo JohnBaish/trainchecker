@@ -113,3 +113,28 @@ these tests the saved key is the Disruptions API's.
    gave five earlier. "PDX" (a guess at a separate Paddington code) gave
    nothing. To investigate before relying on the history for Elizabeth
    line journeys.
+
+## 7. The live board looking back (tested 5.49pm, November 17th)
+
+John asked whether recent arrivals can be had without the history
+service. They can, for about the last two hours.
+
+1. **`timeOffset=-120` works.** `GetDepartureBoard/RDG` (to PAD), asked at
+   5.49pm, listed every train from 15:44, each with its actual departure
+   time ("On time" or e.g. "15:52"), Elizabeth line included. Answered in
+   under a second.
+2. **Arrivals too, via "with details".**
+   `GetDepBoardWithDetails/RDG?filterCrs=PAD&filterType=to&timeOffset=-120&timeWindow=120`
+   gives each train's calling points, including Paddington's scheduled
+   time (`st`) and actual time (`at`, "On time" or a time); trains still
+   running show an expected time (`et`) instead. It returned 25 trains
+   where the plain board returned 34, so it seems to cap the number of
+   rows: two requests (each an hour) would cover two hours fully.
+3. **The arrivals board itself (`GetArrivalBoard`, `GetArrDepBoardWithDetails`)
+   isn't in this subscription** (HTTP 500).
+4. **A real figure, for illustration:** of the 23 trains that had reached
+   Paddington by 5.49pm (departures 15:44 to 17:12), 15 arrived within 3
+   minutes; the latest was the 17:02 from Reading, 23 minutes late.
+5. Quick and cheap, so the page could say how the last two hours have
+   gone with no waiting. Longer periods still need the history service or
+   our own collection.

@@ -40,6 +40,14 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: the last two hours from the live board (Claude Code)
+
+- The live board looks back up to 120 minutes, and "GetDepBoardWithDetails"
+  gives actual arrival times at the destination: a fast "last two hours"
+  without the history service. Arrival boards aren't in the subscription.
+  Details in `design/data-trial-2026-11-17.md` §7. The key saved here is
+  the Live Departure Board one again.
+
 ### November 17th 2026: a week of history in one request (Claude Code)
 
 - One request for a whole week of one hour took 44 seconds, the same as

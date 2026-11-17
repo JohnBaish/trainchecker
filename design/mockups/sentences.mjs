@@ -83,11 +83,16 @@ export function lastTwoLines(a) {
   if (L.known) {
     const sh = share(L.within3, L.known)
     if (L.byArrivals) out.push(`${Cap(sh.trains)} on this route in the last couple of hours got to ${a.to} within three minutes of their timetabled arrival.`)
-    else out.push(`Of the trains that left ${a.from} in the last couple of hours, ${sh.bare} have reached or are expected to reach ${a.to} within three minutes of their timetabled arrival.`)
+    else {
+      // Long journeys (O1): trains that left in the last two hours, by actual or expected arrival.
+      const reach = { past: 'reached', future: 'are expected to reach', mixed: 'have reached or are expected to reach' }[L.tense]
+      out.push(`Of the trains that left ${a.from} in the last couple of hours, ${sh.bare} ${reach} ${a.to} within three minutes of their timetabled arrival.`)
+    }
     const n = L.lates.length, them = L.within3 === 0 ? 'They' : n === 1 ? 'The other' : n === 2 ? 'The other two' : 'The others'
-    if (n === 1) out.push(`${them} was ${num(L.worst)} minutes late.`)
-    else if (n === 2) out.push(`${them} were ${num(L.lates[0])} and ${num(L.lates[1])} minutes late.`)
-    else if (n > 2) out.push(L.usual === L.worst ? `${them} were about ${num(L.usual)} minutes late.` : `${them} were mostly about ${num(L.usual)} minutes late, and the latest was ${num(L.worst)} minutes late.`)
+    const was = { past: n === 1 ? 'was' : 'were', future: n === 1 ? 'is expected to be' : 'are expected to be', mixed: n === 1 ? 'was or is expected to be' : 'were or are expected to be' }[L.tense]
+    if (n === 1) out.push(`${them} ${was} ${num(L.worst)} minutes late.`)
+    else if (n === 2) out.push(`${them} ${was} ${num(L.lates[0])} and ${num(L.lates[1])} minutes late.`)
+    else if (n > 2) out.push(L.usual === L.worst ? `${them} ${was} about ${num(L.usual)} minutes late.` : `${them} ${was} mostly about ${num(L.usual)} minutes late, and the latest ${L.tense === 'future' ? 'is expected to be' : 'was'} ${num(L.worst)} minutes late.`)
   }
   const c = L.cancelled.length
   if (c) out.push(`${Cap(num(c))}${L.known ? ' more' : ''} ${c === 1 ? (L.known ? 'was' : 'train was') : (L.known ? 'were' : 'trains were')} cancelled.`)
@@ -180,11 +185,33 @@ export function platforms(a) {
   return `At the moment, trains are going from platforms including ${and(a.platList.slice(0, 4).map((x) => x[0]))}.`
 }
 
-// The Share button's words (O5, two drafts for John): A plain, B with the verdict.
-export function shareWords(a, kind, when) {
+// The Share button's words (P2, John: A's friendly opening, a short summary, then the link
+// sent separately). Past tense and a date, as a message is often read later (§17).
+export function shareWords(a, when) {
   const at = `${when.time} on ${when.date}`
-  const A = `Here's how the trains from ${a.from} to ${a.to} were looking at ${at}, from Trainchecker.`
-  const lead = { good: 'Good news for anyone travelling', mixed: "It's a mixed bag for anyone travelling", prepared: "Be prepared if you're travelling" }[kind]
-  const B = lead ? `${lead} from ${a.from} to ${a.to}: here's how the trains were looking at ${at}, from Trainchecker.` : null
-  return { A, B, title: `Trainchecker: ${a.from} to ${a.to}`, link: `trainchecker.baish.net/#${a.fromCrs}-${a.toCrs}` }
+  const lead = `Here's how the trains from ${a.from} to ${a.to} were looking at ${at}: `
+  let body
+  if (a.verdict === 'none') {
+    body = `Here's what Trainchecker found at ${at}: no direct train from ${a.from} to ${a.to} in the following four hours.`
+    return { text: body, title: `Trainchecker: ${a.from} to ${a.to}`, link: `trainchecker.baish.net/#${a.fromCrs}-${a.toCrs}` }
+  }
+  const was = (k) => (k === 1 ? 'was' : 'were')
+  if (a.verdict === 'good' && !a.worse) body = 'good news, they were running well.'
+  else if (a.verdict === 'good') {
+    const L = a.last
+    const why = L.known && L.within3 / L.known < 0.75
+      ? `only ${share(L.within3, L.known).bare} of the trains in the couple of hours before got there within three minutes of the timetable`
+      : `${num(L.cancelled.length)} trains were cancelled in the couple of hours before`
+    body = `good news, they were leaving on time, though ${why}.`
+  } else if (a.verdict === 'mixed') {
+    const bits = []
+    if (a.cancelled.length) bits.push(`${num(a.cancelled.length)} ${was(a.cancelled.length)} cancelled`)
+    const late = a.late5.length + a.unknown.length
+    if (late) bits.push(`${num(late)} ${was(late)} running late`)
+    body = `a mixed bag. Most were running, but ${bits.join(' and ').replace(/^(\w+)/, `$1 of the ${num(a.ahead.length)} in the following four hours`)}.`
+  } else {
+    const r = mainReason([...a.cancelled, ...a.late5])
+    body = `be prepared. Of the next ${num(a.ahead.length)}, ${num(a.cancelled.length)} ${was(a.cancelled.length)} cancelled${r ? `, mostly because of ${r}` : ''}.`
+  }
+  return { text: lead + body + ' From Trainchecker.', title: `Trainchecker: ${a.from} to ${a.to}`, link: `trainchecker.baish.net/#${a.fromCrs}-${a.toCrs}` }
 }

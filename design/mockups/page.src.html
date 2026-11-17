@@ -261,7 +261,7 @@ function mockbar() {
     <label>Journey <select id="mj">${opts.map(([v, l]) => `<option value="${v}"${v === S.j ? ' selected' : ''}>${l}</option>`).join('')}</select></label>
     ${j && j.history ? `<label>Last week <select id="mh">${[['choose', 'Not asked yet'], ['loading', 'Loading'], ...(j.history.result ? [['result', 'Result (real figures)']] : [])].map(([v, l]) => `<option value="${v}"${v === S.h ? ' selected' : ''}>${l}</option>`).join('')}</select></label>` : ''}
     <label>Theme <select id="mt">${[['device', 'Follow the device'], ['light', 'Light'], ['dark', 'Dark']].map(([v, l]) => `<option value="${v}"${v === S.t ? ' selected' : ''}>${l}</option>`).join('')}</select></label>
-    <span class="note">Real figures from National Rail at ${DATA.takenLine}. Every sentence is a draft for John.</span>`
+    <span class="note">Real figures from National Rail at ${j ? j.timeLabel + ' on ' + j.dateLine + ' 2026' : DATA.takenLine}. Every sentence is a draft for John.</span>`
   $('#mj').onchange = (e) => setState({ j: e.target.value, h: 'choose' })
   if ($('#mh')) $('#mh').onchange = (e) => setState({ h: e.target.value })
   $('#mt').onchange = (e) => setState({ t: e.target.value })
@@ -325,7 +325,7 @@ function journeyPage(j) {
   let out = `<section class="card strip"><div><div class="card-kicker">Trains to check</div><h2>${j.from} to ${j.to}</h2></div>
     <div class="acts"><button class="btn btn-ghost" data-go="${j.swapId}">${ICON.swap} Swap</button><button class="btn btn-ghost" onclick="document.getElementById('chg').hidden=!document.getElementById('chg').hidden">Change</button></div></section>
     <div id="chg" hidden>${chooser(j)}</div>
-    <div class="dateline"><p class="muted">${DATA.dateLine}, ${DATA.timeLabel}. Live from National Rail.</p><button class="btn btn-ghost">${ICON.refresh} Check again</button></div>
+    <div class="dateline"><p class="muted">${j.dateLine}, ${j.timeLabel}. Live from National Rail.</p><button class="btn btn-ghost">${ICON.refresh} Check again</button></div>
     <section class="card verdict state-${v.kind}">${v.lines.map((l) => `<p>${l}</p>`).join('')}</section>`
   if (j.verdict.kind === 'none') return out + chooser(null) + tail(j)
   const now = (j.ahead.items || []).filter((i) => !i.planned)
@@ -348,8 +348,8 @@ function journeyPage(j) {
 
 function tail(j) {
   return `${j ? `<div class="share-row"><button class="btn btn-secondary">${ICON.share} ${touch() ? 'Share this journey' : 'Copy a link to this journey'}</button></div>
-    <div class="mocknote"><b>Mock-up only: what Share sends</b> (two drafts for John)
-      <p><b>A:</b> “${j.share.A}”</p>${j.share.B ? `<p><b>B:</b> “${j.share.B}”</p>` : ''}
+    <div class="mocknote"><b>Mock-up only: what Share sends</b>
+      <p>“${j.share.text}”</p>
       <p class="small">Then the link, sent separately: ${j.share.link}. Title: “${j.share.title}”.</p></div>` : ''}
   <section class="card motd"><div class="card-kicker">Message of the day</div><p class="placeholder">John's message for ${DATA.dateShort} goes here (one of 366, the same for everyone all day).</p></section>
   <section class="card about"><h3>About these figures</h3>${DATA.about.map((p) => `<p>${p}</p>`).join('')}</section>

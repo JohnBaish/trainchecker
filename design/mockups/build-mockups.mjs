@@ -9,7 +9,8 @@ import { verdict, nextFour, platforms, lastTwoLines, shareWords, share, dayName,
 import { readIncidents, forJourney } from './incidents.mjs'
 
 const here = (f) => new URL(f, import.meta.url)
-const snap = (id) => JSON.parse(readFileSync(here(`./snapshots/20261117-1824-${id}.json`), 'utf8'))
+const STAMP = { 'KGX-YRK': '1947' }
+const snap = (id) => JSON.parse(readFileSync(here(`./snapshots/20261117-${STAMP[id] || '1824'}-${id}.json`), 'utf8'))
 const incidents = readIncidents(here('./snapshots/20261117-incidents.xml.gz').pathname)
 
 const JOURNEYS = [
@@ -18,6 +19,7 @@ const JOURNEYS = [
   ['BTH-BRI', "3. It's a mixed bag"],
   ['MAN-MIA', '4. Be prepared'],
   ['RDG-CBG', '5. No direct train'],
+  ['KGX-YRK', '6. A long journey (7.47pm)'],
 ]
 
 // Hours offered for the last week: 5am to midnight (recommendation §2.6).
@@ -44,7 +46,8 @@ const journeys = JOURNEYS.map(([id, tab]) => {
     swapId: JOURNEYS.some(([x]) => x === `${d}-${o}`) ? `${d}-${o}` : id,
     verdict: verdict(a), next: nextFour(a), platforms: platforms(a),
     lastTwo: a.verdict === 'none' ? null : lastTwoLines(a).join(' '), lastTwoInTop: a.worse,
-    share: shareWords(a, a.verdict, { time: t12(a.now), date: dayName(new Date(a.taken)).replace(/^\w+ /, '') }),
+    share: shareWords(a, { time: t12(a.now), date: dayName(new Date(a.taken)).replace(/^\w+ /, '') }),
+    dateLine: dayName(new Date(a.taken)), timeLabel: t12(a.now),
     ahead: a.verdict === 'none' ? { items: [] } : forJourney(incidents, a),
     history: a.verdict === 'none' ? null : {
       intro: "If you'd like to see the reliability history of trains making this journey over the last week, choose an hour of departure and the results should load in under a minute.",

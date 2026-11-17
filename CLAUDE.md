@@ -45,6 +45,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: share wording, long journey, John's fourth answers (Claude Code)
+
+- P1 to P4 answered (`design/mockups-2026-11-17.md`, fourth answers). Share: friendly opening,
+  a summary, then the link (`shareWords()`); preview picture A.
+- Live Departure Board key saved here again (secure form). Snapshots at 7.47pm: Kings Cross to
+  York (journey 6, the long-journey wording, tense by arrived or expected), Euston to
+  Manchester, Kings Cross to Edinburgh (no train in the next four hours at 7.47pm),
+  Paddington to Plymouth.
+- Checked: 54 views clean (48 plus journey 6's six); controls in a sandboxed frame clean.
+  Republished (Version 4).
+
 ### November 17th 2026: mock-ups rebuilt with John's answers (Claude Code)
 
 - Every answer so far built in (`design/mockups-2026-11-17.md`, first to third answers):

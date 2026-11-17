@@ -90,6 +90,8 @@ export function analyse(snap) {
     })
   }
   const known = counted.filter(([, l]) => l !== null)
+  const arrivedN = known.filter(([t]) => t.ata).length // for the tense (O1)
+  const tense = byArrivals || arrivedN === known.length ? 'past' : arrivedN === 0 ? 'future' : 'mixed'
   const within3 = known.filter(([, l]) => l <= 3).length
   const lates = known.map(([, l]) => l).filter((l) => l > 3).sort((x, y) => x - y)
   const usual = lates.length ? lates[Math.floor((lates.length - 1) / 2)] : null // the middle one
@@ -110,7 +112,7 @@ export function analyse(snap) {
     fromCrs: snap.from, toCrs: snap.to, taken: snap.taken,
     ahead, past, cancelled, late5, unknown, affected, allowance, verdict, badly,
     why: { twoOfThree, gap, noTrains },
-    last: { byArrivals, known: known.length, within3, lates, usual, worst, cancelled: pastCancelled },
+    last: { byArrivals, tense, known: known.length, within3, lates, usual, worst, cancelled: pastCancelled },
     worse, platList, platKnown: platList.reduce((a, [, n]) => a + n, 0),
     messages: (snap.messages || []).map((m) => m.Value || ''),
   }

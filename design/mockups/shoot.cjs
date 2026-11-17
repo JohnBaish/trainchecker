@@ -5,7 +5,7 @@ const path = require('path')
 const out = process.argv[2], scale = Number(process.argv[3] || 1), only = process.argv[4] ? process.argv[4].split(',') : null
 const url = 'file://' + path.join(__dirname, 'mockups.html')
 const SIZES = [['1200', { width: 1200, height: 900 }, false], ['390', { width: 390, height: 844 }, true], ['844x390', { width: 844, height: 390 }, true]]
-const VIEWS = [['first', 'choose'], ['PAD-RDG', 'choose'], ['RDG-PAD', 'choose'], ['RDG-PAD', 'loading'], ['RDG-PAD', 'result'], ['BTH-BRI', 'choose'], ['MAN-MIA', 'choose'], ['RDG-CBG', 'choose']]
+const VIEWS = [['first', 'choose'], ['PAD-RDG', 'choose'], ['RDG-PAD', 'choose'], ['RDG-PAD', 'loading'], ['RDG-PAD', 'result'], ['BTH-BRI', 'choose'], ['MAN-MIA', 'choose'], ['RDG-CBG', 'choose'], ['KGX-YRK', 'choose']]
 ;(async () => {
   const browser = await chromium.launch()
   let problems = 0, n = 0

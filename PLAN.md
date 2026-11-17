@@ -26,7 +26,7 @@ John's jobs first:
 Claude then, with real journeys (Reading to Paddington, and an
 Elizabeth line journey through central London):
 
-1. Fetches the next five hours, platforms and reasons for delays.
+1. Fetches the next four hours, platforms and reasons for delays.
 2. Fetches a week of history, and times it (is it quick enough for a
    visitor to wait for?).
 3. Fetches incidents and checks whether planned engineering work is in
@@ -47,7 +47,7 @@ here, word by word.
 
 ## Stage 3: direct journeys (branch `stage-3-direct`)
 
-The station chooser, the verdict, the next five hours, platforms and the
+The station chooser, the verdict, the next four hours, platforms and the
 last week, for direct journeys. The functions, dark mode, the footer and
 analytics. An `npm run check` for the verdict rules and sentences.
 

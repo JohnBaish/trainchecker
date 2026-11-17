@@ -56,6 +56,13 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: John's answers: iPhone fix, the quote picture, the last week's speed (Claude Code)
+
+- **John:** the iPhone fix works (tapping a station suggestion chooses it); the quote's Share
+  picture "is great" (agreed, SPEC §8.13); the last week for Reading to Basingstoke took about
+  25 seconds on the preview, "which is fine" (the history end to end on Vercel: works).
+- Drafts (question 3, a to e) sent to John again, numbered, for his answers.
+
 ### November 17th 2026: tapping a station suggestion on an iPhone (branch `claude/epic-wright-wlwhvp`; Claude Code)
 
 - **John (iPhone, the preview):** tapping a suggestion under "From" didn't choose it; the box

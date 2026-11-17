@@ -71,7 +71,8 @@ export async function GET(request: Request): Promise<Response> {
     /^\d{4}-\d\d-\d\d$/.test(first) && /^\d{4}-\d\d-\d\d$/.test(last)
   if (!ok) return json({ error: 'request' }, 400)
   const key = process.env.RDM_HSP_KEY
-  if (!key) return json({ error: 'unavailable' }, 503)
+  // Says which setting is missing (never its value), so a deployment without it is easy to spot.
+  if (!key) return json({ error: 'unavailable', reason: 'no RDM_HSP_KEY setting in this deployment' }, 503)
   const body = JSON.stringify({ from_loc: from, to_loc: to, from_time: start, to_time: end, from_date: first, to_date: last, days, tolerance: MARGINS.map(String) })
   const began = Date.now()
   // Another visitor's request may be running: the service then refuses at once (503), so wait a
@@ -92,6 +93,6 @@ export async function GET(request: Request): Promise<Response> {
       await new Promise((res) => setTimeout(res, 4000))
       continue
     }
-    return json({ error: r.status === 503 ? 'busy' : r.status === 504 ? 'timeout' : 'unavailable' }, 502)
+    return json({ error: r.status === 503 ? 'busy' : r.status === 504 ? 'timeout' : 'unavailable', reason: `National Rail answered ${r.status}` }, 502)
   }
 }

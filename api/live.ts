@@ -95,7 +95,8 @@ export async function GET(request: Request): Promise<Response> {
   if (!/^[A-Z]{3}$/.test(from) || !/^[A-Z]{3}$/.test(to)) return json({ error: 'stations' }, 400)
   if (from === to) return json({ error: 'same' }, 400)
   const key = process.env.RDM_LDB_KEY
-  if (!key) return json({ error: 'unavailable' }, 503)
+  // Says which setting is missing (never its value), so a deployment without it is easy to spot.
+  if (!key) return json({ error: 'unavailable', reason: 'no RDM_LDB_KEY setting in this deployment' }, 503)
   const taken = new Date().toISOString()
   try {
     const boards = await Promise.all(WINDOWS.map(([off, win]) => board(key, from, to, off, win)))
@@ -103,6 +104,6 @@ export async function GET(request: Request): Promise<Response> {
   } catch (e) {
     const status = e instanceof BoardError ? e.status : 0
     // National Rail answers an unknown station code with an error, not an empty board.
-    return status === 400 ? json({ error: 'unknown' }, 404) : json({ error: 'unavailable' }, 502)
+    return status === 400 ? json({ error: 'unknown' }, 404) : json({ error: 'unavailable', reason: `National Rail answered ${status || 'nothing'}` }, 502)
   }
 }

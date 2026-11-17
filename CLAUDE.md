@@ -45,6 +45,12 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: John's second answers on the mock-ups (Claude Code)
+
+- N1 to N14 answered; recorded in `design/mockups-2026-11-17.md` ("John's second answers").
+  Checked for N7: the live board gives actual times at stops passed and expected times at
+  stops ahead. Favicon picture sent again. Still open: O1 to O9. Nothing rebuilt yet.
+
 ### November 17th 2026: John's first answers on the mock-ups (Claude Code)
 
 - Recorded in `design/mockups-2026-11-17.md` ("John's first answers"): new wording for

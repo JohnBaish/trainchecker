@@ -15,8 +15,8 @@ given its own branch). Before committing there, run
 
 ## Read these first
 
-0. `design/mockups-2026-11-17.md`: the stage 2 mock-ups and John's questions M1 to M20
-   (then `design/handover-stage-2-2026-11-17.md`, where stage 2 started).
+0. `design/handover-stage-3-2026-11-17.md`: where things stand for stage 3 (the real page).
+   Then `design/mockups-2026-11-17.md`: the agreed wording, and `SPEC.md` §8.
 1. `design/handover-2026-11-17.md`: John's brief, in his own words.
 2. `SPEC.md`: what the tool does, with the open questions.
 3. `PLAN.md`: the stages.
@@ -44,6 +44,13 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 17th 2026: stage 2 agreed; handover for stage 3 (Claude Code)
+
+- John agreed stage 2 ("Yes please. That's great."). `SPEC.md` §8 lists everything agreed at
+  the mock-ups (it overrides §3); `PLAN.md` updated; handover for stage 3 in
+  `design/handover-stage-3-2026-11-17.md`. The stage 2 branch merged into `main` (notes and
+  mock-ups only, house style §10).
 
 ### November 17th 2026: quote option C revised and built in; margins agreed (Claude Code)
 

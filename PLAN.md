@@ -45,11 +45,17 @@ sample data from stage 1, including a good day, a mixed day, a bad day
 and a journey with no direct train. The verdict and summary sentences are agreed
 here, word by word.
 
+## Stage 2 done (November 17th 2026)
+
+Agreed by John: `SPEC.md` §8 and `design/mockups-2026-11-17.md`.
+
 ## Stage 3: direct journeys (branch `stage-3-direct`)
 
-The station chooser, the verdict, the next four hours, platforms and the
-last week, for direct journeys. The functions, dark mode, the footer and
-analytics. An `npm run check` for the verdict rules and sentences.
+The station chooser, the verdict, the next four hours, platforms, the
+last two hours and the last week, for direct journeys; the quote of the
+day and its Share picture; Share; the favicon. The functions, dark mode,
+the footer and analytics. An `npm run check` for the verdict rules and
+sentences. Handover: `design/handover-stage-3-2026-11-17.md`.
 
 ## Stage 4: the days ahead (branch `stage-4-ahead`)
 

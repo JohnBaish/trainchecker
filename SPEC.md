@@ -22,6 +22,9 @@ open questions are numbered at the end.
 
 ## 3. What the page shows, in order
 
+**Superseded in places by §8 (the mock-ups, agreed November 17th 2026),** whose wording
+is final where they differ.
+
 1. **The verdict.** A sentence starting "Good news…", "It's a mixed
    bag…" or "Be prepared…", based on the next four hours and known
    problems. It gives the main reason in a few words. If the last week
@@ -198,3 +201,70 @@ Answers from John, November 17th 2026, unless marked.
     November 17th: credit the Rail Delivery Group and National Rail, with
     no suggestion of endorsement (`design/licences-2026-11-17.md`).
 14. **Share button:** yes. Its sentence is agreed with the mock-up.
+
+## 8. Agreed at the mock-ups (stage 2, November 17th 2026)
+
+Agreed by John on November 17th 2026. Every sentence's exact wording, John's answers and the
+real examples are in `design/mockups-2026-11-17.md`; the rules and sentences as code are in
+`design/mockups/` (`analyse.mjs`, `sentences.mjs`, `incidents.mjs`); the private page is
+https://claude.ai/artifact/QAUKZcDt6Xrhph1aPAUgAS.
+
+1. **The page, top to bottom:** the station boxes ("From", "To", swap, "Show trains", recent
+   journeys); a strip "TRAINS TO CHECK" with the journey, Swap and Change; the date and time
+   fetched, "Live from National Rail." and Check again; the verdict; "The next four hours"
+   with "Platforms" beside it on a computer, and "The last two hours" under Platforms unless
+   the verdict has given it; "The days ahead"; "The last week"; Share; the quote of the
+   day; "About these figures"; the footer.
+2. **The verdict** (rules from the stage 1 recommendation): "Good news: trains from A to B
+   are running well this evening." ("leaving on time" when the last two hours were bad);
+   "It's a mixed bag: most trains … are running …, but two of the 18 in the next four hours
+   are cancelled."; "Be prepared: trains … are (badly) disrupted …. Of the next 30, 10 are
+   cancelled …, mostly because of …". "Delayed" with no time counts as late.
+3. **The last two hours in the verdict** only when bad (two or more cancelled, or fewer than
+   three in four within three minutes), and not after "Be prepared": "Half of the trains on
+   this route in the last couple of hours got to B within three minutes of their timetabled
+   arrival. The others were mostly about six minutes late, and the latest was 23 minutes
+   late." The usual amount (the middle one) and the latest, not an average.
+4. **Long journeys** (fewer than three arrivals): the trains that left A in the last two
+   hours, by actual or expected arrival at B, with the tense to match ("are expected to
+   reach", "reached", "have reached or are expected to reach").
+5. **Rounding:** with 10 or more trains, the nearest of one in twenty, one in ten, a quarter,
+   a third, half, two thirds, three quarters, nine in ten, nineteen in twenty, with "about"
+   unless exact; fewer than 10, the real count ("five of the nine"); "all" and "none" plainly.
+6. **Numbers:** minute counts in sentences follow the house number rule ("three minutes",
+   "20 minutes"); the train list keeps digits. Times "6.26pm".
+7. **The next four hours:** no clock times in the sentences; the late and cancelled trains
+   summarised with National Rail's reasons, shortened ("because of a fault on a train",
+   "mostly because of …" when there are more than two reasons); the list of trains folded
+   away ("Show the three trains that aren't on time").
+8. **Platforms:** "At the moment, most trains are going from platform B…", or "At the
+   moment, trains are going from platforms including 10, 10A, 11 and 13."; "No platforms
+   have been announced yet."
+9. **The days ahead:** only incidents whose summary names both stations, or "to / from /
+   via" one of them; a single amended train only in its own direction. National Rail's
+   advice always folded. (Matching to be tested properly in stage 4.)
+10. **The last week:** John's sentence, hours 5am to midnight, the same kind of day; the
+    result with margins of 3, 10, 30 and 120 minutes: "… about a third of the 26 trains
+    that left Reading between 5pm and 5.30pm reached London Paddington within three minutes
+    of the timetable. Of the others, about three quarters were less than 10 minutes late,
+    and the rest 10 to 30 minutes late." A train missing 120 minutes counts as cancelled.
+    Elizabeth line note where it runs.
+11. **No direct train:** "We can't find a direct train from A to B in the next four hours.
+    Trainchecker only covers direct journeys – if you know part of the route, try that."
+12. **Share** sends a sentence and the link (`#RDG-PAD`, station codes) separately: "Here's
+    how the trains from A to B were looking at 6.24pm on November 17th: good news, they
+    were running well. From Trainchecker." (past tense, a date; the summary follows the
+    verdict).
+13. **Quote of the day:** John's `src/data/quotes.ts`, unchanged, `quoteOfTheDay()`; option
+    C revised (a tinted band, large opening and closing quotation marks, the author and
+    source beneath, a small Share under the closing mark); verse lines on separate lines;
+    Share makes a picture of the quote with "The quote of the day on Trainchecker for
+    November 17th, from E. W. Hornung." and a link to the first page (picture shown to John
+    first).
+14. **Colours:** a coloured edge on the verdict (olive good, terracotta mixed, red be
+    prepared, grey no direct train) and on each listed train (red cancelled, terracotta
+    late).
+15. **Favicon C** (the front of a train, `design/favicon-options/C.svg`); link-preview
+    picture A ("How’s this train line doing", `design/preview-options/og-A.html`).
+16. **About these figures, the credit and the privacy line:** as on the mock-up page, agreed
+    for now.

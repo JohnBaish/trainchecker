@@ -56,6 +56,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: tapping a station suggestion on an iPhone (branch `claude/epic-wright-wlwhvp`; Claude Code)
+
+- **John (iPhone, the preview):** tapping a suggestion under "From" didn't choose it; the box
+  kept "Read". Likely cause: Safari takes the cursor out of the box during the tap, and the list
+  closed at once, before the tap arrived. Now the suggestion stops the cursor leaving
+  (`mousedown`, which Safari sends for taps, not only `pointerdown`), and leaving the box closes
+  the list 300 milliseconds later (`Chooser.tsx`).
+- **Checked:** `tsc -b`, lint, checks; `design/previews/stage3/tap-station.cjs` (Chromium as
+  an iPhone 13, real taps) chooses "Reading West" with the new code, but did with the old code
+  too, so it can't show Safari's behaviour: **not checked on a real iPhone** (WebKit isn't
+  installed here). John to try again.
+
 ### November 17th 2026: John's first look at the preview; the last train gone (branch `claude/epic-wright-wlwhvp`; Claude Code)
 
 - **Vercel:** the keys now reach the preview (John ticked Preview and redeployed); John tried

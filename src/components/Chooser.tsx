@@ -1,7 +1,7 @@
 // The station boxes (SPEC §8.1): "From", "To", swap, "Show trains" and the recent journeys. Each
 // box suggests stations as you type; the arrow keys move through the suggestions and Enter
 // chooses one; a tap or click chooses straight away.
-import { useId, useState, type KeyboardEvent } from 'react'
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
 import { nameOf, resolve, suggest } from '../lib/stations.ts'
 import { hashOf, recentJourneys, type Journey } from '../lib/route.ts'
 import { Icon } from './Icon.tsx'
@@ -10,10 +10,15 @@ function StationBox({ label, value, onChange, error, go }: { label: string; valu
   const id = useId()
   const [open, setOpen] = useState(false)
   const [at, setAt] = useState(-1)
+  // Leaving the box closes the list a moment later: on an iPhone, tapping a suggestion first
+  // takes the cursor out of the box, and closing at once removed the list before the tap
+  // arrived (John, November 17th 2026).
+  const closing = useRef<number | undefined>(undefined)
+  useEffect(() => () => window.clearTimeout(closing.current), [])
   const list = open ? suggest(value) : []
   const exact = list.length === 1 && resolve(value) === list[0][0]
   const shown = exact ? [] : list
-  const choose = (name: string) => { onChange(name); setOpen(false); setAt(-1) }
+  const choose = (name: string) => { window.clearTimeout(closing.current); onChange(name); setOpen(false); setAt(-1) }
   const key = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown' && shown.length) { e.preventDefault(); setOpen(true); setAt((at + 1) % shown.length) }
     else if (e.key === 'ArrowUp' && shown.length) { e.preventDefault(); setAt(at <= 0 ? shown.length - 1 : at - 1) }
@@ -31,13 +36,14 @@ function StationBox({ label, value, onChange, error, go }: { label: string; valu
         autoCapitalize="words" enterKeyHint={go ? 'go' : 'next'} role="combobox" aria-expanded={shown.length > 0} aria-controls={`${id}-list`}
         aria-activedescendant={at >= 0 && shown[at] ? `${id}-${at}` : undefined} aria-invalid={!!error}
         onChange={(e) => { onChange(e.target.value); setOpen(true); setAt(-1) }}
-        onFocus={() => setOpen(true)} onBlur={() => setOpen(false)} onKeyDown={key}
+        onFocus={() => { window.clearTimeout(closing.current); setOpen(true) }}
+        onBlur={() => { closing.current = window.setTimeout(() => setOpen(false), 300) }} onKeyDown={key}
       />
       {shown.length > 0 && (
         <ul className="suggest" id={`${id}-list`} role="listbox">
           {shown.map(([code, name], i) => (
             <li key={code} id={`${id}-${i}`} role="option" aria-selected={i === at} className={i === at ? 'at' : undefined}
-              onPointerDown={(e) => e.preventDefault()} onClick={() => choose(name)}>
+              onMouseDown={(e) => e.preventDefault()} onClick={() => choose(name)}>
               {name} <span className="muted small">{code}</span>
             </li>
           ))}

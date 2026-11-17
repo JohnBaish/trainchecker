@@ -1,0 +1,15 @@
+// Stage 3: on a phone (Chromium as an iPhone 13, with taps), type in a station box and tap a
+// suggestion. Needs `vite preview` on 4620. (John found tapping didn't choose on his iPhone.)
+const { chromium, devices } = require('playwright')
+;(async () => {
+  const b = await chromium.launch()
+  const p = await (await b.newContext({ ...devices['iPhone 13'] })).newPage()
+  await p.goto('http://localhost:4620/')
+  await p.getByLabel('From').tap()
+  await p.keyboard.type('Read')
+  await p.locator('.suggest li', { hasText: 'Reading West' }).tap()
+  await p.waitForTimeout(500)
+  const v = await p.getByLabel('From').inputValue()
+  console.log(v === 'Reading West' ? 'ok   tapping a suggestion chooses it' : `FAIL the box says "${v}"`)
+  await b.close()
+})()

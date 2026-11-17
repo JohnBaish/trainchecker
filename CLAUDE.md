@@ -43,6 +43,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: history can't run side by side (Claude Code)
+
+- Only one history request is accepted at a time (others refused at once
+  with 503). One hour of weekdays over the last week: about 43 seconds on
+  Reading to Paddington; half an hour about 21. So "Show history" can
+  cover about one hour of the day on a busy line, and can't tell one bad
+  day from a poor week within the time. Details in
+  `design/data-trial-2026-11-17.md` §8. Key saved here: HSP.
+
 ### November 17th 2026: last two hours on the page; last week on request (Claude Code)
 
 - John: build it with "the last two hours" from the live board (option

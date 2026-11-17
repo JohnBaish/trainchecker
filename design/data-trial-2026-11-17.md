@@ -138,3 +138,26 @@ service. They can, for about the last two hours.
 5. Quick and cheap, so the page could say how the last two hours have
    gone with no waiting. Longer periods still need the history service or
    our own collection.
+
+## 8. History: requests side by side (tested 6pm, November 17th)
+
+1. **Only one request at a time is accepted.** Twelve sent a second
+   apart: the first three were accepted and all timed out (55 seconds,
+   HTTP 504); the other nine were refused at once (HTTP 503, "Service
+   Temporarily Unavailable"). Two or three half-hour requests a second
+   apart: the first finished in about 22 seconds, the others were refused
+   at once (503). So requests can't run side by side.
+2. **One at a time is fine, and time follows the length of the window.**
+   Reading to Paddington, weekdays November 10th to 16th: 6pm to 7pm took
+   42.6 seconds (61 train runs); 6pm to 6.30pm took 20.7 seconds (31
+   runs). Quieter lines are quicker (Reading to Tottenham Court Road, one
+   hour of one day: 7.5 seconds).
+3. **What fits in about 45 seconds on a busy line:** one hour of the day,
+   for the same kind of day (weekdays, or Saturdays, or Sundays) over the
+   last week. On quieter lines, more hours.
+4. **"One bad day" isn't available within that time.** `serviceMetrics`
+   adds each train up over all the days asked for; splitting by day would
+   mean a request per day (time doesn't shrink with fewer days) or a
+   `serviceDetails` request per train run. Each train run's ID does start
+   with its date (e.g. `20261116…`), but the on-time counts aren't given
+   per run.

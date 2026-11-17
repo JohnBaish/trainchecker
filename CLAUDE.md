@@ -43,6 +43,24 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: stage 1 finished, recommendation written (Claude Code)
+
+- Elizabeth line history: trains missing whenever Paddington or Bond
+  Street is one end; history uses its own codes for some stations (Abbey
+  Wood ABX). Live boards are fine.
+- Rules tried on nine real journeys at 6.15pm (`scripts/try-rules.py`,
+  `design/rules-trial-2026-11-17.md`). Two script faults found and fixed
+  (a negative gap wrapped round the clock; after-midnight arrivals sorted
+  first), both of which made calm journeys look badly disrupted: the app
+  needs checks for both.
+- Recommendation for John: `design/stage-1-recommendation-2026-11-17.md`.
+- John: the page signs off with a message of the day (366 of them, from a
+  `.ts` file he's curating). Added to `SPEC.md` §3.
+- John: history wording ends "…in under a minute"; same kind of day as
+  today; only hours with trains if quick to check (it isn't, without
+  timetable data: see the recommendation). Key saved here: Live
+  Departure Board.
+
 ### November 17th 2026: last week by chosen hour (Claude Code)
 
 - John: the visitor chooses an hour of departure, and the page fetches

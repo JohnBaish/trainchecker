@@ -70,6 +70,9 @@ open questions are numbered at the end.
    replacement buses (answer 10). A route worked out by Trainchecker
    itself, with a journey time, needs a journey planner, so it waits for
    a later version (answer 11).
+6a. **A message of the day** to sign off (John, November 17th 2026): one
+   of 366 messages, the same for everyone for the whole day, curated by
+   John in a Claude chat and supplied as a `.ts` file.
 7. A Share button (answer 14), its sentence agreed with the mock-up.
 8. The source line, with National Rail's credit as its terms require
    (answer 13), and the footer (house style §8).

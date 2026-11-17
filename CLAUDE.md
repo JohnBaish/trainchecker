@@ -40,6 +40,14 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: a week of history in one request (Claude Code)
+
+- One request for a whole week of one hour took 44 seconds, the same as
+  one day; two hours timed out at about 55 seconds. A week of four hours
+  is up to 12 one-hour requests side by side, about a minute. Elizabeth
+  line history looks patchy. The key saved here is the HSP one again.
+  Details in `design/data-trial-2026-11-17.md` §6.
+
 ### November 17th 2026: all four products tested (Claude Code)
 
 - Results in `design/data-trial-2026-11-17.md`. HSP works at

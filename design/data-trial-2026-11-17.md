@@ -88,3 +88,28 @@ key in `x-apikey`.
 All four products share one address, and this environment holds one key
 per address, so keys were swapped in turn for testing. At the end of
 these tests the saved key is the Disruptions API's.
+
+## 6. History: a week in one request (tested about 6pm, November 17th)
+
+1. **A whole week takes no longer than one day.** Reading to Paddington,
+   5pm to 6pm, every weekday from November 10th to 16th: 44 seconds,
+   56 train runs (one day of the same hour took 37 to 44 seconds). So the
+   time depends on the length of the time window, not the number of days.
+2. **But two hours at once timed out** (55 seconds, HTTP 504), even for
+   the week. The gateway seems to give up at about 55 seconds, so one
+   hour per request is the safe size, and even that is close to the
+   limit on a busy line. Half-hour requests are the fallback.
+3. **So a week of four hours = four one-hour requests per type of day**
+   (the service asks for "WEEKDAY", "SATURDAY" or "SUNDAY" separately):
+   up to 12 requests, which can run side by side (a second apart, as
+   forum posts mention a limit of one per second). About a minute in
+   all, if the service holds up.
+4. **A real figure, for illustration of what it gives:** in that hour last
+   week, 25 of 56 Reading to Paddington arrivals were within 3 minutes.
+5. **Elizabeth line coverage looks patchy.** In the same hour of the
+   week only one Elizabeth line run (the 17:16, one day) appeared for
+   Paddington, where about three an hour call. Reading to Bond Street
+   gave none for November 16th, though Reading to Tottenham Court Road
+   gave five earlier. "PDX" (a guess at a separate Paddington code) gave
+   nothing. To investigate before relying on the history for Elizabeth
+   line journeys.

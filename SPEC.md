@@ -23,7 +23,7 @@ open questions are numbered at the end.
 ## 3. What the page shows, in order
 
 1. **The verdict.** A sentence starting "Good news…", "It's a mixed
-   bag…" or "Be prepared…", based on the next five hours and known
+   bag…" or "Be prepared…", based on the next four hours and known
    problems. It gives the main reason in a few words. If the last week
    tells a different story, a second sentence adds it, starting "However,
    it's worth knowing…" (answer 4). For example (illustration only):
@@ -33,7 +33,7 @@ open questions are numbered at the end.
 2. **The next four hours** (four, not five: the live board reaches only
    about four hours ahead; John, November 17th 2026, option a). A summary in words of the departures from A
    that reach B in that time, for example (illustration only): "There are
-   18 trains in the next five hours. 16 are on time, one is expected 12
+   18 trains in the next four hours. 16 are on time, one is expected 12
    minutes late, and the 15.42 is cancelled." Then details for every
    delayed or cancelled train: when it was due, when it's expected, and
    the reason if National Rail gives one.
@@ -43,7 +43,7 @@ open questions are numbered at the end.
    only announced shortly before a train leaves, so this says so when they
    aren't known yet.
 4. **The last week.** How reliable the same journey has been over the last
-   seven days, in the same five hours of the day as the visitor's
+   seven days, in the same four hours of the day as the visitor's
    enquiry (answer 6), in words, and whether it was one bad day or
    consistently poor (§7, question 6), for example (illustration only): "Over the last
    week, 104 of 120 trains arrived within 3 minutes of time. Six were
@@ -146,12 +146,12 @@ Answers from John, November 17th 2026, unless marked.
    mustn't be in a web page, and its history service refuses requests
    from web pages. (Rainfaller's Environment Agency data is different:
    open, with no key, and browsers may fetch it.)
-4. **The verdict:** based on the next five hours and known problems; the
+4. **The verdict:** based on the next four hours and known problems; the
    last week modifies it with "However, it's worth knowing…" or similar.
    *The exact rules and wording are agreed with the mock-ups (stage 2).*
 5. **"On time":** within 3 minutes, said in words.
 6. **The last week:** no asking when the visitor travels. Every train on
-   the journey in the five hours after the enquiry, on each of the last
+   the journey in the four hours after the enquiry, on each of the last
    seven days (confirmed). It must tell one bad day from consistently
    poor running. Agreed (John), with the thresholds tuned on real data
    in stage 1:

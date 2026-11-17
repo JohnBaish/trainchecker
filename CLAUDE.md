@@ -56,6 +56,28 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: the full station list; a clue for Vercel's preview (branch `claude/epic-wright-wlwhvp`; Claude Code)
+
+- **Stations:** John subscribed to Knowledgebase Stations and gave its key (secure form) and its
+  address, `…/1010-knowlegebase-stations-xml-feed1_1/4.0/stations-{TOC}.xml`: one file per
+  company that runs stations. Every two-letter code tried once: 34 have stations, 2,616 in all,
+  including Network Rail's own (NR: Reading, Paddington), the Elizabeth line's central stations
+  (LT) and Southend Airport (XS). `scripts/build-stations.ts` makes `src/data/stations.json`
+  (names and codes, 58 KB, bundled, so typing sends nothing); the stand-in script removed. All
+  273 stand-in stations are in it; 22 names differ slightly from the live board's ("Bond Street
+  (Elizabeth line)", "Langley (Berks)"); the page's headings keep the board's names.
+- **Vercel preview:** John thinks the keys aren't reaching Preview. Claude can't see his Chrome
+  from a cloud session; Vercel's current help (read here) says Preview settings apply to every
+  branch but the production one, and changes apply only to new deployments (Redeploy). The
+  functions now say which setting is missing (`reason`, never a value) or what National Rail
+  answered, at `/api/live?from=RDG&to=PAD`.
+- **Checked:** `npm run check` 163 + 50 (new: the list complete, each code once, no markup,
+  every snapshot's stations, typed names and codes, suggestions); `tsc -b`; build; the boxes at
+  390px with touch and 1200px ("read" offers Reading, Reading Green Park, Reading West), no
+  errors, no sideways scroll. Not checked: the knowledgebase licence for stations (John to
+  share it, as before); the live pages again (the key saved now is the stations one).
+- Key saved here now: Knowledgebase Stations.
+
 ### November 17th 2026: stage 3 built, for John to try (branch `claude/epic-wright-wlwhvp`, not merged; Claude Code)
 
 - **John:** the station list from National Rail's Knowledgebase Stations feed (he'll

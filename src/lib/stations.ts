@@ -1,7 +1,7 @@
-// Station names and codes for the chooser. For now a stand-in made from the stations named in
-// the real live boards of November 17th (scripts/stand-in-stations.ts); the full list comes from
-// National Rail's Knowledgebase Stations feed once it's subscribed (John, November 17th 2026).
-import LIST from '../data/stations.json'
+// Station names and codes for the chooser: all 2,616 from National Rail's Knowledgebase Stations
+// feed (scripts/build-stations.ts, November 17th 2026), bundled with the page, so typing in the
+// boxes sends nothing anywhere.
+import LIST from '../data/stations.json' with { type: 'json' }
 
 export const STATIONS = LIST as [string, string][]
 const BY_CODE = new Map(STATIONS)

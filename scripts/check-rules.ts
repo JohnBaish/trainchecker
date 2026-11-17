@@ -18,6 +18,7 @@ import {
   hourLabel, HOURS, quoteShareText, type Line,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
+import { STATIONS, resolve, suggest } from '../src/lib/stations.ts'
 
 let passed = 0, failed = 0
 function eq(what: string, got: unknown, want: unknown) {
@@ -156,6 +157,16 @@ eq('times', ['18:26', '19:00', '12:00', '00:00', '00:49', '09:05'].map(t12), ['6
 eq('quote of the day', [quoteOfTheDay(new Date('2026-11-17T12:00:00Z')).author, quoteOfTheDay(new Date('2026-11-18T12:00:00Z')).author], ['E. W. Hornung', 'Benjamin Franklin'])
 eq('quote share words', quoteShareText('E. W. Hornung', nov17), 'The quote of the day on Trainchecker for November 17th, from E. W. Hornung.')
 eq('366 quotes', QUOTES.length, 366)
+
+// The station list (Knowledgebase Stations, November 17th 2026): complete, each code once, and
+// every station in the real snapshots findable by its code.
+eq('stations: how many', STATIONS.length >= 2600, true)
+eq('stations: each code once', new Set(STATIONS.map(([c]) => c)).size, STATIONS.length)
+eq('stations: no markup left in names', STATIONS.filter(([, n]) => /&\w+;|<|>/.test(n)), [])
+const inSnaps = new Set(files.flatMap((f) => { const s = raw(f); return [s.from, s.to] }))
+eq('stations: every journey in the snapshots', [...inSnaps].filter((c) => !STATIONS.some(([x]) => x === c)), [])
+eq('stations: typed names and codes', [resolve('reading'), resolve('London Paddington'), resolve('kgx'), resolve('Goring & Streatley'), resolve('nowhere')], ['RDG', 'PAD', 'KGX', 'GOR', null])
+eq('stations: suggestions', [suggest('paddington')[0][1], suggest('man')[0][1], suggest('tcr')[0][0]], ['London Paddington', 'Manchester Piccadilly', 'TCR'])
 
 console.log(`check-rules: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

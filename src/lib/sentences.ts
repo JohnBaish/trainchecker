@@ -3,7 +3,7 @@
 // from design/mockups/sentences.mjs, which made them. scripts/check-rules.ts holds the agreed
 // sentences for the real snapshots, so a change of wording fails loudly.
 //
-// Sentences new in stage 3 (not on the mock-ups) are marked "Claude's draft, for John".
+// Sentences new in stage 3 (not on the mock-ups) were agreed by John on November 17th 2026 too.
 
 import type { Analysis, Train } from './analyse.ts'
 
@@ -113,7 +113,7 @@ export function verdict(a: Analysis): Verdict {
   if (a.verdict === 'none' && a.lastGone) {
     // Trains ran in the last two hours, and none in the next four. In the evening (6pm to 4am)
     // the last one has gone for the night (John, November 17th 2026); in the day, on a quiet
-    // line, there may just be a long gap. Claude's draft wording, for John.
+    // line, there may just be a long gap. Wording agreed by John, November 17th 2026.
     const h = Number(a.now.slice(0, 2))
     const gone = t12(a.lastGone.std)
     if (h >= 18 || h < 4) {
@@ -211,7 +211,7 @@ export function platforms(a: Analysis): string | null {
   if (!a.platKnown) return 'No platforms have been announced yet.'
   const [[p1, n1], ...rest] = a.platList
   const and = (xs: string[]) => xs.join(', ').replace(/, ([^,]*)$/, ' and $1')
-  // One or two platforms known: say each, not "most" (Claude's drafts, for John).
+  // One or two platforms known: say each, not "most" (agreed by John, November 17th 2026).
   const running = a.ahead.filter((s) => !s.cancelled).length
   if (a.platKnown <= 2 && a.platKnown === running) {
     if (a.platKnown === 1) return `At the moment, the train is going from platform ${p1}.`
@@ -276,7 +276,7 @@ export function lastWeekOthers(n: number, w3: number, w10: number, w30: number, 
     [w120 - w30, 'more than half an hour late'],
     [n - w120, 'cancelled'],
   ] as [number, string][]).filter(([k]) => k > 0)
-  // One train in all (Claude's draft, for John): "It was …".
+  // One train in all (agreed by John, November 17th 2026): "It was …".
   if (n === 1) return `It was ${groups[0][1]}.`
   if (groups.length === 1) return others === 1 ? `The other was ${groups[0][1]}.` : `The others were ${groups[0][1]}.`
   const [first, ...rest] = groups
@@ -307,14 +307,14 @@ export function weekFor(now: Date): { kind: DayKind; first: string; last: string
 export const hourLabel = (h: number) => `${t12(`${String(h).padStart(2, '0')}:00`)} to ${t12(`${String((h + 1) % 24).padStart(2, '0')}:00`)}`
 export const HOURS = Array.from({ length: 19 }, (_, i) => i + 5)
 
-/** The line under the hours (agreed for weekdays; Saturdays and Sundays Claude's draft). */
+/** The line under the hours (agreed for weekdays; Saturdays and Sundays agreed by John, November 17th 2026). */
 export function kindLine(kind: DayKind): string {
   if (kind === 'SATURDAY') return 'Today is a Saturday, so this looks at last Saturday (weekdays and Sundays have their own timetables).'
   if (kind === 'SUNDAY') return 'Today is a Sunday, so this looks at last Sunday (weekdays and Saturdays have their own timetables).'
   return 'Today is a weekday, so this looks at the weekdays of the last week (Saturdays and Sundays have their own timetables).'
 }
 
-/** The line while it loads (agreed for weekdays; Saturdays and Sundays Claude's draft). */
+/** The line while it loads (agreed for weekdays; Saturdays and Sundays agreed by John, November 17th 2026). */
 export function loadingLine(kind: DayKind, hour: number): string {
   const h = hourLabel(hour).replace(' to ', ' and ')
   if (kind === 'WEEKDAY') return `Fetching weekday trains between ${h} over the last week from National Rail. This usually takes less than a minute.`
@@ -328,7 +328,7 @@ export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind:
   const between = `between ${t12(o.start)} and ${t12(o.end)}`
   const ds = o.days
   const when = ds.length === 1 ? `On ${dayName(ds[0])}` : `On the ${num(ds.length)} ${o.kind === 'WEEKDAY' ? 'weekdays' : o.kind === 'SATURDAY' ? 'Saturdays' : 'Sundays'} from ${dayName(ds[0])} to ${dayName(ds[ds.length - 1])}`
-  // No trains (Claude's draft, for John).
+  // No trains (agreed by John, November 17th 2026).
   if (!c.n) return `${when}, no trains left ${o.from} for ${o.to} ${between}, as far as National Rail's record shows.`
   const k = c.w3, n = c.n
   if (n === 1) {
@@ -337,7 +337,7 @@ export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind:
   const who = k === n && n === 2 ? 'both trains' : k === n ? `all ${num(n)} trains` : k === 0 ? `none of the ${num(n)} trains` : n < 10 ? `${num(k)} of the ${num(n)} trains` : `${share(k, n).bare} of the ${num(n)} trains`
   const first = `${when}, ${who} that left ${o.from} ${between} reached ${o.to} within three minutes of the timetable.`
   let rest = lastWeekOthers(n, c.w3, c.w10, c.w30, c.w120)
-  // When none were within three minutes there are no "others" (Claude's draft, for John).
+  // When none were within three minutes there are no "others" (agreed by John, November 17th 2026).
   if (k === 0) rest = rest.replace(/^Of the others,/, 'Of these,').replace(/^The others were/, 'They were')
   return rest ? `${first} ${rest}` : first
 }

@@ -10,7 +10,7 @@ import { HOURS, hourLabel, kindLine, lastWeekText, loadingLine, weekFor, type We
 const INTRO = "If you'd like to see the reliability history of trains making this journey over the last week, choose an hour of departure and the results should load in under a minute."
 // The Elizabeth line note (stage 1 recommendation §2.5; agreed at the mock-ups).
 const ELIZABETH = "Some Elizabeth line trains may be missing from these figures: National Rail's history often leaves them out when Paddington or Bond Street is one end of the journey."
-// When the record can't answer (Claude's drafts, for John).
+// When the record can't answer (agreed by John, November 17th 2026).
 const FAILED: Record<string, string> = {
   busy: 'National Rail’s record is busy answering another request. Please try again in a minute.',
   timeout: 'National Rail’s record took too long to answer, which can happen on busy lines in the evening. Please try again later, or choose another hour.',

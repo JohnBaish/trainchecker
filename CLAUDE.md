@@ -56,6 +56,13 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: every stage 3 draft agreed (Claude Code)
+
+- **John:** "All approved!" (question 3, a to e: the last train gone, platforms with one or
+  two known, the error and waiting messages, the last week's less usual cases, Copy a link).
+  Recorded in `SPEC.md` §9 (new: everything agreed while trying stage 3); the code's comments
+  no longer call them drafts. Stage 3 waits only for John's word to merge.
+
 ### November 17th 2026: John's answers: iPhone fix, the quote picture, the last week's speed (Claude Code)
 
 - **John:** the iPhone fix works (tapping a station suggestion chooses it); the quote's Share

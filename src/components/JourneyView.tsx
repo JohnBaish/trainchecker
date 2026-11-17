@@ -16,7 +16,7 @@ import { LastWeek } from './LastWeek.tsx'
 
 type State = { s: 'loading' } | { s: 'ok'; a: Analysis } | { s: 'failed'; why: string }
 
-// When the live boards can't be had (Claude's drafts, for John).
+// When the live boards can't be had (agreed by John, November 17th 2026).
 const FAILED: Record<string, string> = {
   unknown: 'National Rail doesn’t recognise one of these stations. Please choose again.',
   same: 'Please choose two different stations.',

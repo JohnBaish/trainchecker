@@ -59,7 +59,7 @@ export function Chooser({ journey, first, onClose }: { journey?: Journey; first?
   const [to, setTo] = useState(journey ? nameOf(journey.to) : '')
   const [errors, setErrors] = useState<[string | null, string | null]>([null, null])
   const recent = recentJourneys()
-  // Wording of the two messages: Claude's draft, for John.
+  // Wording of the two messages: Agreed by John, November 17th 2026.
   const go = () => {
     const a = resolve(from), b = resolve(to)
     const e: [string | null, string | null] = [

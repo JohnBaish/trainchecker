@@ -14,7 +14,7 @@
   --radius-sm: 8px; --radius-md: 16px; --radius-lg: 28px;
   --shadow-sm: 0 1px 2px color-mix(in srgb, #2e2b25 14%, transparent);
   --raised: #f9f4ed;
-  /* State colours (Claude's draft): good olive, mixed terracotta, be prepared red; each at
+  /* State colours (agreed at the mock-ups, M18): good olive, mixed terracotta, be prepared red; each at
      least 3:1 against the card, and always with its words. */
   --s-good: #56633f; --s-mixed: #b2622d; --s-prepared: #b3261e; --s-none: #82796a;
   --s-good-bg: #f0fae1; --s-mixed-bg: #fff2eb; --s-prepared-bg: #fde8e4;

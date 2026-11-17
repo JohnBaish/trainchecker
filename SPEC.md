@@ -268,3 +268,24 @@ https://claude.ai/artifact/QAUKZcDt6Xrhph1aPAUgAS.
     picture A ("How’s this train line doing", `design/preview-options/og-A.html`).
 16. **About these figures, the credit and the privacy line:** as on the mock-up page, agreed
     for now.
+
+## 9. Agreed while trying stage 3 (November 17th 2026)
+
+Agreed by John on November 17th 2026, after trying the branch's preview on his computer and
+iPhone. The exact words are in `src/lib/sentences.ts` and the components; the log in `CLAUDE.md`
+has the examples.
+
+1. **Station list:** National Rail's Knowledgebase Stations feed, all 2,616 stations, bundled
+   with the page (`scripts/build-stations.ts`).
+2. **Layout:** "The last two hours" across the full width under "The next four hours" and
+   "Platforms" (which are the same height), replacing §8.1's "under Platforms".
+3. **"Both"** for two of two ("Both are expected on time").
+4. **"Copy a link to this journey"** in the notes' grey; it copies the Share sentence with the
+   link on the line below.
+5. **The last train gone:** with trains in the last two hours and none in the next four, after
+   6pm or before 4am, "The last direct train from A to B seems to have gone: …"; in the day,
+   "The latest direct train from A to B left at …"; the Share sentence to match.
+6. **Platforms with one or two known**, the error and waiting messages, and the last week's
+   Saturday, Sunday, no-train, one-train and none-on-time wording (John's question 3, a to e).
+7. **The quote's Share picture** as built (`design/previews/stage3/quote-picture-*.png`).
+8. **The last week's speed:** about 25 seconds for Reading to Basingstoke on the preview: fine.

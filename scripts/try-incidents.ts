@@ -4,7 +4,7 @@
 // the two stations, or whose "routes affected" name both, but that the rule leaves out.
 import { readFileSync } from 'node:fs'
 import { gunzipSync } from 'node:zlib'
-import { readIncidents, matches, current, endOfSunday, stationsIn } from '../src/lib/incidents.ts'
+import { readIncidents, matches, mayAffect, current, endOfSunday, stationsIn } from '../src/lib/incidents.ts'
 import STATIONS from '../src/data/stations.json' with { type: 'json' }
 
 const [file, at] = process.argv.slice(2)
@@ -30,14 +30,16 @@ let any = 0
 J.forEach((j, k) => {
   const [a, b] = j.split('-')
   const got = live.map((i) => [i, matches(i, a, b)] as const).filter(([, w]) => w)
-  const near = live.filter((i) => !matches(i, a, b)).filter((i) => {
+  const may = live.filter((i) => mayAffect(i, a, b))
+  const near = live.filter((i) => !matches(i, a, b) && !mayAffect(i, a, b)).filter((i) => {
     const s = stationsIn(i.summary).map((x) => x.code), r = stationsIn(i.routes).map((x) => x.code)
     return s.includes(a) || s.includes(b) || (r.includes(a) && r.includes(b))
   })
   if (got.length) any++
   p()
-  p(`${k + 1}. **${name.get(a)} to ${name.get(b)}**: ${got.length} counted, ${near.length} left out`)
+  p(`${k + 1}. **${name.get(a)} to ${name.get(b)}**: ${got.length} counted, ${may.length} may affect, ${near.length} left out`)
   for (const [i, w] of got) p(`   - Counted (${w}): ${i.planned ? '' : '(unplanned) '}${i.summary}`)
+  for (const i of may) p(`   - May affect: ${i.planned ? '' : '(unplanned) '}${i.summary}`)
   for (const i of near) p(`   - Left out: ${i.planned ? '' : '(unplanned) '}${i.summary}`)
 })
 p()

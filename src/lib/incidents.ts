@@ -152,3 +152,13 @@ export function current(inc: Incident, now: Date, until: Date): boolean {
   if (!inc.planned) return !inc.end || inc.end >= now
   return !!inc.start && inc.start <= until && (!inc.end || inc.end >= now)
 }
+
+/** An incident that doesn't count by the rule but may still affect the journey (John, November
+ *  17th 2026: say so in a friendly way): it names A or B, though not as the rule needs. One amended
+ *  train only when it leaves from A or ends at B, so it may call at the other station. */
+export function mayAffect(inc: Incident, from: string, to: string): boolean {
+  if (matches(inc, from, to)) return false
+  const one = inc.summary.match(/^Amended \d\d:\d\d (.+?) to (.+?)( service| on | from |$)/)
+  if (one) return stationsIn(one[1]).some((x) => x.code === from) || stationsIn(one[2]).some((x) => x.code === to)
+  return stationsIn(inc.summary).some((x) => x.code === from || x.code === to)
+}

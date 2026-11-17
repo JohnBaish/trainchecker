@@ -52,7 +52,10 @@ open questions are numbered at the end.
    trains making this journey in that hour over the last week. John's
    draft wording: "If you'd like to see the reliability history of trains
    making this journey over the last week, choose an hour of departure and
-   the results should load within 40 seconds." One history request (one
+   the results should load within 40 seconds." Agreed wording ends "…the
+   results should load in under a minute." (John). Same kind of day as
+   today (weekday, Saturday or Sunday); only hours when trains run, if
+   that's easy to check quickly (John). One history request (one
    hour, one kind of day) per choice: about 43 seconds on a busy line like
    Reading to Paddington, much less on quieter ones
    (`design/data-trial-2026-11-17.md` §8). Results kept for the rest of

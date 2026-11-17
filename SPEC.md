@@ -289,3 +289,18 @@ has the examples.
    Saturday, Sunday, no-train, one-train and none-on-time wording (John's question 3, a to e).
 7. **The quote's Share picture** as built (`design/previews/stage3/quote-picture-*.png`).
 8. **The last week's speed:** about 25 seconds for Reading to Basingstoke on the preview: fine.
+
+## 10. Agreed at the start of stage 4 (November 17th 2026)
+
+Asked for by John on November 17th 2026, before stage 4's work; built on the stage 4 branch.
+
+1. **Order:** the quote of the day now comes before "The last two hours", on computers and
+   phones: … the verdict; Share; "The next four hours" and "Platforms"; the quote of the day;
+   "The last two hours"; "The days ahead" (stage 4); "The last week"; "About these figures"; the
+   footer. (Replaces §8.1's order for these parts.)
+2. **"Good news … leaving on time":** the last two hours no longer appear in the verdict; they
+   stay in "The last two hours", so the only difference from the usual good news is "leaving"
+   for "running". After "It's a mixed bag" they're still given in the verdict (§8.3), for John
+   to confirm.
+3. **Share ("Copy a link to this journey", "Share this journey" on phones)** straight under the
+   verdict it quotes, for John to confirm (he wasn't sure where it should go).

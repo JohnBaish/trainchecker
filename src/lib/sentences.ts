@@ -107,6 +107,11 @@ export function lastTwoLines(a: Analysis): string[] {
 export type Line = { bold?: string; text: string }
 export type Verdict = { kind: Analysis['verdict']; lines: Line[] }
 
+/** Whether the verdict gives the last two hours (so their own box is left out): only when they
+ *  were bad and the verdict is "It's a mixed bag". With "Good news" the verdict says "leaving on
+ *  time" instead of "running well", and the box keeps them (John, November 17th 2026, stage 4). */
+export const lastTwoInVerdict = (a: Analysis) => a.worse && a.verdict === 'mixed'
+
 export function verdict(a: Analysis): Verdict {
   const when = partOfDay(a.now)
   const journey = `trains from ${a.from} to ${a.to}`
@@ -156,8 +161,10 @@ export function verdict(a: Analysis): Verdict {
     s += r ? `, mostly because of ${r}.` : '.'
     lines.push({ bold: 'Be prepared:', text: s })
   }
-  // The last two hours, on a new line, only when they were bad (N5).
-  if (a.worse) lines.push({ text: lastTwoLines(a).join(' ') })
+  // The last two hours, on a new line, only when they were bad (N5), and only after "It's a
+  // mixed bag": after "Good news … leaving on time" they stay in their own box (John, November
+  // 17th 2026, stage 4).
+  if (lastTwoInVerdict(a)) lines.push({ text: lastTwoLines(a).join(' ') })
   return { kind, lines }
 }
 

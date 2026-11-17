@@ -147,6 +147,8 @@ details.advice > summary { cursor: pointer; color: var(--color-accent-700); font
 /* share, message of the day, about, footer */
 details.trains-fold { margin-top: var(--space-3); }
 .share-row { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margin-top: var(--space-6); }
+/* Straight under the verdict it quotes (John, stage 4): close to the verdict, a full gap below. */
+.share-row.under-verdict { margin: calc(var(--space-3) - var(--space-6)) 0 var(--space-6); }
 /* quote of the day (option C, revised) */
 .qc2 { display: grid; grid-template-columns: 56px 1fr 56px; gap: 6px; margin-top: var(--space-6); background: var(--color-accent-100); border-radius: calc(var(--radius-lg) * 1.15); padding: 22px 14px 14px 18px; box-shadow: inset 6px 0 0 var(--color-accent); }
 .qmark { font-family: var(--font-heading); font-size: 76px; line-height: 0.9; color: var(--color-accent); text-align: center; }

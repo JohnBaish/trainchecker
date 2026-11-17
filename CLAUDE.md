@@ -54,6 +54,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: stage 4 begun: the page's order, "leaving on time", Share moved up (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John:** the quote of the day before "The last two hours" (computer and iPhone); after "Good
+  news … leaving on time" the last two hours back in their own box, so only "leaving" for
+  "running" differs; Share higher up, "below the last thing it quotes". Done: `lastTwoInVerdict()`
+  (only after "It's a mixed bag", as Bath Spa to Bristol at 6.24pm; to confirm with John);
+  `QuoteCard` shown by `JourneyView` (and by `Tail` only on the first visit); Share straight under
+  the verdict. `SPEC.md` §10.
+- **Checked:** `npm run check` 159 + 50 (the leaving-on-time verdict now one line, its box shown);
+  `tsc -b`, lint, build; pictures from the saved answers (`design/previews/stage4/order-*`, 1200px
+  and 390px, light and dark): no errors, no sideways scroll.
+
 ### November 17th 2026: stage 3 merged into `main`; handover for stage 4 (Claude Code)
 
 - **John:** "Merge please", and a handover and prompt for stage 4. `design/handover-stage-4-2026-11-17.md`

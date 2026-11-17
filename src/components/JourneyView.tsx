@@ -1,18 +1,20 @@
-// A journey's page (SPEC §8.1), top to bottom: the strip "TRAINS TO CHECK" with Swap and Change;
-// the time fetched and Check again; the verdict; "The next four hours" with "Platforms" beside it
-// on a computer, the two the same height; "The last two hours" across the full width under them,
-// unless the verdict has given it; "The last week"; Share. ("The days ahead" is stage 4's.)
+// A journey's page (SPEC §8.1, §9.2 and §10), top to bottom: the strip "TRAINS TO CHECK" with Swap
+// and Change; the time fetched and Check again; the verdict; Share ("Copy a link to this journey"),
+// straight under the verdict it quotes; "The next four hours" with "Platforms" beside it on a
+// computer, the two the same height; the quote of the day; "The last two hours" across the full
+// width, unless the verdict has given it; "The last week". ("The days ahead" is stage 4's.)
 import { useEffect, useState } from 'react'
 import { analyse, type Analysis } from '../lib/analyse.ts'
 import { fetchLive } from '../lib/load.ts'
 import { hashOf, remember, type Journey } from '../lib/route.ts'
 import { useIsNarrow } from '../lib/responsive.ts'
-import { dayName, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
+import { dayName, lastTwoInVerdict, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
 import { isTouch, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
 import { Chooser } from './Chooser.tsx'
 import { Icon } from './Icon.tsx'
 import { LastWeek } from './LastWeek.tsx'
+import { QuoteCard } from './Tail.tsx'
 
 type State = { s: 'loading' } | { s: 'ok'; a: Analysis } | { s: 'failed'; why: string }
 
@@ -64,7 +66,7 @@ function ShareJourney({ a }: { a: Analysis }) {
     setStatus(r === 'copied' ? 'Copied' : r === 'failed' ? 'Sorry, this browser wouldn’t copy it.' : '')
   }
   return (
-    <div className="share-row">
+    <div className="share-row under-verdict">
       <button type="button" className="btn btn-secondary" onClick={go}><Icon name={touch ? 'share' : 'copy'} /> {touch ? 'Share this journey' : 'Copy a link to this journey'}</button>
       <span className="share-status" role="status">{status}</span>
     </div>
@@ -107,7 +109,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
   )
 
   if (state.s === 'loading') {
-    return <>{strip}<p className="dateline muted" role="status"><span className="spinner" aria-hidden="true"></span>Asking National Rail for the trains…</p></>
+    return <>{strip}<p className="dateline muted" role="status"><span className="spinner" aria-hidden="true"></span>Asking National Rail for the trains…</p><QuoteCard /></>
   }
   if (state.s === 'failed') {
     return (
@@ -118,6 +120,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
           {state.why === 'unavailable' && <button type="button" className="btn btn-secondary" onClick={load}><Icon name="refresh" /> Try again</button>}
         </section>
         {state.why !== 'unavailable' && !changing && <Chooser journey={journey} />}
+        <QuoteCard />
       </>
     )
   }
@@ -137,8 +140,12 @@ export function JourneyView({ journey }: { journey: Journey }) {
       <section className={`card verdict state-${v.kind}`}>
         {v.lines.map((l, i) => <p key={i}>{l.bold && <b>{l.bold}</b>}{l.text}</p>)}
       </section>
+      <ShareJourney a={an} />
       {v.kind === 'none' ? (
-        !changing && <Chooser journey={journey} />
+        <>
+          {!changing && <Chooser journey={journey} />}
+          <QuoteCard />
+        </>
       ) : (
         <>
           <div className="grid">
@@ -149,13 +156,13 @@ export function JourneyView({ journey }: { journey: Journey }) {
             </section>
             <section className="card sec"><h3>Platforms</h3><p>{platforms(an)}</p></section>
           </div>
-          {/* Across the full width under the pair, so a computer shows no gap beside it (John,
-              November 17th 2026, after trying the preview). */}
-          {!an.worse && <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>}
+          <QuoteCard />
+          {/* Across the full width, so a computer shows no gap beside it (John, November 17th
+              2026, after trying the preview); after the quote (John, stage 4). */}
+          {!lastTwoInVerdict(an) && <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>}
           <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth} />
         </>
       )}
-      <ShareJourney a={an} />
     </>
   )
 }

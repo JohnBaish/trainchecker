@@ -49,7 +49,7 @@ export default function App() {
             </>
           )}
         </SafetyNet>
-        <Tail />
+        <Tail quote={!journey} />
       </main>
     </>
   )

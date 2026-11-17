@@ -17,7 +17,7 @@ const ABOUT = [
 
 /** The quote of the day (John's quotes.ts, unchanged; option C revised). Verse lines, written
  *  " / " in the file, on separate lines. Its small Share makes a picture of the quote. */
-function QuoteCard() {
+export function QuoteCard() {
   const [now] = useState(() => new Date())
   const q = quoteOfTheDay(now)
   const [status, setStatus] = useState('')
@@ -44,10 +44,12 @@ function QuoteCard() {
   )
 }
 
-export function Tail({ about = true }: { about?: boolean }) {
+/** On a journey's page the quote comes earlier, before "The last two hours" (John, November 17th
+ *  2026, stage 4), so JourneyView shows it and `quote` is false. */
+export function Tail({ about = true, quote = true }: { about?: boolean; quote?: boolean }) {
   return (
     <>
-      <QuoteCard />
+      {quote && <QuoteCard />}
       {about && (
         <section className="card about">
           <h3>About these figures</h3>

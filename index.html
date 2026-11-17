@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Trainchecker</title>
+    <!-- Search and link-preview tags come in stage 5 (PLAN.md; SEO-HANDOVER.md). The preview
+         picture, John's choice A, is already in public/og-trainchecker.png. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Dark mode: set before the page draws, so there's no flash of the wrong colours. A
+         choice kept by the switch wins; otherwise the device's own setting (house style §2).
+         The same key and rule as src/lib/theme.ts. -->
+    <script>
+      (function () {
+        var t = null
+        try { t = localStorage.getItem('trainchecker.theme') } catch (e) {}
+        var device = false
+        try { device = window.matchMedia('(prefers-color-scheme: dark)').matches } catch (e) {}
+        if (t === 'dark' || (t !== 'light' && device)) document.documentElement.dataset.theme = 'dark'
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

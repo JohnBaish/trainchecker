@@ -49,7 +49,7 @@ here, word by word.
 
 Agreed by John: `SPEC.md` §8 and `design/mockups-2026-11-17.md`.
 
-## Stage 3: direct journeys (branch `stage-3-direct`)
+## Stage 3: direct journeys (branch `claude/epic-wright-wlwhvp`, built November 17th 2026, for John to try)
 
 The station chooser, the verdict, the next four hours, platforms, the
 last two hours and the last week, for direct journeys; the quote of the

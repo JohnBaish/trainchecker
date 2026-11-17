@@ -15,7 +15,8 @@ given its own branch). Before committing there, run
 
 ## Read these first
 
-0. `design/handover-stage-3-2026-11-17.md`: where things stand for stage 3 (the real page).
+0. `design/handover-stage-3-2026-11-17.md`: where things stand for stage 3 (the real page),
+   and this log's stage 3 entry (built, not merged).
    Then `design/mockups-2026-11-17.md`: the agreed wording, and `SPEC.md` §8.
 1. `design/handover-2026-11-17.md`: John's brief, in his own words.
 2. `SPEC.md`: what the tool does, with the open questions.
@@ -31,9 +32,19 @@ given its own branch). Before committing there, run
   Vercel's settings as "Secret" variables (house style §9). The Rail
   Data Marketplace's key goes in an `x-apikey` header; its "consumer
   secret" isn't used.
-- `vercel.json` turns off automatic deployments (`git.deploymentEnabled:
-  false`) while there's no app, so pushing notes doesn't send John
-  failed-build emails. Remove it, or set it per branch, in stage 3.
+- `vercel.json` on `main` still turns off automatic deployments
+  (`git.deploymentEnabled: false`); the stage 3 branch's `vercel.json` drops that (so its
+  preview builds) and sets the functions' region (`lhr1`) and time limits. Merging it turns
+  `main`'s deployments back on.
+- **The app (stage 3):** Vite, React and TypeScript, parts copied from Riverwatcher
+  (`organic.css`, `theme.ts`, `ThemeSwitch.tsx`, `responsive.ts`, `words.ts`) and the
+  agreed mock-ups' styles (`src/styles/global.css`). Two Vercel functions: `api/live.ts`
+  (the live board, five windows) and `api/week.ts` (the history, one half hour). The rules in
+  `src/lib/analyse.ts`, every sentence in `src/lib/sentences.ts`. `npm run dev` and `vite
+  preview` serve the functions too (`vite.config.ts`); from a cloud session run them with
+  `NODE_USE_ENV_PROXY=1 RDM_LDB_KEY=proxy-injected RDM_HSP_KEY=proxy-injected`. `npm run
+  check`: `scripts/check-rules.ts` and `scripts/check-api.ts`, on the real snapshots.
+  Browser checks: `design/previews/stage3/sweep.cjs` and `try.cjs` (preview on port 4620).
 - Functions run in London (`lhr1`): the incidents licence allows UK use
   only.
 - Every figure on the page comes from real data. Examples in documents
@@ -44,6 +55,54 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 17th 2026: stage 3 built, for John to try (branch `claude/epic-wright-wlwhvp`, not merged; Claude Code)
+
+- **John:** the station list from National Rail's Knowledgebase Stations feed (he'll
+  subscribe and give the key through the secure form). Until then the boxes use a stand-in:
+  the 273 stations named in the real live boards saved tonight (`scripts/stand-in-stations.ts`,
+  `src/data/stations.json`). The government's NaPTAN list was blocked here.
+- **What:** the page in SPEC §8 except "The days ahead" (stage 4): the chooser (suggestions as
+  you type, arrow keys and Enter, a tap; swap; Recent, four kept on the device; `#RDG-PAD`);
+  the strip with Swap and Change; the time fetched and Check again; the verdict; the next four
+  hours with the folded list (a table on a computer, rows on a phone); Platforms; the last two
+  hours; the last week; Share; the quote of the day with its picture; About; the footer;
+  favicon C; preview picture A in `public/` (its tags are stage 5's); Web Analytics with the
+  part after "#" dropped; the safety net.
+- **The functions:** `api/live.ts` asks the board's five windows at once (about 0.6 seconds),
+  keeps only what the page needs, no caching. `api/week.ts` asks one half hour with margins 3,
+  10, 30 and 120; a 503 (busy) is tried again for up to 20 seconds; answers are kept by
+  Vercel's servers until UK midnight (`s-maxage`), the dates being in the address. Both in
+  London (`regions: ["lhr1"]`), keys from `RDM_LDB_KEY` and `RDM_HSP_KEY`, nothing logged.
+- **Found:** tonight both half hours of Reading to Paddington, 5pm to 6pm, were accepted at
+  the same time (40 seconds each, not refused as at 6pm), so the page asks for both halves
+  together and asks again for a half refused as busy; if the second half fails, the first is
+  shown and the sentence says so. An unknown station code is HTTP 400 ("Invalid crs code
+  supplied"). An hour with no trains answers in about a second, with no services.
+- **Drafted by Claude, for John:** the messages when a station isn't found or National Rail
+  can't be reached; the last week for one Saturday or Sunday ("On Saturday November 14th,
+  …"), with no trains, with one train, and with none on time ("Of these, …"); the Saturday
+  and Sunday lines; "Copy a link to this journey" copies the sentence and the link, one under
+  the other; the quote picture (`design/previews/stage3/quote-picture-*.png`), wired in on the
+  branch but **not agreed yet**.
+- **For John to note:** About and the first-visit paragraph mention engineering work, which
+  arrives in stage 4. The "however" rule can say "about three quarters" got there on time
+  (it triggers below three in four, and 0.7 rounds to three quarters).
+- **Checked:** `npm run check` 157 + 50 (the agreed sentences word for word; the mock-up code
+  and the app agree on all 14 real snapshots, five of them new tonight at 8.59pm with the next
+  four hours past midnight; every snapshot moved to 11.40pm gives the same answers; breaking the
+  clock wrap, the sort or the rounding made checks fail, then restored); `tsc -b`, lint, build.
+  Chromium against live National Rail data: 36 views (first visit, Reading to Paddington,
+  Manchester Airport, Bath to Bristol, no direct train, an unknown station; 1200px, 390px and
+  844×390 with touch, light and dark): no errors, no sideways scrolling, fonts loaded, 44px
+  taps. Controls (18 checks): typing and choosing, wrong and empty boxes, Recent, Swap,
+  Change, Check again, the fold, Copy (read back), the quote picture copied (2400px wide), and
+  the last week with the history's real answers for 5pm to 6pm (asked through the function at
+  8.55pm; the key saved now is the live board's, so the page was fed them in the browser):
+  25 of 56, matching stage 1.
+- **Couldn't check:** Vercel itself (functions, region, caching); a real phone's share sheet;
+  Safari's clipboard; the last week end to end in the browser with both keys at once.
+- Key saved here now: Live Departure Board.
 
 ### November 17th 2026: stage 2 agreed; handover for stage 3 (Claude Code)
 

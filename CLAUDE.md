@@ -1,0 +1,52 @@
+# Trainchecker: working notes
+
+"How's this train line doing." A baish.net tool that tells someone, in
+plain English and gently, how their train journey from A to B looks: the
+next five hours, the platforms, the last week, the days ahead, and another
+way round if needed.
+
+**Project tracker:** when something significant changes (a stage
+finished, a decision made, something goes live or is parked), update
+`trainchecker.md` and its line in `INDEX.md` in
+`JohnBaish/baish.net-directory`, following that repo's README, straight
+to its `main` (John's standing permission, even when this session was
+given its own branch). Before committing there, run
+`node site/check-tracker.mjs` in that repo and fix anything it lists.
+
+## Read these first
+
+1. `design/handover-2026-11-17.md`: John's brief, in his own words.
+2. `SPEC.md`: what the tool does, with the open questions.
+3. `PLAN.md`: the stages.
+4. `HOUSE-STYLE.md`: the shared design and ways of working.
+5. `SEO-HANDOVER.md`: when search work comes up (stage 6).
+
+## Key points
+
+- Nothing visible is built until John has answered the spec's questions
+  and agreed stage 1.
+- Never write a key or token into a file, log or commit. Keys live in
+  Vercel's settings (house style §9).
+- Every figure on the page comes from real data. Examples in documents
+  are marked "illustration only".
+- Copied from `JohnBaish/clockwheel` at commit `372c03c` (November 17th
+  2026): `HOUSE-STYLE.md`, `SEO-HANDOVER.md`, `.claude/skills/fresh-look/`
+  and `.github/workflows/tidy-branches.yml`. Clockwheel holds the master
+  copies.
+
+## Log
+
+### November 17th 2026: set-up (Claude Code)
+
+- John created the repo, first as `trainchecker-`, then renamed it
+  `trainchecker` at Claude's suggestion.
+- John's brief and the earlier Claude chat's reply saved word for word in
+  `design/handover-2026-11-17.md` (there was no separate handover file).
+- The house-style files copied in (see Key points).
+- `SPEC.md` and `PLAN.md` drafted, with 14 open questions.
+- Data checked by web search only. The Open Rail Data wiki was blocked by
+  this session's network, so some details come from search summaries.
+  Found: live departures, a year of history and incidents are all on the
+  Rail Data Marketplace, described as free; the history can't be called
+  from a web page, so a small server is needed; no free journey planner
+  was found for changes. None of it tried with real data yet.

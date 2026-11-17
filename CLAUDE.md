@@ -26,7 +26,11 @@ given its own branch). Before committing there, run
 - Nothing visible is built until John has answered the spec's questions
   and agreed stage 1.
 - Never write a key or token into a file, log or commit. Keys live in
-  Vercel's settings (house style §9).
+  Vercel's settings as "Secret" variables (house style §9). The Rail
+  Data Marketplace's key goes in an `x-apikey` header; its "consumer
+  secret" isn't used.
+- Functions run in London (`lhr1`): the incidents licence allows UK use
+  only.
 - Every figure on the page comes from real data. Examples in documents
   are marked "illustration only".
 - Copied from `JohnBaish/clockwheel` at commit `372c03c` (November 17th
@@ -35,6 +39,19 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 17th 2026: subscriptions approved; licences read (Claude Code)
+
+- John's Rail Data Marketplace subscriptions (Live Departure Board, HSP,
+  Knowledgebase Incidents) were approved the same afternoon. Licences
+  compared in `design/licences-2026-11-17.md`: free, public display
+  allowed, credit needed; incidents data UK only, so functions go in
+  London. The NationalRail Disruptions API isn't subscribed yet.
+- Vercel project's main address: https://trainchecker-alpha.vercel.app/
+- Live Departure Board address (John):
+  `https://api1.raildata.org.uk/1010-live-departure-board-dep1_2/LDBWS/api/20220120/GetDepartureBoard/{crs}`
+- Vercel now calls write-only variables "Secret" (and readable ones
+  "Config"); its page says Secrets are for API keys (read November 17th).
 
 ### November 17th 2026: data research without keys (Claude Code)
 

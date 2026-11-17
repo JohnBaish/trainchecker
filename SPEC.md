@@ -93,8 +93,11 @@ yet: that's stage 1 of `PLAN.md`.
 5. **Station names and codes:** National Rail's station list (in the
    timetable files and the Knowledgebase).
 
-Licences and credit lines for each are to be read before building, and
-the wording agreed with John (house style §8).
+Licences: read on November 17th 2026 (`design/licences-2026-11-17.md`).
+All three are free and allow the data to be shown to the public, with a
+credit to the Rail Delivery Group and, for live departures, National
+Rail. The incidents data may only be used in the UK, so the functions
+run in London. Credit wording agreed with John at the mock-ups.
 
 ## 5. How it would work
 
@@ -174,6 +177,7 @@ Answers from John, November 17th 2026, unless marked.
 11. **Changes:** not in the first version. Direct trains only.
 12. **Remembering:** yes to all: recent journeys kept in the browser, a
     swap-direction button, and the journey in the address after a "#".
-13. **Credits:** however National Rail's terms require. *Read in
-    stage 1.*
+13. **Credits:** however National Rail's terms require. Read on
+    November 17th: credit the Rail Delivery Group and National Rail, with
+    no suggestion of endorsement (`design/licences-2026-11-17.md`).
 14. **Share button:** yes. Its sentence is agreed with the mock-up.

@@ -49,7 +49,7 @@ here, word by word.
 
 Agreed by John: `SPEC.md` §8 and `design/mockups-2026-11-17.md`.
 
-## Stage 3: direct journeys (branch `claude/epic-wright-wlwhvp`, built November 17th 2026, for John to try)
+## Stage 3: direct journeys (done: merged November 17th 2026)
 
 The station chooser, the verdict, the next four hours, platforms, the
 last two hours and the last week, for direct journeys; the quote of the
@@ -57,7 +57,7 @@ day and its Share picture; Share; the favicon. The functions, dark mode,
 the footer and analytics. An `npm run check` for the verdict rules and
 sentences. Handover: `design/handover-stage-3-2026-11-17.md`.
 
-## Stage 4: the days ahead (branch `stage-4-ahead`)
+## Stage 4: the days ahead (branch `stage-4-ahead`; handover `design/handover-stage-4-2026-11-17.md`)
 
 Engineering work and known problems to the end of the coming weekend,
 their effect on the verdict, and National Rail's advice when a journey is

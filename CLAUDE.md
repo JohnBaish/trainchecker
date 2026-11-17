@@ -15,9 +15,8 @@ given its own branch). Before committing there, run
 
 ## Read these first
 
-0. `design/handover-stage-3-2026-11-17.md`: where things stand for stage 3 (the real page),
-   and this log's stage 3 entry (built, not merged).
-   Then `design/mockups-2026-11-17.md`: the agreed wording, and `SPEC.md` §8.
+0. `design/handover-stage-4-2026-11-17.md`: where things stand for stage 4 (the days ahead).
+   Then `design/mockups-2026-11-17.md`: the agreed wording, and `SPEC.md` §8 and §9.
 1. `design/handover-2026-11-17.md`: John's brief, in his own words.
 2. `SPEC.md`: what the tool does, with the open questions.
 3. `PLAN.md`: the stages.
@@ -32,10 +31,9 @@ given its own branch). Before committing there, run
   Vercel's settings as "Secret" variables (house style §9). The Rail
   Data Marketplace's key goes in an `x-apikey` header; its "consumer
   secret" isn't used.
-- `vercel.json` on `main` still turns off automatic deployments
-  (`git.deploymentEnabled: false`); the stage 3 branch's `vercel.json` drops that (so its
-  preview builds) and sets the functions' region (`lhr1`) and time limits. Merging it turns
-  `main`'s deployments back on.
+- `vercel.json` sets the functions' region (`lhr1`) and time limits. Automatic deployments
+  are on again since stage 3 was merged (November 17th 2026): `main` is the live site at
+  trainchecker-alpha.vercel.app, each branch gets a preview.
 - **The app (stage 3):** Vite, React and TypeScript, parts copied from Riverwatcher
   (`organic.css`, `theme.ts`, `ThemeSwitch.tsx`, `responsive.ts`, `words.ts`) and the
   agreed mock-ups' styles (`src/styles/global.css`). Two Vercel functions: `api/live.ts`
@@ -55,6 +53,13 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 17th 2026: stage 3 merged into `main`; handover for stage 4 (Claude Code)
+
+- **John:** "Merge please", and a handover and prompt for stage 4. `design/handover-stage-4-2026-11-17.md`
+  written. Checks, `tsc -b`, lint and build clean first; `claude/epic-wright-wlwhvp`
+  fast-forwarded into `main`, so `main` now builds on Vercel (automatic deployments on again)
+  and trainchecker-alpha.vercel.app shows the page.
 
 ### November 17th 2026: every stage 3 draft agreed (Claude Code)
 

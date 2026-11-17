@@ -59,22 +59,56 @@ function mainReason(trains) {
   return best && best[1] * 2 >= trains.length ? best[0] : null
 }
 
+// Rounded shares (N1, N2, John): with 10 or more trains, the nearest of these, with
+// "about" unless exact; with fewer, the real count. "All" and "none" said plainly.
+const SHARES = [[1, 20, 'one in twenty', 'in'], [1, 10, 'one in ten', 'in'], [1, 4, 'a quarter', 'of'], [1, 3, 'a third', 'of'],
+  [1, 2, 'half', 'of'], [2, 3, 'two thirds', 'of'], [3, 4, 'three quarters', 'of'], [9, 10, 'nine in ten', 'in'], [19, 20, 'nineteen in twenty', 'in']]
+// Returns the phrase for "<share> trains" ("about half of the trains", "five of the nine
+// trains", "all 19 trains") and the bare share ("about half", "five of the nine", "all").
+export function share(k, n) {
+  if (k === n) return { trains: `all ${num(n)} trains`, bare: 'all' }
+  if (k === 0) return { trains: `none of the ${num(n)} trains`, bare: 'none' }
+  if (n < 10) return { trains: `${num(k)} of the ${num(n)} trains`, bare: `${num(k)} of the ${num(n)}` }
+  let best = SHARES[0]
+  for (const x of SHARES) if (Math.abs(k / n - x[0] / x[1]) < Math.abs(k / n - best[0] / best[1])) best = x
+  const about = k * best[1] === n * best[0] ? '' : 'about '
+  return { trains: best[3] === 'in' ? `${about}${best[2]} trains` : `${about}${best[2]} of the trains`, bare: `${about}${best[2]}` }
+}
+
+// How the last two hours went, as sentences (John's wording, N3 to N7).
+export function lastTwoLines(a) {
+  const L = a.last
+  if (!L.known && !L.cancelled.length) return [`No trains made this journey in the last two hours.`]
+  const out = []
+  if (L.known) {
+    const sh = share(L.within3, L.known)
+    if (L.byArrivals) out.push(`${Cap(sh.trains)} on this route in the last couple of hours got to ${a.to} within three minutes of their timetabled arrival.`)
+    else out.push(`Of the trains that left ${a.from} in the last couple of hours, ${sh.bare} have reached or are expected to reach ${a.to} within three minutes of their timetabled arrival.`)
+    const n = L.lates.length, them = L.within3 === 0 ? 'They' : n === 1 ? 'The other' : n === 2 ? 'The other two' : 'The others'
+    if (n === 1) out.push(`${them} was ${num(L.worst)} minutes late.`)
+    else if (n === 2) out.push(`${them} were ${num(L.lates[0])} and ${num(L.lates[1])} minutes late.`)
+    else if (n > 2) out.push(L.usual === L.worst ? `${them} were about ${num(L.usual)} minutes late.` : `${them} were mostly about ${num(L.usual)} minutes late, and the latest was ${num(L.worst)} minutes late.`)
+  }
+  const c = L.cancelled.length
+  if (c) out.push(`${Cap(num(c))}${L.known ? ' more' : ''} ${c === 1 ? (L.known ? 'was' : 'train was') : (L.known ? 'were' : 'trains were')} cancelled.`)
+  return out
+}
+
 export function verdict(a) {
   const when = partOfDay(a.now)
   const journey = `trains from ${a.from} to ${a.to}`
   if (a.verdict === 'none') {
     return {
-      kind: 'none', word: 'No direct train',
-      lines: [
+      kind: 'none', lines: [
         `We can't find a direct train from ${a.from} to ${a.to} in the next four hours.`,
-        `Trainchecker only covers journeys without a change of train for now, so National Rail's journey planner will be more help.`,
+        `Trainchecker only covers direct journeys – if you know part of the route, try that.`,
       ],
     }
   }
   const lines = []
-  let kind = a.verdict
+  const kind = a.verdict
   if (kind === 'good') {
-    lines.push(`<b>Good news:</b> ${journey} are running well ${when}.`)
+    lines.push(a.worse ? `<b>Good news:</b> ${journey} are leaving on time ${when}.` : `<b>Good news:</b> ${journey} are running well ${when}.`)
   } else if (kind === 'mixed') {
     const bits = []
     if (a.cancelled.length) bits.push(`${num(a.cancelled.length)} ${a.cancelled.length === 1 ? 'is' : 'are'} cancelled`)
@@ -83,43 +117,44 @@ export function verdict(a) {
     lines.push(`<b>It's a mixed bag:</b> most ${journey} are running ${when}, but ${bits.join(' and ').replace(/^(\w+)/, `$1 of the ${num(a.ahead.length)} in the next four hours`)}.`)
   } else {
     const r = mainReason([...a.cancelled, ...a.late5])
-    const what = a.badly ? 'are badly disrupted' : 'are disrupted'
-    let s = `<b>Be prepared:</b> ${journey} ${what} ${when}. Of the next ${num(a.ahead.length)}, ${num(a.cancelled.length)} ${a.cancelled.length === 1 ? 'is' : 'are'} cancelled`
+    let s = `<b>Be prepared:</b> ${journey} ${a.badly ? 'are badly disrupted' : 'are disrupted'} ${when}. Of the next ${num(a.ahead.length)}, ${num(a.cancelled.length)} ${a.cancelled.length === 1 ? 'is' : 'are'} cancelled`
     if (a.late5.length) s += ` and ${num(a.late5.length)} ${a.late5.length === 1 ? 'is' : 'are'} running late`
     s += r ? `, mostly because of ${r}.` : '.'
     lines.push(s)
   }
-  if (a.worse) {
-    const L = a.last
-    const opener = kind === 'good' ? "However, it's worth knowing" : "It's also worth knowing"
-    if (L.cancelled.length >= 2) {
-      lines.push(`${opener} that ${num(L.cancelled.length)} trains were cancelled in the last two hours.`)
-    } else {
-      lines.push(`${opener} that the last two hours were less reliable: ${num(L.within3)} of ${num(L.known)} trains ${L.byArrivals ? `reached ${a.to}` : `left ${a.from}`} within 3 minutes of the timetable.`)
-    }
-  }
-  return { kind, word: { good: 'Good news', mixed: "It's a mixed bag", prepared: 'Be prepared' }[kind], lines }
+  // The last two hours, on a new line, only when they were bad (N5).
+  if (a.worse) lines.push(lastTwoLines(a).join(' '))
+  return { kind, lines }
+}
+
+// "because of A and B", or "mostly because of A", or nothing.
+function because(trains) {
+  const rs = [...new Set(trains.map((s) => reasonText(s.reason)).filter(Boolean))]
+  if (!rs.length) return ''
+  if (rs.length <= 2) return `, because of ${rs.join(' and ')}`
+  const m = mainReason(trains)
+  return m ? `, mostly because of ${m}` : ''
 }
 
 export function nextFour(a) {
   if (a.verdict === 'none') return null
   const n = a.ahead.length
-  const end = addMins(a.now, 240)
+  const v = (k) => (k === 1 ? 'is' : 'are')
+  const lines = [n === 1 ? `There's one train from ${a.from} to ${a.to} in the next four hours.` : `There are ${num(n)} trains from ${a.from} to ${a.to} in the next four hours.`]
   const onTime = a.ahead.filter((s) => s.late !== null && s.late <= 3).length
-  const little = a.ahead.filter((s) => s.late !== null && s.late > 3 && s.late <= 5).length
-  const parts = []
-  let first = `There are ${num(n)} trains from ${a.from} to ${a.to} between ${t12(a.now)} and ${t12(end)}.`
-  if (onTime === n) parts.push(`${first} All are expected on time.`)
+  const little = a.ahead.filter((s) => s.late !== null && s.late > 3 && s.late <= 5)
+  if (onTime === n) lines.push(n === 1 ? 'It\'s expected on time.' : 'All are expected on time.')
   else {
-    parts.push(first)
-    const v = (n) => (n === 1 ? 'is' : 'are')
-    const bits = [`${num(onTime)} ${v(onTime)} expected on time`]
-    if (little) bits.push(`${num(little)} ${v(little)} expected a few minutes late`)
-    if (a.late5.length) bits.push(`${num(a.late5.length)} ${v(a.late5.length)} expected more than 5 minutes late`)
-    if (a.unknown.length) bits.push(`${num(a.unknown.length)} ${v(a.unknown.length)} delayed with no time given yet`)
-    if (a.cancelled.length) bits.push(`${num(a.cancelled.length)} ${v(a.cancelled.length)} cancelled`)
-    const last = bits.pop()
-    parts.push(Cap(`${bits.join(', ')}${bits.length ? ' and ' : ''}${last}.`))
+    const g = []
+    if (a.cancelled.length) g.push([a.cancelled.length, `${v(a.cancelled.length)} cancelled${because(a.cancelled)}`])
+    if (a.late5.length) g.push([a.late5.length, `${v(a.late5.length)} expected to be more than five minutes late${because(a.late5)}`])
+    if (little.length) g.push([little.length, `${v(little.length)} expected to be a few minutes late`])
+    if (a.unknown.length) g.push([a.unknown.length, `${v(a.unknown.length)} delayed with no time given yet`])
+    const parts = g.map(([k, t]) => `${num(k)} ${t}`)
+    let s = parts.length > 1 ? `${parts.slice(0, -1).join(', ')}, and ${parts.at(-1)}` : parts[0]
+    s = g[0][0] >= 10 ? `Of these, ${s}.` : `${Cap(s)}.`
+    lines.push(s)
+    if (onTime) lines.push(onTime === 1 ? 'The other is expected on time.' : 'The rest are expected on time.')
   }
   const rows = [...a.cancelled, ...a.late5, ...a.unknown].sort((x, y) => x.rel - y.rel).map((s) => ({
     time: t12(s.std), dest: s.destination, operator: s.operator,
@@ -127,44 +162,29 @@ export function nextFour(a) {
     what: s.cancelled ? 'Cancelled' : s.unknown ? 'Delayed, no time given yet' : `Expected ${t12(s.etd)}, ${s.late} minutes late`,
     reason: reasonText(s.reason) ? Cap(reasonText(s.reason)) + '.' : null,
   }))
-  return { lines: parts, rows, heading: rows.length ? (rows.length === 1 ? 'The train that isn\'t on time' : `The ${num(rows.length)} trains that aren't on time`) : null }
+  const fold = !rows.length ? null : rows.length === 1 ? "Show the train that isn't on time" : `Show the ${num(rows.length)} trains that aren't on time`
+  return { lines: [lines.slice(0, 1).join(' '), lines.slice(1).join(' ')].filter(Boolean), rows, fold }
 }
 
 export function platforms(a) {
   if (a.verdict === 'none') return null
-  const running = a.ahead.length - a.cancelled.length
-  if (!a.platKnown) return `No platforms have been announced yet for the next trains. They're usually shown shortly before a train leaves.`
+  if (!a.platKnown) return 'No platforms have been announced yet.'
   const [[p1, n1], ...rest] = a.platList
-  let s
+  const and = (xs) => xs.join(', ').replace(/, ([^,]*)$/, ' and $1')
   if (n1 * 2 >= a.platKnown) {
-    s = `At the moment, most of the next trains are going from platform ${p1}`
-    if (rest.length === 1) s += `, and ${rest[0][1] === 1 ? 'one' : num(rest[0][1])} from platform ${rest[0][0]}`
-    else if (rest.length > 1) s += `; others from platforms ${rest.slice(0, 3).map((x) => x[0]).join(', ').replace(/, ([^,]*)$/, ' and $1')}`
-    s += '.'
-  } else {
-    const top = a.platList.slice(0, 4).map((x) => x[0])
-    const list = a.platList.length > 4 ? `${top.join(', ')} and others` : top.join(', ').replace(/, ([^,]*)$/, ' and $1')
-    s = `At the moment, the next trains are going from platforms ${list}.`
+    let s = `At the moment, most trains are going from platform ${p1}`
+    if (rest.length === 1) s += `, and ${rest[0][1] === 1 ? 'one' : 'some'} from platform ${rest[0][0]}`
+    else if (rest.length > 1) s += `; others from platforms ${and(rest.slice(0, 3).map((x) => x[0]))}`
+    return s + '.'
   }
-  if (a.platKnown < running) s += ` Platforms for later trains aren't announced yet.`
-  return s
+  return `At the moment, trains are going from platforms including ${and(a.platList.slice(0, 4).map((x) => x[0]))}.`
 }
 
-export function lastTwo(a) {
-  if (a.verdict === 'none') return null
-  const L = a.last
-  if (!L.total && !L.cancelled.length) return `No trains made this journey in the last two hours.`
-  const where = L.byArrivals ? `reached ${a.to}` : `left ${a.from}`
-  let s
-  if (L.byArrivals) {
-    s = L.within3 === 0
-      ? `In the last two hours, none of the ${num(L.known)} trains that reached ${a.to} arrived within 3 minutes of the timetable.`
-      : `In the last two hours, ${num(L.within3)} of ${num(L.known)} trains reached ${a.to} within 3 minutes of the timetable.`
-  } else {
-    s = `Of the ${num(L.known)} trains that left ${a.from} in the last two hours, ${num(L.within3)} left within 3 minutes of the timetable (most haven't reached ${a.to} yet).`
-  }
-  if (L.worst && L.worst.late > 3) s += ` The latest was the ${t12(L.worst.std)} from ${a.from}, ${L.worst.late} minutes late.`
-  if (L.cancelled.length) s += ` ${Cap(plural(L.cancelled.length, 'train was', 'trains were'))} cancelled.`
-  void where
-  return s
+// The Share button's words (O5, two drafts for John): A plain, B with the verdict.
+export function shareWords(a, kind, when) {
+  const at = `${when.time} on ${when.date}`
+  const A = `Here's how the trains from ${a.from} to ${a.to} were looking at ${at}, from Trainchecker.`
+  const lead = { good: 'Good news for anyone travelling', mixed: "It's a mixed bag for anyone travelling", prepared: "Be prepared if you're travelling" }[kind]
+  const B = lead ? `${lead} from ${a.from} to ${a.to}: here's how the trains were looking at ${at}, from Trainchecker.` : null
+  return { A, B, title: `Trainchecker: ${a.from} to ${a.to}`, link: `trainchecker.baish.net/#${a.fromCrs}-${a.toCrs}` }
 }

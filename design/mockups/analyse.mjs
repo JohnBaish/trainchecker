@@ -78,18 +78,27 @@ export function analyse(snap) {
   // Last two hours (recommendation §2.3): arrivals, or departures if fewer than three arrived.
   const arrived = past.filter((s) => s.ata && s.sta && !s.cancelled)
   for (const s of arrived) s.arrLate = s.ata === 'On time' ? 0 : isTime(s.ata) ? diff(s.sta, s.ata) : null
-  const departed = past.filter((s) => !s.cancelled)
-  for (const s of departed) s.depLate = s.etd === 'On time' ? 0 : isTime(s.etd) ? diff(s.std, s.etd) : null
+  // Long journeys (O1, John): when fewer than three have arrived, the trains that left in
+  // the last two hours, each by its actual arrival or, if still on its way, its expected one.
   const byArrivals = arrived.length >= 3
-  const counted = byArrivals ? arrived.map((s) => [s, s.arrLate]) : departed.map((s) => [s, s.depLate])
+  let counted
+  if (byArrivals) counted = arrived.map((s) => [s, s.arrLate])
+  else {
+    counted = past.filter((s) => !s.cancelled && s.sta).map((s) => {
+      const t = s.ata || s.eta
+      return [s, t === 'On time' ? 0 : isTime(t) ? diff(s.sta, t) : null]
+    })
+  }
   const known = counted.filter(([, l]) => l !== null)
   const within3 = known.filter(([, l]) => l <= 3).length
-  const worst = known.reduce((w, x) => (!w || x[1] > w[1] ? x : w), null)
+  const lates = known.map(([, l]) => l).filter((l) => l > 3).sort((x, y) => x - y)
+  const usual = lates.length ? lates[Math.floor((lates.length - 1) / 2)] : null // the middle one
+  const worst = lates.length ? lates[lates.length - 1] : null
   const pastCancelled = past.filter((s) => s.cancelled)
-  // "Noticeably worse" (Claude's draft rule, for John to confirm): two or more cancelled, or
-  // fewer than three in four within 3 minutes, when the next four hours look better than that.
-  const worse = past.length > 0 && verdict !== 'prepared' && verdict !== 'none' &&
-    (pastCancelled.length >= 2 || (known.length >= 4 && within3 / known.length < 0.75))
+  // "Bad" (N5, N6, John): two or more cancelled, or fewer than three in four within three
+  // minutes. Said in the top section then, except when it already says "Be prepared".
+  const bad = (pastCancelled.length >= 2 || (known.length >= 4 && within3 / known.length < 0.75))
+  const worse = bad && verdict !== 'prepared' && verdict !== 'none'
 
   // Platforms (recommendation §2.4).
   const plats = {}
@@ -101,7 +110,7 @@ export function analyse(snap) {
     fromCrs: snap.from, toCrs: snap.to, taken: snap.taken,
     ahead, past, cancelled, late5, unknown, affected, allowance, verdict, badly,
     why: { twoOfThree, gap, noTrains },
-    last: { byArrivals, total: counted.length, known: known.length, within3, worst: worst && { std: worst[0].std, late: worst[1], operator: worst[0].operator }, cancelled: pastCancelled },
+    last: { byArrivals, known: known.length, within3, lates, usual, worst, cancelled: pastCancelled },
     worse, platList, platKnown: platList.reduce((a, [, n]) => a + n, 0),
     messages: (snap.messages || []).map((m) => m.Value || ''),
   }
@@ -113,7 +122,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     console.log(`\n## ${a.from} to ${a.to}, ${a.now}: ${a.verdict}${a.worse ? ' + however' : ''}`)
     console.log(`next 4h: ${a.ahead.length} trains, ${a.cancelled.length} cancelled, ${a.late5.length} >5 late, ${a.unknown.length} delayed no time; affected ${a.affected} (allowance ${a.allowance}); badly ${a.badly} ${JSON.stringify(a.why)}`)
     for (const s of [...a.cancelled, ...a.late5, ...a.unknown].sort((x, y) => x.rel - y.rel)) console.log(`  ${s.std} ${s.operator} → ${s.destination}: ${s.cancelled ? 'cancelled' : s.etd} ${s.reason || ''}`)
-    console.log(`last 2h (${a.last.byArrivals ? 'arrivals' : 'departures'}): ${a.last.within3} of ${a.last.known} within 3; worst ${JSON.stringify(a.last.worst)}; cancelled ${a.last.cancelled.length}`)
+    console.log(`last 2h (${a.last.byArrivals ? 'arrivals' : 'left'}): ${a.last.within3} of ${a.last.known} within 3; usual ${a.last.usual}, worst ${a.last.worst}; cancelled ${a.last.cancelled.length}`)
     console.log(`platforms: ${JSON.stringify(a.platList)} (${a.platKnown} of ${a.ahead.length - a.cancelled.length})`)
     for (const m of a.messages) console.log(`  msg: ${m.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ')}`)
   }

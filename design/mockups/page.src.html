@@ -158,6 +158,9 @@ details.advice > summary { cursor: pointer; color: var(--color-accent-700); font
 .spinner { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--color-accent-300); border-top-color: var(--color-accent); vertical-align: -2px; margin-right: 6px; }
 
 /* share, message of the day, about, footer */
+.mocknote { margin-top: var(--space-3); border: 1.5px dashed var(--color-divider); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); font-size: 14px; }
+.mocknote p { margin: 6px 0 0; }
+details.trains-fold { margin-top: var(--space-3); }
 .share-row { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margin-top: var(--space-6); }
 .motd { margin-top: var(--space-6); }
 .motd p { font-size: 16px; margin: 0; }
@@ -222,7 +225,7 @@ const touch = () => matchMedia('(pointer: coarse)').matches
 // State: journey, last-week state and theme, kept after "#" so pictures can be made.
 function readState() {
   const [j, h, t] = decodeURIComponent(location.hash.slice(1)).split(';')
-  return { j: DATA.journeys.some((x) => x.id === j) || j === 'first' ? j : DATA.journeys[0].id, h: h || 'choose', t: t || 'device' }
+  return { j: DATA.journeys.some((x) => x.id === j) || j === 'first' ? j : DATA.journeys[0].id, h: h || 'choose', t: t || 'device', open: /[?&]open/.test(location.search) }
 }
 let S = readState()
 // The choice is kept in the page; writing it into the address is a bonus that a private
@@ -272,7 +275,7 @@ function chooser(j, first) {
       <div class="from"><label for="from">From</label><input class="input" id="from" value="${from}" placeholder="A station" autocomplete="off"></div>
       <button class="btn btn-secondary swap" aria-label="Swap the stations" title="Swap the stations">${ICON.swap}</button>
       <div class="to"><label for="to">To</label><input class="input" id="to" value="${to}" placeholder="A station" autocomplete="off"></div>
-      <div class="go"><button class="btn btn-primary" style="width:100%">Show the trains</button></div>
+      <div class="go"><button class="btn btn-primary" style="width:100%">Show trains</button></div>
     </div>
     <div class="recent"><span class="small muted">Recent:</span>${DATA.recent.map((r) => `<button class="chip" data-go="${r.id}">${r.label}</button>`).join('')}</div>
   </section>`
@@ -280,15 +283,15 @@ function chooser(j, first) {
 
 function trainsTable(n) {
   if (!n.rows.length) return ''
-  if (narrow()) {
-    return `<p class="sub">${n.heading}</p>` + n.rows.map((r) => `<div class="trow t-${r.status}">
+  const list = narrow()
+    ? n.rows.map((r) => `<div class="trow t-${r.status}">
       <div class="top"><span class="time">${r.time} to ${r.dest}</span></div>
       <p class="what">${r.what}</p>
       <p class="muted">${r.operator}${r.reason ? `. ${r.reason}` : ''}</p></div>`).join('')
-  }
-  return `<p class="sub">${n.heading}</p><table class="trains"><thead><tr><th>Leaves</th><th>To</th><th>What's happening</th><th>Why (from National Rail)</th></tr></thead><tbody>
+    : `<table class="trains"><thead><tr><th>Leaves</th><th>To</th><th>What's happening</th><th>Why (from National Rail)</th></tr></thead><tbody>
     ${n.rows.map((r) => `<tr class="t-${r.status}"><td>${r.time}</td><td>${r.dest}<div class="small muted">${r.operator}</div></td><td class="what">${r.what}</td><td>${r.reason || '<span class="muted">No reason given yet</span>'}</td></tr>`).join('')}
   </tbody></table>`
+  return `<details class="advice trains-fold"${S.open ? ' open' : ''}><summary>${n.fold}</summary>${list}</details>`
 }
 
 function incident(i, open) {
@@ -319,11 +322,11 @@ function history(j) {
 
 function journeyPage(j) {
   const v = j.verdict
-  let out = `<section class="card strip"><div><div class="card-kicker">Your journey</div><h2>${j.from} to ${j.to}</h2></div>
+  let out = `<section class="card strip"><div><div class="card-kicker">Trains to check</div><h2>${j.from} to ${j.to}</h2></div>
     <div class="acts"><button class="btn btn-ghost" data-go="${j.swapId}">${ICON.swap} Swap</button><button class="btn btn-ghost" onclick="document.getElementById('chg').hidden=!document.getElementById('chg').hidden">Change</button></div></section>
     <div id="chg" hidden>${chooser(j)}</div>
     <div class="dateline"><p class="muted">${DATA.dateLine}, ${DATA.timeLabel}. Live from National Rail.</p><button class="btn btn-ghost">${ICON.refresh} Check again</button></div>
-    <section class="card verdict state-${v.kind}">${v.lines.map((l) => `<p>${l}</p>`).join('')}${v.kind === 'none' ? `<p><a href="https://www.nationalrail.co.uk/journey-planner/" target="_blank" rel="noopener">National Rail's journey planner</a></p>` : ''}</section>`
+    <section class="card verdict state-${v.kind}">${v.lines.map((l) => `<p>${l}</p>`).join('')}</section>`
   if (j.verdict.kind === 'none') return out + chooser(null) + tail(j)
   const now = (j.ahead.items || []).filter((i) => !i.planned)
   const later = (j.ahead.items || []).filter((i) => i.planned)
@@ -331,7 +334,7 @@ function journeyPage(j) {
     <section class="card sec"><h3>The next four hours</h3>${j.next.lines.map((l) => `<p class="lead">${l}</p>`).join('')}${trainsTable(j.next)}</section>
     <div class="stack">
       <section class="card sec"><h3>Platforms</h3><p>${j.platforms}</p></section>
-      <section class="card sec"><h3>The last two hours</h3><p>${j.lastTwo}</p></section>
+      ${j.lastTwoInTop ? '' : `<section class="card sec"><h3>The last two hours</h3><p>${j.lastTwo}</p></section>`}
     </div></div>`
   out += `<section class="card sec block"><h3>${now.length ? 'Disruption now, and the days ahead' : 'The days ahead'}</h3>
     ${now.map((i) => incident(i, false)).join('')}
@@ -344,7 +347,10 @@ function journeyPage(j) {
 }
 
 function tail(j) {
-  return `${j ? `<div class="share-row"><button class="btn btn-secondary">${ICON.share} ${touch() ? 'Share this journey' : 'Copy a link to this journey'}</button></div>` : ''}
+  return `${j ? `<div class="share-row"><button class="btn btn-secondary">${ICON.share} ${touch() ? 'Share this journey' : 'Copy a link to this journey'}</button></div>
+    <div class="mocknote"><b>Mock-up only: what Share sends</b> (two drafts for John)
+      <p><b>A:</b> “${j.share.A}”</p>${j.share.B ? `<p><b>B:</b> “${j.share.B}”</p>` : ''}
+      <p class="small">Then the link, sent separately: ${j.share.link}. Title: “${j.share.title}”.</p></div>` : ''}
   <section class="card motd"><div class="card-kicker">Message of the day</div><p class="placeholder">John's message for ${DATA.dateShort} goes here (one of 366, the same for everyone all day).</p></section>
   <section class="card about"><h3>About these figures</h3>${DATA.about.map((p) => `<p>${p}</p>`).join('')}</section>
   <footer class="footer-notice">${DATA.footer.map((p) => `<p>${p}</p>`).join('')}</footer>`

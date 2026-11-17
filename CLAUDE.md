@@ -45,6 +45,19 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: mock-ups rebuilt with John's answers (Claude Code)
+
+- Every answer so far built in (`design/mockups-2026-11-17.md`, first to third answers):
+  rounded shares (`share()` in `sentences.mjs`), minutes in words, the last two hours in the
+  top only when bad (usual amount and the latest), the next four hours with no times and a
+  summary with reasons, the train list folded, new platform wording, engineering work only
+  naming both stations, "TRAINS TO CHECK", "Show trains", the no-direct-train wording, two
+  Share drafts shown on the page, long journeys by expected arrival (not shown: no long
+  journey in tonight's snapshots, and the key here is the incidents one).
+- Favicon C chosen; link-preview options A and B in `design/preview-options/`.
+- Checked: 48-view sweep (1200px, 390px, 844×390 with touch, light and dark) clean; the
+  controls in a sandboxed frame clean. Republished (Version 3).
+
 ### November 17th 2026: John's second answers on the mock-ups (Claude Code)
 
 - N1 to N14 answered; recorded in `design/mockups-2026-11-17.md` ("John's second answers").

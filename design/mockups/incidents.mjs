@@ -1,8 +1,9 @@
 // Stage 2 mock-ups: National Rail's incidents (Knowledgebase Incidents feed) for a journey,
 // from now to the end of the coming Sunday. The matching is Claude's first draft, for the
 // mock-ups only; stage 4 tests it properly (the feed describes routes in words only).
-// Draft rule: an incident counts when its summary or its "routes affected" names both
-// stations, or its summary names one of them as "to / from / via".
+// Rule (O2, John: only what affects the starting and ending stops, not stations between):
+// an incident counts when its summary names both stations, or names one of them as
+// "to / from / via"; one amended train counts only in its own direction.
 import { readFileSync } from 'node:fs'
 import { gunzipSync } from 'node:zlib'
 import { dayName } from './sentences.mjs'
@@ -60,10 +61,8 @@ export function forJourney(all, a) {
     if (inc.planned && !ov.length) continue
     if (/^CLEARED/i.test(inc.summary)) continue
     const inSummary = names.every((n) => inc.summary.includes(n))
-    // One "between X and Y" in the routes, naming both stations.
-    const inRoute = inc.routes.split(/\bbetween /).slice(1).some((c) => names.every((n) => c.includes(n)))
     const tfv = names.some((n) => inc.summary.includes(`to / from / via ${n}`))
-    if (!inSummary && !inRoute && !tfv) continue
+    if (!inSummary && !tfv) continue
     // One train ("Amended 00:49 London Paddington to Reading service"): only in its direction.
     if (/^Amended \d\d:\d\d /.test(inc.summary) && inSummary && inc.summary.indexOf(a.from) > inc.summary.indexOf(a.to)) continue
     const [s, e] = ov[0] || [now, now]

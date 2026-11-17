@@ -5,7 +5,7 @@
 // private page (which adds its own). Usage: node build-mockups.mjs [<folder>]
 import { readFileSync, writeFileSync } from 'node:fs'
 import { analyse } from './analyse.mjs'
-import { verdict, nextFour, platforms, lastTwo, dayName, t12 } from './sentences.mjs'
+import { verdict, nextFour, platforms, lastTwoLines, shareWords, share, dayName, t12 } from './sentences.mjs'
 import { readIncidents, forJourney } from './incidents.mjs'
 
 const here = (f) => new URL(f, import.meta.url)
@@ -30,7 +30,7 @@ for (let h = 5; h < 24; h++) HOURS.push(`${t12(`${String(h).padStart(2, '0')}:00
 const HISTORY_RESULT = {
   'RDG-PAD': {
     hour: '5pm to 6pm',
-    text: 'On the five weekdays from Tuesday November 10th to Monday November 16th, 25 of the 56 trains that left Reading between 5pm and 6pm reached London Paddington within 3 minutes of the timetable.',
+    text: `On the five weekdays from Tuesday November 10th to Monday November 16th, ${share(25, 56).bare} of the 56 trains that left Reading between 5pm and 6pm reached London Paddington within three minutes of the timetable.`,
   },
 }
 
@@ -42,7 +42,9 @@ const journeys = JOURNEYS.map(([id, tab]) => {
   return {
     id, tab, from: a.from, to: a.to,
     swapId: JOURNEYS.some(([x]) => x === `${d}-${o}`) ? `${d}-${o}` : id,
-    verdict: verdict(a), next: nextFour(a), platforms: platforms(a), lastTwo: lastTwo(a),
+    verdict: verdict(a), next: nextFour(a), platforms: platforms(a),
+    lastTwo: a.verdict === 'none' ? null : lastTwoLines(a).join(' '), lastTwoInTop: a.worse,
+    share: shareWords(a, a.verdict, { time: t12(a.now), date: dayName(new Date(a.taken)).replace(/^\w+ /, '') }),
     ahead: a.verdict === 'none' ? { items: [] } : forJourney(incidents, a),
     history: a.verdict === 'none' ? null : {
       intro: "If you'd like to see the reliability history of trains making this journey over the last week, choose an hour of departure and the results should load in under a minute.",

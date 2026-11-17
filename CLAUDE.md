@@ -62,7 +62,7 @@ given its own branch). Before committing there, run
   (only after "It's a mixed bag", as Bath Spa to Bristol at 6.24pm; to confirm with John);
   `QuoteCard` shown by `JourneyView` (and by `Tail` only on the first visit); Share straight under
   the verdict. `SPEC.md` §10.
-- **Checked:** `npm run check` 159 + 50 (the leaving-on-time verdict now one line, its box shown);
+- **Checked:** `npm run check` 158 + 50 (the leaving-on-time verdict now one line, its box shown);
   `tsc -b`, lint, build; pictures from the saved answers (`design/previews/stage4/order-*`, 1200px
   and 390px, light and dark): no errors, no sideways scroll.
 

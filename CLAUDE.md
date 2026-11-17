@@ -45,6 +45,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: the last week's late trains, tested (Claude Code)
+
+- John's Q1: history key saved here (secure form). Several margins cost nothing extra;
+  cancelled trains miss every margin, so a 120-minute margin tells them apart; one cancelled
+  train missing from the history altogether; a busy whole hour timed out tonight
+  (`design/data-trial-2026-11-17.md` §9). `lastWeekOthers()` in `sentences.mjs`; the
+  mock-up's result now uses the real half-hour figures. Republished (Version 5).
+- Key saved here now: Historical Service Performance.
+
 ### November 17th 2026: share wording, long journey, John's fourth answers (Claude Code)
 
 - P1 to P4 answered (`design/mockups-2026-11-17.md`, fourth answers). Share: friendly opening,

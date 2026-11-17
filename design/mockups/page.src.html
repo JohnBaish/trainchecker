@@ -308,7 +308,7 @@ function history(j) {
   const h = j.history
   let body = ''
   if (S.h === 'loading') body = `<p class="hist-result"><span class="spinner"></span>Fetching ${h.kindPlural} between ${h.chosenLabel} over the last week from National Rail. This usually takes less than a minute.</p>`
-  if (S.h === 'result' && h.result) body = `<div class="hist-result"><p class="big">${h.result}</p>${h.note ? `<p class="small muted">${h.note}</p>` : ''}</div>`
+  if (S.h === 'result' && h.result) body = `<div class="hist-result"><p class="big">${h.result}</p>${h.mockNote ? `<p class="mocknote small">${h.mockNote}</p>` : ''}${h.note ? `<p class="small muted">${h.note}</p>` : ''}</div>`
   return `<section class="card sec block"><h3>The last week</h3>
     <p>${h.intro}</p>
     <div class="hist-row">

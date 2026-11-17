@@ -215,3 +215,25 @@ export function shareWords(a, when) {
   }
   return { text: lead + body + ' From Trainchecker.', title: `Trainchecker: ${a.from} to ${a.to}`, link: `trainchecker.baish.net/#${a.fromCrs}-${a.toCrs}` }
 }
+
+// The last week with several margins (Q1, John: what happened to the trains that weren't on
+// time). From the history service's counts within 3, 10, 30 and 120 minutes; a train that
+// misses even 120 minutes is taken as cancelled (checked on November 17th 2026: cancelled
+// trains miss every margin). Returns the sentence after the first.
+export function lastWeekOthers(n, w3, w10, w30, w120 = w30) {
+  const others = n - w3
+  if (!others) return ''
+  const groups = [
+    [w10 - w3, 'less than 10 minutes late'],
+    [w30 - w10, '10 to 30 minutes late'],
+    [w120 - w30, 'more than half an hour late'],
+    [n - w120, 'cancelled'],
+  ].filter(([k]) => k > 0)
+  if (groups.length === 1) return `The others were ${groups[0][1]}.`
+  const [first, ...rest] = groups
+  const sh = share(first[0], others).bare
+  const v = first[0] === 1 && others < 10 ? 'was' : 'were'
+  if (rest.length === 1) return `Of the others, ${sh} ${v} ${first[1]}, and the rest ${rest[0][1]}.`
+  const parts = [`${sh} ${v} ${first[1]}`, ...rest.map(([k, t]) => `${num(k)} ${k === 1 ? "was" : "were"} ${t}`)]
+  return `Of the others, ${parts.slice(0, -1).join(', ')} and ${parts.at(-1)}.`
+}

@@ -5,7 +5,7 @@
 // private page (which adds its own). Usage: node build-mockups.mjs [<folder>]
 import { readFileSync, writeFileSync } from 'node:fs'
 import { analyse } from './analyse.mjs'
-import { verdict, nextFour, platforms, lastTwoLines, shareWords, share, dayName, t12 } from './sentences.mjs'
+import { verdict, nextFour, platforms, lastTwoLines, shareWords, share, lastWeekOthers, dayName, t12 } from './sentences.mjs'
 import { readIncidents, forJourney } from './incidents.mjs'
 
 const here = (f) => new URL(f, import.meta.url)
@@ -26,13 +26,15 @@ const JOURNEYS = [
 const HOURS = []
 for (let h = 5; h < 24; h++) HOURS.push(`${t12(`${String(h).padStart(2, '0')}:00`)} to ${t12(`${String((h + 1) % 24).padStart(2, '0')}:00`)}`)
 
-// The one real last-week figure: Reading to London Paddington, trains leaving 5pm to 6pm on
-// the five weekdays November 10th to 16th 2026: 25 of 56 within 3 minutes (history service,
-// stage 1, design/data-trial-2026-11-17.md §6.4).
+// The real last-week figures: Reading to London Paddington, trains leaving 5pm to 5.30pm on
+// the five weekdays November 10th to 16th 2026, asked at 8.23pm on November 17th with margins
+// of 3, 10 and 30 minutes: 26 trains; 8, 21 and 26 within them
+// (snapshots/20261117-hsp-RDG-PAD-1700-1730.json). The whole hour timed out that evening.
 const HISTORY_RESULT = {
   'RDG-PAD': {
     hour: '5pm to 6pm',
-    text: `On the five weekdays from Tuesday November 10th to Monday November 16th, ${share(25, 56).bare} of the 56 trains that left Reading between 5pm and 6pm reached London Paddington within three minutes of the timetable.`,
+    text: `On the five weekdays from Tuesday November 10th to Monday November 16th, ${share(8, 26).bare} of the 26 trains that left Reading between 5pm and 5.30pm reached London Paddington within three minutes of the timetable. ${lastWeekOthers(26, 8, 21, 26)}`,
+    mockNote: 'Mock-up: the whole hour timed out this evening, so these are the real figures for its first half hour.',
   },
 }
 
@@ -53,7 +55,7 @@ const journeys = JOURNEYS.map(([id, tab]) => {
       intro: "If you'd like to see the reliability history of trains making this journey over the last week, choose an hour of departure and the results should load in under a minute.",
       hours: HOURS, chosenLabel: res ? res.hour : '6pm to 7pm', kindPlural: 'weekday trains',
       kindLine: 'Today is a weekday, so this looks at the weekdays of the last week (Saturdays and Sundays have their own timetables).',
-      result: res ? res.text : null,
+      result: res ? res.text : null, mockNote: res ? res.mockNote : null,
       note: elizabeth ? "Some Elizabeth line trains may be missing from these figures: National Rail's history often leaves them out when Paddington or Bond Street is one end of the journey." : null,
     },
   }

@@ -161,3 +161,27 @@ service. They can, for about the last two hours.
    `serviceDetails` request per train run. Each train run's ID does start
    with its date (e.g. `20261116…`), but the on-time counts aren't given
    per run.
+
+## 9. History: several margins, and cancellations (tested 8.20 to 8.35pm, November 17th)
+
+For John's question: can the last week say what happened to the trains that weren't on time?
+
+1. **No minutes in the totals.** `serviceMetrics` only counts trains within each margin
+   ("tolerance") asked for. But it takes several margins in one request, at no measurable
+   cost: Reading to Paddington, 5pm to 5.30pm, weekdays November 10th to 16th, took 20.5
+   and 26.7 seconds with one margin and 20.0 and 30.6 seconds with three (3, 10, 30).
+2. **The answer:** 26 trains; 8 within 3 minutes, 21 within 10, all 26 within 30
+   (`design/mockups/snapshots/20261117-hsp-RDG-PAD-1700-1730.json`).
+3. **The whole hour (5pm to 6pm) timed out** at 55 seconds tonight, though it took 37 to 44
+   seconds earlier today. A busy line's hour may need two half-hour requests, one after
+   the other (about 40 to 60 seconds), or it may sometimes fail: to plan for in stage 3.
+4. **Cancelled trains count as missing every margin.** Manchester Piccadilly to Manchester
+   Airport, 6.40pm to 7.10pm tonight (9 to 23 seconds): the 6.47pm and 7pm Northern and the
+   6.51pm TransPennine miss even a 120-minute margin; `serviceDetails` (0.6 seconds each)
+   confirms they have no actual times and a cancellation reason (code 832). So a 120-minute
+   margin separates cancelled trains from late ones. The 6.55pm Transport for Wales,
+   cancelled on the live board, isn't in the history at all (it may have ended at
+   Piccadilly), so some cancellations can go uncounted.
+5. **Per-train details are quick** (0.6 seconds), unlike the totals. A true average would need
+   one per late train, one after the other: perhaps 10 to 20 seconds more on a busy line.
+   Not needed for the agreed wording.

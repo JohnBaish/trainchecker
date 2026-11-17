@@ -162,9 +162,17 @@ details.advice > summary { cursor: pointer; color: var(--color-accent-700); font
 .mocknote p { margin: 6px 0 0; }
 details.trains-fold { margin-top: var(--space-3); }
 .share-row { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margin-top: var(--space-6); }
-.motd { margin-top: var(--space-6); }
-.motd p { font-size: 16px; margin: 0; }
-.placeholder { border: 1.5px dashed var(--color-divider); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); color: var(--color-neutral-700); font-style: italic; }
+/* quote of the day (option C, revised) */
+.qc2 { display: grid; grid-template-columns: 56px 1fr 56px; gap: 6px; margin-top: var(--space-6); background: var(--color-accent-100); border-radius: calc(var(--radius-lg) * 1.15); padding: 22px 14px 14px 18px; box-shadow: inset 6px 0 0 var(--color-accent); }
+.qmark { font-family: var(--font-heading); font-size: 76px; line-height: 0.9; color: var(--color-accent); text-align: center; }
+.qc2 .qt { font-size: 18px; margin: 6px 0; }
+.qc2 .qby { font-size: 13px; color: var(--color-neutral-700); margin: 0 0 8px; }
+.qend { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+.qend .qmark { line-height: 0.55; margin-bottom: 2px; }
+.qs2 { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: 44px; min-height: 44px; padding: 0; border: 0; background: none; color: var(--color-neutral-700); font: 600 10px var(--font-body); letter-spacing: 0.04em; cursor: pointer; }
+.qs2 svg { width: 14px; height: 14px; }
+.qs2:hover { color: var(--color-accent-700); }
+@media (max-width: 720px) { .qc2 { grid-template-columns: 30px 1fr 44px; padding: 17px 8px 10px 12px; } .qc2 .qt { font-size: 16px; } .qmark { font-size: 52px; } }
 .about { margin-top: var(--space-6); }
 .about h3 { font-size: 20px; margin: 0 0 var(--space-2); }
 .about p { font-size: 14px; margin: 0 0 var(--space-2); }
@@ -346,12 +354,20 @@ function journeyPage(j) {
   return out + tail(j)
 }
 
+// Quote of the day (John: option C, with a closing mark and a small Share beneath it). Verse
+// lines, written " / " in quotes.ts, shown on separate lines.
+function quoteCard(q) {
+  const esc = (x) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  return `<section class="qc2"><div class="qmark">“</div><div><div class="card-kicker">Quote of the day</div><p class="qt">${esc(q.text).split(' / ').join('<br>')}</p><p class="qby">— ${esc(q.author)}, ${esc(q.source)}</p></div>
+    <div class="qend"><div class="qmark">”</div><button class="qs2" aria-label="Share this quote" title="Share this quote">${ICON.share}<span>Share</span></button></div></section>`
+}
+
 function tail(j) {
   return `${j ? `<div class="share-row"><button class="btn btn-secondary">${ICON.share} ${touch() ? 'Share this journey' : 'Copy a link to this journey'}</button></div>
     <div class="mocknote"><b>Mock-up only: what Share sends</b>
       <p>“${j.share.text}”</p>
       <p class="small">Then the link, sent separately: ${j.share.link}. Title: “${j.share.title}”.</p></div>` : ''}
-  <section class="card motd"><div class="card-kicker">Message of the day</div><p class="placeholder">John's message for ${DATA.dateShort} goes here (one of 366, the same for everyone all day).</p></section>
+  ${quoteCard(DATA.quote)}
   <section class="card about"><h3>About these figures</h3>${DATA.about.map((p) => `<p>${p}</p>`).join('')}</section>
   <footer class="footer-notice">${DATA.footer.map((p) => `<p>${p}</p>`).join('')}</footer>`
 }

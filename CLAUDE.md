@@ -45,6 +45,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: quote option C revised and built in; margins agreed (Claude Code)
+
+- John: history margins 3, 10, 30 and 120 minutes agreed; quote option C with a matching
+  closing mark and a small Share beneath it; verse on separate lines; a Share picture of the
+  quote in stage 3 (`design/mockups-2026-11-17.md`, fifth answers).
+- `build-mockups.mjs` now reads `src/data/quotes.ts` (run with
+  `node --experimental-strip-types`). About: minutes in words. 54 views clean; controls in a
+  sandboxed frame clean. Republished (Version 6).
+
 ### November 17th 2026: quote of the day (Claude Code)
 
 - John: the sign-off is "QUOTE OF THE DAY", from his `quotes.ts` (written in a Claude chat),

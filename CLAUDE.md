@@ -54,6 +54,23 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: the days ahead: matching tested on the real feed (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- Knowledgebase Incidents key saved here (secure form); feed fetched at 10.23pm (937 incidents,
+  104 live to the end of Sunday), saved as `design/mockups/snapshots/20261117-2223-incidents.xml.gz`.
+- **Found:** one date range per incident (night-only and weekend work has the whole span; the
+  summary says which nights); cleared disruption is flagged (`ClearedIncident`), and called-off
+  work begins "CANCELLED:"; the feed's names differ from the station list ("Swindon", "Gillingham
+  (Kent)", "Kings Lynn"); six live incidents name no station.
+- `src/lib/incidents.ts`: reading the feed, station names in the feed's words (longest name wins,
+  no guessing between two Newports), John's rule plus "to / from", "at / through / in the … area"
+  and "via" (new, for John), the end of Sunday in GMT and BST. `scripts/try-incidents.ts` makes the
+  report `design/incidents-trial-2026-11-17.md` (56 journeys, what counts and what's left out).
+- **Checked:** `npm run check` now 158 + 50 + 21 (`scripts/check-days.ts`: the end of Sunday in
+  winter, summer and both clock-change weeks; names; the saved feed's matches); breaking the BST
+  sum made three fail. `tsc -b`, lint.
+- Key saved here now: Knowledgebase Incidents.
+
 ### November 17th 2026: stage 4 begun: the page's order, "leaving on time", Share moved up (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **John:** the quote of the day before "The last two hours" (computer and iPhone); after "Good

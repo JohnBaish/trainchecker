@@ -60,6 +60,9 @@ given its own branch). Before committing there, run
   written. Checks, `tsc -b`, lint and build clean first; `claude/epic-wright-wlwhvp`
   fast-forwarded into `main`, so `main` now builds on Vercel (automatic deployments on again)
   and trainchecker-alpha.vercel.app shows the page.
+- Branch tidied: "Delete merged branches" trial run 44183221021 (one merged branch, nothing
+  unmerged), then the real run 44183310110; `git ls-remote --heads origin` shows only `main`.
+  Key saved here: Knowledgebase Stations.
 
 ### November 17th 2026: every stage 3 draft agreed (Claude Code)
 

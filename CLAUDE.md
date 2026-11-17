@@ -40,6 +40,13 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: four hours, not five (Claude Code)
+
+- John chose option a: the page covers the next four hours, all from the
+  live board. Wherever the spec or notes say "five hours", read four.
+  Vercel variable names agreed: `RDM_LDB_KEY`, `RDM_HSP_KEY`,
+  `RDM_KB_KEY`, `RDM_DISRUPTIONS_KEY` (all type Secret).
+
 ### November 17th 2026: first live data (Claude Code)
 
 - Live Departure Board key saved on John's Default environment (sent only

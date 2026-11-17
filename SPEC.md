@@ -30,7 +30,8 @@ open questions are numbered at the end.
    "Good news: trains from Reading to Paddington are running normally
    this afternoon. However, it's worth knowing that this time of day has
    been unreliable most days this week."
-2. **The next five hours.** A summary in words of the departures from A
+2. **The next four hours** (four, not five: the live board reaches only
+   about four hours ahead; John, November 17th 2026, option a). A summary in words of the departures from A
    that reach B in that time, for example (illustration only): "There are
    18 trains in the next five hours. 16 are on time, one is expected 12
    minutes late, and the 15.42 is cancelled." Then details for every

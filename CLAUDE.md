@@ -45,6 +45,13 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: John's first answers on the mock-ups (Claude Code)
+
+- Recorded in `design/mockups-2026-11-17.md` ("John's first answers"): new wording for
+  "good news" when the last two hours were worse (leaving on time, arrivals in rounded
+  fractions, "three minutes" in words), rounding, no times in "The next four hours" and a
+  summary of late trains and reasons, platforms wording, the last two hours not repeated,
+  "TRAINS TO CHECK", "Show trains". New questions N1 to N16 sent; nothing rebuilt yet.
 ### November 17th 2026: mock-up switcher fixed (Claude Code)
 
 - John: the bar's menus didn't change the view on the private page. Cause: the page wrote

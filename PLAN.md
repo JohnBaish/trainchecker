@@ -23,17 +23,19 @@ John's jobs first:
 3. Allow the data hosts in this environment's network settings, so
    Claude can test from here.
 
-Claude then, with a real journey or two (one direct, one with a change):
+Claude then, with real journeys (Reading to Paddington, and an
+Elizabeth line journey through central London):
 
 1. Fetches the next five hours, platforms and reasons for delays.
 2. Fetches a week of history, and times it (is it quick enough for a
    visitor to wait for?).
 3. Fetches incidents and checks whether planned engineering work is in
    them, and how far ahead.
-4. Tries both ways of finding a change (spec §4, item 4) on a real
-   journey.
-5. Reads each licence and its credit line.
-6. Writes up the findings in `design/data-trial-<date>.md`, with what
+4. Checks the Elizabeth line is covered, including central London.
+5. Checks the "badly disrupted" and "last week" rules against real days,
+   and suggests thresholds.
+6. Reads each licence and its credit line.
+7. Writes up the findings in `design/data-trial-<date>.md`, with what
    works, what doesn't, and a recommendation.
 
 ## Stage 2: mock-ups (branch `stage-2-mockups`)
@@ -51,16 +53,19 @@ analytics. An `npm run check` for the verdict rules and sentences.
 
 ## Stage 4: the days ahead (branch `stage-4-ahead`)
 
-Engineering work and known problems, and their effect on the verdict.
+Engineering work and known problems to the end of the coming weekend,
+their effect on the verdict, and National Rail's advice when a journey is
+badly disrupted.
 
-## Stage 5: changes and alternatives (branch `stage-5-routes`)
-
-Working out a change when there's no direct train, and an alternative
-route when a journey is badly disrupted.
-
-## Stage 6: launch (branch `stage-6-launch`)
+## Stage 5: launch (branch `stage-5-launch`)
 
 Favicon and link-preview picture (options shown first), search (the
 `SEO-HANDOVER.md` checklist), a fresh look, the domain
 `trainchecker.baish.net` (John), Search Console (John), and the card on
 baish.net.
+
+## Later, not planned
+
+1. Journeys with a change, and alternative routes worked out by
+   Trainchecker with a journey time (needs a journey planner).
+2. The London Underground.

@@ -36,6 +36,27 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: John's answers to the 14 questions (Claude Code)
+
+- Recorded beside each question in `SPEC.md` §7. In short: Elizabeth
+  line in, Underground perhaps later; a small server is fine as there's
+  no alternative; the last week modifies the verdict ("However, it's
+  worth knowing…"); "on time" is within 3 minutes; the last week uses the
+  same five hours of each day and must tell one bad day from consistently
+  poor; platforms from the live board only; engineering work to the end
+  of the coming weekend; no changes in the first version; remember, swap
+  and "#" address yes; credits as the terms require; a Share button yes.
+- `PLAN.md`: changes and worked-out routes moved to "Later"; stage 1 now
+  checks the Elizabeth line and tunes the rules on real days; five stages.
+- Name searched: a freight-inspection iPhone app called "TrainChecker"
+  and a passenger app "RailChecker" exist; nothing for passengers called
+  Trainchecker.
+- Proposals for John to confirm: the "last week" rule, the "badly
+  disrupted" rule, and National Rail's own advice standing in for
+  alternative routes.
+- Removed the session's local copy of the old `trainchecker-` clone (it
+  was never pushed to).
+
 ### November 17th 2026: set-up (Claude Code)
 
 - John created the repo, first as `trainchecker-`, then renamed it

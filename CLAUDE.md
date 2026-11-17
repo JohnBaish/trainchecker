@@ -29,6 +29,9 @@ given its own branch). Before committing there, run
   Vercel's settings as "Secret" variables (house style §9). The Rail
   Data Marketplace's key goes in an `x-apikey` header; its "consumer
   secret" isn't used.
+- `vercel.json` turns off automatic deployments (`git.deploymentEnabled:
+  false`) while there's no app, so pushing notes doesn't send John
+  failed-build emails. Remove it, or set it per branch, in stage 3.
 - Functions run in London (`lhr1`): the incidents licence allows UK use
   only.
 - Every figure on the page comes from real data. Examples in documents
@@ -39,6 +42,13 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 17th 2026: no more failed-build emails (Claude Code)
+
+- John was getting a "production deployment failed" email for every push:
+  Vercel tried to build an app that doesn't exist yet. Added `vercel.json`
+  with `"git": {"deploymentEnabled": false}` (Vercel's documented way to
+  turn off all automatic deployments). Nothing visible changes.
 
 ### November 17th 2026: the last two hours from the live board (Claude Code)
 

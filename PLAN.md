@@ -15,8 +15,9 @@ Before any design, prove the data gives what the spec needs.
 John's jobs first:
 
 1. Register on the Rail Data Marketplace and subscribe to the Live
-   Departure Board, Historical Service Performance and Knowledgebase
-   Incidents.
+   Departure Board, Historical Service Performance, Knowledgebase
+   Incidents and the NationalRail Disruptions API. HSP may need
+   approving by hand, so subscribe to it first.
 2. Create the Vercel project for this repo, and save each key as a Vercel
    setting (never pasted into a chat).
 3. Allow the data hosts in this environment's network settings, so

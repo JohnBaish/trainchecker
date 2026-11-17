@@ -36,6 +36,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: data research without keys (Claude Code)
+
+- Read the Rail Data Marketplace's public pages for the four products;
+  findings in `design/data-research-2026-11-17.md`. Knowledgebase
+  Incidents includes planned engineering work; HSP has the lowest uptime
+  (89.86%) and may need approving by hand; the NationalRail Disruptions
+  API added as a candidate. Licences, addresses and the Elizabeth line
+  still to check. The Open Rail Data wiki is behind a bot check that
+  blocks this session; `vercel.com` and `www.nationalrail.co.uk` didn't
+  resolve yet. John created the Vercel project.
+
 ### November 17th 2026: waiting for the Rail Data Marketplace (Claude Code)
 
 - John applied to join the Rail Data Marketplace at 3.30pm. Its email

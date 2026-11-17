@@ -80,9 +80,10 @@ yet: that's stage 1 of `PLAN.md`.
    web page directly (no CORS). Forum posts from March 2026 mention a limit
    of one request per second and timeouts. Untested.
 3. **Engineering work and known problems:** National Rail's Knowledgebase
-   "Incidents" feed, listed as free on RDM. Not yet checked whether it
-   includes planned engineering work as well as live disruption, or how
-   far ahead.
+   "Incidents" feed, listed as free on RDM. Its page says it covers
+   planned engineering work as well as unplanned disruption (checked
+   November 17th); how far ahead isn't stated. RDM's newer "NationalRail
+   Disruptions API" may do the same job (`design/data-research-2026-11-17.md`).
 4. **Changes and alternative routes (later, not the first version):** no ready-made free journey planner
    was found. Options, to test in stage 1: (a) the full timetable (RDG's
    timetable files, free from the National Rail Data Portal), with

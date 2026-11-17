@@ -40,6 +40,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: all four products tested (Claude Code)
+
+- Results in `design/data-trial-2026-11-17.md`. HSP works at
+  `…_hsp_1_1/serviceMetrics` but takes 37 to 44 seconds for one hour of
+  one day on a busy route, so the last week can't be fetched while a
+  visitor waits (question for John). HSP has the Elizabeth line (XR),
+  though not under Paddington's usual code. Incidents feed: one 2.8 MB
+  file, 896 planned works, weeks ahead, routes in words only. Disruptions
+  API: quick, by station, live problems only. The key saved here is now
+  the Disruptions API's (one key per address, swapped for each test).
+
 ### November 17th 2026: fourth subscription (Claude Code)
 
 - NationalRail Disruptions API approved; all four keys are in Vercel

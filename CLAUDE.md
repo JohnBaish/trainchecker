@@ -45,6 +45,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: quote of the day (Claude Code)
+
+- John: the sign-off is "QUOTE OF THE DAY", from his `quotes.ts` (written in a Claude chat),
+  added unchanged as `src/data/quotes.ts` (byte-for-byte the same as the upload). Checked:
+  366 quotes, no duplicates, never the same author two days running, `quoteOfTheDay()`
+  changes at midnight UK time (November 17th: E. W. Hornung; 18th: Benjamin Franklin).
+- Options A (a card), B (a centred sign-off in Caprasimo) and C (a tinted band with a large
+  quotation mark and a Share button) in `design/quote-options/` (`build.mts`), computer and
+  phone, light and dark, with today's quote, the longest and a verse. Verse lines (" / " in
+  the file, 35 quotes) shown on separate lines: display only, for John to confirm.
+
 ### November 17th 2026: the last week's late trains, tested (Claude Code)
 
 - John's Q1: history key saved here (secure form). Several margins cost nothing extra;

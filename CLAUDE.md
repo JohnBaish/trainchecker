@@ -43,6 +43,14 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: last two hours on the page; last week on request (Claude Code)
+
+- John: build it with "the last two hours" from the live board (option
+  d), instead of the last week. The last week moves lower down, behind a
+  "Show history" button with a warning that it takes about a minute. 40
+  seconds with a warning is reasonable, much more isn't, so what it shows
+  is tailored to what can be fetched in that time. `SPEC.md` §3 updated.
+
 ### November 17th 2026: no more failed-build emails (Claude Code)
 
 - John was getting a "production deployment failed" email for every push:

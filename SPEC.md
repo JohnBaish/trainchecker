@@ -42,12 +42,17 @@ open questions are numbered at the end.
    leaving from platform 9; two are from platform 11." Platforms are often
    only announced shortly before a train leaves, so this says so when they
    aren't known yet.
-4. **The last week.** How reliable the same journey has been over the last
-   seven days, in the same four hours of the day as the visitor's
-   enquiry (answer 6), in words, and whether it was one bad day or
-   consistently poor (§7, question 6), for example (illustration only): "Over the last
-   week, 104 of 120 trains arrived within 3 minutes of time. Six were
-   cancelled. Thursday was the worst day."
+4. **The last two hours** (John, November 17th 2026, replacing "the last
+   week" in the main page): how the same journey's trains have actually
+   run in the last two hours, from the live board, with no waiting, for
+   example (illustration only): "In the last two hours, 15 of 23 trains
+   reached Paddington within 3 minutes. The worst was 23 minutes late."
+4a. **The last week, on request**, lower down: a prompt such as "Want to
+   know how reliable this journey has been over the last week?" with a
+   "Show history" button and a warning that it takes about a minute
+   (wording to agree). What it shows is tailored to what can be fetched
+   in about 40 seconds to a minute; much longer would be too long (John).
+   Details to work out from tests: `design/data-trial-2026-11-17.md`.
 5. **The days ahead.** Any planned engineering work or other known
    problems affecting the journey from now to the end of the coming
    weekend (answer 8), in words, with

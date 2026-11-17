@@ -51,6 +51,9 @@ given its own branch). Before committing there, run
   the mock-ups (it overrides §3); `PLAN.md` updated; handover for stage 3 in
   `design/handover-stage-3-2026-11-17.md`. The stage 2 branch merged into `main` (notes and
   mock-ups only, house style §10).
+- Branch tidied: "Delete merged branches" trial run 44171696731 (one merged branch, nothing
+  unmerged), then the real run; `git ls-remote --heads origin` shows only `main`. Tracker
+  updated (stage 3 next). Key saved here: Historical Service Performance.
 
 ### November 17th 2026: quote option C revised and built in; margins agreed (Claude Code)
 

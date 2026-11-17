@@ -45,6 +45,13 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: mock-up switcher fixed (Claude Code)
+
+- John: the bar's menus didn't change the view on the private page. Cause: the page wrote
+  its choice into the address first, which the private page's frame refuses, so it never
+  redrew. Now the choice is kept in the page (the address only if allowed), and Swap,
+  Recent and the brand are buttons. Tested in a sandboxed frame: every control works, no
+  errors; the old version failed the same test. 48-view sweep clean. Republished.
 ### November 17th 2026: stage 2 mock-ups, for John (Claude Code)
 
 - Branch `claude/trainchecker-stage-2-mockups-4v7pih` (the session's assigned branch, in

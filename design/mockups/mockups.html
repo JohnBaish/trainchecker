@@ -103,7 +103,7 @@ a { color: var(--color-accent-700); text-underline-offset: 3px; }
 .pick label { display: block; font-size: 12px; margin-bottom: 5px; color: var(--color-neutral-700); font-weight: 600; }
 .swap { width: 44px; height: 44px; padding: 0; border-color: var(--color-divider); }
 .recent { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; margin-top: var(--space-2); }
-.chip { display: inline-flex; align-items: center; min-height: 36px; padding: 6px 14px; border-radius: 999px; background: var(--color-bg); border: 1px solid var(--color-divider); font-size: 13.5px; color: var(--color-text); text-decoration: none; }
+.chip { cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; min-height: 36px; padding: 6px 14px; border-radius: 999px; background: var(--color-bg); border: 1px solid var(--color-divider); font-size: 13.5px; color: var(--color-text); text-decoration: none; }
 .intro { margin: var(--space-6) 0 0; max-width: 760px; }
 
 /* the verdict */
@@ -205,7 +205,7 @@ details.advice > summary { cursor: pointer; color: var(--color-accent-700); font
 
 <div class="mockbar" id="mockbar"></div>
 <nav class="nav">
-  <a class="nav-brand" href="#">Trainchecker</a>
+  <a class="nav-brand" href="#" data-go="first">Trainchecker</a>
   <button class="theme-switch" id="themeSwitch" role="switch" aria-checked="false" aria-label="Dark mode">
     <span class="theme-switch-label">Dark</span>
     <span class="theme-switch-track"><span class="theme-switch-knob" id="knob"></span></span>
@@ -232,7 +232,21 @@ function readState() {
   return { j: DATA.journeys.some((x) => x.id === j) || j === 'first' ? j : DATA.journeys[0].id, h: h || 'choose', t: t || 'device' }
 }
 let S = readState()
-function setState(p) { S = { ...S, ...p }; history.replaceState(null, '', '#' + [S.j, S.h, S.t].join(';')); render() }
+// The choice is kept in the page; writing it into the address is a bonus that a private
+// page's frame may refuse, so a refusal is ignored.
+function setState(p) {
+  S = { ...S, ...p }
+  try { history.replaceState(null, '', '#' + [S.j, S.h, S.t].join(';')) } catch (e) { /* not allowed here */ }
+  render()
+  try { window.scrollTo(0, 0) } catch (e) { /* ignore */ }
+}
+// Swap, Recent and the brand go to another view without following a link.
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('[data-go]')
+  if (!a) return
+  e.preventDefault()
+  setState({ j: a.dataset.go, h: 'choose' })
+})
 addEventListener('hashchange', () => { S = readState(); render() })
 addEventListener('resize', () => render())
 
@@ -267,7 +281,7 @@ function chooser(j, first) {
       <div class="to"><label for="to">To</label><input class="input" id="to" value="${to}" placeholder="A station" autocomplete="off"></div>
       <div class="go"><button class="btn btn-primary" style="width:100%">Show the trains</button></div>
     </div>
-    <div class="recent"><span class="small muted">Recent:</span>${DATA.recent.map((r) => `<a class="chip" href="#${r.id};choose;${S.t}">${r.label}</a>`).join('')}</div>
+    <div class="recent"><span class="small muted">Recent:</span>${DATA.recent.map((r) => `<button class="chip" data-go="${r.id}">${r.label}</button>`).join('')}</div>
   </section>`
 }
 
@@ -313,7 +327,7 @@ function history(j) {
 function journeyPage(j) {
   const v = j.verdict
   let out = `<section class="card strip"><div><div class="card-kicker">Your journey</div><h2>${j.from} to ${j.to}</h2></div>
-    <div class="acts"><a class="btn btn-ghost" href="#${j.swapId};choose;${S.t}">${ICON.swap} Swap</a><button class="btn btn-ghost" onclick="document.getElementById('chg').hidden=!document.getElementById('chg').hidden">Change</button></div></section>
+    <div class="acts"><button class="btn btn-ghost" data-go="${j.swapId}">${ICON.swap} Swap</button><button class="btn btn-ghost" onclick="document.getElementById('chg').hidden=!document.getElementById('chg').hidden">Change</button></div></section>
     <div id="chg" hidden>${chooser(j)}</div>
     <div class="dateline"><p class="muted">${DATA.dateLine}, ${DATA.timeLabel}. Live from National Rail.</p><button class="btn btn-ghost">${ICON.refresh} Check again</button></div>
     <section class="card verdict state-${v.kind}">${v.lines.map((l) => `<p>${l}</p>`).join('')}${v.kind === 'none' ? `<p><a href="https://www.nationalrail.co.uk/journey-planner/" target="_blank" rel="noopener">National Rail's journey planner</a></p>` : ''}</section>`

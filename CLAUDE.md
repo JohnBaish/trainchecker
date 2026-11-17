@@ -36,6 +36,14 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: name and rules confirmed; stage 1 agreed (Claude Code)
+
+- John kept the name, agreed the "last week" and "badly disrupted" rules
+  and National Rail's advice for alternatives, and agreed stage 1. He is
+  registering on the Rail Data Marketplace and creating the Vercel
+  project. Keys go in Vercel's settings and, for testing here, the
+  environment's secure credential form; never in a chat or a file.
+
 ### November 17th 2026: John's answers to the 14 questions (Claude Code)
 
 - Recorded beside each question in `SPEC.md` §7. In short: Elizabeth

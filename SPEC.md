@@ -130,11 +130,12 @@ Answers from John, November 17th 2026, unless marked.
 1. **Name:** searched (November 17th 2026). There's an iPhone app called
    "TrainChecker" for rail freight inspectors (pre-departure wagon
    checks), and a passenger app called "RailChecker". Nothing found called
-   Trainchecker for passengers. *Still to answer: keep the name?*
+   Trainchecker for passengers. Keep the name (John).
 2. **Area:** Great Britain's National Rail, and the Elizabeth line for
    sure, if doable. The Underground perhaps later. *Elizabeth line:
    individual central-London services appear on a site built on rail data
-   (RailChecker), so it looks likely, but it's unconfirmed until stage 1.*
+   (RailChecker), so it looks likely, but it's unconfirmed until stage 1
+   (John: OK).*
 3. **A server:** yes, if there's no alternative. There isn't one, even for
    Reading to Paddington only: National Rail's live data needs a key that
    mustn't be in a web page, and its history service refuses requests
@@ -146,9 +147,9 @@ Answers from John, November 17th 2026, unless marked.
 5. **"On time":** within 3 minutes, said in words.
 6. **The last week:** no asking when the visitor travels. Every train on
    the journey in the five hours after the enquiry, on each of the last
-   seven days (Claude's reading, *for John to confirm*). It must tell one
-   bad day from consistently poor running. *Proposal, for John to
-   confirm, with the thresholds tuned on real data in stage 1:*
+   seven days (confirmed). It must tell one bad day from consistently
+   poor running. Agreed (John), with the thresholds tuned on real data
+   in stage 1:
    - a day is "poor" if fewer than four in five of its trains were within
      3 minutes, or two or more were cancelled;
    - no poor days: reliable;
@@ -160,16 +161,15 @@ Answers from John, November 17th 2026, unless marked.
 9. **"Badly disrupted":** not a single cancellation. Two of the next three
    trains cancelled, a delay of 45 minutes or more, or the line closed
    counts, but one very late train doesn't count when others run often.
-   *Proposal, for John to confirm:* badly disrupted when any of these is
-   true:
+   Agreed (John): badly disrupted when any of these is true:
    - two of the next three trains to B are cancelled;
    - someone arriving at the station now would reach B 45 minutes or more
      later than the timetable says (so one late train among frequent
      on-time ones doesn't count, as in the Hereford example);
    - no trains are running, or National Rail says the line is closed.
-10. **Alternatives:** trains and replacement buses, if possible. *In the
-    first version this means National Rail's own advice (question 11).
-    For John to confirm.*
+10. **Alternatives:** trains and replacement buses, if possible. In the
+    first version this means National Rail's own advice (question 11);
+    agreed (John: "I think so").
 11. **Changes:** not in the first version. Direct trains only.
 12. **Remembering:** yes to all: recent journeys kept in the browser, a
     swap-direction button, and the journey in the address after a "#".

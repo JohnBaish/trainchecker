@@ -83,7 +83,7 @@ yet: that's stage 1 of `PLAN.md`.
    "Incidents" feed, listed as free on RDM. Not yet checked whether it
    includes planned engineering work as well as live disruption, or how
    far ahead.
-4. **Changes and alternative routes:** no ready-made free journey planner
+4. **Changes and alternative routes (later, not the first version):** no ready-made free journey planner
    was found. Options, to test in stage 1: (a) the full timetable (RDG's
    timetable files, free from the National Rail Data Portal), with
    Trainchecker working out routes itself; (b) the live boards' calling

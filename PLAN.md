@@ -16,8 +16,7 @@ John's jobs first:
 
 1. Register on the Rail Data Marketplace and subscribe to the Live
    Departure Board, Historical Service Performance and Knowledgebase
-   Incidents. Register on the National Rail Data Portal for the timetable
-   files, if the timetable route is chosen.
+   Incidents.
 2. Create the Vercel project for this repo, and save each key as a Vercel
    setting (never pasted into a chat).
 3. Allow the data hosts in this environment's network settings, so
@@ -42,7 +41,7 @@ Elizabeth line journey through central London):
 
 The whole page at 1200px, 390px and 844×390, light and dark, with real
 sample data from stage 1, including a good day, a mixed day, a bad day
-and a journey with a change. The verdict and summary sentences are agreed
+and a journey with no direct train. The verdict and summary sentences are agreed
 here, word by word.
 
 ## Stage 3: direct journeys (branch `stage-3-direct`)

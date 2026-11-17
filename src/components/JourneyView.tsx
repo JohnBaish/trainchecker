@@ -2,13 +2,13 @@
 // and Change; the time fetched and Check again; the verdict; Share ("Copy a link to this journey"),
 // straight under the verdict it quotes; "The next four hours" with "Platforms" beside it on a
 // computer, the two the same height; the quote of the day; "The last two hours" across the full
-// width, unless the verdict has given it; "The last week". ("The days ahead" is stage 4's.)
+// width; "The last week". ("The days ahead" is stage 4's.)
 import { useEffect, useState } from 'react'
 import { analyse, type Analysis } from '../lib/analyse.ts'
 import { fetchLive } from '../lib/load.ts'
 import { hashOf, remember, type Journey } from '../lib/route.ts'
 import { useIsNarrow } from '../lib/responsive.ts'
-import { dayName, lastTwoInVerdict, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
+import { dayName, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
 import { isTouch, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
 import { Chooser } from './Chooser.tsx'
@@ -159,7 +159,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
           <QuoteCard />
           {/* Across the full width, so a computer shows no gap beside it (John, November 17th
               2026, after trying the preview); after the quote (John, stage 4). */}
-          {!lastTwoInVerdict(an) && <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>}
+          <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>
           <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth} />
         </>
       )}

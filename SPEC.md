@@ -298,9 +298,9 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
    phones: … the verdict; Share; "The next four hours" and "Platforms"; the quote of the day;
    "The last two hours"; "The days ahead" (stage 4); "The last week"; "About these figures"; the
    footer. (Replaces §8.1's order for these parts.)
-2. **"Good news … leaving on time":** the last two hours no longer appear in the verdict; they
-   stay in "The last two hours", so the only difference from the usual good news is "leaving"
-   for "running". After "It's a mixed bag" they're still given in the verdict (§8.3), for John
-   to confirm.
+2. **The last two hours are never in the verdict** (replaces §8.3): they always stay in "The
+   last two hours". After "Good news" the only difference when they were bad is "leaving on
+   time" for "running well"; after "It's a mixed bag" nothing in the verdict changes. The verdict
+   itself is decided from the next four hours only, as before.
 3. **Share ("Copy a link to this journey", "Share this journey" on phones)** straight under the
    verdict it quotes, for John to confirm (he wasn't sure where it should go).

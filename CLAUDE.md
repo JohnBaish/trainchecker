@@ -58,11 +58,11 @@ given its own branch). Before committing there, run
 
 - **John:** the quote of the day before "The last two hours" (computer and iPhone); after "Good
   news … leaving on time" the last two hours back in their own box, so only "leaving" for
-  "running" differs; Share higher up, "below the last thing it quotes". Done: `lastTwoInVerdict()`
-  (only after "It's a mixed bag", as Bath Spa to Bristol at 6.24pm; to confirm with John);
+  "running" differs; then, the same after "It's a mixed bag" (so the last two hours are never in
+  the verdict, and always have their box); Share higher up, "below the last thing it quotes". Done:
   `QuoteCard` shown by `JourneyView` (and by `Tail` only on the first visit); Share straight under
   the verdict. `SPEC.md` §10.
-- **Checked:** `npm run check` 158 + 50 (the leaving-on-time verdict now one line, its box shown);
+- **Checked:** `npm run check` 158 + 50 (the leaving-on-time and mixed-bag verdicts now one line, the box always shown);
   `tsc -b`, lint, build; pictures from the saved answers (`design/previews/stage4/order-*`, 1200px
   and 390px, light and dark): no errors, no sideways scroll.
 

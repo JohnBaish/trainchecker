@@ -14,7 +14,7 @@ import { trim, type RawBoard } from '../api/live.ts'
 import { count } from '../api/week.ts'
 import { analyse, diff, type Snap, type Analysis } from '../src/lib/analyse.ts'
 import {
-  verdict, lastTwoInVerdict, nextFour, platforms, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
+  verdict, nextFour, platforms, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
   hourLabel, HOURS, quoteShareText, type Line,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
@@ -54,10 +54,10 @@ for (const f of files) {
   const m = M.analyse(s)
   eq(`${f}: verdict kind`, a.verdict, m.verdict)
   // The last train gone (November 17th 2026) is new since the mock-ups.
-  // Since November 17th 2026 (stage 4), "Good news … leaving on time" no longer gives the last
-  // two hours (they stay in their own box), so only its first line matches the mock-ups.
+  // Since November 17th 2026 (stage 4) the verdict never gives the last two hours (they stay in
+  // their own box), so where the mock-ups added them, only the first line matches.
   const mv: string[] = S.verdict(m).lines
-  if (!a.lastGone) eq(`${f}: verdict`, lineText(verdict(a).lines), a.verdict === 'good' && a.worse ? mv.slice(0, 1) : mv)
+  if (!a.lastGone) eq(`${f}: verdict`, lineText(verdict(a).lines), a.worse ? mv.slice(0, 1) : mv)
   eq(`${f}: next four hours`, nextFour(a), S.nextFour(m))
   // Platforms differ from the mock-ups only where one or two are known (November 17th 2026).
   if (a.platKnown > 2) eq(`${f}: platforms`, platforms(a), S.platforms(m))
@@ -73,7 +73,7 @@ const A = (id: string) => analyse(snapOf(raw(files.find((f) => f.endsWith(`-${id
 const rdgPad = A('RDG-PAD'), manMia = A('MAN-MIA'), kgxYrk = A('KGX-YRK'), bthBri = A('BTH-BRI'), rdgCbg = A('RDG-CBG'), padRdg = A('PAD-RDG')
 eq('good news', lineText(verdict(padRdg).lines), ['<b>Good news:</b> trains from London Paddington to Reading are running well this evening.'])
 eq('leaving on time (P4; the last two hours in their own box, John, stage 4)', lineText(verdict(rdgPad).lines), ['<b>Good news:</b> trains from Reading to London Paddington are leaving on time this evening.'])
-eq('leaving on time: the last two hours box shown', [rdgPad.worse, lastTwoInVerdict(rdgPad)], [true, false])
+eq('mixed bag: the last two hours in their own box (John, stage 4)', [bthBri.worse, verdict(bthBri).lines.length], [true, 1])
 eq('mixed bag', lineText(verdict(bthBri).lines)[0], "<b>It's a mixed bag:</b> most trains from Bath Spa to Bristol Temple Meads are running this evening, but two of the 18 in the next four hours are cancelled.")
 eq('be prepared', lineText(verdict(manMia).lines), ['<b>Be prepared:</b> trains from Manchester Piccadilly to Manchester Airport are disrupted this evening. Of the next 30, 10 are cancelled and two are running late, mostly because of a fault with the signalling system.'])
 eq('no direct train (O7)', lineText(verdict(rdgCbg).lines), [

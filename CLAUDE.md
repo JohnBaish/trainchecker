@@ -40,6 +40,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: first live data (Claude Code)
+
+- Live Departure Board key saved on John's Default environment (sent only
+  to `api1.raildata.org.uk`, `x-apikey` header); the other two keys
+  differ and come later. First test worked: notes in
+  `design/data-trial-2026-11-17.md`. Elizabeth line in the live boards,
+  including Tottenham Court Road. The board reaches only about four hours
+  ahead (120-minute window, start at most 119 minutes ahead): question
+  for John.
+
 ### November 17th 2026: subscriptions approved; licences read (Claude Code)
 
 - John's Rail Data Marketplace subscriptions (Live Departure Board, HSP,

@@ -19,7 +19,7 @@ given its own branch). Before committing there, run
 2. `SPEC.md`: what the tool does, with the open questions.
 3. `PLAN.md`: the stages.
 4. `HOUSE-STYLE.md`: the shared design and ways of working.
-5. `SEO-HANDOVER.md`: when search work comes up (stage 6).
+5. `SEO-HANDOVER.md`: when search work comes up (stage 5).
 
 ## Key points
 
@@ -35,6 +35,14 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 17th 2026: waiting for the Rail Data Marketplace (Claude Code)
+
+- John applied to join the Rail Data Marketplace at 3.30pm. Its email
+  says the request is under review and may take up to three working
+  days, so the answer is due by Friday November 20th. Stage 1's data
+  tests wait for it; John is allowing the documentation sites in the
+  environment meanwhile.
 
 ### November 17th 2026: name and rules confirmed; stage 1 agreed (Claude Code)
 

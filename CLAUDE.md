@@ -43,6 +43,12 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: last week by chosen hour (Claude Code)
+
+- John: the visitor chooses an hour of departure, and the page fetches
+  that hour's reliability over the last week (one history request, about
+  40 seconds on a busy line). His draft wording is in `SPEC.md` §3, 4a.
+
 ### November 17th 2026: history can't run side by side (Claude Code)
 
 - Only one history request is accepted at a time (others refused at once

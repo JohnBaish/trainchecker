@@ -47,12 +47,17 @@ open questions are numbered at the end.
    run in the last two hours, from the live board, with no waiting, for
    example (illustration only): "In the last two hours, 15 of 23 trains
    reached Paddington within 3 minutes. The worst was 23 minutes late."
-4a. **The last week, on request**, lower down: a prompt such as "Want to
-   know how reliable this journey has been over the last week?" with a
-   "Show history" button and a warning that it takes about a minute
-   (wording to agree). What it shows is tailored to what can be fetched
-   in about 40 seconds to a minute; much longer would be too long (John).
-   Details to work out from tests: `design/data-trial-2026-11-17.md`.
+4a. **The last week, on request** (John, November 17th 2026): lower down,
+   the visitor chooses an hour of departure and gets the reliability of
+   trains making this journey in that hour over the last week. John's
+   draft wording: "If you'd like to see the reliability history of trains
+   making this journey over the last week, choose an hour of departure and
+   the results should load within 40 seconds." One history request (one
+   hour, one kind of day) per choice: about 43 seconds on a busy line like
+   Reading to Paddington, much less on quieter ones
+   (`design/data-trial-2026-11-17.md` §8). Results kept for the rest of
+   the day, so later visitors get them at once. It can't tell one bad day
+   from a poor week within that time.
 5. **The days ahead.** Any planned engineering work or other known
    problems affecting the journey from now to the end of the coming
    weekend (answer 8), in words, with

@@ -1,6 +1,8 @@
 # Stage 1: findings and recommendation (November 17th 2026)
 
-For John to agree before the mock-ups (stage 2). The detail is in
+**Agreed by John, all points, November 17th 2026.**
+
+Agreed by John before the mock-ups (stage 2). The detail is in
 `design/data-trial-2026-11-17.md`, `design/rules-trial-2026-11-17.md`
 and `design/licences-2026-11-17.md`.
 
@@ -28,7 +30,7 @@ and `design/licences-2026-11-17.md`.
    any.** With "any late or cancelled train means a mixed bag", three of
    nine calm journeys were "mixed": Reading to Paddington for one train
    20 minutes late out of 51, Liverpool Street to Stratford for one
-   cancellation out of 62. Proposal (for John to confirm):
+   cancellation out of 62. Agreed (John):
    - "Good news" when at most one train, or one in ten if there are many,
      is cancelled or more than 5 minutes late. The one train is still
      described below.
@@ -41,7 +43,7 @@ and `design/licences-2026-11-17.md`.
    late; Manchester Piccadilly to Leeds, two trains cancelled.
 3. **The last two hours on long journeys:** few trains have arrived yet
    (Kings Cross to York: none, as the journey takes about two hours).
-   Proposal: use departures from A when fewer than three arrivals are in,
+   Agreed: use departures from A when fewer than three arrivals are in,
    and say so ("of the trains that left Kings Cross in the last two hours").
 4. **Platforms:** known for about half the next four hours' trains (27 of
    51 for Reading to Paddington); say "Most of the next trains are going
@@ -53,7 +55,7 @@ and `design/licences-2026-11-17.md`.
 6. **Hours to offer for the history:** there's no quick way to know which
    hours have trains without timetable data (not subscribed). An hour
    with no trains answers quickly (0.4 seconds), one with a single train
-   took 9.5 seconds. Proposal: offer 5am to midnight; if an hour has no
+   took 9.5 seconds. Agreed: offer 5am to midnight; if an hour has no
    trains, say so at once. Each answer is kept for the day, so the list
    improves as people ask.
 7. **Keys:** one per product; the app reads them from the four Vercel

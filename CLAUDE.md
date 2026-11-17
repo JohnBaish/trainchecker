@@ -15,6 +15,7 @@ given its own branch). Before committing there, run
 
 ## Read these first
 
+0. `design/handover-stage-2-2026-11-17.md`: where things stand for stage 2.
 1. `design/handover-2026-11-17.md`: John's brief, in his own words.
 2. `SPEC.md`: what the tool does, with the open questions.
 3. `PLAN.md`: the stages.
@@ -42,6 +43,12 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 17th 2026: stage 1 recommendation agreed (Claude Code)
+
+- John agreed every point of `design/stage-1-recommendation-2026-11-17.md`.
+  Stage 2 (mock-ups) starts in a new session: handover in
+  `design/handover-stage-2-2026-11-17.md`.
 
 ### November 17th 2026: stage 1 finished, recommendation written (Claude Code)
 

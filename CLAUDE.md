@@ -54,6 +54,33 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 17th 2026: "The days ahead" built (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John:** for incidents the rule leaves out but that name one of the stations, a friendly
+  sentence conveying the possibility: option 2 ("These might affect some trains from A to B too,
+  as they involve B:", not folded). `mayAffect()`; `SPEC.md` §10.4 and §10.5.
+- **`api/days.ts`** (new, self-contained): fetches the incidents feed (`RDM_KB_KEY`, `x-apikey`),
+  keeps the incidents live to the end of Sunday with National Rail's advice cleaned to simple HTML
+  (`cleanAdvice()`: p, b, lists, https links only), and sends them all (about 30 KB compressed),
+  kept by Vercel's servers for five minutes (`s-maxage=300`). The page matches its own journey
+  (`forJourney()` in `src/lib/incidents.ts`), as it holds the station list: so one cached answer
+  serves every journey, and the function imports nothing. (The handover suggested matching on the
+  server; this is why not.) In `vercel.json` and `vite.config.ts`.
+- **`DaysAhead.tsx`**, between "The last two hours" and "The last week", as on the mock-ups:
+  heading, "Now" items first, "Planned engineering work … to the end of Sunday November 22nd:" or
+  the agreed no-work sentence, each item's when and summary, National Rail's advice folded with
+  "More on National Rail's website"; then the "might affect" items. Drafts (Claude's): the loading
+  line and the message when the feed can't be reached.
+- **Checked:** `npm run check` 158 + 50 + 38 (new: the when labels, including a year and summer
+  time; the sentences; Victoria to Brighton's split; board names; the advice made safe from a
+  hostile example, and only simple tags in all 104 real items); `tsc -b`, lint, build. Browser,
+  the live board from the 6.24pm snapshots and the real feed at 11pm (`design/previews/stage4/
+  days-*`), 1200px and 390px, light and dark: no errors, no sideways scroll, advice links open in
+  a new tab.
+- **Not yet:** the verdict ("Be prepared" when engineering work closes the line today; National
+  Rail's advice when badly disrupted), to agree with John first; the Disruptions API comparison
+  (tomorrow); Vercel itself (`RDM_KB_KEY` must be ticked for Preview too).
+
 ### November 17th 2026: the days ahead: matching tested on the real feed (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - Knowledgebase Incidents key saved here (secure form); feed fetched at 10.23pm (937 incidents,

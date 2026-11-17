@@ -345,3 +345,36 @@ export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind:
 
 /** The quote's Share words (SPEC §8.13). */
 export const quoteShareText = (author: string, date: Date) => `The quote of the day on Trainchecker for ${dateShort(date)}, from ${author}.`
+
+// ---- The days ahead (SPEC §8.9; stage 4) ----
+
+/** A day with the year when it isn't this year's: "Friday April 30th 2027". */
+function dayYear(d: Date, now: Date): string {
+  const y = (x: Date) => new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', year: 'numeric' }).format(x)
+  return y(d) === y(now) ? dayName(d) : `${dayName(d)} ${y(d)}`
+}
+
+/** When an incident applies (as on the mock-ups): "Now" for disruption; work already begun,
+ *  "Until the end of today" or "Now until Thursday November 19th"; later work, "Sunday November
+ *  22nd" or "Saturday November 21st to Tuesday November 24th". */
+export function whenLabel(i: { planned: boolean; start: string | null; end: string | null }, now: Date): string {
+  if (!i.planned) return 'Now'
+  const s = i.start ? new Date(i.start) : now, e = i.end ? new Date(i.end) : null
+  if (s <= now) {
+    if (!e) return 'Now'
+    return dayName(e) === dayName(now) ? 'Until the end of today' : `Now until ${dayYear(e, now)}`
+  }
+  if (!e) return `From ${dayYear(s, now)}`
+  return dayName(s) === dayName(e) ? dayYear(s, now) : `${dayYear(s, now)} to ${dayYear(e, now)}`
+}
+
+/** The section's heading (agreed at the mock-ups). */
+export const daysHeading = (now: boolean) => (now ? 'Disruption now, and the days ahead' : 'The days ahead')
+/** The line before planned work, and the line when there's none (agreed at the mock-ups). */
+export const plannedIntro = (until: Date) => `Planned engineering work and changes from National Rail, to the end of ${dayName(until)}:`
+export const noPlanned = (until: Date) => `National Rail lists no planned engineering work for this journey between now and the end of ${dayName(until)}.`
+/** Before what may affect the journey (John, November 17th 2026: option 2): "These might affect
+ *  some trains from London Victoria to Brighton too, as they involve Brighton:" */
+export function mayIntro(n: number, from: string, to: string, involved: string[]): string {
+  return `${n === 1 ? 'This' : 'These'} might affect some trains from ${from} to ${to} too, as ${n === 1 ? 'it involves' : 'they involve'} ${involved.join(' or ')}:`
+}

@@ -1,6 +1,6 @@
-// "The days ahead" (stage 4; SPEC §8.9): National Rail's incidents (the Knowledgebase Incidents
-// feed) that affect a journey, from now to the end of the coming Sunday. Used by the function
-// (api/days.ts) and the checks; no React, no fetching.
+// "The days ahead" (stage 4; SPEC §8.9): which of National Rail's live incidents (api/days.ts
+// reads the feed) affect a journey. Run in the page, which holds the station list; no React, no
+// fetching.
 //
 // The feed names places in words only (no station codes), so matching is done on the stations'
 // names. John's rule (O2): only what affects the starting and ending stations, not stations
@@ -10,41 +10,8 @@
 
 import STATIONS from '../data/stations.json' with { type: 'json' }
 
-/** One incident, as read from the feed. */
-export type Incident = {
-  id: string
-  planned: boolean
-  cleared: boolean
-  summary: string
-  description: string // National Rail's HTML
-  routes: string // "Routes affected", as text
-  link: string
-  start: Date | null
-  end: Date | null
-}
-
-const unescape = (s: string) => s.replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#39;|&rsquo;/g, '’').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-const text = (h: string) => unescape(h.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim()
-
-/** Every incident in the feed's XML. */
-export function readIncidents(xml: string): Incident[] {
-  return [...xml.matchAll(/<PtIncident>([\s\S]*?)<\/PtIncident>/g)].map(([, i]) => {
-    const g = (re: RegExp) => (i.match(re) || [])[1] || ''
-    const cdata = (tag: string) => g(new RegExp(`<${tag}><!\\[CDATA\\[([\\s\\S]*?)\\]\\]>`))
-    const start = g(/<com:StartTime>(.*?)<\/com:StartTime>/), end = g(/<com:EndTime>(.*?)<\/com:EndTime>/)
-    return {
-      id: g(/<IncidentNumber>(.*?)<\/IncidentNumber>/),
-      planned: g(/<Planned>(.*?)<\/Planned>/) === 'true',
-      cleared: g(/<ClearedIncident>(.*?)<\/ClearedIncident>/) === 'true',
-      summary: text(cdata('Summary')),
-      description: cdata('Description'),
-      routes: text(cdata('RoutesAffected')),
-      link: unescape(g(/<Uri>(.*?)<\/Uri>/)),
-      start: start ? new Date(start) : null,
-      end: end ? new Date(end) : null,
-    }
-  })
-}
+import type { Days, Incident, Item } from '../../api/days.ts'
+export { readIncidents, current, endOfSunday, cleanAdvice, liveItems, type Incident, type Item, type Days } from '../../api/days.ts'
 
 // ---- Station names in National Rail's words ----
 
@@ -112,7 +79,7 @@ const AT = /\b(at|through|in) (the )?$/
 const VIA = /\bvia $/
 
 /** Why an incident counts for the journey from A to B (station codes), or null. */
-export function matches(inc: Incident, from: string, to: string): Why | null {
+export function matches(inc: Pick<Incident | Item, 'summary'>, from: string, to: string): Why | null {
   const s = stationsIn(inc.summary)
   const has = (c: string) => s.some((x) => x.code === c)
   // One train ("Amended 00:49 London Paddington to Reading service"): only in its own direction,
@@ -132,33 +99,26 @@ export function matches(inc: Incident, from: string, to: string): Why | null {
   return null
 }
 
-/** The end of the coming Sunday, UK time (on a Sunday, that Sunday): 23:59:59 on the UK date,
- *  whether the clocks are on GMT or British Summer Time. */
-export function endOfSunday(now: Date): Date {
-  const wd = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', weekday: 'short' }).format(now)
-  const add = ({ Mon: 6, Tue: 5, Wed: 4, Thu: 3, Fri: 2, Sat: 1, Sun: 0 } as Record<string, number>)[wd]
-  const ymd = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(new Date(now.getTime() + add * 864e5))
-  // 23:59:59 UTC on that date, then back by the UK's offset from UTC at that moment (0 or 1 hour).
-  const utc = new Date(`${ymd}T23:59:59Z`)
-  const ukHour = Number(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', hour: '2-digit', hourCycle: 'h23' }).format(utc))
-  return new Date(utc.getTime() - ((ukHour + 24 - 23) % 24) * 3600e3)
-}
-
-/** Whether an incident is live between now and the end of the coming Sunday. Unplanned ones
- *  count until National Rail marks them cleared; planned work cancelled by National Rail
- *  ("CANCELLED: Engineering work …") doesn't count. */
-export function current(inc: Incident, now: Date, until: Date): boolean {
-  if (inc.cleared || /^CLEARED\b/i.test(inc.summary) || /^CANCELLED\b/i.test(inc.summary)) return false
-  if (!inc.planned) return !inc.end || inc.end >= now
-  return !!inc.start && inc.start <= until && (!inc.end || inc.end >= now)
-}
-
 /** An incident that doesn't count by the rule but may still affect the journey (John, November
  *  17th 2026: say so in a friendly way): it names A or B, though not as the rule needs. One amended
  *  train only when it leaves from A or ends at B, so it may call at the other station. */
-export function mayAffect(inc: Incident, from: string, to: string): boolean {
+export function mayAffect(inc: Pick<Incident | Item, 'summary'>, from: string, to: string): boolean {
   if (matches(inc, from, to)) return false
   const one = inc.summary.match(/^Amended \d\d:\d\d (.+?) to (.+?)( service| on | from |$)/)
   if (one) return stationsIn(one[1]).some((x) => x.code === from) || stationsIn(one[2]).some((x) => x.code === to)
   return stationsIn(inc.summary).some((x) => x.code === from || x.code === to)
+}
+
+export type DaysJourney = { fromCrs: string; toCrs: string; from: string; to: string }
+
+/** The journey's items: those that count (disruption first, then planned work by date), and those
+ *  that may affect it, with the stations they involve. */
+export function forJourney(d: Days, p: DaysJourney) {
+  addNames([[p.fromCrs, p.from], [p.toCrs, p.to]])
+  const byStart = (a: Item, b: Item) => (a.planned === b.planned ? (a.start ?? '').localeCompare(b.start ?? '') : a.planned ? 1 : -1)
+  const counted = d.items.filter((i) => matches(i, p.fromCrs, p.toCrs)).sort(byStart)
+  const may = d.items.filter((i) => mayAffect(i, p.fromCrs, p.toCrs)).sort(byStart)
+  const codes = new Set(may.flatMap((i) => stationsIn(i.summary).map((x) => x.code)))
+  const involved = [codes.has(p.fromCrs) && p.from, codes.has(p.toCrs) && p.to].filter((x): x is string => !!x)
+  return { now: counted.filter((i) => !i.planned), planned: counted.filter((i) => i.planned), may, involved }
 }

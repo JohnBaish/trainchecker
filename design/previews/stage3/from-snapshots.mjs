@@ -16,7 +16,7 @@ const errors = []
 p.on('pageerror', (e) => errors.push(e.message))
 await p.route('**/api/live?**', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(snap) }))
 await p.goto(`http://localhost:4620/#${s.from}-${s.to}`)
-await p.waitForSelector('.verdict')
+await p.waitForSelector('.verdict'); await p.waitForSelector('.days .inc, .days p:not(.muted)').catch(() => {})
 const wide = await p.evaluate(() => document.documentElement.scrollWidth > innerWidth)
 await p.screenshot({ path: new URL(`./${name}-${size}-${theme}.png`, import.meta.url).pathname, fullPage: true })
 console.log(name, size, theme, 'errors', errors.length, 'sideways', wide)

@@ -304,3 +304,11 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
    itself is decided from the next four hours only, as before.
 3. **Share ("Copy a link to this journey", "Share this journey" on phones)** straight under the
    verdict it quotes, for John to confirm (he wasn't sure where it should go).
+4. **"The days ahead" may also list what might affect the journey** (John, option 2): incidents
+   that name A or B but don't meet §8.9's rule (one amended train only when it leaves A or ends
+   at B), after the rest, under "These might affect some trains from A to B too, as they involve
+   B:" ("This … as it involves …" for one; "A or B" when both). Not folded.
+5. **§8.9's rule, as built** (`src/lib/incidents.ts`; trial in `design/incidents-trial-2026-11-17.md`):
+   both stations named; or one named after "to / from" (with or without "/ via"), and, for John
+   to confirm, after "at", "through", "in the … area" or "via"; one amended train only from A to
+   B. Cleared disruption and called-off work are left out.

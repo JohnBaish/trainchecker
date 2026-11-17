@@ -3,7 +3,8 @@
 // on November 17th 2026 (design/incidents-trial-2026-11-17.md).
 import { readFileSync } from 'node:fs'
 import { gunzipSync } from 'node:zlib'
-import { readIncidents, matches, current, endOfSunday, stationsIn, type Incident } from '../src/lib/incidents.ts'
+import { readIncidents, matches, current, endOfSunday, stationsIn, cleanAdvice, liveItems, forJourney, type Incident } from '../src/lib/incidents.ts'
+import { whenLabel, mayIntro, noPlanned, plannedIntro, daysHeading } from '../src/lib/sentences.ts'
 
 let passed = 0, failed = 0
 function eq(what: string, got: unknown, want: unknown) {
@@ -48,6 +49,40 @@ eq('Reading to Cambridge: nothing', counted('RDG', 'CBG'), [])
 eq('cleared incidents left out', live.some((i) => /^CLEARED/i.test(i.summary) || i.cleared), false)
 eq('cancelled engineering work left out', live.some((i) => /^CANCELLED/i.test(i.summary)), false)
 eq('every live item has a summary and a link', live.filter((i) => !i.summary || !/^https:\/\//.test(i.link)).map((i) => i.id), [])
+
+// The page's sentences (agreed at the mock-ups; "may affect", John's option 2).
+const tue = new Date('2026-11-17T22:23:00Z')
+const w = (planned: boolean, start: string | null, end: string | null) => whenLabel({ planned, start, end }, tue)
+eq('when: disruption', w(false, '2026-11-17T18:00:00Z', null), 'Now')
+eq('when: begun, ends today', w(true, '2026-11-16T00:00:00Z', '2026-11-17T23:59:00Z'), 'Until the end of today')
+eq('when: begun, ends Thursday', w(true, '2026-11-16T00:00:00Z', '2026-11-19T23:59:00Z'), 'Now until Thursday November 19th')
+eq('when: one day', w(true, '2026-11-22T00:00:00Z', '2026-11-22T23:59:00Z'), 'Sunday November 22nd')
+eq('when: several days', w(true, '2026-11-21T00:00:00Z', '2026-11-24T23:59:00Z'), 'Saturday November 21st to Tuesday November 24th')
+eq('when: into another year', w(true, '2026-06-11T23:00:00Z', '2027-04-30T22:59:00Z'), 'Now until Friday April 30th 2027')
+eq('when: a summer midnight start (BST)', whenLabel({ planned: true, start: '2026-07-18T23:00:00Z', end: '2026-07-19T22:59:00Z' }, new Date('2026-07-15T12:00:00Z')), 'Sunday July 19th')
+const sun = new Date('2026-11-22T23:59:59Z')
+eq('days sentences', [daysHeading(false), daysHeading(true), plannedIntro(sun), noPlanned(sun)], ['The days ahead', 'Disruption now, and the days ahead',
+  'Planned engineering work and changes from National Rail, to the end of Sunday November 22nd:',
+  'National Rail lists no planned engineering work for this journey between now and the end of Sunday November 22nd.'])
+eq('may affect, one', mayIntro(1, 'London Victoria', 'Brighton', ['Brighton']), 'This might affect some trains from London Victoria to Brighton too, as it involves Brighton:')
+eq('may affect, several', mayIntro(4, 'Reading', 'London Paddington', ['Reading', 'London Paddington']), 'These might affect some trains from Reading to London Paddington too, as they involve Reading or London Paddington:')
+
+// What the function sends, and the page's split, on the saved feed.
+const days = liveItems(gunzipSync(readFileSync(new URL('../design/mockups/snapshots/20261117-2223-incidents.xml.gz', import.meta.url))).toString('utf8'), now)
+eq('function: live items', [days.items.length, days.until], [104, '2026-11-22T23:59:59.000Z'])
+const vb = forJourney(days, { fromCrs: 'VIC', toCrs: 'BTN', from: 'London Victoria', to: 'Brighton' })
+eq('Victoria to Brighton: counted and may', [vb.now.length, vb.planned.map((i) => i.summary), vb.may.map((i) => i.summary), vb.involved],
+  [0, ['No Gatwick Express / Southern trains to / from London Victoria on Sunday 22 November'], ['Buses replace late night / early morning trains between Haywards Heath and Brighton / Worthing / Eastbourne from Monday 16 to Friday 20 November'], ['Brighton']])
+const mm = forJourney(days, { fromCrs: 'MAN', toCrs: 'MIA', from: 'Manchester Piccadilly', to: 'Manchester Airport' })
+eq('Manchester Airport: disruption now', mm.now.length, 1)
+eq('board names recognised (Swindon, not "Swindon (Wilts)")', forJourney(days, { fromCrs: 'SWI', toCrs: 'BRI', from: 'Swindon', to: 'Bristol Temple Meads' }).planned.length, 1)
+
+// National Rail's advice, made safe: only simple tags, https links opening a new tab.
+const dirty = '<h4 onclick="x()">Advice</h4><p style="a">Go <a href="javascript:alert(1)">here</a> or <a href="http://www.nationalrail.co.uk/x" title="t">there</a></p><script>alert(1)</script><img src=x onerror=alert(1)><table><tr><td>t</td></tr></table>'
+eq('advice cleaned', cleanAdvice(dirty), '<p><b>Advice</b></p><p>Go here or <a href="https://www.nationalrail.co.uk/x" target="_blank" rel="noopener noreferrer">there</a></p>alert(1)t')
+const tags = new Set(days.items.flatMap((i) => i.advice.match(/<[^>]+>/g) ?? []).map((t) => t.replace(/href="[^"]*"/, 'href')))
+eq('only simple tags in every item', [...tags].sort(), ['</a>', '</b>', '</li>', '</p>', '</ul>', '<a href target="_blank" rel="noopener noreferrer">', '<b>', '<li>', '<p>', '<ul>'])
+eq('no undefined in any item', days.items.filter((i) => /undefined|NaN|\[object/.test(JSON.stringify(i))).length, 0)
 
 console.log(`check-days: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

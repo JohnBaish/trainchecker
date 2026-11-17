@@ -1,5 +1,6 @@
-// Asking Trainchecker's own functions (api/live.ts and api/week.ts), which ask National Rail.
+// Asking Trainchecker's own functions (api/live.ts, api/week.ts and api/days.ts), which ask National Rail.
 import type { Snap } from './analyse.ts'
+import type { Days } from '../../api/days.ts'
 import type { DayKind, WeekCounts } from './sentences.ts'
 
 export type LiveError = 'unknown' | 'same' | 'unavailable'
@@ -29,4 +30,11 @@ export async function fetchWeek(o: { from: string; to: string; days: DayKind; st
   if (r.ok) return (await r.json()) as WeekCounts
   const body = await r.json().catch(() => ({}))
   throw new Error(body.error === 'busy' || body.error === 'timeout' ? body.error : 'unavailable')
+}
+
+/** National Rail's live incidents to the end of Sunday (the same for every journey). */
+export async function fetchDays(): Promise<Days> {
+  const r = await fetch('/api/days').catch(() => null)
+  if (!r || !r.ok) throw new Error('unavailable')
+  return (await r.json()) as Days
 }

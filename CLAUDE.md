@@ -2,7 +2,7 @@
 
 "How's this train line doing." A baish.net tool that tells someone, in
 plain English and gently, how their train journey from A to B looks: the
-next five hours, the platforms, the last week, the days ahead, and another
+next four hours, the platforms, the last week, the days ahead, and another
 way round if needed.
 
 **Project tracker:** when something significant changes (a stage
@@ -39,6 +39,13 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 17th 2026: fourth subscription (Claude Code)
+
+- NationalRail Disruptions API approved; all four keys are in Vercel
+  (John). Its licence: UK only, credit National Rail and the Rail
+  Delivery Group, a month's notice; added to
+  `design/licences-2026-11-17.md`.
 
 ### November 17th 2026: four hours, not five (Claude Code)
 

@@ -574,3 +574,11 @@ they differ.
 14. **Share for each list**, separately: "Share these trains" and "Share these arrivals" ("Copy …" on a computer), the
     words Claude's drafts, agreed: "Here are the trains from Reading to Midgham with platforms, as of 8.22am on November 18th.
     There are trains leaving at … From Trainchecker." and "Here are the trains due at Midgham from Reading, as of …".
+15. **"Delayed" with no time** (John, November 18th 2026): out of both lists, as it isn't expected at its timetabled time;
+    a sentence of its own after the list, with the reason when the board gives one. Arrivals: "The 10.01pm from Oxford,
+    due at 10.25, is delayed, with no new time given yet." / "The 10.01pm and 10.23 from Oxford, due at 10.25 and 10.46,
+    are delayed, with no new times given yet." / all of them: "The trains due in the next hour are delayed, with no new
+    times given yet: the 10.01pm from Oxford, due at 10.25, and the 10.23, due at 10.46." With delayed trains as well,
+    "Trains are expected in the next hour at …", "Two trains are expected …", "One train is expected …" (not "The only
+    train…" or "There are two trains…"). Platforms: "The 3.30pm, from platform 3, is delayed, with no new time given
+    yet." Illustration only.

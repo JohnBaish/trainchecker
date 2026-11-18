@@ -263,6 +263,14 @@ eq('the lists: Share words (drafts)', [listShareWords(mdg, 'platforms', platform
   ['Here are the trains from Reading to Midgham with platforms, as of 8.22am on November 18th. There are trains leaving at 9.13am (platform 12A) and 10.12 (platform 2). From Trainchecker.', 'Here are the trains due at Midgham from Reading, as of 8.22am on November 18th. No direct trains from Reading are expected at Midgham in the next hour. From Trainchecker.'])
 eq('share: "next four hours" (John)', shareWords(bthBri).text.includes('in the next four hours'), true)
 
+// "Delayed" with no time: out of the lists, a sentence of its own, with the reason when given (John, November 18th 2026).
+const late2 = (k: number, del: number[]) => changed('RDG-MDG', (sv) => { sv.filter((x) => x.sta && !x.ata).slice(0, k).forEach((t, i) => { t.std = `08:${30 + i * 7}`; t.sta = `08:${42 + i * 7}`; t.eta = del.includes(i) ? 'Delayed' : 'On time'; t.etd = del.includes(i) ? 'Delayed' : 'On time'; t.cancelled = false; t.reason = i === 0 && del.includes(0) ? 'This train has been delayed by a fault with the signalling system' : null }) })
+eq('delayed arrivals: all of them', arrivals(late2(2, [0, 1])).text, 'The trains due in the next hour are delayed, with no new times given yet: the 8.30am from Reading, due at 8.42, and the 8.37, due at 8.49, because of a fault with the signalling system.')
+eq('delayed arrivals: one of three, and no "There are two trains…"', arrivals(late2(3, [1])).text, 'Two trains are expected in the next hour, at 8.42am (the one due to leave Reading at 8.30) and 8.56 (the 8.44 from Reading). The 8.37am from Reading, due at 8.49, is delayed, with no new time given yet.')
+eq('delayed arrivals: one alone, with its reason', arrivals(late2(1, [0])).text, 'The 8.30am from Reading, due at 8.42, is delayed, with no new time given yet, because of a fault with the signalling system.')
+const tvpD = changed('TVP-PAD', (sv) => { sv.find((x) => x.platform && x.std === '09:30')!.etd = 'Delayed' })
+eq('delayed platforms: out of the list', platformTrains(tvpD)!.text, 'There are trains leaving from platform 2 at 10.30am and 11.29. The 9.30am, from platform 2, is delayed, with no new time given yet.')
+
 // The last train gone: Kings Cross to Edinburgh at 8.59pm (trains in the last two hours, none in
 // the next four); Reading to Cambridge at 6.24pm has none either way, so keeps the agreed words.
 const kgxEdb = analyse(snapOf(raw('20261117-2059-KGX-EDB.json')))

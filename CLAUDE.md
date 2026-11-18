@@ -58,6 +58,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: "Delayed" trains out of the lists; live (`main`; Claude Code)
+
+- **John (the live site, Oxford to Reading at 10.19pm):** a train "delayed with no time given yet" isn't expected at its
+  timetabled time. Agreed: out of both lists, a sentence of its own, the reason when there is one (`SPEC.md` §12.15);
+  "make that live tonight … straight to main". The only "Delayed" train in the saved boards had no reason.
+- **Built:** `arrivals()` and `platformTrains()` in `sentences.ts` (the delayed sentence in `after` and in the Share
+  words); leads that stay true with delayed trains too.
+- **Checked:** `npm run check` 244 + 57 + 73 (new: all delayed, one of three, one alone with a reason, a delayed train
+  in the platforms list); `tsc -b`, lint, build; the page at 390px dark and 1200px light: no errors, no sideways scroll.
+
 ### November 18th 2026: the lists laid out, "pm" once, the late trains as a range; Share for each list (branch `claude/laughing-hawking-8d2b6w`, merged the same day; Claude Code)
 
 - **John (the live site, Stoke-on-Trent to Manchester, Oxford to Reading):** `SPEC.md` §12.10 to §12.14: "(or look like

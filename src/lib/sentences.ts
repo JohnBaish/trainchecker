@@ -5,7 +5,7 @@
 //
 // Sentences new in stage 3 (not on the mock-ups) were agreed by John on November 17th 2026 too.
 
-import { diff, type Analysis, type Train } from './analyse.ts'
+import { diff, isTime, type Analysis, type Train } from './analyse.ts'
 
 const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 /** One to nine as words, 10 and above as digits (house style §13). */
@@ -579,6 +579,70 @@ export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind:
   // When none were within three minutes there are no "others" (agreed by John, November 17th 2026).
   if (k === 0) rest = rest.replace(/^Of the others,/, 'Of these,').replace(/^The others were/, 'They were all')
   return tenAfterWords(`${first}${rest ? ' ' + rest : ''}${more}`)
+}
+
+// ---- The trains with platforms, and arrivals (John, November 18th 2026) ----
+
+const minutesWord = (k: number) => `${num(k)} ${k === 1 ? 'minute' : 'minutes'}`
+const andList = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}` : xs[0])
+
+/** The fold under "Platforms": "There are trains leaving at 3.12pm (platform 2), 3.34pm (four minutes
+ *  later than planned, platform 3) and 3.58pm (platform 2)." The next ten trains with a platform,
+ *  cancelled ones left out; then John's sentence about the rest. Null when none has a platform. */
+export function platformTrains(a: Analysis): { fold: string; text: string } | null {
+  // In the order they're expected to leave, so a late train sits where it now falls.
+  const leaves = (t: Train) => diff(a.now, t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std)
+  const ts = a.ahead.filter((t) => !t.cancelled && t.platform).sort((x, y) => leaves(x) - leaves(y))
+  if (!ts.length) return null
+  const shown = ts.slice(0, 10), rest = ts.length - shown.length
+  const item = (t: Train) => {
+    const late = t.late !== null && t.late > 0 && isTime(t.etd)
+    const bits = [late ? `${minutesWord(t.late!)} later than planned` : t.unknown ? 'delayed, no time given yet' : '', `platform ${t.platform}`].filter(Boolean)
+    return `${t12(late ? t.etd! : t.std)} (${bits.join(', ')})`
+  }
+  const list = andList(shown.map(item))
+  let text = shown.length === 1 ? `There's a train leaving at ${list}.` : `There are trains leaving at ${list}.`
+  if (rest) text += rest === 1
+    ? " We're only showing you the next ten departures, there's another one running later which also has a platform showing already."
+    : ` We're only showing you the next ten departures, there are another ${num(rest)} running later which also have platforms showing already.`
+  return { fold: ts.length === 1 ? 'Show the train with a platform' : 'Show the trains with platforms', text: tenAfterWords(text) }
+}
+
+/** Arrivals at B from A in the next hour, up to 10: "Trains are expected at 3.05pm (the one due to
+ *  leave Reading at 2.40pm), 3.22pm (the 3pm from Reading, arriving four minutes later than planned),
+ *  3.30pm (the 3.15pm, …) and 3.45pm (the 3.20pm)." Trains on their way and still to leave; cancelled
+ *  ones left out, except that with none expected a cancelled one is mentioned. */
+export function arrivals(a: Analysis): { heading: string; text: string } {
+  const heading = `At ${a.to} from ${a.from}`
+  const fromNow = (t: string) => diff(a.now, t)
+  // The board only looks back two hours, so on a journey that can take longer, trains already on
+  // their way may be missing: said plainly, never "none expected" (Claude's draft, for John).
+  const longest = Math.max(0, ...[...a.past, ...a.ahead].filter((t) => t.sta).map((t) => diff(t.std, t.sta!)))
+  const partial = longest >= 120
+  const note = ` Trains that left ${a.from} more than two hours ago aren't included, as Trainchecker can't see them.`
+  const when = (t: Train) => (isTime(t.eta) ? t.eta : t.sta!)
+  const due = [...a.past, ...a.ahead].filter((t) => t.sta && !t.ata)
+  const coming = due.filter((t) => !t.cancelled && fromNow(when(t)) >= 0).sort((x, y) => fromNow(when(x)) - fromNow(when(y)))
+  const inHour = coming.filter((t) => fromNow(when(t)) <= 60)
+  if (!inHour.length && partial) return { heading, text: `Trainchecker can only see trains that left ${a.from} in the last two hours, so it can't say which trains are due at ${a.to} in the next hour.` }
+  if (!inHour.length) {
+    let text = `No direct trains from ${a.from} are expected at ${a.to} in the next hour.`
+    const gone = due.filter((t) => t.cancelled && fromNow(t.sta!) >= 0 && fromNow(t.sta!) <= 60).sort((x, y) => fromNow(x.sta!) - fromNow(y.sta!))
+    if (gone.length === 1) text += ` The one due in at ${t12(gone[0].sta!)} was cancelled.`
+    else if (gone.length > 1) text += ` The ${num(gone.length)} due in at ${andList(gone.map((t) => t12(t.sta!)))} were cancelled.`
+    return { heading, text: tenAfterWords(text) }
+  }
+  const shown = inHour.slice(0, 10)
+  const item = (t: Train, i: number) => {
+    const which = i === 0 ? `the one due to leave ${a.from} at ${t12(t.std)}` : i === 1 ? `the ${t12(t.std)} from ${a.from}` : `the ${t12(t.std)}`
+    const late = isTime(t.eta) ? diff(t.sta!, t.eta) : null
+    const extra = late !== null && late > 0 ? `, arriving ${minutesWord(late)} later than planned`
+      : t.eta && t.eta !== 'On time' && !isTime(t.eta) ? ', delayed with no time given yet' : ''
+    return `${t12(when(t))} (${which}${extra})`
+  }
+  const more = coming.length > shown.length ? ', and more after that' : ''
+  const text = shown.length === 1 ? `One train is expected, at ${item(shown[0], 0)}${more}.` : `Trains are expected at ${andList(shown.map(item))}${more}.`
+  return { heading, text: tenAfterWords(text + (partial ? note : '')) }
 }
 
 /** The quote's Share words (SPEC §8.13). */

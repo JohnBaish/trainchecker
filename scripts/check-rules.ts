@@ -15,7 +15,7 @@ import { count } from '../api/week.ts'
 import { analyse, diff, type Snap, type Analysis } from '../src/lib/analyse.ts'
 import {
   standIn, standInLine, standInMixedLine, tenAfterWords, verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
-  hourLabel, HOURS, quoteShareText, kindLine, type Line,
+  hourLabel, HOURS, quoteShareText, kindLine, platformTrains, arrivals, type Line,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
 import { STATIONS, resolve, suggest, complete } from '../src/lib/stations.ts'
@@ -216,6 +216,23 @@ eq('this train, in the list', nextFour(bthBri)!.rows[1].reason, 'A fault on this
 eq('platforms, one known of many', platforms(A('KGX-YRK')), 'So far, a platform has only been announced for one train: platform 3.')
 eq('two on time (John, November 18th 2026)', nextFour(changed('PAD-RDG', (sv, a) => { const keep = new Set(ids(a).slice(0, 2)); for (let i = sv.length - 1; i >= 0; i--) if (a.ahead.some((t) => t.id === sv[i].id) && !keep.has(sv[i].id)) sv.splice(i, 1) }))!.lines[1], 'Both of them are expected to be on time.')
 eq('both (John)', [share(2, 2).trains, share(2, 2).bare, share(3, 3).trains], ['both trains', 'both', 'all three trains'])
+
+// The trains with platforms and arrivals (John, November 18th 2026), on the real boards.
+const mdg = A('RDG-MDG'), rp9 = analyse(snapOf(raw('20261117-2059-RDG-PAD.json')))
+eq('platforms fold: two trains', platformTrains(mdg), { fold: 'Show the trains with platforms', text: 'There are trains leaving at 9.13am (platform 12A) and 10.12am (platform 2).' })
+eq('platforms fold: one train', platformTrains(kgxYrk), { fold: 'Show the train with a platform', text: "There's a train leaving at 8.03pm (platform 3)." })
+eq('platforms fold: none, no fold', platformTrains(A('PAD-PLY')), null)
+eq('platforms fold: ten, late ones in time order, then the rest (John)', platformTrains(rdgPad)!.text,
+  "There are trains leaving at 6.32pm (platform 11A), 6.33pm (platform 15A), 6.34pm (six minutes later than planned, platform 13), 6.39pm (three minutes later than planned, platform 10A), 6.43pm (platform 11), 6.45pm (platform 13), 6.46pm (20 minutes later than planned, platform 14A), 6.49pm (platform 10A), 6.54pm (platform 11) and 6.59pm (platform 14). We're only showing you the next ten departures, there are another 16 running later which also have platforms showing already.")
+eq('platforms fold: cancelled left out', platformTrains(manMia)!.text.includes('6.28pm'), false)
+eq('arrivals: the brackets in sequence (John)', arrivals(rp9).text.split('), ').slice(0, 3).join('), ') + ')',
+  'Trains are expected at 9.01pm (the one due to leave Reading at 8.37pm), 9.08pm (the 8.44pm from Reading), 9.13pm (the 8.47pm, arriving three minutes later than planned)')
+eq('arrivals: the heading', arrivals(rp9).heading, 'At London Paddington from Reading')
+eq('arrivals: none in the next hour', arrivals(mdg).text, 'No direct trains from Reading are expected at Midgham in the next hour.')
+const mdgGone = changed('RDG-MDG', (sv) => { const t = sv.find((x) => x.sta)!; t.std = '08:40'; t.sta = '08:55'; t.ata = null; t.eta = null; t.cancelled = true })
+eq('arrivals: none, one cancelled (John)', arrivals(mdgGone).text, 'No direct trains from Reading are expected at Midgham in the next hour. The one due in at 8.55am was cancelled.')
+eq('arrivals: a long journey says it can\'t see them all, never "none"', [arrivals(A('PAD-PLY')).text, arrivals(kgxYrk).text.endsWith("aren't included, as Trainchecker can't see them.")],
+  ["Trainchecker can only see trains that left London Paddington in the last two hours, so it can't say which trains are due at Plymouth in the next hour.", true])
 
 // The last train gone: Kings Cross to Edinburgh at 8.59pm (trains in the last two hours, none in
 // the next four); Reading to Cambridge at 6.24pm has none either way, so keeps the agreed words.

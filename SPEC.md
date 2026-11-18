@@ -537,3 +537,14 @@ they differ.
    gentle, natural-sounding answers and a fragment of inspiration." In the picture, three lines broken at
    the commas (option A), in bold (Figtree 700, John). The tagline itself is unchanged; baish.net's line is "Are the trains OK? (With
    gentle, natural answers.)".
+8. **Platforms, the fold** (John): "Show the trains with platforms" (one: "Show the train with a platform"), opening
+   "There are trains leaving at 3.12pm (platform 2), 3.34pm (four minutes later than planned, platform 3) and 3.58pm
+   (platform 2)." The next ten with a platform, in the order they're expected to leave; cancelled ones and trains with
+   no platform left out; then "We're only showing you the next ten departures, there are another 19 running later which
+   also have platforms showing already." Illustration only.
+9. **Arrivals** (John), after the last week, folded under "At Oxford from Reading": "Trains are expected at 3.05pm (the one
+   due to leave Reading at 2.40pm), 3.22pm (the 3pm from Reading, arriving four minutes later than planned), 3.30pm (the
+   3.15pm, arriving six minutes later than planned) and 3.45pm (the 3.20pm)." The next hour, up to 10, "and more after
+   that"; one: "One train is expected, at …"; none: "No direct trains from Reading are expected at Oxford in the next
+   hour." and, if one was cancelled, "The one due in at 3.14pm was cancelled." Journeys of two hours or more: a draft
+   sentence saying trains that left more than two hours ago can't be seen. Illustration only.

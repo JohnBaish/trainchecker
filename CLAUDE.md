@@ -58,6 +58,24 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: the trains with platforms, and Arrivals (branch `claude/laughing-hawking-8d2b6w`, not merged; Claude Code)
+
+- **John:** a fold under Platforms, "Show the trains with platforms": "There are trains leaving at 3.12pm (platform 2),
+  3.34pm (four minutes later than planned, platform 3) …", the next ten with a platform, then "We're only showing you the
+  next ten departures, there are another 19 running later which also have platforms showing already."; cancelled ones
+  and trains with no platform left out; lateness from one minute; "delayed, no time given yet". After the last week,
+  "Arrivals", folded under "At Oxford from Reading": the next hour, up to 10, brackets in sequence ("the one due to
+  leave Reading at 2.40pm", "the 3pm from Reading", "the 3.15pm"; "arriving four minutes later than planned"), "and more
+  after that"; one train, none, and "The one due in at 3.14pm was cancelled.". `SPEC.md` §12.8 and §12.9.
+- **Found (Claude's draft, for John):** the board looks back only two hours, so on journeys of two hours or more trains
+  already on their way can be missing; there the sentence says so, and never "none expected". Platforms in the order
+  trains are expected to leave (a late train had come first).
+- **Built:** `platformTrains()` and `arrivals()` in `sentences.ts`; `PlatformTrains` and `Arrivals` in `JourneyView.tsx`;
+  `scripts/dump-new.ts`; `design/previews/stage5-folds.mjs` (the page fed a saved board, its clock set to then).
+- **Checked:** `npm run check` 232 + 57 + 73 (new: each case on the real boards; switching off the long-journey rule made
+  one fail); `tsc -b`, lint, build; Reading to Paddington at 1200px light, Midgham and Plymouth at 390px with touch: folds
+  44px, no errors, no sideways scroll.
+
 ### November 18th 2026: the sharing picture's words in bold; merged and live (Claude Code)
 
 - **John:** bold rather than semi-bold or regular (three mock-ups); "make it live". `design/og-trainchecker.html`

@@ -9,7 +9,7 @@ import { fetchDays, fetchLive } from '../lib/load.ts'
 import { closedNow, forJourney } from '../lib/incidents.ts'
 import { hashOf, remember, type Journey } from '../lib/route.ts'
 import { useIsNarrow } from '../lib/responsive.ts'
-import { NO_RECORD_AT, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
+import { NO_RECORD_AT, arrivals, platformTrains, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
 import { isTouch, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
 import { Chooser } from './Chooser.tsx'
@@ -28,6 +28,33 @@ const FAILED: Record<string, string> = {
   unknown: 'National Rail doesn’t recognise one of these stations. Please choose again.',
   same: 'Please choose two different stations.',
   unavailable: 'Sorry, National Rail’s live departures couldn’t be reached just now. Please try again in a minute.',
+}
+
+/** The trains with a platform, folded under "Platforms", spaced like the trains fold (John,
+ *  November 18th 2026). */
+function PlatformTrains({ a }: { a: Analysis }) {
+  const p = platformTrains(a)
+  if (!p) return null
+  return (
+    <details className="advice trains-fold">
+      <summary>{p.fold} <Icon name="down" /></summary>
+      <p>{p.text}</p>
+    </details>
+  )
+}
+
+/** Arrivals at B, after the last week: folded, the arrow by the sub-heading (John, November 18th 2026). */
+function Arrivals({ a }: { a: Analysis }) {
+  const x = arrivals(a)
+  return (
+    <section className="card sec block">
+      <h3>Arrivals</h3>
+      <details className="advice arrivals-fold">
+        <summary>{x.heading} <Icon name="down" /></summary>
+        <p>{x.text}</p>
+      </details>
+    </section>
+  )
 }
 
 function Trains({ n }: { n: NextFour }) {
@@ -209,7 +236,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
             {next!.lines.map((l) => <p key={l} className="lead">{l}</p>)}
             <Trains n={next!} />
           </section>
-          <section className="card sec"><h3>Platforms</h3><p>{platforms(an)}</p></section>
+          <section className="card sec"><h3>Platforms</h3><p>{platforms(an)}</p><PlatformTrains a={an} /></section>
         </div>
       )}
       {!closed && <QuoteCard />}
@@ -221,6 +248,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
       {(an.verdict !== 'none' || (an.lastGone && !closed)) && (
         <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth && endOut} noRecord={noRecord} standIn={stand ? { ...stand, left: stand.side === 'to' ? an.to : an.from } : null} others={others} />
       )}
+      {(an.verdict !== 'none' || (an.lastGone && !closed)) && <Arrivals a={an} />}
     </>
   )
 }

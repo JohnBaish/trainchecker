@@ -54,6 +54,22 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: Tiverton Parkway explained; Ivybridge's suggestions (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **Tiverton Parkway to Paddington** (live board saved at 8.22am, Live Departure Board key swapped
+  in through the secure form): no fault. Earlier, the 07:58 (2 hours 31 minutes, via Castle Cary,
+  Frome, Westbury, Pewsey and Hungerford) was in the next four hours with three two-hour trains,
+  so it was rightly counted slower; the only fault was the repeated "platform 2", fixed earlier.
+  Saved `20261118-0822-TVP-PAD.json` and `-RDG-MDG.json`; the checks now compare them too (the
+  mock-up code taught "both").
+- **Ivybridge (John, iPhone):** the suggestions vanished at "Ivy" and came back at "Ivyb": "Ivy" is
+  Ivybridge's code, counted as a finished entry. `complete()` in `stations.ts` now closes the list
+  only for a full name. `SPEC.md` §10.39.
+- **Checked:** `npm run check` 186 + 56 + 68; `tsc -b`, lint, build; iPhone 13 emulation typing
+  "Ivybridge" a letter at a time (`design/previews/stage4/type-ivybridge.cjs`): offered from "Iv"
+  to "Ivybridg", closed at the full name.
+- Key saved here now: Live Departure Board.
+
 ### November 18th 2026: "ten", one platform, the new tagline (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **John:** "ten" when it closely follows a spelt number; "has only been announced" for one

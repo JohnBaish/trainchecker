@@ -2,7 +2,7 @@
 // box suggests stations as you type; the arrow keys move through the suggestions and Enter
 // chooses one; a tap or click chooses straight away.
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
-import { nameOf, resolve, suggest } from '../lib/stations.ts'
+import { complete, nameOf, resolve, suggest } from '../lib/stations.ts'
 import { hashOf, recentJourneys, type Journey } from '../lib/route.ts'
 import { Icon } from './Icon.tsx'
 
@@ -17,7 +17,7 @@ function StationBox({ label, value, onChange, error, go }: { label: string; valu
   const box = useRef<HTMLInputElement>(null)
   useEffect(() => () => window.clearTimeout(closing.current), [])
   const list = open ? suggest(value) : []
-  const exact = list.length === 1 && resolve(value) === list[0][0]
+  const exact = complete(value, list)
   const shown = exact ? [] : list
   const choose = (name: string) => { window.clearTimeout(closing.current); onChange(name); setOpen(false); setAt(-1) }
   const key = (e: KeyboardEvent<HTMLInputElement>) => {

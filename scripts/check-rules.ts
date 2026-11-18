@@ -18,7 +18,7 @@ import {
   hourLabel, HOURS, quoteShareText, type Line,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
-import { STATIONS, resolve, suggest } from '../src/lib/stations.ts'
+import { STATIONS, resolve, suggest, complete } from '../src/lib/stations.ts'
 
 let passed = 0, failed = 0
 function eq(what: string, got: unknown, want: unknown) {
@@ -77,7 +77,7 @@ for (const f of files) {
   // the trains … which weren't cancelled" and "didn't run at all"; one or two late trains in their
   // own tense. The mock-ups are compared where none of these apply.
   const digits = (l: string) => l.replace('nineteen in twenty', '19 in 20').replace('nine in ten', 'nine in 10').replace('one in ten', 'one in 10').replace('one in twenty', 'one in 20')
-  if (!a.last.cancelled.length && !(a.last.tense === 'mixed' && a.last.lates.length <= 2)) eq(`${f}: last two hours`, lastTwoLines(a), (S.lastTwoLines(m) as string[]).map(digits).map(tenAfterWords))
+  if (!a.last.cancelled.length && !(a.last.tense === 'mixed' && a.last.lates.length <= 2)) eq(`${f}: last two hours`, lastTwoLines(a), (S.lastTwoLines(m) as string[]).map(digits).map(tenAfterWords).map((l) => (a.last.known === 2 ? l.replace(', all are ', ', both are ') : l)))
   const when = { time: t12(m.now), date: dayName(new Date(m.taken)).replace(/^\w+ /, '') }
   if (!a.lastGone) eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text)
   const bad = pageText(a).filter((t) => /undefined|null|NaN|\[object/.test(t))
@@ -175,6 +175,8 @@ const kyMixed = changed('KGX-YRK', (sv, a) => {
 eq('one late train, its own tense', [kyMixed.last.tense, lastTwoLines(kyMixed)[1]], ['mixed', 'The other is expected to be six minutes late.'])
 eq('ten after a spelt number (John)', ['about nine in 10 trains', 'one in 10', 'The other two were four and 10 minutes late.', 'one was less than 10 minutes late', 'at 10.30pm', 'four from platform 10', '19 in 20', 'about 10 trains an hour'].map(tenAfterWords),
   ['about nine in ten trains', 'one in ten', 'The other two were four and ten minutes late.', 'one was less than 10 minutes late', 'at 10.30pm', 'four from platform 10', '19 in 20', 'about 10 trains an hour'])
+eq('suggestions stay open at "Ivy", a code on the way to Ivybridge (John)', [complete('Ivy', suggest('Ivy')), suggest('Ivy').map(([, n]) => n)], [false, ['Ivybridge']])
+eq('suggestions close once the full name is in the box', [complete('Ivybridge', suggest('Ivybridge')), complete('reading', suggest('reading'))], [true, false])
 eq('this train, in the list', nextFour(bthBri)!.rows[1].reason, 'A fault on this train.')
 eq('platforms, one known of many', platforms(A('KGX-YRK')), 'So far, a platform has only been announced for one train: platform 3.')
 eq('two on time (John)', nextFour(changed('PAD-RDG', (sv, a) => { const keep = new Set(ids(a).slice(0, 2)); for (let i = sv.length - 1; i >= 0; i--) if (a.ahead.some((t) => t.id === sv[i].id) && !keep.has(sv[i].id)) sv.splice(i, 1) }))!.lines[1], 'Both are expected on time.')

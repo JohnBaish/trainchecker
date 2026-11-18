@@ -428,3 +428,6 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
 38. **The tagline** (John): "How the trains are doing, written the way we speak." The link-preview
     picture remade (`design/og-trainchecker.html`, `node design/og-shoot.cjs`, fonts from
     `node_modules`), broken after the comma.
+39. **Suggestions stay open while a name is being typed** (John, Ivybridge): they close only when
+    the box holds a station's full name, not when the letters typed so far happen to be a code
+    ("Ivy" is Ivybridge's code, IVY).

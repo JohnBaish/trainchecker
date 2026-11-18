@@ -220,10 +220,13 @@ eq('both (John)', [share(2, 2).trains, share(2, 2).bare, share(3, 3).trains], ['
 // The trains with platforms and arrivals (John, November 18th 2026), on the real boards.
 const mdg = A('RDG-MDG'), rp9 = analyse(snapOf(raw('20261117-2059-RDG-PAD.json')))
 eq('platforms fold: two trains', platformTrains(mdg), { fold: 'Show the trains with platforms', text: 'There are trains leaving at 9.13am (platform 12A) and 10.12am (platform 2).' })
-eq('platforms fold: one train', platformTrains(kgxYrk), { fold: 'Show the train with a platform', text: "There's a train leaving at 8.03pm (platform 3)." })
+eq('platforms fold: one train', platformTrains(kgxYrk), { fold: 'Show the train with a platform', text: "There's a train leaving from platform 3 at 8.03pm." })
 eq('platforms fold: none, no fold', platformTrains(A('PAD-PLY')), null)
 eq('platforms fold: ten, late ones in time order, then the rest (John)', platformTrains(rdgPad)!.text,
-  "There are trains leaving at 6.32pm (platform 11A), 6.33pm (platform 15A), 6.34pm (six minutes later than planned, platform 13), 6.39pm (three minutes later than planned, platform 10A), 6.43pm (platform 11), 6.45pm (platform 13), 6.46pm (20 minutes later than planned, platform 14A), 6.49pm (platform 10A), 6.54pm (platform 11) and 6.59pm (platform 14). We're only showing you the next ten departures, there are another 16 running later which also have platforms showing already.")
+  "There are trains leaving at 6.32pm (platform 11A), 6.33pm (platform 15A), 6.34pm (six minutes later than planned, platform 13), 6.39pm (three minutes later than planned, platform 10A), 6.43pm (platform 11), 6.45pm (platform 13), 6.46pm (20 minutes later than planned, platform 14A), 6.49pm (platform 10A), 6.54pm (platform 11) and 6.59pm (platform 14). We're only showing you the next ten departures, there are another 16 running later which also have platforms showing.")
+eq('platforms fold: one platform for all, said once (John)', platformTrains(A('TVP-PAD'))!.text, 'There are trains leaving from platform 2 at 9.30am, 10.30am and 11.29am.')
+eq('platforms fold: two platforms for three or more, said once (John)', platformTrains(manMia)!.text, 'There are trains leaving from platforms 9 and 13 at 6.36pm, 6.37pm (nine minutes later than planned), 6.51pm, 7.04pm and 7.18pm.')
+eq('platforms fold: two trains, two platforms, each its own', platformTrains(mdg)!.text, 'There are trains leaving at 9.13am (platform 12A) and 10.12am (platform 2).')
 eq('platforms fold: cancelled left out', platformTrains(manMia)!.text.includes('6.28pm'), false)
 eq('arrivals: the brackets in sequence (John)', arrivals(rp9).text.split('), ').slice(0, 3).join('), ') + ')',
   'Trains are expected at 9.01pm (the one due to leave Reading at 8.37pm), 9.08pm (the 8.44pm from Reading), 9.13pm (the 8.47pm, arriving three minutes later than planned)')

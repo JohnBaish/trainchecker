@@ -595,16 +595,23 @@ export function platformTrains(a: Analysis): { fold: string; text: string } | nu
   const ts = a.ahead.filter((t) => !t.cancelled && t.platform).sort((x, y) => leaves(x) - leaves(y))
   if (!ts.length) return null
   const shown = ts.slice(0, 10), rest = ts.length - shown.length
+  // One or two platforms for all of them: said once, at the start, and people check which when they
+  // get there (John, November 18th 2026): "There are trains leaving from platforms 10 and 11 at 9pm,
+  // 9.10pm (six minutes later than planned) and 9.12pm."
+  const plats = [...new Set(shown.map((t) => t.platform!))].sort((x, y) => parseInt(x) - parseInt(y) || x.localeCompare(y))
+  const once = plats.length === 1 || (plats.length === 2 && shown.length > 2)
   const item = (t: Train) => {
     const late = t.late !== null && t.late > 0 && isTime(t.etd)
-    const bits = [late ? `${minutesWord(t.late!)} later than planned` : t.unknown ? 'delayed, no time given yet' : '', `platform ${t.platform}`].filter(Boolean)
-    return `${t12(late ? t.etd! : t.std)} (${bits.join(', ')})`
+    const bits = [late ? `${minutesWord(t.late!)} later than planned` : t.unknown ? 'delayed, no time given yet' : '', once ? '' : `platform ${t.platform}`].filter(Boolean)
+    return `${t12(late ? t.etd! : t.std)}${bits.length ? ` (${bits.join(', ')})` : ''}`
   }
   const list = andList(shown.map(item))
-  let text = shown.length === 1 ? `There's a train leaving at ${list}.` : `There are trains leaving at ${list}.`
+  const from = once ? `from ${plats.length === 1 ? `platform ${plats[0]}` : `platforms ${plats[0]} and ${plats[1]}`} ` : ''
+  let text = shown.length === 1 ? `There's a train leaving ${from}at ${list}.` : `There are trains leaving ${from}at ${list}.`
+  // "already" dropped (John, November 18th 2026).
   if (rest) text += rest === 1
-    ? " We're only showing you the next ten departures, there's another one running later which also has a platform showing already."
-    : ` We're only showing you the next ten departures, there are another ${num(rest)} running later which also have platforms showing already.`
+    ? " We're only showing you the next ten departures, there's another one running later which also has a platform showing."
+    : ` We're only showing you the next ten departures, there are another ${num(rest)} running later which also have platforms showing.`
   return { fold: ts.length === 1 ? 'Show the train with a platform' : 'Show the trains with platforms', text: tenAfterWords(text) }
 }
 

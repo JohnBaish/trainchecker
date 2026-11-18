@@ -541,7 +541,9 @@ they differ.
    "There are trains leaving at 3.12pm (platform 2), 3.34pm (four minutes later than planned, platform 3) and 3.58pm
    (platform 2)." The next ten with a platform, in the order they're expected to leave; cancelled ones and trains with
    no platform left out; then "We're only showing you the next ten departures, there are another 19 running later which
-   also have platforms showing already." Illustration only.
+   also have platforms showing." ("already" dropped, John.) One platform for all of them, or two for three or more
+   trains, said once: "There are trains leaving from platforms 9 and 13 at 6.36pm, 6.37pm (nine minutes later than
+   planned) and 6.51pm." Illustration only. Long journeys' arrivals: Claude's drafts agreed. About names the arrivals.
 9. **Arrivals** (John), after the last week, folded under "At Oxford from Reading": "Trains are expected at 3.05pm (the one
    due to leave Reading at 2.40pm), 3.22pm (the 3pm from Reading, arriving four minutes later than planned), 3.30pm (the
    3.15pm, arriving six minutes later than planned) and 3.45pm (the 3.20pm)." The next hour, up to 10, "and more after

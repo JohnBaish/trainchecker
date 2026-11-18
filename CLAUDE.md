@@ -75,6 +75,9 @@ given its own branch). Before committing there, run
 - **Checked:** `npm run check` 232 + 57 + 73 (new: each case on the real boards; switching off the long-journey rule made
   one fail); `tsc -b`, lint, build; Reading to Paddington at 1200px light, Midgham and Plymouth at 390px with touch: folds
   44px, no errors, no sideways scroll.
+- **Then (John):** "already" dropped; the long-journey drafts agreed; one platform for all, or two for three or more
+  trains, said once at the start; About adds the arrivals. Fast and slower trains in the list: wording shown to John
+  first. Checks 235 + 57 + 73.
 
 ### November 18th 2026: the sharing picture's words in bold; merged and live (Claude Code)
 

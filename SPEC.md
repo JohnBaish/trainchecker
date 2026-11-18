@@ -572,5 +572,5 @@ they differ.
     on its own line, the rest run together with accent-coloured dots; one or two trains stay a sentence. Fast, slower
     and Elizabeth Line trains each get a lead ("Fast trains, from platforms 10 and 11:").
 14. **Share for each list**, separately: "Share these trains" and "Share these arrivals" ("Copy …" on a computer), the
-    words Claude's drafts: "Here are the trains from Reading to Midgham with platforms, as of 8.22am on November 18th.
+    words Claude's drafts, agreed: "Here are the trains from Reading to Midgham with platforms, as of 8.22am on November 18th.
     There are trains leaving at … From Trainchecker." and "Here are the trains due at Midgham from Reading, as of …".

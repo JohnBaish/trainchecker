@@ -58,7 +58,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 18th 2026: the lists laid out, "pm" once, the late trains as a range; Share for each list (branch `claude/laughing-hawking-8d2b6w`; Claude Code)
+### November 18th 2026: the lists laid out, "pm" once, the late trains as a range; Share for each list (branch `claude/laughing-hawking-8d2b6w`, merged the same day; Claude Code)
 
 - **John (the live site, Stoke-on-Trent to Manchester, Oxford to Reading):** `SPEC.md` §12.10 to §12.14: "(or look like
   they will reach)"; the late trains as a range ("mostly about 23" was the middle figure, and "the latest was 78" said
@@ -71,6 +71,8 @@ given its own branch). Before committing there, run
   "am" once and "7pm" kept, the rows, the Share words; the mock-up comparison now only where neither new rule applies);
   `tsc -b`, lint, build; Reading to Paddington at 390px dark and Bath to Bristol at 1200px light: folds 44px, no errors,
   no sideways scroll. Earlier: the previous branch tidied after merging (trial run, then the real run; only `main` left).
+- **John (the preview):** "These changes are all excellent. Please merge them." The Share drafts agreed with them. Merged
+  with this note in the same push (one deployment).
 
 ### November 18th 2026: the trains with platforms, and Arrivals (branch `claude/laughing-hawking-8d2b6w`, merged the same day; Claude Code)
 

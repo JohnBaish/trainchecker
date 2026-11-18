@@ -666,8 +666,20 @@ export function arrivals(a: Analysis): { heading: string; text: string } {
       : t.eta && t.eta !== 'On time' && !isTime(t.eta) ? ', delayed with no time given yet' : ''
     return `${t12(when(t))} (${which}${extra})`
   }
-  const more = coming.length > shown.length ? ', and more after that' : ''
-  const text = shown.length === 1 ? `One train is expected, at ${item(shown[0], 0)}${more}.` : `Trains are expected at ${andList(shown.map(item))}${more}.`
+  // The hour said up front (John, November 18th 2026): "The first ten trains in the next hour are
+  // expected at …"; "The trains arriving in the next hour are expected at …"; "There are two trains
+  // arriving in the next hour. They're expected at …"; "The only train arriving in the next hour is
+  // expected at …". On a long journey Trainchecker can't see them all, so it says what it can see
+  // (Claude's draft, for John), then the note.
+  const list = andList(shown.map(item))
+  const n = inHour.length
+  const text = partial
+    ? (n === 1 ? `Trainchecker can see one train arriving in the next hour, expected at ${list}.`
+      : `Trainchecker can see ${num(n)} trains arriving in the next hour. ${n > 10 ? 'The first ten are' : "They're"} expected at ${list}.`)
+    : n > 10 ? `The first ten trains in the next hour are expected at ${list}.`
+    : n > 2 ? `The trains arriving in the next hour are expected at ${list}.`
+    : n === 2 ? `There are two trains arriving in the next hour. They're expected at ${list}.`
+    : `The only train arriving in the next hour is expected at ${list}.`
   return { heading, text: tenAfterWords(text + (partial ? note : '')) }
 }
 

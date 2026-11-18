@@ -82,6 +82,9 @@ given its own branch). Before committing there, run
   across them all. `SPEC.md` §12.8. Checks 237 + 57 + 73; Reading to Paddington at 390px: no errors, no sideways scroll.
 - **John:** with one kind of train on three or more platforms, the list stays in time order, each train with its
   platform (Liverpool Street to Stratford), rather than grouped by platform. "The branch looks really good."
+- **John:** arrivals say the hour up front ("The first ten trains in the next hour…", "The trains arriving in the next
+  hour…", "There are two trains…", "The only train…"); "and more after that" dropped. Long journeys: "Trainchecker can
+  see three trains arriving in the next hour…" (Claude's draft, for John). Checks 241 + 57 + 73.
 
 ### November 18th 2026: the sharing picture's words in bold; merged and live (Claude Code)
 

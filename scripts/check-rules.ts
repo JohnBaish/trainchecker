@@ -231,7 +231,12 @@ eq('platforms fold: two platforms for three or more, said once (John)', platform
 eq('platforms fold: two trains, two platforms, each its own', platformTrains(mdg)!.text, 'There are trains leaving at 9.13am (platform 12A) and 10.12am (platform 2).')
 eq('platforms fold: cancelled left out', platformTrains(manMia)!.text.includes('6.28pm'), false)
 eq('arrivals: the brackets in sequence (John)', arrivals(rp9).text.split('), ').slice(0, 3).join('), ') + ')',
-  'Trains are expected at 9.01pm (the one due to leave Reading at 8.37pm), 9.08pm (the 8.44pm from Reading), 9.13pm (the 8.47pm, arriving three minutes later than planned)')
+  'The first ten trains in the next hour are expected at 9.01pm (the one due to leave Reading at 8.37pm), 9.08pm (the 8.44pm from Reading), 9.13pm (the 8.47pm, arriving three minutes later than planned)')
+const soon = (k: number) => changed('RDG-MDG', (sv) => { sv.filter((x) => x.sta && !x.ata).slice(0, k).forEach((t, i) => { t.std = `08:${30 + i * 10}`; t.sta = `08:${45 + i * 10}`; t.eta = 'On time'; t.cancelled = false }) })
+eq('arrivals: one, "The only train" (John)', arrivals(soon(1)).text, 'The only train arriving in the next hour is expected at 8.45am (the one due to leave Reading at 8.30am).')
+eq('arrivals: two (John)', arrivals(soon(2)).text, "There are two trains arriving in the next hour. They're expected at 8.45am (the one due to leave Reading at 8.30am) and 8.55am (the 8.40am from Reading).")
+eq('arrivals: three to ten (John)', arrivals(analyse(snapOf(raw('20261117-2059-PAD-RDG.json')))).text.startsWith('The trains arriving in the next hour are expected at 9.11pm'), true)
+eq('arrivals: long journey, what it can see (draft)', arrivals(A('TVP-PAD')).text, "Trainchecker can see one train arriving in the next hour, expected at 9.21am (the one due to leave Tiverton Parkway at 6.53am). Trains that left Tiverton Parkway more than two hours ago aren't included, as Trainchecker can't see them.")
 eq('arrivals: the heading', arrivals(rp9).heading, 'At London Paddington from Reading')
 eq('arrivals: none in the next hour', arrivals(mdg).text, 'No direct trains from Reading are expected at Midgham in the next hour.')
 const mdgGone = changed('RDG-MDG', (sv) => { const t = sv.find((x) => x.sta)!; t.std = '08:40'; t.sta = '08:55'; t.ata = null; t.eta = null; t.cancelled = true })

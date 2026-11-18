@@ -149,7 +149,7 @@ eq('Manchester: disrupted, not badly', [manMia.verdict, manMia.badly], ['prepare
 eq('platforms: one kind of train, as before', platforms(bthBri), 'Most trains are currently going from platform 1.')
 eq('the train, in the summary (John)', nextFour(bthBri)!.lines[1], 'Two are cancelled, because of a passenger being taken ill on a train and a fault on the train. The rest are expected on time.')
 eq('trains an hour (John: "an hour" after every group)', nextFour(rdgPad)!.lines[0], 'There are eight fast trains an hour from Reading to London Paddington in the next four hours, two slower ones an hour (taking about 40 minutes) and about two an hour on the Elizabeth Line.')
-eq('platforms by kind of train (John)', platforms(rdgPad), 'Most fast trains are currently going from platforms 10 and 11, with slower ones using mostly platform 15A and Elizabeth Line trains using platforms 13 and 14.')
+eq('platforms by kind of train (John)', platforms(rdgPad), 'Most fast trains are currently going from platforms 10 and 11, with slower ones mostly using platform 15A and Elizabeth Line trains using platforms 13 and 14.')
 eq('trains an hour, no real split', [nextFour(bthBri)!.lines[0], nextFour(manMia)!.lines[0]], ['There are about five trains an hour from Bath Spa to Bristol Temple Meads in the next four hours.', 'There are about eight trains an hour from Manchester Piccadilly to Manchester Airport in the next four hours.'])
 eq('eight or fewer: the count', nextFour(kgxYrk)!.lines[0], 'There are five trains from London Kings Cross to York in the next four hours.')
 const padRdg9 = analyse(snapOf(raw('20261117-2059-PAD-RDG.json')))

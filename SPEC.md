@@ -383,3 +383,18 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
     platforms a group, covering at least two thirds of its trains with a platform; "Most" or
     "mostly" unless they cover all; "10A" counted as 10 where plain 10 is in use. One kind of
     train: as before.
+25. **"Mostly using"** rather than "using mostly" in the platforms sentence (John).
+26. **"On this route"** (John): "Planned engineering work and changes on this route from National
+    Rail, to the end of this weekend:". The sentence when nothing is listed keeps "for this
+    journey".
+27. **The line before possible changes** (John), in the same type as the planned line: "Other
+    changes involving London Paddington which might also affect this route:"; one entry: "Another
+    change involving …"; with nothing listed above: "Changes involving … which might affect this
+    route:" or "A change involving …" (Claude's, to match). Replaces §10.4's sentence.
+28. **What might affect the journey, tightened** (after John found Southampton to Bournemouth shown
+    for Basingstoke to Southampton Central): "the route" is now only the stations between A and B;
+    an item is left out when its advice says the journey's trains carry on ("Trains will continue
+    to run between Reading and Southampton Central", "other services are available"); otherwise
+    it stays if it names no other station, a station between A and B, or its advice has a sentence
+    about trains between A and B that stop there (not "via Bath Spa (not calling)"). Reading to
+    Newbury now drops out for Paddington to Reading.

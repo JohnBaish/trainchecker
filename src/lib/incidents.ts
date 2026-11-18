@@ -110,11 +110,13 @@ const words = (i: Pick<Item, 'summary'> & Partial<Pick<Item, 'advice'>> & Partia
 
 /** An incident that doesn't count by the rule but may still affect the journey (John, November
  *  17th 2026: say so in a friendly way): it names A or B, though not as the rule needs, and
- *  (November 18th 2026) it could touch this journey's trains. With the route (the stations the
- *  trains from A call at, from the live board), work naming other stations counts only if one of
- *  them is on it, so "Reading to Basingstoke" drops out for Reading to London Paddington. One
- *  amended train counts when it leaves from A or ends at B and its advice names the other end
- *  ("…will terminate at Reading"), as it may then run between them. */
+ *  (November 18th 2026) it could touch this journey's trains: it names no other station, or one
+ *  the trains call at between A and B (`route`, from the live board), or its advice has a sentence
+ *  about trains between A and B that doesn't say they carry on as normal. So "Reading to
+ *  Basingstoke" drops out for Reading to London Paddington, and Southampton to Bournemouth for
+ *  Basingstoke to Southampton Central: its advice says "Trains will continue to run between
+ *  Reading and Southampton Central", and a sentence like that, naming A or B, means it's left out. One amended train counts when it leaves from A or ends at B and its
+ *  advice names the other end ("…will terminate at Reading"). */
 export function mayAffect(inc: Pick<Item, 'summary'> & Partial<Pick<Item, 'advice'>> & Partial<Pick<Incident, 'description'>>, from: string, to: string, route?: string[]): boolean {
   if (matches(inc, from, to)) return false
   const one = singleTrain(inc.summary)
@@ -125,8 +127,21 @@ export function mayAffect(inc: Pick<Item, 'summary'> & Partial<Pick<Item, 'advic
   const named = stationsIn(inc.summary).map((x) => x.code)
   if (!named.includes(from) && !named.includes(to)) return false
   const others = named.filter((c) => c !== from && c !== to)
-  return !route || !others.length || others.some((c) => route.includes(c))
+  const all = adviceLines(words(inc)).flatMap(sentences)
+  // National Rail saying the journey's trains carry on ("Trains will continue to run between Reading
+  // and Southampton Central"): not shown.
+  const fine = (l: string) => FINE.test(l) && !/reduced|fewer|amended|revised|delay|later|earlier|bus/i.test(l)
+  if (all.some((l) => fine(l) && stationsIn(l).some((x) => x.code === from || x.code === to))) return false
+  if (!route || !others.length || others.some((c) => route.includes(c))) return true
+  return all.some((l) => {
+    // "…via Bath Spa (not calling)" passes through without stopping.
+    if (ALTERNATIVE.test(l) || FINE.test(l) || /not calling/i.test(l)) return false
+    const c = stationsIn(l).map((x) => x.code), i = c.indexOf(from), j = c.indexOf(to)
+    return i >= 0 && j >= 0 && (j > i || /\bbetween\b/i.test(l))
+  })
 }
+
+const FINE = /continue to run|as normal|as usual|not (be )?affected|unaffected|(are|is|remain) available|still run/i
 
 const text = (h: string) => h.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ')
 

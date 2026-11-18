@@ -66,12 +66,15 @@ eq('when: into another year', w(true, '2026-06-11T23:00:00Z', '2027-04-30T22:59:
 eq('when: a summer midnight start (BST)', label(whenLabel({ planned: true, start: '2026-07-18T23:00:00Z', end: '2026-07-19T22:59:00Z' }, new Date('2026-07-15T12:00:00Z'))), 'On Sunday (July 19th)')
 const sun = new Date('2026-11-22T23:59:59Z')
 eq('days sentences (John: this weekend; today on a Sunday)', [daysHeading(false), daysHeading(true), plannedIntro(sun, tue), noPlanned(sun, tue), plannedIntro(sun, new Date('2026-11-22T10:00:00Z')), noPlanned(sun, new Date('2026-11-22T10:00:00Z'))], ['The days ahead', 'Disruption now, and the days ahead',
-  'Planned engineering work and changes from National Rail, to the end of this weekend:',
+  'Planned engineering work and changes on this route from National Rail, to the end of this weekend:',
   "National Rail isn't listing any planned engineering work for this journey between now and the end of this weekend.",
-  'Planned engineering work and changes from National Rail, to the end of today:',
+  'Planned engineering work and changes on this route from National Rail, to the end of today:',
   "National Rail isn't listing any planned engineering work for this journey between now and the end of today."])
-eq('may affect, one', mayIntro(1, 'London Victoria', 'Brighton', ['Brighton']), 'This might affect some trains from London Victoria to Brighton too, as it involves Brighton:')
-eq('may affect, several', mayIntro(4, 'Reading', 'London Paddington', ['Reading', 'London Paddington']), 'These might affect some trains from Reading to London Paddington too, as they involve Reading or London Paddington:')
+eq('may affect (John, November 18th 2026)', [mayIntro(1, ['Southampton Central'], false), mayIntro(3, ['London Paddington'], true), mayIntro(1, ['London Paddington'], true), mayIntro(2, ['Reading', 'London Paddington'], false)], [
+  'A change involving Southampton Central which might affect this route:',
+  'Other changes involving London Paddington which might also affect this route:',
+  'Another change involving London Paddington which might also affect this route:',
+  'Changes involving Reading or London Paddington which might affect this route:'])
 
 // What the function sends, and the page's split, on the saved feed.
 const days = liveItems(gunzipSync(readFileSync(new URL('../design/mockups/snapshots/20261117-2223-incidents.xml.gz', import.meta.url))).toString('utf8'), now)
@@ -115,7 +118,16 @@ eq('gist: never more than two sentences, never undefined', days.items.every((i) 
 const route = (f: string) => { const r = JSON.parse(readFileSync(new URL(`../design/mockups/snapshots/${f}`, import.meta.url), 'utf8')); return trim(r.from, r.to, r.taken, r.boards.map((b: { board: RawBoard }) => b.board)).route }
 const rdgPad = route('20261117-1824-RDG-PAD.json'), padRdg = route('20261117-1824-PAD-RDG.json')
 eq('route: Reading to Basingstoke and Newbury drop out for Reading to Paddington', [mayAffect(it(/Reading to Basingstoke/), 'RDG', 'PAD', rdgPad), mayAffect(it(/between Reading and Newbury/), 'RDG', 'PAD', rdgPad)], [false, false])
-eq('route: Reading to Newbury stays for Paddington to Reading (Penzance trains)', mayAffect(it(/between Reading and Newbury/), 'PAD', 'RDG', padRdg), true)
+// Since the route is only the stations between A and B (John, November 18th 2026), work beyond B
+// drops out unless its advice names the journey's trains: Reading to Newbury now drops out for
+// Paddington to Reading (its advice retimes Penzance trains without naming Reading).
+eq('route: work beyond B drops out (Reading to Newbury, for Paddington to Reading)', mayAffect(it(/between Reading and Newbury/), 'PAD', 'RDG', padRdg), false)
+eq('route: Southampton to Bournemouth drops out for Basingstoke to Southampton Central (John)', mayAffect(it(/Southampton Central and Bournemouth/), 'BSK', 'SOU', ['WIN', 'SOA', 'MCV']), false)
+const bthBriRoute = route('20261117-1824-BTH-BRI.json')
+eq('may: a night bus from Bath Spa to Bristol shows (Westbury to Bristol buses)', mayAffect(it(/Westbury \/ Frome/), 'BTH', 'BRI', bthBriRoute), true)
+eq('may: "via Bath Spa (not calling)" does not (Weston-super-Mare)', mayAffect(it(/Weston-super-Mare \/ Taunton on/), 'BTH', 'BRI', bthBriRoute), false)
+eq('may: "other services are available" is reassurance (Blackpool, for the Airport)', mayAffect(it(/Manchester Airport and Blackpool/), 'MAN', 'MIA', route('20261117-1824-MAN-MIA.json')), false)
+eq('route: Haywards Heath (between) stays for Victoria to Brighton', mayAffect(it(/Haywards Heath and Brighton/), 'VIC', 'BTN', ['CLJ', 'ECR', 'GTW', 'TBD', 'HHE', 'BUG', 'HSK', 'PRP']), true)
 eq('route: single services stay when their advice names the other end', [mayAffect(it(/05:31 Bedwyn/), 'RDG', 'PAD', rdgPad), mayAffect(it(/23:45 Didcot/), 'RDG', 'PAD', rdgPad)], [true, true])
 eq('early or late', [earlyOrLate(it(/05:31 Bedwyn/)), earlyOrLate(it(/23:45 Didcot/)), earlyOrLate(it(/08:37 Reading/))], [true, true, false])
 const at606 = new Date('2026-11-18T06:06:00Z')

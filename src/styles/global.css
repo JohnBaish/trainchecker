@@ -129,6 +129,7 @@ a { color: var(--color-accent-700); text-underline-offset: 3px; }
 .inc { border-top: 1px solid var(--color-divider); padding: var(--space-3) 0; }
 .inc:first-of-type { border-top: 0; }
 .inc .when { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; color: var(--color-accent-700); margin: 0 0 2px; }
+.days .may-intro { margin-top: var(--space-2); }
 .when-date { text-transform: none; letter-spacing: 0; font-weight: 600; }
 .inc .when.now { color: var(--s-prepared); }
 /* National Rail's advice in two sentences, above the fold (John, November 18th 2026). */

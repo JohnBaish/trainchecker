@@ -109,7 +109,7 @@ export function DaysAhead({ days, journey: p }: { days: DaysState; journey: Jour
       <Items items={j.planned} now={now} j={p} />
       {j.may.length > 0 && (
         <>
-          <p className="sub">{mayIntro(entries(j.may), p.from, p.to, j.involved)}</p>
+          <p className="may-intro">{mayIntro(entries(j.may), j.involved, j.now.length + j.planned.length > 0)}</p>
           <Items items={j.may} now={now} j={p} />
         </>
       )}

@@ -54,6 +54,21 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: "mostly using", "on this route", the line before possible changes; what might affect tightened (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John (iPhone, the preview at 7.37am, Basingstoke to Southampton Central):** "mostly using";
+  "on this route"; the possible-changes sentence reworded, in the planned line's type; and the
+  Southampton to Bournemouth work shown though its advice says trains continue to run between
+  Reading and Southampton Central. `SPEC.md` §10.25 to §10.28.
+- **Built:** `api/live.ts`'s `route` is now the stations before B only; `mayAffect()` leaves out
+  items whose advice says the trains carry on, and otherwise looks for a sentence about trains
+  between A and B that stop there; `mayIntro()` reworded (`.may-intro`).
+- **Checked:** `npm run check` 163 + 50 + 68 (new: Southampton dropped for Basingstoke, Haywards
+  Heath kept for Victoria, Westbury buses kept and Weston dropped for Bath, Blackpool dropped for
+  the Airport; the new sentences); `tsc -b`, lint, build; the section for Reading to Paddington
+  (390px) and Bath to Bristol (1200px, dark) (`design/previews/stage4/days-v3-*`): no errors, no
+  sideways scroll.
+
 ### November 18th 2026: "an hour" throughout, dates as people say them, platforms by kind of train (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **John:** approved the last round's drafts; "an hour" after every group; "ON SUNDAY (November

@@ -33,7 +33,8 @@ export type Service = {
   ata: string | null // actual arrival at B, once there
 }
 
-/** `route`: every station the trains from A to B call at after A, including beyond B, so "The
+/** `route`: every station the trains from A call at before B (John, November 18th 2026: work
+ *  beyond B, such as Southampton to Bournemouth for Basingstoke to Southampton, can't touch it), so "The
  *  days ahead" can tell whether work elsewhere could touch this journey (John, November 18th 2026). */
 export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route: string[] }
 
@@ -53,7 +54,8 @@ export function trim(from: string, to: string, taken: string, boards: RawBoard[]
   for (const board of boards) {
     for (const s of board.trainServices || []) {
       const cps = (s.subsequentCallingPoints || []).flatMap((g) => g.callingPoint || [])
-      for (const c of cps) if (c.crs) route.add(c.crs)
+      const at = cps.findIndex((c) => c.crs === to)
+      for (const c of at >= 0 ? cps.slice(0, at) : []) if (c.crs) route.add(c.crs)
       const p = cps.find((c) => c.crs === to) || {}
       seen.set(s.serviceID, {
         id: s.serviceID, std: s.std, etd: s.etd ?? null, platform: s.platform || null,

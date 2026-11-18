@@ -323,7 +323,7 @@ export function platformsByKind(a: Analysis): string | null {
   if (parts.length < 2) return null
   const name = (k: Group['kind'], first: boolean) => (k === 'elizabeth' ? 'Elizabeth Line trains' : k === 'fast' ? 'fast trains' : first ? 'slower trains' : 'slower ones')
   const [f, ...rest] = parts
-  const others = rest.map((p) => `${name(p.kind, false)} using ${p.most ? 'mostly ' : ''}${p.text}`)
+  const others = rest.map((p) => `${name(p.kind, false)} ${p.most ? 'mostly ' : ''}using ${p.text}`)
   return `${f.most ? 'Most ' : ''}${f.most ? name(f.kind, true) : Cap(name(f.kind, true))} ${f.most ? 'are' : 'are'} currently going from ${f.text}, with ${others.length > 1 ? `${others.slice(0, -1).join(', ')} and ${others[others.length - 1]}` : others[0]}.`
 }
 
@@ -518,12 +518,16 @@ export const daysHeading = (now: boolean) => (now ? 'Disruption now, and the day
 /** The line before planned work, and the line when there's none (agreed at the mock-ups). */
 /** "this weekend", or "today" on a Sunday (John, November 18th 2026: as people say it, no date). */
 const weekend = (until: Date, now: Date) => (dayName(until) === dayName(now) ? 'today' : 'this weekend')
-export const plannedIntro = (until: Date, now: Date) => `Planned engineering work and changes from National Rail, to the end of ${weekend(until, now)}:`
+export const plannedIntro = (until: Date, now: Date) => `Planned engineering work and changes on this route from National Rail, to the end of ${weekend(until, now)}:`
 export const noPlanned = (until: Date, now: Date) => `National Rail isn't listing any planned engineering work for this journey between now and the end of ${weekend(until, now)}.`
-/** Before what may affect the journey (John, November 17th 2026: option 2): "These might affect
- *  some trains from London Victoria to Brighton too, as they involve Brighton:" */
-export function mayIntro(n: number, from: string, to: string, involved: string[]): string {
-  return `${n === 1 ? 'This' : 'These'} might affect some trains from ${from} to ${to} too, as ${n === 1 ? 'it involves' : 'they involve'} ${involved.join(' or ')}:`
+/** Before what may affect the journey, in the same type as the line above it (John, November 18th
+ *  2026): "Other changes involving London Paddington which might also affect this route:"; one:
+ *  "Another change involving …"; with nothing listed above: "Changes involving … which might affect
+ *  this route:" or "A change involving …". */
+export function mayIntro(n: number, involved: string[], above: boolean): string {
+  const who = involved.join(' or ')
+  if (above) return `${n === 1 ? 'Another change' : 'Other changes'} involving ${who} which might also affect this route:`
+  return `${n === 1 ? 'A change' : 'Changes'} involving ${who} which might affect this route:`
 }
 
 /** The verdict when no train runs in the next four hours because National Rail says the line is

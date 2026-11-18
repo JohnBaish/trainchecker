@@ -6,7 +6,7 @@
 // more single services very early or late are grouped under one sentence (John, November 18th).
 import type { Days, Item } from '../../api/days.ts'
 import type { DaysJourney as Journey } from '../lib/incidents.ts'
-import { earlyOrLate, entries, forJourney, gist } from '../lib/incidents.ts'
+import { earlyOrLate, entries, forJourney, gist, plainSummary } from '../lib/incidents.ts'
 import { Icon } from './Icon.tsx'
 import { daysHeading, mayIntro, noPlanned, plannedIntro, singlesKicker, singlesLine, whenLabel } from '../lib/sentences.ts'
 
@@ -27,7 +27,7 @@ function Incident({ i, now, j }: { i: Item; now: Date; j: Journey }) {
   return (
     <div className="inc">
       <p className={`when${i.planned ? '' : ' now'}`}>{whenLabel(i, now)}</p>
-      <h4>{i.summary}</h4>
+      <h4>{plainSummary(i.summary)}</h4>
       {g.length > 0 && <p className="gist">{g.join(' ')}</p>}
       {(i.advice || i.link) && (
         <details className="advice">
@@ -52,7 +52,7 @@ function Singles({ items, now, j }: { items: Item[]; now: Date; j: Journey }) {
           {items.map((i) => (
             <div key={i.id} className="single">
               <p className="when">{whenLabel(i, now)}</p>
-              <p><b>{i.summary}</b></p>
+              <p><b>{plainSummary(i.summary)}</b></p>
               <p>{gist(i, j.fromCrs, j.toCrs).join(' ')}</p>
               <details className="advice">
                 <summary>National Rail's advice <Icon name="down" /></summary>
@@ -99,7 +99,7 @@ export function DaysAhead({ days, journey: p }: { days: DaysState; journey: Jour
     <section className="card sec block days">
       <h3>{daysHeading(j.now.length > 0)}</h3>
       <Items items={j.now} now={now} j={p} />
-      <p className={j.now.length ? 'sub' : ''}>{j.planned.length ? plannedIntro(until) : noPlanned(until)}</p>
+      <p className={j.now.length ? 'sub' : ''}>{j.planned.length ? plannedIntro(until, now) : noPlanned(until, now)}</p>
       <Items items={j.planned} now={now} j={p} />
       {j.may.length > 0 && (
         <>

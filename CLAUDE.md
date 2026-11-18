@@ -54,6 +54,24 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: trains an hour, the train list, "this weekend", summaries in the house style (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John:** agreed the principles for trains an hour (one "an hour", one "and", journey times for
+  the middle groups), the train list with the reason and company after the status, "this weekend"
+  with no date and "National Rail isn't listing any…", summaries reworded, "slower";
+  "Elizabeth Line" with a capital L as National Rail shows it (told TfL's own style is a small l).
+  `SPEC.md` §10.16 to §10.20.
+- **Built:** `speedGroups()`, `trainsAnHour()`, `companyName()`, `why()` in `sentences.ts`; the
+  list in `JourneyView.tsx`; `plainSummary()` and `houseStyle()` in `incidents.ts`.
+- **Found:** Euston to Milton Keynes's companies are mixed on the real board (a 32-minute London
+  Northwestern train, Avanti trains of 55 to 58 minutes in the evening), so neither is named there;
+  the board's "LNR & WMR" is two brands under one code.
+- **Checked:** `npm run check` 166 + 50 + 62 (the sentences on every saved board; the summaries,
+  including Limehouse's date after a time kept); `tsc -b`, lint, build; whole page fed the 6.24pm
+  board and the 6.35am feed as at 6.06am (`design/previews/stage4/page-*`), 1200px and 390px: no
+  errors, no sideways scroll.
+- Key saved here now: Knowledgebase Incidents (swapped back).
+
 ### November 18th 2026: John's notes on Reading to Paddington at 6.42am; first changes (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **John:** the three drafts agreed; a gradual pass to make the page read naturally, some points

@@ -175,7 +175,7 @@ export function gist({ advice, summary }: Pick<Item, 'advice' | 'summary'>, from
     second = second.replace(/^As a result,?\s+/i, '').replace(/,? and (will )?run (later|earlier) than usual throughout(?=\.$)/i, '')
     out.push(second[0].toUpperCase() + second.slice(1))
   }
-  return out.map((x) => wordNumbers(/[.!?]$/.test(x) ? x : x + '.'))
+  return out.map((x) => houseStyle(/[.!?]$/.test(x) ? x : x + '.'))
 }
 
 export type DaysJourney = { fromCrs: string; toCrs: string; from: string; to: string; route?: string[] }
@@ -230,4 +230,43 @@ export function closedNow(items: Item[], now: Date): 'buses' | 'none' | null {
     if (/\bno\b[^.]{0,40}\btrains\b/i.test(s)) return 'none'
   }
   return null
+}
+
+// ---- National Rail's summaries in the house style (John, November 18th 2026) ----
+
+const DAY = '(?:Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day'
+const MONTH = '(?:January|February|March|April|May|June|July|August|September|October|November|December)'
+const DATE = `${DAY} \\d{1,2}(?: ${MONTH})?(?: \\d{4})?`
+const ordinal = (d: number) => d + (d % 10 === 1 && d !== 11 ? 'st' : d % 10 === 2 && d !== 12 ? 'nd' : d % 10 === 3 && d !== 13 ? 'rd' : 'th')
+const clock12 = (h: number, m: number) => (m === 0 && h === 12 ? 'midday' : m === 0 && h === 0 ? 'midnight' : `${h % 12 || 12}${m ? '.' + String(m).padStart(2, '0') : ''}${h < 12 ? 'am' : 'pm'}`)
+
+/** A summary as the page shows it (matching always uses National Rail's own words):
+ *  1. the date at the end dropped, as the line above says when ("…on Sunday 22 November",
+ *     "…from Monday 16 to Thursday 19 November"), but "until further notice" kept;
+ *  2. other dates in house style ("Wednesday November 18th"), times too ("5.31am");
+ *  3. National Rail's slashes as words: "to / from / via" → "to, from and through", "to / from" →
+ *     "to and from", other lists "A, B or C";
+ *  4. numbers one to nine in words where they count something. */
+export function plainSummary(summary: string): string {
+  let s = summary.trim()
+  s = s.replace(new RegExp(`\\s+from ${DATE}(?: ${MONTH})?(?: \\d{4})? until further notice$`), ' until further notice')
+  // Not after a time ("…to 04:40 on Monday 23 November"), where the date belongs to the time.
+  const cut = s.replace(new RegExp(`\\s+(?:on|from|between) ${DATE}(?:,? (?:and|to|until) ${DATE})*$`), '')
+  if (!/\d\d:\d\d$/.test(cut)) s = cut
+  s = houseStyle(s)
+  s = s.replace(/\bto \/ from \/ via\b/g, 'to, from and through').replace(/\bto \/ from\b/g, 'to and from')
+  // Other "A / B / C" lists, a word or name either side.
+  s = s.replace(/((?:[^\s/][^/]*?)(?: \/ [^/]+?)+)(?=$| (?:on|from|via|between|and|until|expected|before|after|service|services|trains?)\b|[,:.])/g, (m) => {
+    const parts = m.split(' / ')
+    return parts.length > 1 ? `${parts.slice(0, -1).join(', ')} or ${parts[parts.length - 1]}` : m
+  })
+  return s
+}
+
+/** Dates, times and numbers in National Rail's words in the house style: "Wednesday 18 November"
+ *  → "Wednesday November 18th", "06:39" → "6.39am", "2 out of 4" → "two out of four". */
+export function houseStyle(t: string): string {
+  return wordNumbers(t
+    .replace(new RegExp(`\\b(${DAY}) (\\d{1,2}) (${MONTH})(?: (\\d{4}))?`, 'g'), (_, d, n, m, y) => `${d} ${m} ${ordinal(+n)}${y ? ' ' + y : ''}`)
+    .replace(/\b([01]\d|2[0-3]):([0-5]\d)\b/g, (_, h, m) => clock12(+h, +m)))
 }

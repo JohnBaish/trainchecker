@@ -5,7 +5,7 @@
 //
 // Sentences new in stage 3 (not on the mock-ups) were agreed by John on November 17th 2026 too.
 
-import type { Analysis, Train } from './analyse.ts'
+import { diff, type Analysis, type Train } from './analyse.ts'
 
 const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 /** One to nine as words, 10 and above as digits (house style §13). */
@@ -175,14 +175,94 @@ function because(trains: Train[]): string {
   return m ? `, mostly because of ${m}` : ''
 }
 
-export type Row = { time: string; dest: string; operator: string; status: 'cancelled' | 'late' | 'unknown'; what: string; reason: string | null }
+export type Row = { time: string; dest: string; operator: string; status: 'cancelled' | 'late' | 'unknown'; what: string; reason: string | null; why: string }
 export type NextFour = { lines: string[]; rows: Row[]; fold: string | null }
+
+// ---- Trains an hour, fast and slower (John, November 18th 2026) ----
+
+/** A company's name as people know it: "Elizabeth Line" as National Rail writes it, "Lumo" for
+ *  the board's "Lumo Stirling"; a name shared by two brands ("LNR & WMR") isn't named at all. */
+export function companyName(op: string): string | null {
+  // National Rail's capital L (John, November 18th 2026).
+  if (/elizabeth/i.test(op)) return 'Elizabeth Line'
+  if (/&/.test(op)) return null
+  return op.replace(/^Lumo\b.*$/, 'Lumo')
+}
+
+type Group = { k: number; kind: 'fast' | 'slower' | 'elizabeth' | 'all'; company: string | null; mins: number }
+
+/** The next four hours' trains in groups by journey time (to B): fast (no more than a quarter
+ *  longer than the quickest, or within 10 minutes of it), slower, and the Elizabeth Line on its own
+ *  when it's slower. Each group's company when the whole group is one company and the groups
+ *  differ, and its middle journey time. */
+export function speedGroups(a: Analysis): Group[] {
+  const t = a.ahead.filter((x) => x.sta).map((x) => ({ mins: diff(x.std, x.sta!), op: x.operator }))
+  if (!t.length) return [{ k: a.ahead.length, kind: 'all', company: null, mins: 0 }]
+  const q = Math.min(...t.map((x) => x.mins)), lim = Math.max(q * 1.25, q + 10)
+  const eliz = t.filter((x) => /elizabeth/i.test(x.op) && x.mins > lim)
+  const rest = t.filter((x) => !eliz.includes(x))
+  const mid = (g: typeof t) => g.map((x) => x.mins).sort((m, n) => m - n)[Math.floor(g.length / 2)]
+  let fast = rest.filter((x) => x.mins <= lim), slow = rest.filter((x) => x.mins > lim)
+  // Slower only if they usually take 10 minutes or more longer than the fast ones; otherwise one
+  // group (Manchester to the Airport: 13 to 24 minutes, no real split).
+  if (slow.length && fast.length && mid(slow) - mid(fast) < 10) { fast = rest; slow = [] }
+  const raw: [typeof t, Group['kind']][] = slow.length || eliz.length ? [[fast, 'fast'], [slow, 'slower'], [eliz, 'elizabeth']] : [[fast, 'all']]
+  const groups = raw.filter(([g]) => g.length).map(([g, kind]) => {
+    const ops = [...new Set(g.map((x) => x.op))]
+    return { k: g.length, kind, company: ops.length === 1 ? companyName(ops[0]) : null, mins: mid(g), ops }
+  })
+  // Name the companies only when every named group is one company and they differ.
+  const named = groups.length > 1 && groups.every((g) => g.ops.length === 1) && new Set(groups.map((g) => g.ops[0])).size === groups.length
+  return groups.map(({ k, kind, company, mins }) => ({ k, kind, company: kind === 'elizabeth' ? 'Elizabeth Line' : named ? company : null, mins }))
+}
+
+/** "about eight" a hour from k trains in four hours ("about" unless exact); fewer than four: the
+ *  real count, "three … in all". */
+const perHour = (k: number) => (k % 4 ? 'about ' : '') + num(Math.round(k / 4))
+
+/** The first line of "The next four hours" with more than eight trains (John, November 18th 2026):
+ *  "There are about eight fast trains an hour from Reading to London Paddington in the next four
+ *  hours, about two slower ones (taking about 40 minutes) and two on the Elizabeth Line." "An hour"
+ *  said once; one "and"; journey times only for the groups in the middle (people know the fastest
+ *  and slowest). A group of fewer than four trains: "three on the Elizabeth Line in that time"
+ *  (Claude's draft). */
+export function trainsAnHour(a: Analysis): string | null {
+  if (a.ahead.length <= 8) return null
+  const gs = speedGroups(a)
+  const phrase = (g: Group, i: number) => {
+    const few = g.k < 4
+    const n = few ? num(g.k) : perHour(g.k)
+    const one = few ? g.k === 1 : Math.round(g.k / 4) === 1
+    const time = i > 0 && i < gs.length - 1 ? ` (taking about ${num(Math.round(g.mins / 5) * 5)} minutes)` : ''
+    const all = few && i > 0 ? ' in that time' : ''
+    if (g.kind === 'elizabeth') return `${n} on the Elizabeth Line${all}${time}`
+    const co = g.company ? `${g.company} ` : ''
+    const adj = g.kind === 'all' ? '' : `${g.kind} `
+    if (i === 0) return `${n} ${adj}${co}${one ? 'train' : 'trains'}${few ? '' : ' an hour'} from ${a.from} to ${a.to} in the next four hours`
+    return `${n} ${adj}${co}${one ? (co ? 'train' : 'one') : (co ? 'trains' : 'ones')}${all}${time}`
+  }
+  const ps = gs.map(phrase)
+  const list = ps.length > 1 ? `${ps.slice(0, -1).join(', ')} and ${ps[ps.length - 1]}` : ps[0]
+  return `There ${gs[0].k === 1 || (gs[0].k >= 4 && Math.round(gs[0].k / 4) === 1) ? 'is' : 'are'} ${list}.`
+}
+
+/** What follows "Cancelled" or "Expected 6.45pm, 7 minutes late" on the same line, in the
+ *  explanation's font (John, November 18th 2026): " because of a fault on this train (Great Western
+ *  Railway)." National Rail's own words when they can't follow "because of"; the company alone when
+ *  there's no reason. */
+export function why(reason: string | null, operator: string): string {
+  const co = `(${companyName(operator) ?? operator})`
+  const r = reasonText(reason)
+  if (!r) return ` ${co}.`
+  if (r !== reason) return ` because of ${r.replace(/[.\s]+$/, '')} ${co}.`
+  return `. ${Cap(r.replace(/[.\s]+$/, ''))} ${co}.`
+}
 
 export function nextFour(a: Analysis): NextFour | null {
   if (a.verdict === 'none') return null
   const n = a.ahead.length
   const v = (k: number) => (k === 1 ? 'is' : 'are')
-  const lines = [n === 1 ? `There's one train from ${a.from} to ${a.to} in the next four hours.` : `There are ${num(n)} trains from ${a.from} to ${a.to} in the next four hours.`]
+  const lines = [trainsAnHour(a) ?? (n === 1 ? `There's one train from ${a.from} to ${a.to} in the next four hours.` : `There are ${num(n)} trains from ${a.from} to ${a.to} in the next four hours.`)]
   const onTime = a.ahead.filter((s) => s.late !== null && s.late <= 3).length
   const little = a.ahead.filter((s) => s.late !== null && s.late > 3 && s.late <= 5)
   if (onTime === n) lines.push(n === 1 ? "It's expected on time." : n === 2 ? 'Both are expected on time.' : 'All are expected on time.')
@@ -205,6 +285,7 @@ export function nextFour(a: Analysis): NextFour | null {
       status: s.cancelled ? 'cancelled' : s.unknown ? 'unknown' : 'late',
       what: s.cancelled ? 'Cancelled' : s.unknown ? 'Delayed, no time given yet' : `Expected ${t12(s.etd!)}, ${s.late} minutes late`,
       reason: r ? Cap(r) + '.' : null,
+      why: why(s.reason, s.operator),
     }
   })
   const fold = !rows.length ? null : rows.length === 1 ? "Show the train that isn't on time" : `Show the ${num(rows.length)} trains that aren't on time`
@@ -376,8 +457,10 @@ export function whenLabel(i: { planned: boolean; start: string | null; end: stri
 /** The section's heading (agreed at the mock-ups). */
 export const daysHeading = (now: boolean) => (now ? 'Disruption now, and the days ahead' : 'The days ahead')
 /** The line before planned work, and the line when there's none (agreed at the mock-ups). */
-export const plannedIntro = (until: Date) => `Planned engineering work and changes from National Rail, to the end of ${dayName(until)}:`
-export const noPlanned = (until: Date) => `National Rail lists no planned engineering work for this journey between now and the end of ${dayName(until)}.`
+/** "this weekend", or "today" on a Sunday (John, November 18th 2026: as people say it, no date). */
+const weekend = (until: Date, now: Date) => (dayName(until) === dayName(now) ? 'today' : 'this weekend')
+export const plannedIntro = (until: Date, now: Date) => `Planned engineering work and changes from National Rail, to the end of ${weekend(until, now)}:`
+export const noPlanned = (until: Date, now: Date) => `National Rail isn't listing any planned engineering work for this journey between now and the end of ${weekend(until, now)}.`
 /** Before what may affect the journey (John, November 17th 2026: option 2): "These might affect
  *  some trains from London Victoria to Brighton too, as they involve Brighton:" */
 export function mayIntro(n: number, from: string, to: string, involved: string[]): string {

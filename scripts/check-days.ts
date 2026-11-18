@@ -4,7 +4,7 @@
 import { readFileSync } from 'node:fs'
 import { trim, type RawBoard } from '../api/live.ts'
 import { gunzipSync } from 'node:zlib'
-import { readIncidents, matches, current, endOfSunday, stationsIn, cleanAdvice, liveItems, forJourney, closedNow, gist, mayAffect, earlyOrLate, entries, wordNumbers, type Incident } from '../src/lib/incidents.ts'
+import { readIncidents, matches, current, endOfSunday, stationsIn, cleanAdvice, liveItems, forJourney, closedNow, gist, mayAffect, earlyOrLate, entries, wordNumbers, plainSummary, type Incident } from '../src/lib/incidents.ts'
 import { whenLabel, mayIntro, noPlanned, plannedIntro, daysHeading, closedVerdict, closedShare, singlesLine, singlesKicker } from '../src/lib/sentences.ts'
 
 let passed = 0, failed = 0
@@ -62,9 +62,11 @@ eq('when: several days', w(true, '2026-11-21T00:00:00Z', '2026-11-24T23:59:00Z')
 eq('when: into another year', w(true, '2026-06-11T23:00:00Z', '2027-04-30T22:59:00Z'), 'Now until Friday April 30th 2027')
 eq('when: a summer midnight start (BST)', whenLabel({ planned: true, start: '2026-07-18T23:00:00Z', end: '2026-07-19T22:59:00Z' }, new Date('2026-07-15T12:00:00Z')), 'Sunday July 19th')
 const sun = new Date('2026-11-22T23:59:59Z')
-eq('days sentences', [daysHeading(false), daysHeading(true), plannedIntro(sun), noPlanned(sun)], ['The days ahead', 'Disruption now, and the days ahead',
-  'Planned engineering work and changes from National Rail, to the end of Sunday November 22nd:',
-  'National Rail lists no planned engineering work for this journey between now and the end of Sunday November 22nd.'])
+eq('days sentences (John: this weekend; today on a Sunday)', [daysHeading(false), daysHeading(true), plannedIntro(sun, tue), noPlanned(sun, tue), plannedIntro(sun, new Date('2026-11-22T10:00:00Z')), noPlanned(sun, new Date('2026-11-22T10:00:00Z'))], ['The days ahead', 'Disruption now, and the days ahead',
+  'Planned engineering work and changes from National Rail, to the end of this weekend:',
+  "National Rail isn't listing any planned engineering work for this journey between now and the end of this weekend.",
+  'Planned engineering work and changes from National Rail, to the end of today:',
+  "National Rail isn't listing any planned engineering work for this journey between now and the end of today."])
 eq('may affect, one', mayIntro(1, 'London Victoria', 'Brighton', ['Brighton']), 'This might affect some trains from London Victoria to Brighton too, as it involves Brighton:')
 eq('may affect, several', mayIntro(4, 'Reading', 'London Paddington', ['Reading', 'London Paddington']), 'These might affect some trains from Reading to London Paddington too, as they involve Reading or London Paddington:')
 
@@ -100,10 +102,10 @@ eq('closed: Share', closedShare('buses', { from: 'Derby', to: 'Matlock', now: '1
 const it = (re: RegExp) => days.items.find((i) => re.test(i.summary))!
 eq('gist: Reading to Paddington, Sunday (no "throughout")', gist(it(/via London Paddington on Sunday/), 'RDG', 'PAD'), [
   'Engineering work is taking place between London Paddington and Southall, closing two out of four lines throughout the day.',
-  'The 06:20 Reading to London Paddington service will start at 06:39.'])
-eq('gist: the other way', gist(it(/via London Paddington on Sunday/), 'PAD', 'RDG')[1], 'The 06:38 London Paddington to Reading service will not run.')
-eq('gist: a "will:" list joined', gist(it(/23:45 Didcot/), 'RDG', 'PAD')[1], 'The 23:45 Didcot Parkway to London Paddington service will not call at Taplow or Burnham and terminate at Ealing Broadway.')
-eq('gist: a single train', gist(it(/05:31 Bedwyn/), 'RDG', 'PAD')[1], 'The 05:31 Bedwyn to London Paddington will terminate at Reading.')
+  'The 6.20am Reading to London Paddington service will start at 6.39am.'])
+eq('gist: the other way', gist(it(/via London Paddington on Sunday/), 'PAD', 'RDG')[1], 'The 6.38am London Paddington to Reading service will not run.')
+eq('gist: a "will:" list joined', gist(it(/23:45 Didcot/), 'RDG', 'PAD')[1], 'The 11.45pm Didcot Parkway to London Paddington service will not call at Taplow or Burnham and terminate at Ealing Broadway.')
+eq('gist: a single train', gist(it(/05:31 Bedwyn/), 'RDG', 'PAD')[1], 'The 5.31am Bedwyn to London Paddington will terminate at Reading.')
 eq('gist: disruption, between either way round, no ways round it', gist(it(/Disruption between Manchester Airport/), 'MAN', 'MIA')[1], 'Trains between Manchester Airport and Manchester Piccadilly may be delayed by up to 30 minutes or revised or cancelled.')
 eq('gist: Derby to Matlock', gist(it(/Derby and Matlock/), 'DBY', 'MAT')[1], 'No trains will run between Derby and Matlock for the duration.')
 eq('gist: never more than two sentences, never undefined', days.items.every((i) => { const g = gist(i, 'RDG', 'PAD'); return g.length <= 2 && !g.some((x) => /undefined|NaN/.test(x)) }), true)
@@ -120,6 +122,26 @@ eq('singles after midnight say the night before', singlesLine([it(/00:49 London 
 eq('numbers in words (John), digits kept for times and platforms', wordNumbers('closing 2 out of 4 lines; 2 trains per hour from platform 3 at 06:39; route 42; 4.6km; 12 trains'),
   'closing two out of four lines; two trains per hour from platform 3 at 06:39; route 42; 4.6km; 12 trains')
 eq('two grouped single services make one entry ("This might affect…")', [entries([it(/05:31 Bedwyn/), it(/23:45 Didcot/)]), entries([it(/05:31 Bedwyn/)]), entries([it(/05:31 Bedwyn/), it(/between Reading and Newbury/)])], [1, 1, 2])
+
+// National Rail's summaries in the house style (John, November 18th 2026).
+eq('summaries reworded', [
+  'Amended trains to / from / via London Paddington on Sunday 22 November',
+  'Amended 05:31 Bedwyn to London Paddington service from Tuesday 17 to Friday 20 November',
+  'Buses replace late night / early morning trains between Haywards Heath and Brighton / Worthing / Eastbourne from Monday 16 to Friday 20 November',
+  'Amended train service between London Waterloo and Exeter St Davids from Monday 10 August until further notice',
+  'No London-bound trains at Limehouse from 20:45 on Saturday 17 October to 04:40 on Monday 23 November',
+  'Disruption between Manchester Airport and Manchester Piccadilly expected until 05:00 Wednesday 18 November',
+  'Buses replace trains between Corby and Kettering before 06:30 on Saturday 21 November',
+].map(plainSummary), [
+  'Amended trains to, from and through London Paddington',
+  'Amended 5.31am Bedwyn to London Paddington service',
+  'Buses replace late night or early morning trains between Haywards Heath and Brighton, Worthing or Eastbourne',
+  'Amended train service between London Waterloo and Exeter St Davids until further notice',
+  'No London-bound trains at Limehouse from 8.45pm on Saturday October 17th to 4.40am on Monday November 23rd',
+  'Disruption between Manchester Airport and Manchester Piccadilly expected until 5am Wednesday November 18th',
+  'Buses replace trains between Corby and Kettering before 6.30am on Saturday November 21st',
+])
+eq('summaries: nothing lost or broken on any real item', days.items.filter((i) => { const p = plainSummary(i.summary); return !p || /undefined|\/ |  /.test(p) || p.length < 15 }).map((i) => i.summary), [])
 
 console.log(`check-days: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

@@ -348,3 +348,24 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
     affect …" when the list shows one entry (two grouped single services count as one); numbers
     one to nine in words in National Rail's sentences where they count something ("closing two out
     of four lines").
+16. **Trains an hour** (John, November 18th 2026), with more than eight in the next four hours:
+    groups by journey time to B: fast (no more than a quarter longer than the quickest, or within
+    10 minutes of it), slower (only if usually 10 minutes or more longer), and the Elizabeth Line
+    on its own when it's slower; a company named only when every group is one company and they
+    differ, and its name isn't shared ("LNR & WMR" isn't named). "An hour" said once, one "and",
+    journey times only for groups in the middle: "There are eight fast trains an hour from Reading
+    to London Paddington in the next four hours, two slower ones (taking about 40 minutes) and
+    about two on the Elizabeth Line." Fewer than four in a group: "three on the Elizabeth Line in
+    that time" (Claude's draft). Eight or fewer: the count, as before. "Slower", not "slow".
+17. **"Elizabeth Line"** with a capital L, as National Rail shows it (John).
+18. **The train list** (John): each train's status ("Cancelled" in red, or how late), then on the
+    same line, in the explanation's font, " because of … (Great Western Railway)." The table's
+    "Why" column and the company under the destination are gone.
+19. **"To the end of this weekend"** ("today" on a Sunday), no date; with nothing listed: "National
+    Rail isn't listing any planned engineering work for this journey between now and the end of
+    this weekend." (John).
+20. **National Rail's summaries in the house style** (John, agreed): the date at the end dropped
+    (the line above says when), except after a time or "until further notice"; dates and times in
+    house style ("Wednesday November 18th", "5.31am"), in the two-sentence summaries too; "to / from
+    / via" as "to, from and through", "to / from" as "to and from", other lists "A, B or C";
+    numbers one to nine in words where they count something.

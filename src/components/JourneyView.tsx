@@ -33,22 +33,22 @@ function Trains({ n }: { n: NextFour }) {
   return (
     <details className="advice trains-fold">
       <summary>{n.fold} <Icon name="down" /></summary>
+      {/* Each train: "Cancelled" (or how late) and, on the same line in the explanation's font,
+          why and the company (John, November 18th 2026). */}
       {narrow ? n.rows.map((r, i) => (
         <div key={i} className={`trow t-${r.status}`}>
           <div className="top"><span className="time">{r.time} to {r.dest}</span></div>
-          <p className="what">{r.what}</p>
-          <p className="muted">{r.operator}{r.reason ? `. ${r.reason}` : ''}</p>
+          <p><span className="what">{r.what}</span><span className="why">{r.why}</span></p>
         </div>
       )) : (
         <table className="trains">
-          <thead><tr><th>Leaves</th><th>To</th><th>What's happening</th><th>Why (from National Rail)</th></tr></thead>
+          <thead><tr><th>Leaves</th><th>To</th><th>What's happening</th></tr></thead>
           <tbody>
             {n.rows.map((r, i) => (
               <tr key={i} className={`t-${r.status}`}>
                 <td>{r.time}</td>
-                <td>{r.dest}<div className="small muted">{r.operator}</div></td>
-                <td className="what">{r.what}</td>
-                <td>{r.reason || <span className="muted">No reason given yet</span>}</td>
+                <td>{r.dest}</td>
+                <td><span className="what">{r.what}</span><span className="why">{r.why}</span></td>
               </tr>
             ))}
           </tbody>

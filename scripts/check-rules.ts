@@ -61,7 +61,12 @@ for (const f of files) {
   // Since November 18th 2026 (John): "a fault on the train" in the summary; the list keeps "this".
   const mn = S.nextFour(m)
   if (mn) mn.lines = mn.lines.map((l: string) => l.replace(/\bthis train\b/g, 'the train'))
-  eq(`${f}: next four hours`, nextFour(a), mn)
+  // Since November 18th 2026 (John): trains an hour when there are more than eight, and each
+  // listed train's reason and company after its status (`why`), so those are left out here.
+  const nf = nextFour(a)
+  const cmp = nf && { ...nf, lines: a.ahead.length > 8 ? nf.lines.slice(1) : nf.lines, rows: nf.rows.map(({ why: _w, ...r }) => r) }
+  if (mn && a.ahead.length > 8) mn.lines = mn.lines.slice(1)
+  eq(`${f}: next four hours`, cmp, mn)
   // Platforms differ from the mock-ups only where one or two are known (November 17th 2026).
   // "Currently" rather than "At the moment" (John, November 18th 2026).
   const mp = (S.platforms(m) as string | null)?.replace(/^At the moment, (\w)/, (_: string, c: string) => c.toUpperCase()).replace(/ (are|is) going/, ' $1 currently going')
@@ -142,6 +147,12 @@ eq('Manchester: disrupted, not badly', [manMia.verdict, manMia.badly], ['prepare
 
 eq('platforms: currently (John)', platforms(rdgPad), 'Trains are currently going from platforms including 10, 10A, 11 and 13.')
 eq('the train, in the summary (John)', nextFour(bthBri)!.lines[1], 'Two are cancelled, because of a passenger being taken ill on a train and a fault on the train. The rest are expected on time.')
+eq('trains an hour (John)', nextFour(rdgPad)!.lines[0], 'There are eight fast trains an hour from Reading to London Paddington in the next four hours, two slower ones (taking about 40 minutes) and about two on the Elizabeth Line.')
+eq('trains an hour, no real split', [nextFour(bthBri)!.lines[0], nextFour(manMia)!.lines[0]], ['There are about five trains an hour from Bath Spa to Bristol Temple Meads in the next four hours.', 'There are about eight trains an hour from Manchester Piccadilly to Manchester Airport in the next four hours.'])
+eq('eight or fewer: the count', nextFour(kgxYrk)!.lines[0], 'There are five trains from London Kings Cross to York in the next four hours.')
+const padRdg9 = analyse(snapOf(raw('20261117-2059-PAD-RDG.json')))
+eq('a small group: "in that time"', nextFour(padRdg9)!.lines[0], 'There are about three fast trains an hour from London Paddington to Reading in the next four hours, about three slower ones (taking about 40 minutes) and three on the Elizabeth Line in that time.')
+eq('why, after the status (John)', [nextFour(bthBri)!.rows[1].why, nextFour(rdgPad)!.rows[2].why], [' because of a fault on this train (Great Western Railway).', ' (Great Western Railway).'])
 eq('this train, in the list', nextFour(bthBri)!.rows[1].reason, 'A fault on this train.')
 eq('platforms, one known of many', platforms(A('KGX-YRK')), 'So far, a platform has been announced for one train: platform 3.')
 eq('two on time (John)', nextFour(changed('PAD-RDG', (sv, a) => { const keep = new Set(ids(a).slice(0, 2)); for (let i = sv.length - 1; i >= 0; i--) if (a.ahead.some((t) => t.id === sv[i].id) && !keep.has(sv[i].id)) sv.splice(i, 1) }))!.lines[1], 'Both are expected on time.')

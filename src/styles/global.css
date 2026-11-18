@@ -121,6 +121,8 @@ a { color: var(--color-accent-700); text-underline-offset: 3px; }
 .trow .what { font-weight: 600; }
 .trow.t-cancelled .what { color: var(--s-prepared); font-weight: 700; }
 .trow p { margin: 2px 0 0; font-size: 13.5px; }
+/* Why a train is late or cancelled, after "Cancelled" on the same line (John, November 18th 2026). */
+.why { color: var(--color-neutral-700); font-weight: 400; }
 .sub { margin-top: var(--space-4) !important; font-weight: 700; font-size: 14px; }
 
 /* the days ahead */

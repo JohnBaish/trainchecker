@@ -135,7 +135,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
   }
 
   const an = state.a
-  const journeyNames = { fromCrs: an.fromCrs, toCrs: an.toCrs, from: an.from, to: an.to }
+  const journeyNames = { fromCrs: an.fromCrs, toCrs: an.toCrs, from: an.from, to: an.to, route: an.route }
   const mine = days.s === 'ok' ? forJourney(days.d, journeyNames) : null
   const v = verdict(an)
   // The line closed today (John, November 18th 2026): with no train in the next four hours, say

@@ -99,17 +99,95 @@ export function matches(inc: Pick<Incident | Item, 'summary'>, from: string, to:
   return null
 }
 
-/** An incident that doesn't count by the rule but may still affect the journey (John, November
- *  17th 2026: say so in a friendly way): it names A or B, though not as the rule needs. One amended
- *  train only when it leaves from A or ends at B, so it may call at the other station. */
-export function mayAffect(inc: Pick<Incident | Item, 'summary'>, from: string, to: string): boolean {
-  if (matches(inc, from, to)) return false
-  const one = inc.summary.match(/^Amended \d\d:\d\d (.+?) to (.+?)( service| on | from |$)/)
-  if (one) return stationsIn(one[1]).some((x) => x.code === from) || stationsIn(one[2]).some((x) => x.code === to)
-  return stationsIn(inc.summary).some((x) => x.code === from || x.code === to)
+/** One amended train ("Amended 05:31 Bedwyn to London Paddington service …"): its time, and the
+ *  stations it runs from and to. */
+export function singleTrain(summary: string): { time: string; from: string[]; to: string[] } | null {
+  const m = summary.match(/^Amended (\d\d:\d\d) (.+?) to (.+?)( service| on | from |$)/)
+  return m ? { time: m[1], from: stationsIn(m[2]).map((x) => x.code), to: stationsIn(m[3]).map((x) => x.code) } : null
 }
 
-export type DaysJourney = { fromCrs: string; toCrs: string; from: string; to: string }
+const words = (i: Pick<Item, 'summary'> & Partial<Pick<Item, 'advice'>> & Partial<Pick<Incident, 'description'>>) => i.advice ?? i.description ?? ''
+
+/** An incident that doesn't count by the rule but may still affect the journey (John, November
+ *  17th 2026: say so in a friendly way): it names A or B, though not as the rule needs, and
+ *  (November 18th 2026) it could touch this journey's trains. With the route (the stations the
+ *  trains from A call at, from the live board), work naming other stations counts only if one of
+ *  them is on it, so "Reading to Basingstoke" drops out for Reading to London Paddington. One
+ *  amended train counts when it leaves from A or ends at B and its advice names the other end
+ *  ("…will terminate at Reading"), as it may then run between them. */
+export function mayAffect(inc: Pick<Item, 'summary'> & Partial<Pick<Item, 'advice'>> & Partial<Pick<Incident, 'description'>>, from: string, to: string, route?: string[]): boolean {
+  if (matches(inc, from, to)) return false
+  const one = singleTrain(inc.summary)
+  if (one) {
+    const other = one.from.includes(from) ? to : one.to.includes(to) ? from : null
+    return !!other && stationsIn(text(words(inc))).some((x) => x.code === other)
+  }
+  const named = stationsIn(inc.summary).map((x) => x.code)
+  if (!named.includes(from) && !named.includes(to)) return false
+  const others = named.filter((c) => c !== from && c !== to)
+  return !route || !others.length || others.some((c) => route.includes(c))
+}
+
+const text = (h: string) => h.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ')
+
+/** National Rail's advice as lines of plain text (paragraphs and list items). A sentence ending
+ *  "will:" before a list is joined to it ("…service will not call at Taplow or Burnham and
+ *  terminate at Ealing Broadway."), as National Rail often writes that way. */
+export function adviceLines(advice: string): string[] {
+  const out: string[] = []
+  for (const [, p, ul] of advice.matchAll(/<p>([\s\S]*?)<\/p>|<[uo]l>([\s\S]*?)<\/[uo]l>/g)) {
+    if (p !== undefined) { const t = text(p).trim(); if (t) out.push(t); continue }
+    const items = [...ul.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => text(m[1]).trim()).filter(Boolean)
+    const last = out[out.length - 1]
+    if (last && /\bwill:$/i.test(last) && items.length) {
+      const bits = items.map((x) => { const f = (sentences(x)[0] ?? x).replace(/[.!?]+$/, ''); return f[0].toLowerCase() + f.slice(1) })
+      out[out.length - 1] = `${last.slice(0, -1)} ${bits.length > 1 ? `${bits.slice(0, -1).join(', ')} and ${bits[bits.length - 1]}` : bits[0]}.`
+    } else out.push(...items)
+  }
+  return out
+}
+
+/** A line of text as sentences. */
+const sentences = (l: string) => l.match(/[^.!?]+(?:[.!?]+(?=\s+[A-Z"“(]|\s*$)|$)/g)?.map((x) => x.trim()).filter(Boolean) ?? []
+const ALTERNATIVE = /no extra cost|alternative|you can (use|travel)|tickets? (will be|are|is) (accepted|valid)|metrolink|bee network|london buses|underground/i
+const CHANGE = /will not run|will (start|terminate|depart|arrive|run|call|divert|be (diverted|retimed|cancelled|revised|delayed))|will not call|may be (delayed|cancelled|revised)|replace|bus|cancel|delay|divert|retimed|earlier|later/i
+
+/** A short summary above the fold (John, November 18th 2026: option A, National Rail's own
+ *  sentences): the advice's first sentence (what and where), then the first sentence that names
+ *  this journey's trains (A then B, or "between" them either way round) and says what changes (for one
+ *  amended train, the sentence about it),
+ *  leaving out ways round it ("you can use … at no extra cost"). At most two sentences. One tidy
+ *  (John): "…, and run later than usual throughout" dropped, as it goes without saying. */
+export function gist({ advice, summary }: Pick<Item, 'advice' | 'summary'>, from: string, to: string): string[] {
+  const all = adviceLines(advice).flatMap(sentences)
+  if (!all.length) return []
+  const out = [all[0]]
+  const mine = all.slice(1).filter((l) => {
+    if (ALTERNATIVE.test(l)) return false
+    const c = stationsIn(l).map((x) => x.code), i = c.indexOf(from), j = c.indexOf(to)
+    return i >= 0 && j >= 0 && (j > i || /\bbetween\b/i.test(l))
+  })
+  // One amended train: the sentence about that train ("The 05:31 Bedwyn to London Paddington will
+  // terminate at Reading.").
+  const one = singleTrain(summary)
+  let second = (one && all.slice(1).find((l) => l.includes(one.time))) || mine.find((l) => CHANGE.test(l)) || mine[0]
+  if (second) {
+    second = second.replace(/^As a result,?\s+/i, '').replace(/,? and (will )?run (later|earlier) than usual throughout(?=\.$)/i, '')
+    out.push(second[0].toUpperCase() + second.slice(1))
+  }
+  return out.map((x) => (/[.!?]$/.test(x) ? x : x + '.'))
+}
+
+export type DaysJourney = { fromCrs: string; toCrs: string; from: string; to: string; route?: string[] }
+
+/** Single trains very early or late (before 7am, or from 10pm), grouped as one entry when there
+ *  are two or more (John, November 18th 2026). */
+export const earlyOrLate = (i: Pick<Item, 'summary'>) => {
+  const t = singleTrain(i.summary)
+  if (!t) return false
+  const h = Number(t.time.slice(0, 2))
+  return h < 7 || h >= 22
+}
 
 /** The journey's items: those that count (disruption first, then planned work by date), and those
  *  that may affect it, with the stations they involve. */
@@ -117,7 +195,7 @@ export function forJourney(d: Days, p: DaysJourney) {
   addNames([[p.fromCrs, p.from], [p.toCrs, p.to]])
   const byStart = (a: Item, b: Item) => (a.planned === b.planned ? (a.start ?? '').localeCompare(b.start ?? '') : a.planned ? 1 : -1)
   const counted = d.items.filter((i) => matches(i, p.fromCrs, p.toCrs)).sort(byStart)
-  const may = d.items.filter((i) => mayAffect(i, p.fromCrs, p.toCrs)).sort(byStart)
+  const may = d.items.filter((i) => mayAffect(i, p.fromCrs, p.toCrs, p.route)).sort(byStart)
   const codes = new Set(may.flatMap((i) => stationsIn(i.summary).map((x) => x.code)))
   const involved = [codes.has(p.fromCrs) && p.from, codes.has(p.toCrs) && p.to].filter((x): x is string => !!x)
   return { now: counted.filter((i) => !i.planned), planned: counted.filter((i) => i.planned), may, involved }

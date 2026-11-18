@@ -325,3 +325,18 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
    lists disruption now for the journey.
 9. **Drafts agreed** (John): the section's loading line and the message when the feed can't be
    reached.
+10. **A summary above the fold** (John, November 18th 2026: option A): under each item's summary,
+    at most two sentences of National Rail's own advice: its first sentence, then the first that
+    names this journey's trains and says what changes (for one amended train, the sentence about
+    it), leaving out ways round it. "…, and run later than usual throughout" is dropped (John).
+    A sentence ending "will:" before a list is joined to the list.
+11. **Single services very early or late** (before 7am, or from 10pm), two or more, grouped (John):
+    "TWO SINGLE SERVICES", then "If you're travelling before 6am between now and Friday or after
+    11pm on Saturday you may be affected – see more details.", and a fold "More details" with each
+    service's summary, its two sentences and National Rail's advice. After midnight: "after
+    midnight on Friday night" (Claude's, so it isn't read as Saturday night).
+12. **What can't affect the journey is left out** (John, agreed): "might affect" items naming other
+    stations stay only if one is a station this journey's trains call at (the live board, including
+    beyond B); a single amended train stays only if its advice names the other end.
+13. **The Disruptions API** (compared November 18th 2026, `design/data-trial-2026-11-17.md` §10):
+    the same incidents as the feed, unplanned only; for John to decide whether to keep it.

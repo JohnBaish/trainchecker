@@ -33,7 +33,9 @@ export type Service = {
   ata: string | null // actual arrival at B, once there
 }
 
-export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[] }
+/** `route`: every station the trains from A to B call at after A, including beyond B, so "The
+ *  days ahead" can tell whether work elsewhere could touch this journey (John, November 18th 2026). */
+export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route: string[] }
 
 type CallingPoint = { crs?: string; st?: string; et?: string; at?: string; isCancelled?: boolean; cancelReason?: string; delayReason?: string }
 type RawService = {
@@ -47,9 +49,11 @@ export type RawBoard = { locationName?: string; filterLocationName?: string; tra
 /** The boards' answers, made into one list of trains (each once), with names for A and B. */
 export function trim(from: string, to: string, taken: string, boards: RawBoard[]): Snap {
   const seen = new Map<string, Service>()
+  const route = new Set<string>()
   for (const board of boards) {
     for (const s of board.trainServices || []) {
       const cps = (s.subsequentCallingPoints || []).flatMap((g) => g.callingPoint || [])
+      for (const c of cps) if (c.crs) route.add(c.crs)
       const p = cps.find((c) => c.crs === to) || {}
       seen.set(s.serviceID, {
         id: s.serviceID, std: s.std, etd: s.etd ?? null, platform: s.platform || null,
@@ -61,7 +65,7 @@ export function trim(from: string, to: string, taken: string, boards: RawBoard[]
     }
   }
   const named = boards.find((b) => b.locationName) || {}
-  return { taken, from, to, fromName: named.locationName || from, toName: named.filterLocationName || to, services: [...seen.values()] }
+  return { taken, from, to, fromName: named.locationName || from, toName: named.filterLocationName || to, services: [...seen.values()], route: [...route].sort() }
 }
 
 const json = (body: unknown, status = 200) =>

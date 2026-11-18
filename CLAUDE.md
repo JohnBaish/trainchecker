@@ -54,6 +54,25 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: summaries, single services grouped, the route check; the Disruptions API compared (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John:** option A (National Rail's own sentences), without "throughout"; single services grouped
+  under his sentence ("If you're travelling before 6am between now and Friday or after 11pm on
+  Saturday you may be affected – see more details."), with National Rail's advice in the fold;
+  leave out what can't affect the journey. `SPEC.md` §10.10 to §10.13.
+- **Built:** `gist()`, `adviceLines()` (joins "will:" lists), `singleTrain()`, `earlyOrLate()`,
+  `mayAffect()` with the route; `singlesLine()`; `api/live.ts` sends `route` (every station the
+  trains call at after A); `DaysAhead.tsx` shows the summaries and the grouped entry.
+- **The Disruptions API** (key saved here at 6.40am, secure form): the same four live disruptions
+  as the feed of 6.35am, same ids and words, unplanned only; it also lists stations along the route
+  (Cardiff for Ebbw Vale), as the feed's "Routes affected" does. `design/data-trial-2026-11-17.md`
+  §10; answers in `design/mockups/snapshots/20261118-0640-disruptions/`.
+- **Checked:** `npm run check` 158 + 50 + 58 (new: the summaries word for word, two sentences at
+  most, "throughout" (breaking it made one fail), the route, the grouped sentence); `tsc -b`, lint,
+  build; the page fed the 6.24pm boards and the 6.35am feed as at 6.06am
+  (`design/previews/stage4/gist-*`), 1200px and 390px, light and dark: no errors, no sideways scroll.
+- Key saved here now: NationalRail Disruptions API (the incidents one to swap back).
+
 ### November 18th 2026: John's answers; arrows; the line closed today (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **John (tried the preview at 6.06am, Reading to Paddington):** the two drafts agreed; the

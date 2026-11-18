@@ -397,3 +397,38 @@ export function closedShare(how: 'buses' | 'none', a: { from: string; to: string
     ? `Here's what Trainchecker found at ${at}: National Rail said buses were replacing trains between ${a.from} and ${a.to} that day.`
     : `Here's what Trainchecker found at ${at}: National Rail said no trains were running between ${a.from} and ${a.to} that day.`
 }
+
+/** A day by name when it's within the coming week ("Friday"), otherwise in full. */
+function dayWord(d: Date, now: Date): string {
+  if (dayName(d) === dayName(now)) return 'today'
+  return d.getTime() - now.getTime() < 6 * 864e5 ? dayName(d).split(' ')[0] : dayName(d)
+}
+
+/** Single services very early or late, grouped (John, November 18th 2026): "Two single services"
+ *  above one sentence, "If you're travelling before 6am between now and Friday or after 11pm on
+ *  Saturday you may be affected – see more details." Early trains (before 7am) say "before" the
+ *  next hour; late ones (10pm to 4am) "after" the hour. */
+export function singlesKicker(n: number): string {
+  return `${Cap(num(n))} single services`
+}
+export function singlesLine(items: { summary: string; start: string | null; end: string | null }[], now: Date): string {
+  const phrases: string[] = []
+  for (const i of items) {
+    const t = i.summary.match(/^Amended (\d\d):(\d\d)/)
+    if (!t) continue
+    const h = Number(t[1])
+    const hour = (x: number) => t12(`${String(x % 24).padStart(2, '0')}:00`)
+    const at = h >= 4 && h < 12 ? `before ${hour(h + 1)}` : `after ${hour(h)}`
+    const s = i.start ? new Date(i.start) : now, e = i.end ? new Date(i.end) : s
+    const when = s <= now
+      ? (dayName(e) === dayName(now) ? 'today' : `between now and ${dayWord(e, now)}`)
+      : dayName(s) === dayName(e) ? `on ${dayWord(s, now)}` : `between ${dayWord(s, now)} and ${dayWord(e, now)}`
+    // Between midnight and 4am, the night before, so "after midnight on Friday night" isn't read as
+    // Saturday night.
+    const night = h < 4 && dayName(s) === dayName(e) && s > now ? `on ${dayWord(new Date(s.getTime() - 864e5), now)} night` : null
+    const p = `${at} ${night ?? when}`.replace(/ on today$/, ' today').replace(/ on today night$/, ' tonight')
+    if (!phrases.includes(p)) phrases.push(p)
+  }
+  const list = phrases.length > 1 ? `${phrases.slice(0, -1).join(', ')} or ${phrases[phrases.length - 1]}` : phrases[0]
+  return `If you're travelling ${list} you may be affected – see more details.`
+}

@@ -185,3 +185,23 @@ For John's question: can the last week say what happened to the trains that were
 5. **Per-train details are quick** (0.6 seconds), unlike the totals. A true average would need
    one per late train, one after the other: perhaps 10 to 20 seconds more on a busy line.
    Not needed for the agreed wording.
+
+## 10. The Disruptions API against the incidents feed (6.35am to 6.40am, November 18th 2026)
+
+The incidents feed saved at 6.35am (`snapshots/20261118-0635-incidents.xml.gz`: 919 incidents,
+25 unplanned, 5 of them live), then the Disruptions API asked for 23 stations at 6.40am
+(`snapshots/20261118-0640-disruptions/`): the stations the live disruptions name, and Reading,
+Paddington, Manchester Airport, Euston, Kings Cross, Brighton, Victoria, Waterloo, Liverpool
+Street, Derby, Matlock, Cardiff and Bristol.
+
+1. **The same incidents, with the same ids and words.** The API returned four disruptions, each
+   also in the feed with the same id, summary and description. The fifth live one in the feed
+   (London Underground industrial action) names no station, so no station would return it.
+2. **Unplanned only:** no planned work at all (Derby, Matlock and Victoria had none, though the
+   feed has work there this week), so the feed is needed anyway.
+3. **What it adds: stations along the route.** Cardiff Central returned "Buses replace trains
+   between Llanhilleth and Ebbw Vale Town", which doesn't name Cardiff; the feed's "Routes
+   affected" says the same ("Between Maesteg / Bridgend / Cardiff Central / Newport (South
+   Wales) and Ebbw Vale Town").
+4. Quick (well under a second a station), but one request per station per visit, where the feed
+   is one request for everyone every five minutes.

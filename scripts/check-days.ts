@@ -2,9 +2,10 @@
 // station names in National Rail's words, and the matching on the saved incidents feed of 10.23pm
 // on November 17th 2026 (design/incidents-trial-2026-11-17.md).
 import { readFileSync } from 'node:fs'
+import { trim, type RawBoard } from '../api/live.ts'
 import { gunzipSync } from 'node:zlib'
-import { readIncidents, matches, current, endOfSunday, stationsIn, cleanAdvice, liveItems, forJourney, closedNow, type Incident } from '../src/lib/incidents.ts'
-import { whenLabel, mayIntro, noPlanned, plannedIntro, daysHeading, closedVerdict, closedShare } from '../src/lib/sentences.ts'
+import { readIncidents, matches, current, endOfSunday, stationsIn, cleanAdvice, liveItems, forJourney, closedNow, gist, mayAffect, earlyOrLate, type Incident } from '../src/lib/incidents.ts'
+import { whenLabel, mayIntro, noPlanned, plannedIntro, daysHeading, closedVerdict, closedShare, singlesLine, singlesKicker } from '../src/lib/sentences.ts'
 
 let passed = 0, failed = 0
 function eq(what: string, got: unknown, want: unknown) {
@@ -93,6 +94,28 @@ eq('closed: Victoria on Sunday', closedFor('VIC', 'BTN', 'London Victoria', 'Bri
 eq('closed: Victoria on Wednesday', closedFor('VIC', 'BTN', 'London Victoria', 'Brighton', '2026-11-18T12:00:00Z'), null)
 eq('closed: the verdict (John)', closedVerdict('buses', 'Derby', 'Matlock'), [{ bold: 'Be prepared:', text: ' National Rail says buses are replacing trains between Derby and Matlock today. Their advice is under “The days ahead” below.' }])
 eq('closed: Share', closedShare('buses', { from: 'Derby', to: 'Matlock', now: '12:05', taken: '2026-11-18T12:05:00Z' }), "Here's what Trainchecker found at 12.05pm on November 18th: National Rail said buses were replacing trains between Derby and Matlock that day.")
+
+// The summaries above the fold (John, November 18th 2026: National Rail's own sentences), the
+// single services grouped, and the route check, on the saved feed and the 6.24pm boards.
+const it = (re: RegExp) => days.items.find((i) => re.test(i.summary))!
+eq('gist: Reading to Paddington, Sunday (no "throughout")', gist(it(/via London Paddington on Sunday/), 'RDG', 'PAD'), [
+  'Engineering work is taking place between London Paddington and Southall, closing 2 out of 4 lines throughout the day.',
+  'The 06:20 Reading to London Paddington service will start at 06:39.'])
+eq('gist: the other way', gist(it(/via London Paddington on Sunday/), 'PAD', 'RDG')[1], 'The 06:38 London Paddington to Reading service will not run.')
+eq('gist: a "will:" list joined', gist(it(/23:45 Didcot/), 'RDG', 'PAD')[1], 'The 23:45 Didcot Parkway to London Paddington service will not call at Taplow or Burnham and terminate at Ealing Broadway.')
+eq('gist: a single train', gist(it(/05:31 Bedwyn/), 'RDG', 'PAD')[1], 'The 05:31 Bedwyn to London Paddington will terminate at Reading.')
+eq('gist: disruption, between either way round, no ways round it', gist(it(/Disruption between Manchester Airport/), 'MAN', 'MIA')[1], 'Trains between Manchester Airport and Manchester Piccadilly may be delayed by up to 30 minutes or revised or cancelled.')
+eq('gist: Derby to Matlock', gist(it(/Derby and Matlock/), 'DBY', 'MAT')[1], 'No trains will run between Derby and Matlock for the duration.')
+eq('gist: never more than two sentences, never undefined', days.items.every((i) => { const g = gist(i, 'RDG', 'PAD'); return g.length <= 2 && !g.some((x) => /undefined|NaN/.test(x)) }), true)
+const route = (f: string) => { const r = JSON.parse(readFileSync(new URL(`../design/mockups/snapshots/${f}`, import.meta.url), 'utf8')); return trim(r.from, r.to, r.taken, r.boards.map((b: { board: RawBoard }) => b.board)).route }
+const rdgPad = route('20261117-1824-RDG-PAD.json'), padRdg = route('20261117-1824-PAD-RDG.json')
+eq('route: Reading to Basingstoke and Newbury drop out for Reading to Paddington', [mayAffect(it(/Reading to Basingstoke/), 'RDG', 'PAD', rdgPad), mayAffect(it(/between Reading and Newbury/), 'RDG', 'PAD', rdgPad)], [false, false])
+eq('route: Reading to Newbury stays for Paddington to Reading (Penzance trains)', mayAffect(it(/between Reading and Newbury/), 'PAD', 'RDG', padRdg), true)
+eq('route: single services stay when their advice names the other end', [mayAffect(it(/05:31 Bedwyn/), 'RDG', 'PAD', rdgPad), mayAffect(it(/23:45 Didcot/), 'RDG', 'PAD', rdgPad)], [true, true])
+eq('early or late', [earlyOrLate(it(/05:31 Bedwyn/)), earlyOrLate(it(/23:45 Didcot/)), earlyOrLate(it(/08:37 Reading/))], [true, true, false])
+const at606 = new Date('2026-11-18T06:06:00Z')
+eq('singles (John\'s words)', [singlesKicker(2), singlesLine([it(/05:31 Bedwyn/), it(/23:45 Didcot/)], at606)], ['Two single services', "If you're travelling before 6am between now and Friday or after 11pm on Saturday you may be affected – see more details."])
+eq('singles after midnight say the night before', singlesLine([it(/00:49 London Paddington/), it(/00:34 London Paddington/)], at606), "If you're travelling after midnight on Friday night or after midnight on Saturday night you may be affected – see more details.")
 
 console.log(`check-days: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

@@ -214,3 +214,12 @@ Elizabeth Line out at Bond Street and Paddington only. Of Ealing's 10, four miss
 each has National Rail's cancellation code in the train's details (773 on November 11th, 896 on
 the 13th), so they really were cancelled, not missing. Reading to Ealing Broadway, 8am to 9am,
 through the page: 15 ran, about three quarters within three minutes, five cancelled.
+
+## 12. Twyford, and asking for one company (November 18th 2026)
+
+Twyford to Paddington, 8am to 9am, weekdays November 11th to 17th: the 8.23am and 8.56am Great
+Western trains (five runs each) and a single Elizabeth Line run (the 8.18am, one day, more than
+half an hour late), which is what made John's sentence say "the rest more than half an hour late".
+The other Elizabeth Line runs, three an hour, are missing at Paddington; to Ealing Broadway all
+15 are there. The service's `toc_filter` works: Great Western only, 11 seconds, the ten runs.
+Through the page, both parts together answered in 31 seconds.

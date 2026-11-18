@@ -9,7 +9,7 @@ import { fetchDays, fetchLive } from '../lib/load.ts'
 import { closedNow, forJourney } from '../lib/incidents.ts'
 import { hashOf, remember, type Journey } from '../lib/route.ts'
 import { useIsNarrow } from '../lib/responsive.ts'
-import { NO_RECORD_AT, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
+import { NO_RECORD_AT, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
 import { isTouch, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
 import { Chooser } from './Chooser.tsx'
@@ -147,12 +147,18 @@ export function JourneyView({ journey }: { journey: Journey }) {
   const taken = new Date(an.taken)
   const next = nextFour(an)
   const elizabeth = [...an.ahead, ...an.past].some((s) => /Elizabeth/i.test(s.operator))
-  // Every train on the Elizabeth Line, with Paddington or Bond Street one end: National Rail's
-  // record leaves them out (stage 1), so the last week says so at once (John, November 18th 2026).
+  // Where National Rail's record leaves the Elizabeth Line out at an end (Paddington, Bond Street):
+  // measured to the nearest station it covers instead (John, November 18th 2026). Every train on the
+  // Elizabeth Line: just that; other companies' trains too (Twyford to Paddington): those to the
+  // real end, and the Elizabeth Line to the stand-in. With no stand-in, every train on the
+  // Elizabeth Line: "Sorry, …" at once.
   const allTrains = [...an.ahead, ...an.past]
-  const noRecord = allTrains.length > 0 && allTrains.every((s) => /Elizabeth/i.test(s.operator)) && [an.fromCrs, an.toCrs].some((c) => NO_RECORD_AT.includes(c))
-  // Then, if there is one, the nearest station the record does cover (John's Ealing Broadway idea).
-  const stand = noRecord ? standIn(an) : null
+  const endOut = [an.fromCrs, an.toCrs].some((c) => NO_RECORD_AT.includes(c))
+  const allEliz = allTrains.length > 0 && allTrains.every((s) => /Elizabeth/i.test(s.operator))
+  const stand = endOut && elizabeth ? standIn(an) : null
+  const noRecord = allEliz && endOut && !stand
+  const otherCos = [...new Set(allTrains.filter((s) => !/Elizabeth/i.test(s.operator)).map((s) => s.operator))]
+  const others = stand && !allEliz ? { company: otherCos.length === 1 ? companyName(otherCos[0]) : null } : null
   return (
     <>
       {strip}
@@ -193,7 +199,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
               2026, after trying the preview); after the quote (John, stage 4). */}
           <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>
           <DaysAhead days={days} journey={journeyNames} />
-          <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth} noRecord={noRecord && !stand} standIn={stand ? { ...stand, left: stand.side === 'to' ? an.to : an.from } : null} />
+          <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth} noRecord={noRecord} standIn={stand ? { ...stand, left: stand.side === 'to' ? an.to : an.from } : null} others={others} />
         </>
       )}
     </>

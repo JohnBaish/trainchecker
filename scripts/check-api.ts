@@ -38,6 +38,14 @@ const m = count(read('20261117-hsp-MAN-MIA-1840-1910.json'))
 // Manchester Piccadilly to the Airport, 6.40pm to 7.10pm on November 17th (asked with 120): four
 // trains, three of them cancelled (they miss even 120 minutes; data trial §9).
 eq('history MAN-MIA', [m.n, m.w3, m.w10, m.w30, m.w120, m.n - m.w120], [4, 0, 1, 1, 1, 3])
+// Leaving the Elizabeth Line out (John, November 18th 2026: a stray run at Paddington), as at
+// Twyford to Paddington, 8am to 9am: two Great Western trains five times, one Elizabeth Line run.
+const tw = { Services: [
+  { serviceAttributesMetrics: { matched_services: '5', toc_code: 'GW', rids: [] }, Metrics: [{ tolerance_value: '3', num_tolerance: '3' }, { tolerance_value: '120', num_tolerance: '4' }] },
+  { serviceAttributesMetrics: { matched_services: '5', toc_code: 'GW', rids: [] }, Metrics: [{ tolerance_value: '3', num_tolerance: '3' }, { tolerance_value: '120', num_tolerance: '4' }] },
+  { serviceAttributesMetrics: { matched_services: '1', toc_code: 'XR', rids: [] }, Metrics: [{ tolerance_value: '3', num_tolerance: '0' }, { tolerance_value: '120', num_tolerance: '1' }] },
+] }
+eq('history: Elizabeth Line left out', [count(tw).n, count(tw, 'XR').n, count(tw, 'XR').w3, count(tw, 'XR').w120, count(tw, 'XR').elizabeth], [11, 10, 6, 8, 0])
 eq('history empty', count({ Services: [] }), { n: 0, w3: 0, w10: 0, w30: 0, w120: 0, dates: [], elizabeth: 0 })
 
 // Kept until UK midnight: 6.24pm GMT on November 17th is 20,160 seconds before it; in summer

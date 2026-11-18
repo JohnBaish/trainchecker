@@ -19,8 +19,8 @@ export async function fetchLive(from: string, to: string): Promise<Snap> {
 
 export type WeekError = 'busy' | 'timeout' | 'unavailable'
 
-export async function fetchWeek(o: { from: string; to: string; days: DayKind; start: string; end: string; first: string; last: string }): Promise<WeekCounts> {
-  const q = new URLSearchParams(o).toString()
+export async function fetchWeek(o: { from: string; to: string; days: DayKind; start: string; end: string; first: string; last: string; only?: string; skip?: string }): Promise<WeekCounts> {
+  const q = new URLSearchParams(Object.entries(o).filter(([, v]) => v) as [string, string][]).toString()
   let r: Response
   try {
     r = await fetch(`/api/week?${q}`)

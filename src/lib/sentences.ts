@@ -473,21 +473,24 @@ export function loadingLine(kind: DayKind, hour: number): string {
 /** The result (John's wording, O4 and Q1): "On the five weekdays from Tuesday November 10th to
  *  Monday November 16th, about a third of the 26 trains that left Reading between 5pm and
  *  5.30pm reached London Paddington within three minutes of the timetable. Of the others, …" */
-export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind: DayKind; days: Date[]; start: string; end: string }): string {
+/** `noun` names the trains when the result is for one kind ("Great Western Railway trains",
+ *  "Elizabeth Line trains": John, November 18th 2026). */
+export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind: DayKind; days: Date[]; start: string; end: string; noun?: [string, string] }): string {
+  const [one, many] = o.noun ?? ['train', 'trains']
   const between = `between ${t12(o.start)} and ${t12(o.end)}`
   const ds = o.days
   const when = ds.length === 1 ? `On ${dayName(ds[0])}` : `On the ${num(ds.length)} ${o.kind === 'WEEKDAY' ? 'weekdays' : o.kind === 'SATURDAY' ? 'Saturdays' : 'Sundays'} from ${dayName(ds[0])} to ${dayName(ds[ds.length - 1])}`
   // No trains (agreed by John, November 17th 2026).
-  if (!c.n) return `${when}, no trains left ${o.from} for ${o.to} ${between}, as far as National Rail's record shows.`
+  if (!c.n) return `${when}, no ${many} left ${o.from} for ${o.to} ${between}, as far as National Rail's record shows.`
   // A cancelled train didn't leave (John, November 18th 2026): the share is of the trains that ran,
   // and the cancelled ones (missing even the 120-minute margin) get a sentence of their own.
   const cancelled = c.n - c.w120, n = c.w120, k = c.w3
   const more = cancelled ? ` ${Cap(num(cancelled))} more ${cancelled === 1 ? 'was' : 'were'} cancelled.` : ''
-  if (!n) return `${when}, ${cancelled === 1 ? 'the only train due to leave' : cancelled === 2 ? 'both trains due to leave' : `all ${num(cancelled)} trains due to leave`} ${o.from} ${between} ${cancelled === 1 ? 'was' : 'were'} cancelled.`
+  if (!n) return `${when}, ${cancelled === 1 ? `the only ${one} due to leave` : cancelled === 2 ? `both ${many} due to leave` : `all ${num(cancelled)} ${many} due to leave`} ${o.from} ${between} ${cancelled === 1 ? 'was' : 'were'} cancelled.`
   if (n === 1) {
-    return `${when}, the only train that left ${o.from} ${between} ${k ? 'reached' : "didn't reach"} ${o.to} within three minutes of the timetable.${k ? '' : ' ' + lastWeekOthers(1, c.w3, c.w10, c.w30, c.w120)}${more}`
+    return `${when}, the only ${one} that left ${o.from} ${between} ${k ? 'reached' : "didn't reach"} ${o.to} within three minutes of the timetable.${k ? '' : ' ' + lastWeekOthers(1, c.w3, c.w10, c.w30, c.w120)}${more}`
   }
-  const who = k === n && n === 2 ? 'both trains' : k === n ? `all ${num(n)} trains` : k === 0 ? `none of the ${num(n)} trains` : n < 10 ? `${num(k)} of the ${num(n)} trains` : `${share(k, n).bare} of the ${num(n)} trains`
+  const who = k === n && n === 2 ? `both ${many}` : k === n ? `all ${num(n)} ${many}` : k === 0 ? `none of the ${num(n)} ${many}` : n < 10 ? `${num(k)} of the ${num(n)} ${many}` : `${share(k, n).bare} of the ${num(n)} ${many}`
   const first = `${when}, ${who} that left ${o.from} ${between} reached ${o.to} within three minutes of the timetable.`
   let rest = lastWeekOthers(n, c.w3, c.w10, c.w30, c.w120)
   // When none were within three minutes there are no "others" (agreed by John, November 17th 2026).
@@ -628,6 +631,13 @@ export function standIn(a: { fromCrs: string; toCrs: string; stops: [string, str
   const ok = a.stops.filter(([c]) => !NO_RECORD_AT.includes(c))
   const pick = ok.find(([c]) => c === 'EAL') ?? (toOut ? ok[ok.length - 1] : ok[0])
   return pick ? { crs: pick[0], name: pick[1], side: toOut ? 'to' : 'from' } : null
+}
+
+/** Before the Elizabeth Line's part when other trains run too (Claude's draft, November 18th 2026):
+ *  "National Rail’s record leaves Elizabeth Line trains out at London Paddington, so for them this
+ *  shows how they ran as far as Ealing Broadway." */
+export function standInMixedLine(left: string, s: { name: string; side: 'from' | 'to' }): string {
+  return `National Rail’s record leaves Elizabeth Line trains out at ${left}, so for them this shows how they ran ${s.side === 'to' ? 'as far as' : 'from'} ${s.name}.`
 }
 
 /** The line before the hours: "National Rail's record leaves these trains out at Bond Street, so

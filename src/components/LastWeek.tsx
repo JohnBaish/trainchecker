@@ -5,7 +5,7 @@
 import { useRef, useState } from 'react'
 import { clock } from '../lib/analyse.ts'
 import { fetchWeek } from '../lib/load.ts'
-import { HOURS, hourLabel, kindLine, lastWeekText, loadingLine, standInLine, weekFor, type WeekCounts } from '../lib/sentences.ts'
+import { HOURS, hourLabel, kindLine, lastWeekText, loadingLine, standInLine, standInMixedLine, weekFor, type WeekCounts } from '../lib/sentences.ts'
 
 const INTRO = "If you'd like to see the reliability history of trains making this journey over the last week, choose an hour of departure and the results should load in under a minute."
 // The Elizabeth Line note (stage 1 recommendation §2.5; agreed at the mock-ups). "Elizabeth Line" with a
@@ -22,17 +22,28 @@ const FAILED: Record<string, string> = {
   unavailable: 'National Rail’s record couldn’t be reached just now. Please try again in a minute.',
 }
 
-type State = { s: 'choose' } | { s: 'loading'; hour: number } | { s: 'done'; text: string; note: string | null } | { s: 'failed'; text: string }
+type State = { s: 'choose' } | { s: 'loading'; hour: number } | { s: 'done'; paras: { lead?: string; text: string }[]; note: string | null } | { s: 'failed'; text: string }
 
 const hhmm = (h: number, m: number) => `${String(h).padStart(2, '0')}${String(m).padStart(2, '0')}`
 const colon = (t: string) => `${t.slice(0, 2)}:${t.slice(2)}`
 
 type StandIn = { crs: string; name: string; side: 'from' | 'to'; left: string }
+/** One part of the answer: a journey, perhaps for one company or leaving one out, with its words. */
+type Part = { from: string; to: string; fromName: string; toName: string; only?: string; skip?: string; noun?: [string, string]; lead?: string }
 
-export function LastWeek({ from: fromCrs, to: toCrs, fromName: fromN, toName: toN, elizabeth, noRecord, standIn }: { from: string; to: string; fromName: string; toName: string; elizabeth: boolean; noRecord: boolean; standIn?: StandIn | null }) {
-  // Measured to (or from) a stand-in station when the record leaves an end out (John, November 18th 2026).
-  const from = standIn?.side === 'from' ? standIn.crs : fromCrs, to = standIn?.side === 'to' ? standIn.crs : toCrs
-  const fromName = standIn?.side === 'from' ? standIn.name : fromN, toName = standIn?.side === 'to' ? standIn.name : toN
+
+/** The last week. With a stand-in station (John, November 18th 2026): every train on the Elizabeth
+ *  Line, measured to the stand-in; or, with `others` (other companies’ trains run too), those trains
+ *  to the real end (any stray Elizabeth Line runs left out) and the Elizabeth Line to the stand-in. */
+export function LastWeek({ from, to, fromName, toName, elizabeth, noRecord, standIn, others }: { from: string; to: string; fromName: string; toName: string; elizabeth: boolean; noRecord: boolean; standIn?: StandIn | null; others?: { company: string | null } | null }) {
+  const sFrom = standIn?.side === 'from' ? standIn.crs : from, sTo = standIn?.side === 'to' ? standIn.crs : to
+  const sFromName = standIn?.side === 'from' ? standIn.name : fromName, sToName = standIn?.side === 'to' ? standIn.name : toName
+  const parts: Part[] = !standIn ? [{ from, to, fromName, toName }]
+    : !others ? [{ from: sFrom, to: sTo, fromName: sFromName, toName: sToName }]
+    : [
+        { from, to, fromName, toName, skip: 'XR', noun: others.company ? [`${others.company} train`, `${others.company} trains`] : undefined },
+        { from: sFrom, to: sTo, fromName: sFromName, toName: sToName, only: 'XR', noun: ['Elizabeth Line train', 'Elizabeth Line trains'], lead: standInMixedLine(standIn.left, standIn) },
+      ]
   const [now] = useState(() => new Date())
   const wk = weekFor(now)
   const h = Number(clock(now).slice(0, 2))
@@ -40,16 +51,12 @@ export function LastWeek({ from: fromCrs, to: toCrs, fromName: fromN, toName: to
   const [state, setState] = useState<State>({ s: 'choose' })
   const asking = useRef(0)
 
-  const show = async () => {
-    const ask = ++asking.current
-    const chosen = hour
-    setState({ s: 'loading', hour: chosen })
+  /** One part for the chosen hour: both halves asked together; a half refused as busy asked again
+   *  once the other has answered. The text, or the reason it failed. */
+  const askPart = async (p: Part, chosen: number): Promise<{ text?: string; failure?: string; empty?: boolean }> => {
     const end = chosen === 23 ? '2359' : hhmm(chosen + 1, 0)
     const halves: [string, string][] = [[hhmm(chosen, 0), hhmm(chosen, 30)], [hhmm(chosen, 30), end]]
-    // Both halves asked together, which was accepted on the evening of November 17th (40 seconds
-    // each on Reading to Paddington); a half refused as busy is asked again once the other has
-    // answered, as the record took only one request at a time earlier that day.
-    const one = ([start, stop]: [string, string]) => fetchWeek({ from, to, days: wk.kind, start, end: stop, first: wk.first, last: wk.last })
+    const one = ([start, stop]: [string, string]) => fetchWeek({ from: p.from, to: p.to, days: wk.kind, start, end: stop, first: wk.first, last: wk.last, only: p.only, skip: p.skip })
     const tries = await Promise.allSettled(halves.map(one))
     const got: WeekCounts[] = []
     let failure: string | null = null
@@ -59,18 +66,27 @@ export function LastWeek({ from: fromCrs, to: toCrs, fromName: fromN, toName: to
       if (t.status === 'fulfilled') got.push(t.value)
       else { failure = (t.reason as Error).message; break }
     }
-    if (ask !== asking.current) return
-    const o = { from: fromName, to: toName, kind: wk.kind, days: wk.days }
-    const sum = (cs: WeekCounts[]): WeekCounts => cs.reduce((a, c) => ({
+    if (!got.length) return { failure: failure ?? 'unavailable' }
+    const sum = got.reduce((a, c) => ({
       n: a.n + c.n, w3: a.w3 + c.w3, w10: a.w10 + c.w10, w30: a.w30 + c.w30, w120: a.w120 + c.w120, dates: [...a.dates, ...c.dates], elizabeth: a.elizabeth + c.elizabeth,
     }))
-    if (!got.length) { setState({ s: 'failed', text: FAILED[failure ?? 'unavailable'] ?? FAILED.unavailable }); return }
-    if (elizabeth && !sum(got).n) { setState({ s: 'failed', text: NO_RECORD }); return }
     // The hour as a whole; or, if its second half couldn't be had, the first half, said plainly.
     const endLabel = got.length === 2 ? colon(end === '2359' ? '0000' : end) : colon(halves[0][1])
-    let text = lastWeekText(sum(got), { ...o, start: colon(halves[0][0]), end: endLabel })
+    let text = lastWeekText(sum, { from: p.fromName, to: p.toName, kind: wk.kind, days: wk.days, start: colon(halves[0][0]), end: endLabel, noun: p.noun })
     if (got.length === 1) text += ` National Rail’s record didn’t answer for the half hour after that, so it isn’t included.`
-    setState({ s: 'done', text, note: elizabeth && !standIn ? ELIZABETH : null })
+    return { text, empty: !sum.n }
+  }
+
+  const show = async () => {
+    const ask = ++asking.current
+    const chosen = hour
+    setState({ s: 'loading', hour: chosen })
+    const results = await Promise.all(parts.map((p) => askPart(p, chosen)))
+    if (ask !== asking.current) return
+    if (results.every((r) => r.failure)) { setState({ s: 'failed', text: FAILED[results[0].failure!] ?? FAILED.unavailable }); return }
+    if (elizabeth && !others && results[0].empty) { setState({ s: 'failed', text: NO_RECORD }); return }
+    const paras = results.map((r, i) => ({ lead: parts[i].lead, text: r.text ?? FAILED[r.failure!] ?? FAILED.unavailable }))
+    setState({ s: 'done', paras, note: elizabeth && !standIn ? ELIZABETH : null })
   }
 
   const loading = state.s === 'loading'
@@ -86,7 +102,7 @@ export function LastWeek({ from: fromCrs, to: toCrs, fromName: fromN, toName: to
     <section className="card sec block">
       <h3>The last week</h3>
       <p>{INTRO}</p>
-      {standIn && <p>{standInLine(standIn.left, standIn)}</p>}
+      {standIn && !others && <p>{standInLine(standIn.left, standIn)}</p>}
       <div className="hist-row">
         <select aria-label="An hour of departure" value={hour} onChange={(e) => setHour(Number(e.target.value))} disabled={loading}>
           {HOURS.map((x) => <option key={x} value={x}>{hourLabel(x)}</option>)}
@@ -97,7 +113,12 @@ export function LastWeek({ from: fromCrs, to: toCrs, fromName: fromN, toName: to
         {state.s === 'loading' && <p className="hist-result"><span className="spinner" aria-hidden="true"></span>{loadingLine(wk.kind, state.hour)}</p>}
         {state.s === 'done' && (
           <div className="hist-result">
-            <p className="big">{state.text}</p>
+            {state.paras.map((p, i) => (
+              <div key={i}>
+                {p.lead && <p className="small muted">{p.lead}</p>}
+                <p className="big">{p.text}</p>
+              </div>
+            ))}
             {state.note && <p className="small muted">{state.note}</p>}
           </div>
         )}

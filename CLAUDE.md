@@ -54,6 +54,21 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: Elizabeth Line and other trains in the last week (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John:** Twyford to Paddington, 8am to 9am, read oddly ("the rest more than half an hour
+  late"). Found: the record has the Great Western trains and one stray Elizabeth Line run at
+  Paddington; the rest of the Elizabeth Line only as far as Ealing Broadway
+  (`design/data-trial-2026-11-17.md` §12).
+- **Built:** `api/week.ts` takes `only` (the service's `toc_filter`) and `skip` (left out of
+  `count()`); `api/live.ts`'s `stops` from the train with the most stops; `lastWeekText()` can name
+  the trains (`noun`); `standInMixedLine()`; `LastWeek` asks for one or two parts at once.
+  `SPEC.md` §10.41.
+- **Checked:** `npm run check` 193 + 57 + 68; `tsc -b`, lint, build; iPhone 13 emulation, Twyford to
+  Paddington with a made-up two-train board and the real history for 8am to 9am
+  (`design/previews/stage4/stand-in-mixed.ts`): two paragraphs, 31 seconds, no errors, no sideways
+  scroll.
+
 ### November 18th 2026: the last week to Ealing Broadway for Bond Street (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **John:** yes to measuring Elizabeth Line journeys to Ealing Broadway where the record leaves

@@ -36,7 +36,7 @@ export type Service = {
 /** `route`: every station the trains from A call at before B (John, November 18th 2026: work
  *  beyond B, such as Southampton to Bournemouth for Basingstoke to Southampton, can't touch it), so "The
  *  days ahead" can tell whether work elsewhere could touch this journey (John, November 18th 2026). */
-/** `stops`: the stations, in order, that the first train calls at between A and B, with their names
+/** `stops`: the stations, in order, that the train with the most stops calls at between A and B, with their names
  *  (for the last week's stand-in station when National Rail's record leaves out an end: John,
  *  November 18th 2026). */
 export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route: string[]; stops: [string, string][] }
@@ -60,7 +60,8 @@ export function trim(from: string, to: string, taken: string, boards: RawBoard[]
       const cps = (s.subsequentCallingPoints || []).flatMap((g) => g.callingPoint || [])
       const at = cps.findIndex((c) => c.crs === to)
       for (const c of at >= 0 ? cps.slice(0, at) : []) if (c.crs) route.add(c.crs)
-      if (!stops.length && at > 0) stops = cps.slice(0, at).filter((c) => c.crs).map((c): [string, string] => [c.crs!, c.locationName || c.crs!])
+      // The train with the most stops (an Elizabeth Line train, where one runs).
+      if (at > stops.length) stops = cps.slice(0, at).filter((c) => c.crs).map((c): [string, string] => [c.crs!, c.locationName || c.crs!])
       const p = cps.find((c) => c.crs === to) || {}
       seen.set(s.serviceID, {
         id: s.serviceID, std: s.std, etd: s.etd ?? null, platform: s.platform || null,

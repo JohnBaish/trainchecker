@@ -14,7 +14,7 @@ import { trim, type RawBoard } from '../api/live.ts'
 import { count } from '../api/week.ts'
 import { analyse, diff, type Snap, type Analysis } from '../src/lib/analyse.ts'
 import {
-  standIn, standInLine, tenAfterWords, verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
+  standIn, standInLine, standInMixedLine, tenAfterWords, verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
   hourLabel, HOURS, quoteShareText, type Line,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
@@ -220,6 +220,9 @@ eq('the last week: Tiverton Parkway (John)', lastWeekText({ n: 5, w3: 0, w10: 1,
   'On the five weekdays from Tuesday November 10th to Monday November 16th, none of the four trains that left Tiverton Parkway between 7am and 8am reached London Paddington within three minutes of the timetable. Of these, one was less than 10 minutes late, and the rest 10 to 30 minutes late. One more was cancelled.')
 eq('the last week: all cancelled', lastWeekText({ n: 2, w3: 0, w10: 0, w30: 0, w120: 0, dates: [], elizabeth: 0 }, { ...one, from: 'Reading', to: 'London Paddington', start: '07:00', end: '07:30' }),
   'On Saturday November 14th, both trains due to leave Reading between 7am and 7.30am were cancelled.')
+eq('the last week, one company named (John, Twyford)', lastWeekText({ n: 10, w3: 6, w10: 8, w30: 8, w120: 8, dates: [], elizabeth: 0 }, { ...one, from: 'Twyford', to: 'London Paddington', kind: wk.kind, days: wk.days, start: '08:00', end: '09:00', noun: ['Great Western Railway train', 'Great Western Railway trains'] }),
+  'On the five weekdays from Tuesday November 10th to Monday November 16th, six of the eight Great Western Railway trains that left Twyford between 8am and 9am reached London Paddington within three minutes of the timetable. The others were less than 10 minutes late. Two more were cancelled.')
+eq('the last week, the Elizabeth Line part (draft)', standInMixedLine('London Paddington', { name: 'Ealing Broadway', side: 'to' }), 'National Rail’s record leaves Elizabeth Line trains out at London Paddington, so for them this shows how they ran as far as Ealing Broadway.')
 eq('the last week: the hours', [HOURS.length, hourLabel(HOURS[0]), hourLabel(17), hourLabel(HOURS[HOURS.length - 1])], [19, '5am to 6am', '5pm to 6pm', '11pm to midnight'])
 const sentences = [lastWeekText(hsp, { ...one, kind: wk.kind, days: wk.days }), lastWeekText(mm, one)]
 eq('the last week: no undefined, null or NaN', sentences.filter((t) => /undefined|null|NaN/.test(t)), [])

@@ -3,6 +3,8 @@
 // Rail's Historical Service Performance (SPEC §8.10; design/data-trial-2026-11-17.md §6 to §9).
 //
 // GET /api/week?from=RDG&to=PAD&days=WEEKDAY&start=1700&end=1730&first=2026-11-10&last=2026-11-16
+//   &only=XR  (one company: the service's own toc_filter, checked November 18th 2026)
+//   &skip=XR  (leave a company out: the record has only stray Elizabeth Line runs at Paddington)
 //
 // The page asks for each half hour in turn: the service takes one request at a time (others are
 // refused at once with HTTP 503), and a busy line's whole hour can run past its 55-second
@@ -26,11 +28,12 @@ type Raw = {
 }
 
 /** Adds up the service's answer: every train run, and how many were within each margin. */
-export function count(raw: Raw): WeekCounts {
+export function count(raw: Raw, skip?: string): WeekCounts {
   const c: WeekCounts = { n: 0, w3: 0, w10: 0, w30: 0, w120: 0, dates: [], elizabeth: 0 }
   const dates = new Set<string>()
   for (const s of raw.Services || []) {
     const a = s.serviceAttributesMetrics || {}
+    if (skip && a.toc_code === skip) continue
     const n = Number(a.matched_services) || 0
     c.n += n
     if (a.toc_code === 'XR') c.elizabeth += n
@@ -69,11 +72,12 @@ export async function GET(request: Request): Promise<Response> {
   const ok = /^[A-Z]{3}$/.test(from) && /^[A-Z]{3}$/.test(to) && ['WEEKDAY', 'SATURDAY', 'SUNDAY'].includes(days) &&
     /^([01]\d|2[0-3])[0-5]\d$/.test(start) && /^([01]\d|2[0-3])[0-5]\d$/.test(end) &&
     /^\d{4}-\d\d-\d\d$/.test(first) && /^\d{4}-\d\d-\d\d$/.test(last)
-  if (!ok) return json({ error: 'request' }, 400)
+  const only = (q.get('only') || '').toUpperCase(), skip = (q.get('skip') || '').toUpperCase()
+  if (!ok || (only && !/^[A-Z]{2}$/.test(only)) || (skip && !/^[A-Z]{2}$/.test(skip))) return json({ error: 'request' }, 400)
   const key = process.env.RDM_HSP_KEY
   // Says which setting is missing (never its value), so a deployment without it is easy to spot.
   if (!key) return json({ error: 'unavailable', reason: 'no RDM_HSP_KEY setting in this deployment' }, 503)
-  const body = JSON.stringify({ from_loc: from, to_loc: to, from_time: start, to_time: end, from_date: first, to_date: last, days, tolerance: MARGINS.map(String) })
+  const body = JSON.stringify({ from_loc: from, to_loc: to, from_time: start, to_time: end, from_date: first, to_date: last, days, tolerance: MARGINS.map(String), ...(only ? { toc_filter: [only] } : {}) })
   const began = Date.now()
   // Another visitor's request may be running: the service then refuses at once (503), so wait a
   // little and try again, while there's still time for an answer within Vercel's 60 seconds.
@@ -88,7 +92,7 @@ export async function GET(request: Request): Promise<Response> {
     } catch {
       return json({ error: 'timeout' }, 504)
     }
-    if (r.ok) return json(count((await r.json()) as Raw), 200, `public, max-age=0, s-maxage=${untilMidnight(new Date())}`)
+    if (r.ok) return json(count((await r.json()) as Raw, skip || undefined), 200, `public, max-age=0, s-maxage=${untilMidnight(new Date())}`)
     if (r.status === 503 && Date.now() - began < 20000) {
       await new Promise((res) => setTimeout(res, 4000))
       continue

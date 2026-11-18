@@ -514,3 +514,22 @@ they differ.
      expected to…"), with no sentence after it (it had read "They was…").
    - The sentences after it are unchanged.
 3. **Share:** "…got there within three minutes of their planned time" (was "of the timetable").
+4. **The last two hours, cancellations:** "Two more didn't run at all." whenever trains are counted before
+   it; one train with cancellations, "The only train that ran from Midgham…".
+5. **The next four hours:** "It's expected to be on time." / "Both of them are expected to be on time." /
+   "They're all expected to be on time." / "The rest are expected to be on time." / "The other one is
+   expected to be on time."
+6. **The last week** (illustrations only):
+   - The days, with no dates: "On the weekdays from last Wednesday until yesterday, …" (Tuesday to
+     Friday); "From last Monday to Friday, …" (Monday); "Last Saturday, …"; "Last Sunday, …".
+   - "…all five trains leaving Midgham between 11am and midday got to Reading within three minutes of
+     their planned time."; "both trains leaving"; "five of the nine trains leaving"; "about a third of the
+     26 trains leaving"; but "38 of the 40 trains leaving" for the "in" shares (was "about 19 in 20 of the
+     40"); "none of the four trains that left Midgham…".
+   - One train: "…the only train leaving Midgham … got to Reading within three minutes of its planned
+     time." / "…was less than 10 minutes late getting to Reading." ("10 to 30 minutes", "more than half an
+     hour"); "the only train that ran from" with cancellations.
+   - Unchanged: no trains ("no trains left … for …"), all cancelled, and the sentences after.
+   - The line under the hours: "Today is a weekday, so that's what this checks. (Saturdays and Sundays
+     have their own timetables.)", and the same for Saturdays and Sundays. The waiting line is unchanged.
+   - About keeps "within three minutes of the timetable" (a definition).

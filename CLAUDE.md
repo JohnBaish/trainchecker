@@ -57,6 +57,19 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: "expected to be on time"; the last week as we'd say it (branch `claude/laughing-hawking-8d2b6w`; Claude Code)
+
+- **John:** "They're all expected to be on time." and the rest; the last week "On the weekdays from last
+  Wednesday until yesterday, all five trains leaving Midgham … got to Reading within three minutes of their
+  planned time." Every case set out; his answers in `SPEC.md` §12.4 to §12.6 (no dates; "From last Monday to
+  Friday" on a Monday; "38 of the 40"; the line under the hours with its bracket a sentence of its own).
+- **Built:** `nextFour()`, `lastTwoLines()`, `lastWeekText()`, `kindLine()` in `sentences.ts`.
+- **Checked:** `npm run check` 222 + 57 + 73 (new: the days for a Monday, a Wednesday and a Sunday, all and
+  both, the only train on time and late, "38 of the 40", the lines under the hours, the only train with
+  cancellations; the mock-up comparison translated; breaking the Monday rule made one fail); `tsc -b`, lint,
+  build; the saved boards' last two hours unchanged from the previous round (none has cancellations among
+  trains still on their way); the page fed Reading to Midgham at 390px: no errors, no sideways scroll.
+
 ### November 18th 2026: the last two hours, share first (branch `claude/laughing-hawking-8d2b6w`; Claude Code)
 
 - **John (the preview, Midgham to Reading):** "All of the trains that left Midgham … have reached Reading (or

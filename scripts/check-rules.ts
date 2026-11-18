@@ -15,7 +15,7 @@ import { count } from '../api/week.ts'
 import { analyse, diff, type Snap, type Analysis } from '../src/lib/analyse.ts'
 import {
   standIn, standInLine, standInMixedLine, tenAfterWords, verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
-  hourLabel, HOURS, quoteShareText, type Line,
+  hourLabel, HOURS, quoteShareText, kindLine, type Line,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
 import { STATIONS, resolve, suggest, complete } from '../src/lib/stations.ts'
@@ -61,7 +61,8 @@ for (const f of files) {
   if (!a.lastGone) eq(`${f}: verdict`, lineText(verdict(a).lines), a.worse ? mv.slice(0, 1) : mv)
   // Since November 18th 2026 (John): "a fault on the train" in the summary; the list keeps "this".
   const mn = S.nextFour(m)
-  if (mn) mn.lines = mn.lines.map((l: string) => l.replace(/\bthis train\b/g, 'the train'))
+  // "…expected to be on time" since November 18th 2026 (John, stage 5).
+  if (mn) mn.lines = mn.lines.map((l: string) => l.replace(/\bthis train\b/g, 'the train').replace('All are expected on time.', "They're all expected to be on time.").replace('Both are expected on time.', 'Both of them are expected to be on time.').replace("It's expected on time.", "It's expected to be on time.").replace('The rest are expected on time.', 'The rest are expected to be on time.').replace('The other is expected on time.', 'The other one is expected to be on time.'))
   // Since November 18th 2026 (John): trains an hour when there are more than eight, and each
   // listed train's reason and company after its status (`why`), so those are left out here.
   const nf = nextFour(a)
@@ -158,7 +159,7 @@ eq('Manchester: disrupted, not badly', [manMia.verdict, manMia.badly], ['prepare
 
 eq('platforms: the same for every kind, so the plain sentence (John, Tiverton Parkway)', platforms(changed('RDG-PAD', (sv) => { for (const t of sv) if (t.platform) t.platform = '2' })), 'Trains are currently going from platform 2.')
 eq('platforms: all from one platform, no "Most"', platforms(bthBri), 'Trains are currently going from platform 1.')
-eq('the train, in the summary (John)', nextFour(bthBri)!.lines[1], 'Two are cancelled, because of a passenger being taken ill on a train and a fault on the train. The rest are expected on time.')
+eq('the train, in the summary (John)', nextFour(bthBri)!.lines[1], 'Two are cancelled, because of a passenger being taken ill on a train and a fault on the train. The rest are expected to be on time.')
 eq('trains an hour (John: "an hour" after every group)', nextFour(rdgPad)!.lines[0], 'There are eight fast trains an hour from Reading to London Paddington in the next four hours, two slower ones an hour (taking about 40 minutes) and about two an hour on the Elizabeth Line.')
 eq('platforms by kind of train (John)', platforms(rdgPad), 'Most fast trains are currently going from platforms 10 and 11, with slower ones mostly using platform 15A and Elizabeth Line trains using platforms 13 and 14.')
 eq('trains an hour, no real split', [nextFour(bthBri)!.lines[0], nextFour(manMia)!.lines[0]], ['There are about five trains an hour from Bath Spa to Bristol Temple Meads in the next four hours.', 'There are about eight trains an hour from Manchester Piccadilly to Manchester Airport in the next four hours.'])
@@ -193,8 +194,11 @@ eq('the only train, on time', [ky({ known: 1, within3: 1, lates: [], lateArrived
   [[`The only train leaving ${lead} got to York within three minutes of its planned time.`], [`The only train leaving ${lead} is expected to get to York within three minutes of its planned time.`]])
 eq('the only train, late (no "They was")', [ky({ known: 1, within3: 0, lates: [6], lateArrived: [true], usual: 6, worst: 6, tense: 'past' }), ky({ known: 1, within3: 0, lates: [6], lateArrived: [false], usual: 6, worst: 6, tense: 'future' })],
   [[`The only train leaving ${lead} was six minutes late getting to York.`], [`The only train leaving ${lead} is expected to be six minutes late getting to York.`]])
-eq('cancellations: by the trains that left, "Two trains didn\'t run"; by arrivals, "Two more"', [ky({ known: 4, within3: 4, lates: [], lateArrived: [], tense: 'past', cancelled: manMia.last.cancelled.slice(0, 2) }).at(-1), ky({ byArrivals: true, known: 4, within3: 4, lates: [], lateArrived: [], tense: 'past', cancelled: manMia.last.cancelled.slice(0, 2) })],
-  ["Two trains didn't run at all.", ['All four trains that ran on this route in the last couple of hours reached York within three minutes of their planned time.', "Two more didn't run at all."]])
+const two = manMia.last.cancelled.slice(0, 2)
+eq('the only train, with cancellations: "that ran from" (John)', ky({ known: 1, within3: 1, lates: [], lateArrived: [], tense: 'past', cancelled: two }),
+  [`The only train that ran from ${lead} got to York within three minutes of its planned time.`, "Two more didn't run at all."])
+eq('cancellations: "Two more" either way (John)', [ky({ known: 4, within3: 4, lates: [], lateArrived: [], tense: 'past', cancelled: two }).at(-1), ky({ byArrivals: true, known: 4, within3: 4, lates: [], lateArrived: [], tense: 'past', cancelled: two })],
+  ["Two more didn't run at all.", ['All four trains that ran on this route in the last couple of hours reached York within three minutes of their planned time.', "Two more didn't run at all."]])
 eq('ten after a spelt number (John)', ['about nine in 10 trains', 'one in 10', 'The other two were four and 10 minutes late.', 'one was less than 10 minutes late', 'at 10.30pm', 'four from platform 10', '19 in 20', 'about 10 trains an hour'].map(tenAfterWords),
   ['about nine in ten trains', 'one in ten', 'The other two were four and ten minutes late.', 'one was less than 10 minutes late', 'at 10.30pm', 'four from platform 10', '19 in 20', 'about 10 trains an hour'])
 eq('suggestions stay open at "Ivy", a code on the way to Ivybridge (John)', [complete('Ivy', suggest('Ivy')), suggest('Ivy').map(([, n]) => n)], [false, ['Ivybridge']])
@@ -210,7 +214,7 @@ eq('stand-in: both ends left out, none', standIn({ fromCrs: 'PAD', toCrs: 'BDS',
 eq('stand-in: the line (draft)', standInLine('Bond Street', { name: 'Ealing Broadway', side: 'to' }), 'National Rail’s record leaves these trains out at Bond Street, so this shows how they ran as far as Ealing Broadway.')
 eq('this train, in the list', nextFour(bthBri)!.rows[1].reason, 'A fault on this train.')
 eq('platforms, one known of many', platforms(A('KGX-YRK')), 'So far, a platform has only been announced for one train: platform 3.')
-eq('two on time (John)', nextFour(changed('PAD-RDG', (sv, a) => { const keep = new Set(ids(a).slice(0, 2)); for (let i = sv.length - 1; i >= 0; i--) if (a.ahead.some((t) => t.id === sv[i].id) && !keep.has(sv[i].id)) sv.splice(i, 1) }))!.lines[1], 'Both are expected on time.')
+eq('two on time (John, November 18th 2026)', nextFour(changed('PAD-RDG', (sv, a) => { const keep = new Set(ids(a).slice(0, 2)); for (let i = sv.length - 1; i >= 0; i--) if (a.ahead.some((t) => t.id === sv[i].id) && !keep.has(sv[i].id)) sv.splice(i, 1) }))!.lines[1], 'Both of them are expected to be on time.')
 eq('both (John)', [share(2, 2).trains, share(2, 2).bare, share(3, 3).trains], ['both trains', 'both', 'all three trains'])
 
 // The last train gone: Kings Cross to Edinburgh at 8.59pm (trains in the last two hours, none in
@@ -225,7 +229,7 @@ const wk = weekFor(nov17)
 eq('the last week: weekdays', [wk.kind, wk.first, wk.last, wk.days.length], ['WEEKDAY', '2026-11-10', '2026-11-16', 5])
 const hsp = count(JSON.parse(readFileSync(new URL('20261117-hsp-RDG-PAD-1700-1730.json', dir), 'utf8')))
 eq('the last week: agreed sentence', lastWeekText(hsp, { from: 'Reading', to: 'London Paddington', kind: wk.kind, days: wk.days, start: '17:00', end: '17:30' }),
-  'On the five weekdays from Tuesday November 10th to Monday November 16th, about a third of the 26 trains that left Reading between 5pm and 5.30pm reached London Paddington within three minutes of the timetable. Another 13 were less than 10 minutes late, and the other five were 10 to 30 minutes late.')
+  'On the weekdays from last Tuesday until yesterday, about a third of the 26 trains leaving Reading between 5pm and 5.30pm got to London Paddington within three minutes of their planned time. Another 13 were less than 10 minutes late, and the other five were 10 to 30 minutes late.')
 // Shares only with more than 20 not on time since the fresh look (6.3), as in the mock-ups' code.
 eq('the last week: the mock-up code agrees', lastWeekOthers(40, 8, 33, 40), S.lastWeekOthers(40, 8, 33, 40))
 const sat = weekFor(new Date('2026-11-21T10:00:00Z'))
@@ -234,12 +238,12 @@ const clocks = weekFor(new Date('2026-10-27T08:00:00Z')) // the clocks went back
 eq('the last week: across a clock change', [clocks.first, clocks.last, clocks.days.map((d) => dayName(d))], ['2026-10-20', '2026-10-26', ['Tuesday October 20th', 'Wednesday October 21st', 'Thursday October 22nd', 'Friday October 23rd', 'Monday October 26th']])
 const one = { from: 'Reading', to: 'London Paddington', kind: sat.kind, days: sat.days, start: '17:00', end: '18:00' }
 eq('the last week: no trains', lastWeekText({ n: 0, w3: 0, w10: 0, w30: 0, w120: 0, dates: [], elizabeth: 0 }, one),
-  "On Saturday November 14th, no trains left Reading for London Paddington between 5pm and 6pm, as far as National Rail's record shows.")
+  "Last Saturday, no trains left Reading for London Paddington between 5pm and 6pm, as far as National Rail's record shows.")
 // Manchester's real answer (four trains, three cancelled), shown as if for one Saturday.
 const mm = count(JSON.parse(readFileSync(new URL('20261117-hsp-MAN-MIA-1840-1910.json', dir), 'utf8')))
 // Cancelled trains didn't leave (John, November 18th 2026): counted apart.
 eq('the last week: one ran, three cancelled', lastWeekText(mm, { ...one, from: 'Manchester Piccadilly', to: 'Manchester Airport', start: '18:40', end: '19:10' }),
-  "On Saturday November 14th, the only train that left Manchester Piccadilly between 6.40pm and 7.10pm didn't reach Manchester Airport within three minutes of the timetable. It was less than 10 minutes late. Three more were cancelled.")
+  'Last Saturday, the only train that ran from Manchester Piccadilly between 6.40pm and 7.10pm was less than 10 minutes late getting to Manchester Airport. Three more were cancelled.')
 // The trains not on time, as counts following on from the on-time ones (John, November 18th 2026).
 const others = (n: number, w3: number, w10: number, w30: number, w120 = w30) => lastWeekOthers(n, w3, w10, w30, w120)
 eq('not on time: Totnes (John)', others(5, 2, 4, 5), 'Another two were less than 10 minutes late, and the other one was 10 to 30 minutes late.')
@@ -251,13 +255,23 @@ eq('not on time: none on time, one band', others(3, 0, 3, 3), 'They were all les
 eq('not on time: up to 20, counts (fresh look 6.3)', others(26, 8, 21, 26), 'Another 13 were less than 10 minutes late, and the other five were 10 to 30 minutes late.')
 eq('not on time: more than 20, shares and "the rest"', others(40, 8, 32, 40), 'Of the others, three quarters were less than 10 minutes late, and the rest 10 to 30 minutes late.')
 eq('the last week: Tiverton Parkway (John)', lastWeekText({ n: 5, w3: 0, w10: 1, w30: 4, w120: 4, dates: [], elizabeth: 0 }, { ...one, from: 'Tiverton Parkway', to: 'London Paddington', kind: wk.kind, days: wk.days, start: '07:00', end: '08:00' }),
-  'On the five weekdays from Tuesday November 10th to Monday November 16th, none of the four trains that left Tiverton Parkway between 7am and 8am reached London Paddington within three minutes of the timetable. One was less than 10 minutes late, and the other three were 10 to 30 minutes late. One more was cancelled.')
+  'On the weekdays from last Tuesday until yesterday, none of the four trains that left Tiverton Parkway between 7am and 8am got to London Paddington within three minutes of their planned time. One was less than 10 minutes late, and the other three were 10 to 30 minutes late. One more was cancelled.')
 eq('the last week: all cancelled', lastWeekText({ n: 2, w3: 0, w10: 0, w30: 0, w120: 0, dates: [], elizabeth: 0 }, { ...one, from: 'Reading', to: 'London Paddington', start: '07:00', end: '07:30' }),
-  'On Saturday November 14th, both trains due to leave Reading between 7am and 7.30am were cancelled.')
+  'Last Saturday, both trains due to leave Reading between 7am and 7.30am were cancelled.')
 eq('the last week, one company named (John, Twyford)', lastWeekText({ n: 10, w3: 6, w10: 8, w30: 8, w120: 8, dates: [], elizabeth: 0 }, { ...one, from: 'Twyford', to: 'London Paddington', kind: wk.kind, days: wk.days, start: '08:00', end: '09:00', noun: ['Great Western Railway train', 'Great Western Railway trains'] }),
-  'On the five weekdays from Tuesday November 10th to Monday November 16th, six of the eight Great Western Railway trains that left Twyford between 8am and 9am reached London Paddington within three minutes of the timetable. The other two were less than 10 minutes late. Two more were cancelled.')
+  'On the weekdays from last Tuesday until yesterday, six of the eight Great Western Railway trains leaving Twyford between 8am and 9am got to London Paddington within three minutes of their planned time. The other two were less than 10 minutes late. Two more were cancelled.')
 eq('the last week, the Elizabeth Line part (draft)', standInMixedLine('London Paddington', { name: 'Ealing Broadway', side: 'to' }), 'National Rail’s record leaves Elizabeth Line trains out at London Paddington, so for those this shows how they ran as far as Ealing Broadway.')
 eq('the last week: the hours', [HOURS.length, hourLabel(HOURS[0]), hourLabel(17), hourLabel(HOURS[HOURS.length - 1])], [19, '5am to 6am', '5pm to 6pm', '11pm to midnight'])
+// The days as we'd say them, the only train, "38 of the 40", the line under the hours (John, November 18th 2026).
+const mon = weekFor(new Date('2026-11-16T10:00:00Z')), sun = weekFor(new Date('2026-11-22T10:00:00Z')), wed = weekFor(new Date('2026-11-18T10:00:00Z'))
+const w5 = (n: number, w3: number, o: Partial<typeof one> = {}) => lastWeekText({ n, w3, w10: n, w30: n, w120: n, dates: [], elizabeth: 0 }, { ...one, start: '11:00', end: '12:00', ...o })
+eq('the last week: the days', [w5(5, 5, { kind: mon.kind, days: mon.days }), w5(5, 5, { kind: wed.kind, days: wed.days }), w5(5, 5, { kind: sun.kind, days: sun.days })].map((t) => t.split(',')[0]),
+  ['From last Monday to Friday', 'On the weekdays from last Wednesday until yesterday', 'Last Sunday'])
+eq('the last week: all, both', [w5(5, 5), w5(2, 2)], ['Last Saturday, all five trains leaving Reading between 11am and midday got to London Paddington within three minutes of their planned time.', 'Last Saturday, both trains leaving Reading between 11am and midday got to London Paddington within three minutes of their planned time.'])
+eq('the last week: the only train, on time and late', [w5(1, 1), lastWeekText({ n: 1, w3: 0, w10: 0, w30: 1, w120: 1, dates: [], elizabeth: 0 }, { ...one, start: '11:00', end: '12:00' })],
+  ['Last Saturday, the only train leaving Reading between 11am and midday got to London Paddington within three minutes of its planned time.', 'Last Saturday, the only train leaving Reading between 11am and midday was 10 to 30 minutes late getting to London Paddington.'])
+eq('the last week: "38 of the 40", but "about a third of the 26"', [w5(40, 38), w5(26, 9)].map((t) => t.split(', ')[1].split('. ')[0] + '.'), ['38 of the 40 trains leaving Reading between 11am and midday got to London Paddington within three minutes of their planned time.', 'about a third of the 26 trains leaving Reading between 11am and midday got to London Paddington within three minutes of their planned time.'])
+eq('the line under the hours', [kindLine('WEEKDAY'), kindLine('SATURDAY'), kindLine('SUNDAY')], ["Today is a weekday, so that's what this checks. (Saturdays and Sundays have their own timetables.)", "Today is a Saturday, so that's what this checks. (Weekdays and Sundays have their own timetables.)", "Today is a Sunday, so that's what this checks. (Weekdays and Saturdays have their own timetables.)"])
 const sentences = [lastWeekText(hsp, { ...one, kind: wk.kind, days: wk.days }), lastWeekText(mm, one)]
 eq('the last week: no undefined, null or NaN', sentences.filter((t) => /undefined|null|NaN/.test(t)), [])
 

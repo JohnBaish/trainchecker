@@ -15,7 +15,7 @@ given its own branch). Before committing there, run
 
 ## Read these first
 
-0. Next: the rest of stage 5 (`design/handover-stage-5-2026-11-18.md`): Search Console and the baish.net card; search work live
+0. Next: the rest of stage 5 (`design/handover-stage-5-2026-11-18.md`): the baish.net card (Search Console done); search work live
    at trainchecker.baish.net since November 18th 2026. The fresh look is done (November 18th
    2026, `SPEC.md` §11). The agreed wording: `SPEC.md` §8 to §11.
 1. `design/handover-2026-11-17.md`: John's brief, in his own words.
@@ -67,7 +67,8 @@ given its own branch). Before committing there, run
   Reading) and `/api/days` answer.
 - Branch tidied: "Delete merged branches" trial run 44301047770 (one merged branch, nothing unmerged), then
   the real run; `git ls-remote --heads origin` shows only `main`.
-- **Still to do:** Search Console (John: the sitemap, URL Inspection, Request indexing); the baish.net card
+- **Search Console:** done (John, the same day).
+- **Still to do:** the baish.net card
   (in clockwheel, on `claude/laughing-hawking-8d2b6w`; John: later today or tomorrow, with its NEW date set to
   that day); the tracker and the baish.net overview once it's on.
 

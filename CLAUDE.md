@@ -66,6 +66,9 @@ given its own branch). Before committing there, run
 - **For John:** `RDM_KB_KEY` must be ticked for Production in Vercel (as for Preview) for "The days
   ahead" on the live site; the Disruptions API isn't used (his call whether to end it: a month's
   notice). Not checked on a real iPhone: the cross in the station boxes.
+- Branch tidied: "Delete merged branches" trial run 44269189633 (one merged branch, nothing
+  unmerged), then the real run; `git ls-remote --heads origin` shows only `main`. Tracker updated
+  (stage 4 merged; next, stage 5).
 - Key saved here now: Historical Service Performance.
 
 ### November 18th 2026: Elizabeth Line and other trains in the last week (branch `claude/inspiring-pascal-h96tqk`; Claude Code)

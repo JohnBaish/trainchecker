@@ -66,6 +66,8 @@ given its own branch). Before committing there, run
 - Merged into `main` with the new sharing wording (the branch's earlier commit). Checks, `tsc -b`, lint and build
   clean first. Apps keep their own copy of a link's preview for a while, so a chat where the link hasn't been sent
   before shows the new card soonest.
+- **Checked live:** the picture at trainchecker.baish.net is the new bold one (byte for byte), and both text tags have the
+  new sentence. Branch tidied: trial run 44326379849 (one merged, nothing unmerged), then the real run; only `main` left.
 
 ### November 18th 2026: new wording for sharing a link (branch `claude/laughing-hawking-8d2b6w`, merged the same day; Claude Code)
 

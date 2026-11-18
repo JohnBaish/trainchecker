@@ -36,9 +36,12 @@ export type Service = {
 /** `route`: every station the trains from A call at before B (John, November 18th 2026: work
  *  beyond B, such as Southampton to Bournemouth for Basingstoke to Southampton, can't touch it), so "The
  *  days ahead" can tell whether work elsewhere could touch this journey (John, November 18th 2026). */
-export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route: string[] }
+/** `stops`: the stations, in order, that the first train calls at between A and B, with their names
+ *  (for the last week's stand-in station when National Rail's record leaves out an end: John,
+ *  November 18th 2026). */
+export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route: string[]; stops: [string, string][] }
 
-type CallingPoint = { crs?: string; st?: string; et?: string; at?: string; isCancelled?: boolean; cancelReason?: string; delayReason?: string }
+type CallingPoint = { crs?: string; locationName?: string; st?: string; et?: string; at?: string; isCancelled?: boolean; cancelReason?: string; delayReason?: string }
 type RawService = {
   serviceID: string; std: string; etd?: string; platform?: string; operator?: string
   destination?: { locationName?: string }[]
@@ -51,11 +54,13 @@ export type RawBoard = { locationName?: string; filterLocationName?: string; tra
 export function trim(from: string, to: string, taken: string, boards: RawBoard[]): Snap {
   const seen = new Map<string, Service>()
   const route = new Set<string>()
+  let stops: [string, string][] = []
   for (const board of boards) {
     for (const s of board.trainServices || []) {
       const cps = (s.subsequentCallingPoints || []).flatMap((g) => g.callingPoint || [])
       const at = cps.findIndex((c) => c.crs === to)
       for (const c of at >= 0 ? cps.slice(0, at) : []) if (c.crs) route.add(c.crs)
+      if (!stops.length && at > 0) stops = cps.slice(0, at).filter((c) => c.crs).map((c): [string, string] => [c.crs!, c.locationName || c.crs!])
       const p = cps.find((c) => c.crs === to) || {}
       seen.set(s.serviceID, {
         id: s.serviceID, std: s.std, etd: s.etd ?? null, platform: s.platform || null,
@@ -67,7 +72,7 @@ export function trim(from: string, to: string, taken: string, boards: RawBoard[]
     }
   }
   const named = boards.find((b) => b.locationName) || {}
-  return { taken, from, to, fromName: named.locationName || from, toName: named.filterLocationName || to, services: [...seen.values()], route: [...route].sort() }
+  return { taken, from, to, fromName: named.locationName || from, toName: named.filterLocationName || to, services: [...seen.values()], route: [...route].sort(), stops }
 }
 
 const json = (body: unknown, status = 200) =>

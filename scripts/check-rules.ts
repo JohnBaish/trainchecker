@@ -14,7 +14,7 @@ import { trim, type RawBoard } from '../api/live.ts'
 import { count } from '../api/week.ts'
 import { analyse, diff, type Snap, type Analysis } from '../src/lib/analyse.ts'
 import {
-  tenAfterWords, verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
+  standIn, standInLine, tenAfterWords, verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
   hourLabel, HOURS, quoteShareText, type Line,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
@@ -177,6 +177,14 @@ eq('ten after a spelt number (John)', ['about nine in 10 trains', 'one in 10', '
   ['about nine in ten trains', 'one in ten', 'The other two were four and ten minutes late.', 'one was less than 10 minutes late', 'at 10.30pm', 'four from platform 10', '19 in 20', 'about 10 trains an hour'])
 eq('suggestions stay open at "Ivy", a code on the way to Ivybridge (John)', [complete('Ivy', suggest('Ivy')), suggest('Ivy').map(([, n]) => n)], [false, ['Ivybridge']])
 eq('suggestions close once the full name is in the box', [complete('Ivybridge', suggest('Ivybridge')), complete('reading', suggest('reading'))], [true, false])
+// The last week's stand-in station (John's Ealing Broadway idea, November 18th 2026): the history
+// had no Reading to Bond Street trains, but 10 to Ealing Broadway and 10 to Tottenham Court Road.
+const west: [string, string][] = [['TWY', 'Twyford'], ['SLO', 'Slough'], ['EAL', 'Ealing Broadway'], ['PAD', 'London Paddington']]
+eq('stand-in: Reading to Bond Street measures to Ealing Broadway', standIn({ fromCrs: 'RDG', toCrs: 'BDS', stops: west }), { crs: 'EAL', name: 'Ealing Broadway', side: 'to' })
+eq('stand-in: Bond Street to Reading from Ealing Broadway', standIn({ fromCrs: 'BDS', toCrs: 'RDG', stops: [['PAD', 'London Paddington'], ['EAL', 'Ealing Broadway'], ['SLO', 'Slough']] }), { crs: 'EAL', name: 'Ealing Broadway', side: 'from' })
+eq('stand-in: from the east, the nearest stop', standIn({ fromCrs: 'ABW', toCrs: 'BDS', stops: [['WWC', 'Woolwich'], ['CWX', 'Canary Wharf'], ['ZLW', 'Whitechapel'], ['LST', 'Liverpool Street'], ['ZFD', 'Farringdon'], ['TCR', 'Tottenham Court Road']] }), { crs: 'TCR', name: 'Tottenham Court Road', side: 'to' })
+eq('stand-in: both ends left out, none', standIn({ fromCrs: 'PAD', toCrs: 'BDS', stops: [] }), null)
+eq('stand-in: the line (draft)', standInLine('Bond Street', { name: 'Ealing Broadway', side: 'to' }), 'National Rail’s record leaves these trains out at Bond Street, so this shows how they ran as far as Ealing Broadway.')
 eq('this train, in the list', nextFour(bthBri)!.rows[1].reason, 'A fault on this train.')
 eq('platforms, one known of many', platforms(A('KGX-YRK')), 'So far, a platform has only been announced for one train: platform 3.')
 eq('two on time (John)', nextFour(changed('PAD-RDG', (sv, a) => { const keep = new Set(ids(a).slice(0, 2)); for (let i = sv.length - 1; i >= 0; i--) if (a.ahead.some((t) => t.id === sv[i].id) && !keep.has(sv[i].id)) sv.splice(i, 1) }))!.lines[1], 'Both are expected on time.')

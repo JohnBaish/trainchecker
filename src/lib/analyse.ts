@@ -8,7 +8,7 @@ export type Service = {
   id: string; std: string; etd: string | null; platform: string | null; operator: string; destination: string
   cancelled: boolean; reason: string | null; sta: string | null; eta: string | null; ata: string | null
 }
-export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route?: string[] }
+export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route?: string[]; stops?: [string, string][] }
 
 export type Train = Service & {
   rel: number // minutes from now to its timetabled departure (negative: already gone)
@@ -23,6 +23,8 @@ export type Analysis = {
   now: string; from: string; to: string; fromCrs: string; toCrs: string; taken: string
   /** Stations the trains call at after A (api/live.ts). */
   route: string[]
+  /** The stations in order between A and B, with names (api/live.ts). */
+  stops: [string, string][]
   ahead: Train[]; past: Train[]; cancelled: Train[]; late5: Train[]; unknown: Train[]
   affected: number; allowance: number; verdict: Kind; badly: boolean
   why: { twoOfThree: boolean; gap: number | null; noTrains: boolean }
@@ -120,7 +122,7 @@ export function analyse(snap: Snap): Analysis {
   const platList = Object.entries(plats).sort((a, b) => b[1] - a[1])
 
   return {
-    now, from: snap.fromName, to: snap.toName, fromCrs: snap.from, toCrs: snap.to, taken: snap.taken, route: snap.route ?? [],
+    now, from: snap.fromName, to: snap.toName, fromCrs: snap.from, toCrs: snap.to, taken: snap.taken, route: snap.route ?? [], stops: snap.stops ?? [],
     ahead, past, cancelled, late5, unknown, affected, allowance, verdict, badly,
     why: { twoOfThree, gap, noTrains },
     last: { byArrivals, tense, known: known.length, within3, lates, lateArrived, usual, worst, cancelled: pastCancelled },

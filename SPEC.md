@@ -431,3 +431,9 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
 39. **Suggestions stay open while a name is being typed** (John, Ivybridge): they close only when
     the box holds a station's full name, not when the letters typed so far happen to be a code
     ("Ivy" is Ivybridge's code, IVY).
+40. **The last week via a stand-in station** (John's idea, tested November 18th 2026): when every
+    train is on the Elizabeth Line and the record leaves an end out (Paddington or Bond Street), the
+    last week measures to (or from) Ealing Broadway when the trains call there, otherwise the
+    nearest stop the record covers, under "National Rail’s record leaves these trains out at Bond
+    Street, so this shows how they ran as far as Ealing Broadway." (Claude's draft). With both ends
+    left out, the no-record message (§10.34).

@@ -612,3 +612,28 @@ export function singlesLine(items: { summary: string; start: string | null; end:
   const list = phrases.length > 1 ? `${phrases.slice(0, -1).join(', ')} or ${phrases[phrases.length - 1]}` : phrases[0]
   return `If you're travelling ${list} you may be affected – see more details.`
 }
+
+// ---- The last week where National Rail's record leaves out an end (John, November 18th 2026) ----
+
+/** Stations where the record leaves out Elizabeth Line trains (stage 1; Bond Street checked again
+ *  November 18th 2026: none, while Ealing Broadway and Tottenham Court Road had them). */
+export const NO_RECORD_AT = ['PAD', 'BDS']
+
+/** For an all-Elizabeth Line journey with an end the record leaves out: the station to measure to
+ *  (or from) instead: Ealing Broadway when the trains call there, otherwise the nearest stop to
+ *  that end that the record covers. Null when both ends are left out or there's no such stop. */
+export function standIn(a: { fromCrs: string; toCrs: string; stops: [string, string][] }): { crs: string; name: string; side: 'from' | 'to' } | null {
+  const fromOut = NO_RECORD_AT.includes(a.fromCrs), toOut = NO_RECORD_AT.includes(a.toCrs)
+  if (fromOut === toOut) return null
+  const ok = a.stops.filter(([c]) => !NO_RECORD_AT.includes(c))
+  const pick = ok.find(([c]) => c === 'EAL') ?? (toOut ? ok[ok.length - 1] : ok[0])
+  return pick ? { crs: pick[0], name: pick[1], side: toOut ? 'to' : 'from' } : null
+}
+
+/** The line before the hours: "National Rail's record leaves these trains out at Bond Street, so
+ *  this shows how they ran as far as Ealing Broadway." (Claude's draft.) */
+export function standInLine(left: string, s: { name: string; side: 'from' | 'to' }): string {
+  return s.side === 'to'
+    ? `National Rail’s record leaves these trains out at ${left}, so this shows how they ran as far as ${s.name}.`
+    : `National Rail’s record leaves these trains out at ${left}, so this shows how they ran from ${s.name}.`
+}

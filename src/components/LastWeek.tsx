@@ -5,7 +5,7 @@
 import { useRef, useState } from 'react'
 import { clock } from '../lib/analyse.ts'
 import { fetchWeek } from '../lib/load.ts'
-import { HOURS, hourLabel, kindLine, lastWeekText, loadingLine, weekFor, type WeekCounts } from '../lib/sentences.ts'
+import { HOURS, hourLabel, kindLine, lastWeekText, loadingLine, standInLine, weekFor, type WeekCounts } from '../lib/sentences.ts'
 
 const INTRO = "If you'd like to see the reliability history of trains making this journey over the last week, choose an hour of departure and the results should load in under a minute."
 // The Elizabeth Line note (stage 1 recommendation §2.5; agreed at the mock-ups). "Elizabeth Line" with a
@@ -27,7 +27,12 @@ type State = { s: 'choose' } | { s: 'loading'; hour: number } | { s: 'done'; tex
 const hhmm = (h: number, m: number) => `${String(h).padStart(2, '0')}${String(m).padStart(2, '0')}`
 const colon = (t: string) => `${t.slice(0, 2)}:${t.slice(2)}`
 
-export function LastWeek({ from, to, fromName, toName, elizabeth, noRecord }: { from: string; to: string; fromName: string; toName: string; elizabeth: boolean; noRecord: boolean }) {
+type StandIn = { crs: string; name: string; side: 'from' | 'to'; left: string }
+
+export function LastWeek({ from: fromCrs, to: toCrs, fromName: fromN, toName: toN, elizabeth, noRecord, standIn }: { from: string; to: string; fromName: string; toName: string; elizabeth: boolean; noRecord: boolean; standIn?: StandIn | null }) {
+  // Measured to (or from) a stand-in station when the record leaves an end out (John, November 18th 2026).
+  const from = standIn?.side === 'from' ? standIn.crs : fromCrs, to = standIn?.side === 'to' ? standIn.crs : toCrs
+  const fromName = standIn?.side === 'from' ? standIn.name : fromN, toName = standIn?.side === 'to' ? standIn.name : toN
   const [now] = useState(() => new Date())
   const wk = weekFor(now)
   const h = Number(clock(now).slice(0, 2))
@@ -65,7 +70,7 @@ export function LastWeek({ from, to, fromName, toName, elizabeth, noRecord }: { 
     const endLabel = got.length === 2 ? colon(end === '2359' ? '0000' : end) : colon(halves[0][1])
     let text = lastWeekText(sum(got), { ...o, start: colon(halves[0][0]), end: endLabel })
     if (got.length === 1) text += ` National Rail’s record didn’t answer for the half hour after that, so it isn’t included.`
-    setState({ s: 'done', text, note: elizabeth ? ELIZABETH : null })
+    setState({ s: 'done', text, note: elizabeth && !standIn ? ELIZABETH : null })
   }
 
   const loading = state.s === 'loading'
@@ -81,6 +86,7 @@ export function LastWeek({ from, to, fromName, toName, elizabeth, noRecord }: { 
     <section className="card sec block">
       <h3>The last week</h3>
       <p>{INTRO}</p>
+      {standIn && <p>{standInLine(standIn.left, standIn)}</p>}
       <div className="hist-row">
         <select aria-label="An hour of departure" value={hour} onChange={(e) => setHour(Number(e.target.value))} disabled={loading}>
           {HOURS.map((x) => <option key={x} value={x}>{hourLabel(x)}</option>)}

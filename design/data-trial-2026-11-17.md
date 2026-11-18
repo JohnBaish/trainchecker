@@ -205,3 +205,12 @@ Street, Derby, Matlock, Cardiff and Bristol.
    Wales) and Ebbw Vale Town").
 4. Quick (well under a second a station), but one request per station per visit, where the feed
    is one request for everyone every five minutes.
+
+## 11. The Elizabeth Line in the history, again (8am to 8.30am, weekdays November 11th to 17th 2026)
+
+Reading to Bond Street: no trains. Reading to Ealing Broadway: 10, all Elizabeth Line. Reading to
+Tottenham Court Road: 10. Reading to Paddington: 34, one Elizabeth Line. So the record leaves the
+Elizabeth Line out at Bond Street and Paddington only. Of Ealing's 10, four missed every margin:
+each has National Rail's cancellation code in the train's details (773 on November 11th, 896 on
+the 13th), so they really were cancelled, not missing. Reading to Ealing Broadway, 8am to 9am,
+through the page: 15 ran, about three quarters within three minutes, five cancelled.

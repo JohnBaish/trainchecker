@@ -54,6 +54,21 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: the last week to Ealing Broadway for Bond Street (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John:** yes to measuring Elizabeth Line journeys to Ealing Broadway where the record leaves
+  Bond Street out. History key saved here (secure form).
+- **Found** (`design/data-trial-2026-11-17.md` §11): Bond Street none, Ealing Broadway and Tottenham
+  Court Road complete; trains with no times carry cancellation codes, so they were cancelled.
+- **Built:** `api/live.ts` sends `stops` (the first train's stations in order, with names);
+  `standIn()` and `standInLine()` in `sentences.ts`; `LastWeek` asks for the stand-in end and says
+  so above the hours. `SPEC.md` §10.40.
+- **Checked:** `npm run check` 191 + 56 + 68; `tsc -b`, lint, build; iPhone 13 emulation, Reading to
+  Bond Street with the 6.24pm board's Elizabeth Line trains and the real history for 8am to 9am
+  (`design/previews/stage4/stand-in.ts`): asked Reading to Ealing Broadway in two halves, answered
+  "about three quarters of the 15 trains … Five more were cancelled."; no errors, no sideways scroll.
+- Key saved here now: Historical Service Performance.
+
 ### November 18th 2026: Tiverton Parkway explained; Ivybridge's suggestions (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **Tiverton Parkway to Paddington** (live board saved at 8.22am, Live Departure Board key swapped

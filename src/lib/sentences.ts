@@ -68,8 +68,9 @@ function mainReason(trains: Train[]): string | null {
 
 // Rounded shares (N1, N2, John): with 10 or more trains, the nearest of these, with "about"
 // unless exact; with fewer, the real count. "All" and "none" said plainly.
-const SHARES: [number, number, string, 'in' | 'of'][] = [[1, 20, 'one in twenty', 'in'], [1, 10, 'one in ten', 'in'], [1, 4, 'a quarter', 'of'], [1, 3, 'a third', 'of'],
-  [1, 2, 'half', 'of'], [2, 3, 'two thirds', 'of'], [3, 4, 'three quarters', 'of'], [9, 10, 'nine in ten', 'in'], [19, 20, 'nineteen in twenty', 'in']]
+// In digits from 10 up, by the house number rule (John, November 18th 2026): "19 in 20".
+const SHARES: [number, number, string, 'in' | 'of'][] = [[1, 20, 'one in 20', 'in'], [1, 10, 'one in 10', 'in'], [1, 4, 'a quarter', 'of'], [1, 3, 'a third', 'of'],
+  [1, 2, 'half', 'of'], [2, 3, 'two thirds', 'of'], [3, 4, 'three quarters', 'of'], [9, 10, 'nine in 10', 'in'], [19, 20, '19 in 20', 'in']]
 /** The phrase for "<share> trains" ("about half of the trains", "five of the nine trains",
  *  "all 19 trains") and the bare share ("about half", "five of the nine", "all"). */
 export function share(k: number, n: number): { trains: string; bare: string } {
@@ -89,21 +90,33 @@ export function lastTwoLines(a: Analysis): string[] {
   const L = a.last
   if (!L.known && !L.cancelled.length) return ['No trains made this journey in the last two hours.']
   const out: string[] = []
+  const c = L.cancelled.length
   if (L.known) {
     const sh = share(L.within3, L.known)
-    if (L.byArrivals) out.push(`${Cap(sh.trains)} on this route in the last couple of hours got to ${a.to} within three minutes of their timetabled arrival.`)
-    else {
+    if (L.byArrivals) {
+      // With cancellations, say first that the share is of the trains that ran (John, November
+      // 18th 2026), so the cancelled ones aren't read as part of it.
+      if (c) {
+        const who = L.within3 === L.known ? (L.known === 2 ? 'both' : `all ${num(L.known)}`) : L.within3 === 0 ? `none of the ${num(L.known)}` : sh.bare
+        out.push(`Of the trains on this route in the last couple of hours which weren't cancelled, ${who} got to ${a.to} within three minutes of their timetabled arrival.`)
+      } else out.push(`${Cap(sh.trains)} on this route in the last couple of hours got to ${a.to} within three minutes of their timetabled arrival.`)
+    } else {
       const reach = { past: 'reached', future: 'are expected to reach', mixed: 'have reached or are expected to reach' }[L.tense]
       out.push(`Of the trains that left ${a.from} in the last couple of hours, ${sh.bare} ${reach} ${a.to} within three minutes of their timetabled arrival.`)
     }
     const n = L.lates.length, them = L.within3 === 0 ? 'They' : n === 1 ? 'The other' : n === 2 ? 'The other two' : 'The others'
     const was = { past: n === 1 ? 'was' : 'were', future: n === 1 ? 'is expected to be' : 'are expected to be', mixed: n === 1 ? 'was or is expected to be' : 'were or are expected to be' }[L.tense]
-    if (n === 1) out.push(`${them} ${was} ${num(L.worst!)} minutes late.`)
-    else if (n === 2) out.push(`${them} ${was} ${num(L.lates[0])} and ${num(L.lates[1])} minutes late.`)
+    // One or two late: each one's own tense, as we know whether it has arrived (John).
+    const own = (i: number) => (L.lateArrived[i] ? 'was' : 'is expected to be')
+    if (n === 1) out.push(`${them} ${own(0)} ${num(L.worst!)} minutes late.`)
+    else if (n === 2 && L.lateArrived[0] !== L.lateArrived[1]) {
+      const [x, y] = L.lateArrived[0] ? [0, 1] : [1, 0]
+      out.push(`${L.within3 === 0 ? 'One' : 'Of the other two, one'} ${own(x)} ${num(L.lates[x])} minutes late and the other ${own(y)} ${num(L.lates[y])} minutes late.`)
+    } else if (n === 2) out.push(`${them} ${L.lateArrived[0] ? 'were' : 'are expected to be'} ${num(L.lates[0])} and ${num(L.lates[1])} minutes late.`)
     else if (n > 2) out.push(L.usual === L.worst ? `${them} ${was} about ${num(L.usual!)} minutes late.` : `${them} ${was} mostly about ${num(L.usual!)} minutes late, and the latest ${L.tense === 'future' ? 'is expected to be' : 'was'} ${num(L.worst!)} minutes late.`)
   }
-  const c = L.cancelled.length
-  if (c) out.push(`${Cap(num(c))}${L.known ? ' more' : ''} ${c === 1 ? (L.known ? 'was' : 'train was') : (L.known ? 'were' : 'trains were')} cancelled.`)
+  // "Two trains didn't run at all." (John, November 18th 2026.)
+  if (c) out.push(L.known ? `${Cap(num(c))} ${c === 1 ? "train didn't" : "trains didn't"} run at all.` : `${Cap(num(c))} ${c === 1 ? 'train was' : 'trains were'} cancelled.`)
   return out
 }
 
@@ -139,7 +152,7 @@ export function verdict(a: Analysis): Verdict {
     return {
       kind: 'none', lines: [
         { text: `We can't find a direct train from ${a.from} to ${a.to} in the next four hours.` },
-        { text: 'Trainchecker only covers direct journeys – if you know part of the route, try that.' },
+        { text: 'Trainchecker only covers direct journeys – please try another.' },
       ],
     }
   }
@@ -320,7 +333,9 @@ export function platformsByKind(a: Analysis): string | null {
     const list = pick.length === 1 ? `platform ${pick[0]}` : `platforms ${pick[0]} and ${pick[1]}`
     parts.push({ kind: g.kind, text: list, most: covered < known })
   }
-  if (parts.length < 2) return null
+  // The same platforms for every kind (Tiverton Parkway: "platform 2, with slower ones using platform
+  // 2", John): nothing to tell apart, so the plain sentence instead.
+  if (parts.length < 2 || parts.every((p) => p.text === parts[0].text)) return null
   const name = (k: Group['kind'], first: boolean) => (k === 'elizabeth' ? 'Elizabeth Line trains' : k === 'fast' ? 'fast trains' : first ? 'slower trains' : 'slower ones')
   const [f, ...rest] = parts
   const others = rest.map((p) => `${name(p.kind, false)} ${p.most ? 'mostly ' : ''}using ${p.text}`)
@@ -343,6 +358,8 @@ export function platforms(a: Analysis): string | null {
   if (a.platKnown === 2) return rest.length ? `So far, platforms have been announced for two trains: platforms ${p1} and ${rest[0][0]}.` : `So far, platforms have been announced for two trains, both platform ${p1}.`
   const byKind = platformsByKind(a)
   if (byKind) return byKind
+  // Every announced train from one platform: no "Most" (John, November 18th 2026).
+  if (!rest.length) return `Trains are currently going from platform ${p1}.`
   if (n1 * 2 >= a.platKnown) {
     let s = `Most trains are currently going from platform ${p1}`
     if (rest.length === 1) s += `, and ${rest[0][1] === 1 ? 'one' : 'some'} from platform ${rest[0][0]}`
@@ -404,7 +421,8 @@ export function lastWeekOthers(n: number, w3: number, w10: number, w30: number, 
   if (n === 1) return `It was ${groups[0][1]}.`
   if (groups.length === 1) return others === 1 ? `The other was ${groups[0][1]}.` : `The others were ${groups[0][1]}.`
   const [first, ...rest] = groups
-  const sh = share(first[0], others).bare
+  // A plain count when there are few ("one was…", not "one of the four was…").
+  const sh = others < 10 ? num(first[0]) : share(first[0], others).bare
   const v = first[0] === 1 && others < 10 ? 'was' : 'were'
   if (rest.length === 1) return `Of the others, ${sh} ${v} ${first[1]}, and the rest ${rest[0][1]}.`
   const ps = [`${sh} ${v} ${first[1]}`, ...rest.map(([k, t]) => `${num(k)} ${k === 1 ? 'was' : 'were'} ${t}`)]
@@ -454,16 +472,20 @@ export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind:
   const when = ds.length === 1 ? `On ${dayName(ds[0])}` : `On the ${num(ds.length)} ${o.kind === 'WEEKDAY' ? 'weekdays' : o.kind === 'SATURDAY' ? 'Saturdays' : 'Sundays'} from ${dayName(ds[0])} to ${dayName(ds[ds.length - 1])}`
   // No trains (agreed by John, November 17th 2026).
   if (!c.n) return `${when}, no trains left ${o.from} for ${o.to} ${between}, as far as National Rail's record shows.`
-  const k = c.w3, n = c.n
+  // A cancelled train didn't leave (John, November 18th 2026): the share is of the trains that ran,
+  // and the cancelled ones (missing even the 120-minute margin) get a sentence of their own.
+  const cancelled = c.n - c.w120, n = c.w120, k = c.w3
+  const more = cancelled ? ` ${Cap(num(cancelled))} more ${cancelled === 1 ? 'was' : 'were'} cancelled.` : ''
+  if (!n) return `${when}, ${cancelled === 1 ? 'the only train due to leave' : cancelled === 2 ? 'both trains due to leave' : `all ${num(cancelled)} trains due to leave`} ${o.from} ${between} ${cancelled === 1 ? 'was' : 'were'} cancelled.`
   if (n === 1) {
-    return `${when}, the only train that left ${o.from} ${between} ${k ? 'reached' : "didn't reach"} ${o.to} within three minutes of the timetable.${k ? '' : ' ' + lastWeekOthers(n, c.w3, c.w10, c.w30, c.w120)}`
+    return `${when}, the only train that left ${o.from} ${between} ${k ? 'reached' : "didn't reach"} ${o.to} within three minutes of the timetable.${k ? '' : ' ' + lastWeekOthers(1, c.w3, c.w10, c.w30, c.w120)}${more}`
   }
   const who = k === n && n === 2 ? 'both trains' : k === n ? `all ${num(n)} trains` : k === 0 ? `none of the ${num(n)} trains` : n < 10 ? `${num(k)} of the ${num(n)} trains` : `${share(k, n).bare} of the ${num(n)} trains`
   const first = `${when}, ${who} that left ${o.from} ${between} reached ${o.to} within three minutes of the timetable.`
   let rest = lastWeekOthers(n, c.w3, c.w10, c.w30, c.w120)
   // When none were within three minutes there are no "others" (agreed by John, November 17th 2026).
   if (k === 0) rest = rest.replace(/^Of the others,/, 'Of these,').replace(/^The others were/, 'They were')
-  return rest ? `${first} ${rest}` : first
+  return `${first}${rest ? ' ' + rest : ''}${more}`
 }
 
 /** The quote's Share words (SPEC §8.13). */

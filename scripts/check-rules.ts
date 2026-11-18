@@ -56,7 +56,8 @@ for (const f of files) {
   // The last train gone (November 17th 2026) is new since the mock-ups.
   // Since November 17th 2026 (stage 4) the verdict never gives the last two hours (they stay in
   // their own box), so where the mock-ups added them, only the first line matches.
-  const mv: string[] = S.verdict(m).lines
+  // "…– please try another." since November 18th 2026 (John).
+  const mv: string[] = (S.verdict(m).lines as string[]).map((l) => l.replace('if you know part of the route, try that.', 'please try another.'))
   if (!a.lastGone) eq(`${f}: verdict`, lineText(verdict(a).lines), a.worse ? mv.slice(0, 1) : mv)
   // Since November 18th 2026 (John): "a fault on the train" in the summary; the list keeps "this".
   const mn = S.nextFour(m)
@@ -69,10 +70,14 @@ for (const f of files) {
   eq(`${f}: next four hours`, cmp, mn)
   // Platforms differ from the mock-ups only where one or two are known (November 17th 2026).
   // "Currently" rather than "At the moment" (John, November 18th 2026).
-  const mp = (S.platforms(m) as string | null)?.replace(/^At the moment, (\w)/, (_: string, c: string) => c.toUpperCase()).replace(/ (are|is) going/, ' $1 currently going')
+  const mp = (S.platforms(m) as string | null)?.replace(/^At the moment, most trains are going from platform (\S+)\.$/, 'Trains are currently going from platform $1.').replace(/^At the moment, (\w)/, (_: string, c: string) => c.toUpperCase()).replace(/ (are|is) going/, ' $1 currently going')
   // By kind of train since November 18th 2026 (John): compared only where the trains are one kind.
   if (a.platKnown > 2 && !platformsByKind(a)) eq(`${f}: platforms`, platforms(a), mp)
-  eq(`${f}: last two hours`, lastTwoLines(a), S.lastTwoLines(m))
+  // Since November 18th 2026 (John): shares in digits from 10 ("19 in 20"); with cancellations, "Of
+  // the trains … which weren't cancelled" and "didn't run at all"; one or two late trains in their
+  // own tense. The mock-ups are compared where none of these apply.
+  const digits = (l: string) => l.replace('nineteen in twenty', '19 in 20').replace('nine in ten', 'nine in 10').replace('one in ten', 'one in 10').replace('one in twenty', 'one in 20')
+  if (!a.last.cancelled.length && !(a.last.tense === 'mixed' && a.last.lates.length <= 2)) eq(`${f}: last two hours`, lastTwoLines(a), (S.lastTwoLines(m) as string[]).map(digits))
   const when = { time: t12(m.now), date: dayName(new Date(m.taken)).replace(/^\w+ /, '') }
   if (!a.lastGone) eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text)
   const bad = pageText(a).filter((t) => /undefined|null|NaN|\[object/.test(t))
@@ -89,7 +94,7 @@ eq('mixed bag', lineText(verdict(bthBri).lines)[0], "<b>It's a mixed bag:</b> mo
 eq('be prepared', lineText(verdict(manMia).lines), ['<b>Be prepared:</b> trains from Manchester Piccadilly to Manchester Airport are disrupted this evening. Of the next 30, 10 are cancelled and two are running late, mostly because of a fault with the signalling system.'])
 eq('no direct train (O7)', lineText(verdict(rdgCbg).lines), [
   "We can't find a direct train from Reading to Cambridge in the next four hours.",
-  'Trainchecker only covers direct journeys – if you know part of the route, try that.',
+  'Trainchecker only covers direct journeys – please try another.',
 ])
 eq('long journey (O1, John)', lastTwoLines(kgxYrk), [
   'Of the trains that left London Kings Cross in the last couple of hours, seven of the eight are expected to reach York within three minutes of their timetabled arrival.',
@@ -126,7 +131,7 @@ eq('back across midnight', diff('00:03', '23:58'), -5)
 
 // 4: rounding (N1, N2), with "about" unless exact.
 eq('rounding', [share(11, 22).bare, share(8, 26).bare, share(17, 19).bare, share(5, 9).trains, share(19, 19).trains, share(0, 12).trains, share(1, 10).bare, share(18, 20).bare, share(19, 20).bare, share(7, 21).bare],
-  ['half', 'about a third', 'about nine in ten', 'five of the nine trains', 'all 19 trains', 'none of the 12 trains', 'one in ten', 'nine in ten', 'nineteen in twenty', 'a third'])
+  ['half', 'about a third', 'about nine in 10', 'five of the nine trains', 'all 19 trains', 'none of the 12 trains', 'one in 10', 'nine in 10', '19 in 20', 'a third'])
 
 // "Badly disrupted" (SPEC §7, answer 9), on real boards changed one way at a time.
 function changed(id: string, edit: (sv: Snap['services'], a: Analysis) => void): Analysis {
@@ -146,7 +151,8 @@ const oneVeryLate = changed('PAD-RDG', (sv, a) => { const t = sv.find((x) => x.i
 eq('one very late train among frequent ones: not badly disrupted (Hereford example)', oneVeryLate.badly, false)
 eq('Manchester: disrupted, not badly', [manMia.verdict, manMia.badly], ['prepared', false])
 
-eq('platforms: one kind of train, as before', platforms(bthBri), 'Most trains are currently going from platform 1.')
+eq('platforms: the same for every kind, so the plain sentence (John, Tiverton Parkway)', platforms(changed('RDG-PAD', (sv) => { for (const t of sv) if (t.platform) t.platform = '2' })), 'Trains are currently going from platform 2.')
+eq('platforms: all from one platform, no "Most"', platforms(bthBri), 'Trains are currently going from platform 1.')
 eq('the train, in the summary (John)', nextFour(bthBri)!.lines[1], 'Two are cancelled, because of a passenger being taken ill on a train and a fault on the train. The rest are expected on time.')
 eq('trains an hour (John: "an hour" after every group)', nextFour(rdgPad)!.lines[0], 'There are eight fast trains an hour from Reading to London Paddington in the next four hours, two slower ones an hour (taking about 40 minutes) and about two an hour on the Elizabeth Line.')
 eq('platforms by kind of train (John)', platforms(rdgPad), 'Most fast trains are currently going from platforms 10 and 11, with slower ones mostly using platform 15A and Elizabeth Line trains using platforms 13 and 14.')
@@ -155,6 +161,18 @@ eq('eight or fewer: the count', nextFour(kgxYrk)!.lines[0], 'There are five trai
 const padRdg9 = analyse(snapOf(raw('20261117-2059-PAD-RDG.json')))
 eq('a small group: "in that time"', nextFour(padRdg9)!.lines[0], 'There are about three fast trains an hour from London Paddington to Reading in the next four hours, about three slower ones an hour (taking about 40 minutes) and three on the Elizabeth Line in that time.')
 eq('why, after the status (John)', [nextFour(bthBri)!.rows[1].why, nextFour(rdgPad)!.rows[2].why], [' because of a fault on this train (Great Western Railway).', ' (Great Western Railway).'])
+eq('cancellations in the last two hours (John)', lastTwoLines(analyse(snapOf(raw('20261117-2059-LST-SRA.json')))), [
+  "Of the trains on this route in the last couple of hours which weren't cancelled, about 19 in 20 got to Stratford (London) within three minutes of their timetabled arrival.",
+  'The other two were four and 16 minutes late.', "Four trains didn't run at all."])
+eq('cancellations, none on time', lastTwoLines(manMia)[0], "Of the trains on this route in the last couple of hours which weren't cancelled, none of the seven got to Manchester Airport within three minutes of their timetabled arrival.")
+// One late train, not yet arrived, in a mixed group: its own tense (John). Kings Cross to York's
+// late one, changed to not yet arrived and another train marked arrived.
+const kyMixed = changed('KGX-YRK', (sv, a) => {
+  // Two on-time ones marked as arrived (fewer than three, so still by the trains that left); the
+  // late one still on its way.
+  for (const t of a.past.filter((y) => y.eta === 'On time').slice(0, 2)) sv.find((y) => y.id === t.id)!.ata = t.sta
+})
+eq('one late train, its own tense', [kyMixed.last.tense, lastTwoLines(kyMixed)[1]], ['mixed', 'The other is expected to be six minutes late.'])
 eq('this train, in the list', nextFour(bthBri)!.rows[1].reason, 'A fault on this train.')
 eq('platforms, one known of many', platforms(A('KGX-YRK')), 'So far, a platform has been announced for one train: platform 3.')
 eq('two on time (John)', nextFour(changed('PAD-RDG', (sv, a) => { const keep = new Set(ids(a).slice(0, 2)); for (let i = sv.length - 1; i >= 0; i--) if (a.ahead.some((t) => t.id === sv[i].id) && !keep.has(sv[i].id)) sv.splice(i, 1) }))!.lines[1], 'Both are expected on time.')
@@ -183,8 +201,13 @@ eq('the last week: no trains', lastWeekText({ n: 0, w3: 0, w10: 0, w30: 0, w120:
   "On Saturday November 14th, no trains left Reading for London Paddington between 5pm and 6pm, as far as National Rail's record shows.")
 // Manchester's real answer (four trains, three cancelled), shown as if for one Saturday.
 const mm = count(JSON.parse(readFileSync(new URL('20261117-hsp-MAN-MIA-1840-1910.json', dir), 'utf8')))
-eq('the last week: none on time, three cancelled', lastWeekText(mm, { ...one, from: 'Manchester Piccadilly', to: 'Manchester Airport', start: '18:40', end: '19:10' }),
-  'On Saturday November 14th, none of the four trains that left Manchester Piccadilly between 6.40pm and 7.10pm reached Manchester Airport within three minutes of the timetable. Of these, one of the four was less than 10 minutes late, and the rest cancelled.')
+// Cancelled trains didn't leave (John, November 18th 2026): counted apart.
+eq('the last week: one ran, three cancelled', lastWeekText(mm, { ...one, from: 'Manchester Piccadilly', to: 'Manchester Airport', start: '18:40', end: '19:10' }),
+  "On Saturday November 14th, the only train that left Manchester Piccadilly between 6.40pm and 7.10pm didn't reach Manchester Airport within three minutes of the timetable. It was less than 10 minutes late. Three more were cancelled.")
+eq('the last week: Tiverton Parkway (John)', lastWeekText({ n: 5, w3: 0, w10: 1, w30: 4, w120: 4, dates: [], elizabeth: 0 }, { ...one, from: 'Tiverton Parkway', to: 'London Paddington', kind: wk.kind, days: wk.days, start: '07:00', end: '08:00' }),
+  'On the five weekdays from Tuesday November 10th to Monday November 16th, none of the four trains that left Tiverton Parkway between 7am and 8am reached London Paddington within three minutes of the timetable. Of these, one was less than 10 minutes late, and the rest 10 to 30 minutes late. One more was cancelled.')
+eq('the last week: all cancelled', lastWeekText({ n: 2, w3: 0, w10: 0, w30: 0, w120: 0, dates: [], elizabeth: 0 }, { ...one, from: 'Reading', to: 'London Paddington', start: '07:00', end: '07:30' }),
+  'On Saturday November 14th, both trains due to leave Reading between 7am and 7.30am were cancelled.')
 eq('the last week: the hours', [HOURS.length, hourLabel(HOURS[0]), hourLabel(17), hourLabel(HOURS[HOURS.length - 1])], [19, '5am to 6am', '5pm to 6pm', '11pm to midnight'])
 const sentences = [lastWeekText(hsp, { ...one, kind: wk.kind, days: wk.days }), lastWeekText(mm, one)]
 eq('the last week: no undefined, null or NaN', sentences.filter((t) => /undefined|null|NaN/.test(t)), [])

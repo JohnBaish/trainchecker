@@ -14,6 +14,7 @@ function StationBox({ label, value, onChange, error, go }: { label: string; valu
   // takes the cursor out of the box, and closing at once removed the list before the tap
   // arrived (John, November 17th 2026).
   const closing = useRef<number | undefined>(undefined)
+  const box = useRef<HTMLInputElement>(null)
   useEffect(() => () => window.clearTimeout(closing.current), [])
   const list = open ? suggest(value) : []
   const exact = list.length === 1 && resolve(value) === list[0][0]
@@ -31,14 +32,24 @@ function StationBox({ label, value, onChange, error, go }: { label: string; valu
   return (
     <div className="station">
       <label htmlFor={id}>{label}</label>
+      <div className="field">
       <input
-        id={id} className="input" value={value} placeholder="A station" autoComplete="off" autoCorrect="off" spellCheck={false}
+        ref={box} id={id} className={`input${value ? ' has-clear' : ''}`} value={value} placeholder="A station" autoComplete="off" autoCorrect="off" spellCheck={false}
         autoCapitalize="words" enterKeyHint={go ? 'go' : 'next'} role="combobox" aria-expanded={shown.length > 0} aria-controls={`${id}-list`}
         aria-activedescendant={at >= 0 && shown[at] ? `${id}-${at}` : undefined} aria-invalid={!!error}
         onChange={(e) => { onChange(e.target.value); setOpen(true); setAt(-1) }}
         onFocus={() => { window.clearTimeout(closing.current); setOpen(true) }}
         onBlur={() => { closing.current = window.setTimeout(() => setOpen(false), 300) }} onKeyDown={key}
       />
+      {/* A cross to empty the box in one tap, on a phone above all (John, November 18th 2026). It
+          keeps the cursor in the box, so the keyboard stays up for the new station. */}
+      {value && (
+        <button type="button" className="clear" aria-label={`Clear ${label}`} title="Clear"
+          onMouseDown={(e) => e.preventDefault()} onClick={() => { onChange(''); setOpen(true); setAt(-1); box.current?.focus() }}>
+          <Icon name="clear" />
+        </button>
+      )}
+      </div>
       {shown.length > 0 && (
         <ul className="suggest" id={`${id}-list`} role="listbox">
           {shown.map(([code, name], i) => (

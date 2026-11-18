@@ -147,6 +147,10 @@ export function JourneyView({ journey }: { journey: Journey }) {
   const taken = new Date(an.taken)
   const next = nextFour(an)
   const elizabeth = [...an.ahead, ...an.past].some((s) => /Elizabeth/i.test(s.operator))
+  // Every train on the Elizabeth Line, with Paddington or Bond Street one end: National Rail's
+  // record leaves them out (stage 1), so the last week says so at once (John, November 18th 2026).
+  const allTrains = [...an.ahead, ...an.past]
+  const noRecord = allTrains.length > 0 && allTrains.every((s) => /Elizabeth/i.test(s.operator)) && [an.fromCrs, an.toCrs].some((c) => c === 'PAD' || c === 'BDS')
   return (
     <>
       {strip}
@@ -187,7 +191,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
               2026, after trying the preview); after the quote (John, stage 4). */}
           <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>
           <DaysAhead days={days} journey={journeyNames} />
-          <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth} />
+          <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth} noRecord={noRecord} />
         </>
       )}
     </>

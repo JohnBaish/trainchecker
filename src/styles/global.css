@@ -210,6 +210,12 @@ details.trains-fold { margin-top: var(--space-3); }
 /* ---- New in stage 3 ---- */
 /* The station boxes' suggestions. */
 .station { position: relative; }
+.station .field { position: relative; }
+.input.has-clear { padding-right: 44px; }
+/* The cross that empties a station box: a 44px tap, the icon 16px (John, November 18th 2026). */
+.station .clear { position: absolute; right: 0; top: 0; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; background: none; color: var(--color-neutral-700); cursor: pointer; border-radius: 999px; }
+.station .clear svg { width: 16px; height: 16px; }
+.station .clear:hover { color: var(--color-text); }
 .suggest { position: absolute; z-index: 5; left: 0; right: 0; top: calc(100% - 2px); margin: 0; padding: 6px 0; list-style: none; background: var(--raised); border: 1px solid var(--color-divider); border-radius: var(--radius-md); box-shadow: 0 8px 24px #0003; max-height: 320px; overflow-y: auto; }
 .suggest li { padding: 10px 16px; cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 8px; }
 .suggest li:hover, .suggest li.at { background: var(--color-accent-100); }

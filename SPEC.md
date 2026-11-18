@@ -398,3 +398,25 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
     it stays if it names no other station, a station between A and B, or its advice has a sentence
     about trains between A and B that stop there (not "via Bath Spa (not calling)"). Reading to
     Newbury now drops out for Paddington to Reading.
+29. **The last two hours with cancellations** (John, November 18th 2026): "Of the trains on this
+    route in the last couple of hours which weren't cancelled, about 19 in 20 got to B within
+    three minutes of their timetabled arrival. The other was seven minutes late. Two trains didn't
+    run at all." Without cancellations, as before. Rounded shares in digits from 10: "one in 20",
+    "one in 10", "nine in 10", "19 in 20".
+30. **One or two late trains in their own tense** (John): "The other is expected to be seven
+    minutes late" or "Of the other two, one was six minutes late and the other is expected to be
+    seven minutes late", not "was or is expected to be".
+31. **Platforms:** no "Most" when every announced train uses one platform ("Trains are currently
+    going from platform 1."); by kind of train only when the kinds use different platforms (John,
+    Tiverton Parkway).
+32. **The last week counts only the trains that ran** (John): "…none of the four trains that left
+    Tiverton Parkway between 7am and 8am reached London Paddington within three minutes of the
+    timetable. Of these, one was less than 10 minutes late, and the rest 10 to 30 minutes late. One
+    more was cancelled." All cancelled: "…both trains due to leave A between X and Y were
+    cancelled." A plain count for few ("one was", not "one of the four was").
+33. **No direct train:** "Trainchecker only covers direct journeys – please try another." (John).
+34. **No record** (John): "Sorry, National Rail isn’t offering historical data between these two
+    stations." In place of the hour choice when every train is on the Elizabeth Line and Paddington
+    or Bond Street is one end; and in place of "no trains left…" when an Elizabeth Line journey's
+    answer is empty.
+35. **A cross (×) in the station boxes** to empty them in one tap (John), keeping the cursor there.

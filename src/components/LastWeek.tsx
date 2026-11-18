@@ -11,6 +11,10 @@ const INTRO = "If you'd like to see the reliability history of trains making thi
 // The Elizabeth Line note (stage 1 recommendation §2.5; agreed at the mock-ups). "Elizabeth Line" with a
 // capital L, as National Rail shows it (John, November 18th 2026).
 const ELIZABETH = "Some Elizabeth Line trains may be missing from these figures: National Rail's history often leaves them out when Paddington or Bond Street is one end of the journey."
+// No record for these trains (John, November 18th 2026), shown instead of the choice when every
+// train is on the Elizabeth Line and Paddington or Bond Street is one end (stage 1: the record leaves
+// them out), and instead of "no trains left" when an Elizabeth Line journey's answer is empty.
+const NO_RECORD = 'Sorry, National Rail isn’t offering historical data between these two stations.'
 // When the record can't answer (agreed by John, November 17th 2026).
 const FAILED: Record<string, string> = {
   busy: 'National Rail’s record is busy answering another request. Please try again in a minute.',
@@ -23,7 +27,7 @@ type State = { s: 'choose' } | { s: 'loading'; hour: number } | { s: 'done'; tex
 const hhmm = (h: number, m: number) => `${String(h).padStart(2, '0')}${String(m).padStart(2, '0')}`
 const colon = (t: string) => `${t.slice(0, 2)}:${t.slice(2)}`
 
-export function LastWeek({ from, to, fromName, toName, elizabeth }: { from: string; to: string; fromName: string; toName: string; elizabeth: boolean }) {
+export function LastWeek({ from, to, fromName, toName, elizabeth, noRecord }: { from: string; to: string; fromName: string; toName: string; elizabeth: boolean; noRecord: boolean }) {
   const [now] = useState(() => new Date())
   const wk = weekFor(now)
   const h = Number(clock(now).slice(0, 2))
@@ -56,6 +60,7 @@ export function LastWeek({ from, to, fromName, toName, elizabeth }: { from: stri
       n: a.n + c.n, w3: a.w3 + c.w3, w10: a.w10 + c.w10, w30: a.w30 + c.w30, w120: a.w120 + c.w120, dates: [...a.dates, ...c.dates], elizabeth: a.elizabeth + c.elizabeth,
     }))
     if (!got.length) { setState({ s: 'failed', text: FAILED[failure ?? 'unavailable'] ?? FAILED.unavailable }); return }
+    if (elizabeth && !sum(got).n) { setState({ s: 'failed', text: NO_RECORD }); return }
     // The hour as a whole; or, if its second half couldn't be had, the first half, said plainly.
     const endLabel = got.length === 2 ? colon(end === '2359' ? '0000' : end) : colon(halves[0][1])
     let text = lastWeekText(sum(got), { ...o, start: colon(halves[0][0]), end: endLabel })
@@ -64,6 +69,14 @@ export function LastWeek({ from, to, fromName, toName, elizabeth }: { from: stri
   }
 
   const loading = state.s === 'loading'
+  if (noRecord) {
+    return (
+      <section className="card sec block">
+        <h3>The last week</h3>
+        <p>{NO_RECORD}</p>
+      </section>
+    )
+  }
   return (
     <section className="card sec block">
       <h3>The last week</h3>

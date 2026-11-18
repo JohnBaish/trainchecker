@@ -54,6 +54,26 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: cancellations, tenses, platforms, the last week, no record, a cross in the boxes (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John (the preview):** "which weren't cancelled" and "didn't run at all"; digits for "19 in 20";
+  the own tense for one late train; Tiverton Parkway's "platform 2 … platform 2"; the last week
+  counting a cancelled train as having left; "please try another"; a blunt no-record message for
+  Bond Street; a clear cross on a phone. Tagline idea: "Summaries of the train situation, written
+  the way we speak." `SPEC.md` §10.29 to §10.35.
+- **Built:** `lastTwoLines()` rewritten (with `lateArrived` in `analyse.ts`); shares in digits;
+  `platforms()` and `platformsByKind()` fall back; `lastWeekText()` counts the trains that ran;
+  `LastWeek`'s `noRecord`; `Chooser`'s cross (`Icon` "clear", `.station .clear`).
+- **Checked:** `npm run check` 166 + 50 + 68 (new: Liverpool Street and Manchester's cancellations,
+  one late train not yet arrived, one platform for all, Tiverton's figures, all cancelled, "both");
+  `tsc -b`, lint, build; iPhone 13 emulation: the cross empties From, keeps the cursor, 44 by 44
+  pixels, suggestions follow; Reading to Bond Street (the 6.24pm board's Elizabeth Line trains)
+  shows the no-record message (`design/previews/stage4/clear-cross-390.png`,
+  `no-record-RDG-BDS-390.png`); no errors, no sideways scroll.
+- **Not checked:** Tiverton Parkway to Paddington's groups (no saved board; the live board's key
+  isn't the one saved here); Ealing Broadway as a stand-in for Bond Street in the last week (the
+  history's key needed).
+
 ### November 18th 2026: "mostly using", "on this route", the line before possible changes; what might affect tightened (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **John (iPhone, the preview at 7.37am, Basingstoke to Southampton Central):** "mostly using";

@@ -26,7 +26,7 @@ export type Analysis = {
   ahead: Train[]; past: Train[]; cancelled: Train[]; late5: Train[]; unknown: Train[]
   affected: number; allowance: number; verdict: Kind; badly: boolean
   why: { twoOfThree: boolean; gap: number | null; noTrains: boolean }
-  last: { byArrivals: boolean; tense: Tense; known: number; within3: number; lates: number[]; usual: number | null; worst: number | null; cancelled: Train[] }
+  last: { byArrivals: boolean; tense: Tense; known: number; within3: number; lates: number[]; lateArrived: boolean[]; usual: number | null; worst: number | null; cancelled: Train[] }
   worse: boolean
   platList: [string, number][]
   platKnown: number
@@ -101,7 +101,11 @@ export function analyse(snap: Snap): Analysis {
   const arrivedN = known.filter(([t]) => t.ata).length
   const tense: Tense = byArrivals || arrivedN === known.length ? 'past' : arrivedN === 0 ? 'future' : 'mixed'
   const within3 = known.filter(([, l]) => l <= 3).length
-  const lates = known.map(([, l]) => l).filter((l) => l > 3).sort((x, y) => x - y)
+  const lateOnes = known.filter(([, l]) => l > 3).sort((x, y) => x[1] - y[1])
+  const lates = lateOnes.map(([, l]) => l)
+  // Whether each late one has arrived, for the tense when there are only one or two (John,
+  // November 18th 2026: not "was or is expected to be" when it's just one).
+  const lateArrived = lateOnes.map(([t]) => !!t.ata)
   const usual = lates.length ? lates[Math.floor((lates.length - 1) / 2)] : null // the middle one (N4)
   const worst = lates.length ? lates[lates.length - 1] : null
   const pastCancelled = past.filter((s) => s.cancelled)
@@ -119,7 +123,7 @@ export function analyse(snap: Snap): Analysis {
     now, from: snap.fromName, to: snap.toName, fromCrs: snap.from, toCrs: snap.to, taken: snap.taken, route: snap.route ?? [],
     ahead, past, cancelled, late5, unknown, affected, allowance, verdict, badly,
     why: { twoOfThree, gap, noTrains },
-    last: { byArrivals, tense, known: known.length, within3, lates, usual, worst, cancelled: pastCancelled },
+    last: { byArrivals, tense, known: known.length, within3, lates, lateArrived, usual, worst, cancelled: pastCancelled },
     worse, platList, platKnown: platList.reduce((a, [, n]) => a + n, 0),
     lastGone: ahead.length ? null : past.filter((s) => !s.cancelled).at(-1) ?? null,
   }

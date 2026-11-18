@@ -175,7 +175,7 @@ export function gist({ advice, summary }: Pick<Item, 'advice' | 'summary'>, from
     second = second.replace(/^As a result,?\s+/i, '').replace(/,? and (will )?run (later|earlier) than usual throughout(?=\.$)/i, '')
     out.push(second[0].toUpperCase() + second.slice(1))
   }
-  return out.map((x) => (/[.!?]$/.test(x) ? x : x + '.'))
+  return out.map((x) => wordNumbers(/[.!?]$/.test(x) ? x : x + '.'))
 }
 
 export type DaysJourney = { fromCrs: string; toCrs: string; from: string; to: string; route?: string[] }
@@ -187,6 +187,22 @@ export const earlyOrLate = (i: Pick<Item, 'summary'>) => {
   if (!t) return false
   const h = Number(t.time.slice(0, 2))
   return h < 7 || h >= 22
+}
+
+/** How many entries a list shows: two or more single services very early or late make one. */
+export function entries(items: Pick<Item, 'summary'>[]): number {
+  const singles = items.filter(earlyOrLate).length
+  return items.length - (singles >= 2 ? singles - 1 : 0)
+}
+
+/** The house number rule (one to nine in words) in National Rail's sentences, where a number
+ *  counts something: "closing 2 out of 4 lines" → "closing two out of four lines" (John, November
+ *  18th 2026). Times, dates, platforms and bus routes keep their digits. */
+const NUM = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+export function wordNumbers(t: string): string {
+  return t.replace(/\b([1-9])(?= out of \d)/g, (_, d) => NUM[+d])
+    .replace(/(\bout of )([1-9])\b/g, (_, a, d) => a + NUM[+d])
+    .replace(/\b([1-9]) (lines?|tracks?|trains?|services?|minutes?|hours?|stations?|coaches|carriages|platforms?|stops?|days?|nights?|weeks?)\b/g, (_, d, w) => `${NUM[+d]} ${w}`)
 }
 
 /** The journey's items: those that count (disruption first, then planned work by date), and those

@@ -340,3 +340,11 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
     beyond B); a single amended train stays only if its advice names the other end.
 13. **The Disruptions API** (compared November 18th 2026, `design/data-trial-2026-11-17.md` §10):
     the same incidents as the feed, unplanned only; for John to decide whether to keep it.
+14. **Drafts agreed** (John, November 18th 2026): the "no trains are running" verdict, the
+    line-closed Share sentence, and "after midnight on Friday night".
+15. **Wording** (John, November 18th 2026): platforms say "currently" ("Trains are currently going
+    from platforms including …", "Most trains are currently going from platform B …"); the
+    summaries' reasons say "a fault on the train" (the train list keeps "this train"); "This might
+    affect …" when the list shows one entry (two grouped single services count as one); numbers
+    one to nine in words in National Rail's sentences where they count something ("closing two out
+    of four lines").

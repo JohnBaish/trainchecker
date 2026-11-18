@@ -4,7 +4,7 @@
 import { readFileSync } from 'node:fs'
 import { trim, type RawBoard } from '../api/live.ts'
 import { gunzipSync } from 'node:zlib'
-import { readIncidents, matches, current, endOfSunday, stationsIn, cleanAdvice, liveItems, forJourney, closedNow, gist, mayAffect, earlyOrLate, type Incident } from '../src/lib/incidents.ts'
+import { readIncidents, matches, current, endOfSunday, stationsIn, cleanAdvice, liveItems, forJourney, closedNow, gist, mayAffect, earlyOrLate, entries, wordNumbers, type Incident } from '../src/lib/incidents.ts'
 import { whenLabel, mayIntro, noPlanned, plannedIntro, daysHeading, closedVerdict, closedShare, singlesLine, singlesKicker } from '../src/lib/sentences.ts'
 
 let passed = 0, failed = 0
@@ -99,7 +99,7 @@ eq('closed: Share', closedShare('buses', { from: 'Derby', to: 'Matlock', now: '1
 // single services grouped, and the route check, on the saved feed and the 6.24pm boards.
 const it = (re: RegExp) => days.items.find((i) => re.test(i.summary))!
 eq('gist: Reading to Paddington, Sunday (no "throughout")', gist(it(/via London Paddington on Sunday/), 'RDG', 'PAD'), [
-  'Engineering work is taking place between London Paddington and Southall, closing 2 out of 4 lines throughout the day.',
+  'Engineering work is taking place between London Paddington and Southall, closing two out of four lines throughout the day.',
   'The 06:20 Reading to London Paddington service will start at 06:39.'])
 eq('gist: the other way', gist(it(/via London Paddington on Sunday/), 'PAD', 'RDG')[1], 'The 06:38 London Paddington to Reading service will not run.')
 eq('gist: a "will:" list joined', gist(it(/23:45 Didcot/), 'RDG', 'PAD')[1], 'The 23:45 Didcot Parkway to London Paddington service will not call at Taplow or Burnham and terminate at Ealing Broadway.')
@@ -116,6 +116,10 @@ eq('early or late', [earlyOrLate(it(/05:31 Bedwyn/)), earlyOrLate(it(/23:45 Didc
 const at606 = new Date('2026-11-18T06:06:00Z')
 eq('singles (John\'s words)', [singlesKicker(2), singlesLine([it(/05:31 Bedwyn/), it(/23:45 Didcot/)], at606)], ['Two single services', "If you're travelling before 6am between now and Friday or after 11pm on Saturday you may be affected – see more details."])
 eq('singles after midnight say the night before', singlesLine([it(/00:49 London Paddington/), it(/00:34 London Paddington/)], at606), "If you're travelling after midnight on Friday night or after midnight on Saturday night you may be affected – see more details.")
+
+eq('numbers in words (John), digits kept for times and platforms', wordNumbers('closing 2 out of 4 lines; 2 trains per hour from platform 3 at 06:39; route 42; 4.6km; 12 trains'),
+  'closing two out of four lines; two trains per hour from platform 3 at 06:39; route 42; 4.6km; 12 trains')
+eq('two grouped single services make one entry ("This might affect…")', [entries([it(/05:31 Bedwyn/), it(/23:45 Didcot/)]), entries([it(/05:31 Bedwyn/)]), entries([it(/05:31 Bedwyn/), it(/between Reading and Newbury/)])], [1, 1, 2])
 
 console.log(`check-days: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

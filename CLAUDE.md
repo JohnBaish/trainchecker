@@ -54,6 +54,20 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: John's notes on Reading to Paddington at 6.42am; first changes (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John:** the three drafts agreed; a gradual pass to make the page read naturally, some points
+  changing earlier decisions. Done now (`SPEC.md` §10.14, §10.15): "currently" for platforms; "the
+  train" in summaries; "This might affect" for one entry (`entries()`); numbers in words in National
+  Rail's sentences (`wordNumbers()`). For discussion: trains an hour, fast and slow, companies
+  named; the train list's layout; "to the end of this weekend"; National Rail's summaries reworded.
+- **Found** (the 6.24pm boards): Reading to Paddington's 49 trains are 31 fast (about 24 minutes),
+  9 slower Great Western (about 40) and 9 Elizabeth line (about 54, shown to Abbey Wood); Bath to
+  Bristol and Manchester to the Airport have no real split; Liverpool Street to Stratford's three
+  companies all take about seven minutes; Euston to Milton Keynes: Avanti about 32, London
+  Northwestern about 66.
+- **Checked:** `npm run check` 161 + 50 + 60; `tsc -b`, lint.
+
 ### November 18th 2026: summaries, single services grouped, the route check; the Disruptions API compared (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **John:** option A (National Rail's own sentences), without "throughout"; single services grouped

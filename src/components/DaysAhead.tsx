@@ -6,7 +6,7 @@
 // more single services very early or late are grouped under one sentence (John, November 18th).
 import type { Days, Item } from '../../api/days.ts'
 import type { DaysJourney as Journey } from '../lib/incidents.ts'
-import { earlyOrLate, forJourney, gist } from '../lib/incidents.ts'
+import { earlyOrLate, entries, forJourney, gist } from '../lib/incidents.ts'
 import { Icon } from './Icon.tsx'
 import { daysHeading, mayIntro, noPlanned, plannedIntro, singlesKicker, singlesLine, whenLabel } from '../lib/sentences.ts'
 
@@ -103,7 +103,7 @@ export function DaysAhead({ days, journey: p }: { days: DaysState; journey: Jour
       <Items items={j.planned} now={now} j={p} />
       {j.may.length > 0 && (
         <>
-          <p className="sub">{mayIntro(j.may.length, p.from, p.to, j.involved)}</p>
+          <p className="sub">{mayIntro(entries(j.may), p.from, p.to, j.involved)}</p>
           <Items items={j.may} now={now} j={p} />
         </>
       )}

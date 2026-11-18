@@ -58,9 +58,14 @@ for (const f of files) {
   // their own box), so where the mock-ups added them, only the first line matches.
   const mv: string[] = S.verdict(m).lines
   if (!a.lastGone) eq(`${f}: verdict`, lineText(verdict(a).lines), a.worse ? mv.slice(0, 1) : mv)
-  eq(`${f}: next four hours`, nextFour(a), S.nextFour(m))
+  // Since November 18th 2026 (John): "a fault on the train" in the summary; the list keeps "this".
+  const mn = S.nextFour(m)
+  if (mn) mn.lines = mn.lines.map((l: string) => l.replace(/\bthis train\b/g, 'the train'))
+  eq(`${f}: next four hours`, nextFour(a), mn)
   // Platforms differ from the mock-ups only where one or two are known (November 17th 2026).
-  if (a.platKnown > 2) eq(`${f}: platforms`, platforms(a), S.platforms(m))
+  // "Currently" rather than "At the moment" (John, November 18th 2026).
+  const mp = (S.platforms(m) as string | null)?.replace(/^At the moment, (\w)/, (_: string, c: string) => c.toUpperCase()).replace(/ (are|is) going/, ' $1 currently going')
+  if (a.platKnown > 2) eq(`${f}: platforms`, platforms(a), mp)
   eq(`${f}: last two hours`, lastTwoLines(a), S.lastTwoLines(m))
   const when = { time: t12(m.now), date: dayName(new Date(m.taken)).replace(/^\w+ /, '') }
   if (!a.lastGone) eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text)
@@ -135,6 +140,9 @@ const oneVeryLate = changed('PAD-RDG', (sv, a) => { const t = sv.find((x) => x.i
 eq('one very late train among frequent ones: not badly disrupted (Hereford example)', oneVeryLate.badly, false)
 eq('Manchester: disrupted, not badly', [manMia.verdict, manMia.badly], ['prepared', false])
 
+eq('platforms: currently (John)', platforms(rdgPad), 'Trains are currently going from platforms including 10, 10A, 11 and 13.')
+eq('the train, in the summary (John)', nextFour(bthBri)!.lines[1], 'Two are cancelled, because of a passenger being taken ill on a train and a fault on the train. The rest are expected on time.')
+eq('this train, in the list', nextFour(bthBri)!.rows[1].reason, 'A fault on this train.')
 eq('platforms, one known of many', platforms(A('KGX-YRK')), 'So far, a platform has been announced for one train: platform 3.')
 eq('two on time (John)', nextFour(changed('PAD-RDG', (sv, a) => { const keep = new Set(ids(a).slice(0, 2)); for (let i = sv.length - 1; i >= 0; i--) if (a.ahead.some((t) => t.id === sv[i].id) && !keep.has(sv[i].id)) sv.splice(i, 1) }))!.lines[1], 'Both are expected on time.')
 eq('both (John)', [share(2, 2).trains, share(2, 2).bare, share(3, 3).trains], ['both trains', 'both', 'all three trains'])

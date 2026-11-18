@@ -49,11 +49,15 @@ export function reasonText(r: string | null): string | null {
   return r.replace(/^This (service|train) (has been|is being|was) (delayed|cancelled) (by|because of|due to) /i, '')
 }
 
+/** A reason as the summaries give it: "a fault on this train" becomes "a fault on the train",
+ *  which reads better in a list of reasons (John, November 18th 2026). The train list keeps "this". */
+const summaryReason = (r: string | null) => reasonText(r)?.replace(/\bthis (train|service)\b/gi, 'the $1') ?? null
+
 /** The most common reason among some trains, if one covers at least half of them. Reasons that
  *  differ only by a place ("…signalling system" and "…signalling system at Gatley") count as
  *  one, in the shorter wording. */
 function mainReason(trains: Train[]): string | null {
-  const rs = trains.map((s) => reasonText(s.reason)).filter((r): r is string => !!r)
+  const rs = trains.map((s) => summaryReason(s.reason)).filter((r): r is string => !!r)
   let best: [string, number] | null = null
   for (const r of new Set(rs)) {
     const n = rs.filter((x) => x === r || x.startsWith(r + ' ')).length
@@ -164,7 +168,7 @@ export function verdict(a: Analysis): Verdict {
 
 /** "because of A and B", or "mostly because of A", or nothing. */
 function because(trains: Train[]): string {
-  const rs = [...new Set(trains.map((s) => reasonText(s.reason)).filter(Boolean))]
+  const rs = [...new Set(trains.map((s) => summaryReason(s.reason)).filter(Boolean))]
   if (!rs.length) return ''
   if (rs.length <= 2) return `, because of ${rs.join(' and ')}`
   const m = mainReason(trains)
@@ -213,20 +217,21 @@ export function platforms(a: Analysis): string | null {
   const [[p1, n1], ...rest] = a.platList
   const and = (xs: string[]) => xs.join(', ').replace(/, ([^,]*)$/, ' and $1')
   // One or two platforms known: say each, not "most" (agreed by John, November 17th 2026).
+  // "Currently" rather than "At the moment" (John, November 18th 2026).
   const running = a.ahead.filter((s) => !s.cancelled).length
   if (a.platKnown <= 2 && a.platKnown === running) {
-    if (a.platKnown === 1) return `At the moment, the train is going from platform ${p1}.`
-    return rest.length ? `At the moment, one train is going from platform ${p1} and the other from platform ${rest[0][0]}.` : `At the moment, both trains are going from platform ${p1}.`
+    if (a.platKnown === 1) return `The train is currently going from platform ${p1}.`
+    return rest.length ? `One train is currently going from platform ${p1} and the other from platform ${rest[0][0]}.` : `Both trains are currently going from platform ${p1}.`
   }
   if (a.platKnown === 1) return `So far, a platform has been announced for one train: platform ${p1}.`
   if (a.platKnown === 2) return rest.length ? `So far, platforms have been announced for two trains: platforms ${p1} and ${rest[0][0]}.` : `So far, platforms have been announced for two trains, both platform ${p1}.`
   if (n1 * 2 >= a.platKnown) {
-    let s = `At the moment, most trains are going from platform ${p1}`
+    let s = `Most trains are currently going from platform ${p1}`
     if (rest.length === 1) s += `, and ${rest[0][1] === 1 ? 'one' : 'some'} from platform ${rest[0][0]}`
     else if (rest.length > 1) s += `; others from platforms ${and(rest.slice(0, 3).map((x) => x[0]))}`
     return s + '.'
   }
-  return `At the moment, trains are going from platforms including ${and(a.platList.slice(0, 4).map((x) => x[0]))}.`
+  return `Trains are currently going from platforms including ${and(a.platList.slice(0, 4).map((x) => x[0]))}.`
 }
 
 /** The Share button's words (P2, John): a friendly opening, a short summary, then the link,

@@ -53,14 +53,17 @@ eq('every live item has a summary and a link', live.filter((i) => !i.summary || 
 
 // The page's sentences (agreed at the mock-ups; "may affect", John's option 2).
 const tue = new Date('2026-11-17T22:23:00Z')
-const w = (planned: boolean, start: string | null, end: string | null) => whenLabel({ planned, start, end }, tue)
+const label = (x: { main: string; date?: string }) => x.main + (x.date ? ' ' + x.date : '')
+const w = (planned: boolean, start: string | null, end: string | null) => label(whenLabel({ planned, start, end }, tue))
 eq('when: disruption', w(false, '2026-11-17T18:00:00Z', null), 'Now')
 eq('when: begun, ends today', w(true, '2026-11-16T00:00:00Z', '2026-11-17T23:59:00Z'), 'Until the end of today')
-eq('when: begun, ends Thursday', w(true, '2026-11-16T00:00:00Z', '2026-11-19T23:59:00Z'), 'Now until Thursday November 19th')
-eq('when: one day', w(true, '2026-11-22T00:00:00Z', '2026-11-22T23:59:00Z'), 'Sunday November 22nd')
-eq('when: several days', w(true, '2026-11-21T00:00:00Z', '2026-11-24T23:59:00Z'), 'Saturday November 21st to Tuesday November 24th')
+eq('when: begun, ends Thursday (John)', w(true, '2026-11-16T00:00:00Z', '2026-11-19T23:59:00Z'), 'Now until Thursday (November 19th)')
+eq('when: one day (John)', w(true, '2026-11-22T00:00:00Z', '2026-11-22T23:59:00Z'), 'On Sunday (November 22nd)')
+eq('when: tomorrow', w(true, '2026-11-18T00:00:00Z', '2026-11-18T23:59:00Z'), 'Tomorrow (November 18th)')
+eq('when: several days within the week', w(true, '2026-11-20T00:00:00Z', '2026-11-22T23:59:00Z'), 'From Friday to Sunday (November 20th to 22nd)')
+eq('when: ending beyond the week: full dates', w(true, '2026-11-21T00:00:00Z', '2026-11-24T23:59:00Z'), 'Saturday November 21st to Tuesday November 24th')
 eq('when: into another year', w(true, '2026-06-11T23:00:00Z', '2027-04-30T22:59:00Z'), 'Now until Friday April 30th 2027')
-eq('when: a summer midnight start (BST)', whenLabel({ planned: true, start: '2026-07-18T23:00:00Z', end: '2026-07-19T22:59:00Z' }, new Date('2026-07-15T12:00:00Z')), 'Sunday July 19th')
+eq('when: a summer midnight start (BST)', label(whenLabel({ planned: true, start: '2026-07-18T23:00:00Z', end: '2026-07-19T22:59:00Z' }, new Date('2026-07-15T12:00:00Z'))), 'On Sunday (July 19th)')
 const sun = new Date('2026-11-22T23:59:59Z')
 eq('days sentences (John: this weekend; today on a Sunday)', [daysHeading(false), daysHeading(true), plannedIntro(sun, tue), noPlanned(sun, tue), plannedIntro(sun, new Date('2026-11-22T10:00:00Z')), noPlanned(sun, new Date('2026-11-22T10:00:00Z'))], ['The days ahead', 'Disruption now, and the days ahead',
   'Planned engineering work and changes from National Rail, to the end of this weekend:',

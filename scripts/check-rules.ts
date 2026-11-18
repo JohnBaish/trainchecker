@@ -14,7 +14,7 @@ import { trim, type RawBoard } from '../api/live.ts'
 import { count } from '../api/week.ts'
 import { analyse, diff, type Snap, type Analysis } from '../src/lib/analyse.ts'
 import {
-  verdict, nextFour, platforms, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
+  verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
   hourLabel, HOURS, quoteShareText, type Line,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
@@ -70,7 +70,8 @@ for (const f of files) {
   // Platforms differ from the mock-ups only where one or two are known (November 17th 2026).
   // "Currently" rather than "At the moment" (John, November 18th 2026).
   const mp = (S.platforms(m) as string | null)?.replace(/^At the moment, (\w)/, (_: string, c: string) => c.toUpperCase()).replace(/ (are|is) going/, ' $1 currently going')
-  if (a.platKnown > 2) eq(`${f}: platforms`, platforms(a), mp)
+  // By kind of train since November 18th 2026 (John): compared only where the trains are one kind.
+  if (a.platKnown > 2 && !platformsByKind(a)) eq(`${f}: platforms`, platforms(a), mp)
   eq(`${f}: last two hours`, lastTwoLines(a), S.lastTwoLines(m))
   const when = { time: t12(m.now), date: dayName(new Date(m.taken)).replace(/^\w+ /, '') }
   if (!a.lastGone) eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text)
@@ -145,13 +146,14 @@ const oneVeryLate = changed('PAD-RDG', (sv, a) => { const t = sv.find((x) => x.i
 eq('one very late train among frequent ones: not badly disrupted (Hereford example)', oneVeryLate.badly, false)
 eq('Manchester: disrupted, not badly', [manMia.verdict, manMia.badly], ['prepared', false])
 
-eq('platforms: currently (John)', platforms(rdgPad), 'Trains are currently going from platforms including 10, 10A, 11 and 13.')
+eq('platforms: one kind of train, as before', platforms(bthBri), 'Most trains are currently going from platform 1.')
 eq('the train, in the summary (John)', nextFour(bthBri)!.lines[1], 'Two are cancelled, because of a passenger being taken ill on a train and a fault on the train. The rest are expected on time.')
-eq('trains an hour (John)', nextFour(rdgPad)!.lines[0], 'There are eight fast trains an hour from Reading to London Paddington in the next four hours, two slower ones (taking about 40 minutes) and about two on the Elizabeth Line.')
+eq('trains an hour (John: "an hour" after every group)', nextFour(rdgPad)!.lines[0], 'There are eight fast trains an hour from Reading to London Paddington in the next four hours, two slower ones an hour (taking about 40 minutes) and about two an hour on the Elizabeth Line.')
+eq('platforms by kind of train (John)', platforms(rdgPad), 'Most fast trains are currently going from platforms 10 and 11, with slower ones using mostly platform 15A and Elizabeth Line trains using platforms 13 and 14.')
 eq('trains an hour, no real split', [nextFour(bthBri)!.lines[0], nextFour(manMia)!.lines[0]], ['There are about five trains an hour from Bath Spa to Bristol Temple Meads in the next four hours.', 'There are about eight trains an hour from Manchester Piccadilly to Manchester Airport in the next four hours.'])
 eq('eight or fewer: the count', nextFour(kgxYrk)!.lines[0], 'There are five trains from London Kings Cross to York in the next four hours.')
 const padRdg9 = analyse(snapOf(raw('20261117-2059-PAD-RDG.json')))
-eq('a small group: "in that time"', nextFour(padRdg9)!.lines[0], 'There are about three fast trains an hour from London Paddington to Reading in the next four hours, about three slower ones (taking about 40 minutes) and three on the Elizabeth Line in that time.')
+eq('a small group: "in that time"', nextFour(padRdg9)!.lines[0], 'There are about three fast trains an hour from London Paddington to Reading in the next four hours, about three slower ones an hour (taking about 40 minutes) and three on the Elizabeth Line in that time.')
 eq('why, after the status (John)', [nextFour(bthBri)!.rows[1].why, nextFour(rdgPad)!.rows[2].why], [' because of a fault on this train (Great Western Railway).', ' (Great Western Railway).'])
 eq('this train, in the list', nextFour(bthBri)!.rows[1].reason, 'A fault on this train.')
 eq('platforms, one known of many', platforms(A('KGX-YRK')), 'So far, a platform has been announced for one train: platform 3.')

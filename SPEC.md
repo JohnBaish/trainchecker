@@ -369,3 +369,17 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
     house style ("Wednesday November 18th", "5.31am"), in the two-sentence summaries too; "to / from
     / via" as "to, from and through", "to / from" as "to and from", other lists "A, B or C";
     numbers one to nine in words where they count something.
+21. **Approved** (John, November 18th 2026): "three on the Elizabeth Line in that time" for a
+    group of fewer than four, "eight" (no "about") when exact, and the house-style rewording.
+22. **"An hour" after every group** (John): "…two slower ones an hour (taking about 40 minutes) and
+    about two an hour on the Elizabeth Line."
+23. **When, as people say it** (John): the words in the kicker's capitals, the date in brackets in
+    ordinary type: "ON SUNDAY (November 22nd)", "NOW UNTIL FRIDAY (November 20th)", "TOMORROW
+    (November 19th)", "FROM FRIDAY TO SUNDAY (November 20th to 22nd)", "LATER TODAY", "UNTIL THE
+    END OF TODAY", "NOW". Beyond the coming week, full dates as before.
+24. **Platforms by kind of train** (John: "accurate but not all that precise"), when the trains
+    fall into groups: "Most fast trains are currently going from platforms 10 and 11, with slower
+    ones using mostly platform 15A and Elizabeth Line trains using platforms 13 and 14." Up to two
+    platforms a group, covering at least two thirds of its trains with a platform; "Most" or
+    "mostly" unless they cover all; "10A" counted as 10 where plain 10 is in use. One kind of
+    train: as before.

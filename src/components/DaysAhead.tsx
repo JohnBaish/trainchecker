@@ -22,11 +22,17 @@ function Advice({ i }: { i: Item }) {
   )
 }
 
+/** "ON SUNDAY (November 22nd)": the words in the kicker's capitals, the date in ordinary type. */
+function When({ i, now, className }: { i: Item; now: Date; className: string }) {
+  const w = whenLabel(i, now)
+  return <p className={className}>{w.main}{w.date && <span className="when-date"> {w.date}</span>}</p>
+}
+
 function Incident({ i, now, j }: { i: Item; now: Date; j: Journey }) {
   const g = gist(i, j.fromCrs, j.toCrs)
   return (
     <div className="inc">
-      <p className={`when${i.planned ? '' : ' now'}`}>{whenLabel(i, now)}</p>
+      <When i={i} now={now} className={`when${i.planned ? '' : ' now'}`} />
       <h4>{plainSummary(i.summary)}</h4>
       {g.length > 0 && <p className="gist">{g.join(' ')}</p>}
       {(i.advice || i.link) && (
@@ -51,7 +57,7 @@ function Singles({ items, now, j }: { items: Item[]; now: Date; j: Journey }) {
         <div className="raised">
           {items.map((i) => (
             <div key={i.id} className="single">
-              <p className="when">{whenLabel(i, now)}</p>
+              <When i={i} now={now} className="when" />
               <p><b>{plainSummary(i.summary)}</b></p>
               <p>{gist(i, j.fromCrs, j.toCrs).join(' ')}</p>
               <details className="advice">

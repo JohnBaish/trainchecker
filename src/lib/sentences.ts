@@ -189,15 +189,15 @@ export function companyName(op: string): string | null {
   return op.replace(/^Lumo\b.*$/, 'Lumo')
 }
 
-type Group = { k: number; kind: 'fast' | 'slower' | 'elizabeth' | 'all'; company: string | null; mins: number }
+type Group = { k: number; kind: 'fast' | 'slower' | 'elizabeth' | 'all'; company: string | null; mins: number; trains: Train[] }
 
 /** The next four hours' trains in groups by journey time (to B): fast (no more than a quarter
  *  longer than the quickest, or within 10 minutes of it), slower, and the Elizabeth Line on its own
  *  when it's slower. Each group's company when the whole group is one company and the groups
  *  differ, and its middle journey time. */
 export function speedGroups(a: Analysis): Group[] {
-  const t = a.ahead.filter((x) => x.sta).map((x) => ({ mins: diff(x.std, x.sta!), op: x.operator }))
-  if (!t.length) return [{ k: a.ahead.length, kind: 'all', company: null, mins: 0 }]
+  const t = a.ahead.filter((x) => x.sta).map((x) => ({ mins: diff(x.std, x.sta!), op: x.operator, x }))
+  if (!t.length) return [{ k: a.ahead.length, kind: 'all', company: null, mins: 0, trains: a.ahead }]
   const q = Math.min(...t.map((x) => x.mins)), lim = Math.max(q * 1.25, q + 10)
   const eliz = t.filter((x) => /elizabeth/i.test(x.op) && x.mins > lim)
   const rest = t.filter((x) => !eliz.includes(x))
@@ -209,11 +209,11 @@ export function speedGroups(a: Analysis): Group[] {
   const raw: [typeof t, Group['kind']][] = slow.length || eliz.length ? [[fast, 'fast'], [slow, 'slower'], [eliz, 'elizabeth']] : [[fast, 'all']]
   const groups = raw.filter(([g]) => g.length).map(([g, kind]) => {
     const ops = [...new Set(g.map((x) => x.op))]
-    return { k: g.length, kind, company: ops.length === 1 ? companyName(ops[0]) : null, mins: mid(g), ops }
+    return { k: g.length, kind, company: ops.length === 1 ? companyName(ops[0]) : null, mins: mid(g), ops, trains: g.map((y) => y.x) }
   })
   // Name the companies only when every named group is one company and they differ.
   const named = groups.length > 1 && groups.every((g) => g.ops.length === 1) && new Set(groups.map((g) => g.ops[0])).size === groups.length
-  return groups.map(({ k, kind, company, mins }) => ({ k, kind, company: kind === 'elizabeth' ? 'Elizabeth Line' : named ? company : null, mins }))
+  return groups.map(({ k, kind, company, mins, trains }) => ({ k, kind, company: kind === 'elizabeth' ? 'Elizabeth Line' : named ? company : null, mins, trains }))
 }
 
 /** "about eight" a hour from k trains in four hours ("about" unless exact); fewer than four: the
@@ -222,8 +222,8 @@ const perHour = (k: number) => (k % 4 ? 'about ' : '') + num(Math.round(k / 4))
 
 /** The first line of "The next four hours" with more than eight trains (John, November 18th 2026):
  *  "There are about eight fast trains an hour from Reading to London Paddington in the next four
- *  hours, about two slower ones (taking about 40 minutes) and two on the Elizabeth Line." "An hour"
- *  said once; one "and"; journey times only for the groups in the middle (people know the fastest
+ *  hours, about two slower ones an hour (taking about 40 minutes) and three an hour on the Elizabeth
+ *  Line." "An hour" after every group (John, November 18th 2026); one "and"; journey times only for the groups in the middle (people know the fastest
  *  and slowest). A group of fewer than four trains: "three on the Elizabeth Line in that time"
  *  (Claude's draft). */
 export function trainsAnHour(a: Analysis): string | null {
@@ -234,12 +234,14 @@ export function trainsAnHour(a: Analysis): string | null {
     const n = few ? num(g.k) : perHour(g.k)
     const one = few ? g.k === 1 : Math.round(g.k / 4) === 1
     const time = i > 0 && i < gs.length - 1 ? ` (taking about ${num(Math.round(g.mins / 5) * 5)} minutes)` : ''
+    // "An hour" after every group (John, November 18th 2026), so no figure can be read as a total.
     const all = few && i > 0 ? ' in that time' : ''
-    if (g.kind === 'elizabeth') return `${n} on the Elizabeth Line${all}${time}`
+    const hr = few ? '' : ' an hour'
+    if (g.kind === 'elizabeth') return `${n}${hr} on the Elizabeth Line${all}${time}`
     const co = g.company ? `${g.company} ` : ''
     const adj = g.kind === 'all' ? '' : `${g.kind} `
     if (i === 0) return `${n} ${adj}${co}${one ? 'train' : 'trains'}${few ? '' : ' an hour'} from ${a.from} to ${a.to} in the next four hours`
-    return `${n} ${adj}${co}${one ? (co ? 'train' : 'one') : (co ? 'trains' : 'ones')}${all}${time}`
+    return `${n} ${adj}${co}${one ? (co ? 'train' : 'one') : (co ? 'trains' : 'ones')}${hr}${all}${time}`
   }
   const ps = gs.map(phrase)
   const list = ps.length > 1 ? `${ps.slice(0, -1).join(', ')} and ${ps[ps.length - 1]}` : ps[0]
@@ -292,6 +294,39 @@ export function nextFour(a: Analysis): NextFour | null {
   return { lines: [lines[0], lines.slice(1).join(' ')].filter(Boolean), rows, fold }
 }
 
+/** Platforms for each kind of train, when the trains fall into groups (John, November 18th 2026:
+ *  "accurate but not all that precise"): "Most fast trains are currently going from platforms 10
+ *  and 11, with slower ones using platforms 13A and 15A and Elizabeth Line trains using platforms 13
+ *  and 14." For each group, the platforms most used, up to two, covering at least two thirds of
+ *  its trains with a platform; "Most" unless they cover all. "10A" counts as 10 where plain 10 is
+ *  in use too (at Reading, 10A is one end of platform 10). Null when there's only one group, or
+ *  fewer than two groups have a platform yet. */
+export function platformsByKind(a: Analysis): string | null {
+  const groups = speedGroups(a).filter((g) => g.kind !== 'all')
+  if (groups.length < 2) return null
+  const used = new Set(a.ahead.filter((t) => t.platform && !t.cancelled).map((t) => t.platform!))
+  const base = (p: string) => { const m = p.match(/^(\d+)[A-Z]$/); return m && used.has(m[1]) ? m[1] : p }
+  const parts: { kind: Group['kind']; text: string; most: boolean }[] = []
+  for (const g of groups) {
+    const counts = new Map<string, number>()
+    for (const t of g.trains) if (t.platform && !t.cancelled) counts.set(base(t.platform), (counts.get(base(t.platform)) ?? 0) + 1)
+    const known = [...counts.values()].reduce((x, y) => x + y, 0)
+    if (!known) continue
+    const top = [...counts].sort((x, y) => y[1] - x[1])
+    const pick: string[] = []
+    let covered = 0
+    for (const [p, n] of top) { if (pick.length === 2 || covered * 3 >= known * 2) break; pick.push(p); covered += n }
+    pick.sort((x, y) => parseInt(x) - parseInt(y) || x.localeCompare(y))
+    const list = pick.length === 1 ? `platform ${pick[0]}` : `platforms ${pick[0]} and ${pick[1]}`
+    parts.push({ kind: g.kind, text: list, most: covered < known })
+  }
+  if (parts.length < 2) return null
+  const name = (k: Group['kind'], first: boolean) => (k === 'elizabeth' ? 'Elizabeth Line trains' : k === 'fast' ? 'fast trains' : first ? 'slower trains' : 'slower ones')
+  const [f, ...rest] = parts
+  const others = rest.map((p) => `${name(p.kind, false)} using ${p.most ? 'mostly ' : ''}${p.text}`)
+  return `${f.most ? 'Most ' : ''}${f.most ? name(f.kind, true) : Cap(name(f.kind, true))} ${f.most ? 'are' : 'are'} currently going from ${f.text}, with ${others.length > 1 ? `${others.slice(0, -1).join(', ')} and ${others[others.length - 1]}` : others[0]}.`
+}
+
 export function platforms(a: Analysis): string | null {
   if (a.verdict === 'none') return null
   if (!a.platKnown) return 'No platforms have been announced yet.'
@@ -306,6 +341,8 @@ export function platforms(a: Analysis): string | null {
   }
   if (a.platKnown === 1) return `So far, a platform has been announced for one train: platform ${p1}.`
   if (a.platKnown === 2) return rest.length ? `So far, platforms have been announced for two trains: platforms ${p1} and ${rest[0][0]}.` : `So far, platforms have been announced for two trains, both platform ${p1}.`
+  const byKind = platformsByKind(a)
+  if (byKind) return byKind
   if (n1 * 2 >= a.platKnown) {
     let s = `Most trains are currently going from platform ${p1}`
     if (rest.length === 1) s += `, and ${rest[0][1] === 1 ? 'one' : 'some'} from platform ${rest[0][0]}`
@@ -440,18 +477,40 @@ function dayYear(d: Date, now: Date): string {
   return y(d) === y(now) ? dayName(d) : `${dayName(d)} ${y(d)}`
 }
 
-/** When an incident applies (as on the mock-ups): "Now" for disruption; work already begun,
- *  "Until the end of today" or "Now until Thursday November 19th"; later work, "Sunday November
- *  22nd" or "Saturday November 21st to Tuesday November 24th". */
-export function whenLabel(i: { planned: boolean; start: string | null; end: string | null }, now: Date): string {
-  if (!i.planned) return 'Now'
+/** "November 22nd", or "November 21st to 24th", "November 30th to December 2nd". */
+function monthDays(s: Date, e?: Date): string {
+  const md = (d: Date) => dayName(d).replace(/^\w+ /, '')
+  if (!e || md(s) === md(e)) return md(s)
+  const [ms, ds] = md(s).split(' '), [me, de] = md(e).split(' ')
+  return ms === me ? `${ms} ${ds} to ${de}` : `${md(s)} to ${md(e)}`
+}
+const weekday = (d: Date) => dayName(d).split(' ')[0]
+const withinWeek = (d: Date, now: Date) => d.getTime() - now.getTime() < 6 * 864e5
+
+/** When an incident applies, as people say it (John, November 18th 2026): the words, shown in
+ *  capitals, then the date in brackets in ordinary type: "On Sunday (November 22nd)", "Now until
+ *  Thursday (November 19th)", "From Saturday to Tuesday (November 21st to 24th)", "Tomorrow
+ *  (November 19th)", "Later today", "Until the end of today", "Now". Beyond the coming week, the full
+ *  date as before ("Now until Friday April 30th 2027"). */
+export function whenLabel(i: { planned: boolean; start: string | null; end: string | null }, now: Date): { main: string; date?: string } {
+  if (!i.planned) return { main: 'Now' }
   const s = i.start ? new Date(i.start) : now, e = i.end ? new Date(i.end) : null
+  const today = (d: Date) => dayName(d) === dayName(now)
+  const tomorrow = (d: Date) => dayName(d) === dayName(new Date(now.getTime() + 864e5))
   if (s <= now) {
-    if (!e) return 'Now'
-    return dayName(e) === dayName(now) ? 'Until the end of today' : `Now until ${dayYear(e, now)}`
+    if (!e) return { main: 'Now' }
+    if (today(e)) return { main: 'Until the end of today' }
+    if (tomorrow(e)) return { main: 'Now until tomorrow', date: `(${monthDays(e)})` }
+    return withinWeek(e, now) ? { main: `Now until ${weekday(e)}`, date: `(${monthDays(e)})` } : { main: `Now until ${dayYear(e, now)}` }
   }
-  if (!e) return `From ${dayYear(s, now)}`
-  return dayName(s) === dayName(e) ? dayYear(s, now) : `${dayYear(s, now)} to ${dayYear(e, now)}`
+  if (!e || dayName(s) === dayName(e)) {
+    if (today(s)) return { main: e ? 'Later today' : 'From later today' }
+    const day = tomorrow(s) ? 'Tomorrow' : `On ${weekday(s)}`
+    return e ? { main: day, date: `(${monthDays(s)})` } : { main: `From ${tomorrow(s) ? 'tomorrow' : weekday(s)}`, date: `(${monthDays(s)})` }
+  }
+  if (!withinWeek(e, now)) return { main: `${dayYear(s, now)} to ${dayYear(e, now)}` }
+  const from = today(s) ? 'later today' : tomorrow(s) ? 'tomorrow' : weekday(s)
+  return { main: `From ${from} to ${weekday(e)}`, date: `(${monthDays(s, e)})` }
 }
 
 /** The section's heading (agreed at the mock-ups). */

@@ -54,6 +54,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: "an hour" throughout, dates as people say them, platforms by kind of train (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John:** approved the last round's drafts; "an hour" after every group; "ON SUNDAY (November
+  22nd)"; platforms by kind of train, "accurate but not all that precise". `SPEC.md` §10.21 to §10.24.
+- **Built:** `trainsAnHour()` with "an hour" each time; `speedGroups()` now keeps its trains;
+  `platformsByKind()`; `whenLabel()` returns the words and the date (`DaysAhead`'s `When`, the date
+  in ordinary type, `.when-date`).
+- **Checked:** `npm run check` 163 + 50 + 64 (four mock-up platform comparisons now skipped where
+  the new sentence applies, with the new sentence checked instead); `tsc -b`, lint, build; whole
+  page as at 6.06am (`design/previews/stage4/page-*`), 1200px light and 390px dark: no errors, no
+  sideways scroll.
+
 ### November 18th 2026: trains an hour, the train list, "this weekend", summaries in the house style (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **John:** agreed the principles for trains an hour (one "an hour", one "and", journey times for

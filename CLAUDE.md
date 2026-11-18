@@ -85,6 +85,10 @@ given its own branch). Before committing there, run
 - **John:** arrivals say the hour up front ("The first ten trains in the next hour…", "The trains arriving in the next
   hour…", "There are two trains…", "The only train…"); "and more after that" dropped. Long journeys: "Trainchecker can
   see three trains arriving in the next hour…" (Claude's draft, agreed by John). Checks 241 + 57 + 73.
+- **Vercel turned two pushes away** (a341deb and 75bae38, about 3.35pm to 3.40pm): red crosses on GitHub, and neither
+  appears in Vercel's Deployments list, so no build was started; a fresh clone built cleanly here. Most likely the free
+  plan's daily deployment limit (about 100 a day across the account; not confirmed, the message wasn't found). Notes now
+  go up with real changes rather than on their own. Retried at 5.35pm with this commit.
 
 ### November 18th 2026: the sharing picture's words in bold; merged and live (Claude Code)
 

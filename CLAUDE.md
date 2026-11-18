@@ -58,7 +58,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 18th 2026: new wording for sharing a link (branch `claude/laughing-hawking-8d2b6w`, not merged; Claude Code)
+### November 18th 2026: the sharing picture's words in bold; merged and live (Claude Code)
+
+- **John:** bold rather than semi-bold or regular (three mock-ups); "make it live". `design/og-trainchecker.html`
+  loads Figtree 700 instead of 400; `og-shoot.cjs` checks the 700 weight; `public/og-trainchecker.png` remade
+  (identical to the mock-up). `SPEC.md` §12.7.
+- Merged into `main` with the new sharing wording (the branch's earlier commit). Checks, `tsc -b`, lint and build
+  clean first. Apps keep their own copy of a link's preview for a while, so a chat where the link hasn't been sent
+  before shows the new card soonest.
+
+### November 18th 2026: new wording for sharing a link (branch `claude/laughing-hawking-8d2b6w`, merged the same day; Claude Code)
 
 - **John:** for the link preview, "Check how the trains are doing, with gentle, natural-sounding answers and a
   fragment of inspiration."; option A of two mock-ups (three lines, broken at the commas). `SPEC.md` §12.7.

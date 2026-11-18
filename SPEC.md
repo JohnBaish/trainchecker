@@ -535,5 +535,5 @@ they differ.
    - About keeps "within three minutes of the timetable" (a definition).
 7. **Sharing a link** (the link-preview picture and its text tags): "Check how the trains are doing, with
    gentle, natural-sounding answers and a fragment of inspiration." In the picture, three lines broken at
-   the commas (option A). The tagline itself is unchanged; baish.net's line is "Are the trains OK? (With
+   the commas (option A), in bold (Figtree 700, John). The tagline itself is unchanged; baish.net's line is "Are the trains OK? (With
    gentle, natural answers.)".

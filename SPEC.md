@@ -441,6 +441,6 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
     at an end** (John, Twyford to Paddington): two parts. The other trains to the real end, any
     stray Elizabeth Line run left out, named when one company ("six of the eight Great Western
     Railway trains that left Twyford…"); then "National Rail’s record leaves Elizabeth Line trains
-    out at London Paddington, so for them this shows how they ran as far as Ealing Broadway."
+    out at London Paddington, so for those this shows how they ran as far as Ealing Broadway."
     (Claude's draft) and the Elizabeth Line trains to Ealing Broadway ("…of the 11 Elizabeth Line
     trains that left Twyford…"). The history asked for one company with its own `toc_filter`.

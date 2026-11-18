@@ -634,10 +634,10 @@ export function standIn(a: { fromCrs: string; toCrs: string; stops: [string, str
 }
 
 /** Before the Elizabeth Line's part when other trains run too (Claude's draft, November 18th 2026):
- *  "National Rail’s record leaves Elizabeth Line trains out at London Paddington, so for them this
+ *  "National Rail’s record leaves Elizabeth Line trains out at London Paddington, so for those this
  *  shows how they ran as far as Ealing Broadway." */
 export function standInMixedLine(left: string, s: { name: string; side: 'from' | 'to' }): string {
-  return `National Rail’s record leaves Elizabeth Line trains out at ${left}, so for them this shows how they ran ${s.side === 'to' ? 'as far as' : 'from'} ${s.name}.`
+  return `National Rail’s record leaves Elizabeth Line trains out at ${left}, so for those this shows how they ran ${s.side === 'to' ? 'as far as' : 'from'} ${s.name}.`
 }
 
 /** The line before the hours: "National Rail's record leaves these trains out at Bond Street, so

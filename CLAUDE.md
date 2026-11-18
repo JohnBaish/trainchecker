@@ -36,12 +36,15 @@ given its own branch). Before committing there, run
   trainchecker-alpha.vercel.app, each branch gets a preview.
 - **The app (stage 3):** Vite, React and TypeScript, parts copied from Riverwatcher
   (`organic.css`, `theme.ts`, `ThemeSwitch.tsx`, `responsive.ts`, `words.ts`) and the
-  agreed mock-ups' styles (`src/styles/global.css`). Two Vercel functions: `api/live.ts`
-  (the live board, five windows) and `api/week.ts` (the history, one half hour). The rules in
+  agreed mock-ups' styles (`src/styles/global.css`). Three Vercel functions: `api/live.ts`
+  (the live board, five windows), `api/week.ts` (the history, one half hour) and `api/days.ts`
+  (stage 4: the incidents feed, live to the end of Sunday; matched in the page by
+  `src/lib/incidents.ts`). The rules in
   `src/lib/analyse.ts`, every sentence in `src/lib/sentences.ts`. `npm run dev` and `vite
   preview` serve the functions too (`vite.config.ts`); from a cloud session run them with
-  `NODE_USE_ENV_PROXY=1 RDM_LDB_KEY=proxy-injected RDM_HSP_KEY=proxy-injected`. `npm run
-  check`: `scripts/check-rules.ts` and `scripts/check-api.ts`, on the real snapshots.
+  `NODE_USE_ENV_PROXY=1 RDM_LDB_KEY=proxy-injected RDM_HSP_KEY=proxy-injected RDM_KB_KEY=proxy-injected`
+  (only the key saved here works). `npm run check`: `scripts/check-rules.ts`, `scripts/check-api.ts`
+  and `scripts/check-days.ts`, on the real snapshots.
   Browser checks: `design/previews/stage3/sweep.cjs` and `try.cjs` (preview on port 4620).
 - Functions run in London (`lhr1`): the incidents licence allows UK use
   only.
@@ -53,6 +56,17 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 18th 2026: stage 4 merged into `main` (Claude Code)
+
+- **John:** "so for those" in the Elizabeth Line line; happy with everything on the branch; merge to
+  `main` and move on. Checks 193 + 57 + 68, `tsc -b`, lint and build clean first;
+  `claude/inspiring-pascal-h96tqk` fast-forwarded into `main`, so trainchecker-alpha.vercel.app
+  has stage 4. `PLAN.md`: stage 4 done.
+- **For John:** `RDM_KB_KEY` must be ticked for Production in Vercel (as for Preview) for "The days
+  ahead" on the live site; the Disruptions API isn't used (his call whether to end it: a month's
+  notice). Not checked on a real iPhone: the cross in the station boxes.
+- Key saved here now: Historical Service Performance.
 
 ### November 18th 2026: Elizabeth Line and other trains in the last week (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 

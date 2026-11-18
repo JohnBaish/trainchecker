@@ -57,11 +57,13 @@ day and its Share picture; Share; the favicon. The functions, dark mode,
 the footer and analytics. An `npm run check` for the verdict rules and
 sentences. Handover: `design/handover-stage-3-2026-11-17.md`.
 
-## Stage 4: the days ahead (branch `stage-4-ahead`; handover `design/handover-stage-4-2026-11-17.md`)
+## Stage 4: the days ahead (done: merged November 18th 2026)
 
 Engineering work and known problems to the end of the coming weekend,
 their effect on the verdict, and National Rail's advice when a journey is
-badly disrupted.
+badly disrupted. Built on branch `claude/inspiring-pascal-h96tqk`, with a
+round of John's wording and layout changes across the page (`SPEC.md`
+§10). The tagline and preview picture (stage 5's) were done too.
 
 ## Stage 5: launch (branch `stage-5-launch`)
 

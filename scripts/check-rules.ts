@@ -222,7 +222,7 @@ eq('the last week: all cancelled', lastWeekText({ n: 2, w3: 0, w10: 0, w30: 0, w
   'On Saturday November 14th, both trains due to leave Reading between 7am and 7.30am were cancelled.')
 eq('the last week, one company named (John, Twyford)', lastWeekText({ n: 10, w3: 6, w10: 8, w30: 8, w120: 8, dates: [], elizabeth: 0 }, { ...one, from: 'Twyford', to: 'London Paddington', kind: wk.kind, days: wk.days, start: '08:00', end: '09:00', noun: ['Great Western Railway train', 'Great Western Railway trains'] }),
   'On the five weekdays from Tuesday November 10th to Monday November 16th, six of the eight Great Western Railway trains that left Twyford between 8am and 9am reached London Paddington within three minutes of the timetable. The others were less than 10 minutes late. Two more were cancelled.')
-eq('the last week, the Elizabeth Line part (draft)', standInMixedLine('London Paddington', { name: 'Ealing Broadway', side: 'to' }), 'National Rail’s record leaves Elizabeth Line trains out at London Paddington, so for them this shows how they ran as far as Ealing Broadway.')
+eq('the last week, the Elizabeth Line part (draft)', standInMixedLine('London Paddington', { name: 'Ealing Broadway', side: 'to' }), 'National Rail’s record leaves Elizabeth Line trains out at London Paddington, so for those this shows how they ran as far as Ealing Broadway.')
 eq('the last week: the hours', [HOURS.length, hourLabel(HOURS[0]), hourLabel(17), hourLabel(HOURS[HOURS.length - 1])], [19, '5am to 6am', '5pm to 6pm', '11pm to midnight'])
 const sentences = [lastWeekText(hsp, { ...one, kind: wk.kind, days: wk.days }), lastWeekText(mm, one)]
 eq('the last week: no undefined, null or NaN', sentences.filter((t) => /undefined|null|NaN/.test(t)), [])

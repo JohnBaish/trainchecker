@@ -65,7 +65,11 @@ badly disrupted. Built on branch `claude/inspiring-pascal-h96tqk`, with a
 round of John's wording and layout changes across the page (`SPEC.md`
 §10). The tagline and preview picture (stage 5's) were done too.
 
-## Stage 5: launch (branch `stage-5-launch`)
+## Fresh look (next; handover `design/handover-fresh-look-2026-11-18.md`)
+
+A full review of the live tool (`/fresh-look`), changing nothing; then John's agreed changes.
+
+## Stage 5: launch (after the fresh look; handover `design/handover-stage-5-2026-11-18.md`)
 
 Favicon and link-preview picture (options shown first), search (the
 `SEO-HANDOVER.md` checklist), a fresh look, the domain

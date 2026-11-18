@@ -15,8 +15,9 @@ given its own branch). Before committing there, run
 
 ## Read these first
 
-0. `design/handover-stage-4-2026-11-17.md`: where things stand for stage 4 (the days ahead).
-   Then `design/mockups-2026-11-17.md`: the agreed wording, and `SPEC.md` §8 and §9.
+0. Next: `design/handover-fresh-look-2026-11-18.md` (the fresh look, now), then
+   `design/handover-stage-5-2026-11-18.md` (the launch, after the fresh look's changes). The agreed
+   wording: `SPEC.md` §8, §9 and §10.
 1. `design/handover-2026-11-17.md`: John's brief, in his own words.
 2. `SPEC.md`: what the tool does, with the open questions.
 3. `PLAN.md`: the stages.
@@ -56,6 +57,13 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 18th 2026: handovers for the fresh look and stage 5 (Claude Code)
+
+- **John:** a note and a prompt for a new session to run the fresh look, and the same for the
+  next stage. `design/handover-fresh-look-2026-11-18.md` and `design/handover-stage-5-2026-11-18.md`
+  written (each ends with the prompt to paste); "Read these first" points to them; `PLAN.md`
+  updated; tracker: next, the fresh look.
 
 ### November 18th 2026: the last week's late trains as counts; live (`main`; Claude Code)
 

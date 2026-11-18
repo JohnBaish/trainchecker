@@ -15,7 +15,8 @@ given its own branch). Before committing there, run
 
 ## Read these first
 
-0. Next: `design/handover-stage-5-2026-11-18.md` (the launch). The fresh look is done (November 18th
+0. Next: the rest of stage 5 (`design/handover-stage-5-2026-11-18.md`): Search Console and the baish.net card; search work live
+   at trainchecker.baish.net since November 18th 2026. The fresh look is done (November 18th
    2026, `SPEC.md` §11). The agreed wording: `SPEC.md` §8 to §11.
 1. `design/handover-2026-11-17.md`: John's brief, in his own words.
 2. `SPEC.md`: what the tool does, with the open questions.
@@ -56,6 +57,19 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 18th 2026: stage 5's search work and wording merged; live at trainchecker.baish.net (Claude Code)
+
+- **John:** "Let's merge all that"; trainchecker.baish.net added in Vercel (John). Checks 222 + 57 + 73,
+  `tsc -b`, lint and build clean first; `claude/laughing-hawking-8d2b6w` fast-forwarded into `main` (0069ce1).
+- **Checked live** at trainchecker.baish.net: robots.txt and sitemap.xml right (step 16); the title,
+  description, canonical and preview tags in the page; the preview picture (200); `/api/live` (Midgham to
+  Reading) and `/api/days` answer.
+- Branch tidied: "Delete merged branches" trial run 44301047770 (one merged branch, nothing unmerged), then
+  the real run; `git ls-remote --heads origin` shows only `main`.
+- **Still to do:** Search Console (John: the sitemap, URL Inspection, Request indexing); the baish.net card
+  (in clockwheel, on `claude/laughing-hawking-8d2b6w`; John: later today or tomorrow, with its NEW date set to
+  that day); the tracker and the baish.net overview once it's on.
 
 ### November 18th 2026: "expected to be on time"; the last week as we'd say it (branch `claude/laughing-hawking-8d2b6w`; Claude Code)
 

@@ -557,5 +557,5 @@ they differ.
    Then (John): the hour said up front, and no "and more after that": "The first ten trains in the next hour are
    expected at …" (more than ten); "The trains arriving in the next hour are expected at …" (three to ten); "There are
    two trains arriving in the next hour. They're expected at …"; "The only train arriving in the next hour is expected
-   at …". Long journeys (Claude's draft): "Trainchecker can see three trains arriving in the next hour. They're expected
+   at …". Long journeys (Claude's draft, agreed): "Trainchecker can see three trains arriving in the next hour. They're expected
    at …" (or "one train …, expected at …"), then the note.

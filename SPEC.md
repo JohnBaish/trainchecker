@@ -544,6 +544,10 @@ they differ.
    also have platforms showing." ("already" dropped, John.) One platform for all of them, or two for three or more
    trains, said once: "There are trains leaving from platforms 9 and 13 at 6.36pm, 6.37pm (nine minutes later than
    planned) and 6.51pm." Illustration only. Long journeys' arrivals: Claude's drafts agreed. About names the arrivals.
+   By kind of train, as the Platforms sentence groups them (John): "Fast trains are leaving from platforms 10 and 11 at
+   9.01pm, 9.10pm (six minutes later than planned) and 9.12pm, slower ones at 9.04pm (platform 14A) and 9.38pm (platform
+   15A), and Elizabeth Line trains from platform 14 at 9pm and 9.30pm."; "a slower one" for one; 10A counted as 10 where
+   plain 10 is in use; the ten-train limit across them all. Illustration only.
 9. **Arrivals** (John), after the last week, folded under "At Oxford from Reading": "Trains are expected at 3.05pm (the one
    due to leave Reading at 2.40pm), 3.22pm (the 3pm from Reading, arriving four minutes later than planned), 3.30pm (the
    3.15pm, arriving six minutes later than planned) and 3.45pm (the 3.20pm)." The next hour, up to 10, "and more after

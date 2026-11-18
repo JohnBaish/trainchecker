@@ -78,6 +78,8 @@ given its own branch). Before committing there, run
 - **Then (John):** "already" dropped; the long-journey drafts agreed; one platform for all, or two for three or more
   trains, said once at the start; About adds the arrivals. Fast and slower trains in the list: wording shown to John
   first. Checks 235 + 57 + 73.
+- **Then (John):** fast, slower and Elizabeth Line trains apart, as drafted; 10A as 10 where 10 is in use; the limit
+  across them all. `SPEC.md` §12.8. Checks 237 + 57 + 73; Reading to Paddington at 390px: no errors, no sideways scroll.
 
 ### November 18th 2026: the sharing picture's words in bold; merged and live (Claude Code)
 

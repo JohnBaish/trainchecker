@@ -597,17 +597,36 @@ export function platformTrains(a: Analysis): { fold: string; text: string } | nu
   const shown = ts.slice(0, 10), rest = ts.length - shown.length
   // One or two platforms for all of them: said once, at the start, and people check which when they
   // get there (John, November 18th 2026): "There are trains leaving from platforms 10 and 11 at 9pm,
-  // 9.10pm (six minutes later than planned) and 9.12pm."
-  const plats = [...new Set(shown.map((t) => t.platform!))].sort((x, y) => parseInt(x) - parseInt(y) || x.localeCompare(y))
-  const once = plats.length === 1 || (plats.length === 2 && shown.length > 2)
-  const item = (t: Train) => {
-    const late = t.late !== null && t.late > 0 && isTime(t.etd)
-    const bits = [late ? `${minutesWord(t.late!)} later than planned` : t.unknown ? 'delayed, no time given yet' : '', once ? '' : `platform ${t.platform}`].filter(Boolean)
-    return `${t12(late ? t.etd! : t.std)}${bits.length ? ` (${bits.join(', ')})` : ''}`
+  // 9.10pm (six minutes later than planned) and 9.12pm." "10A" counts as 10 where plain 10 is in use
+  // too, as in the Platforms sentence (John). Two trains on two platforms keep their own.
+  const used = new Set(a.ahead.filter((t) => t.platform && !t.cancelled).map((t) => t.platform!))
+  const base = (p: string) => { const m = p.match(/^(\d+)[A-Z]$/); return m && used.has(m[1]) ? m[1] : p }
+  const phrase = (ts: Train[]) => {
+    const plats = [...new Set(ts.map((t) => base(t.platform!)))].sort((x, y) => parseInt(x) - parseInt(y) || x.localeCompare(y))
+    const once = plats.length === 1 || (plats.length === 2 && ts.length > 2)
+    const item = (t: Train) => {
+      const late = t.late !== null && t.late > 0 && isTime(t.etd)
+      const bits = [late ? `${minutesWord(t.late!)} later than planned` : t.unknown ? 'delayed, no time given yet' : '', once ? '' : `platform ${t.platform}`].filter(Boolean)
+      return `${t12(late ? t.etd! : t.std)}${bits.length ? ` (${bits.join(', ')})` : ''}`
+    }
+    const from = once ? `from ${plats.length === 1 ? `platform ${plats[0]}` : `platforms ${plats[0]} and ${plats[1]}`} ` : ''
+    return `${from}at ${andList(ts.map(item))}`
   }
-  const list = andList(shown.map(item))
-  const from = once ? `from ${plats.length === 1 ? `platform ${plats[0]}` : `platforms ${plats[0]} and ${plats[1]}`} ` : ''
-  let text = shown.length === 1 ? `There's a train leaving ${from}at ${list}.` : `There are trains leaving ${from}at ${list}.`
+  // Fast, slower and Elizabeth Line trains apart, as the Platforms sentence groups them (John):
+  // "Fast trains are leaving from platforms 10 and 11 at …, slower ones at 9.04pm (platform 14A) and
+  // 9.38pm (platform 15A), and Elizabeth Line trains from platform 14 at 9pm and 9.30pm."
+  const groups = speedGroups(a).filter((g) => g.kind !== 'all').map((g) => ({ kind: g.kind, ts: shown.filter((t) => g.trains.includes(t)) })).filter((g) => g.ts.length)
+  let text: string
+  if (groups.length > 1 && groups.reduce((n, g) => n + g.ts.length, 0) === shown.length) {
+    const name = { fast: ['fast train', 'fast trains', 'fast one', 'fast ones'], slower: ['slower train', 'slower trains', 'slower one', 'slower ones'], elizabeth: ['Elizabeth Line train', 'Elizabeth Line trains', 'Elizabeth Line train', 'Elizabeth Line trains'] } as const
+    const article = (w: string) => (/^[aeiouAEIOU]/.test(w) ? 'an' : 'a')
+    const parts = groups.map((g, i) => {
+      const n = name[g.kind as 'fast' | 'slower' | 'elizabeth'], one = g.ts.length === 1
+      const who = i === 0 ? (one ? `${Cap(article(n[0]))} ${n[0]} is leaving` : `${Cap(n[1])} are leaving`) : (one ? `${article(n[2])} ${n[2]}` : n[3])
+      return `${who} ${phrase(g.ts)}`
+    })
+    text = `${parts.slice(0, -1).join(', ')}, and ${parts[parts.length - 1]}.`
+  } else text = shown.length === 1 ? `There's a train leaving ${phrase(shown)}.` : `There are trains leaving ${phrase(shown)}.`
   // "already" dropped (John, November 18th 2026).
   if (rest) text += rest === 1
     ? " We're only showing you the next ten departures, there's another one running later which also has a platform showing."

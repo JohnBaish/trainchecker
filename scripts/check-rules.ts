@@ -15,7 +15,7 @@ import { count } from '../api/week.ts'
 import { analyse, diff, type Snap, type Analysis } from '../src/lib/analyse.ts'
 import {
   standIn, standInLine, standInMixedLine, tenAfterWords, verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
-  hourLabel, HOURS, quoteShareText, kindLine, platformTrains, arrivals, type Line,
+  hourLabel, HOURS, quoteShareText, kindLine, platformTrains, arrivals, listShareWords, type Line,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
 import { STATIONS, resolve, suggest, complete } from '../src/lib/stations.ts'
@@ -80,12 +80,14 @@ for (const f of files) {
   const digits = (l: string) => l.replace('nineteen in twenty', '19 in 20').replace('nine in ten', 'nine in 10').replace('one in ten', 'one in 10').replace('one in twenty', 'one in 20')
   // Since November 18th 2026 (John, stage 5) the first sentence starts with the share ("All five
   // trains leaving A…") and ends "of their planned time", so only the sentences after it are compared.
-  if (!a.last.cancelled.length && !(a.last.tense === 'mixed' && a.last.lates.length <= 2)) eq(`${f}: last two hours`, lastTwoLines(a).slice(1), (S.lastTwoLines(m) as string[]).map(digits).map(tenAfterWords).slice(1))
+  // Since November 18th 2026 (John) more than two late trains are given as a range, and "expected" is said once, so only the
+  // boards where neither applies are compared.
+  if (!a.last.cancelled.length && a.last.lates.length <= 2 && a.last.tense === 'past') eq(`${f}: last two hours`, lastTwoLines(a).slice(1), (S.lastTwoLines(m) as string[]).map(digits).map(tenAfterWords).slice(1))
   const when = { time: t12(m.now), date: dayName(new Date(m.taken)).replace(/^\w+ /, '') }
   // Since the fresh look (November 18th 2026), "Be prepared"'s Share sentence gives the late trains
   // too, as the verdict does, so it's compared with the mock-up only for the other verdicts. "Their
   // planned time" rather than "the timetable" since November 18th 2026 (John, stage 5).
-  if (!a.lastGone && a.verdict !== 'prepared') eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text.replace('of the timetable. From', 'of their planned time. From'))
+  if (!a.lastGone && a.verdict !== 'prepared') eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text.replace('of the timetable. From', 'of their planned time. From').replace('following four hours', 'next four hours'))
   const bad = pageText(a).filter((t) => /undefined|null|NaN|\[object/.test(t))
   eq(`${f}: no undefined, null or NaN`, bad, [])
 }
@@ -104,7 +106,7 @@ eq('no direct train (O7)', lineText(verdict(rdgCbg).lines), [
 ])
 eq('long journey (O1, John)', lastTwoLines(kgxYrk), [
   'Seven of the eight trains leaving London Kings Cross in the last couple of hours are expected to reach York within three minutes of their planned time.',
-  'The other is expected to be six minutes late.',
+  'The other is set to be six minutes late.',
 ])
 eq('share (P2)', shareWords(rdgPad).text, "Here's how the trains from Reading to London Paddington were looking at 6.24pm on November 17th: good news, they were leaving on time, though only half of the trains in the couple of hours before got there within three minutes of their planned time. From Trainchecker.")
 eq('share link and title', [shareWords(rdgPad).hash, shareWords(rdgPad).title], ['#RDG-PAD', 'Trainchecker: Reading to London Paddington'])
@@ -183,12 +185,12 @@ eq('one late train, its own tense', [kyMixed.last.tense, lastTwoLines(kyMixed)[1
 // Kings Cross to York's real analysis with its "last" figures changed.
 const ky = (o: Partial<Analysis['last']>) => lastTwoLines({ ...kgxYrk, last: { ...kgxYrk.last, byArrivals: false, cancelled: [], ...o } })
 const lead = 'London Kings Cross in the last couple of hours'
-eq('share first: some arrived', lastTwoLines(kyMixed)[0], `Seven of the eight trains leaving ${lead} have reached York (or are expected to do so) within three minutes of their planned time.`)
+eq('share first: some arrived', lastTwoLines(kyMixed)[0], `Seven of the eight trains leaving ${lead} have reached (or look like they will reach) York within three minutes of their planned time.`)
 eq('share first: all, with the number', ky({ known: 4, within3: 4, lates: [], lateArrived: [], tense: 'past' }), [`All four trains leaving ${lead} reached York within three minutes of their planned time.`])
 eq('share first: both', ky({ known: 2, within3: 2, lates: [], lateArrived: [], tense: 'future' }), [`Both trains leaving ${lead} are expected to reach York within three minutes of their planned time.`])
 eq('share first: none, "that left"', ky({ known: 3, within3: 0, lates: [5, 6, 8], lateArrived: [true, true, true], usual: 6, worst: 8, tense: 'past' })[0], `None of the three trains that left ${lead} reached York within three minutes of their planned time.`)
 eq('share first: one of nine, singular', [ky({ known: 9, within3: 1, tense: 'future' })[0], ky({ known: 9, within3: 1, tense: 'mixed' })[0]],
-  [`One of the nine trains leaving ${lead} is expected to reach York within three minutes of their planned time.`, `One of the nine trains leaving ${lead} has reached York (or is expected to do so) within three minutes of their planned time.`])
+  [`One of the nine trains leaving ${lead} is expected to reach York within three minutes of their planned time.`, `One of the nine trains leaving ${lead} has reached (or looks like it will reach) York within three minutes of their planned time.`])
 eq('share first: rounded', ky({ known: 20, within3: 15, tense: 'past' })[0], `Three quarters of the trains leaving ${lead} reached York within three minutes of their planned time.`)
 eq('the only train, on time', [ky({ known: 1, within3: 1, lates: [], lateArrived: [], tense: 'past' }), ky({ known: 1, within3: 1, lates: [], lateArrived: [], tense: 'future' })],
   [[`The only train leaving ${lead} got to York within three minutes of its planned time.`], [`The only train leaving ${lead} is expected to get to York within three minutes of its planned time.`]])
@@ -219,30 +221,47 @@ eq('both (John)', [share(2, 2).trains, share(2, 2).bare, share(3, 3).trains], ['
 
 // The trains with platforms and arrivals (John, November 18th 2026), on the real boards.
 const mdg = A('RDG-MDG'), rp9 = analyse(snapOf(raw('20261117-2059-RDG-PAD.json')))
-eq('platforms fold: two trains', platformTrains(mdg), { fold: 'Show the trains with platforms', text: 'There are trains leaving at 9.13am (platform 12A) and 10.12am (platform 2).' })
-eq('platforms fold: one train', platformTrains(kgxYrk), { fold: 'Show the train with a platform', text: "There's a train leaving from platform 3 at 8.03pm." })
+eq('platforms fold: two trains, a sentence, "am" said once (John)', [platformTrains(mdg)!.fold, platformTrains(mdg)!.text, platformTrains(mdg)!.blocks], ['Show the trains with platforms', 'There are trains leaving at 9.13am (platform 12A) and 10.12 (platform 2).', null])
+eq('platforms fold: one train', [platformTrains(kgxYrk)!.fold, platformTrains(kgxYrk)!.text], ['Show the train with a platform', "There's a train leaving from platform 3 at 8.03pm."])
 eq('platforms fold: none, no fold', platformTrains(A('PAD-PLY')), null)
 eq('platforms fold: ten, late ones in time order, by kind, then the rest (John)', platformTrains(rdgPad)!.text,
-  "Fast trains are leaving at 6.32pm (platform 11A), 6.39pm (three minutes later than planned, platform 10A), 6.43pm (platform 11), 6.46pm (20 minutes later than planned, platform 14A), 6.49pm (platform 10A) and 6.54pm (platform 11), a slower one from platform 15A at 6.33pm, and Elizabeth Line trains from platforms 13 and 14 at 6.34pm (six minutes later than planned), 6.45pm and 6.59pm. We're only showing you the next ten departures, there are another 16 running later which also have platforms showing.")
-eq('platforms fold: fast trains on 10 and 11 (10A as 10, John)', platformTrains(rp9)!.text.split(', slower')[0], 'Fast trains are leaving from platforms 10 and 11 at 9.01pm, 9.10pm (six minutes later than planned), 9.12pm, 9.23pm, 9.26pm and 9.43pm')
-eq('platforms fold: one of a kind ("a slower one")', platformTrains(analyse(snapOf(raw('20261117-2059-PAD-RDG.json')))), { fold: 'Show the trains with platforms', text: 'Fast trains are leaving at 9.02pm (platform 4) and 9.04pm (platform 8), a slower one from platform 10 at 9.08pm, and Elizabeth Line trains from platform B at 9.17pm, 9.47pm and 10.17pm.' })
-eq('platforms fold: one platform for all, said once (John)', platformTrains(A('TVP-PAD'))!.text, 'There are trains leaving from platform 2 at 9.30am, 10.30am and 11.29am.')
-eq('platforms fold: two platforms for three or more, said once (John)', platformTrains(manMia)!.text, 'There are trains leaving from platforms 9 and 13 at 6.36pm, 6.37pm (nine minutes later than planned), 6.51pm, 7.04pm and 7.18pm.')
-eq('platforms fold: two trains, two platforms, each its own', platformTrains(mdg)!.text, 'There are trains leaving at 9.13am (platform 12A) and 10.12am (platform 2).')
+  "Fast trains are leaving at 6.32pm (platform 11A), 6.39 (three minutes later than planned, platform 10A), 6.43 (platform 11), 6.46 (20 minutes later than planned, platform 14A), 6.49 (platform 10A) and 6.54 (platform 11), a slower one from platform 15A at 6.33, and Elizabeth Line trains from platforms 13 and 14 at 6.34 (six minutes later than planned), 6.45 and 6.59. We're only showing you the next ten departures, there are another 16 running later which also have platforms showing.")
+eq('platforms fold: fast trains on 10 and 11 (10A as 10, John)', platformTrains(rp9)!.text.split(', slower')[0], 'Fast trains are leaving from platforms 10 and 11 at 9.01pm, 9.10 (six minutes later than planned), 9.12, 9.23, 9.26 and 9.43')
+eq('platforms fold: one of a kind ("a slower one")', platformTrains(analyse(snapOf(raw('20261117-2059-PAD-RDG.json'))))!.text, 'Fast trains are leaving at 9.02pm (platform 4) and 9.04 (platform 8), a slower one from platform 10 at 9.08, and Elizabeth Line trains from platform B at 9.17, 9.47 and 10.17.')
+eq('platforms fold: one platform for all, said once (John)', platformTrains(A('TVP-PAD'))!.text, 'There are trains leaving from platform 2 at 9.30am, 10.30 and 11.29.')
+eq('platforms fold: two platforms for three or more, said once (John)', platformTrains(manMia)!.text, 'There are trains leaving from platforms 9 and 13 at 6.36pm, 6.37 (nine minutes later than planned), 6.51, 7.04 and 7.18.')
+eq('platforms fold: two trains, two platforms, each its own', platformTrains(mdg)!.text, 'There are trains leaving at 9.13am (platform 12A) and 10.12 (platform 2).')
 eq('platforms fold: cancelled left out', platformTrains(manMia)!.text.includes('6.28pm'), false)
 eq('arrivals: the brackets in sequence (John)', arrivals(rp9).text.split('), ').slice(0, 3).join('), ') + ')',
-  'The first ten trains in the next hour are expected at 9.01pm (the one due to leave Reading at 8.37pm), 9.08pm (the 8.44pm from Reading), 9.13pm (the 8.47pm, arriving three minutes later than planned)')
+  'The first ten trains in the next hour are expected at 9.01pm (the one due to leave Reading at 8.37), 9.08 (the 8.44 from Reading), 9.13 (the 8.47, arriving three minutes later than planned)')
 const soon = (k: number) => changed('RDG-MDG', (sv) => { sv.filter((x) => x.sta && !x.ata).slice(0, k).forEach((t, i) => { t.std = `08:${30 + i * 10}`; t.sta = `08:${45 + i * 10}`; t.eta = 'On time'; t.cancelled = false }) })
-eq('arrivals: one, "The only train" (John)', arrivals(soon(1)).text, 'The only train arriving in the next hour is expected at 8.45am (the one due to leave Reading at 8.30am).')
-eq('arrivals: two (John)', arrivals(soon(2)).text, "There are two trains arriving in the next hour. They're expected at 8.45am (the one due to leave Reading at 8.30am) and 8.55am (the 8.40am from Reading).")
+eq('arrivals: one, "The only train" (John)', arrivals(soon(1)).text, 'The only train arriving in the next hour is expected at 8.45am (the one due to leave Reading at 8.30).')
+eq('arrivals: two (John)', arrivals(soon(2)).text, "There are two trains arriving in the next hour. They're expected at 8.45am (the one due to leave Reading at 8.30) and 8.55 (the 8.40 from Reading).")
 eq('arrivals: three to ten (John)', arrivals(analyse(snapOf(raw('20261117-2059-PAD-RDG.json')))).text.startsWith('The trains arriving in the next hour are expected at 9.11pm'), true)
-eq('arrivals: long journey, what it can see (draft)', arrivals(A('TVP-PAD')).text, "Trainchecker can see one train arriving in the next hour, expected at 9.21am (the one due to leave Tiverton Parkway at 6.53am). Trains that left Tiverton Parkway more than two hours ago aren't included, as Trainchecker can't see them.")
+eq('arrivals: long journey, what it can see (draft)', arrivals(A('TVP-PAD')).text, "Trainchecker can see one train arriving in the next hour, expected at 9.21am (the one due to leave Tiverton Parkway at 6.53). Trains that left Tiverton Parkway more than two hours ago aren't included, as Trainchecker can't see them.")
 eq('arrivals: the heading', arrivals(rp9).heading, 'At London Paddington from Reading')
 eq('arrivals: none in the next hour', arrivals(mdg).text, 'No direct trains from Reading are expected at Midgham in the next hour.')
 const mdgGone = changed('RDG-MDG', (sv) => { const t = sv.find((x) => x.sta)!; t.std = '08:40'; t.sta = '08:55'; t.ata = null; t.eta = null; t.cancelled = true })
 eq('arrivals: none, one cancelled (John)', arrivals(mdgGone).text, 'No direct trains from Reading are expected at Midgham in the next hour. The one due in at 8.55am was cancelled.')
 eq('arrivals: a long journey says it can\'t see them all, never "none"', [arrivals(A('PAD-PLY')).text, arrivals(kgxYrk).text.endsWith("aren't included, as Trainchecker can't see them.")],
   ["Trainchecker can only see trains that left London Paddington in the last two hours, so it can't say which trains are due at Plymouth in the next hour.", true])
+
+// The late trains as a range (John, November 18th 2026), and "expected" said once, then "set to be".
+eq('late trains: a range', [lastTwoLines(bthBri)[1], lastTwoLines(rdgPad)[1], lastTwoLines(manMia)[1]],
+  ['The others were between four and 12 minutes late.', 'The others were between four and 23 minutes late, most of them less than 10.', 'They were between five and ten minutes late.'])
+eq('late trains: some still on their way ("were, or are set to be,")', ky({ known: 8, within3: 2, lates: [5, 12, 23, 25, 30, 78], lateArrived: [true, true, true, false, false, false], usual: 23, worst: 78, tense: 'mixed' })[1],
+  'The others were, or are set to be, between five and 78 minutes late, most of them less than 30.')
+eq('late trains: none arrived yet, "expected" once then "set to be"', ky({ known: 5, within3: 3, lates: [6, 9], lateArrived: [false, false], usual: 6, worst: 9, tense: 'future' }),
+  [`Three of the five trains leaving ${lead} are expected to reach York within three minutes of their planned time.`, 'The other two are set to be six and nine minutes late.'])
+eq('late trains: all the same', ky({ known: 6, within3: 3, lates: [7, 7, 7], lateArrived: [true, true, true], usual: 7, worst: 7, tense: 'past' })[1], 'The others were seven minutes late.')
+// "am" and "pm" said once (John): dropped while the same, back when it changes; on the hour kept.
+const tvp = platformTrains(A('TVP-PAD'))!
+eq('the lists: "am" once, the hour kept, laid out as rows', [tvp.text, tvp.blocks], ['There are trains leaving from platform 2 at 9.30am, 10.30 and 11.29.', [{ lead: 'There are trains leaving from platform 2 at:', rows: [{ time: '9.30am' }, { time: '10.30' }, { time: '11.29' }] }]])
+eq('the lists: on the hour keeps "pm", across midday too', arrivals(analyse(snapOf(raw('20261117-1824-BTH-BRI.json')))).text.endsWith('6.53 (the 6.38) and 7pm (the 6.48).'), true)
+eq('the lists: notes on their own rows', platformTrains(rp9)!.blocks![0], { lead: 'Fast trains, from platforms 10 and 11:', rows: [{ time: '9.01pm' }, { time: '9.10', note: 'six minutes later than planned' }, { time: '9.12' }, { time: '9.23' }, { time: '9.26' }, { time: '9.43' }] })
+eq('the lists: Share words (drafts)', [listShareWords(mdg, 'platforms', platformTrains(mdg)!.prose).text, listShareWords(mdg, 'arrivals', arrivals(mdg).text).text],
+  ['Here are the trains from Reading to Midgham with platforms, as of 8.22am on November 18th. There are trains leaving at 9.13am (platform 12A) and 10.12 (platform 2). From Trainchecker.', 'Here are the trains due at Midgham from Reading, as of 8.22am on November 18th. No direct trains from Reading are expected at Midgham in the next hour. From Trainchecker.'])
+eq('share: "next four hours" (John)', shareWords(bthBri).text.includes('in the next four hours'), true)
 
 // The last train gone: Kings Cross to Edinburgh at 8.59pm (trains in the last two hours, none in
 // the next four); Reading to Cambridge at 6.24pm has none either way, so keeps the agreed words.

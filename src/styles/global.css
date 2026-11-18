@@ -161,6 +161,16 @@ details.advice[open] > summary svg { transform: rotate(180deg); }
 
 /* share, message of the day, about, footer */
 details.trains-fold { margin-top: var(--space-3); }
+/* The two lists (John's option D, November 18th 2026): bold times, notes in the quieter colour, the
+   on-time ones run together with accent-coloured dots. The commas are for screen readers only. */
+.tlist { margin-top: var(--space-2); }
+.tlist .tlead { margin: 0 0 4px; }
+.tline { margin: 4px 0; line-height: 1.55; }
+.tnote { color: var(--color-neutral-700); }
+.tdot { color: var(--color-accent); font-weight: 700; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.tafter { margin-top: var(--space-2); }
+.share-row.in-fold { margin-top: var(--space-3); }
 .share-row { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margin-top: var(--space-6); }
 /* Straight under the verdict it quotes (John, stage 4): close to the verdict, a full gap below. */
 .share-row.under-verdict { margin: calc(var(--space-3) - var(--space-6)) 0 var(--space-6); }

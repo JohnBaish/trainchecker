@@ -9,7 +9,7 @@ import { fetchDays, fetchLive } from '../lib/load.ts'
 import { closedNow, forJourney } from '../lib/incidents.ts'
 import { hashOf, remember, type Journey } from '../lib/route.ts'
 import { useIsNarrow } from '../lib/responsive.ts'
-import { NO_RECORD_AT, arrivals, platformTrains, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
+import { NO_RECORD_AT, arrivals, platformTrains, listShareWords, type Listing, type TimeRow, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
 import { isTouch, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
 import { Chooser } from './Chooser.tsx'
@@ -30,6 +30,49 @@ const FAILED: Record<string, string> = {
   unavailable: 'Sorry, National Rail’s live departures couldn’t be reached just now. Please try again in a minute.',
 }
 
+/** A list laid out as John's option D (November 18th 2026): the lead line, then times in bold; a
+ *  time with something to say on its own line, the rest run together with coloured dots. */
+function TimeList({ x }: { x: Listing }) {
+  if (!x.blocks) return <p>{x.text}</p>
+  const lines = (rows: TimeRow[]) => {
+    const out: (TimeRow | TimeRow[])[] = []
+    for (const r of rows) {
+      const last = out[out.length - 1]
+      if (r.note) out.push(r)
+      else if (Array.isArray(last)) last.push(r)
+      else out.push([r])
+    }
+    return out.map((l, i) => Array.isArray(l)
+      ? <div key={i} className="tline">{l.map((r, j) => <span key={j}>{j > 0 && <span className="tdot" aria-hidden="true"> · </span>}<b>{r.time}</b>{j < l.length - 1 && <span className="sr">,</span>}</span>)}</div>
+      : <div key={i} className="tline"><b>{l.time}</b> <span className="tnote">{l.note}</span></div>)
+  }
+  return (
+    <>
+      {x.blocks.map((b, i) => <div key={i} className="tlist"><p className="tlead">{b.lead}</p>{lines(b.rows)}</div>)}
+      {x.after && <p className="tafter">{x.after}</p>}
+    </>
+  )
+}
+
+/** Share for one of the lists, inside its fold (John, November 18th 2026; words Claude's drafts). */
+function ListShare({ a, kind, prose }: { a: Analysis; kind: 'platforms' | 'arrivals'; prose: string }) {
+  const [status, setStatus] = useState('')
+  const touch = isTouch()
+  const go = async () => {
+    setStatus('')
+    const w = listShareWords(a, kind, prose)
+    const r = await shareText({ title: w.title, text: w.text, url: `${location.origin}/${w.hash}` })
+    setStatus(r === 'copied' ? 'Copied' : r === 'failed' ? 'Sorry, this browser wouldn’t copy it.' : '')
+  }
+  const what = kind === 'platforms' ? 'these trains' : 'these arrivals'
+  return (
+    <div className="share-row in-fold">
+      <button type="button" className="btn btn-secondary" onClick={go}><Icon name={touch ? 'share' : 'copy'} /> {touch ? `Share ${what}` : `Copy ${what}`}</button>
+      <span className="share-status" role="status">{status}</span>
+    </div>
+  )
+}
+
 /** The trains with a platform, folded under "Platforms", spaced like the trains fold (John,
  *  November 18th 2026). */
 function PlatformTrains({ a }: { a: Analysis }) {
@@ -38,7 +81,8 @@ function PlatformTrains({ a }: { a: Analysis }) {
   return (
     <details className="advice trains-fold">
       <summary>{p.fold} <Icon name="down" /></summary>
-      <p>{p.text}</p>
+      <TimeList x={p} />
+      <ListShare a={a} kind="platforms" prose={p.prose} />
     </details>
   )
 }
@@ -51,7 +95,8 @@ function Arrivals({ a }: { a: Analysis }) {
       <h3>Arrivals</h3>
       <details className="advice arrivals-fold">
         <summary>{x.heading} <Icon name="down" /></summary>
-        <p>{x.text}</p>
+        <TimeList x={x} />
+        <ListShare a={a} kind="arrivals" prose={x.text} />
       </details>
     </section>
   )

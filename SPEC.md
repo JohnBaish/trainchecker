@@ -559,3 +559,18 @@ they differ.
    two trains arriving in the next hour. They're expected at …"; "The only train arriving in the next hour is expected
    at …". Long journeys (Claude's draft, agreed): "Trainchecker can see three trains arriving in the next hour. They're expected
    at …" (or "one train …, expected at …"), then the note.
+10. **The last two hours, again** (John, November 18th 2026): "have reached (or look like they will reach) Manchester
+    Piccadilly …" (trains still to arrive keep "are expected to reach"); more than two late trains as a range, "The
+    others were between four and 23 minutes late, most of them less than 10." ("most of them less than 10, 15, 20, 30
+    or 60" only when the range is more than 10 minutes), replacing "mostly about … and the latest was …"; "expected"
+    said once in the paragraph, then "set to be" ("The others were, or are set to be, between five and 78 minutes
+    late…"). Illustration only.
+11. **Share:** "in the next four hours" (was "following").
+12. **Times in a list:** "am" or "pm" said the first time and again only when it changes; on the hour it stays ("9pm").
+    Times in brackets count ("7.58pm (the one due to leave Oxford at 7.30), 8.19 (the 7.16 from Oxford, …)").
+13. **The two lists laid out** (option D of four mock-ups): a lead line, then bold times, a time with something to say
+    on its own line, the rest run together with accent-coloured dots; one or two trains stay a sentence. Fast, slower
+    and Elizabeth Line trains each get a lead ("Fast trains, from platforms 10 and 11:").
+14. **Share for each list**, separately: "Share these trains" and "Share these arrivals" ("Copy …" on a computer), the
+    words Claude's drafts: "Here are the trains from Reading to Midgham with platforms, as of 8.22am on November 18th.
+    There are trains leaving at … From Trainchecker." and "Here are the trains due at Midgham from Reading, as of …".

@@ -58,6 +58,20 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: the lists laid out, "pm" once, the late trains as a range; Share for each list (branch `claude/laughing-hawking-8d2b6w`; Claude Code)
+
+- **John (the live site, Stoke-on-Trent to Manchester, Oxford to Reading):** `SPEC.md` §12.10 to §12.14: "(or look like
+  they will reach)"; the late trains as a range ("mostly about 23" was the middle figure, and "the latest was 78" said
+  "was" for a train not yet in); "expected" once, then "set to be"; "next four hours" in Share; "am"/"pm" once in a list,
+  "9pm" kept; option D of four layouts (bold times, coloured dots); a Share for each list.
+- **Built:** `lastTwoLines()`, `shareWords()`, `clockSay()`, `platformTrains()` and `arrivals()` (now a `Listing`: the
+  sentence, the lead and rows, the note after), `listShareWords()` in `sentences.ts`; `TimeList` and `ListShare` in
+  `JourneyView.tsx`; `.tlist`, `.tline`, `.tdot` in `global.css`.
+- **Checked:** `npm run check` 240 + 57 + 73 (new: the ranges, "were, or are set to be,", "set to be" after "expected",
+  "am" once and "7pm" kept, the rows, the Share words; the mock-up comparison now only where neither new rule applies);
+  `tsc -b`, lint, build; Reading to Paddington at 390px dark and Bath to Bristol at 1200px light: folds 44px, no errors,
+  no sideways scroll. Earlier: the previous branch tidied after merging (trial run, then the real run; only `main` left).
+
 ### November 18th 2026: the trains with platforms, and Arrivals (branch `claude/laughing-hawking-8d2b6w`, merged the same day; Claude Code)
 
 - **John:** a fold under Platforms, "Show the trains with platforms": "There are trains leaving at 3.12pm (platform 2),

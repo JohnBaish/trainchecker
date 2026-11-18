@@ -125,20 +125,32 @@ export function lastTwoLines(a: Analysis): string[] {
       const reach = {
         past: `reached ${a.to}`,
         future: `${one ? 'is' : 'are'} expected to reach ${a.to}`,
-        mixed: `${one ? 'has' : 'have'} reached ${a.to} (or ${one ? 'is' : 'are'} expected to do so)`,
+        // "have reached (or look like they will reach) B" (John, November 18th 2026).
+        mixed: `${one ? 'has reached (or looks like it will reach)' : 'have reached (or look like they will reach)'} ${a.to}`,
       }[L.tense]
       out.push(`${Cap(sh.trains)} ${L.within3 === 0 ? 'that left' : 'leaving'} ${a.from} in the last couple of hours ${reach} ${planned}`)
     }
     const n = L.lates.length, them = L.within3 === 0 ? 'They' : n === 1 ? 'The other' : n === 2 ? 'The other two' : 'The others'
-    const was = { past: n === 1 ? 'was' : 'were', future: n === 1 ? 'is expected to be' : 'are expected to be', mixed: n === 1 ? 'was or is expected to be' : 'were or are expected to be' }[L.tense]
+    // "Expected" once in the paragraph; after that "set to be", so it isn't repeated (John, November
+    // 18th 2026). Only the first sentence of trains still on their way says "expected" now.
+    const exp = !L.byArrivals && L.tense === 'future'
+    const toBe = (k: number) => (exp ? (k === 1 ? 'is set to be' : 'are set to be') : (k === 1 ? 'is expected to be' : 'are expected to be'))
+    const was = { past: n === 1 ? 'was' : 'were', future: toBe(n), mixed: n === 1 ? 'was, or is set to be,' : 'were, or are set to be,' }[L.tense]
     // One or two late: each one's own tense, as we know whether it has arrived (John).
-    const own = (i: number) => (L.lateArrived[i] ? 'was' : 'is expected to be')
+    const own = (i: number) => (L.lateArrived[i] ? 'was' : toBe(1))
     if (n === 1) out.push(`${them} ${own(0)} ${num(L.worst!)} minutes late.`)
     else if (n === 2 && L.lateArrived[0] !== L.lateArrived[1]) {
       const [x, y] = L.lateArrived[0] ? [0, 1] : [1, 0]
       out.push(`${L.within3 === 0 ? 'One' : 'Of the other two, one'} ${own(x)} ${num(L.lates[x])} minutes late and the other ${own(y)} ${num(L.lates[y])} minutes late.`)
-    } else if (n === 2) out.push(`${them} ${L.lateArrived[0] ? 'were' : 'are expected to be'} ${num(L.lates[0])} and ${num(L.lates[1])} minutes late.`)
-    else if (n > 2) out.push(L.usual === L.worst ? `${them} ${was} about ${num(L.usual!)} minutes late.` : `${them} ${was} mostly about ${num(L.usual!)} minutes late, and the latest ${L.tense === 'future' ? 'is expected to be' : 'was'} ${num(L.worst!)} minutes late.`)
+    } else if (n === 2) out.push(`${them} ${L.lateArrived[0] ? 'were' : toBe(2)} ${num(L.lates[0])} and ${num(L.lates[1])} minutes late.`)
+    else if (n > 2) {
+      // The range, and where most fell when it's wide (John, November 18th 2026): "The others were
+      // between four and 23 minutes late, most of them less than 10." The middle figure read as
+      // typical when it wasn't ("mostly about 23").
+      const lo = L.lates[0], hi = L.worst!
+      const most = hi - lo > 10 ? [10, 15, 20, 30, 60].find((t) => t < hi && L.lates.filter((l) => l < t).length > n / 2) : undefined
+      out.push(lo === hi ? `${them} ${was} ${num(lo)} minutes late.` : `${them} ${was} between ${num(lo)} and ${num(hi)} minutes late${most ? `, most of them less than ${num(most)}` : ''}.`)
+    }
   }
   // "Two more didn't run at all." whenever trains are counted before it (John, November 18th 2026).
   if (c) out.push(!L.known ? `${Cap(num(c))} ${c === 1 ? 'train was' : 'trains were'} cancelled.` : `${Cap(num(c))} more didn't run at all.`)
@@ -434,8 +446,8 @@ export function shareWords(a: Analysis): { text: string; title: string; hash: st
   const taken = new Date(a.taken)
   const at = `${t12(a.now)} on ${dateShort(taken)}`
   const title = `Trainchecker: ${a.from} to ${a.to}`, hash = `#${a.fromCrs}-${a.toCrs}`
-  if (a.verdict === 'none' && a.lastGone) return { text: `Here's what Trainchecker found at ${at}: the last direct train from ${a.from} to ${a.to} had gone, at ${t12(a.lastGone.std)}, with no other in the following four hours.`, title, hash }
-  if (a.verdict === 'none') return { text: `Here's what Trainchecker found at ${at}: no direct train from ${a.from} to ${a.to} in the following four hours.`, title, hash }
+  if (a.verdict === 'none' && a.lastGone) return { text: `Here's what Trainchecker found at ${at}: the last direct train from ${a.from} to ${a.to} had gone, at ${t12(a.lastGone.std)}, with no other in the next four hours.`, title, hash }
+  if (a.verdict === 'none') return { text: `Here's what Trainchecker found at ${at}: no direct train from ${a.from} to ${a.to} in the next four hours.`, title, hash }
   const lead = `Here's how the trains from ${a.from} to ${a.to} were looking at ${at}: `
   const was = (k: number) => (k === 1 ? 'was' : 'were')
   let body: string
@@ -451,7 +463,7 @@ export function shareWords(a: Analysis): { text: string; title: string; hash: st
     if (a.cancelled.length) bits.push(`${num(a.cancelled.length)} ${was(a.cancelled.length)} cancelled`)
     const late = a.late5.length + a.unknown.length
     if (late) bits.push(`${num(late)} ${was(late)} running late`)
-    body = `a mixed bag. Most were running, but ${bits.join(' and ').replace(/^(\w+)/, `$1 of the ${num(a.ahead.length)} in the following four hours`)}.`
+    body = `a mixed bag. Most were running, but ${bits.join(' and ').replace(/^(\w+)/, `$1 of the ${num(a.ahead.length)} in the next four hours`)}.`
   } else {
     // The same counts as the verdict, never "zero were cancelled" (fresh look 2.1).
     body = `be prepared.${preparedCounts(a, 'past')}${arrivingNow(a, 'past')}`
@@ -586,101 +598,137 @@ export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind:
 const minutesWord = (k: number) => `${num(k)} ${k === 1 ? 'minute' : 'minutes'}`
 const andList = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}` : xs[0])
 
-/** The fold under "Platforms": "There are trains leaving at 3.12pm (platform 2), 3.34pm (four minutes
- *  later than planned, platform 3) and 3.58pm (platform 2)." The next ten trains with a platform,
- *  cancelled ones left out; then John's sentence about the rest. Null when none has a platform. */
-export function platformTrains(a: Analysis): { fold: string; text: string } | null {
-  // In the order they're expected to leave, so a late train sits where it now falls.
+/** A list as the page lays it out (John's option D, November 18th 2026): a lead line, then the
+ *  times in bold, each with something to say on its own line, the rest run together with dots. */
+export type TimeRow = { time: string; note?: string }
+export type ListBlock = { lead: string; rows: TimeRow[] }
+export type Listing = { text: string; blocks: ListBlock[] | null; after: string | null; prose: string }
+
+/** Times in reading order, "am" or "pm" said once and again only when it changes; on the hour it
+ *  stays ("9pm"), as a bare "9" could read as a count (John, November 18th 2026). */
+function clockSay() {
+  let last = ''
+  return (hhmm: string) => {
+    const s = t12(hhmm)
+    if (s === 'midday' || s === 'midnight') { last = s === 'midday' ? 'pm' : 'am'; return s }
+    const m = s.match(/^(.*?)(am|pm)$/)
+    if (!m) return s
+    const out = s.includes('.') && last === m[2] ? m[1] : s
+    last = m[2]
+    return out
+  }
+}
+const said = (r: TimeRow) => `${r.time}${r.note ? ` (${r.note})` : ''}`
+
+/** The fold under "Platforms": the next ten trains with a platform, cancelled ones left out, in the
+ *  order they're expected to leave; fast, slower and Elizabeth Line trains apart when the Platforms
+ *  sentence groups them. Null when none has a platform. */
+export function platformTrains(a: Analysis): (Listing & { fold: string }) | null {
   const leaves = (t: Train) => diff(a.now, t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std)
   const ts = a.ahead.filter((t) => !t.cancelled && t.platform).sort((x, y) => leaves(x) - leaves(y))
   if (!ts.length) return null
   const shown = ts.slice(0, 10), rest = ts.length - shown.length
-  // One or two platforms for all of them: said once, at the start, and people check which when they
-  // get there (John, November 18th 2026): "There are trains leaving from platforms 10 and 11 at 9pm,
-  // 9.10pm (six minutes later than planned) and 9.12pm." "10A" counts as 10 where plain 10 is in use
-  // too, as in the Platforms sentence (John). Two trains on two platforms keep their own.
+  // One or two platforms for them all: said once, at the start, and people check which when they get
+  // there; "10A" counts as 10 where plain 10 is in use too. Two trains on two platforms keep their own.
   const used = new Set(a.ahead.filter((t) => t.platform && !t.cancelled).map((t) => t.platform!))
   const base = (p: string) => { const m = p.match(/^(\d+)[A-Z]$/); return m && used.has(m[1]) ? m[1] : p }
-  const phrase = (ts: Train[]) => {
-    const plats = [...new Set(ts.map((t) => base(t.platform!)))].sort((x, y) => parseInt(x) - parseInt(y) || x.localeCompare(y))
-    const once = plats.length === 1 || (plats.length === 2 && ts.length > 2)
-    const item = (t: Train) => {
+  const say = clockSay()
+  const groupsOf = speedGroups(a).filter((g) => g.kind !== 'all').map((g) => ({ kind: g.kind, ts: shown.filter((t) => g.trains.includes(t)) })).filter((g) => g.ts.length)
+  const grouped = groupsOf.length > 1 && groupsOf.reduce((n, g) => n + g.ts.length, 0) === shown.length
+  const parts = (grouped ? groupsOf : [{ kind: 'all' as const, ts: shown }]).map((g) => {
+    const plats = [...new Set(g.ts.map((t) => base(t.platform!)))].sort((x, y) => parseInt(x) - parseInt(y) || x.localeCompare(y))
+    const once = plats.length === 1 || (plats.length === 2 && g.ts.length > 2)
+    const rows = g.ts.map((t): TimeRow => {
       const late = t.late !== null && t.late > 0 && isTime(t.etd)
       const bits = [late ? `${minutesWord(t.late!)} later than planned` : t.unknown ? 'delayed, no time given yet' : '', once ? '' : `platform ${t.platform}`].filter(Boolean)
-      return `${t12(late ? t.etd! : t.std)}${bits.length ? ` (${bits.join(', ')})` : ''}`
-    }
-    const from = once ? `from ${plats.length === 1 ? `platform ${plats[0]}` : `platforms ${plats[0]} and ${plats[1]}`} ` : ''
-    return `${from}at ${andList(ts.map(item))}`
-  }
-  // Fast, slower and Elizabeth Line trains apart, as the Platforms sentence groups them (John):
-  // "Fast trains are leaving from platforms 10 and 11 at …, slower ones at 9.04pm (platform 14A) and
-  // 9.38pm (platform 15A), and Elizabeth Line trains from platform 14 at 9pm and 9.30pm."
-  const groups = speedGroups(a).filter((g) => g.kind !== 'all').map((g) => ({ kind: g.kind, ts: shown.filter((t) => g.trains.includes(t)) })).filter((g) => g.ts.length)
-  let text: string
-  if (groups.length > 1 && groups.reduce((n, g) => n + g.ts.length, 0) === shown.length) {
-    const name = { fast: ['fast train', 'fast trains', 'fast one', 'fast ones'], slower: ['slower train', 'slower trains', 'slower one', 'slower ones'], elizabeth: ['Elizabeth Line train', 'Elizabeth Line trains', 'Elizabeth Line train', 'Elizabeth Line trains'] } as const
-    const article = (w: string) => (/^[aeiouAEIOU]/.test(w) ? 'an' : 'a')
-    const parts = groups.map((g, i) => {
-      const n = name[g.kind as 'fast' | 'slower' | 'elizabeth'], one = g.ts.length === 1
-      const who = i === 0 ? (one ? `${Cap(article(n[0]))} ${n[0]} is leaving` : `${Cap(n[1])} are leaving`) : (one ? `${article(n[2])} ${n[2]}` : n[3])
-      return `${who} ${phrase(g.ts)}`
+      return { time: say(late ? t.etd! : t.std), note: bits.length ? bits.join(', ') : undefined }
     })
-    text = `${parts.slice(0, -1).join(', ')}, and ${parts[parts.length - 1]}.`
-  } else text = shown.length === 1 ? `There's a train leaving ${phrase(shown)}.` : `There are trains leaving ${phrase(shown)}.`
+    const where = once ? (plats.length === 1 ? `platform ${plats[0]}` : `platforms ${plats[0]} and ${plats[1]}`) : null
+    return { kind: g.kind, rows, where }
+  })
+  const name = { fast: ['fast train', 'fast trains', 'fast one', 'fast ones'], slower: ['slower train', 'slower trains', 'slower one', 'slower ones'], elizabeth: ['Elizabeth Line train', 'Elizabeth Line trains', 'Elizabeth Line train', 'Elizabeth Line trains'] } as const
+  const article = (w: string) => (/^[aeiouAEIOU]/.test(w) ? 'an' : 'a')
+  let prose: string, blocks: ListBlock[]
+  if (grouped) {
+    const ps = parts.map((g, i) => {
+      const n = name[g.kind as 'fast' | 'slower' | 'elizabeth'], one = g.rows.length === 1
+      const who = i === 0 ? (one ? `${Cap(article(n[0]))} ${n[0]} is leaving` : `${Cap(n[1])} are leaving`) : (one ? `${article(n[2])} ${n[2]}` : n[3])
+      return `${who} ${g.where ? `from ${g.where} ` : ''}at ${andList(g.rows.map(said))}`
+    })
+    prose = `${ps.slice(0, -1).join(', ')}, and ${ps[ps.length - 1]}.`
+    blocks = parts.map((g) => {
+      const n = name[g.kind as 'fast' | 'slower' | 'elizabeth'], one = g.rows.length === 1
+      return { lead: `${one ? `${Cap(article(n[0]))} ${n[0]}` : Cap(n[1])}${g.where ? `, from ${g.where}` : ''}:`, rows: g.rows }
+    })
+  } else {
+    const g = parts[0], from = g.where ? `from ${g.where} ` : ''
+    prose = shown.length === 1 ? `There's a train leaving ${from}at ${said(g.rows[0])}.` : `There are trains leaving ${from}at ${andList(g.rows.map(said))}.`
+    blocks = [{ lead: `There are trains leaving ${from}at:`, rows: g.rows }]
+  }
   // "already" dropped (John, November 18th 2026).
-  if (rest) text += rest === 1
-    ? " We're only showing you the next ten departures, there's another one running later which also has a platform showing."
-    : ` We're only showing you the next ten departures, there are another ${num(rest)} running later which also have platforms showing.`
-  return { fold: ts.length === 1 ? 'Show the train with a platform' : 'Show the trains with platforms', text: tenAfterWords(text) }
+  const after = !rest ? null : rest === 1
+    ? "We're only showing you the next ten departures, there's another one running later which also has a platform showing."
+    : `We're only showing you the next ten departures, there are another ${num(rest)} running later which also have platforms showing.`
+  return {
+    fold: ts.length === 1 ? 'Show the train with a platform' : 'Show the trains with platforms',
+    prose: tenAfterWords(prose), text: tenAfterWords(prose + (after ? ' ' + after : '')),
+    blocks: shown.length > 2 ? blocks.map((b) => ({ ...b, rows: b.rows.map((x) => ({ ...x, note: x.note && tenAfterWords(x.note) })) })) : null, after,
+  }
 }
 
-/** Arrivals at B from A in the next hour, up to 10: "Trains are expected at 3.05pm (the one due to
- *  leave Reading at 2.40pm), 3.22pm (the 3pm from Reading, arriving four minutes later than planned),
- *  3.30pm (the 3.15pm, …) and 3.45pm (the 3.20pm)." Trains on their way and still to leave; cancelled
- *  ones left out, except that with none expected a cancelled one is mentioned. */
-export function arrivals(a: Analysis): { heading: string; text: string } {
+/** Arrivals at B from A in the next hour, up to 10, the hour said up front (John, November 18th
+ *  2026), the brackets in sequence ("the one due to leave Oxford at 7.30", "the 7.16 from Oxford",
+ *  "the 8.08"); trains on their way and still to leave; cancelled ones left out, except that with
+ *  none expected a cancelled one is mentioned. On a long journey Trainchecker can't see them all,
+ *  so it says what it can see, then a note. */
+export function arrivals(a: Analysis): Listing & { heading: string } {
   const heading = `At ${a.to} from ${a.from}`
   const fromNow = (t: string) => diff(a.now, t)
-  // The board only looks back two hours, so on a journey that can take longer, trains already on
-  // their way may be missing: said plainly, never "none expected" (Claude's draft, for John).
   const longest = Math.max(0, ...[...a.past, ...a.ahead].filter((t) => t.sta).map((t) => diff(t.std, t.sta!)))
   const partial = longest >= 120
-  const note = ` Trains that left ${a.from} more than two hours ago aren't included, as Trainchecker can't see them.`
+  const note = `Trains that left ${a.from} more than two hours ago aren't included, as Trainchecker can't see them.`
   const when = (t: Train) => (isTime(t.eta) ? t.eta : t.sta!)
   const due = [...a.past, ...a.ahead].filter((t) => t.sta && !t.ata)
   const coming = due.filter((t) => !t.cancelled && fromNow(when(t)) >= 0).sort((x, y) => fromNow(when(x)) - fromNow(when(y)))
   const inHour = coming.filter((t) => fromNow(when(t)) <= 60)
-  if (!inHour.length && partial) return { heading, text: `Trainchecker can only see trains that left ${a.from} in the last two hours, so it can't say which trains are due at ${a.to} in the next hour.` }
+  const plain = (text: string) => ({ heading, text: tenAfterWords(text), prose: tenAfterWords(text), blocks: null, after: null })
+  if (!inHour.length && partial) return plain(`Trainchecker can only see trains that left ${a.from} in the last two hours, so it can't say which trains are due at ${a.to} in the next hour.`)
   if (!inHour.length) {
     let text = `No direct trains from ${a.from} are expected at ${a.to} in the next hour.`
     const gone = due.filter((t) => t.cancelled && fromNow(t.sta!) >= 0 && fromNow(t.sta!) <= 60).sort((x, y) => fromNow(x.sta!) - fromNow(y.sta!))
-    if (gone.length === 1) text += ` The one due in at ${t12(gone[0].sta!)} was cancelled.`
-    else if (gone.length > 1) text += ` The ${num(gone.length)} due in at ${andList(gone.map((t) => t12(t.sta!)))} were cancelled.`
-    return { heading, text: tenAfterWords(text) }
+    const say = clockSay()
+    if (gone.length === 1) text += ` The one due in at ${say(gone[0].sta!)} was cancelled.`
+    else if (gone.length > 1) text += ` The ${num(gone.length)} due in at ${andList(gone.map((t) => say(t.sta!)))} were cancelled.`
+    return plain(text)
   }
-  const shown = inHour.slice(0, 10)
-  const item = (t: Train, i: number) => {
-    const which = i === 0 ? `the one due to leave ${a.from} at ${t12(t.std)}` : i === 1 ? `the ${t12(t.std)} from ${a.from}` : `the ${t12(t.std)}`
+  const shown = inHour.slice(0, 10), n = inHour.length
+  const say = clockSay()
+  const rows = shown.map((t, i): TimeRow => {
+    const time = say(when(t))
+    const which = i === 0 ? `the one due to leave ${a.from} at ${say(t.std)}` : i === 1 ? `the ${say(t.std)} from ${a.from}` : `the ${say(t.std)}`
     const late = isTime(t.eta) ? diff(t.sta!, t.eta) : null
     const extra = late !== null && late > 0 ? `, arriving ${minutesWord(late)} later than planned`
       : t.eta && t.eta !== 'On time' && !isTime(t.eta) ? ', delayed with no time given yet' : ''
-    return `${t12(when(t))} (${which}${extra})`
-  }
-  // The hour said up front (John, November 18th 2026): "The first ten trains in the next hour are
-  // expected at …"; "The trains arriving in the next hour are expected at …"; "There are two trains
-  // arriving in the next hour. They're expected at …"; "The only train arriving in the next hour is
-  // expected at …". On a long journey Trainchecker can't see them all, so it says what it can see
-  // (Claude's draft, for John), then the note.
-  const list = andList(shown.map(item))
-  const n = inHour.length
-  const text = partial
-    ? (n === 1 ? `Trainchecker can see one train arriving in the next hour, expected at ${list}.`
-      : `Trainchecker can see ${num(n)} trains arriving in the next hour. ${n > 10 ? 'The first ten are' : "They're"} expected at ${list}.`)
-    : n > 10 ? `The first ten trains in the next hour are expected at ${list}.`
-    : n > 2 ? `The trains arriving in the next hour are expected at ${list}.`
-    : n === 2 ? `There are two trains arriving in the next hour. They're expected at ${list}.`
-    : `The only train arriving in the next hour is expected at ${list}.`
-  return { heading, text: tenAfterWords(text + (partial ? note : '')) }
+    return { time, note: tenAfterWords(which + extra) }
+  })
+  const list = andList(rows.map(said))
+  const lead = partial
+    ? (n === 1 ? null : `Trainchecker can see ${num(n)} trains arriving in the next hour. ${n > 10 ? 'The first ten are' : "They're"} expected at`)
+    : n > 10 ? 'The first ten trains in the next hour are expected at'
+    : n > 2 ? 'The trains arriving in the next hour are expected at'
+    : n === 2 ? "There are two trains arriving in the next hour. They're expected at"
+    : 'The only train arriving in the next hour is expected at'
+  const prose = lead === null ? `Trainchecker can see one train arriving in the next hour, expected at ${list}.` : `${lead} ${list}.`
+  const after = partial ? note : null
+  return { heading, prose: tenAfterWords(prose), text: tenAfterWords(prose + (after ? ' ' + after : '')), blocks: shown.length > 2 && lead ? [{ lead: `${lead}:`, rows }] : null, after }
+}
+
+/** The two lists' Share words (Claude's drafts, for John): a line saying what and when, the
+ *  sentence, and the journey's link sent separately (house style §17). */
+export function listShareWords(a: Analysis, kind: 'platforms' | 'arrivals', prose: string): { text: string; title: string; hash: string } {
+  const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
+  const head = kind === 'platforms' ? `Here are the trains from ${a.from} to ${a.to} with platforms, as of ${at}.` : `Here are the trains due at ${a.to} from ${a.from}, as of ${at}.`
+  return { text: tenAfterWords(`${head} ${prose} From Trainchecker.`), title: `Trainchecker: ${a.from} to ${a.to}`, hash: `#${a.fromCrs}-${a.toCrs}` }
 }
 
 /** The quote's Share words (SPEC §8.13). */

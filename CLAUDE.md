@@ -58,7 +58,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 18th 2026: the trains with platforms, and Arrivals (branch `claude/laughing-hawking-8d2b6w`, not merged; Claude Code)
+### November 18th 2026: the trains with platforms, and Arrivals (branch `claude/laughing-hawking-8d2b6w`, merged the same day; Claude Code)
 
 - **John:** a fold under Platforms, "Show the trains with platforms": "There are trains leaving at 3.12pm (platform 2),
   3.34pm (four minutes later than planned, platform 3) …", the next ten with a platform, then "We're only showing you the
@@ -89,6 +89,8 @@ given its own branch). Before committing there, run
   appears in Vercel's Deployments list, so no build was started; a fresh clone built cleanly here. Most likely the free
   plan's daily deployment limit (about 100 a day across the account; not confirmed, the message wasn't found). Notes now
   go up with real changes rather than on their own. Retried at 5.35pm with this commit.
+- **The retry built** (faff619, Ready; John saw "The only train arriving in the next hour…" on the preview). **John:**
+  "merge to main whilst we've got the chance". Merged with this note in the same push (one deployment).
 
 ### November 18th 2026: the sharing picture's words in bold; merged and live (Claude Code)
 

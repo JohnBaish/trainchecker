@@ -492,3 +492,25 @@ they differ.
 11. **Across the site** (7.1 to 7.3): printing keeps cards whole and leaves out the last week's box
     without an answer; the tab names the journey ("Reading to London Paddington – Trainchecker");
     the introduction runs the full width and adds "and, if you ask, how they ran over the last week".
+
+## 12. Agreed in stage 5 (November 18th 2026)
+
+1. **Search:** title "Trainchecker – free train delays and disruption checker"; description "Free
+   live train delays between any two stations in Great Britain, in plain English: the next four
+   hours, platforms, the last week and engineering work."; link previews the name and tagline.
+2. **The last two hours, share first** (John: "the way we speak"). Replaces the "Of the trains…"
+   openings in §8 and §10. Illustrations only:
+   - "All four trains leaving Midgham in the last couple of hours reached Reading within three
+     minutes of their planned time." Likewise "Both trains leaving…", "Five of the nine trains
+     leaving…", "About three quarters of the trains leaving…", "19 in 20 trains leaving…"; but
+     "None of the four trains that left Midgham…".
+   - Tenses: "reached Reading"; "are expected to reach Reading"; "have reached Reading (or are
+     expected to do so)". "One of the nine" takes "is" and "has".
+   - Three or more arrived (only those counted): "All 12 trains on this route in the last couple of
+     hours reached Reading…"; with cancellations, "…trains that ran on this route…", then "Two more
+     didn't run at all."
+   - One train: "The only train leaving Midgham in the last couple of hours got to Reading within
+     three minutes of its planned time." / "…was six minutes late getting to Reading." (or "is
+     expected to…"), with no sentence after it (it had read "They was…").
+   - The sentences after it are unchanged.
+3. **Share:** "…got there within three minutes of their planned time" (was "of the timetable").

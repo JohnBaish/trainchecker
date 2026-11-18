@@ -57,6 +57,21 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: the last two hours, share first (branch `claude/laughing-hawking-8d2b6w`; Claude Code)
+
+- **John (the preview, Midgham to Reading):** "All of the trains that left Midgham … have reached Reading (or
+  are expected to do so) within three minutes of their planned time." Every case set out; his answers in
+  `SPEC.md` §12.2 and §12.3 ("leaving" except "None … that left"; "on this route" kept; "that ran on this
+  route" and "Two more" with cancellations; "The only train … got to"; "planned time" in Share too).
+- **Built:** `lastTwoLines()` and `shareWords()` in `sentences.ts`. Found and fixed: one late train alone
+  read "They was six minutes late." New `scripts/dump-last-two.ts` prints the sentences on every saved
+  board, for before-and-after comparisons.
+- **Checked:** `npm run check` 216 + 57 + 73 (new: each share, tense, one train, cancellations; the mock-up
+  comparison now starts at the second sentence; breaking the singular made one fail); `tsc -b`, lint, build;
+  the 16 saved boards before and after: only the intended sentences changed; the page fed Tiverton Parkway
+  and Manchester boards at 1200px dark and 390px light: no errors, no sideways scroll. Not checked live (the
+  key saved here is the history one). Not touched: the last week's "within three minutes of the timetable".
+
 ### November 18th 2026: stage 5 begun: search tags, robots.txt and sitemap; the baish.net card (branch `claude/laughing-hawking-8d2b6w`; Claude Code)
 
 - **John (from drafts, three of each):** title "Trainchecker – free train delays and disruption checker" (1c);

@@ -101,18 +101,32 @@ export function lastTwoLines(a: Analysis): string[] {
   if (!L.known && !L.cancelled.length) return ['No trains made this journey in the last two hours.']
   const out: string[] = []
   const c = L.cancelled.length
-  if (L.known) {
+  if (L.known === 1) {
+    // One train (only when fewer than three have arrived): "The only train leaving A in the last
+    // couple of hours got to B within three minutes of its planned time." (John, November 18th 2026.)
+    const lead = `The only train leaving ${a.from} in the last couple of hours`
+    const done = L.tense === 'past'
+    out.push(L.within3
+      ? `${lead} ${done ? 'got to' : 'is expected to get to'} ${a.to} within three minutes of its planned time.`
+      : `${lead} ${done ? 'was' : 'is expected to be'} ${num(L.worst!)} minutes late getting to ${a.to}.`)
+  } else if (L.known) {
+    // The share first, then the trains (John, November 18th 2026): "All four trains leaving A…",
+    // "Five of the nine trains leaving A…", "About three quarters of the trains leaving A…", but
+    // "None of the four trains that left A…". With three or more arrived, only those are counted
+    // ("on this route"); with cancellations as well, "that ran on this route" (so the cancelled
+    // ones aren't read as part of the share), and "Two more didn't run at all."
     const sh = share(L.within3, L.known)
+    const one = L.within3 === 1 && L.known < 10 // "One of the nine trains … is expected to reach"
+    const planned = 'within three minutes of their planned time.'
     if (L.byArrivals) {
-      // With cancellations, say first that the share is of the trains that ran (John, November
-      // 18th 2026), so the cancelled ones aren't read as part of it.
-      if (c) {
-        const who = L.within3 === L.known ? (L.known === 2 ? 'both' : `all ${num(L.known)}`) : L.within3 === 0 ? `none of the ${num(L.known)}` : sh.bare
-        out.push(`Of the trains on this route in the last couple of hours which weren't cancelled, ${who} got to ${a.to} within three minutes of their timetabled arrival.`)
-      } else out.push(`${Cap(sh.trains)} on this route in the last couple of hours got to ${a.to} within three minutes of their timetabled arrival.`)
+      out.push(`${Cap(sh.trains)} ${c ? 'that ran ' : ''}on this route in the last couple of hours reached ${a.to} ${planned}`)
     } else {
-      const reach = { past: 'reached', future: 'are expected to reach', mixed: 'have reached or are expected to reach' }[L.tense]
-      out.push(`Of the trains that left ${a.from} in the last couple of hours, ${sh.bare} ${reach} ${a.to} within three minutes of their timetabled arrival.`)
+      const reach = {
+        past: `reached ${a.to}`,
+        future: `${one ? 'is' : 'are'} expected to reach ${a.to}`,
+        mixed: `${one ? 'has' : 'have'} reached ${a.to} (or ${one ? 'is' : 'are'} expected to do so)`,
+      }[L.tense]
+      out.push(`${Cap(sh.trains)} ${L.within3 === 0 ? 'that left' : 'leaving'} ${a.from} in the last couple of hours ${reach} ${planned}`)
     }
     const n = L.lates.length, them = L.within3 === 0 ? 'They' : n === 1 ? 'The other' : n === 2 ? 'The other two' : 'The others'
     const was = { past: n === 1 ? 'was' : 'were', future: n === 1 ? 'is expected to be' : 'are expected to be', mixed: n === 1 ? 'was or is expected to be' : 'were or are expected to be' }[L.tense]
@@ -126,7 +140,8 @@ export function lastTwoLines(a: Analysis): string[] {
     else if (n > 2) out.push(L.usual === L.worst ? `${them} ${was} about ${num(L.usual!)} minutes late.` : `${them} ${was} mostly about ${num(L.usual!)} minutes late, and the latest ${L.tense === 'future' ? 'is expected to be' : 'was'} ${num(L.worst!)} minutes late.`)
   }
   // "Two trains didn't run at all." (John, November 18th 2026.)
-  if (c) out.push(L.known ? `${Cap(num(c))} ${c === 1 ? "train didn't" : "trains didn't"} run at all.` : `${Cap(num(c))} ${c === 1 ? 'train was' : 'trains were'} cancelled.`)
+  // "Two more didn't run at all." after "…trains that ran on this route…" (John, November 18th 2026).
+  if (c) out.push(!L.known ? `${Cap(num(c))} ${c === 1 ? 'train was' : 'trains were'} cancelled.` : L.byArrivals ? `${Cap(num(c))} more didn't run at all.` : `${Cap(num(c))} ${c === 1 ? "train didn't" : "trains didn't"} run at all.`)
   return out.map(tenAfterWords)
 }
 
@@ -427,7 +442,7 @@ export function shareWords(a: Analysis): { text: string; title: string; hash: st
   else if (a.verdict === 'good') {
     const L = a.last
     const why = L.known && L.within3 / L.known < 0.75
-      ? `only ${share(L.within3, L.known).bare} of the trains in the couple of hours before got there within three minutes of the timetable`
+      ? `only ${share(L.within3, L.known).bare} of the trains in the couple of hours before got there within three minutes of their planned time`
       : `${num(L.cancelled.length)} trains were cancelled in the couple of hours before`
     body = `good news, they were leaving on time, though ${why}.`
   } else if (a.verdict === 'mixed') {

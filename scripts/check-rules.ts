@@ -77,11 +77,14 @@ for (const f of files) {
   // the trains … which weren't cancelled" and "didn't run at all"; one or two late trains in their
   // own tense. The mock-ups are compared where none of these apply.
   const digits = (l: string) => l.replace('nineteen in twenty', '19 in 20').replace('nine in ten', 'nine in 10').replace('one in ten', 'one in 10').replace('one in twenty', 'one in 20')
-  if (!a.last.cancelled.length && !(a.last.tense === 'mixed' && a.last.lates.length <= 2)) eq(`${f}: last two hours`, lastTwoLines(a), (S.lastTwoLines(m) as string[]).map(digits).map(tenAfterWords).map((l) => (a.last.known === 2 ? l.replace(', all are ', ', both are ') : l)))
+  // Since November 18th 2026 (John, stage 5) the first sentence starts with the share ("All five
+  // trains leaving A…") and ends "of their planned time", so only the sentences after it are compared.
+  if (!a.last.cancelled.length && !(a.last.tense === 'mixed' && a.last.lates.length <= 2)) eq(`${f}: last two hours`, lastTwoLines(a).slice(1), (S.lastTwoLines(m) as string[]).map(digits).map(tenAfterWords).slice(1))
   const when = { time: t12(m.now), date: dayName(new Date(m.taken)).replace(/^\w+ /, '') }
   // Since the fresh look (November 18th 2026), "Be prepared"'s Share sentence gives the late trains
-  // too, as the verdict does, so it's compared with the mock-up only for the other verdicts.
-  if (!a.lastGone && a.verdict !== 'prepared') eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text)
+  // too, as the verdict does, so it's compared with the mock-up only for the other verdicts. "Their
+  // planned time" rather than "the timetable" since November 18th 2026 (John, stage 5).
+  if (!a.lastGone && a.verdict !== 'prepared') eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text.replace('of the timetable. From', 'of their planned time. From'))
   const bad = pageText(a).filter((t) => /undefined|null|NaN|\[object/.test(t))
   eq(`${f}: no undefined, null or NaN`, bad, [])
 }
@@ -99,10 +102,10 @@ eq('no direct train (O7)', lineText(verdict(rdgCbg).lines), [
   'Trainchecker only covers direct journeys – please try another.',
 ])
 eq('long journey (O1, John)', lastTwoLines(kgxYrk), [
-  'Of the trains that left London Kings Cross in the last couple of hours, seven of the eight are expected to reach York within three minutes of their timetabled arrival.',
+  'Seven of the eight trains leaving London Kings Cross in the last couple of hours are expected to reach York within three minutes of their planned time.',
   'The other is expected to be six minutes late.',
 ])
-eq('share (P2)', shareWords(rdgPad).text, "Here's how the trains from Reading to London Paddington were looking at 6.24pm on November 17th: good news, they were leaving on time, though only half of the trains in the couple of hours before got there within three minutes of the timetable. From Trainchecker.")
+eq('share (P2)', shareWords(rdgPad).text, "Here's how the trains from Reading to London Paddington were looking at 6.24pm on November 17th: good news, they were leaving on time, though only half of the trains in the couple of hours before got there within three minutes of their planned time. From Trainchecker.")
 eq('share link and title', [shareWords(rdgPad).hash, shareWords(rdgPad).title], ['#RDG-PAD', 'Trainchecker: Reading to London Paddington'])
 eq('fold', nextFour(rdgPad)!.fold, "Show the three trains that aren't on time")
 
@@ -164,9 +167,9 @@ const padRdg9 = analyse(snapOf(raw('20261117-2059-PAD-RDG.json')))
 eq('a small group: "in that time"', nextFour(padRdg9)!.lines[0], 'There are about three fast trains an hour from London Paddington to Reading in the next four hours, about three slower ones an hour (taking about 40 minutes) and three on the Elizabeth Line in that time.')
 eq('why, after the status (John)', [nextFour(bthBri)!.rows[1].why, nextFour(rdgPad)!.rows[2].why], [' because of a fault on this train (Great Western Railway).', ' (Great Western Railway).'])
 eq('cancellations in the last two hours (John)', lastTwoLines(analyse(snapOf(raw('20261117-2059-LST-SRA.json')))), [
-  "Of the trains on this route in the last couple of hours which weren't cancelled, about 19 in 20 got to Stratford (London) within three minutes of their timetabled arrival.",
-  'The other two were four and 16 minutes late.', "Four trains didn't run at all."])
-eq('cancellations, none on time', lastTwoLines(manMia)[0], "Of the trains on this route in the last couple of hours which weren't cancelled, none of the seven got to Manchester Airport within three minutes of their timetabled arrival.")
+  'About 19 in 20 trains that ran on this route in the last couple of hours reached Stratford (London) within three minutes of their planned time.',
+  'The other two were four and 16 minutes late.', "Four more didn't run at all."])
+eq('cancellations, none on time', lastTwoLines(manMia)[0], 'None of the seven trains that ran on this route in the last couple of hours reached Manchester Airport within three minutes of their planned time.')
 // One late train, not yet arrived, in a mixed group: its own tense (John). Kings Cross to York's
 // late one, changed to not yet arrived and another train marked arrived.
 const kyMixed = changed('KGX-YRK', (sv, a) => {
@@ -175,6 +178,23 @@ const kyMixed = changed('KGX-YRK', (sv, a) => {
   for (const t of a.past.filter((y) => y.eta === 'On time').slice(0, 2)) sv.find((y) => y.id === t.id)!.ata = t.sta
 })
 eq('one late train, its own tense', [kyMixed.last.tense, lastTwoLines(kyMixed)[1]], ['mixed', 'The other is expected to be six minutes late.'])
+// The last two hours with the share first (John, November 18th 2026, stage 5): every case, on
+// Kings Cross to York's real analysis with its "last" figures changed.
+const ky = (o: Partial<Analysis['last']>) => lastTwoLines({ ...kgxYrk, last: { ...kgxYrk.last, byArrivals: false, cancelled: [], ...o } })
+const lead = 'London Kings Cross in the last couple of hours'
+eq('share first: some arrived', lastTwoLines(kyMixed)[0], `Seven of the eight trains leaving ${lead} have reached York (or are expected to do so) within three minutes of their planned time.`)
+eq('share first: all, with the number', ky({ known: 4, within3: 4, lates: [], lateArrived: [], tense: 'past' }), [`All four trains leaving ${lead} reached York within three minutes of their planned time.`])
+eq('share first: both', ky({ known: 2, within3: 2, lates: [], lateArrived: [], tense: 'future' }), [`Both trains leaving ${lead} are expected to reach York within three minutes of their planned time.`])
+eq('share first: none, "that left"', ky({ known: 3, within3: 0, lates: [5, 6, 8], lateArrived: [true, true, true], usual: 6, worst: 8, tense: 'past' })[0], `None of the three trains that left ${lead} reached York within three minutes of their planned time.`)
+eq('share first: one of nine, singular', [ky({ known: 9, within3: 1, tense: 'future' })[0], ky({ known: 9, within3: 1, tense: 'mixed' })[0]],
+  [`One of the nine trains leaving ${lead} is expected to reach York within three minutes of their planned time.`, `One of the nine trains leaving ${lead} has reached York (or is expected to do so) within three minutes of their planned time.`])
+eq('share first: rounded', ky({ known: 20, within3: 15, tense: 'past' })[0], `Three quarters of the trains leaving ${lead} reached York within three minutes of their planned time.`)
+eq('the only train, on time', [ky({ known: 1, within3: 1, lates: [], lateArrived: [], tense: 'past' }), ky({ known: 1, within3: 1, lates: [], lateArrived: [], tense: 'future' })],
+  [[`The only train leaving ${lead} got to York within three minutes of its planned time.`], [`The only train leaving ${lead} is expected to get to York within three minutes of its planned time.`]])
+eq('the only train, late (no "They was")', [ky({ known: 1, within3: 0, lates: [6], lateArrived: [true], usual: 6, worst: 6, tense: 'past' }), ky({ known: 1, within3: 0, lates: [6], lateArrived: [false], usual: 6, worst: 6, tense: 'future' })],
+  [[`The only train leaving ${lead} was six minutes late getting to York.`], [`The only train leaving ${lead} is expected to be six minutes late getting to York.`]])
+eq('cancellations: by the trains that left, "Two trains didn\'t run"; by arrivals, "Two more"', [ky({ known: 4, within3: 4, lates: [], lateArrived: [], tense: 'past', cancelled: manMia.last.cancelled.slice(0, 2) }).at(-1), ky({ byArrivals: true, known: 4, within3: 4, lates: [], lateArrived: [], tense: 'past', cancelled: manMia.last.cancelled.slice(0, 2) })],
+  ["Two trains didn't run at all.", ['All four trains that ran on this route in the last couple of hours reached York within three minutes of their planned time.', "Two more didn't run at all."]])
 eq('ten after a spelt number (John)', ['about nine in 10 trains', 'one in 10', 'The other two were four and 10 minutes late.', 'one was less than 10 minutes late', 'at 10.30pm', 'four from platform 10', '19 in 20', 'about 10 trains an hour'].map(tenAfterWords),
   ['about nine in ten trains', 'one in ten', 'The other two were four and ten minutes late.', 'one was less than 10 minutes late', 'at 10.30pm', 'four from platform 10', '19 in 20', 'about 10 trains an hour'])
 eq('suggestions stay open at "Ivy", a code on the way to Ivybridge (John)', [complete('Ivy', suggest('Ivy')), suggest('Ivy').map(([, n]) => n)], [false, ['Ivybridge']])

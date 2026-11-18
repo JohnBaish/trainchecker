@@ -58,6 +58,19 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: new wording for sharing a link (branch `claude/laughing-hawking-8d2b6w`, not merged; Claude Code)
+
+- **John:** for the link preview, "Check how the trains are doing, with gentle, natural-sounding answers and a
+  fragment of inspiration."; option A of two mock-ups (three lines, broken at the commas). `SPEC.md` §12.7.
+  On baish.net (clockwheel's branch): "Are the trains OK? (With gentle, natural answers.)", and "Near you"
+  reordered Refueller, Trainchecker, Roadteller, Riverwatcher.
+- **Built:** `design/og-trainchecker.html` (the name and words centred as a block); `public/og-trainchecker.png`
+  remade (`node design/og-shoot.cjs`, both fonts loaded; identical to the mock-up); `og:description` and
+  `twitter:description` in `index.html`.
+- **For John:** the preview's `og:image` names trainchecker.baish.net, so a branch preview shows the new words
+  with the old picture; the card can only be tried in full once merged. WhatsApp shows about 80 characters of
+  the text.
+
 ### November 18th 2026: stage 5's search work and wording merged; live at trainchecker.baish.net (Claude Code)
 
 - **John:** "Let's merge all that"; trainchecker.baish.net added in Vercel (John). Checks 222 + 57 + 73,

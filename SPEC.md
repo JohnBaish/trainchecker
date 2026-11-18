@@ -533,3 +533,7 @@ they differ.
    - The line under the hours: "Today is a weekday, so that's what this checks. (Saturdays and Sundays
      have their own timetables.)", and the same for Saturdays and Sundays. The waiting line is unchanged.
    - About keeps "within three minutes of the timetable" (a definition).
+7. **Sharing a link** (the link-preview picture and its text tags): "Check how the trains are doing, with
+   gentle, natural-sounding answers and a fragment of inspiration." In the picture, three lines broken at
+   the commas (option A). The tagline itself is unchanged; baish.net's line is "Are the trains OK? (With
+   gentle, natural answers.)".

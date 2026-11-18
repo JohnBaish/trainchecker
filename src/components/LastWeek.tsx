@@ -99,7 +99,7 @@ export function LastWeek({ from, to, fromName, toName, elizabeth, noRecord, stan
     )
   }
   return (
-    <section className="card sec block">
+    <section className={`card sec block lastweek${state.s === 'done' ? '' : ' no-answer'}`}>
       <h3>The last week</h3>
       <p>{INTRO}</p>
       {standIn && !others && <p>{standInLine(standIn.left, standIn)}</p>}

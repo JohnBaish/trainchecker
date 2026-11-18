@@ -6,7 +6,7 @@ import { complete, nameOf, resolve, suggest } from '../lib/stations.ts'
 import { hashOf, recentJourneys, type Journey } from '../lib/route.ts'
 import { Icon } from './Icon.tsx'
 
-function StationBox({ label, value, onChange, error, go }: { label: string; value: string; onChange: (v: string) => void; error: string | null; go?: () => void }) {
+function StationBox({ label, value, onChange, error, go, next, boxRef }: { label: string; value: string; onChange: (v: string) => void; error: string | null; go?: () => void; next?: () => void; boxRef?: { current: HTMLInputElement | null } }) {
   const id = useId()
   const [open, setOpen] = useState(false)
   const [at, setAt] = useState(-1)
@@ -14,7 +14,8 @@ function StationBox({ label, value, onChange, error, go }: { label: string; valu
   // takes the cursor out of the box, and closing at once removed the list before the tap
   // arrived (John, November 17th 2026).
   const closing = useRef<number | undefined>(undefined)
-  const box = useRef<HTMLInputElement>(null)
+  const own = useRef<HTMLInputElement>(null)
+  const box = boxRef ?? own
   useEffect(() => () => window.clearTimeout(closing.current), [])
   const list = open ? suggest(value) : []
   const exact = complete(value, list)
@@ -25,8 +26,11 @@ function StationBox({ label, value, onChange, error, go }: { label: string; valu
     else if (e.key === 'ArrowUp' && shown.length) { e.preventDefault(); setAt(at <= 0 ? shown.length - 1 : at - 1) }
     else if (e.key === 'Escape') { setOpen(false); setAt(-1) }
     else if (e.key === 'Enter') {
-      if (at >= 0 && shown[at]) { e.preventDefault(); choose(shown[at][1]) }
+      // In From, Return chooses the highlighted suggestion (if any) and moves on to To (fresh look
+      // 4.3); in To, it chooses or shows the trains.
+      if (at >= 0 && shown[at]) { e.preventDefault(); choose(shown[at][1]); next?.() }
       else if (go) { e.preventDefault(); setOpen(false); go() }
+      else if (next) { e.preventDefault(); setOpen(false); next() }
     }
   }
   return (
@@ -70,6 +74,7 @@ export function Chooser({ journey, first, onClose }: { journey?: Journey; first?
   const [to, setTo] = useState(journey ? nameOf(journey.to) : '')
   const [errors, setErrors] = useState<[string | null, string | null]>([null, null])
   const recent = recentJourneys()
+  const toBox = useRef<HTMLInputElement>(null)
   // Wording of the two messages: Agreed by John, November 17th 2026.
   const go = () => {
     const a = resolve(from), b = resolve(to)
@@ -88,12 +93,12 @@ export function Chooser({ journey, first, onClose }: { journey?: Journey; first?
     <section className="card chooser">
       {first ? <h2>How are the trains running?</h2> : <div className="card-kicker">Choose a journey</div>}
       <div className="pick">
-        <div className="from"><StationBox label="From" value={from} onChange={setFrom} error={errors[0]} /></div>
+        <div className="from"><StationBox label="From" value={from} onChange={setFrom} error={errors[0]} next={() => toBox.current?.focus()} /></div>
         <button type="button" className="btn btn-secondary swap" aria-label="Swap the stations" title="Swap the stations"
           onClick={() => { setFrom(to); setTo(from); setErrors([errors[1], errors[0]]) }}>
           <Icon name="swap" />
         </button>
-        <div className="to"><StationBox label="To" value={to} onChange={setTo} error={errors[1]} go={go} /></div>
+        <div className="to"><StationBox label="To" value={to} onChange={setTo} error={errors[1]} go={go} boxRef={toBox} /></div>
         <div className="go"><button type="button" className="btn btn-primary" style={{ width: '100%' }} onClick={go}>Show trains</button></div>
       </div>
       {recent.length > 0 && (

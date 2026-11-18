@@ -77,6 +77,10 @@ function ShareJourney({ a, text }: { a: Analysis; text?: string }) {
 
 export function JourneyView({ journey }: { journey: Journey }) {
   const [state, setState] = useState<State>({ s: 'loading' })
+  // "Check again" keeps the page showing (and the last week's answer, and any open folds) while it
+  // asks again (fresh look 6.1, John, November 18th 2026).
+  const [refreshing, setRefreshing] = useState(false)
+  const [refreshFailed, setRefreshFailed] = useState(false)
   const [changing, setChanging] = useState(false)
   // Asked when the page opens, and again with each "Check again" (round).
   const [round, setRound] = useState(0)
@@ -84,7 +88,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
   const [days, setDays] = useState<DaysState>({ s: 'loading' })
   useEffect(() => {
     let current = true
-    fetchDays().then((d) => current && setDays({ s: 'ok', d }), () => current && setDays({ s: 'failed' }))
+    fetchDays().then((d) => current && setDays({ s: 'ok', d }), () => current && setDays((old) => (old.s === 'ok' ? old : { s: 'failed' })))
     return () => { current = false }
   }, [round])
   useEffect(() => {
@@ -93,14 +97,30 @@ export function JourneyView({ journey }: { journey: Journey }) {
       (snap) => {
         if (!current) return
         const a = analyse(snap)
-        remember({ ...journey, label: `${a.from} to ${a.to}` })
+        // Not kept in Recent when there's no direct train either way in the six hours (fresh look 3.2).
+        if (a.ahead.length || a.past.length) remember({ ...journey, label: `${a.from} to ${a.to}` })
         setState({ s: 'ok', a })
+        setRefreshing(false); setRefreshFailed(false)
       },
-      (e) => { if (current) setState({ s: 'failed', why: (e as Error).message }) },
+      (e) => {
+        if (!current) return
+        setRefreshing(false)
+        // A failed "Check again" keeps the figures already shown, and says so.
+        setState((old) => { if (old.s === 'ok') { setRefreshFailed(true); return old } return { s: 'failed', why: (e as Error).message } })
+      },
     )
     return () => { current = false }
   }, [journey, round])
-  const load = () => { setState({ s: 'loading' }); setDays({ s: 'loading' }); setRound(round + 1) }
+  const load = () => {
+    if (state.s === 'ok') { setRefreshing(true); setRefreshFailed(false) } else { setState({ s: 'loading' }); setDays({ s: 'loading' }) }
+    setRound(round + 1)
+  }
+  // The tab names the journey (fresh look 7.2).
+  const titleFrom = state.s === 'ok' ? state.a.from : nameOf(journey.from), titleTo = state.s === 'ok' ? state.a.to : nameOf(journey.to)
+  useEffect(() => {
+    document.title = `${titleFrom} to ${titleTo} – Trainchecker`
+    return () => { document.title = 'Trainchecker' }
+  }, [titleFrom, titleTo])
 
   const a = state.s === 'ok' ? state.a : null
   const fromName = a ? a.from : nameOf(journey.from), toName = a ? a.to : nameOf(journey.to)
@@ -164,43 +184,39 @@ export function JourneyView({ journey }: { journey: Journey }) {
       {strip}
       <div className="dateline">
         <p className="muted">{dayName(taken)}, {t12(an.now)}. Live from National Rail.</p>
-        <button type="button" className="btn btn-ghost" onClick={load}><Icon name="refresh" /> Check again</button>
+        <button type="button" className="btn btn-ghost" onClick={load} disabled={refreshing}>
+          {refreshing ? <><span className="spinner" aria-hidden="true"></span>Checking…</> : <><Icon name="refresh" /> Check again</>}
+        </button>
+        {refreshFailed && <p className="muted small" role="status">Sorry, National Rail couldn’t be reached just now, so these are the figures from before.</p>}
       </div>
       <section className={`card verdict state-${v.kind}`}>
         {v.lines.map((l, i) => <p key={i}>{l.bold && <b>{l.bold}</b>}{l.text}</p>)}
       </section>
       <ShareJourney a={an} text={closed ? closedShare(closed, an) : undefined} />
-      {an.verdict === 'none' ? (
-        closed ? (
-          // No trains because the line is closed today: National Rail's advice, which the verdict
-          // points to.
-          <>
-            <DaysAhead days={days} journey={journeyNames} />
-            <QuoteCard />
-          </>
-        ) : (
-          <>
-            {!changing && <Chooser journey={journey} />}
-            <QuoteCard />
-          </>
-        )
-      ) : (
-        <>
-          <div className="grid">
-            <section className="card sec">
-              <h3>The next four hours</h3>
-              {next!.lines.map((l) => <p key={l} className="lead">{l}</p>)}
-              <Trains n={next!} />
-            </section>
-            <section className="card sec"><h3>Platforms</h3><p>{platforms(an)}</p></section>
-          </div>
-          <QuoteCard />
-          {/* Across the full width, so a computer shows no gap beside it (John, November 17th
-              2026, after trying the preview); after the quote (John, stage 4). */}
-          <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>
-          <DaysAhead days={days} journey={journeyNames} />
-          <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth} noRecord={noRecord} standIn={stand ? { ...stand, left: stand.side === 'to' ? an.to : an.from } : null} others={others} />
-        </>
+      {/* No direct train at all: the boxes to try another, and the quote. The line closed today:
+          National Rail's advice, which the verdict points to. The last train gone for now: the last
+          two hours, the days ahead and the last week, as people then plan for later (fresh look
+          3.1, John, November 18th 2026). Otherwise the whole page. One list, so "The last week"
+          keeps its answer when a check changes which of these it is. */}
+      {an.verdict === 'none' && !closed && !an.lastGone && !changing && <Chooser journey={journey} />}
+      {an.verdict !== 'none' && (
+        <div className="grid">
+          <section className="card sec">
+            <h3>The next four hours</h3>
+            {next!.lines.map((l) => <p key={l} className="lead">{l}</p>)}
+            <Trains n={next!} />
+          </section>
+          <section className="card sec"><h3>Platforms</h3><p>{platforms(an)}</p></section>
+        </div>
+      )}
+      {!closed && <QuoteCard />}
+      {/* Across the full width, so a computer shows no gap beside it (John, November 17th
+          2026, after trying the preview); after the quote (John, stage 4). */}
+      {(an.verdict !== 'none' || (an.lastGone && !closed)) && <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>}
+      {(an.verdict !== 'none' || closed || an.lastGone) && <DaysAhead days={days} journey={journeyNames} />}
+      {closed && <QuoteCard />}
+      {(an.verdict !== 'none' || (an.lastGone && !closed)) && (
+        <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth && endOut} noRecord={noRecord} standIn={stand ? { ...stand, left: stand.side === 'to' ? an.to : an.from } : null} others={others} />
       )}
     </>
   )

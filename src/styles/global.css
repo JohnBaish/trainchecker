@@ -75,6 +75,7 @@ a { color: var(--color-accent-700); text-underline-offset: 3px; }
 .strip .acts { display: flex; gap: var(--space-2); flex-wrap: wrap; }
 .dateline { margin: var(--space-3) 0 var(--space-4); display: flex; gap: var(--space-2); align-items: baseline; flex-wrap: wrap; }
 .dateline p { margin: 0; }
+.dateline p.small { flex-basis: 100%; }
 
 /* the chooser */
 .chooser { margin: var(--space-6) 0 0; }
@@ -84,7 +85,7 @@ a { color: var(--color-accent-700); text-underline-offset: 3px; }
 .swap { width: 44px; height: 44px; padding: 0; border-color: var(--color-divider); }
 .recent { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; margin-top: var(--space-2); }
 .chip { cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; min-height: 36px; padding: 6px 14px; border-radius: 999px; background: var(--color-bg); border: 1px solid var(--color-divider); font-size: 13.5px; color: var(--color-text); text-decoration: none; }
-.intro { margin: var(--space-6) 0 0; max-width: 760px; }
+.intro { margin: var(--space-6) 0 0; }
 
 /* the verdict */
 .verdict { margin-bottom: var(--space-6); box-shadow: var(--shadow-sm), inset 7px 0 0 var(--edge, transparent); padding-left: calc(var(--space-6) + 10px); }
@@ -240,7 +241,10 @@ details.trains-fold { margin-top: var(--space-3); }
   .pick > .go { margin-top: 0; }
 }
 @media print {
-  .nav, .acts, .dateline .btn, .share-row, .hist-row, .qs2, .chooser { display: none !important; }
+  .nav, .acts, .dateline .btn, .share-row, .hist-row, .qs2, .chooser, .lastweek.no-answer { display: none !important; }
+  /* Cards kept whole across pages (house style §5; fresh look 7.1). */
+  .card, .qc2, .inc, .trow, tr { break-inside: avoid; }
+  h3, h4 { break-after: avoid; }
   html, body { background: #fff; }
 }
 /* "Copy a link to this journey" in the quieter grey of the small notes (John: "a bit bright"). */

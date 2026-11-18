@@ -6,11 +6,11 @@ import { quoteShareText } from '../lib/sentences.ts'
 import { deliverImage, quoteFileName, quoteImage } from '../lib/share.ts'
 import { Icon } from './Icon.tsx'
 
-export const INTRO = "Trainchecker tells you, in plain English, how the trains from one station to another are running: the next four hours, which platforms they're leaving from, how the last two hours went, and any engineering work before the end of the weekend. For journeys with no change of train, for now."
+export const INTRO = "Trainchecker tells you, in plain English, how the trains from one station to another are running: the next four hours, which platforms they're leaving from, how the last two hours went, any engineering work before the end of the weekend and, if you ask, how they ran over the last week. For journeys with no change of train, for now."
 
 const ABOUT = [
   'Trainchecker looks at trains that go straight from one station to the other, with no change. “On time” means within three minutes of the timetable.',
-  '“Good news” means at most one train in 10 is cancelled or more than five minutes late (or one train, when there are fewer than 20). “Be prepared” means the journey is badly disrupted, three or more trains are cancelled, or engineering work closes the line today. Anything in between is “a mixed bag”.',
+  '“Good news” means at most one train in 10 is cancelled or more than five minutes late (or one train, when there are fewer than 20). “Be prepared” means the journey is badly disrupted, three or more trains are cancelled (and more than one in 20), or engineering work closes the line today. Anything in between is “a mixed bag”.',
   'The next four hours, the platforms and the last two hours come from National Rail’s live departure boards, fetched when you open the page. Disruption and engineering work come from National Rail’s list of incidents. The last week comes from National Rail’s record of how trains ran, fetched only when you ask, as it takes a while.',
   'Train information from National Rail, supplied by the Rail Delivery Group through the Rail Data Marketplace. Trainchecker isn’t connected with or endorsed by either. Times can change at short notice, so check with National Rail or your train company before you travel.',
 ]

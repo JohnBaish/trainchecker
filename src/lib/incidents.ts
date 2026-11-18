@@ -154,9 +154,15 @@ export function adviceLines(advice: string): string[] {
     if (p !== undefined) { const t = text(p).trim(); if (t) out.push(t); continue }
     const items = [...ul.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => text(m[1]).trim()).filter(Boolean)
     const last = out[out.length - 1]
+    const join = (bits: string[]) => (bits.length > 1 ? `${bits.slice(0, -1).join(', ')} and ${bits[bits.length - 1]}` : bits[0])
     if (last && /\bwill:$/i.test(last) && items.length) {
       const bits = items.map((x) => { const f = (sentences(x)[0] ?? x).replace(/[.!?]+$/, ''); return f[0].toLowerCase() + f.slice(1) })
-      out[out.length - 1] = `${last.slice(0, -1)} ${bits.length > 1 ? `${bits.slice(0, -1).join(', ')} and ${bits[bits.length - 1]}` : bits[0]}.`
+      out[out.length - 1] = `${last.slice(0, -1)} ${join(bits)}.`
+    } else if (last && /:$/.test(last) && items.length && items.length <= 3 && items.every((x) => x.length <= 80 && !/[.!?]\s+\S/.test(x))) {
+      // A short list after a colon joined on (fresh look 5.3): "The following trains will not call
+      // at Burnham or Taplow: the 00:01 London Paddington to Reading, the 00:19 …".
+      const bits = items.map((x) => { const f = x.replace(/[.!?]+$/, '').replace(/ (service|services|train)$/i, ''); return /^The\b/.test(f) ? 'the' + f.slice(3) : f })
+      out[out.length - 1] = `${last} ${join(bits)}.`
     } else out.push(...items)
   }
   return out
@@ -173,8 +179,14 @@ const CHANGE = /will not run|will (start|terminate|depart|arrive|run|call|divert
  *  amended train, the sentence about it),
  *  leaving out ways round it ("you can use … at no extra cost"). At most two sentences. One tidy
  *  (John): "…, and run later than usual throughout" dropped, as it goes without saying. */
-export function gist({ advice, summary }: Pick<Item, 'advice' | 'summary'>, from: string, to: string): string[] {
+export function gist({ advice, summary }: Pick<Item, 'advice' | 'summary'>, from: string, to: string, now = new Date()): string[] {
+  // A sentence ending in a colon before a longer list (kept in the fold) ends at the colon ("…will
+  // run to a temporary timetable, as follows:" → "…timetable."), or, when it only introduces the
+  // list ("The following trains …:"), isn't used (fresh look 5.3).
   const all = adviceLines(advice).flatMap(sentences)
+    .filter((l) => !(/:$/.test(l) && /\bfollowing\b/i.test(l)))
+    .map((l) => l.replace(/,? as follows:$|:$/, '.'))
+    .map((l) => sincePast(l, now))
   if (!all.length) return []
   const out = [all[0]]
   const mine = all.slice(1).filter((l) => {
@@ -190,7 +202,32 @@ export function gist({ advice, summary }: Pick<Item, 'advice' | 'summary'>, from
     second = second.replace(/^As a result,?\s+/i, '').replace(/,? and (will )?run (later|earlier) than usual throughout(?=\.$)/i, '')
     out.push(second[0].toUpperCase() + second.slice(1))
   }
-  return out.map((x) => houseStyle(/[.!?]$/.test(x) ? x : x + '.'))
+  return out.map((x) => slashes(houseStyle(/[.!?]$/.test(x) ? x : x + '.')))
+}
+
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+/** Whether "10 August" (no year) is before today: in the year that puts it nearest to now. */
+function passed(day: number, month: string, now: Date): boolean {
+  const ymd = (d: Date) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(d)
+  const y = Number(ymd(now).slice(0, 4)), m = MONTHS.indexOf(month)
+  const cands = [y - 1, y, y + 1].map((yy) => new Date(Date.UTC(yy, m, day, 12)))
+  const near = cands.sort((a, b) => Math.abs(a.getTime() - now.getTime()) - Math.abs(b.getTime() - now.getTime()))[0]
+  return ymd(near) < ymd(now)
+}
+
+/** A start date that has passed isn't worth saying (fresh look, John, November 18th 2026): "From
+ *  Monday 10 August, train services … will run to a temporary timetable" → "Train services … are
+ *  running to a temporary timetable"; "From Monday 9 to Tuesday 17 November, buses will replace
+ *  trains" → "Until Tuesday 17 November, buses are replacing trains". Only that sentence, and only
+ *  "will run", "will operate" and "will replace" change tense. */
+export function sincePast(l: string, now: Date): string {
+  const D = `${DAY} (\\d{1,2})(?: (${MONTH}))?(?: \\d{4})?`
+  const range = l.match(new RegExp(`^From ${D} (?:to|until) (${DAY} \\d{1,2} (${MONTH})(?: \\d{4})?),?\\s+`))
+  const one = l.match(new RegExp(`^From ${D},?\\s+`))
+  const tense = (t: string) => t.replace(/\bwill run\b/, 'are running').replace(/\bwill operate\b/, 'are operating').replace(/\bwill replace\b/, 'are replacing')
+  if (range && passed(Number(range[1]), range[2] ?? range[4], now)) return `Until ${range[3]}, ${tense(l.slice(range[0].length))}`
+  if (one && !range && one[2] && passed(Number(one[1]), one[2], now)) { const r = tense(l.slice(one[0].length)); return r[0].toUpperCase() + r.slice(1) }
+  return l
 }
 
 export type DaysJourney = { fromCrs: string; toCrs: string; from: string; to: string; route?: string[] }
@@ -268,20 +305,27 @@ export function plainSummary(summary: string): string {
   // Not after a time ("…to 04:40 on Monday 23 November"), where the date belongs to the time.
   const cut = s.replace(new RegExp(`\\s+(?:on|from|between) ${DATE}(?:,? (?:and|to|until) ${DATE})*$`), '')
   if (!/\d\d:\d\d$/.test(cut)) s = cut
-  s = houseStyle(s)
+  return slashes(houseStyle(s))
+}
+
+/** National Rail's slashes as words, in the summaries and their two sentences (fresh look 5.2):
+ *  "to / from / via" → "to, from and through", "to / from" → "to and from", other lists "A, B or C". */
+export function slashes(s: string): string {
   s = s.replace(/\bto \/ from \/ via\b/g, 'to, from and through').replace(/\bto \/ from\b/g, 'to and from')
   // Other "A / B / C" lists, a word or name either side.
-  s = s.replace(/((?:[^\s/][^/]*?)(?: \/ [^/]+?)+)(?=$| (?:on|from|via|between|and|until|expected|before|after|service|services|trains?)\b|[,:.])/g, (m) => {
+  return s.replace(/((?:[^\s/][^/]*?)(?: \/ [^/]+?)+)(?=$| (?:on|from|via|between|and|until|expected|before|after|service|services|trains?)\b|[,:.])/g, (m) => {
     const parts = m.split(' / ')
     return parts.length > 1 ? `${parts.slice(0, -1).join(', ')} or ${parts[parts.length - 1]}` : m
   })
-  return s
 }
 
 /** Dates, times and numbers in National Rail's words in the house style: "Wednesday 18 November"
  *  → "Wednesday November 18th", "06:39" → "6.39am", "2 out of 4" → "two out of four". */
 export function houseStyle(t: string): string {
   return wordNumbers(t
+    // A range with the month once: "Monday 9 to Tuesday 17 November" → "Monday November 9th to
+    // Tuesday November 17th" (fresh look 5.2).
+    .replace(new RegExp(`\\b(${DAY}) (\\d{1,2}) (to|and|until) (${DAY}) (\\d{1,2}) (${MONTH})`, 'g'), (_, d1, n1, w, d2, n2, m) => `${d1} ${n1} ${m} ${w} ${d2} ${n2} ${m}`)
     .replace(new RegExp(`\\b(${DAY}) (\\d{1,2}) (${MONTH})(?: (\\d{4}))?`, 'g'), (_, d, n, m, y) => `${d} ${m} ${ordinal(+n)}${y ? ' ' + y : ''}`)
     .replace(/\b([01]\d|2[0-3]):([0-5]\d)\b/g, (_, h, m) => clock12(+h, +m)))
 }

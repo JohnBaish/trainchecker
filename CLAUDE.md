@@ -15,9 +15,8 @@ given its own branch). Before committing there, run
 
 ## Read these first
 
-0. Next: `design/handover-fresh-look-2026-11-18.md` (the fresh look, now), then
-   `design/handover-stage-5-2026-11-18.md` (the launch, after the fresh look's changes). The agreed
-   wording: `SPEC.md` §8, §9 and §10.
+0. Next: `design/handover-stage-5-2026-11-18.md` (the launch). The fresh look is done (November 18th
+   2026, `SPEC.md` §11). The agreed wording: `SPEC.md` §8 to §11.
 1. `design/handover-2026-11-17.md`: John's brief, in his own words.
 2. `SPEC.md`: what the tool does, with the open questions.
 3. `PLAN.md`: the stages.
@@ -57,6 +56,32 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 18th 2026: the fresh look, and every change from it, live (`main`; Claude Code)
+
+- **Review** of `main` at 58b8a5d (no changes made during it): 16 saved boards at 1200px, 390px,
+  844×390 and 667×320 with touch, light and dark, the saved incidents feeds, made-up boards for
+  unusual cases, the last week live. Report and PDF sent. Findings: 2.1 "zero are cancelled"; 2.2
+  "badly disrupted" from late arrivals or "Delayed" trains, unexplained; 2.3 every train cancelled;
+  2.4 "this morning"/"tomorrow" after midnight; 2.5 three cancellations on busy lines; 3.1 the last
+  train gone hid the page; 3.2 no-direct journeys in Recent; 4.1 phone suggestions covering "Show
+  trains"; 4.2 "King's Cross"; 4.3 Return in From; 5.1 repeated "after midnight"; 5.2 slashes in the
+  two-sentence summaries; 5.3 ":." lists; 6.1 Check again wiping the last week; 6.2 the Elizabeth
+  Line note out of place; 6.3 shares mixed with counts; 7.1 printing; 7.2 tab title; 7.3 the
+  introduction. Left alone: 8.1 to 8.8.
+- **John:** all accepted; 2.2 option b, 3.1 option a, 2.5 option b; 5.3 a short list joined, a long
+  one cut at the colon; and a new rule: a start date already passed is left out ("are running").
+  The introduction full width. Straight to `main`, without asking again.
+- **Built:** `analyse.ts` (Delayed trains at their timetabled time in the 45-minute rule, `arrLate`,
+  one in 20); `sentences.ts` (`preparedCounts`, `arrivingNow`, "tonight", platforms when all
+  cancelled, merged single services, counts up to 20); `incidents.ts` (`slashes`, `sincePast`, date
+  ranges, colon lists); `stations.ts` (apostrophes, `complete`); `Chooser.tsx` (Return moves on);
+  `JourneyView.tsx` (Check again keeps the page, one list of sections, Recent, tab title, the note);
+  `LastWeek.tsx`, `Tail.tsx`, `global.css` (print, full-width introduction). `SPEC.md` §11.
+- **Checked:** `npm run check` 207 + 57 + 73 (new checks for each case); `tsc -b`, lint (no
+  warnings), build; the sweep again (16 boards, four sizes: no errors, no sideways scroll); probes for
+  each fix; every sentence on the 16 boards compared before and after (only the intended changes).
+  Not checked: Safari, a real iPhone, the live site (blocked here).
 
 ### November 18th 2026: handovers for the fresh look and stage 5 (Claude Code)
 

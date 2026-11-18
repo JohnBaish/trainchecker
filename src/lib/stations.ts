@@ -8,7 +8,9 @@ const BY_CODE = new Map(STATIONS)
 
 export const nameOf = (code: string) => BY_CODE.get(code) ?? code
 
-const norm = (s: string) => s.toLowerCase().replace(/[’'.,()-]/g, ' ').replace(/\s+/g, ' ').trim()
+// Apostrophes are dropped rather than made spaces, so "King's Cross" finds "London Kings Cross"
+// (fresh look 4.2, John, November 18th 2026).
+const norm = (s: string) => s.toLowerCase().replace(/[’']/g, '').replace(/[.,()-]/g, ' ').replace(/\s+/g, ' ').trim()
 
 /** The station a box's words mean: its exact name, or its three-letter code. */
 export function resolve(text: string): string | null {
@@ -37,9 +39,11 @@ export function suggest(text: string, max = 8): [string, string][] {
   return STATIONS.map((s) => [score(s), s] as const).filter(([k]) => k < 9).sort((a, b) => a[0] - b[0]).slice(0, max).map(([, s]) => s)
 }
 
-/** Whether the suggestions can close because the box already holds a station's full name. Not for
- *  a code that happens to be a word typed on the way to a name: "Ivy" is Ivybridge's code (IVY), and
- *  closing there made the list vanish and come back at "Ivyb" (John, November 18th 2026). */
+/** Whether the suggestions can close because the box already holds a station's full name, even
+ *  when other names start with it ("Reading", with Reading West below it: on a phone the open list
+ *  covered "Show trains"; fresh look 4.1). Not for a code that happens to be a word typed on the way
+ *  to a name: "Ivy" is Ivybridge's code (IVY), and closing there made the list vanish and come back
+ *  at "Ivyb" (John, November 18th 2026). */
 export function complete(text: string, list: [string, string][]): boolean {
-  return list.length === 1 && norm(list[0][1]) === norm(text)
+  return list.some(([, n]) => norm(n) === norm(text))
 }

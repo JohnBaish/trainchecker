@@ -4,7 +4,7 @@
 import { readFileSync } from 'node:fs'
 import { trim, type RawBoard } from '../api/live.ts'
 import { gunzipSync } from 'node:zlib'
-import { readIncidents, matches, current, endOfSunday, stationsIn, cleanAdvice, liveItems, forJourney, closedNow, gist, mayAffect, earlyOrLate, entries, wordNumbers, plainSummary, type Incident } from '../src/lib/incidents.ts'
+import { readIncidents, matches, current, endOfSunday, stationsIn, cleanAdvice, liveItems, forJourney, closedNow, gist, mayAffect, earlyOrLate, entries, wordNumbers, plainSummary, houseStyle, sincePast, type Incident } from '../src/lib/incidents.ts'
 import { whenLabel, mayIntro, noPlanned, plannedIntro, daysHeading, closedVerdict, closedShare, singlesLine, singlesKicker } from '../src/lib/sentences.ts'
 
 let passed = 0, failed = 0
@@ -114,6 +114,19 @@ eq('gist: a "will:" list joined', gist(it(/23:45 Didcot/), 'RDG', 'PAD')[1], 'Th
 eq('gist: a single train', gist(it(/05:31 Bedwyn/), 'RDG', 'PAD')[1], 'The 5.31am Bedwyn to London Paddington will terminate at Reading.')
 eq('gist: disruption, between either way round, no ways round it', gist(it(/Disruption between Manchester Airport/), 'MAN', 'MIA')[1], 'Trains between Manchester Airport and Manchester Piccadilly may be delayed by up to 30 minutes or revised or cancelled.')
 eq('gist: Derby to Matlock', gist(it(/Derby and Matlock/), 'DBY', 'MAT')[1], 'No trains will run between Derby and Matlock for the duration.')
+// The fresh look (November 18th 2026): a short list after a colon joined on (5.3); a longer one ends
+// at the colon; National Rail's slashes as words (5.2); a start date that has passed left out.
+eq('gist: a short list after a colon joined on', gist(it(/to \/ from Burnham \/ Taplow/), 'BNM', 'TAP', now)[1],
+  'The following trains will not call at Burnham or Taplow: the 12.01am London Paddington to Reading, the 12.19am Reading to London Paddington and the 12.48am London Paddington to Reading.')
+eq('gist: a longer list ends at the colon, and a start date that has passed is left out', gist(it(/London Waterloo and Exeter St Davids/), 'WAT', 'EXD', now)[1],
+  'Train services between London Waterloo and Exeter St Davids are running to a temporary timetable.')
+eq('gist: no slashes and no ":." on any real item', days.items.filter((i) => { const c = [...new Set(stationsIn(i.summary).map((x) => x.code))]; return c.length > 1 && gist(i, c[0], c[1], now).some((x) => / \/ |:\./.test(x)) }).map((i) => i.summary), [])
+eq('start dates: passed, a range, still to come', [
+  sincePast('From Monday 10 August, train services between A and B will run to a temporary timetable.', now),
+  sincePast('From Monday 9 to Tuesday 24 November, buses will replace trains between A and B.', now),
+  sincePast('From Saturday 21 November, buses will replace trains between A and B.', now),
+], ['Train services between A and B are running to a temporary timetable.', 'Until Tuesday 24 November, buses are replacing trains between A and B.', 'From Saturday 21 November, buses will replace trains between A and B.'])
+eq('dates: a range with the month once', houseStyle('From Monday 9 to Tuesday 17 November, buses'), 'From Monday November 9th to Tuesday November 17th, buses')
 eq('gist: never more than two sentences, never undefined', days.items.every((i) => { const g = gist(i, 'RDG', 'PAD'); return g.length <= 2 && !g.some((x) => /undefined|NaN/.test(x)) }), true)
 const route = (f: string) => { const r = JSON.parse(readFileSync(new URL(`../design/mockups/snapshots/${f}`, import.meta.url), 'utf8')); return trim(r.from, r.to, r.taken, r.boards.map((b: { board: RawBoard }) => b.board)).route }
 const rdgPad = route('20261117-1824-RDG-PAD.json'), padRdg = route('20261117-1824-PAD-RDG.json')
@@ -132,7 +145,7 @@ eq('route: single services stay when their advice names the other end', [mayAffe
 eq('early or late', [earlyOrLate(it(/05:31 Bedwyn/)), earlyOrLate(it(/23:45 Didcot/)), earlyOrLate(it(/08:37 Reading/))], [true, true, false])
 const at606 = new Date('2026-11-18T06:06:00Z')
 eq('singles (John\'s words)', [singlesKicker(2), singlesLine([it(/05:31 Bedwyn/), it(/23:45 Didcot/)], at606)], ['Two single services', "If you're travelling before 6am between now and Friday or after 11pm on Saturday you may be affected – see more details."])
-eq('singles after midnight say the night before', singlesLine([it(/00:49 London Paddington/), it(/00:34 London Paddington/)], at606), "If you're travelling after midnight on Friday night or after midnight on Saturday night you may be affected – see more details.")
+eq('singles after midnight say the night before, the same time said once (fresh look 5.1)', singlesLine([it(/00:49 London Paddington/), it(/00:34 London Paddington/)], at606), "If you're travelling after midnight on Friday or Saturday night you may be affected – see more details.")
 
 eq('numbers in words (John), digits kept for times and platforms', wordNumbers('closing 2 out of 4 lines; 2 trains per hour from platform 3 at 06:39; route 42; 4.6km; 12 trains'),
   'closing two out of four lines; two trains per hour from platform 3 at 06:39; route 42; 4.6km; 12 trains')

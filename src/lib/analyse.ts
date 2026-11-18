@@ -26,6 +26,8 @@ export type Analysis = {
   /** The stations in order between A and B, with names (api/live.ts). */
   stops: [string, string][]
   ahead: Train[]; past: Train[]; cancelled: Train[]; late5: Train[]; unknown: Train[]
+  /** Expected to leave on time but reach B more than five minutes late. */
+  arrLate: Train[]
   affected: number; allowance: number; verdict: Kind; badly: boolean
   why: { twoOfThree: boolean; gap: number | null; noTrains: boolean }
   last: { byArrivals: boolean; tense: Tense; known: number; within3: number; lates: number[]; lateArrived: boolean[]; usual: number | null; worst: number | null; cancelled: Train[] }
@@ -72,10 +74,12 @@ export function analyse(snap: Snap): Analysis {
   const twoOfThree = next3.filter((s) => s.cancelled).length >= 2
   const running = ahead.filter((s) => !s.cancelled && s.sta)
   const fromNow = (t: string) => (mins(t) - mins(now) + 1440) % 1440
+  // A train shown as "Delayed" with no time isn't taken as never arriving: its timetabled time
+  // stands in, so two "Delayed" trains alone don't make the line "badly disrupted" (fresh look
+  // 2.2, John, November 18th 2026).
   const expArr = (s: Train) => {
     const e = s.eta || s.ata
-    if (e === null || e === 'On time') return fromNow(s.sta!)
-    return isTime(e) ? fromNow(e) : null
+    return isTime(e) ? fromNow(e) : fromNow(s.sta!)
   }
   const firstSched = ahead.find((s) => s.sta)
   const bests = running.map(expArr).filter((x): x is number => x !== null)
@@ -84,11 +88,17 @@ export function analyse(snap: Snap): Analysis {
   const noTrains = ahead.length > 0 && running.length === 0
   const badly = twoOfThree || (gap !== null && gap >= 45) || noTrains
 
+  // Trains expected to leave on time (within five minutes) but reach B more than five minutes
+  // late (fresh look 2.2), so "The next four hours" can say so.
+  const arrLate = ahead.filter((s) => !s.cancelled && s.late !== null && s.late <= 5 && s.sta && isTime(s.eta) && diff(s.sta, s.eta) > 5)
+
   // The verdict: good news allows one train, or one in ten when there are 20 or more.
   const allowance = Math.max(1, Math.floor(ahead.length / 10))
   let verdict: Kind = 'good'
   if (affected > allowance) verdict = 'mixed'
-  if (badly || cancelled.length >= 3) verdict = 'prepared'
+  // Three or more cancelled counts only when that's also more than one train in 20, so a third
+  // cancellation on a very busy line isn't "Be prepared" on its own (fresh look 2.5, John).
+  if (badly || (cancelled.length >= 3 && cancelled.length * 20 > ahead.length)) verdict = 'prepared'
   if (ahead.length === 0) verdict = 'none'
 
   // The last two hours: arrivals at B; on long journeys (fewer than three arrived), the trains
@@ -123,7 +133,7 @@ export function analyse(snap: Snap): Analysis {
 
   return {
     now, from: snap.fromName, to: snap.toName, fromCrs: snap.from, toCrs: snap.to, taken: snap.taken, route: snap.route ?? [], stops: snap.stops ?? [],
-    ahead, past, cancelled, late5, unknown, affected, allowance, verdict, badly,
+    ahead, past, cancelled, late5, unknown, arrLate, affected, allowance, verdict, badly,
     why: { twoOfThree, gap, noTrains },
     last: { byArrivals, tense, known: known.length, within3, lates, lateArrived, usual, worst, cancelled: pastCancelled },
     worse, platList, platKnown: platList.reduce((a, [, n]) => a + n, 0),

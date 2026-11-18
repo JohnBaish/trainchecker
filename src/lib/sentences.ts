@@ -42,9 +42,11 @@ export function dayName(date: Date): string {
 /** "November 17th" in UK time. */
 export const dateShort = (date: Date) => dayName(date).replace(/^\w+ /, '')
 
-/** The part of the day: before midday, before 5pm, after (M1). */
+/** The part of the day: before midday, before 5pm, after (M1); "tonight" from midnight to 4am
+ *  (fresh look 2.4, John, November 18th 2026). */
 export function partOfDay(hhmm: string): string {
   const h = Number(hhmm.slice(0, 2))
+  if (h < 4) return 'tonight'
   if (h < 12) return 'this morning'
   if (h < 17) return 'this afternoon'
   return 'this evening'
@@ -142,10 +144,11 @@ export function verdict(a: Analysis): Verdict {
     const h = Number(a.now.slice(0, 2))
     const gone = t12(a.lastGone.std)
     if (h >= 18 || h < 4) {
+      // After midnight the first trains run later today, not "tomorrow" (fresh look 2.4).
       return {
         kind: 'none', lines: [
           { text: `The last direct train from ${a.from} to ${a.to} seems to have gone: the latest left at ${gone}, and there isn't another in the next four hours.` },
-          { text: 'Trainchecker looks four hours ahead, so check again later for the first trains tomorrow.' },
+          { text: `Trainchecker looks four hours ahead, so check again later for the first trains ${h < 4 ? 'of the day' : 'tomorrow'}.` },
         ],
       }
     }
@@ -175,16 +178,40 @@ export function verdict(a: Analysis): Verdict {
     if (late) bits.push(`${num(late)} ${late === 1 ? 'is' : 'are'} running late`)
     lines.push({ bold: "It's a mixed bag:", text: ` most ${journey} are running ${when}, but ${bits.join(' and ').replace(/^(\w+)/, `$1 of the ${num(a.ahead.length)} in the next four hours`)}.` })
   } else {
-    const r = mainReason([...a.cancelled, ...a.late5])
-    let s = ` ${journey} ${a.badly ? 'are badly disrupted' : 'are disrupted'} ${when}. Of the next ${num(a.ahead.length)}, ${num(a.cancelled.length)} ${a.cancelled.length === 1 ? 'is' : 'are'} cancelled`
-    if (a.late5.length) s += ` and ${num(a.late5.length)} ${a.late5.length === 1 ? 'is' : 'are'} running late`
-    s += r ? `, mostly because of ${r}.` : '.'
-    lines.push({ bold: 'Be prepared:', text: s })
+    lines.push({ bold: 'Be prepared:', text: ` ${journey} ${a.badly ? 'are badly disrupted' : 'are disrupted'} ${when}.${preparedCounts(a, 'present')}${arrivingNow(a, 'present')}` })
   }
   // The last two hours are never in the verdict now: they stay in their own box, and when they
   // were bad, "Good news" says "leaving on time" instead of "running well" (John, November 17th
   // 2026, stage 4; replaces N5).
   return { kind, lines: lines.map((l) => ({ ...l, text: tenAfterWords(l.text) })) }
+}
+
+/** How many of n: "all four", "both", or the number (fresh look 2.3). */
+const howMany = (k: number, n: number) => (k === n ? (n === 2 ? 'both' : `all ${num(n)}`) : num(k))
+
+/** "Be prepared"'s counts: " Of the next six, two are cancelled and all six are running late,
+ *  mostly because of …", saying only what applies, and nothing when no train is cancelled or late
+ *  (fresh look 2.1 and 2.3: never "zero are cancelled"). Late includes "Delayed" with no time. */
+function preparedCounts(a: Analysis, tense: 'present' | 'past'): string {
+  const n = a.ahead.length, c = a.cancelled.length, l = a.late5.length + a.unknown.length
+  const be = (k: number) => (tense === 'past' ? (k === 1 ? 'was' : 'were') : k === 1 ? 'is' : 'are')
+  const bits: string[] = []
+  if (c) bits.push(`${howMany(c, n)} ${be(c)} cancelled`)
+  if (l) bits.push(`${howMany(l, n)} ${be(l)} running late`)
+  if (!bits.length) return ''
+  const r = mainReason([...a.cancelled, ...a.late5])
+  return ` Of the next ${num(n)}, ${bits.join(' and ')}${r ? `, mostly because of ${r}` : ''}.`
+}
+
+/** When someone arriving at the station now would reach B 45 minutes or more late (the rule for
+ *  "badly disrupted"), say so, as nothing else on the page may (fresh look 2.2). */
+function arrivingNow(a: Analysis, tense: 'present' | 'past'): string {
+  const g = a.why.gap
+  if (g === null || g < 45) return ''
+  const m = num(Math.round(g / 5) * 5)
+  return tense === 'present'
+    ? ` Someone arriving at the station now is expected to reach ${a.to} about ${m} minutes later than the timetable says.`
+    : ` Someone arriving at the station then was expected to reach ${a.to} about ${m} minutes later than the timetable said.`
 }
 
 /** "because of A and B", or "mostly because of A", or nothing. */
@@ -286,27 +313,33 @@ export function nextFour(a: Analysis): NextFour | null {
   const n = a.ahead.length
   const v = (k: number) => (k === 1 ? 'is' : 'are')
   const lines = [trainsAnHour(a) ?? (n === 1 ? `There's one train from ${a.from} to ${a.to} in the next four hours.` : `There are ${num(n)} trains from ${a.from} to ${a.to} in the next four hours.`)]
-  const onTime = a.ahead.filter((s) => s.late !== null && s.late <= 3).length
-  const little = a.ahead.filter((s) => s.late !== null && s.late > 3 && s.late <= 5)
+  // Trains leaving on time but expected at B more than five minutes late are said apart (fresh
+  // look 2.2), so this never says "All are expected on time" under "badly disrupted".
+  const onTime = a.ahead.filter((s) => s.late !== null && s.late <= 3 && !a.arrLate.includes(s)).length
+  const little = a.ahead.filter((s) => s.late !== null && s.late > 3 && s.late <= 5 && !a.arrLate.includes(s))
   if (onTime === n) lines.push(n === 1 ? "It's expected on time." : n === 2 ? 'Both are expected on time.' : 'All are expected on time.')
   else {
     const g: [number, string][] = []
     if (a.cancelled.length) g.push([a.cancelled.length, `${v(a.cancelled.length)} cancelled${because(a.cancelled)}`])
     if (a.late5.length) g.push([a.late5.length, `${v(a.late5.length)} expected to be more than five minutes late${because(a.late5)}`])
+    if (a.arrLate.length) g.push([a.arrLate.length, `${v(a.arrLate.length)} expected to leave on time but reach ${a.to} more than five minutes late${because(a.arrLate)}`])
     if (little.length) g.push([little.length, `${v(little.length)} expected to be a few minutes late`])
     if (a.unknown.length) g.push([a.unknown.length, `${v(a.unknown.length)} delayed with no time given yet`])
-    const ps = g.map(([k, t]) => `${num(k)} ${t}`)
+    // "All four are cancelled" when every train is (fresh look 2.3).
+    const ps = g.map(([k, t]) => `${k === n && g.length === 1 ? howMany(k, n) : num(k)} ${t}`)
     let s = ps.length > 1 ? `${ps.slice(0, -1).join(', ')}, and ${ps[ps.length - 1]}` : ps[0]
     s = g[0][0] >= 10 ? `Of these, ${s}.` : `${Cap(s)}.`
     lines.push(s)
     if (onTime) lines.push(onTime === 1 ? 'The other is expected on time.' : 'The rest are expected on time.')
   }
-  const rows: Row[] = [...a.cancelled, ...a.late5, ...a.unknown].sort((x, y) => x.rel - y.rel).map((s) => {
+  const rows: Row[] = [...a.cancelled, ...a.late5, ...a.arrLate, ...a.unknown].sort((x, y) => x.rel - y.rel).map((s) => {
     const r = reasonText(s.reason)
+    const arr = a.arrLate.includes(s)
     return {
       time: t12(s.std), dest: s.destination, operator: s.operator,
       status: s.cancelled ? 'cancelled' : s.unknown ? 'unknown' : 'late',
-      what: s.cancelled ? 'Cancelled' : s.unknown ? 'Delayed, no time given yet' : `Expected ${t12(s.etd!)}, ${s.late} minutes late`,
+      what: s.cancelled ? 'Cancelled' : s.unknown ? 'Delayed, no time given yet'
+        : arr ? `Expected at ${a.to} ${t12(s.eta!)}, ${diff(s.sta!, s.eta!)} minutes late` : `Expected ${t12(s.etd!)}, ${s.late} minutes late`,
       reason: r ? Cap(r) + '.' : null,
       why: why(s.reason, s.operator),
     }
@@ -352,6 +385,8 @@ export function platformsByKind(a: Analysis): string | null {
 
 export function platforms(a: Analysis): string | null {
   if (a.verdict === 'none') return null
+  // Every train cancelled: no platforms to wait for (fresh look 2.3).
+  if (a.ahead.every((s) => s.cancelled)) return a.ahead.length === 1 ? "This train is cancelled, so there's no platform to show." : 'None of these trains is running, so there are no platforms to show.'
   if (!a.platKnown) return 'No platforms have been announced yet.'
   const [[p1, n1], ...rest] = a.platList
   const and = (xs: string[]) => xs.join(', ').replace(/, ([^,]*)$/, ' and $1')
@@ -402,8 +437,8 @@ export function shareWords(a: Analysis): { text: string; title: string; hash: st
     if (late) bits.push(`${num(late)} ${was(late)} running late`)
     body = `a mixed bag. Most were running, but ${bits.join(' and ').replace(/^(\w+)/, `$1 of the ${num(a.ahead.length)} in the following four hours`)}.`
   } else {
-    const r = mainReason([...a.cancelled, ...a.late5])
-    body = `be prepared. Of the next ${num(a.ahead.length)}, ${num(a.cancelled.length)} ${was(a.cancelled.length)} cancelled${r ? `, mostly because of ${r}` : ''}.`
+    // The same counts as the verdict, never "zero were cancelled" (fresh look 2.1).
+    body = `be prepared.${preparedCounts(a, 'past')}${arrivingNow(a, 'past')}`
   }
   return { text: tenAfterWords(lead + body + ' From Trainchecker.'), title, hash }
 }
@@ -427,11 +462,11 @@ export function lastWeekOthers(n: number, w3: number, w10: number, w30: number, 
   ] as [number, string][]).filter(([k]) => k > 0)
   // One train in all (agreed by John, November 17th 2026): "It was …".
   if (n === 1) return `It was ${groups[0][1]}.`
-  // Few trains (fewer than 10 not on time): counts, following on from the on-time ones (John,
+  // Few trains (up to 20 not on time; fewer than 10 until the fresh look, 6.3): counts, following on from the on-time ones (John,
   // November 18th 2026): "Another two were less than 10 minutes late, and the other one was 10 to
   // 30 minutes late."; "One more was…"; "The other three were…"; with none on time, "One was less
   // than 10 minutes late, and the other three were 10 to 30 minutes late."
-  if (others < 10) {
+  if (others <= 20) {
     const was = (k: number) => (k === 1 ? 'was' : 'were')
     if (groups.length === 1) {
       if (others === 1) return `The other was ${groups[0][1]}.`
@@ -446,7 +481,7 @@ export function lastWeekOthers(n: number, w3: number, w10: number, w30: number, 
     const ps = [`${lead} ${was(c1)} ${b1}`, ...more.map(([k, t]) => `${num(k)} ${was(k)} ${t}`)]
     return `${ps.slice(0, -1).join(', ')} and ${ps[ps.length - 1]}.`
   }
-  // Ten or more: rounded shares, and "the rest" (John: kept, as the shares are approximate).
+  // More than 20: rounded shares, and "the rest" (John: kept, as the shares are approximate).
   if (groups.length === 1) return `The others were ${groups[0][1]}.`
   const [first, ...rest] = groups
   const sh = share(first[0], others).bare
@@ -632,6 +667,18 @@ export function singlesLine(items: { summary: string; start: string | null; end:
     const p = `${at} ${night ?? when}`.replace(/ on today$/, ' today').replace(/ on today night$/, ' tonight')
     if (!phrases.includes(p)) phrases.push(p)
   }
+  // The same time on different days said once: "after midnight on Friday or Saturday night", not
+  // "after midnight on Friday night or after midnight on Saturday night" (fresh look 5.1).
+  const merged: string[] = []
+  for (const p of phrases) {
+    const m = p.match(/^(.*) on (\w+)( night)?$/)
+    const j = m ? merged.findIndex((q) => q.startsWith(`${m[1]} on `) && q.endsWith(m[3] ?? '') && (!!m[3] === / night$/.test(q))) : -1
+    if (!m || j < 0) { merged.push(p); continue }
+    const q = merged[j], tail = m[3] ?? ''
+    const days = q.slice(`${m[1]} on `.length, q.length - tail.length)
+    merged[j] = `${m[1]} on ${days.replace(/ or /g, ', ')} or ${m[2]}${tail}`.replace(/^(.* on )(.*), (\w+) or (\w+)/, '$1$2, $3 or $4')
+  }
+  phrases.splice(0, phrases.length, ...merged)
   const list = phrases.length > 1 ? `${phrases.slice(0, -1).join(', ')} or ${phrases[phrases.length - 1]}` : phrases[0]
   return `If you're travelling ${list} you may be affected – see more details.`
 }

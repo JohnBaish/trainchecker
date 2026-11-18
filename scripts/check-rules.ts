@@ -79,7 +79,9 @@ for (const f of files) {
   const digits = (l: string) => l.replace('nineteen in twenty', '19 in 20').replace('nine in ten', 'nine in 10').replace('one in ten', 'one in 10').replace('one in twenty', 'one in 20')
   if (!a.last.cancelled.length && !(a.last.tense === 'mixed' && a.last.lates.length <= 2)) eq(`${f}: last two hours`, lastTwoLines(a), (S.lastTwoLines(m) as string[]).map(digits).map(tenAfterWords).map((l) => (a.last.known === 2 ? l.replace(', all are ', ', both are ') : l)))
   const when = { time: t12(m.now), date: dayName(new Date(m.taken)).replace(/^\w+ /, '') }
-  if (!a.lastGone) eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text)
+  // Since the fresh look (November 18th 2026), "Be prepared"'s Share sentence gives the late trains
+  // too, as the verdict does, so it's compared with the mock-up only for the other verdicts.
+  if (!a.lastGone && a.verdict !== 'prepared') eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text)
   const bad = pageText(a).filter((t) => /undefined|null|NaN|\[object/.test(t))
   eq(`${f}: no undefined, null or NaN`, bad, [])
 }
@@ -176,7 +178,8 @@ eq('one late train, its own tense', [kyMixed.last.tense, lastTwoLines(kyMixed)[1
 eq('ten after a spelt number (John)', ['about nine in 10 trains', 'one in 10', 'The other two were four and 10 minutes late.', 'one was less than 10 minutes late', 'at 10.30pm', 'four from platform 10', '19 in 20', 'about 10 trains an hour'].map(tenAfterWords),
   ['about nine in ten trains', 'one in ten', 'The other two were four and ten minutes late.', 'one was less than 10 minutes late', 'at 10.30pm', 'four from platform 10', '19 in 20', 'about 10 trains an hour'])
 eq('suggestions stay open at "Ivy", a code on the way to Ivybridge (John)', [complete('Ivy', suggest('Ivy')), suggest('Ivy').map(([, n]) => n)], [false, ['Ivybridge']])
-eq('suggestions close once the full name is in the box', [complete('Ivybridge', suggest('Ivybridge')), complete('reading', suggest('reading'))], [true, false])
+eq('suggestions close once the full name is in the box, even with longer names below (fresh look 4.1)', [complete('Ivybridge', suggest('Ivybridge')), complete('reading', suggest('reading')), complete('Reading W', suggest('Reading W'))], [true, true, false])
+eq("an apostrophe doesn't matter (fresh look 4.2)", [resolve("King's Cross"), suggest("king's cross").map(([c]) => c), resolve("london king's cross")], [null, ['KGX'], 'KGX'])
 // The last week's stand-in station (John's Ealing Broadway idea, November 18th 2026): the history
 // had no Reading to Bond Street trains, but 10 to Ealing Broadway and 10 to Tottenham Court Road.
 const west: [string, string][] = [['TWY', 'Twyford'], ['SLO', 'Slough'], ['EAL', 'Ealing Broadway'], ['PAD', 'London Paddington']]
@@ -202,8 +205,9 @@ const wk = weekFor(nov17)
 eq('the last week: weekdays', [wk.kind, wk.first, wk.last, wk.days.length], ['WEEKDAY', '2026-11-10', '2026-11-16', 5])
 const hsp = count(JSON.parse(readFileSync(new URL('20261117-hsp-RDG-PAD-1700-1730.json', dir), 'utf8')))
 eq('the last week: agreed sentence', lastWeekText(hsp, { from: 'Reading', to: 'London Paddington', kind: wk.kind, days: wk.days, start: '17:00', end: '17:30' }),
-  'On the five weekdays from Tuesday November 10th to Monday November 16th, about a third of the 26 trains that left Reading between 5pm and 5.30pm reached London Paddington within three minutes of the timetable. Of the others, about three quarters were less than 10 minutes late, and the rest 10 to 30 minutes late.')
-eq('the last week: the mock-up code agrees', lastWeekOthers(26, 8, 21, 26), S.lastWeekOthers(26, 8, 21, 26))
+  'On the five weekdays from Tuesday November 10th to Monday November 16th, about a third of the 26 trains that left Reading between 5pm and 5.30pm reached London Paddington within three minutes of the timetable. Another 13 were less than 10 minutes late, and the other five were 10 to 30 minutes late.')
+// Shares only with more than 20 not on time since the fresh look (6.3), as in the mock-ups' code.
+eq('the last week: the mock-up code agrees', lastWeekOthers(40, 8, 33, 40), S.lastWeekOthers(40, 8, 33, 40))
 const sat = weekFor(new Date('2026-11-21T10:00:00Z'))
 eq('the last week: on a Saturday', [sat.kind, sat.first, sat.last, sat.days.map((d) => dayName(d))], ['SATURDAY', '2026-11-14', '2026-11-20', ['Saturday November 14th']])
 const clocks = weekFor(new Date('2026-10-27T08:00:00Z')) // the clocks went back on Sunday October 25th
@@ -224,7 +228,8 @@ eq('not on time: the first just one ("One more")', others(6, 3, 4, 6), 'One more
 eq('not on time: three bands', others(8, 4, 6, 7, 8), 'Another two were less than 10 minutes late, one was 10 to 30 minutes late and one was more than half an hour late.')
 eq('not on time: one band', [others(9, 6, 9, 9), others(9, 8, 9, 9)], ['The other three were less than 10 minutes late.', 'The other was less than 10 minutes late.'])
 eq('not on time: none on time, one band', others(3, 0, 3, 3), 'They were all less than 10 minutes late.')
-eq('not on time: ten or more, shares and "the rest"', others(26, 8, 21, 26), 'Of the others, about three quarters were less than 10 minutes late, and the rest 10 to 30 minutes late.')
+eq('not on time: up to 20, counts (fresh look 6.3)', others(26, 8, 21, 26), 'Another 13 were less than 10 minutes late, and the other five were 10 to 30 minutes late.')
+eq('not on time: more than 20, shares and "the rest"', others(40, 8, 32, 40), 'Of the others, three quarters were less than 10 minutes late, and the rest 10 to 30 minutes late.')
 eq('the last week: Tiverton Parkway (John)', lastWeekText({ n: 5, w3: 0, w10: 1, w30: 4, w120: 4, dates: [], elizabeth: 0 }, { ...one, from: 'Tiverton Parkway', to: 'London Paddington', kind: wk.kind, days: wk.days, start: '07:00', end: '08:00' }),
   'On the five weekdays from Tuesday November 10th to Monday November 16th, none of the four trains that left Tiverton Parkway between 7am and 8am reached London Paddington within three minutes of the timetable. One was less than 10 minutes late, and the other three were 10 to 30 minutes late. One more was cancelled.')
 eq('the last week: all cancelled', lastWeekText({ n: 2, w3: 0, w10: 0, w30: 0, w120: 0, dates: [], elizabeth: 0 }, { ...one, from: 'Reading', to: 'London Paddington', start: '07:00', end: '07:30' }),
@@ -241,6 +246,35 @@ eq('times', ['18:26', '19:00', '12:00', '00:00', '00:49', '09:05'].map(t12), ['6
 eq('quote of the day', [quoteOfTheDay(new Date('2026-11-17T12:00:00Z')).author, quoteOfTheDay(new Date('2026-11-18T12:00:00Z')).author], ['E. W. Hornung', 'Benjamin Franklin'])
 eq('quote share words', quoteShareText('E. W. Hornung', nov17), 'The quote of the day on Trainchecker for November 17th, from E. W. Hornung.')
 eq('366 quotes', QUOTES.length, 366)
+
+// The fresh look (November 18th 2026): made-up boards for cases the saved ones don't have.
+{
+  const T = '2026-11-17T18:24:00Z'
+  const at = (iso: string, m: number) => new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(new Date(iso).getTime() + m * 60e3))
+  const tr = (i: number, rel: number, o: Partial<Snap['services'][number]> = {}, t = T) => ({ id: 's' + i, std: at(t, rel), etd: 'On time', platform: '3', operator: 'Great Western Railway', destination: 'Bristol Temple Meads', cancelled: false, reason: null, sta: at(t, rel + 20), eta: 'On time', ata: null, ...o })
+  const board = (services: Snap['services'], taken = T): Snap => ({ taken, from: 'BTH', to: 'BRI', fromName: 'Bath Spa', toName: 'Bristol Temple Meads', services, route: [], stops: [] })
+  const lates = analyse(board([5, 35, 65, 95, 125, 155].map((r, i) => tr(i, r, { etd: at(T, r + 50), eta: at(T, r + 70) }))))
+  eq('be prepared, late trains only: no "zero are cancelled" (2.1)', [lineText(verdict(lates).lines)[0], shareWords(lates).text], [
+    '<b>Be prepared:</b> trains from Bath Spa to Bristol Temple Meads are badly disrupted this evening. Of the next six, all six are running late. Someone arriving at the station now is expected to reach Bristol Temple Meads about 50 minutes later than the timetable says.',
+    "Here's how the trains from Bath Spa to Bristol Temple Meads were looking at 6.24pm on November 17th: be prepared. Of the next six, all six were running late. Someone arriving at the station then was expected to reach Bristol Temple Meads about 50 minutes later than the timetable said. From Trainchecker."])
+  const arrive = analyse(board([5, 65, 125, 185].map((r, i) => tr(i, r, { eta: at(T, r + 75) }))))
+  eq('be prepared from late arrivals: said, and not "All are expected on time" (2.2)', [lineText(verdict(arrive).lines)[0], nextFour(arrive)!.lines[1], nextFour(arrive)!.rows[0].what], [
+    '<b>Be prepared:</b> trains from Bath Spa to Bristol Temple Meads are badly disrupted this evening. Someone arriving at the station now is expected to reach Bristol Temple Meads about 55 minutes later than the timetable says.',
+    'All four are expected to leave on time but reach Bristol Temple Meads more than five minutes late.', 'Expected at Bristol Temple Meads 7.44pm, 55 minutes late'])
+  const delayed = analyse(board([5, 35, 65, 95, 125, 155].map((r, i) => tr(i, r, i < 2 ? { etd: 'Delayed', eta: 'Delayed' } : {}))))
+  eq('two "Delayed" trains alone: a mixed bag, not badly disrupted (2.2)', [delayed.badly, delayed.verdict], [false, 'mixed'])
+  const gone = analyse(board([5, 35, 65, 95].map((r, i) => tr(i, r, { cancelled: true, etd: 'Cancelled', platform: null, reason: 'This train has been cancelled because of a fault on this train' }))))
+  eq('every train cancelled (2.3)', [lineText(verdict(gone).lines)[0], nextFour(gone)!.lines[1], platforms(gone)], [
+    '<b>Be prepared:</b> trains from Bath Spa to Bristol Temple Meads are badly disrupted this evening. Of the next four, all four are cancelled, mostly because of a fault on the train.',
+    'All four are cancelled, because of a fault on the train.', 'None of these trains is running, so there are no platforms to show.'])
+  const T2 = '2026-11-18T01:10:00Z'
+  const night = analyse(board([10, 50].map((r, i) => tr(i, r, {}, T2)), T2))
+  const lastNight = analyse(board([tr(1, -50, { ata: at(T2, -30), etd: at(T2, -50) }, T2)], T2))
+  eq('after midnight: "tonight" and "the first trains of the day" (2.4)', [lineText(verdict(night).lines)[0], lineText(verdict(lastNight).lines)[1]], [
+    '<b>Good news:</b> trains from Bath Spa to Bristol Temple Meads are running well tonight.', 'Trainchecker looks four hours ahead, so check again later for the first trains of the day.'])
+  const busy = (k: number, n: number) => analyse(board(Array.from({ length: n }, (_, i) => tr(i, 2 + i * 2.4, i % 10 === 5 && i < k * 10 ? { cancelled: true, etd: 'Cancelled' } : {})))).verdict
+  eq('three cancelled: "Be prepared" only when more than one in 20 (2.5)', [busy(3, 40), busy(3, 60), busy(3, 95), busy(5, 95)], ['prepared', 'good', 'good', 'prepared'])
+}
 
 // The station list (Knowledgebase Stations, November 17th 2026): complete, each code once, and
 // every station in the real snapshots findable by its code.

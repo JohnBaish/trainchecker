@@ -450,3 +450,45 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
     was …"; one band: "The other three were…" ("The other was…"); none on time: "One was less than
     10 minutes late, and the other three were 10 to 30 minutes late." or "They were all…". Ten or
     more: rounded shares and "the rest", as before. A band ("10 to 30") keeps its digits.
+
+## 11. Agreed at the fresh look (November 18th 2026)
+
+John accepted every recommendation of the fresh look (report of November 18th 2026, commit
+58b8a5d), with the choices below. Built and live the same day. These replace earlier points where
+they differ.
+
+1. **"Be prepared" counts** (2.1, 2.3): only what applies, never "zero are cancelled": "Of the next
+   six, all six are running late."; "all four are cancelled" (and "All four are cancelled" in "The
+   next four hours") when every train is; the Share sentence gives the same counts.
+2. **Late arrivals** (2.2, option b): when someone arriving now would reach B 45 minutes or more late,
+   the verdict says so ("Someone arriving at the station now is expected to reach B about 50 minutes
+   later than the timetable says."); "The next four hours" says when trains leave on time but are
+   expected at B more than five minutes late, and lists them ("Expected at B 7.44pm, 55 minutes
+   late"); a "Delayed" train with no time counts at its timetabled time in the 45-minute rule.
+3. **Every train cancelled, Platforms** (2.3): "None of these trains is running, so there are no
+   platforms to show." ("This train is cancelled, so there's no platform to show." for one).
+4. **After midnight** (2.4): "tonight" from midnight to 4am; "the first trains of the day" after
+   midnight (still "tomorrow" from 6pm).
+5. **Three cancellations** (2.5, option b): "Be prepared" only when also more than one train in 20.
+   "About these figures" says so.
+6. **The last train gone** (3.1, option a): "The last two hours", "The days ahead" and "The last week"
+   shown, without the second station chooser. "No direct train at all" is unchanged.
+7. **Recent** (3.2): not kept when there's no direct train either way in the six hours.
+8. **Station boxes** (4.1 to 4.3): the suggestions close once the box holds a full name, even when
+   longer names start with it (§10.39 still holds for codes); apostrophes ignored ("King's Cross");
+   Return in From moves to To.
+9. **The days ahead** (5.1 to 5.3, and John's rule on past start dates): the same time on different
+   days said once ("after midnight on Friday or Saturday night"); the two-sentence summaries tidied
+   like the summaries (slashes as words, "Monday 9 to Tuesday 17 November" as a whole); a short list
+   after a colon (up to three items) joined on; a longer one ends the sentence at the colon, and
+   "The following …:" isn't used; a start date that has passed is left out ("From Monday 10 August,
+   … will run" → "… are running"; "From Monday 9 to Tuesday 24 November, buses will replace" →
+   "Until Tuesday 24 November, buses are replacing"); one still to come stays. National Rail's
+   advice in the fold is unchanged.
+10. **The last week** (6.1 to 6.3): "Check again" keeps the page (and the last week's answer and open
+    folds) while it asks again, saying so if it can't; the Elizabeth Line note and the no-record
+    message only when Paddington or Bond Street is an end; counts up to 20 trains not on time
+    (replaces "fewer than 10" in §10.42), shares above that.
+11. **Across the site** (7.1 to 7.3): printing keeps cards whole and leaves out the last week's box
+    without an answer; the tab names the journey ("Reading to London Paddington – Trainchecker");
+    the introduction runs the full width and adds "and, if you ask, how they ran over the last week".

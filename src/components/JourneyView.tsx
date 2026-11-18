@@ -5,15 +5,16 @@
 // width; "The days ahead" (DaysAhead.tsx); "The last week".
 import { useEffect, useState } from 'react'
 import { analyse, type Analysis } from '../lib/analyse.ts'
-import { fetchLive } from '../lib/load.ts'
+import { fetchDays, fetchLive } from '../lib/load.ts'
+import { closedNow, forJourney } from '../lib/incidents.ts'
 import { hashOf, remember, type Journey } from '../lib/route.ts'
 import { useIsNarrow } from '../lib/responsive.ts'
-import { dayName, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
+import { closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
 import { isTouch, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
 import { Chooser } from './Chooser.tsx'
 import { Icon } from './Icon.tsx'
-import { DaysAhead } from './DaysAhead.tsx'
+import { DaysAhead, type DaysState } from './DaysAhead.tsx'
 import { LastWeek } from './LastWeek.tsx'
 import { QuoteCard } from './Tail.tsx'
 
@@ -31,7 +32,7 @@ function Trains({ n }: { n: NextFour }) {
   if (!n.rows.length) return null
   return (
     <details className="advice trains-fold">
-      <summary>{n.fold}</summary>
+      <summary>{n.fold} <Icon name="down" /></summary>
       {narrow ? n.rows.map((r, i) => (
         <div key={i} className={`trow t-${r.status}`}>
           <div className="top"><span className="time">{r.time} to {r.dest}</span></div>
@@ -57,13 +58,13 @@ function Trains({ n }: { n: NextFour }) {
   )
 }
 
-function ShareJourney({ a }: { a: Analysis }) {
+function ShareJourney({ a, text }: { a: Analysis; text?: string }) {
   const [status, setStatus] = useState('')
   const touch = isTouch()
   const go = async () => {
     setStatus('')
     const w = shareWords(a)
-    const r = await shareText({ title: w.title, text: w.text, url: `${location.origin}/${w.hash}` })
+    const r = await shareText({ title: w.title, text: text ?? w.text, url: `${location.origin}/${w.hash}` })
     setStatus(r === 'copied' ? 'Copied' : r === 'failed' ? 'Sorry, this browser wouldn’t copy it.' : '')
   }
   return (
@@ -79,6 +80,13 @@ export function JourneyView({ journey }: { journey: Journey }) {
   const [changing, setChanging] = useState(false)
   // Asked when the page opens, and again with each "Check again" (round).
   const [round, setRound] = useState(0)
+  // National Rail's incidents, asked at the same time as the trains (the verdict uses them too).
+  const [days, setDays] = useState<DaysState>({ s: 'loading' })
+  useEffect(() => {
+    let current = true
+    fetchDays().then((d) => current && setDays({ s: 'ok', d }), () => current && setDays({ s: 'failed' }))
+    return () => { current = false }
+  }, [round])
   useEffect(() => {
     let current = true
     fetchLive(journey.from, journey.to).then(
@@ -92,7 +100,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
     )
     return () => { current = false }
   }, [journey, round])
-  const load = () => { setState({ s: 'loading' }); setRound(round + 1) }
+  const load = () => { setState({ s: 'loading' }); setDays({ s: 'loading' }); setRound(round + 1) }
 
   const a = state.s === 'ok' ? state.a : null
   const fromName = a ? a.from : nameOf(journey.from), toName = a ? a.to : nameOf(journey.to)
@@ -127,7 +135,15 @@ export function JourneyView({ journey }: { journey: Journey }) {
   }
 
   const an = state.a
+  const journeyNames = { fromCrs: an.fromCrs, toCrs: an.toCrs, from: an.from, to: an.to }
+  const mine = days.s === 'ok' ? forJourney(days.d, journeyNames) : null
   const v = verdict(an)
+  // The line closed today (John, November 18th 2026): with no train in the next four hours, say
+  // so rather than "We can't find a direct train". And with "Be prepared", point to National
+  // Rail's advice when it lists disruption now.
+  const closed = mine && v.kind === 'none' && days.s === 'ok' ? closedNow([...mine.now, ...mine.planned], new Date(days.d.taken)) : null
+  if (closed) { v.kind = 'prepared'; v.lines = closedVerdict(closed, an.from, an.to) }
+  else if (v.kind === 'prepared' && mine?.now.length) v.lines = [...v.lines, { text: disruptionAdvice }]
   const taken = new Date(an.taken)
   const next = nextFour(an)
   const elizabeth = [...an.ahead, ...an.past].some((s) => /Elizabeth/i.test(s.operator))
@@ -141,12 +157,21 @@ export function JourneyView({ journey }: { journey: Journey }) {
       <section className={`card verdict state-${v.kind}`}>
         {v.lines.map((l, i) => <p key={i}>{l.bold && <b>{l.bold}</b>}{l.text}</p>)}
       </section>
-      <ShareJourney a={an} />
-      {v.kind === 'none' ? (
-        <>
-          {!changing && <Chooser journey={journey} />}
-          <QuoteCard />
-        </>
+      <ShareJourney a={an} text={closed ? closedShare(closed, an) : undefined} />
+      {an.verdict === 'none' ? (
+        closed ? (
+          // No trains because the line is closed today: National Rail's advice, which the verdict
+          // points to.
+          <>
+            <DaysAhead days={days} journey={journeyNames} />
+            <QuoteCard />
+          </>
+        ) : (
+          <>
+            {!changing && <Chooser journey={journey} />}
+            <QuoteCard />
+          </>
+        )
       ) : (
         <>
           <div className="grid">
@@ -161,7 +186,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
           {/* Across the full width, so a computer shows no gap beside it (John, November 17th
               2026, after trying the preview); after the quote (John, stage 4). */}
           <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>
-          <DaysAhead fromCrs={an.fromCrs} toCrs={an.toCrs} from={an.from} to={an.to} />
+          <DaysAhead days={days} journey={journeyNames} />
           <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth} />
         </>
       )}

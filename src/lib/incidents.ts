@@ -122,3 +122,18 @@ export function forJourney(d: Days, p: DaysJourney) {
   const involved = [codes.has(p.fromCrs) && p.from, codes.has(p.toCrs) && p.to].filter((x): x is string => !!x)
   return { now: counted.filter((i) => !i.planned), planned: counted.filter((i) => i.planned), may, involved }
 }
+
+/** Whether an item counted for the journey closes the line today, for the verdict (SPEC §7 answer
+ *  4; John, November 18th 2026): applying now, saying buses replace the trains or there are no
+ *  trains, and not only at some hours ("late night", "before 06:30"). 'buses', 'none' or null. */
+export function closedNow(items: Item[], now: Date): 'buses' | 'none' | null {
+  for (const i of items) {
+    if (i.start && new Date(i.start) > now) continue
+    if (i.end && new Date(i.end) < now) continue
+    const s = i.summary
+    if (/late night|early morning|very early|evening|overnight|morning|night|before \d|after \d|from \d\d:\d\d|until \d\d:\d\d/i.test(s)) continue
+    if (/\b(buses|coaches|taxis) replace (all )?trains\b/i.test(s)) return 'buses'
+    if (/\bno\b[^.]{0,40}\btrains\b/i.test(s)) return 'none'
+  }
+  return null
+}

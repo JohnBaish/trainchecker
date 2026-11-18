@@ -3,8 +3,8 @@
 // on November 17th 2026 (design/incidents-trial-2026-11-17.md).
 import { readFileSync } from 'node:fs'
 import { gunzipSync } from 'node:zlib'
-import { readIncidents, matches, current, endOfSunday, stationsIn, cleanAdvice, liveItems, forJourney, type Incident } from '../src/lib/incidents.ts'
-import { whenLabel, mayIntro, noPlanned, plannedIntro, daysHeading } from '../src/lib/sentences.ts'
+import { readIncidents, matches, current, endOfSunday, stationsIn, cleanAdvice, liveItems, forJourney, closedNow, type Incident } from '../src/lib/incidents.ts'
+import { whenLabel, mayIntro, noPlanned, plannedIntro, daysHeading, closedVerdict, closedShare } from '../src/lib/sentences.ts'
 
 let passed = 0, failed = 0
 function eq(what: string, got: unknown, want: unknown) {
@@ -83,6 +83,16 @@ eq('advice cleaned', cleanAdvice(dirty), '<p><b>Advice</b></p><p>Go here or <a h
 const tags = new Set(days.items.flatMap((i) => i.advice.match(/<[^>]+>/g) ?? []).map((t) => t.replace(/href="[^"]*"/, 'href')))
 eq('only simple tags in every item', [...tags].sort(), ['</a>', '</b>', '</li>', '</p>', '</ul>', '<a href target="_blank" rel="noopener noreferrer">', '<b>', '<li>', '<p>', '<ul>'])
 eq('no undefined in any item', days.items.filter((i) => /undefined|NaN|\[object/.test(JSON.stringify(i))).length, 0)
+
+// The line closed today (John, November 18th 2026): buses all day count; only at some hours don't.
+const closedFor = (a: string, b: string, A: string, B: string, at: string) => { const j = forJourney(days, { fromCrs: a, toCrs: b, from: A, to: B }); return closedNow([...j.now, ...j.planned], new Date(at)) }
+eq('closed: Derby to Matlock, buses all week', closedFor('DBY', 'MAT', 'Derby', 'Matlock', '2026-11-18T12:00:00Z'), 'buses')
+eq('closed: Corby, buses only before 06:30', closedFor('KET', 'COR', 'Kettering', 'Corby', '2026-11-21T05:00:00Z'), null)
+eq('closed: Swindon to Bristol, late night only', closedFor('SWI', 'BRI', 'Swindon', 'Bristol Temple Meads', '2026-11-18T23:30:00Z'), null)
+eq('closed: Victoria on Sunday', closedFor('VIC', 'BTN', 'London Victoria', 'Brighton', '2026-11-22T12:00:00Z'), 'none')
+eq('closed: Victoria on Wednesday', closedFor('VIC', 'BTN', 'London Victoria', 'Brighton', '2026-11-18T12:00:00Z'), null)
+eq('closed: the verdict (John)', closedVerdict('buses', 'Derby', 'Matlock'), [{ bold: 'Be prepared:', text: ' National Rail says buses are replacing trains between Derby and Matlock today. Their advice is under “The days ahead” below.' }])
+eq('closed: Share', closedShare('buses', { from: 'Derby', to: 'Matlock', now: '12:05', taken: '2026-11-18T12:05:00Z' }), "Here's what Trainchecker found at 12.05pm on November 18th: National Rail said buses were replacing trains between Derby and Matlock that day.")
 
 console.log(`check-days: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

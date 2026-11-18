@@ -312,3 +312,16 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
    both stations named; or one named after "to / from" (with or without "/ via"), and, for John
    to confirm, after "at", "through", "in the … area" or "via"; one amended train only from A to
    B. Cleared disruption and called-off work are left out.
+6. **Arrows on the folds** (John, November 18th 2026): a down arrow to unfold, pointing up when
+   open; on National Rail's advice and "Show the … trains that aren't on time".
+7. **The line closed today** (John, November 18th 2026, agreed): with no train in the next four
+   hours and an item for the journey, applying now, saying buses replace the trains (not only at
+   some hours): "**Be prepared:** National Rail says buses are replacing trains between A and B
+   today. Their advice is under “The days ahead” below." Then "The days ahead" and the quote.
+   Drafts: the same with "no trains are running", and the Share sentence ("…National Rail said
+   buses were replacing trains between A and B that day.").
+8. **Badly disrupted** (John, agreed): "Be prepared" adds "National Rail’s advice, including
+   other ways to travel with your ticket, is under “Disruption now” below." when National Rail
+   lists disruption now for the journey.
+9. **Drafts agreed** (John): the section's loading line and the message when the feed can't be
+   reached.

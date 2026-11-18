@@ -378,3 +378,22 @@ export const noPlanned = (until: Date) => `National Rail lists no planned engine
 export function mayIntro(n: number, from: string, to: string, involved: string[]): string {
   return `${n === 1 ? 'This' : 'These'} might affect some trains from ${from} to ${to} too, as ${n === 1 ? 'it involves' : 'they involve'} ${involved.join(' or ')}:`
 }
+
+/** The verdict when no train runs in the next four hours because National Rail says the line is
+ *  closed today (John, November 18th 2026: his words for buses; the "no trains" words are
+ *  Claude's draft to match). Replaces "We can't find a direct train…", which would mislead. */
+export function closedVerdict(how: 'buses' | 'none', from: string, to: string): Line[] {
+  return [{ bold: 'Be prepared:', text: how === 'buses'
+    ? ` National Rail says buses are replacing trains between ${from} and ${to} today. Their advice is under “The days ahead” below.`
+    : ` National Rail says no trains are running between ${from} and ${to} today. Their advice is under “The days ahead” below.` }]
+}
+/** Added to "Be prepared" when National Rail lists disruption now for the journey (John,
+ *  November 18th 2026). */
+export const disruptionAdvice = 'National Rail’s advice, including other ways to travel with your ticket, is under “Disruption now” below.'
+/** The Share words for a closed line (Claude's draft, to match the agreed Share sentences). */
+export function closedShare(how: 'buses' | 'none', a: { from: string; to: string; now: string; taken: string }): string {
+  const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
+  return how === 'buses'
+    ? `Here's what Trainchecker found at ${at}: National Rail said buses were replacing trains between ${a.from} and ${a.to} that day.`
+    : `Here's what Trainchecker found at ${at}: National Rail said no trains were running between ${a.from} and ${a.to} that day.`
+}

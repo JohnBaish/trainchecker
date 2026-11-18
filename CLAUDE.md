@@ -54,6 +54,21 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: John's answers; arrows; the line closed today (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John (tried the preview at 6.06am, Reading to Paddington):** the two drafts agreed; the
+  line-closed and disruption-advice verdicts agreed as worded; arrows on the folds. Asked for
+  options: a two-sentence summary of National Rail's advice above the fold; single early or late
+  trains grouped; leaving out what can't affect the journey (Reading to Basingstoke for Reading to
+  Paddington). `SPEC.md` §10.6 to §10.9.
+- **Built:** the arrows (`Icon` "down", turned when open); `closedNow()` and `closedVerdict()`
+  (buses all day count; "late night", "before 06:30" and the like don't); the disruption line;
+  JourneyView now fetches the incidents with the trains and passes them to `DaysAhead`.
+- **Checked:** `npm run check` 158 + 50 + 45 (new: Derby to Matlock closed, Corby and Swindon
+  not, Victoria on Sunday only, the words); `tsc -b`, lint, build; Derby to Matlock in the browser
+  with no trains and the real feed at 6.20am (`design/previews/stage4/closed-*`), 1200px and 390px:
+  no errors, no sideways scroll; the arrow close up, folded and open.
+
 ### November 17th 2026: "The days ahead" built (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **John:** for incidents the rule leaves out but that name one of the stations, a friendly

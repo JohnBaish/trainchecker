@@ -80,6 +80,8 @@ given its own branch). Before committing there, run
   first. Checks 235 + 57 + 73.
 - **Then (John):** fast, slower and Elizabeth Line trains apart, as drafted; 10A as 10 where 10 is in use; the limit
   across them all. `SPEC.md` §12.8. Checks 237 + 57 + 73; Reading to Paddington at 390px: no errors, no sideways scroll.
+- **John:** with one kind of train on three or more platforms, the list stays in time order, each train with its
+  platform (Liverpool Street to Stratford), rather than grouped by platform. "The branch looks really good."
 
 ### November 18th 2026: the sharing picture's words in bold; merged and live (Claude Code)
 

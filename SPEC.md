@@ -444,3 +444,9 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
     out at London Paddington, so for those this shows how they ran as far as Ealing Broadway."
     (Claude's draft) and the Elizabeth Line trains to Ealing Broadway ("…of the 11 Elizabeth Line
     trains that left Twyford…"). The history asked for one company with its own `toc_filter`.
+42. **The last week's trains not on time, as counts** (John, November 18th 2026), when fewer than
+    10: "Another two were less than 10 minutes late, and the other one was 10 to 30 minutes late."
+    "One more was…" when the first band is one; three bands: "Another two were …, one was … and one
+    was …"; one band: "The other three were…" ("The other was…"); none on time: "One was less than
+    10 minutes late, and the other three were 10 to 30 minutes late." or "They were all…". Ten or
+    more: rounded shares and "the rest", as before. A band ("10 to 30") keeps its digits.

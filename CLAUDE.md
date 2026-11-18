@@ -57,6 +57,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: the last week's late trains as counts; live (`main`; Claude Code)
+
+- **John (Totnes to Paddington, 8am to 9am):** "the rest" was one train. Cases set out for him;
+  agreed as proposed, "One more" for a first band of one; "make it live straight away".
+  `lastWeekOthers()` rewritten for fewer than 10 not on time (`SPEC.md` §10.42); `tenAfterWords()`
+  leaves "10 to 30" alone (it had made "ten to 30").
+- **Checked:** `npm run check` 200 + 57 + 68 (every case); `tsc -b`, lint, build. Straight to
+  `main` at John's word.
+
 ### November 18th 2026: stage 4 merged into `main` (Claude Code)
 
 - **John:** "so for those" in the Elizabeth Line line; happy with everything on the branch; merge to

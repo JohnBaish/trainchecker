@@ -13,9 +13,10 @@ export const num = (n: number) => (Number.isInteger(n) && n >= 0 && n < 10 ? WOR
 export const Cap = (s: string) => s[0].toUpperCase() + s.slice(1)
 
 /** "10" spelt "ten" when it follows a spelt number closely, within two words (John, November 18th
- *  2026): "nine in ten", "four and ten minutes late". Not a time ("10.30pm") or a platform. */
+ *  2026): "nine in ten", "four and ten minutes late". Not a time ("10.30pm"), a platform, or a
+ *  band ("10 to 30 minutes late"). */
 export function tenAfterWords(s: string): string {
-  return s.replace(/\b(one|two|three|four|five|six|seven|eight|nine)\b((?:\s+\S+){0,2}?)\s+10\b(?![.:]\d|\s*[ap]m)/gi,
+  return s.replace(/\b(one|two|three|four|five|six|seven|eight|nine)\b((?:\s+\S+){0,2}?)\s+10\b(?![.:]\d|\s*[ap]m| to \d)/gi,
     (m, w: string, mid: string) => (/platforms?$/i.test(mid.trim()) ? m : `${w}${mid} ten`))
 }
 
@@ -426,11 +427,30 @@ export function lastWeekOthers(n: number, w3: number, w10: number, w30: number, 
   ] as [number, string][]).filter(([k]) => k > 0)
   // One train in all (agreed by John, November 17th 2026): "It was …".
   if (n === 1) return `It was ${groups[0][1]}.`
-  if (groups.length === 1) return others === 1 ? `The other was ${groups[0][1]}.` : `The others were ${groups[0][1]}.`
+  // Few trains (fewer than 10 not on time): counts, following on from the on-time ones (John,
+  // November 18th 2026): "Another two were less than 10 minutes late, and the other one was 10 to
+  // 30 minutes late."; "One more was…"; "The other three were…"; with none on time, "One was less
+  // than 10 minutes late, and the other three were 10 to 30 minutes late."
+  if (others < 10) {
+    const was = (k: number) => (k === 1 ? 'was' : 'were')
+    if (groups.length === 1) {
+      if (others === 1) return `The other was ${groups[0][1]}.`
+      return w3 ? `The other ${num(others)} were ${groups[0][1]}.` : `They were all ${groups[0][1]}.`
+    }
+    const [[c1, b1], ...more] = groups
+    const lead = w3 ? (c1 === 1 ? 'One more' : `Another ${num(c1)}`) : Cap(num(c1))
+    if (more.length === 1) {
+      const [c2, b2] = more[0]
+      return `${lead} ${was(c1)} ${b1}, and the other ${c2 === 1 ? 'one' : num(c2)} ${was(c2)} ${b2}.`
+    }
+    const ps = [`${lead} ${was(c1)} ${b1}`, ...more.map(([k, t]) => `${num(k)} ${was(k)} ${t}`)]
+    return `${ps.slice(0, -1).join(', ')} and ${ps[ps.length - 1]}.`
+  }
+  // Ten or more: rounded shares, and "the rest" (John: kept, as the shares are approximate).
+  if (groups.length === 1) return `The others were ${groups[0][1]}.`
   const [first, ...rest] = groups
-  // A plain count when there are few ("one was…", not "one of the four was…").
-  const sh = others < 10 ? num(first[0]) : share(first[0], others).bare
-  const v = first[0] === 1 && others < 10 ? 'was' : 'were'
+  const sh = share(first[0], others).bare
+  const v = 'were'
   if (rest.length === 1) return `Of the others, ${sh} ${v} ${first[1]}, and the rest ${rest[0][1]}.`
   const ps = [`${sh} ${v} ${first[1]}`, ...rest.map(([k, t]) => `${num(k)} ${k === 1 ? 'was' : 'were'} ${t}`)]
   return `Of the others, ${ps.slice(0, -1).join(', ')} and ${ps[ps.length - 1]}.`
@@ -494,7 +514,7 @@ export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind:
   const first = `${when}, ${who} that left ${o.from} ${between} reached ${o.to} within three minutes of the timetable.`
   let rest = lastWeekOthers(n, c.w3, c.w10, c.w30, c.w120)
   // When none were within three minutes there are no "others" (agreed by John, November 17th 2026).
-  if (k === 0) rest = rest.replace(/^Of the others,/, 'Of these,').replace(/^The others were/, 'They were')
+  if (k === 0) rest = rest.replace(/^Of the others,/, 'Of these,').replace(/^The others were/, 'They were all')
   return tenAfterWords(`${first}${rest ? ' ' + rest : ''}${more}`)
 }
 

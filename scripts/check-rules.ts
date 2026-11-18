@@ -216,12 +216,21 @@ const mm = count(JSON.parse(readFileSync(new URL('20261117-hsp-MAN-MIA-1840-1910
 // Cancelled trains didn't leave (John, November 18th 2026): counted apart.
 eq('the last week: one ran, three cancelled', lastWeekText(mm, { ...one, from: 'Manchester Piccadilly', to: 'Manchester Airport', start: '18:40', end: '19:10' }),
   "On Saturday November 14th, the only train that left Manchester Piccadilly between 6.40pm and 7.10pm didn't reach Manchester Airport within three minutes of the timetable. It was less than 10 minutes late. Three more were cancelled.")
+// The trains not on time, as counts following on from the on-time ones (John, November 18th 2026).
+const others = (n: number, w3: number, w10: number, w30: number, w120 = w30) => lastWeekOthers(n, w3, w10, w30, w120)
+eq('not on time: Totnes (John)', others(5, 2, 4, 5), 'Another two were less than 10 minutes late, and the other one was 10 to 30 minutes late.')
+eq('not on time: two bands, more than one', others(7, 2, 4, 7), 'Another two were less than 10 minutes late, and the other three were 10 to 30 minutes late.')
+eq('not on time: the first just one ("One more")', others(6, 3, 4, 6), 'One more was less than 10 minutes late, and the other two were 10 to 30 minutes late.')
+eq('not on time: three bands', others(8, 4, 6, 7, 8), 'Another two were less than 10 minutes late, one was 10 to 30 minutes late and one was more than half an hour late.')
+eq('not on time: one band', [others(9, 6, 9, 9), others(9, 8, 9, 9)], ['The other three were less than 10 minutes late.', 'The other was less than 10 minutes late.'])
+eq('not on time: none on time, one band', others(3, 0, 3, 3), 'They were all less than 10 minutes late.')
+eq('not on time: ten or more, shares and "the rest"', others(26, 8, 21, 26), 'Of the others, about three quarters were less than 10 minutes late, and the rest 10 to 30 minutes late.')
 eq('the last week: Tiverton Parkway (John)', lastWeekText({ n: 5, w3: 0, w10: 1, w30: 4, w120: 4, dates: [], elizabeth: 0 }, { ...one, from: 'Tiverton Parkway', to: 'London Paddington', kind: wk.kind, days: wk.days, start: '07:00', end: '08:00' }),
-  'On the five weekdays from Tuesday November 10th to Monday November 16th, none of the four trains that left Tiverton Parkway between 7am and 8am reached London Paddington within three minutes of the timetable. Of these, one was less than 10 minutes late, and the rest 10 to 30 minutes late. One more was cancelled.')
+  'On the five weekdays from Tuesday November 10th to Monday November 16th, none of the four trains that left Tiverton Parkway between 7am and 8am reached London Paddington within three minutes of the timetable. One was less than 10 minutes late, and the other three were 10 to 30 minutes late. One more was cancelled.')
 eq('the last week: all cancelled', lastWeekText({ n: 2, w3: 0, w10: 0, w30: 0, w120: 0, dates: [], elizabeth: 0 }, { ...one, from: 'Reading', to: 'London Paddington', start: '07:00', end: '07:30' }),
   'On Saturday November 14th, both trains due to leave Reading between 7am and 7.30am were cancelled.')
 eq('the last week, one company named (John, Twyford)', lastWeekText({ n: 10, w3: 6, w10: 8, w30: 8, w120: 8, dates: [], elizabeth: 0 }, { ...one, from: 'Twyford', to: 'London Paddington', kind: wk.kind, days: wk.days, start: '08:00', end: '09:00', noun: ['Great Western Railway train', 'Great Western Railway trains'] }),
-  'On the five weekdays from Tuesday November 10th to Monday November 16th, six of the eight Great Western Railway trains that left Twyford between 8am and 9am reached London Paddington within three minutes of the timetable. The others were less than 10 minutes late. Two more were cancelled.')
+  'On the five weekdays from Tuesday November 10th to Monday November 16th, six of the eight Great Western Railway trains that left Twyford between 8am and 9am reached London Paddington within three minutes of the timetable. The other two were less than 10 minutes late. Two more were cancelled.')
 eq('the last week, the Elizabeth Line part (draft)', standInMixedLine('London Paddington', { name: 'Ealing Broadway', side: 'to' }), 'National Rail’s record leaves Elizabeth Line trains out at London Paddington, so for those this shows how they ran as far as Ealing Broadway.')
 eq('the last week: the hours', [HOURS.length, hourLabel(HOURS[0]), hourLabel(17), hourLabel(HOURS[HOURS.length - 1])], [19, '5am to 6am', '5pm to 6pm', '11pm to midnight'])
 const sentences = [lastWeekText(hsp, { ...one, kind: wk.kind, days: wk.days }), lastWeekText(mm, one)]

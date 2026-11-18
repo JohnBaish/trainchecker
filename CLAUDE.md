@@ -54,6 +54,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: "ten", one platform, the new tagline (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
+
+- **John:** "ten" when it closely follows a spelt number; "has only been announced" for one
+  platform; tagline "How the trains are doing, written the way we speak."; yes to the Ealing
+  Broadway idea; Tiverton Parkway to Paddington has no slower trains (1h58, 1h58, 2h00), to debug.
+  `SPEC.md` top and §10.36 to §10.38.
+- **Built:** `tenAfterWords()` on every generated sentence; the preview picture remade from a new
+  source (`design/og-trainchecker.html`, `design/og-shoot.cjs`; the old option A loaded Google's
+  fonts).
+- **Checked:** `npm run check` 167 + 50 + 68; `tsc -b`, lint; the picture looked at (both fonts
+  loaded, the script stops if not).
+
 ### November 18th 2026: cancellations, tenses, platforms, the last week, no record, a cross in the boxes (branch `claude/inspiring-pascal-h96tqk`; Claude Code)
 
 - **John (the preview):** "which weren't cancelled" and "didn't run at all"; digits for "19 in 20";

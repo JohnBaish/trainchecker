@@ -12,6 +12,13 @@ const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'e
 export const num = (n: number) => (Number.isInteger(n) && n >= 0 && n < 10 ? WORDS[n] : n.toLocaleString('en-GB'))
 export const Cap = (s: string) => s[0].toUpperCase() + s.slice(1)
 
+/** "10" spelt "ten" when it follows a spelt number closely, within two words (John, November 18th
+ *  2026): "nine in ten", "four and ten minutes late". Not a time ("10.30pm") or a platform. */
+export function tenAfterWords(s: string): string {
+  return s.replace(/\b(one|two|three|four|five|six|seven|eight|nine)\b((?:\s+\S+){0,2}?)\s+10\b(?![.:]\d|\s*[ap]m)/gi,
+    (m, w: string, mid: string) => (/platforms?$/i.test(mid.trim()) ? m : `${w}${mid} ten`))
+}
+
 /** "18:26" → "6.26pm"; "19:00" → "7pm"; "12:00" → "midday"; "00:00" → "midnight" (§15). */
 export function t12(hhmm: string): string {
   const [h, m] = hhmm.split(':').map(Number)
@@ -117,7 +124,7 @@ export function lastTwoLines(a: Analysis): string[] {
   }
   // "Two trains didn't run at all." (John, November 18th 2026.)
   if (c) out.push(L.known ? `${Cap(num(c))} ${c === 1 ? "train didn't" : "trains didn't"} run at all.` : `${Cap(num(c))} ${c === 1 ? 'train was' : 'trains were'} cancelled.`)
-  return out
+  return out.map(tenAfterWords)
 }
 
 /** A line of the verdict: an opening in bold ("Good news:") and the rest. */
@@ -176,7 +183,7 @@ export function verdict(a: Analysis): Verdict {
   // The last two hours are never in the verdict now: they stay in their own box, and when they
   // were bad, "Good news" says "leaving on time" instead of "running well" (John, November 17th
   // 2026, stage 4; replaces N5).
-  return { kind, lines }
+  return { kind, lines: lines.map((l) => ({ ...l, text: tenAfterWords(l.text) })) }
 }
 
 /** "because of A and B", or "mostly because of A", or nothing. */
@@ -304,7 +311,7 @@ export function nextFour(a: Analysis): NextFour | null {
     }
   })
   const fold = !rows.length ? null : rows.length === 1 ? "Show the train that isn't on time" : `Show the ${num(rows.length)} trains that aren't on time`
-  return { lines: [lines[0], lines.slice(1).join(' ')].filter(Boolean), rows, fold }
+  return { lines: [lines[0], lines.slice(1).join(' ')].filter(Boolean).map(tenAfterWords), rows, fold }
 }
 
 /** Platforms for each kind of train, when the trains fall into groups (John, November 18th 2026:
@@ -354,7 +361,7 @@ export function platforms(a: Analysis): string | null {
     if (a.platKnown === 1) return `The train is currently going from platform ${p1}.`
     return rest.length ? `One train is currently going from platform ${p1} and the other from platform ${rest[0][0]}.` : `Both trains are currently going from platform ${p1}.`
   }
-  if (a.platKnown === 1) return `So far, a platform has been announced for one train: platform ${p1}.`
+  if (a.platKnown === 1) return `So far, a platform has only been announced for one train: platform ${p1}.`
   if (a.platKnown === 2) return rest.length ? `So far, platforms have been announced for two trains: platforms ${p1} and ${rest[0][0]}.` : `So far, platforms have been announced for two trains, both platform ${p1}.`
   const byKind = platformsByKind(a)
   if (byKind) return byKind
@@ -397,7 +404,7 @@ export function shareWords(a: Analysis): { text: string; title: string; hash: st
     const r = mainReason([...a.cancelled, ...a.late5])
     body = `be prepared. Of the next ${num(a.ahead.length)}, ${num(a.cancelled.length)} ${was(a.cancelled.length)} cancelled${r ? `, mostly because of ${r}` : ''}.`
   }
-  return { text: lead + body + ' From Trainchecker.', title, hash }
+  return { text: tenAfterWords(lead + body + ' From Trainchecker.'), title, hash }
 }
 
 // ---- The last week (SPEC §8.10) ----
@@ -485,7 +492,7 @@ export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind:
   let rest = lastWeekOthers(n, c.w3, c.w10, c.w30, c.w120)
   // When none were within three minutes there are no "others" (agreed by John, November 17th 2026).
   if (k === 0) rest = rest.replace(/^Of the others,/, 'Of these,').replace(/^The others were/, 'They were')
-  return `${first}${rest ? ' ' + rest : ''}${more}`
+  return tenAfterWords(`${first}${rest ? ' ' + rest : ''}${more}`)
 }
 
 /** The quote's Share words (SPEC §8.13). */

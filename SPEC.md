@@ -1,6 +1,6 @@
 # Trainchecker: spec (draft)
 
-**Tagline:** "How's this train line doing" (John, November 17th 2026).
+**Tagline:** "How the trains are doing, written the way we speak." (John, November 18th 2026; was "How's this train line doing", November 17th 2026).
 
 Draft by Claude Code, November 17th 2026, from John's brief in
 `design/handover-2026-11-17.md`. Everything here is for John to agree. The
@@ -420,3 +420,11 @@ Asked for by John on November 17th 2026, before stage 4's work; built on the sta
     or Bond Street is one end; and in place of "no trains left…" when an Elizabeth Line journey's
     answer is empty.
 35. **A cross (×) in the station boxes** to empty them in one tap (John), keeping the cursor there.
+36. **"Ten" after a spelt number** (John): "10" is spelt when it follows one to nine within two
+    words ("nine in ten", "four and ten minutes late"); otherwise digits ("one was less than 10
+    minutes late"). Not for times or platforms.
+37. **One platform known:** "So far, a platform has only been announced for one train: platform
+    12A." (John).
+38. **The tagline** (John): "How the trains are doing, written the way we speak." The link-preview
+    picture remade (`design/og-trainchecker.html`, `node design/og-shoot.cjs`, fonts from
+    `node_modules`), broken after the comma.

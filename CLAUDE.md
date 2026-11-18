@@ -57,6 +57,24 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 18th 2026: stage 5 begun: search tags, robots.txt and sitemap; the baish.net card (branch `claude/laughing-hawking-8d2b6w`; Claude Code)
+
+- **John (from drafts, three of each):** title "Trainchecker – free train delays and disruption checker" (1c);
+  description "Free live train delays between any two stations in Great Britain, in plain English: the next four
+  hours, platforms, the last week and engineering work." (2c, 151 characters; "engineering work" kept); preview
+  tags the name and tagline with `og-trainchecker.png`; the tab goes back to the full title after a journey;
+  no more first-visit text (the introduction is enough); on baish.net, "Near you", with the tagline as its
+  line, and the hub description "…fuel prices, rivers, roads and trains." (148). No search-volume figures were
+  found; the drafts used the words National Rail, the train companies and Trainline use.
+- **Built:** `index.html` (title, description, canonical `https://trainchecker.baish.net/`, `og:` and
+  `twitter:` tags, the comment); `JourneyView.tsx`'s `HOME_TITLE`; `public/robots.txt`, `public/sitemap.xml`.
+  In clockwheel, the card on the same branch name (see its `CLAUDE.md`); `SEO-HANDOVER.md` re-copied.
+- **Checked:** `npm run check` 207 + 57 + 73, `tsc -b`, lint, build; Chromium against `vite preview` at 1200px
+  and 390px with touch: every tag, the tab title before, during and after a journey, robots.txt and sitemap.xml
+  served (200), no errors, no sideways scroll.
+- **Still to do:** John's word to merge; John adds trainchecker.baish.net in Vercel and its DNS record; check
+  robots.txt and sitemap.xml live; Search Console; then the card on baish.net, the tracker and the overview.
+
 ### November 18th 2026: the fresh look, and every change from it, live (`main`; Claude Code)
 
 - **Review** of `main` at 58b8a5d (no changes made during it): 16 saved boards at 1200px, 390px,

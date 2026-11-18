@@ -20,6 +20,9 @@ import { QuoteCard } from './Tail.tsx'
 
 type State = { s: 'loading' } | { s: 'ok'; a: Analysis } | { s: 'failed'; why: string }
 
+// The page's own title, as in index.html (search, stage 5).
+const HOME_TITLE = 'Trainchecker – free train delays and disruption checker'
+
 // When the live boards can't be had (agreed by John, November 17th 2026).
 const FAILED: Record<string, string> = {
   unknown: 'National Rail doesn’t recognise one of these stations. Please choose again.',
@@ -115,11 +118,11 @@ export function JourneyView({ journey }: { journey: Journey }) {
     if (state.s === 'ok') { setRefreshing(true); setRefreshFailed(false) } else { setState({ s: 'loading' }); setDays({ s: 'loading' }) }
     setRound(round + 1)
   }
-  // The tab names the journey (fresh look 7.2).
+  // The tab names the journey (fresh look 7.2), and goes back to index.html's title afterwards.
   const titleFrom = state.s === 'ok' ? state.a.from : nameOf(journey.from), titleTo = state.s === 'ok' ? state.a.to : nameOf(journey.to)
   useEffect(() => {
     document.title = `${titleFrom} to ${titleTo} – Trainchecker`
-    return () => { document.title = 'Trainchecker' }
+    return () => { document.title = HOME_TITLE }
   }, [titleFrom, titleTo])
 
   const a = state.s === 'ok' ? state.a : null

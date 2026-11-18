@@ -3,9 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Trainchecker</title>
-    <!-- Search and link-preview tags come in stage 5 (PLAN.md; SEO-HANDOVER.md). The preview
-         picture, John's choice A, is already in public/og-trainchecker.png. -->
+    <title>Trainchecker – free train delays and disruption checker</title>
+    <meta name="description" content="Free live train delays between any two stations in Great Britain, in plain English: the next four hours, platforms, the last week and engineering work." />
+    <link rel="canonical" href="https://trainchecker.baish.net/" />
+    <!-- Search (stage 5, John's wording, November 18th 2026; SEO-HANDOVER.md): the <title> and
+         the search description above are for search engines; the og:/twitter: tags below are for
+         link previews and use the tagline instead. The canonical link names the one main address.
+         JourneyView.tsx sets the tab's title for a journey and puts this one back afterwards:
+         keep the two the same. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Trainchecker" />
+    <meta property="og:description" content="How the trains are doing, written the way we speak." />
+    <meta property="og:image" content="https://trainchecker.baish.net/og-trainchecker.png" />
+    <meta property="og:url" content="https://trainchecker.baish.net/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Trainchecker" />
+    <meta name="twitter:description" content="How the trains are doing, written the way we speak." />
+    <meta name="twitter:image" content="https://trainchecker.baish.net/og-trainchecker.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <!-- Dark mode: set before the page draws, so there's no flash of the wrong colours. A
          choice kept by the switch wins; otherwise the device's own setting (house style §2).

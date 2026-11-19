@@ -58,7 +58,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 19th 2026: "The next ten trains are leaving at:"; share-picture mock-ups (branch `claude/beautiful-allen-xir4rp`; Claude Code)
+### November 19th 2026: "The next ten trains"; the two lists shared as pictures (branch `claude/beautiful-allen-xir4rp`, merged the same day; Claude Code)
 
 - **John:** no sentence about the trains after the first ten with platforms; the list starts "The next ten
   trains are leaving at:" instead. Done in `platformTrains()`; grouped lists (Reading to Paddington) start
@@ -95,6 +95,8 @@ given its own branch). Before committing there, run
   last, the rest in order, a delayed platforms row keeps its badge); `tsc -b`, lint, build; the pictures
   read back from the clipboard with two trains made "Delayed" in a saved board (illustration only,
   `design/share-picture-options/built-*-delayed-illustration.png`).
+- **John:** "Please merge it to main." Checks 259 + 57 + 73, `tsc -b`, lint and build clean first; merged
+  with this note in the same push (one deployment). Still to try on a real iPhone: the share sheet.
 
 ### November 18th 2026: "Delayed" trains out of the lists; live (`main`; Claude Code)
 

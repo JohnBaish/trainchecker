@@ -15,7 +15,7 @@ import { count } from '../api/week.ts'
 import { analyse, diff, type Snap, type Analysis } from '../src/lib/analyse.ts'
 import {
   standIn, standInLine, standInMixedLine, tenAfterWords, verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
-  hourLabel, HOURS, quoteShareText, kindLine, platformTrains, arrivals, listShareWords, type Line,
+  hourLabel, HOURS, quoteShareText, kindLine, platformTrains, arrivals, listShareWords, platformsPicture, arrivalsPicture, type Line,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
 import { STATIONS, resolve, suggest, complete } from '../src/lib/stations.ts'
@@ -378,5 +378,25 @@ eq('stations: every journey in the snapshots', [...inSnaps].filter((c) => !STATI
 eq('stations: typed names and codes', [resolve('reading'), resolve('London Paddington'), resolve('kgx'), resolve('Goring & Streatley'), resolve('nowhere')], ['RDG', 'PAD', 'KGX', 'GOR', null])
 eq('stations: suggestions', [suggest('paddington')[0][1], suggest('man')[0][1], suggest('tcr')[0][0]], ['London Paddington', 'Manchester Piccadilly', 'TCR'])
 
+
+// The lists as pictures (John, November 19th 2026): platforms with the times trains are leaving,
+// arrivals with the timetabled time; the platform once when all share one; the share words.
+{
+  const pp = platformsPicture(rdgPad)!
+  eq('picture: platforms, ten rows, the leaving time, kind and lateness', [pp.rows.length, pp.rows[0], pp.rows.find((r) => r.late)], [10, { time: '6.32pm', mid: 'Fast', late: '', platform: '11A' }, { time: '6.34pm', mid: 'Elizabeth Line', late: 'six minutes late', platform: '13' }])
+  eq('picture: platforms, the words with more than ten (John)', pp.words.text, 'The next ten trains from Reading to London Paddington with platforms, at 6.24pm on November 17th, from Trainchecker.')
+  const bp = platformsPicture(analyse(snapOf(raw('20261117-1824-BTH-BRI.json'))))!
+  eq('picture: one platform for all, said once, no kinds', [bp.one, bp.rows.every((r) => r.mid === '')], ['1', true])
+  eq('picture: platforms, fewer than ten', platformsPicture(A('TVP-PAD'))!.words.text.startsWith('The trains from Tiverton Parkway to London Paddington with platforms, at '), true)
+  eq('picture: no platforms, no picture', platformsPicture(A('PAD-PLY')), null)
+  const ap = arrivalsPicture(rp9)!
+  eq('picture: arrivals, timetabled time, "the 8.47pm", "arriving … late" (John)', [ap.heads, ap.rows[2]], [['DUE IN', 'FROM READING'], { time: '9.10pm', mid: 'the 8.47pm', late: 'arriving three minutes late' }])
+  eq('picture: arrivals in timetabled order', ap.rows.map((r) => r.time).join(' '), '9.01pm 9.08pm 9.10pm 9.21pm 9.24pm 9.24pm 9.28pm 9.35pm 9.44pm 9.52pm')
+  eq('picture: arrivals, the words with more than ten', ap.words.text, 'The first ten trains due at London Paddington from Reading after 8.59pm on November 17th, from Trainchecker.')
+  eq('picture: arrivals, a long journey has its note', arrivalsPicture(A('TVP-PAD'))!.note, "Trains that left Tiverton Parkway more than two hours ago aren't included, as Trainchecker can't see them.")
+  eq('picture: arrivals, none, words instead', arrivalsPicture(mdg), null)
+  const dl = changed('RDG-MDG', (sv) => { const t = sv.filter((x) => x.sta && !x.ata)[0]; t.std = '08:30'; t.sta = '08:45'; t.eta = 'Delayed'; t.cancelled = false })
+  eq('picture: a delayed train with no time is a row of its own', arrivalsPicture(dl)!.rows, [{ time: '8.45am', mid: 'the 8.30am', late: 'delayed, no new time yet' }])
+}
 console.log(`check-rules: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

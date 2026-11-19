@@ -9,8 +9,8 @@ import { fetchDays, fetchLive } from '../lib/load.ts'
 import { closedNow, forJourney } from '../lib/incidents.ts'
 import { hashOf, remember, type Journey } from '../lib/route.ts'
 import { useIsNarrow } from '../lib/responsive.ts'
-import { NO_RECORD_AT, arrivals, platformTrains, listShareWords, type Listing, type TimeRow, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
-import { isTouch, shareText } from '../lib/share.ts'
+import { NO_RECORD_AT, arrivals, platformTrains, listShareWords, platformsPicture, arrivalsPicture, type Listing, type TimeRow, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
+import { deliverImage, isTouch, listFileName, listImage, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
 import { Chooser } from './Chooser.tsx'
 import { Icon } from './Icon.tsx'
@@ -48,21 +48,24 @@ function TimeList({ x }: { x: Listing }) {
   }
   return (
     <>
-      {x.blocks.map((b, i) => <div key={i} className="tlist"><p className="tlead">{b.head ? <b>{b.lead}</b> : b.lead}</p>{lines(b.rows)}</div>)}
+      {x.blocks.map((b, i) => <div key={i} className="tlist"><p className={b.head ? 'tlead thead' : 'tlead'}>{b.lead}</p>{lines(b.rows)}</div>)}
       {x.after && <p className="tafter">{x.after}</p>}
     </>
   )
 }
 
-/** Share for one of the lists, inside its fold (John, November 18th 2026; words Claude's drafts). */
+/** Share for one of the lists, inside its fold: a picture of the list in the dark colours with a
+ *  sentence and the link (John, November 19th 2026); the words alone when there's no list. */
 function ListShare({ a, kind, prose }: { a: Analysis; kind: 'platforms' | 'arrivals'; prose: string }) {
   const [status, setStatus] = useState('')
   const touch = isTouch()
   const go = async () => {
     setStatus('')
-    const w = listShareWords(a, kind, prose)
-    const r = await shareText({ title: w.title, text: w.text, url: `${location.origin}/${w.hash}` })
-    setStatus(r === 'copied' ? 'Copied' : r === 'failed' ? 'Sorry, this browser wouldn’t copy it.' : '')
+    const pic = kind === 'platforms' ? platformsPicture(a) : arrivalsPicture(a)
+    const w = pic ? pic.words : listShareWords(a, kind, prose)
+    const words = { title: w.title, text: w.text, url: `${location.origin}/${w.hash}` }
+    const r = pic ? await deliverImage(listImage(pic), listFileName(kind, w.hash), words) : await shareText(words)
+    setStatus(r === 'copied' ? 'Copied' : r === 'saved' ? 'Saved as a picture' : r === 'failed' ? 'Sorry, this browser wouldn’t copy it.' : '')
   }
   const what = kind === 'platforms' ? 'these trains' : 'these arrivals'
   return (

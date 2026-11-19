@@ -587,3 +587,17 @@ they differ.
     leaving at:" (or "…leaving from platform 1 at:"). Where the trains are grouped by kind, "The next ten
     trains" comes first, in bold with no colon (John), then the groups as before, and the Share words begin "Of the next ten trains,
     fast ones are leaving…" (Claude's draft for the grouped case, for John).
+17. **"The next ten trains" above grouped lists** (John, November 19th 2026): in small orange capitals,
+    as the day labels in "The days ahead" (option C), so "Fast trains:" reads as the first heading.
+18. **The two lists' Share sends a picture** (John, November 19th 2026), always in the dark colours, with
+    a sentence and the journey's link sent separately (house style §17). Platforms (option B): a row per
+    train with the time it's leaving, the kind of train when the list is grouped, lateness in orange
+    ("six minutes late"), and the platform as a badge; when all share one platform, "All from platform"
+    and the badge once in the heading row (3.1). Arrivals (B1): "Due in" with the timetabled arrival,
+    "From Reading" with "the 8.47pm", and "arriving three minutes late". Every row keeps its "am" or "pm".
+    A train delayed with no time is a row of its own, "delayed, no new time yet" (Claude's draft); a long
+    journey's note about trains Trainchecker can't see goes under the rows. The words: "The next ten
+    trains from Reading to London Paddington with platforms, at 6.24pm on November 17th, from
+    Trainchecker." ("The trains…" with ten or fewer); "The trains due at London Paddington from Reading,
+    at 8.59pm on November 17th, from Trainchecker." ("The first ten trains due at … after 8.59pm on
+    November 17th…" with more). With no trains in the list, the words alone, as before.

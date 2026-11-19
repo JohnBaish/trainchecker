@@ -757,6 +757,69 @@ export function listShareWords(a: Analysis, kind: 'platforms' | 'arrivals', pros
   return { text: tenAfterWords(`${head} ${prose} From Trainchecker.`), title: `Trainchecker: ${a.from} to ${a.to}`, hash: `#${a.fromCrs}-${a.toCrs}` }
 }
 
+/** The two lists as a picture (John, November 19th 2026): a row per train, in the dark colours.
+ *  Platforms: the times trains are leaving, the kind of train when the list is grouped, lateness,
+ *  and the platform (said once in the heading when all share one). Arrivals: the timetabled
+ *  arrival, "the 8.47pm" from A, and lateness. Delayed trains with no time are rows of their own. */
+export type PicRow = { time: string; mid: string; late: string; platform?: string }
+export type ListPicture = {
+  kicker: string; title: string; when: string; heads: [string, string]
+  one: string | null; rows: PicRow[]; note: string | null; words: { text: string; title: string; hash: string }
+}
+const lateWords = (k: number) => `${num(k)} ${k === 1 ? 'minute' : 'minutes'} late`
+const NO_TIME = 'delayed, no new time yet'
+
+export function platformsPicture(a: Analysis): ListPicture | null {
+  const leaves = (t: Train) => diff(a.now, t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std)
+  const ts = a.ahead.filter((t) => !t.cancelled && t.platform).sort((x, y) => leaves(x) - leaves(y))
+  if (!ts.length) return null
+  const first = ts.slice(0, 10), limited = ts.length > 10
+  const groups = speedGroups(a).filter((g) => g.kind !== 'all' && first.some((t) => g.trains.includes(t)))
+  const label = { fast: 'Fast', slower: 'Slower', elizabeth: 'Elizabeth Line', all: '' } as const
+  const rows = first.map((t): PicRow => {
+    const late = t.late !== null && t.late > 0 && isTime(t.etd)
+    return {
+      time: t12(late ? t.etd! : t.std),
+      mid: groups.length > 1 ? label[groups.find((g) => g.trains.includes(t))?.kind ?? 'all'] : '',
+      late: t.unknown ? NO_TIME : late ? lateWords(t.late!) : '',
+      platform: t.platform!,
+    }
+  })
+  const one = rows.every((r) => r.platform === rows[0].platform) && rows.length > 1 ? rows[0].platform! : null
+  const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
+  return {
+    kicker: 'TRAINCHECKER · PLATFORMS', title: `${a.from} to ${a.to}`, when: at,
+    heads: ['LEAVING', 'PLATFORM'], one, rows, note: null,
+    words: { text: `${limited ? 'The next ten trains' : 'The trains'} from ${a.from} to ${a.to} with platforms, at ${at}, from Trainchecker.`, title: `Trainchecker: ${a.from} to ${a.to}`, hash: `#${a.fromCrs}-${a.toCrs}` },
+  }
+}
+
+export function arrivalsPicture(a: Analysis): ListPicture | null {
+  const fromNow = (t: string) => diff(a.now, t)
+  const when = (t: Train) => (isTime(t.eta) ? t.eta : t.sta!)
+  const due = [...a.past, ...a.ahead].filter((t) => t.sta && !t.ata && !t.cancelled)
+  const delayed = (t: Train) => !!t.eta && t.eta !== 'On time' && !isTime(t.eta)
+  const inHour = due.filter((t) => !delayed(t) && fromNow(when(t)) >= 0 && fromNow(when(t)) <= 60).sort((x, y) => fromNow(when(x)) - fromNow(when(y)))
+  const held = due.filter((t) => delayed(t) && fromNow(t.sta!) >= 0 && fromNow(t.sta!) <= 60)
+  const shown = [...inHour.slice(0, 10), ...held].sort((x, y) => fromNow(x.sta!) - fromNow(y.sta!))
+  if (!shown.length) return null
+  const longest = Math.max(0, ...[...a.past, ...a.ahead].filter((t) => t.sta).map((t) => diff(t.std, t.sta!)))
+  const rows = shown.map((t): PicRow => {
+    const late = isTime(t.eta) ? diff(t.sta!, t.eta) : 0
+    return { time: t12(t.sta!), mid: `the ${t12(t.std)}`, late: delayed(t) ? NO_TIME : late > 0 ? `arriving ${lateWords(late)}` : '' }
+  })
+  const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
+  return {
+    kicker: 'TRAINCHECKER · ARRIVALS', title: `At ${a.to} from ${a.from}`, when: at,
+    heads: ['DUE IN', `FROM ${a.from.toUpperCase()}`], one: null, rows,
+    note: longest >= 120 ? `Trains that left ${a.from} more than two hours ago aren't included, as Trainchecker can't see them.` : null,
+    words: {
+      text: inHour.length > 10 ? `The first ten trains due at ${a.to} from ${a.from} after ${at}, from Trainchecker.` : `The trains due at ${a.to} from ${a.from}, at ${at}, from Trainchecker.`,
+      title: `Trainchecker: ${a.from} to ${a.to}`, hash: `#${a.fromCrs}-${a.toCrs}`,
+    },
+  }
+}
+
 /** The quote's Share words (SPEC §8.13). */
 export const quoteShareText = (author: string, date: Date) => `The quote of the day on Trainchecker for ${dateShort(date)}, from ${author}.`
 

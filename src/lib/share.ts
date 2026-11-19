@@ -4,11 +4,14 @@
 // gets the sentence, the link (sent separately) and a title; on a computer the sentence and the
 // link are copied, one under the other.
 //
+// The platforms and arrivals lists: a picture of the list, a row per train, always in the dark
+// colours (John, November 19th 2026), with the sentence and the journey's link.
+//
 // The quote of the day: a picture of the quote in the house style, with the sentence and a link
 // to the first page. Always in the light colours; made on the visitor's device, and nothing is
 // sent anywhere until the visitor chooses where it goes.
 import type { Quote } from '../data/quotes.ts'
-import { dateShort } from './sentences.ts'
+import { dateShort, type ListPicture } from './sentences.ts'
 
 const touch = () => typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches
 export const isTouch = touch
@@ -125,6 +128,150 @@ export function quoteImage(q: Quote, date: Date): HTMLCanvasElement {
   ctx.textAlign = 'left'
   return canvas
 }
+
+// ---- The two lists' pictures (John, November 19th 2026; options B, B1 and 3.1) ----
+
+/** The dark colours (global.css), whatever the page's own mode. */
+const D = { bg: '#24211e', band: '#37332e', text: '#e8dfcf', muted: '#b0a593', accent: '#dd8a56', kicker: '#f2a573', rule: 'rgba(232,223,207,0.16)', badge: '#4a2a14' }
+
+function spaced(ctx: CanvasRenderingContext2D, px: string) {
+  if ('letterSpacing' in ctx) (ctx as CanvasRenderingContext2D & { letterSpacing: string }).letterSpacing = px
+}
+
+/** Draws text to fit a width, a size smaller at a time if need be. */
+function fitFont(ctx: CanvasRenderingContext2D, text: string, weight: number, size: number, width: number): number {
+  let z = size
+  do { ctx.font = `${weight} ${z}px ${FIG}`; if (ctx.measureText(text).width <= width) break; z -= 1 } while (z > 18)
+  return z
+}
+
+export function listImage(p: ListPicture): HTMLCanvasElement {
+  const LW = 1080, scale = 2, pad = 60, inner = 52
+  const canvas = document.createElement('canvas')
+  const probe = canvas.getContext('2d')!
+  probe.font = `52px ${CAP}`
+  const title = wrap(probe, p.title, LW - pad * 2)
+  probe.font = `24px ${FIG}`
+  const x0 = pad + inner, x1 = LW - pad - inner
+  const note = p.note ? wrap(probe, p.note, x1 - x0) : []
+  const titleTop = 100, titleLh = 60
+  const bandTop = titleTop + title.length * titleLh + 20
+  const headH = p.one ? 70 : 50, rowH = 90
+  const bandH = 44 + headH + p.rows.length * rowH - 18 + (note.length ? 26 + note.length * 34 : 0) + 44
+  const H = bandTop + bandH + 110
+  canvas.width = LW * scale
+  canvas.height = H * scale
+  const ctx = canvas.getContext('2d')!
+  ctx.scale(scale, scale)
+  ctx.fillStyle = D.bg
+  ctx.fillRect(0, 0, LW, H)
+
+  ctx.fillStyle = D.kicker
+  ctx.font = `600 20px ${FIG}`
+  spaced(ctx, '1.6px')
+  ctx.fillText(p.kicker, pad, 72)
+  spaced(ctx, '0px')
+  ctx.fillStyle = D.muted
+  ctx.font = `20px ${FIG}`
+  ctx.textAlign = 'right'
+  ctx.fillText(p.when, LW - pad, 72)
+  ctx.textAlign = 'left'
+  ctx.fillStyle = D.text
+  ctx.font = `52px ${CAP}`
+  title.forEach((l, i) => ctx.fillText(l, pad, titleTop + 36 + i * titleLh))
+
+  // The band, with its terracotta edge on the left (as the quote's picture).
+  const y0 = bandTop, y1 = bandTop + bandH
+  ctx.save()
+  ctx.beginPath()
+  ctx.roundRect(pad, y0, LW - pad * 2, bandH, 36)
+  ctx.clip()
+  ctx.fillStyle = D.band
+  ctx.fillRect(pad, y0, LW - pad * 2, bandH)
+  ctx.fillStyle = D.accent
+  ctx.fillRect(pad, y0, 10, bandH)
+  ctx.restore()
+
+  const badge = (text: string, right: number, mid: number) => {
+    ctx.font = `700 34px ${FIG}`
+    const w = Math.max(92, ctx.measureText(text).width + 40)
+    ctx.fillStyle = D.badge
+    ctx.beginPath(); ctx.roundRect(right - w, mid - 26, w, 52, 18); ctx.fill()
+    ctx.fillStyle = D.kicker
+    ctx.textAlign = 'center'
+    ctx.fillText(text, right - w / 2, mid + 12)
+    ctx.textAlign = 'left'
+    return w
+  }
+  const colX = x0 + 194
+  let y = y0 + 44
+  ctx.font = `600 18px ${FIG}`
+  ctx.fillStyle = D.muted
+  spaced(ctx, '1.4px')
+  if (p.one) {
+    const mid = y + 20
+    ctx.fillText(p.heads[0], x0, mid + 7)
+    const w = badge(p.one, x1, mid)
+    ctx.font = `600 18px ${FIG}`
+    ctx.fillStyle = D.muted
+    ctx.textAlign = 'right'
+    ctx.fillText('ALL FROM PLATFORM', x1 - w - 16, mid + 7)
+    ctx.textAlign = 'left'
+  } else {
+    ctx.fillText(p.heads[0], x0, y + 14)
+    const second = p.rows.some((r) => r.platform)
+    if (second) { ctx.textAlign = 'right'; ctx.fillText(p.heads[1], x1, y + 14); ctx.textAlign = 'left' }
+    else ctx.fillText(p.heads[1], colX, y + 14)
+  }
+  spaced(ctx, '0px')
+  y += headH
+
+  p.rows.forEach((r, i) => {
+    const top = y + i * rowH, mid = top + 45
+    ctx.strokeStyle = D.rule
+    ctx.lineWidth = 1
+    ctx.beginPath(); ctx.moveTo(x0, top); ctx.lineTo(x1, top); ctx.stroke()
+    ctx.fillStyle = D.text
+    ctx.font = `700 36px ${FIG}`
+    ctx.fillText(r.time, x0, mid + 13)
+    const right = r.platform && !p.one ? x1 - badge(r.platform, x1, mid) - 20 : x1
+    // The middle: the kind or "the 8.47pm" in grey, then lateness in orange.
+    const parts = [r.mid, r.late].filter(Boolean)
+    const all = parts.join(' · ')
+    const z = fitFont(ctx, all, 600, 28, right - colX)
+    let x = colX
+    if (r.mid) {
+      ctx.font = `400 ${z}px ${FIG}`; ctx.fillStyle = D.muted
+      ctx.fillText(r.mid + (r.late ? ' · ' : ''), x, mid + 10)
+      x += ctx.measureText(r.mid + (r.late ? ' · ' : '')).width
+    }
+    if (r.late) {
+      ctx.font = `600 ${z}px ${FIG}`; ctx.fillStyle = D.accent
+      ctx.fillText(r.late, x, mid + 10)
+    }
+  })
+  if (note.length) {
+    ctx.fillStyle = D.muted
+    ctx.font = `24px ${FIG}`
+    const top = y + p.rows.length * rowH - 18 + 26
+    note.forEach((l, i) => ctx.fillText(l, x0, top + 24 + i * 34))
+  }
+
+  ctx.strokeStyle = D.rule
+  ctx.beginPath(); ctx.moveTo(pad, y1 + 44); ctx.lineTo(LW - pad, y1 + 44); ctx.stroke()
+  ctx.fillStyle = D.kicker
+  ctx.font = `30px ${CAP}`
+  ctx.fillText('Trainchecker', pad, y1 + 88)
+  ctx.fillStyle = D.muted
+  ctx.font = `20px ${FIG}`
+  ctx.textAlign = 'right'
+  ctx.fillText('trainchecker.baish.net', LW - pad, y1 + 86)
+  ctx.textAlign = 'left'
+  return canvas
+}
+
+/** "trainchecker-platforms-RDG-PAD.png" */
+export const listFileName = (kind: 'platforms' | 'arrivals', hash: string) => `trainchecker-${kind}-${hash.slice(1)}.png`
 
 function save(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob)

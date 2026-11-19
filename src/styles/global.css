@@ -165,6 +165,8 @@ details.trains-fold { margin-top: var(--space-3); }
    on-time ones run together with accent-coloured dots. The commas are for screen readers only. */
 .tlist { margin-top: var(--space-2); }
 .tlist .tlead { margin: 0 0 4px; }
+/* "The next ten trains" above grouped lists, as the day labels in "The days ahead" (John, November 19th 2026). */
+.tlist .thead { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; color: var(--color-accent-700); padding-top: 4px; }
 .tline { margin: 4px 0; line-height: 1.55; }
 .tnote { color: var(--color-neutral-700); }
 .tdot { color: var(--color-accent); font-weight: 700; }

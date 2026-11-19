@@ -80,6 +80,15 @@ given its own branch). Before committing there, run
   heading row; `option-Bs2`, a badge and "All ten trains are leaving from platform 1", times in two columns,
   read down), and "The next ten trains" in a shade as well as bold (`page-heading-options.png`: A accent, B
   grey, C small capitals as "The days ahead" uses). Nothing built.
+- **John:** 3.1 and 4C; build it. **Built:** `.thead` in `global.css`; `platformsPicture()` and
+  `arrivalsPicture()` in `sentences.ts`; `listImage()` and `listFileName()` in `share.ts` (canvas,
+  1080 wide at 2×, dark colours); `ListShare` sends the picture, the words alone when there's no list.
+  `SPEC.md` §12.17 and §12.18. **Checked:** `npm run check` 257 + 57 + 73 (new: rows, kinds, lateness,
+  one platform, timetabled order, the words, a long journey's note, a delayed train); `tsc -b`, lint,
+  build; Chromium at 1200px: Copy puts the picture on the clipboard (read back for four saved boards,
+  `design/share-picture-options/built-*.png`); at 390px with touch: no share sheet in this browser, so
+  it saves the picture ("Saved as a picture"); no errors, no sideways scroll. **Not checked:** a real
+  phone's share sheet (WhatsApp, Messages), Safari's clipboard.
 
 ### November 18th 2026: "Delayed" trains out of the lists; live (`main`; Claude Code)
 

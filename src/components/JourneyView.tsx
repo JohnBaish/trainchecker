@@ -48,7 +48,7 @@ function TimeList({ x }: { x: Listing }) {
   }
   return (
     <>
-      {x.blocks.map((b, i) => <div key={i} className="tlist"><p className="tlead">{b.lead}</p>{lines(b.rows)}</div>)}
+      {x.blocks.map((b, i) => <div key={i} className="tlist"><p className="tlead">{b.head ? <b>{b.lead}</b> : b.lead}</p>{lines(b.rows)}</div>)}
       {x.after && <p className="tafter">{x.after}</p>}
     </>
   )

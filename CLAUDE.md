@@ -71,6 +71,10 @@ given its own branch). Before committing there, run
   Mock-ups in `design/share-picture-options/` (`data.ts` takes the real lists from saved boards,
   `options.html` lays them out, `picture.cjs` photographs them; fonts checked): A, the panel as on the page,
   dark; B, a row per train with the platform as a badge, dark; C, A in the light colours. Nothing built.
+- **John:** B in dark; grouped lists start "The next ten trains" in bold, no colon (done; checks 246 + 57 + 73,
+  the fold at 390px dark). The pictures to show timetabled times, lateness in words: B1 (platforms "TRAIN",
+  "leaving three minutes late"; arrivals "DUE IN" then "the 8.47pm" from A, "arriving three minutes late")
+  and B2 (arrivals "TRAIN" then "DUE IN"). Share words to start "The next ten trains…" when there are more.
 
 ### November 18th 2026: "Delayed" trains out of the lists; live (`main`; Claude Code)
 

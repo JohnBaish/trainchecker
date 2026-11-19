@@ -2,61 +2,71 @@
  {
   "board": [
    {
+    "time": "6.46pm",
+    "std": "6.26pm",
+    "platform": "14A",
+    "kind": "Fast",
+    "note": "20 min late"
+   },
+   {
+    "time": "6.34pm",
+    "std": "6.28pm",
+    "platform": "13",
+    "kind": "Elizabeth Line",
+    "note": "6 min late"
+   },
+   {
     "time": "6.32pm",
+    "std": "6.32pm",
     "platform": "11A",
     "kind": "Fast",
     "note": ""
    },
    {
     "time": "6.33pm",
+    "std": "6.33pm",
     "platform": "15A",
     "kind": "Slower",
     "note": ""
    },
    {
-    "time": "6.34pm",
-    "platform": "13",
-    "kind": "Elizabeth Line",
-    "note": "6 min late"
-   },
-   {
     "time": "6.39pm",
+    "std": "6.36pm",
     "platform": "10A",
     "kind": "Fast",
     "note": "3 min late"
    },
    {
     "time": "6.43pm",
+    "std": "6.43pm",
     "platform": "11",
     "kind": "Fast",
     "note": ""
    },
    {
     "time": "6.45pm",
+    "std": "6.45pm",
     "platform": "13",
     "kind": "Elizabeth Line",
     "note": ""
    },
    {
-    "time": "6.46pm",
-    "platform": "14A",
-    "kind": "Fast",
-    "note": "20 min late"
-   },
-   {
     "time": "6.49pm",
+    "std": "6.49pm",
     "platform": "10A",
     "kind": "Fast",
     "note": ""
    },
    {
     "time": "6.54pm",
+    "std": "6.54pm",
     "platform": "11",
     "kind": "Fast",
     "note": ""
    },
    {
     "time": "6.59pm",
+    "std": "6.59pm",
     "platform": "14",
     "kind": "Elizabeth Line",
     "note": ""
@@ -69,8 +79,9 @@
   "date": "November 17th",
   "blocks": [
    {
-    "lead": "The next ten trains:",
-    "rows": []
+    "lead": "The next ten trains",
+    "rows": [],
+    "head": true
    },
    {
     "lead": "Fast trains:",
@@ -132,60 +143,70 @@
   "board": [
    {
     "time": "6.38pm",
+    "std": "6.38pm",
     "platform": "1",
     "kind": "",
     "note": ""
    },
    {
     "time": "6.48pm",
+    "std": "6.48pm",
     "platform": "1",
     "kind": "",
     "note": ""
    },
    {
     "time": "7.23pm",
+    "std": "7.23pm",
     "platform": "1",
     "kind": "",
     "note": ""
    },
    {
     "time": "7.38pm",
+    "std": "7.38pm",
     "platform": "1",
     "kind": "",
     "note": ""
    },
    {
     "time": "7.49pm",
+    "std": "7.49pm",
     "platform": "1",
     "kind": "",
     "note": ""
    },
    {
     "time": "7.54pm",
+    "std": "7.54pm",
     "platform": "1",
     "kind": "",
     "note": ""
    },
    {
     "time": "7.59pm",
+    "std": "7.59pm",
     "platform": "1",
     "kind": "",
     "note": ""
    },
    {
     "time": "8.15pm",
+    "std": "8.15pm",
     "platform": "1",
     "kind": "",
     "note": ""
    },
    {
     "time": "8.23pm",
+    "std": "8.23pm",
     "platform": "1",
     "kind": "",
     "note": ""
    },
    {
     "time": "8.40pm",
+    "std": "8.40pm",
     "platform": "1",
     "kind": "",
     "note": ""
@@ -240,51 +261,61 @@
   "board": [
    {
     "time": "9.01pm",
+    "sta": "9.01pm",
     "left": "8.37pm",
     "note": ""
    },
    {
     "time": "9.08pm",
+    "sta": "9.08pm",
     "left": "8.44pm",
     "note": ""
    },
    {
     "time": "9.13pm",
+    "sta": "9.10pm",
     "left": "8.47pm",
     "note": "3 min late"
    },
    {
     "time": "9.21pm",
+    "sta": "9.21pm",
     "left": "8.42pm",
     "note": ""
    },
    {
     "time": "9.24pm",
+    "sta": "9.24pm",
     "left": "8.30pm",
     "note": ""
    },
    {
     "time": "9.24pm",
+    "sta": "9.24pm",
     "left": "9.01pm",
     "note": ""
    },
    {
     "time": "9.33pm",
+    "sta": "9.28pm",
     "left": "9.04pm",
     "note": "5 min late"
    },
    {
     "time": "9.35pm",
+    "sta": "9.35pm",
     "left": "9.12pm",
     "note": ""
    },
    {
     "time": "9.44pm",
+    "sta": "9.44pm",
     "left": "9.04pm",
     "note": ""
    },
    {
     "time": "9.52pm",
+    "sta": "9.52pm",
     "left": "9.23pm",
     "note": ""
    }

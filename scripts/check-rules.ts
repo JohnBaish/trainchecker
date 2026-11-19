@@ -229,7 +229,7 @@ eq('platforms fold: ten, late ones in time order, by kind, "Of the next ten trai
 // More than ten (John, November 19th 2026): "The next ten trains are leaving at:", no sentence about the rest.
 const bthP = platformTrains(analyse(snapOf(raw('20261117-1824-BTH-BRI.json'))))!
 eq('platforms fold: more than ten, "The next ten trains" (John)', [bthP.text, bthP.blocks![0].lead, bthP.after], ['The next ten trains are leaving from platform 1 at 6.38pm, 6.48, 7.23, 7.38, 7.49, 7.54, 7.59, 8.15, 8.23 and 8.40.', 'The next ten trains are leaving from platform 1 at:', null])
-eq('platforms fold: grouped, "The next ten trains:" first', platformTrains(rdgPad)!.blocks!.slice(0, 2).map((b) => b.lead), ['The next ten trains:', 'Fast trains:'])
+eq('platforms fold: grouped, "The next ten trains" first, in bold (John)', platformTrains(rdgPad)!.blocks!.slice(0, 2).map((b) => [b.lead, !!b.head]), [['The next ten trains', true], ['Fast trains:', false]])
 eq('platforms fold: fast trains on 10 and 11 (10A as 10, John)', platformTrains(rp9)!.text.split(', slower')[0], 'Of the next ten trains, fast ones are leaving from platforms 10 and 11 at 9.01pm, 9.10 (six minutes later than planned), 9.12, 9.23, 9.26 and 9.43')
 eq('platforms fold: one of a kind ("a slower one")', platformTrains(analyse(snapOf(raw('20261117-2059-PAD-RDG.json'))))!.text, 'Fast trains are leaving at 9.02pm (platform 4) and 9.04 (platform 8), a slower one from platform 10 at 9.08, and Elizabeth Line trains from platform B at 9.17, 9.47 and 10.17.')
 eq('platforms fold: one platform for all, said once (John)', platformTrains(A('TVP-PAD'))!.text, 'There are trains leaving from platform 2 at 9.30am, 10.30 and 11.29.')

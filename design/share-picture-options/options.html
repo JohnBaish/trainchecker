@@ -41,10 +41,10 @@ h1 { font-family: Caprasimo, serif; font-weight: 400; font-size: 52px; line-heig
 </style>
 <div class="pic" id="pic"></div>
 <script>
-const q = new URLSearchParams(location.search), opt = q.get('opt') || 'A', i = +(q.get('i') || 0)
+const q = new URLSearchParams(location.search), opt = q.get('opt') || 'A', i = +(q.get('i') || 0), v = q.get('v') || ''
 if (opt === 'C') document.documentElement.classList.add('light')
 const W = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
-const words = (s) => s.replace(/(\d+) min late/, (m, n) => `${n < 10 ? W[n] : n} ${n == 1 ? 'minute' : 'minutes'} late`)
+const words = (s, verb = '') => s.replace(/(\d+) min late/, (m, n) => `${verb}${n < 10 ? W[n] : n} ${n == 1 ? 'minute' : 'minutes'} late`)
 fetch('data.json').then((r) => r.json()).then((all) => {
   const d = all[i], plat = d.kind === 'platforms'
   const kick = plat ? 'TRAINCHECKER · PLATFORMS' : 'TRAINCHECKER · ARRIVALS'
@@ -59,10 +59,22 @@ fetch('data.json').then((r) => r.json()).then((all) => {
       return `<div class="blk"><p class="lead">${b.lead}</p>${out.join('')}</div>`
     }).join('') + (d.after ? `<p class="after">${d.after}</p>` : '')
   } else {
+    if (v) {
+      // Timetabled times only, lateness in words (John, November 19th 2026).
+      const late = (r, verb) => r.note ? `<span class="late">${words(r.note, verb)}</span>` : ''
+      const head = plat ? `<div class="colhead"><span>TRAIN</span><span></span><span>PLATFORM</span></div>`
+        : v === '1' ? `<div class="colhead"><span>DUE IN</span><span>FROM ${d.from.toUpperCase()}</span><span></span></div>`
+        : `<div class="colhead"><span>TRAIN</span><span>DUE IN</span><span></span></div>`
+      body = head + d.board.map((r) => plat
+        ? `<div class="row"><span class="t">${r.std}</span><span class="mid">${[r.kind, late(r, 'leaving ')].filter(Boolean).join(' · ')}</span><span class="plat">${r.platform}</span></div>`
+        : v === '1' ? `<div class="row"><span class="t">${r.sta}</span><span class="mid">${[`the ${r.left}`, late(r, 'arriving ')].filter(Boolean).join(' · ')}</span><span></span></div>`
+        : `<div class="row"><span class="t">${r.left}</span><span class="mid">${[r.sta, late(r, 'arriving ')].filter(Boolean).join(' · ')}</span><span></span></div>`).join('')
+    } else {
     const head = plat ? `<div class="colhead"><span>LEAVING</span><span></span><span>PLATFORM</span></div>` : `<div class="colhead"><span>ARRIVING</span><span>LEFT ${d.from.toUpperCase()}</span><span></span></div>`
     body = head + d.board.map((r) => plat
       ? `<div class="row"><span class="t">${r.time}</span><span class="mid">${[r.kind && (r.kind === 'Elizabeth Line' ? 'Elizabeth Line' : `${r.kind}`), r.note && `<span class="late">${words(r.note)}</span>`].filter(Boolean).join(' · ')}</span><span class="plat">${r.platform}</span></div>`
       : `<div class="row"><span class="t">${r.time}</span><span class="mid">${r.left}${r.note ? ` · <span class="late">${words(r.note)}</span>` : ''}</span><span></span></div>`).join('')
+    }
   }
   document.getElementById('pic').innerHTML = `
     <div class="top"><span class="kick">${kick}</span><span class="when">${d.at} on ${d.date}</span></div>

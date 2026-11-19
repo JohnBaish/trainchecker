@@ -601,7 +601,7 @@ const andList = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')
 /** A list as the page lays it out (John's option D, November 18th 2026): a lead line, then the
  *  times in bold, each with something to say on its own line, the rest run together with dots. */
 export type TimeRow = { time: string; note?: string }
-export type ListBlock = { lead: string; rows: TimeRow[] }
+export type ListBlock = { lead: string; rows: TimeRow[]; head?: boolean }
 export type Listing = { text: string; blocks: ListBlock[] | null; after: string | null; prose: string }
 
 /** Times in reading order, "am" or "pm" said once and again only when it changes; on the hour it
@@ -663,7 +663,8 @@ export function platformTrains(a: Analysis): (Listing & { fold: string }) | null
       return `${who} ${g.where ? `from ${g.where} ` : ''}at ${andList(g.rows.map(said))}`
     })
     prose = `${ps.slice(0, -1).join(', ')}, and ${ps[ps.length - 1]}.`
-    blocks = (limited ? [{ lead: 'The next ten trains:', rows: [] as TimeRow[] }] : []).concat(parts.map((g) => {
+    blocks = // In bold with no colon, so it doesn't read as a second lead (John, November 19th 2026).
+    (limited ? [{ lead: 'The next ten trains', rows: [], head: true }] as ListBlock[] : []).concat(parts.map((g) => {
       const n = name[g.kind as 'fast' | 'slower' | 'elizabeth'], one = g.rows.length === 1
       return { lead: `${one ? `${Cap(article(n[0]))} ${n[0]}` : Cap(n[1])}${g.where ? `, from ${g.where}` : ''}:`, rows: g.rows }
     }))

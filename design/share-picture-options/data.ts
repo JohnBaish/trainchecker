@@ -9,15 +9,15 @@ const isT = (s?: string | null) => !!s && /^\d\d:\d\d$/.test(s)
 // Option B's rows: one train a row, time, platform (or where from), and anything to say.
 function boardP(a: Analysis) {
   const leaves = (t: any) => diff(a.now, t.late > 0 && isT(t.etd) ? t.etd : t.std)
-  const ts = a.ahead.filter((t) => !t.cancelled && t.platform && !t.unknown).sort((x, y) => leaves(x) - leaves(y)).slice(0, 10)
+  const ts = a.ahead.filter((t) => !t.cancelled && t.platform && !t.unknown).sort((x, y) => leaves(x) - leaves(y)).slice(0, 10).sort((x, y) => diff(a.now, x.std) - diff(a.now, y.std))
   const g = speedGroups(a).filter((x) => x.kind !== 'all')
   const kind = (t: any) => { const k = g.find((x) => x.trains.includes(t))?.kind; return k === 'fast' ? 'Fast' : k === 'slower' ? 'Slower' : k === 'elizabeth' ? 'Elizabeth Line' : '' }
-  return ts.map((t: any) => ({ time: t12(t.late > 0 && isT(t.etd) ? t.etd : t.std), platform: t.platform, kind: kind(t), note: t.late > 0 && isT(t.etd) ? `${t.late} min late` : '' }))
+  return ts.map((t: any) => ({ time: t12(t.late > 0 && isT(t.etd) ? t.etd : t.std), std: t12(t.std), platform: t.platform, kind: kind(t), note: t.late > 0 && isT(t.etd) ? `${t.late} min late` : '' }))
 }
 function boardA(a: Analysis) {
   const when = (t: any) => (isT(t.eta) ? t.eta : t.sta)
   const ts = [...a.past, ...a.ahead].filter((t: any) => t.sta && !t.ata && !t.cancelled && (t.eta === 'On time' || isT(t.eta) || !t.eta)).filter((t: any) => { const d = diff(a.now, when(t)); return d >= 0 && d <= 60 }).sort((x: any, y: any) => diff(a.now, when(x)) - diff(a.now, when(y))).slice(0, 10)
-  return ts.map((t: any) => { const late = isT(t.eta) ? diff(t.sta, t.eta) : 0; return { time: t12(when(t)), left: t12(t.std), note: late > 0 ? `${late} min late` : '' } })
+  return ts.map((t: any) => { const late = isT(t.eta) ? diff(t.sta, t.eta) : 0; return { time: t12(when(t)), sta: t12(t.sta), left: t12(t.std), note: late > 0 ? `${late} min late` : '' } })
 }
 const out: unknown[] = []
 for (const [f, kind] of [['20261117-1824-RDG-PAD.json', 'platforms'], ['20261117-1824-BTH-BRI.json', 'platforms'], ['20261117-2059-RDG-PAD.json', 'arrivals']] as const) {

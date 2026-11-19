@@ -585,5 +585,5 @@ they differ.
 16. **More than ten trains with platforms** (John, November 19th 2026): no sentence about the rest
     ("We're only showing you the next ten departures…" is gone); the list starts "The next ten trains are
     leaving at:" (or "…leaving from platform 1 at:"). Where the trains are grouped by kind, "The next ten
-    trains:" comes first, then the groups as before, and the Share words begin "Of the next ten trains,
+    trains" comes first, in bold with no colon (John), then the groups as before, and the Share words begin "Of the next ten trains,
     fast ones are leaving…" (Claude's draft for the grouped case, for John).

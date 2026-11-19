@@ -827,6 +827,21 @@ export function arrivalsPicture(a: Analysis): ListPicture | null {
   }
 }
 
+/** PROTOTYPE (November 19th 2026, for John to compare): a spoken line about a board's rows, as
+ *  "Seven are expected to leave on time, and three are running two minutes late." */
+export function boardSummary(rows: PicRow[], verb: 'leave' | 'arrive'): string {
+  const known = rows.filter((r) => r.time !== '?')
+  const mins = known.map((r) => r.late.match(/(\w+) minutes? late/)?.[1]).filter(Boolean).map((w) => (WORDS.indexOf(w!) >= 0 ? WORDS.indexOf(w!) : Number(w)))
+  const k = mins.length, n = known.length
+  if (!n) return ''
+  const on = verb === 'leave' ? 'expected to leave on time' : 'expected on time'
+  if (!k) return n === 1 ? `It's ${on}.` : n === 2 ? `Both are ${on}.` : `They're all ${on}.`
+  const lo = Math.min(...mins), hi = Math.max(...mins)
+  const range = lo === hi ? `${num(lo)} ${lo === 1 ? 'minute' : 'minutes'}` : `between ${num(lo)} and ${num(hi)} minutes`
+  if (k === n) return tenAfterWords(`${n === 1 ? "It's" : n === 2 ? 'Both are' : "They're all"} running ${range} late.`)
+  return tenAfterWords(`${Cap(num(n - k))} ${n - k === 1 ? 'is' : 'are'} ${on}, and ${num(k)} ${k === 1 ? 'is' : 'are'} running ${range} late.`)
+}
+
 /** The quote's Share words (SPEC §8.13). */
 export const quoteShareText = (author: string, date: Date) => `The quote of the day on Trainchecker for ${dateShort(date)}, from ${author}.`
 

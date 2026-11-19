@@ -9,7 +9,7 @@ import { fetchDays, fetchLive } from '../lib/load.ts'
 import { closedNow, forJourney } from '../lib/incidents.ts'
 import { hashOf, remember, type Journey } from '../lib/route.ts'
 import { useIsNarrow } from '../lib/responsive.ts'
-import { NO_RECORD_AT, arrivals, platformTrains, listShareWords, platformsPicture, arrivalsPicture, type Listing, type TimeRow, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
+import { NO_RECORD_AT, arrivals, platformTrains, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type ListPicture, Cap, num, type Listing, type TimeRow, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
 import { deliverImage, isTouch, listFileName, listImage, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
 import { Chooser } from './Chooser.tsx'
@@ -76,15 +76,50 @@ function ListShare({ a, kind, prose }: { a: Analysis; kind: 'platforms' | 'arriv
   )
 }
 
+/** PROTOTYPE (November 19th 2026, for John to compare; ?mock=A or ?mock=B): the lists laid out
+ *  as the share pictures are, in the page's own colours. */
+const MOCK = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('mock') : null
+function Board({ p }: { p: ListPicture }) {
+  const second = p.rows.some((r) => r.platform)
+  return (
+    <div className="board" role="table">
+      <div className="bhead" role="row">
+        <span role="columnheader">{p.heads[0]}</span>
+        {p.one
+          ? <span className="bone" role="columnheader">All from platform <span className="badge">{p.one}</span></span>
+          : <span role="columnheader" className={second ? 'bright' : ''}>{p.heads[1]}</span>}
+      </div>
+      {p.rows.map((r, i) => (
+        <div key={i} className="brow" role="row">
+          <span className={r.time === '?' ? 'bt q' : 'bt'} role="cell">{r.time}</span>
+          <span className="bmid" role="cell">
+            {r.mid && <span>{r.mid}</span>}
+            {r.late && <span className="blate">{r.mid && <span className="bsep" aria-hidden="true">{'\u00a0· '}</span>}{r.late}</span>}
+          </span>
+          {r.platform && !p.one && <span className="badge" role="cell">{r.platform}</span>}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /** The trains with a platform, folded under "Platforms", spaced like the trains fold (John,
  *  November 18th 2026). */
 function PlatformTrains({ a }: { a: Analysis }) {
   const p = platformTrains(a)
+  const pic = MOCK ? platformsPicture(a) : null
   if (!p) return null
   return (
     <details className="advice trains-fold">
       <summary>{p.fold} <Icon name="down" /></summary>
-      <TimeList x={p} />
+      {MOCK && pic ? (
+        <>
+          {pic.words.text.startsWith('The next ten') && <p className="tlead thead board-kick">The next ten trains</p>}
+          {MOCK === 'A' && <p className="board-say">{[boardSummary(pic.rows, 'leave'), p.after].filter(Boolean).join(' ')}</p>}
+          <Board p={pic} />
+          {MOCK === 'B' && p.after && <p className="tafter">{p.after}</p>}
+        </>
+      ) : <TimeList x={p} />}
       <ListShare a={a} kind="platforms" prose={p.prose} />
     </details>
   )
@@ -93,12 +128,26 @@ function PlatformTrains({ a }: { a: Analysis }) {
 /** Arrivals at B, after the last week: folded, the arrow by the sub-heading (John, November 18th 2026). */
 function Arrivals({ a }: { a: Analysis }) {
   const x = arrivals(a)
+  const pic = MOCK ? arrivalsPicture(a) : null
+  const known = pic ? pic.rows.filter((r) => r.time !== '?').length : 0
+  const count = !pic ? '' : pic.words.text.startsWith('The first ten') ? 'More than ten trains are due in the next hour.'
+    : known === 1 ? 'One train is due in the next hour.' : `${Cap(num(known))} trains are due in the next hour.`
+  const limited = !!pic && pic.words.text.startsWith('The first ten')
+  const lateLine = pic ? boardSummary(pic.rows, 'arrive') : ''
+  const say = pic ? [count, limited && lateLine ? `Of the first ten, ${lateLine[0].toLowerCase()}${lateLine.slice(1)}` : lateLine].filter(Boolean).join(' ') : ''
   return (
     <section className="card sec block">
       <h3>Arrivals</h3>
+      {MOCK === 'B' && pic && <p>{say}</p>}
       <details className="advice arrivals-fold">
-        <summary>{x.heading} <Icon name="down" /></summary>
-        <TimeList x={x} />
+        <summary>{MOCK === 'B' && pic ? 'Show the arrivals' : x.heading} <Icon name="down" /></summary>
+        {MOCK && pic ? (
+          <>
+            {MOCK === 'A' && <p className="board-say">{[say, x.after].filter(Boolean).join(' ')}</p>}
+            <Board p={pic} />
+            {MOCK === 'B' && x.after && <p className="tafter">{x.after}</p>}
+          </>
+        ) : <TimeList x={x} />}
         <ListShare a={a} kind="arrivals" prose={x.text} />
       </details>
     </section>

@@ -9,7 +9,7 @@ import { fetchDays, fetchLive } from '../lib/load.ts'
 import { closedNow, forJourney } from '../lib/incidents.ts'
 import { hashOf, remember, type Journey } from '../lib/route.ts'
 import { useIsNarrow } from '../lib/responsive.ts'
-import { NO_RECORD_AT, arrivals, platformTrains, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type ListPicture, Cap, num, type Listing, type TimeRow, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
+import { NO_RECORD_AT, arrivals, platformTrains, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type ListPicture, Cap, num, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
 import { deliverImage, isTouch, listFileName, listImage, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
 import { Chooser } from './Chooser.tsx'
@@ -28,30 +28,6 @@ const FAILED: Record<string, string> = {
   unknown: 'National Rail doesn’t recognise one of these stations. Please choose again.',
   same: 'Please choose two different stations.',
   unavailable: 'Sorry, National Rail’s live departures couldn’t be reached just now. Please try again in a minute.',
-}
-
-/** A list laid out as John's option D (November 18th 2026): the lead line, then times in bold; a
- *  time with something to say on its own line, the rest run together with coloured dots. */
-function TimeList({ x }: { x: Listing }) {
-  if (!x.blocks) return <p>{x.text}</p>
-  const lines = (rows: TimeRow[]) => {
-    const out: (TimeRow | TimeRow[])[] = []
-    for (const r of rows) {
-      const last = out[out.length - 1]
-      if (r.note) out.push(r)
-      else if (Array.isArray(last)) last.push(r)
-      else out.push([r])
-    }
-    return out.map((l, i) => Array.isArray(l)
-      ? <div key={i} className="tline">{l.map((r, j) => <span key={j}>{j > 0 && <span className="tdot" aria-hidden="true"> · </span>}<b>{r.time}</b>{j < l.length - 1 && <span className="sr">,</span>}</span>)}</div>
-      : <div key={i} className="tline"><b>{l.time}</b> <span className="tnote">{l.note}</span></div>)
-  }
-  return (
-    <>
-      {x.blocks.map((b, i) => <div key={i} className="tlist"><p className={b.head ? 'tlead thead' : 'tlead'}>{b.lead}</p>{lines(b.rows)}</div>)}
-      {x.after && <p className="tafter">{x.after}</p>}
-    </>
-  )
 }
 
 /** Share for one of the lists, inside its fold: a picture of the list in the dark colours with a
@@ -76,11 +52,26 @@ function ListShare({ a, kind, prose }: { a: Analysis; kind: 'platforms' | 'arriv
   )
 }
 
-/** PROTOTYPE (November 19th 2026, for John to compare; ?mock=A or ?mock=B): the lists laid out
- *  as the share pictures are, in the page's own colours. */
-const MOCK = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('mock') : null
+/** "am" or "pm" said once in a run of times, again only when it changes; on the hour it stays
+ *  ("9pm"), as elsewhere (John, November 18th 2026). */
+function onceAmPm(times: string[]): string[] {
+  let last = ''
+  return times.map((t) => {
+    if (t === 'midday' || t === 'midnight') { last = t === 'midday' ? 'pm' : 'am'; return t }
+    const m = t.match(/^(.*?)(am|pm)$/)
+    if (!m) return t
+    const out = t.includes('.') && last === m[2] ? m[1] : t
+    last = m[2]
+    return out
+  })
+}
+
+/** The two lists laid out as the share pictures are, in the page's own colours (John, November
+ *  19th 2026, option B). A simple one-platform list, with nothing to say about any train, is a
+ *  line of times with dots instead. */
 function Board({ p }: { p: ListPicture }) {
   const second = p.rows.some((r) => r.platform)
+  const simple = !!p.one && p.rows.every((r) => !r.mid && !r.late)
   return (
     <div className="board" role="table">
       <div className="bhead" role="row">
@@ -89,7 +80,11 @@ function Board({ p }: { p: ListPicture }) {
           ? <span className="bone" role="columnheader">All from platform <span className="badge">{p.one}</span></span>
           : <span role="columnheader" className={second ? 'bright' : ''}>{p.heads[1]}</span>}
       </div>
-      {p.rows.map((r, i) => (
+      {simple ? (
+        <p className="bline" role="row">{onceAmPm(p.rows.map((r) => r.time)).map((t, i) => (
+          <span key={i} role="cell">{i > 0 && <span className="tdot" aria-hidden="true"> · </span>}<b>{t}</b>{i < p.rows.length - 1 && <span className="sr">,</span>}</span>
+        ))}</p>
+      ) : p.rows.map((r, i) => (
         <div key={i} className="brow" role="row">
           <span className={r.time === '?' ? 'bt q' : 'bt'} role="cell">{r.time}</span>
           <span className="bmid" role="cell">
@@ -99,55 +94,54 @@ function Board({ p }: { p: ListPicture }) {
           {r.platform && !p.one && <span className="badge" role="cell">{r.platform}</span>}
         </div>
       ))}
+      {p.note && <p className="tafter">{p.note}</p>}
     </div>
   )
 }
 
-/** The trains with a platform, folded under "Platforms", spaced like the trains fold (John,
- *  November 18th 2026). */
+/** The trains with a platform, folded under "Platforms": the board, then any delayed train's
+ *  sentence with its reason (John, November 18th and 19th 2026). */
 function PlatformTrains({ a }: { a: Analysis }) {
   const p = platformTrains(a)
-  const pic = MOCK ? platformsPicture(a) : null
-  if (!p) return null
+  const pic = platformsPicture(a)
+  if (!p || !pic) return null
   return (
     <details className="advice trains-fold">
       <summary>{p.fold} <Icon name="down" /></summary>
-      {MOCK && pic ? (
-        <>
-          {pic.words.text.startsWith('The next ten') && <p className="tlead thead board-kick">The next ten trains</p>}
-          {MOCK === 'A' && <p className="board-say">{[boardSummary(pic.rows, 'leave'), p.after].filter(Boolean).join(' ')}</p>}
-          <Board p={pic} />
-          {MOCK === 'B' && p.after && <p className="tafter">{p.after}</p>}
-        </>
-      ) : <TimeList x={p} />}
+      {pic.words.text.startsWith('The next ten') && <p className="board-kick">The next ten trains</p>}
+      <Board p={pic} />
+      {p.after && <p className="tafter">{p.after}</p>}
       <ListShare a={a} kind="platforms" prose={p.prose} />
     </details>
   )
 }
 
-/** Arrivals at B, after the last week: folded, the arrow by the sub-heading (John, November 18th 2026). */
+/** Arrivals at B, after the last week: a sentence first, then the board folded under "Show the
+ *  arrivals" (John, November 19th 2026, option B; the sentence is Claude's draft). */
 function Arrivals({ a }: { a: Analysis }) {
   const x = arrivals(a)
-  const pic = MOCK ? arrivalsPicture(a) : null
-  const known = pic ? pic.rows.filter((r) => r.time !== '?').length : 0
-  const count = !pic ? '' : pic.words.text.startsWith('The first ten') ? 'More than ten trains are due in the next hour.'
+  const pic = arrivalsPicture(a)
+  if (!pic) return (
+    <section className="card sec block">
+      <h3>Arrivals</h3>
+      <p>{x.text}</p>
+    </section>
+  )
+  const known = pic.rows.filter((r) => r.time !== '?').length
+  const limited = pic.words.text.startsWith('The first ten')
+  const count = !known ? '' : pic.note ? (known === 1 ? 'Trainchecker can see one train due in the next hour.' : `Trainchecker can see ${num(known)} trains due in the next hour.`)
+    : limited ? 'More than ten trains are due in the next hour.'
     : known === 1 ? 'One train is due in the next hour.' : `${Cap(num(known))} trains are due in the next hour.`
-  const limited = !!pic && pic.words.text.startsWith('The first ten')
-  const lateLine = pic ? boardSummary(pic.rows, 'arrive') : ''
-  const say = pic ? [count, limited && lateLine ? `Of the first ten, ${lateLine[0].toLowerCase()}${lateLine.slice(1)}` : lateLine].filter(Boolean).join(' ') : ''
+  const late = boardSummary(pic.rows, 'arrive')
+  const say = known ? [count, limited && late ? `Of the first ten, ${late[0].toLowerCase()}${late.slice(1)}` : late].filter(Boolean).join(' ') : x.prose
   return (
     <section className="card sec block">
       <h3>Arrivals</h3>
-      {MOCK === 'B' && pic && <p>{say}</p>}
+      <p>{say}</p>
       <details className="advice arrivals-fold">
-        <summary>{MOCK === 'B' && pic ? 'Show the arrivals' : x.heading} <Icon name="down" /></summary>
-        {MOCK && pic ? (
-          <>
-            {MOCK === 'A' && <p className="board-say">{[say, x.after].filter(Boolean).join(' ')}</p>}
-            <Board p={pic} />
-            {MOCK === 'B' && x.after && <p className="tafter">{x.after}</p>}
-          </>
-        ) : <TimeList x={x} />}
+        <summary>Show the arrivals <Icon name="down" /></summary>
+        <Board p={pic} />
+        {known > 0 && x.after && <p className="tafter">{x.after.replace(/ ?Trains that left .*$/, '')}</p>}
         <ListShare a={a} kind="arrivals" prose={x.text} />
       </details>
     </section>

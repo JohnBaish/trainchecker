@@ -15,7 +15,7 @@ import { count } from '../api/week.ts'
 import { analyse, diff, type Snap, type Analysis } from '../src/lib/analyse.ts'
 import {
   standIn, standInLine, standInMixedLine, tenAfterWords, verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
-  hourLabel, HOURS, quoteShareText, kindLine, platformTrains, arrivals, listShareWords, platformsPicture, arrivalsPicture, type Line,
+  hourLabel, HOURS, quoteShareText, kindLine, platformTrains, arrivals, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type Line,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
 import { STATIONS, resolve, suggest, complete } from '../src/lib/stations.ts'
@@ -404,5 +404,10 @@ eq('stations: suggestions', [suggest('paddington')[0][1], suggest('man')[0][1], 
   const pp2 = platformsPicture(pd)!
   eq('picture: platforms, a delayed train "?" at the bottom with its platform', [pp2.rows[pp2.rows.length - 1].time, pp2.rows[pp2.rows.length - 1].late, !!pp2.rows[pp2.rows.length - 1].platform, /the \d/.test(pp2.rows[pp2.rows.length - 1].mid)], ['?', 'delayed, no new time yet', true, true])
 }
+// The boards' sentence (John, November 19th 2026, option B; Claude's draft wording).
+eq('board: all on time', boardSummary(platformsPicture(analyse(snapOf(raw('20261117-1824-BTH-BRI.json'))))!.rows, 'leave'), "They're all expected to leave on time.")
+eq('board: some late, a range', boardSummary(platformsPicture(rdgPad)!.rows, 'leave'), 'Seven are expected to leave on time, and three are running between three and 20 minutes late.')
+eq('board: arrivals, one late', boardSummary([{ time: '9.01pm', mid: '', late: '' }, { time: '9.10pm', mid: '', late: 'arriving three minutes late' }], 'arrive'), 'One is expected on time, and one is running three minutes late.')
+eq('board: a delayed one with no time is left out of the count', boardSummary([{ time: '9.01pm', mid: '', late: '' }, { time: '?', mid: '', late: 'delayed, no new time yet' }], 'arrive'), "It's expected on time.")
 console.log(`check-rules: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

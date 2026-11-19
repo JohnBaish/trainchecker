@@ -608,3 +608,13 @@ they differ.
     and cancellations). The kind of train ("Fast", "Slower", "Elizabeth Line") now shows on arrivals too
     when the journey has more than one kind, so two "8.58am" trains can be told apart. A long note goes
     on a second line.
+20. **The lists on the page as boards** (John, November 19th 2026, option B of two): the folds under
+    Platforms and Arrivals show the share pictures' layout in the page's own colours (light or dark): a
+    row per train, the time in bold, the kind of train and lateness beside it (lateness on its own line
+    on a phone), platform badges. A one-platform list with nothing to say about any train is a line of
+    times with dots, "am" or "pm" said once (John). The friendly voice stays in the sentences: Platforms
+    keeps its sentence above the fold; Arrivals gets one too (Claude's draft: "More than ten trains are
+    due in the next hour. Of the first ten, eight are expected on time, and two are running between
+    three and five minutes late."; "Trainchecker can see one train due in the next hour." on a long
+    journey), and its fold is "Show the arrivals". A delayed train's sentence, with its reason, stays
+    under the board.

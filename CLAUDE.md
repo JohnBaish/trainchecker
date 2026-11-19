@@ -58,6 +58,19 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 19th 2026: the lists on the page as boards (branch `claude/beautiful-allen-xir4rp`; Claude Code)
+
+- **John:** the share pictures now look better than the page; could the folds look better while still
+  speaking to you? Two prototypes on real code (`?mock=A`, a sentence inside the fold; `?mock=B`, the
+  sentence above it), pictures in `design/board-options/`. **John:** B, with "FROM READING" lined up, and a
+  simple one-platform list as a line of times with dots, "am" once.
+- **Built:** `Board` in `JourneyView.tsx` (from `platformsPicture()`/`arrivalsPicture()`), `onceAmPm()`,
+  `boardSummary()` in `sentences.ts`; the old `TimeList` gone; `.board`, `.bhead`, `.brow`, `.bline`,
+  `.badge` in `global.css`. `SPEC.md` §12.20.
+- **Checked:** `npm run check` 263 + 57 + 73; `tsc -b`, lint (no warnings), build; saved boards (Bath to
+  Bristol, Tiverton Parkway to Paddington, Reading to Paddington) at 390px dark and 1200px light: no errors,
+  no sideways scroll.
+
 ### November 19th 2026: "The next ten trains"; the two lists shared as pictures (branch `claude/beautiful-allen-xir4rp`, merged the same day; Claude Code)
 
 - **John:** no sentence about the trains after the first ten with platforms; the list starts "The next ten

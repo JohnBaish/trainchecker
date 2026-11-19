@@ -172,15 +172,15 @@ details.trains-fold { margin-top: var(--space-3); }
 .tdot { color: var(--color-accent); font-weight: 700; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .tafter { margin-top: var(--space-2); }
-/* PROTOTYPE (November 19th 2026): the lists as boards, like the share pictures. */
+/* The lists as boards, like the share pictures (John, November 19th 2026, option B). */
 .board-kick { margin: var(--space-2) 0 0; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; color: var(--color-accent-700); }
-.board-say { margin: var(--space-2) 0 0; }
 .board { margin-top: var(--space-3); }
-.bhead { display: grid; grid-template-columns: 5.6em 1fr auto; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--color-neutral-700); padding-bottom: 8px; border-bottom: 1px solid var(--color-divider); }
+.bhead { display: grid; grid-template-columns: 5.4rem 1fr auto; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--color-neutral-700); padding-bottom: 8px; border-bottom: 1px solid var(--color-divider); }
 .bhead .bone { grid-column: 2 / 4; justify-self: end; display: inline-flex; align-items: center; gap: 10px; }
 .bhead .bright { grid-column: 3; justify-self: end; }
-.brow { display: grid; grid-template-columns: 5.6em 1fr auto; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--color-divider); }
+.brow { display: grid; grid-template-columns: 5.4rem 1fr auto; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--color-divider); }
 .brow:last-child { border-bottom: 0; }
+.bline { margin: 12px 0 0; font-size: 17px; line-height: 1.9; }
 .bt { font-weight: 700; font-size: 17px; }
 .bt.q { color: var(--color-accent-700); }
 .bmid { color: var(--color-neutral-700); }

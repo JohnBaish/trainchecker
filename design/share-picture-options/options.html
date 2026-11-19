@@ -38,6 +38,17 @@ h1 { font-family: Caprasimo, serif; font-weight: 400; font-size: 52px; line-heig
 .plat { min-width: 92px; text-align: center; padding: 6px 18px; border-radius: 18px; background: var(--badge); color: var(--kicker); font-weight: 700; font-size: 34px; }
 .plat small { display: block; font-size: 15px; font-weight: 600; letter-spacing: 0.08em; opacity: 0.85; }
 .colhead { display: grid; grid-template-columns: 170px 1fr auto; gap: 24px; font-size: 18px; font-weight: 600; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 14px; }
+.s1head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; }
+.s1head .lbl { font-size: 18px; font-weight: 600; letter-spacing: 0.08em; color: var(--muted); display: flex; align-items: center; gap: 16px; }
+.s1head + .row { border-top: 1px solid var(--rule); padding-top: 18px; }
+.plat.big { font-size: 60px; min-width: 120px; padding: 14px 22px; border-radius: 24px; }
+.allplat { display: flex; align-items: center; gap: 28px; font-size: 32px; padding-bottom: 30px; border-bottom: 1px solid var(--rule); margin-bottom: 10px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(5, auto); grid-auto-flow: column; column-gap: 40px; }
+.grid2 .cell { padding: 16px 0; border-bottom: 1px solid var(--rule); font-size: 36px; }
+.grid2 .cell:nth-child(5n) { border-bottom: 0; padding-bottom: 0; }
+.grid2 .t { font-weight: 700; }
+.grid2 .mid { color: var(--muted); font-size: 26px; }
+.late { color: var(--accent); font-weight: 600; }
 </style>
 <div class="pic" id="pic"></div>
 <script>
@@ -59,7 +70,15 @@ fetch('data.json').then((r) => r.json()).then((all) => {
       return `<div class="blk"><p class="lead">${b.lead}</p>${out.join('')}</div>`
     }).join('') + (d.after ? `<p class="after">${d.after}</p>` : '')
   } else {
-    if (v) {
+    if (v === 's1' || v === 's2') {
+      // Every train on one platform (Claude's ideas, November 19th 2026): said once, not on each row.
+      const p1 = d.board[0].platform
+      const late = (r) => r.note ? `<span class="late">${words(r.note, 'leaving ')}</span>` : ''
+      body = v === 's1'
+        ? `<div class="s1head"><span class="lbl">LEAVING</span><span class="lbl">ALL FROM PLATFORM <span class="plat">${p1}</span></span></div>` +
+          d.board.map((r) => `<div class="row"><span class="t">${r.time}</span><span class="mid">${late(r)}</span><span></span></div>`).join('')
+        : `<div class="allplat"><span class="plat big">${p1}</span><span>All ten trains are leaving from platform ${p1}</span></div><div class="grid2">${d.board.map((r) => `<div class="cell"><span class="t">${r.time}</span>${r.note ? ` <span class="mid">${late(r)}</span>` : ''}</div>`).join('')}</div>`
+    } else if (v) {
       // Timetabled times only, lateness in words (John, November 19th 2026).
       const late = (r, verb) => r.note ? `<span class="late">${words(r.note, verb)}</span>` : ''
       const head = plat ? `<div class="colhead"><span>TRAIN</span><span></span><span>PLATFORM</span></div>`

@@ -5,7 +5,7 @@ const path = require('node:path')
 ;(async () => {
   const b = await chromium.launch()
   const p = await b.newPage({ viewport: { width: 1080, height: 400 }, deviceScaleFactor: 1 })
-  for (const [opt, list, v] of [['A', [0, 1, 2]], ['B', [0, 1, 2]], ['C', [0, 2]], ['B', [0], '1'], ['B', [2], '1'], ['B', [2], '2']]) for (const i of list) {
+  for (const [opt, list, v] of [['A', [0, 1, 2]], ['B', [0, 1, 2]], ['C', [0, 2]], ['B', [2], '1'], ['B', [2], '2'], ['B', [1], 's1'], ['B', [1], 's2']]) for (const i of list) {
     await p.goto(`http://localhost:4630/design/share-picture-options/options.html?opt=${opt}&i=${i}${v ? `&v=${v}` : ''}`)
     await p.waitForSelector('body[data-ready]')
     await p.evaluate(() => document.fonts.ready)

@@ -75,6 +75,11 @@ given its own branch). Before committing there, run
   the fold at 390px dark). The pictures to show timetabled times, lateness in words: B1 (platforms "TRAIN",
   "leaving three minutes late"; arrivals "DUE IN" then "the 8.47pm" from A, "arriving three minutes late")
   and B2 (arrivals "TRAIN" then "DUE IN"). Share words to start "The next ten trains…" when there are more.
+- **John:** timetabled times for arrivals only; platforms keep the times they're leaving (option B). Arrivals
+  B1 chosen. Asked for: a layout when all ten leave from one platform (`option-Bs1`, the platform once in the
+  heading row; `option-Bs2`, a badge and "All ten trains are leaving from platform 1", times in two columns,
+  read down), and "The next ten trains" in a shade as well as bold (`page-heading-options.png`: A accent, B
+  grey, C small capitals as "The days ahead" uses). Nothing built.
 
 ### November 18th 2026: "Delayed" trains out of the lists; live (`main`; Claude Code)
 

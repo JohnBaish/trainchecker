@@ -69,7 +69,7 @@ function onceAmPm(times: string[]): string[] {
 /** The two lists laid out as the share pictures are, in the page's own colours (John, November
  *  19th 2026, option B). A simple one-platform list, with nothing to say about any train, is a
  *  line of times with dots instead. */
-const SIMPLE = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('simple') : null // PROTOTYPE
+const SIMPLE = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('simple')?.toUpperCase() ?? null : null // PROTOTYPE
 function Board({ p }: { p: ListPicture }) {
   const second = p.rows.some((r) => r.platform)
   const simple = !!p.one && p.rows.every((r) => !r.mid && !r.late)

@@ -582,3 +582,8 @@ they differ.
     "Trains are expected in the next hour at …", "Two trains are expected …", "One train is expected …" (not "The only
     train…" or "There are two trains…"). Platforms: "The 3.30pm, from platform 3, is delayed, with no new time given
     yet." Illustration only.
+16. **More than ten trains with platforms** (John, November 19th 2026): no sentence about the rest
+    ("We're only showing you the next ten departures…" is gone); the list starts "The next ten trains are
+    leaving at:" (or "…leaving from platform 1 at:"). Where the trains are grouped by kind, "The next ten
+    trains:" comes first, then the groups as before, and the Share words begin "Of the next ten trains,
+    fast ones are leaving…" (Claude's draft for the grouped case, for John).

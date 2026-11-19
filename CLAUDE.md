@@ -58,6 +58,20 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 19th 2026: "The next ten trains are leaving at:"; share-picture mock-ups (branch `claude/beautiful-allen-xir4rp`; Claude Code)
+
+- **John:** no sentence about the trains after the first ten with platforms; the list starts "The next ten
+  trains are leaving at:" instead. Done in `platformTrains()`; grouped lists (Reading to Paddington) start
+  "The next ten trains:" then the groups, and their Share words "Of the next ten trains, fast ones…" (draft,
+  for John). `SPEC.md` §12.16.
+- **Checked:** `npm run check` 246 + 57 + 73 (new: Bath Spa to Bristol's ten of more, and the grouped lead);
+  `tsc -b`, lint, build; the fold at 390px dark (Bath to Bristol) and 1200px light (Reading to Paddington):
+  no errors, no sideways scroll.
+- **John asked:** could the two lists' Share send a picture of the panel, perhaps in the dark colours?
+  Mock-ups in `design/share-picture-options/` (`data.ts` takes the real lists from saved boards,
+  `options.html` lays them out, `picture.cjs` photographs them; fonts checked): A, the panel as on the page,
+  dark; B, a row per train with the platform as a badge, dark; C, A in the light colours. Nothing built.
+
 ### November 18th 2026: "Delayed" trains out of the lists; live (`main`; Claude Code)
 
 - **John (the live site, Oxford to Reading at 10.19pm):** a train "delayed with no time given yet" isn't expected at its

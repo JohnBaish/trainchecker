@@ -1,0 +1,74 @@
+<!doctype html>
+<meta charset="utf-8">
+<!-- Share-picture options for the two lists (November 19th 2026, mock-ups only): picture.cjs
+     opens this with ?opt=A|B|C&i=0..2 and photographs it. Data from data.json (data.ts). -->
+<style>
+@font-face { font-family: Caprasimo; src: url(../../node_modules/@fontsource/caprasimo/files/caprasimo-latin-400-normal.woff2); }
+@font-face { font-family: Figtree; font-weight: 400; src: url(../../node_modules/@fontsource/figtree/files/figtree-latin-400-normal.woff2); }
+@font-face { font-family: Figtree; font-weight: 600; src: url(../../node_modules/@fontsource/figtree/files/figtree-latin-600-normal.woff2); }
+@font-face { font-family: Figtree; font-weight: 700; src: url(../../node_modules/@fontsource/figtree/files/figtree-latin-700-normal.woff2); }
+:root { --bg: #24211e; --band: #37332e; --text: #e8dfcf; --muted: #b0a593; --accent: #dd8a56; --kicker: #f2a573; --rule: #e8dfcf29; --badge: #4a2a14; }
+.light { --bg: #f5ead8; --band: #ebddc5; --text: #201e1d; --muted: #645c50; --accent: #c67139; --kicker: #8c491a; --rule: #201e1d29; --badge: #fde3cf; }
+html, body { margin: 0; }
+body { width: 1080px; background: var(--bg); color: var(--text); font-family: Figtree, sans-serif; -webkit-font-smoothing: antialiased; }
+.pic { padding: 56px 60px 48px; }
+.top { display: flex; justify-content: space-between; align-items: baseline; font-size: 20px; }
+.kick { font-weight: 600; letter-spacing: 0.08em; color: var(--kicker); }
+.when { color: var(--muted); }
+h1 { font-family: Caprasimo, serif; font-weight: 400; font-size: 52px; line-height: 1.15; margin: 26px 0 30px; }
+.band { background: var(--band); border-radius: 36px; padding: 44px 52px; box-shadow: inset 10px 0 0 var(--accent); }
+.lead { font-size: 30px; margin: 0 0 10px; }
+.lead + .lead { margin-top: 0; }
+.blk + .blk { margin-top: 26px; }
+.line { font-size: 34px; line-height: 1.5; margin: 6px 0; }
+.line b { font-weight: 700; }
+.note { color: var(--muted); font-size: 30px; }
+.dot { color: var(--accent); font-weight: 700; }
+.after { font-size: 26px; color: var(--muted); margin: 26px 0 0; }
+.foot { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--rule); margin-top: 40px; padding-top: 26px; }
+.foot .name { font-family: Caprasimo, serif; font-size: 30px; color: var(--kicker); }
+.foot .addr { font-size: 20px; color: var(--muted); }
+/* Option B: a row per train */
+.row { display: grid; grid-template-columns: 170px 1fr auto; align-items: center; gap: 24px; padding: 18px 0; border-top: 1px solid var(--rule); font-size: 32px; }
+.row:first-child { border-top: 0; padding-top: 0; }
+.row:last-child { padding-bottom: 0; }
+.row .t { font-weight: 700; font-size: 36px; }
+.row .mid { color: var(--muted); font-size: 28px; }
+.row .mid .late { color: var(--accent); font-weight: 600; }
+.plat { min-width: 92px; text-align: center; padding: 6px 18px; border-radius: 18px; background: var(--badge); color: var(--kicker); font-weight: 700; font-size: 34px; }
+.plat small { display: block; font-size: 15px; font-weight: 600; letter-spacing: 0.08em; opacity: 0.85; }
+.colhead { display: grid; grid-template-columns: 170px 1fr auto; gap: 24px; font-size: 18px; font-weight: 600; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 14px; }
+</style>
+<div class="pic" id="pic"></div>
+<script>
+const q = new URLSearchParams(location.search), opt = q.get('opt') || 'A', i = +(q.get('i') || 0)
+if (opt === 'C') document.documentElement.classList.add('light')
+const W = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+const words = (s) => s.replace(/(\d+) min late/, (m, n) => `${n < 10 ? W[n] : n} ${n == 1 ? 'minute' : 'minutes'} late`)
+fetch('data.json').then((r) => r.json()).then((all) => {
+  const d = all[i], plat = d.kind === 'platforms'
+  const kick = plat ? 'TRAINCHECKER · PLATFORMS' : 'TRAINCHECKER · ARRIVALS'
+  const title = plat ? `${d.from} to ${d.to}` : `At ${d.to} from ${d.from}`
+  let body = ''
+  if (opt !== 'B') {
+    body = d.blocks.map((b) => {
+      const out = []; let run = []
+      const flush = () => { if (run.length) out.push(`<div class="line">${run.map((t) => `<b>${t}</b>`).join('<span class="dot"> · </span>')}</div>`); run = [] }
+      for (const r of b.rows) { if (r.note) { flush(); out.push(`<div class="line"><b>${r.time}</b> <span class="note">${r.note}</span></div>`) } else run.push(r.time) }
+      flush()
+      return `<div class="blk"><p class="lead">${b.lead}</p>${out.join('')}</div>`
+    }).join('') + (d.after ? `<p class="after">${d.after}</p>` : '')
+  } else {
+    const head = plat ? `<div class="colhead"><span>LEAVING</span><span></span><span>PLATFORM</span></div>` : `<div class="colhead"><span>ARRIVING</span><span>LEFT ${d.from.toUpperCase()}</span><span></span></div>`
+    body = head + d.board.map((r) => plat
+      ? `<div class="row"><span class="t">${r.time}</span><span class="mid">${[r.kind && (r.kind === 'Elizabeth Line' ? 'Elizabeth Line' : `${r.kind}`), r.note && `<span class="late">${words(r.note)}</span>`].filter(Boolean).join(' · ')}</span><span class="plat">${r.platform}</span></div>`
+      : `<div class="row"><span class="t">${r.time}</span><span class="mid">${r.left}${r.note ? ` · <span class="late">${words(r.note)}</span>` : ''}</span><span></span></div>`).join('')
+  }
+  document.getElementById('pic').innerHTML = `
+    <div class="top"><span class="kick">${kick}</span><span class="when">${d.at} on ${d.date}</span></div>
+    <h1>${title}</h1>
+    <div class="band">${body}</div>
+    <div class="foot"><span class="name">Trainchecker</span><span class="addr">trainchecker.baish.net</span></div>`
+  document.body.dataset.ready = '1'
+})
+</script>

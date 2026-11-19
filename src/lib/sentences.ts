@@ -627,7 +627,7 @@ export function platformTrains(a: Analysis): (Listing & { fold: string }) | null
   const leaves = (t: Train) => diff(a.now, t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std)
   const ts = a.ahead.filter((t) => !t.cancelled && t.platform).sort((x, y) => leaves(x) - leaves(y))
   if (!ts.length) return null
-  const first = ts.slice(0, 10), rest = ts.length - first.length
+  const first = ts.slice(0, 10), limited = ts.length > first.length
   // "Delayed" with no time: not leaving at its timetabled time, so not in the list; a sentence of
   // its own after it (John, November 18th 2026).
   const shown = first.filter((t) => !t.unknown), held = first.filter((t) => t.unknown)
@@ -656,32 +656,34 @@ export function platformTrains(a: Analysis): (Listing & { fold: string }) | null
   else if (grouped) {
     const ps = parts.map((g, i) => {
       const n = name[g.kind as 'fast' | 'slower' | 'elizabeth'], one = g.rows.length === 1
-      const who = i === 0 ? (one ? `${Cap(article(n[0]))} ${n[0]} is leaving` : `${Cap(n[1])} are leaving`) : (one ? `${article(n[2])} ${n[2]}` : n[3])
+      // With more trains after these ten (John, November 19th 2026): "Of the next ten trains, fast ones…".
+      const who = i === 0
+        ? (limited ? `Of the next ten trains, ${one ? `${article(n[2])} ${n[2]} is` : `${n[3]} are`} leaving` : one ? `${Cap(article(n[0]))} ${n[0]} is leaving` : `${Cap(n[1])} are leaving`)
+        : (one ? `${article(n[2])} ${n[2]}` : n[3])
       return `${who} ${g.where ? `from ${g.where} ` : ''}at ${andList(g.rows.map(said))}`
     })
     prose = `${ps.slice(0, -1).join(', ')}, and ${ps[ps.length - 1]}.`
-    blocks = parts.map((g) => {
+    blocks = (limited ? [{ lead: 'The next ten trains:', rows: [] as TimeRow[] }] : []).concat(parts.map((g) => {
       const n = name[g.kind as 'fast' | 'slower' | 'elizabeth'], one = g.rows.length === 1
       return { lead: `${one ? `${Cap(article(n[0]))} ${n[0]}` : Cap(n[1])}${g.where ? `, from ${g.where}` : ''}:`, rows: g.rows }
-    })
+    }))
   } else {
     const g = parts[0], from = g.where ? `from ${g.where} ` : ''
-    prose = shown.length === 1 ? `There's a train leaving ${from}at ${said(g.rows[0])}.` : `There are trains leaving ${from}at ${andList(g.rows.map(said))}.`
-    blocks = [{ lead: `There are trains leaving ${from}at:`, rows: g.rows }]
+    // More after these ten: "The next ten trains are leaving at:", and no sentence about the rest
+    // (John, November 19th 2026).
+    const lead = limited ? `The next ten trains are leaving ${from}at` : `There are trains leaving ${from}at`
+    prose = shown.length === 1 && !limited ? `There's a train leaving ${from}at ${said(g.rows[0])}.` : `${lead} ${andList(g.rows.map(said))}.`
+    blocks = [{ lead: `${lead}:`, rows: g.rows }]
   }
   const sayH = clockSay()
   const heldLine = !held.length ? '' : held.length === 1
     ? `The ${sayH(held[0].std)}, from platform ${held[0].platform}, is delayed, with no new time given yet${because(held)}.`
     : `The ${andList(held.map((t) => `${sayH(t.std)} (platform ${t.platform})`))} are delayed, with no new times given yet${because(held)}.`
   prose = [prose, heldLine].filter(Boolean).join(' ')
-  // "already" dropped (John, November 18th 2026).
-  const more = !rest ? null : rest === 1
-    ? "We're only showing you the next ten departures, there's another one running later which also has a platform showing."
-    : `We're only showing you the next ten departures, there are another ${num(rest)} running later which also have platforms showing.`
-  const after = [heldLine, more].filter(Boolean).join(' ') || null
+  const after = heldLine || null
   return {
     fold: ts.length === 1 ? 'Show the train with a platform' : 'Show the trains with platforms',
-    prose: tenAfterWords(prose), text: tenAfterWords([prose, more].filter(Boolean).join(' ')),
+    prose: tenAfterWords(prose), text: tenAfterWords(prose),
     blocks: shown.length > 2 ? blocks.map((b) => ({ ...b, rows: b.rows.map((x) => ({ ...x, note: x.note && tenAfterWords(x.note) })) })) : null, after,
   }
 }

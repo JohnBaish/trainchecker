@@ -58,7 +58,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 19th 2026: the lists on the page as boards (branch `claude/beautiful-allen-xir4rp`; Claude Code)
+### November 19th 2026: the lists on the page as boards (branch `claude/beautiful-allen-xir4rp`, merged the same day; Claude Code)
 
 - **John:** the share pictures now look better than the page; could the folds look better while still
   speaking to you? Two prototypes on real code (`?mock=A`, a sentence inside the fold; `?mock=B`, the
@@ -70,6 +70,12 @@ given its own branch). Before committing there, run
 - **Checked:** `npm run check` 263 + 57 + 73; `tsc -b`, lint (no warnings), build; saved boards (Bath to
   Bristol, Tiverton Parkway to Paddington, Reading to Paddington) at 390px dark and 1200px light: no errors,
   no sideways scroll.
+- **John (the preview):** Arrivals' fold back to "At Reading from Midgham"; for a one-platform list, three
+  layouts tried (`design/board-options/simple-options.png`: A even columns, B tiles, C a big badge beside
+  the times); B on a phone and A on a computer, "merge straight to main". The `?mock=` and `?simple=`
+  switches removed. Checks 263 + 57 + 73, `tsc -b`, lint, build; Bath to Bristol at 390px dark, Tiverton
+  Parkway at 1200px light, Reading to Paddington's board and arrivals at 390px: no errors, no sideways
+  scroll. Merged with this note in the same push.
 
 ### November 19th 2026: "The next ten trains"; the two lists shared as pictures (branch `claude/beautiful-allen-xir4rp`, merged the same day; Claude Code)
 

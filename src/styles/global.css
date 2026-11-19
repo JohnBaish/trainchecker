@@ -182,17 +182,15 @@ details.trains-fold { margin-top: var(--space-3); }
 .brow:last-child { border-bottom: 0; }
 .simple .shead { margin: 0; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--color-neutral-700); display: flex; align-items: center; gap: 10px; }
 .simple .stimes b { font-size: 17px; }
-/* A: times spread evenly in equal columns, a light rule under the heading */
-.simple-A .shead { padding-bottom: 8px; border-bottom: 1px solid var(--color-divider); }
-.simple-A .stimes { display: grid; grid-template-columns: repeat(auto-fill, minmax(5.2rem, 1fr)); gap: 10px 8px; margin-top: 12px; }
-/* B: each time its own soft tile */
-.simple-B .stimes { display: grid; grid-template-columns: repeat(auto-fill, minmax(5.2rem, 1fr)); gap: 8px; margin-top: 12px; }
-.simple-B .stimes b { text-align: center; padding: 10px 4px; border-radius: 12px; background: color-mix(in srgb, var(--color-text) 6%, transparent); }
-/* C: a big platform badge beside the times, like a departure board line */
-.simple-C { display: flex; align-items: center; gap: 16px; }
-.simple-C .stimes { display: flex; flex-wrap: wrap; gap: 6px 18px; }
-.badge.big { font-size: 28px; min-width: 2em; padding: 6px 14px; border-radius: 14px; }
-.bline { margin: 12px 0 0; font-size: 17px; line-height: 1.9; }
+/* A one-platform list (John, November 19th 2026): even columns under a light rule on a computer,
+   a soft tile for each time on a phone. */
+.simple .shead { padding-bottom: 8px; border-bottom: 1px solid var(--color-divider); }
+.simple .stimes { display: grid; grid-template-columns: repeat(auto-fill, minmax(5.2rem, 1fr)); gap: 10px 8px; margin-top: 12px; }
+@media (max-width: 720px) {
+  .simple .shead { padding-bottom: 0; border-bottom: 0; }
+  .simple .stimes { gap: 8px; }
+  .simple .stimes b { text-align: center; padding: 10px 4px; border-radius: 12px; background: color-mix(in srgb, var(--color-text) 6%, transparent); }
+}
 .bt { font-weight: 700; font-size: 17px; }
 .bt.q { color: var(--color-accent-700); }
 .bmid { color: var(--color-neutral-700); }

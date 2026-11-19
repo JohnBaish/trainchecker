@@ -612,9 +612,10 @@ they differ.
     Platforms and Arrivals show the share pictures' layout in the page's own colours (light or dark): a
     row per train, the time in bold, the kind of train and lateness beside it (lateness on its own line
     on a phone), platform badges. A one-platform list with nothing to say about any train is a line of
-    times with dots, "am" or "pm" said once (John). The friendly voice stays in the sentences: Platforms
+    times, "am" or "pm" said once: tiles on a phone, even columns under a light rule on a computer, with
+    "All from platform" and the badge above (John, after three layouts). The friendly voice stays in the sentences: Platforms
     keeps its sentence above the fold; Arrivals gets one too (Claude's draft: "More than ten trains are
     due in the next hour. Of the first ten, eight are expected on time, and two are running between
     three and five minutes late."; "Trainchecker can see one train due in the next hour." on a long
-    journey), and its fold is "Show the arrivals". A delayed train's sentence, with its reason, stays
+    journey); its fold keeps "At Reading from Midgham" (John). A delayed train's sentence, with its reason, stays
     under the board.

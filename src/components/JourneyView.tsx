@@ -69,16 +69,16 @@ function onceAmPm(times: string[]): string[] {
 /** The two lists laid out as the share pictures are, in the page's own colours (John, November
  *  19th 2026, option B). A simple one-platform list, with nothing to say about any train, is a
  *  line of times with dots instead. */
-const SIMPLE = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('simple')?.toUpperCase() ?? null : null // PROTOTYPE
 function Board({ p }: { p: ListPicture }) {
   const second = p.rows.some((r) => r.platform)
   const simple = !!p.one && p.rows.every((r) => !r.mid && !r.late)
   return (
-    <div className="board" role="table">
-      {simple && SIMPLE ? (
-        <div className={`simple simple-${SIMPLE}`}>
-          {SIMPLE === 'C' ? <span className="badge big">{p.one}</span> : <p className="shead">All from platform <span className="badge">{p.one}</span></p>}
-          <div className="stimes">{onceAmPm(p.rows.map((r) => r.time)).map((t, i) => <b key={i}>{t}</b>)}</div>
+    <div className="board" role={simple ? undefined : 'table'}>
+      {simple ? (
+        // Even columns on a computer, a tile for each time on a phone (John, November 19th 2026).
+        <div className="simple">
+          <p className="shead">All from platform <span className="badge">{p.one}</span></p>
+          <div className="stimes" role="list">{onceAmPm(p.rows.map((r) => r.time)).map((t, i) => <b key={i} role="listitem">{t}</b>)}</div>
         </div>
       ) : <>
       <div className="bhead" role="row">
@@ -87,11 +87,7 @@ function Board({ p }: { p: ListPicture }) {
           ? <span className="bone" role="columnheader">All from platform <span className="badge">{p.one}</span></span>
           : <span role="columnheader" className={second ? 'bright' : ''}>{p.heads[1]}</span>}
       </div>
-      {simple ? (
-        <p className="bline" role="row">{onceAmPm(p.rows.map((r) => r.time)).map((t, i) => (
-          <span key={i} role="cell">{i > 0 && <span className="tdot" aria-hidden="true"> · </span>}<b>{t}</b>{i < p.rows.length - 1 && <span className="sr">,</span>}</span>
-        ))}</p>
-      ) : p.rows.map((r, i) => (
+      {p.rows.map((r, i) => (
         <div key={i} className="brow" role="row">
           <span className={r.time === '?' ? 'bt q' : 'bt'} role="cell">{r.time}</span>
           <span className="bmid" role="cell">

@@ -89,6 +89,12 @@ given its own branch). Before committing there, run
   `design/share-picture-options/built-*.png`); at 390px with touch: no share sheet in this browser, so
   it saves the picture ("Saved as a picture"); no errors, no sideways scroll. **Not checked:** a real
   phone's share sheet (WhatsApp, Messages), Safari's clipboard.
+- **John (the preview, 9.15am):** "The changes are excellent." Delayed trains with no time: "?" in the time
+  box, the explanation beside it, at the bottom; orange not red; the kind of train on arrivals too.
+  `SPEC.md` §12.19. **Checked:** `npm run check` 259 + 57 + 73 (new: "?" and "was due", the delayed ones
+  last, the rest in order, a delayed platforms row keeps its badge); `tsc -b`, lint, build; the pictures
+  read back from the clipboard with two trains made "Delayed" in a saved board (illustration only,
+  `design/share-picture-options/built-*-delayed-illustration.png`).
 
 ### November 18th 2026: "Delayed" trains out of the lists; live (`main`; Claude Code)
 

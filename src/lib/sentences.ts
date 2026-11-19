@@ -776,14 +776,13 @@ export function platformsPicture(a: Analysis): ListPicture | null {
   const first = ts.slice(0, 10), limited = ts.length > 10
   const groups = speedGroups(a).filter((g) => g.kind !== 'all' && first.some((t) => g.trains.includes(t)))
   const label = { fast: 'Fast', slower: 'Slower', elizabeth: 'Elizabeth Line', all: '' } as const
-  const rows = first.map((t): PicRow => {
+  // A delayed train with no time: "?" for its time, at the bottom, so the times above run in
+  // order (John, November 19th 2026).
+  const kindOf = (t: Train) => (groups.length > 1 ? label[groups.find((g) => g.trains.includes(t))?.kind ?? 'all'] : '')
+  const rows = [...first.filter((t) => !t.unknown), ...first.filter((t) => t.unknown)].map((t): PicRow => {
     const late = t.late !== null && t.late > 0 && isTime(t.etd)
-    return {
-      time: t12(late ? t.etd! : t.std),
-      mid: groups.length > 1 ? label[groups.find((g) => g.trains.includes(t))?.kind ?? 'all'] : '',
-      late: t.unknown ? NO_TIME : late ? lateWords(t.late!) : '',
-      platform: t.platform!,
-    }
+    if (t.unknown) return { time: '?', mid: [kindOf(t), `the ${t12(t.std)}`].filter(Boolean).join(' · '), late: NO_TIME, platform: t.platform! }
+    return { time: t12(late ? t.etd! : t.std), mid: kindOf(t), late: late ? lateWords(t.late!) : '', platform: t.platform! }
   })
   const one = rows.every((r) => r.platform === rows[0].platform) && rows.length > 1 ? rows[0].platform! : null
   const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
@@ -801,12 +800,20 @@ export function arrivalsPicture(a: Analysis): ListPicture | null {
   const delayed = (t: Train) => !!t.eta && t.eta !== 'On time' && !isTime(t.eta)
   const inHour = due.filter((t) => !delayed(t) && fromNow(when(t)) >= 0 && fromNow(when(t)) <= 60).sort((x, y) => fromNow(when(x)) - fromNow(when(y)))
   const held = due.filter((t) => delayed(t) && fromNow(t.sta!) >= 0 && fromNow(t.sta!) <= 60)
-  const shown = [...inHour.slice(0, 10), ...held].sort((x, y) => fromNow(x.sta!) - fromNow(y.sta!))
+  const bySta = (x: Train, y: Train) => fromNow(x.sta!) - fromNow(y.sta!)
+  // Delayed ones with no time at the bottom, "?" for their time (John, November 19th 2026).
+  const shown = [...inHour.slice(0, 10).sort(bySta), ...held.sort(bySta)]
   if (!shown.length) return null
+  // The kind of train, when the journey has more than one (two "8.58am" trains can be different).
+  const kinds = speedGroups({ ...a, ahead: [...a.past, ...a.ahead] }).filter((g) => g.kind !== 'all')
+  const label = { fast: 'Fast', slower: 'Slower', elizabeth: 'Elizabeth Line', all: '' } as const
+  const kindOf = (t: Train) => (kinds.length > 1 ? label[kinds.find((g) => g.trains.includes(t))?.kind ?? 'all'] : '')
   const longest = Math.max(0, ...[...a.past, ...a.ahead].filter((t) => t.sta).map((t) => diff(t.std, t.sta!)))
   const rows = shown.map((t): PicRow => {
     const late = isTime(t.eta) ? diff(t.sta!, t.eta) : 0
-    return { time: t12(t.sta!), mid: `the ${t12(t.std)}`, late: delayed(t) ? NO_TIME : late > 0 ? `arriving ${lateWords(late)}` : '' }
+    const mid = [`the ${t12(t.std)}`, kindOf(t)].filter(Boolean).join(' · ')
+    if (delayed(t)) return { time: '?', mid, late: `delayed, was due ${t12(t.sta!)}, no new time yet` }
+    return { time: t12(t.sta!), mid, late: late > 0 ? `arriving ${lateWords(late)}` : '' }
   })
   const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
   return {

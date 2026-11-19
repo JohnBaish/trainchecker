@@ -231,23 +231,28 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
     ctx.strokeStyle = D.rule
     ctx.lineWidth = 1
     ctx.beginPath(); ctx.moveTo(x0, top); ctx.lineTo(x1, top); ctx.stroke()
-    ctx.fillStyle = D.text
+    // "?" for a delayed train with no time, in the lateness orange (John, November 19th 2026).
+    ctx.fillStyle = r.time === '?' ? D.accent : D.text
     ctx.font = `700 36px ${FIG}`
     ctx.fillText(r.time, x0, mid + 13)
     const right = r.platform && !p.one ? x1 - badge(r.platform, x1, mid) - 20 : x1
-    // The middle: the kind or "the 8.47pm" in grey, then lateness in orange.
-    const parts = [r.mid, r.late].filter(Boolean)
-    const all = parts.join(' · ')
-    const z = fitFont(ctx, all, 600, 28, right - colX)
-    let x = colX
-    if (r.mid) {
-      ctx.font = `400 ${z}px ${FIG}`; ctx.fillStyle = D.muted
-      ctx.fillText(r.mid + (r.late ? ' · ' : ''), x, mid + 10)
-      x += ctx.measureText(r.mid + (r.late ? ' · ' : '')).width
+    // The middle: the kind or "the 8.47pm" in grey, then lateness in orange; on two lines when
+    // it won't fit on one at a readable size.
+    const sep = r.mid && r.late ? ' · ' : ''
+    ctx.font = `600 28px ${FIG}`
+    const oneLine = ctx.measureText(r.mid + sep + r.late).width <= right - colX
+    const draw = (text: string, weight: number, colour: string, x: number, y: number, size: number) => {
+      ctx.font = `${weight} ${size}px ${FIG}`; ctx.fillStyle = colour; ctx.fillText(text, x, y)
+      return ctx.measureText(text).width
     }
-    if (r.late) {
-      ctx.font = `600 ${z}px ${FIG}`; ctx.fillStyle = D.accent
-      ctx.fillText(r.late, x, mid + 10)
+    if (oneLine) {
+      let x = colX
+      if (r.mid) x += draw(r.mid + sep, 400, D.muted, x, mid + 10, 28)
+      if (r.late) draw(r.late, 600, D.accent, x, mid + 10, 28)
+    } else {
+      const z = Math.min(fitFont(ctx, r.mid, 400, 26, right - colX), fitFont(ctx, r.late, 600, 26, right - colX))
+      draw(r.mid, 400, D.muted, colX, mid - 6, z)
+      draw(r.late, 600, D.accent, colX, mid + 26, z)
     }
   })
   if (note.length) {

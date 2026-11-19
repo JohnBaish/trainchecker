@@ -601,3 +601,10 @@ they differ.
     Trainchecker." ("The trains…" with ten or fewer); "The trains due at London Paddington from Reading,
     at 8.59pm on November 17th, from Trainchecker." ("The first ten trains due at … after 8.59pm on
     November 17th…" with more). With no trains in the list, the words alone, as before.
+19. **Delayed trains with no time in the pictures** (John, November 19th 2026): a bold orange "?" in
+    the time box and the explanation beside it, at the bottom of the list so the times above run in
+    order. Arrivals: "the 8.58am · delayed, was due 9.21am, no new time yet"; platforms: "the 9.31am ·
+    delayed, no new time yet", with the platform badge kept. Orange, not red (red means "be prepared"
+    and cancellations). The kind of train ("Fast", "Slower", "Elizabeth Line") now shows on arrivals too
+    when the journey has more than one kind, so two "8.58am" trains can be told apart. A long note goes
+    on a second line.

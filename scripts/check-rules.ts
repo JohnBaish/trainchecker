@@ -390,13 +390,19 @@ eq('stations: suggestions', [suggest('paddington')[0][1], suggest('man')[0][1], 
   eq('picture: platforms, fewer than ten', platformsPicture(A('TVP-PAD'))!.words.text.startsWith('The trains from Tiverton Parkway to London Paddington with platforms, at '), true)
   eq('picture: no platforms, no picture', platformsPicture(A('PAD-PLY')), null)
   const ap = arrivalsPicture(rp9)!
-  eq('picture: arrivals, timetabled time, "the 8.47pm", "arriving … late" (John)', [ap.heads, ap.rows[2]], [['DUE IN', 'FROM READING'], { time: '9.10pm', mid: 'the 8.47pm', late: 'arriving three minutes late' }])
+  eq('picture: arrivals, timetabled time, "the 8.47pm", "arriving … late" (John)', [ap.heads, ap.rows[2]], [['DUE IN', 'FROM READING'], { time: '9.10pm', mid: 'the 8.47pm · Fast', late: 'arriving three minutes late' }])
   eq('picture: arrivals in timetabled order', ap.rows.map((r) => r.time).join(' '), '9.01pm 9.08pm 9.10pm 9.21pm 9.24pm 9.24pm 9.28pm 9.35pm 9.44pm 9.52pm')
   eq('picture: arrivals, the words with more than ten', ap.words.text, 'The first ten trains due at London Paddington from Reading after 8.59pm on November 17th, from Trainchecker.')
   eq('picture: arrivals, a long journey has its note', arrivalsPicture(A('TVP-PAD'))!.note, "Trains that left Tiverton Parkway more than two hours ago aren't included, as Trainchecker can't see them.")
   eq('picture: arrivals, none, words instead', arrivalsPicture(mdg), null)
   const dl = changed('RDG-MDG', (sv) => { const t = sv.filter((x) => x.sta && !x.ata)[0]; t.std = '08:30'; t.sta = '08:45'; t.eta = 'Delayed'; t.cancelled = false })
-  eq('picture: a delayed train with no time is a row of its own', arrivalsPicture(dl)!.rows, [{ time: '8.45am', mid: 'the 8.30am', late: 'delayed, no new time yet' }])
+  eq('picture: a delayed train with no time, "?" and "was due" (John)', arrivalsPicture(dl)!.rows, [{ time: '?', mid: 'the 8.30am', late: 'delayed, was due 8.45am, no new time yet' }])
+  const dl2 = changed('PAD-RDG', (sv, a) => { const t = sv.find((x) => a.ahead.some((y) => y.id === x.id && y.sta && !y.ata))!; t.eta = 'Delayed' })
+  const r2 = arrivalsPicture(analyse(snapOf(raw('20261117-2059-PAD-RDG.json'))))!, d2 = arrivalsPicture(dl2)!
+  eq('picture: the delayed one goes to the bottom, the rest in order', [d2.rows[d2.rows.length - 1].time, d2.rows.slice(0, -1).every((r) => r.time !== '?'), d2.rows.length <= r2.rows.length + 1], ['?', true, true])
+  const pd = changed('RDG-PAD', (sv, a) => { const t = sv.find((x) => a.ahead.some((y) => y.id === x.id && y.platform && !y.cancelled))!; t.etd = 'Delayed' })
+  const pp2 = platformsPicture(pd)!
+  eq('picture: platforms, a delayed train "?" at the bottom with its platform', [pp2.rows[pp2.rows.length - 1].time, pp2.rows[pp2.rows.length - 1].late, !!pp2.rows[pp2.rows.length - 1].platform, /the \d/.test(pp2.rows[pp2.rows.length - 1].mid)], ['?', 'delayed, no new time yet', true, true])
 }
 console.log(`check-rules: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

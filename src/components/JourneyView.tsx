@@ -69,11 +69,18 @@ function onceAmPm(times: string[]): string[] {
 /** The two lists laid out as the share pictures are, in the page's own colours (John, November
  *  19th 2026, option B). A simple one-platform list, with nothing to say about any train, is a
  *  line of times with dots instead. */
+const SIMPLE = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('simple') : null // PROTOTYPE
 function Board({ p }: { p: ListPicture }) {
   const second = p.rows.some((r) => r.platform)
   const simple = !!p.one && p.rows.every((r) => !r.mid && !r.late)
   return (
     <div className="board" role="table">
+      {simple && SIMPLE ? (
+        <div className={`simple simple-${SIMPLE}`}>
+          {SIMPLE === 'C' ? <span className="badge big">{p.one}</span> : <p className="shead">All from platform <span className="badge">{p.one}</span></p>}
+          <div className="stimes">{onceAmPm(p.rows.map((r) => r.time)).map((t, i) => <b key={i}>{t}</b>)}</div>
+        </div>
+      ) : <>
       <div className="bhead" role="row">
         <span role="columnheader">{p.heads[0]}</span>
         {p.one
@@ -94,6 +101,7 @@ function Board({ p }: { p: ListPicture }) {
           {r.platform && !p.one && <span className="badge" role="cell">{r.platform}</span>}
         </div>
       ))}
+      </>}
       {p.note && <p className="tafter">{p.note}</p>}
     </div>
   )
@@ -139,7 +147,7 @@ function Arrivals({ a }: { a: Analysis }) {
       <h3>Arrivals</h3>
       <p>{say}</p>
       <details className="advice arrivals-fold">
-        <summary>Show the arrivals <Icon name="down" /></summary>
+        <summary>{x.heading} <Icon name="down" /></summary>
         <Board p={pic} />
         {known > 0 && x.after && <p className="tafter">{x.after.replace(/ ?Trains that left .*$/, '')}</p>}
         <ListShare a={a} kind="arrivals" prose={x.text} />

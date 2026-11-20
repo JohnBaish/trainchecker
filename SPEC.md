@@ -630,3 +630,9 @@ they differ.
     under Platforms say "6.39 (was due 6.36, platform 10A)"; Arrivals' "(the one due to leave Reading
     at 8.37 and arrive at 9.01)" (illustration only), "(the 8.47, which was due at 9.10)" (Claude’s draft). The boards'
     sentence counts lateness from the minutes, not the words. A late note breaks only after its comma.
+22. **Tighter late notes** (John, November 20th 2026, after trying §12.21 on his iPhone): Platforms says
+    only "was due 1.42" (the heading "EXPECTED TO LEAVE" shows it's late); Arrivals says "running 15
+    minutes late" instead of a third time ("1.44pm the 1.05pm · Fast · running 15 minutes late"). The
+    sentences follow: "(the one due to leave Reading at 5.41, running two minutes late)", "(the 8.47,
+    running three minutes late)". A delayed train with no time keeps "delayed, was due 8.45am, no new
+    time yet".

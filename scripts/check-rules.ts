@@ -238,7 +238,7 @@ eq('platforms fold: two platforms for three or more, said once (John)', platform
 eq('platforms fold: two trains, two platforms, each its own', platformTrains(mdg)!.text, 'There are trains leaving at 9.13am (platform 12A) and 10.12 (platform 2).')
 eq('platforms fold: cancelled left out', platformTrains(manMia)!.text.includes('6.28pm'), false)
 eq('arrivals: the brackets in sequence (John)', arrivals(rp9).text.split('), ').slice(0, 3).join('), ') + ')',
-  'The first ten trains in the next hour are expected at 9.01pm (the one due to leave Reading at 8.37), 9.08 (the 8.44 from Reading), 9.13 (the 8.47, which was due at 9.10)')
+  'The first ten trains in the next hour are expected at 9.01pm (the one due to leave Reading at 8.37), 9.08 (the 8.44 from Reading), 9.13 (the 8.47, running three minutes late)')
 const soon = (k: number) => changed('RDG-MDG', (sv) => { sv.filter((x) => x.sta && !x.ata).slice(0, k).forEach((t, i) => { t.std = `08:${30 + i * 10}`; t.sta = `08:${45 + i * 10}`; t.eta = 'On time'; t.cancelled = false }) })
 eq('arrivals: one, "The only train" (John)', arrivals(soon(1)).text, 'The only train arriving in the next hour is expected at 8.45am (the one due to leave Reading at 8.30).')
 eq('arrivals: two (John)', arrivals(soon(2)).text, "There are two trains arriving in the next hour. They're expected at 8.45am (the one due to leave Reading at 8.30) and 8.55 (the 8.40 from Reading).")
@@ -384,14 +384,14 @@ eq('stations: suggestions', [suggest('paddington')[0][1], suggest('man')[0][1], 
 // arrivals with the timetabled time; the platform once when all share one; the share words.
 {
   const pp = platformsPicture(rdgPad)!
-  eq('picture: platforms, ten rows, the leaving time, kind and lateness', [pp.rows.length, pp.rows[0], pp.rows.find((r) => r.late)], [10, { time: '6.32pm', mid: 'Fast', late: '', platform: '11A' }, { time: '6.34pm', mid: 'Elizabeth Line', late: 'was due 6.28, running late', platform: '13', lateBy: 6 }])
+  eq('picture: platforms, ten rows, the leaving time, kind and lateness', [pp.rows.length, pp.rows[0], pp.rows.find((r) => r.late)], [10, { time: '6.32pm', mid: 'Fast', late: '', platform: '11A' }, { time: '6.34pm', mid: 'Elizabeth Line', late: 'was due 6.28', platform: '13', lateBy: 6 }])
   eq('picture: platforms, the words with more than ten (John)', pp.words.text, 'The next ten trains from Reading to London Paddington with platforms, at 6.24pm on November 17th, from Trainchecker.')
   const bp = platformsPicture(analyse(snapOf(raw('20261117-1824-BTH-BRI.json'))))!
   eq('picture: one platform for all, said once, no kinds', [bp.one, bp.rows.every((r) => r.mid === '')], ['1', true])
   eq('picture: platforms, fewer than ten', platformsPicture(A('TVP-PAD'))!.words.text.startsWith('The trains from Tiverton Parkway to London Paddington with platforms, at '), true)
   eq('picture: no platforms, no picture', platformsPicture(A('PAD-PLY')), null)
   const ap = arrivalsPicture(rp9)!
-  eq('picture: arrivals, the expected time, "the 8.47pm", "was due … running late" (John, November 20th)', [ap.heads, ap.rows[2]], [['EXPECTED IN', 'FROM READING'], { time: '9.13pm', mid: 'the 8.47pm · Fast', late: 'was due 9.10, running late', lateBy: 3 }])
+  eq('picture: arrivals, the expected time, "the 8.47pm", "running … minutes late" (John, November 20th)', [ap.heads, ap.rows[2]], [['EXPECTED IN', 'FROM READING'], { time: '9.13pm', mid: 'the 8.47pm · Fast', late: 'running three minutes late', lateBy: 3 }])
   eq('picture: arrivals in the order expected (John, November 20th)', ap.rows.map((r) => r.time).join(' '), '9.01pm 9.08pm 9.13pm 9.21pm 9.24pm 9.24pm 9.33pm 9.35pm 9.44pm 9.52pm')
   eq('picture: platforms heading (John, November 20th)', pp.heads, ['EXPECTED TO LEAVE', 'PLATFORM'])
   eq('picture: arrivals, the words with more than ten', ap.words.text, 'The first ten trains due at London Paddington from Reading after 8.59pm on November 17th, from Trainchecker.')
@@ -409,9 +409,15 @@ eq('stations: suggestions', [suggest('paddington')[0][1], suggest('man')[0][1], 
 // The boards' sentence (John, November 19th 2026, option B; Claude's draft wording).
 eq('board: all on time', boardSummary(platformsPicture(analyse(snapOf(raw('20261117-1824-BTH-BRI.json'))))!.rows, 'leave'), "They're all expected to leave on time.")
 eq('board: some late, a range', boardSummary(platformsPicture(rdgPad)!.rows, 'leave'), 'Seven are expected to leave on time, and three are running between three and 20 minutes late.')
-eq('board: arrivals, one late', boardSummary([{ time: '9.01pm', mid: '', late: '' }, { time: '9.10pm', mid: '', late: 'was due 9.07, running late', lateBy: 3 }], 'arrive'), 'One is expected on time, and one is running three minutes late.')
+eq('board: arrivals, one late', boardSummary([{ time: '9.01pm', mid: '', late: '' }, { time: '9.10pm', mid: '', late: 'running three minutes late', lateBy: 3 }], 'arrive'), 'One is expected on time, and one is running three minutes late.')
 eq('board: a delayed one with no time is left out of the count', boardSummary([{ time: '9.01pm', mid: '', late: '' }, { time: '?', mid: '', late: 'delayed, no new time yet' }], 'arrive'), "It's expected on time.")
 // "was due": "am"/"pm" left off when it matches, kept across midday and on the hour (John, November 20th 2026).
 eq('was due: pm once, kept across midday, on the hour', [dueSay('12:53', '12:47'), dueSay('12:04', '11:58'), dueSay('13:10', '12:59'), dueSay('21:04', '21:00')], ['12.47', '11.58am', '12.59', '9pm'])
+{
+  const one = changed('RDG-PAD', (sv, a) => { const t = sv.filter((x) => a.ahead.some((y) => y.id === x.id && y.sta && !y.ata && !y.cancelled)).sort((x, y) => (x.sta! < y.sta! ? -1 : 1))[0]; t.eta = ((h, m) => `${String(h + Math.floor((m + 1) / 60)).padStart(2, '0')}:${String((m + 1) % 60).padStart(2, '0')}`)(+t.sta!.slice(0, 2), +t.sta!.slice(3)) })
+  const r = arrivalsPicture(one)!.rows.find((x) => x.lateBy === 1)
+  eq('picture: arrivals, one minute late', r?.late, 'running one minute late')
+  eq('arrivals: the first train late, "running … late" (John, November 20th)', arrivals(rdgPad).text.startsWith('The first ten trains in the next hour are expected at 6.25pm (the one due to leave Reading at 5.41, running two minutes late), 6.26 (the 6.01 from Reading, running two minutes late), 6.28 (the 5.32, running two minutes late)'), true)
+}
 console.log(`check-rules: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

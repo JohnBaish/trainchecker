@@ -739,7 +739,7 @@ export function arrivals(a: Analysis): Listing & { heading: string } {
     const which = i === 0 ? `the one due to leave ${a.from} at ${say(t.std)}` : i === 1 ? `the ${say(t.std)} from ${a.from}` : `the ${say(t.std)}`
     const late = isTime(t.eta) ? diff(t.sta!, t.eta) : null
     // The timetabled arrival beside the expected one (John, November 20th 2026; Claude's draft wording).
-    const extra = late !== null && late > 0 ? (i === 0 ? ` and arrive at ${dueSay(t.eta!, t.sta!)}` : `, which was due at ${dueSay(t.eta!, t.sta!)}`)
+    const extra = late !== null && late > 0 ? `, ${lateBy(late)}`
       : t.eta && t.eta !== 'On time' && !isTime(t.eta) ? ', delayed with no time given yet' : ''
     return { time, note: tenAfterWords(which + extra) }
   })
@@ -776,7 +776,10 @@ export type ListPicture = {
   kicker: string; title: string; when: string; heads: [string, string]
   one: string | null; rows: PicRow[]; note: string | null; words: { text: string; title: string; hash: string }
 }
-const runningLate = (now: string, due: string) => `was due ${dueSay(now, due)}, running late`
+// Platforms: "was due 1.42" (the heading says "Expected to leave", so it's plainly late); arrivals:
+// "running 15 minutes late", the train named by its departure (John, November 20th 2026).
+const wasDue = (now: string, due: string) => `was due ${dueSay(now, due)}`
+const lateBy = (k: number) => `running ${num(k)} ${k === 1 ? 'minute' : 'minutes'} late`
 const NO_TIME = 'delayed, no new time yet'
 
 export function platformsPicture(a: Analysis): ListPicture | null {
@@ -792,7 +795,7 @@ export function platformsPicture(a: Analysis): ListPicture | null {
   const rows = [...first.filter((t) => !t.unknown), ...first.filter((t) => t.unknown)].map((t): PicRow => {
     const late = t.late !== null && t.late > 0 && isTime(t.etd)
     if (t.unknown) return { time: '?', mid: [kindOf(t), `the ${t12(t.std)}`].filter(Boolean).join(' · '), late: NO_TIME, platform: t.platform! }
-    return { time: t12(late ? t.etd! : t.std), mid: kindOf(t), late: late ? runningLate(t.etd!, t.std) : '', platform: t.platform!, lateBy: late ? t.late! : undefined }
+    return { time: t12(late ? t.etd! : t.std), mid: kindOf(t), late: late ? wasDue(t.etd!, t.std) : '', platform: t.platform!, lateBy: late ? t.late! : undefined }
   })
   const one = rows.every((r) => r.platform === rows[0].platform) && rows.length > 1 ? rows[0].platform! : null
   const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
@@ -824,7 +827,7 @@ export function arrivalsPicture(a: Analysis): ListPicture | null {
     const late = isTime(t.eta) ? diff(t.sta!, t.eta) : 0
     const mid = [`the ${t12(t.std)}`, kindOf(t)].filter(Boolean).join(' · ')
     if (delayed(t)) return { time: '?', mid, late: `delayed, was due ${t12(t.sta!)}, no new time yet` }
-    return { time: t12(when(t)), mid, late: late > 0 ? runningLate(t.eta!, t.sta!) : '', lateBy: late > 0 ? late : undefined }
+    return { time: t12(when(t)), mid, late: late > 0 ? lateBy(late) : '', lateBy: late > 0 ? late : undefined }
   })
   const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
   return {

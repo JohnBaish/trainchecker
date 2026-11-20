@@ -74,6 +74,11 @@ given its own branch). Before committing there, run
 - **Checked:** `npm run check` 265 + 57 + 73 (new: "pm" once, kept across midday and on the hour; the headings; the
   expected order); `tsc -b`, lint, build; Reading to Paddington's saved boards at 390px dark and light and 1200px
   light: headings on one line, no errors, no sideways scroll; both pictures read back from the clipboard at 1200px.
+- **John (the preview on his iPhone):** "The changes on this branch are excellent." Tighter: Platforms "was due 1.42"
+  alone; Arrivals "running 15 minutes late" instead of "was due …". `SPEC.md` §12.22. Checks 267 + 57 + 73 (new: one
+  minute, the first train in the sentence); `tsc -b`, lint, build; Reading to Paddington at 390px dark and both
+  pictures at 1200px: no errors, no sideways scroll. Preview:
+  trainchecker-git-claude-quirky-feynman-l9a8pb-john-baish.vercel.app.
 
 ### November 19th 2026: the lists on the page as boards (branch `claude/beautiful-allen-xir4rp`, merged the same day; Claude Code)
 

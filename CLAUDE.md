@@ -34,7 +34,10 @@ given its own branch). Before committing there, run
   secret" isn't used.
 - `vercel.json` sets the functions' region (`lhr1`) and time limits. Automatic deployments
   are on again since stage 3 was merged (November 17th 2026): `main` is the live site at
-  trainchecker-alpha.vercel.app, each branch gets a preview.
+  trainchecker-alpha.vercel.app, each branch gets a preview: `https://trainchecker-git-<branch>-john-baish.vercel.app/`,
+  the branch name with "/" as "-" (e.g. `trainchecker-git-claude-quirky-feynman-l9a8pb-john-baish.vercel.app`,
+  John, November 20th 2026). Vercel shortens names over 63 characters, so a long branch name
+  won't fit this pattern: then use the commit's Vercel "Details" link on GitHub.
 - **The app (stage 3):** Vite, React and TypeScript, parts copied from Riverwatcher
   (`organic.css`, `theme.ts`, `ThemeSwitch.tsx`, `responsive.ts`, `words.ts`) and the
   agreed mock-ups' styles (`src/styles/global.css`). Three Vercel functions: `api/live.ts`

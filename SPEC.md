@@ -628,5 +628,5 @@ they differ.
     timetabled departure from A to be shown, not the big time to be the timetable (12.59 read as the
     time expected, so "the 12.35pm … 11 minutes late" looked like a 13-minute journey). The sentences
     under Platforms say "6.39 (was due 6.36, platform 10A)"; Arrivals' "(the one due to leave Reading
-    at 8.37 and arrive at 8.55)", "(the 8.47, which was due at 9.10)" (Claude's draft). The boards'
+    at 8.37 and arrive at 9.01)" (illustration only), "(the 8.47, which was due at 9.10)" (Claude’s draft). The boards'
     sentence counts lateness from the minutes, not the words. A late note breaks only after its comma.

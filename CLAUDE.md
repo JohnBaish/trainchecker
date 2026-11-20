@@ -61,6 +61,21 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)
+
+- **John** (who'd mixed up the weekends: National Rail's "no trains to / from London Paddington" page is for
+  November 28th and 29th, not this Sunday) liked the idea of also showing the following weekend's whole-line
+  closures. **Tried on the saved feed of November 18th 6.35am** (nothing built): to this Sunday 97 items, to the
+  next 172; only 14 of the extra are whole-line closures ("no trains" / "buses replace trains", not night work),
+  about a fifth more to download. Matching: Reading and Maidenhead to Paddington catch Dolphin Junction; Midgham
+  and Bath to Bristol nothing; Victoria to Brighton wrongly catches "No Southeastern trains … London Victoria";
+  Reading to Slough misses it (the headline names only Paddington).
+- **For John on Monday, in this thread:** (1) the wording, draft "Looking further ahead: there will be no trains
+  to or from London Paddington on Saturday November 28th and Sunday November 29th (Dolphin Junction upgrade).",
+  National Rail's advice folded; (2) count a closure naming a train company only when that company runs the
+  journey's trains (recommended); (3) accept headline-only matching for now. Kept apart from the verdict and the
+  list to Sunday.
+
 ### November 20th 2026: the big time is the one to act on (branch `claude/quirky-feynman-l9a8pb`, merged the same day; Claude Code)
 
 - **John (the live site, Reading to Paddington):** "12.59pm, the 12.35pm, Fast, arriving 11 minutes late" looked like a

@@ -636,3 +636,6 @@ they differ.
     sentences follow: "(the one due to leave Reading at 5.41, running two minutes late)", "(the 8.47,
     running three minutes late)". A delayed train with no time keeps "delayed, was due 8.45am, no new
     time yet".
+23. **"was due to go at"** (John, November 20th 2026): Platforms' late note is "was due to go at 2.19", on
+    the board, in the picture and in the sentence ("6.39 (was due to go at 6.36, platform 10A)"). It
+    fits on one line on a 390px phone, even with "12.28" (measured; "was due to leave at" didn't).

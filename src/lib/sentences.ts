@@ -650,7 +650,7 @@ export function platformTrains(a: Analysis): (Listing & { fold: string }) | null
     const once = plats.length === 1 || (plats.length === 2 && g.ts.length > 2)
     const rows = g.ts.map((t): TimeRow => {
       const late = t.late !== null && t.late > 0 && isTime(t.etd)
-      const bits = [late ? `was due ${dueSay(t.etd!, t.std)}` : '', once ? '' : `platform ${t.platform}`].filter(Boolean)
+      const bits = [late ? wasDue(t.etd!, t.std) : '', once ? '' : `platform ${t.platform}`].filter(Boolean)
       return { time: say(late ? t.etd! : t.std), note: bits.length ? bits.join(', ') : undefined }
     })
     const where = once ? (plats.length === 1 ? `platform ${plats[0]}` : `platforms ${plats[0]} and ${plats[1]}`) : null
@@ -776,9 +776,10 @@ export type ListPicture = {
   kicker: string; title: string; when: string; heads: [string, string]
   one: string | null; rows: PicRow[]; note: string | null; words: { text: string; title: string; hash: string }
 }
-// Platforms: "was due 1.42" (the heading says "Expected to leave", so it's plainly late); arrivals:
-// "running 15 minutes late", the train named by its departure (John, November 20th 2026).
-const wasDue = (now: string, due: string) => `was due ${dueSay(now, due)}`
+// Platforms: "was due to go at 1.42" (the heading says "Expected to leave", so it's plainly late; it
+// fits on one line beside the badge on a 390px phone); arrivals: "running 15 minutes late", the train
+// named by its departure (John, November 20th 2026).
+const wasDue = (now: string, due: string) => `was due to go at ${dueSay(now, due)}`
 const lateBy = (k: number) => `running ${num(k)} ${k === 1 ? 'minute' : 'minutes'} late`
 const NO_TIME = 'delayed, no new time yet'
 

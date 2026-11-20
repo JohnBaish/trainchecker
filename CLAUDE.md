@@ -79,6 +79,11 @@ given its own branch). Before committing there, run
   minute, the first train in the sentence); `tsc -b`, lint, build; Reading to Paddington at 390px dark and both
   pictures at 1200px: no errors, no sideways scroll. Preview:
   trainchecker-git-claude-quirky-feynman-l9a8pb-john-baish.vercel.app.
+- **John:** keep lateness on its own line on a phone (measured: "Fast · was due 2.19" would share the line on
+  most phones, Elizabeth Line trains and arrivals wouldn't); "was due to go at 2.19" rather than "was due to leave
+  at", which missed by a few pixels at 390px. `SPEC.md` §12.23. Checks 267 + 57 + 73; `tsc -b`, lint, build;
+  both Reading to Paddington boards at 375, 390, 393, 402, 430 and 1200px: every note on one line, no errors,
+  no sideways scroll.
 
 ### November 19th 2026: the lists on the page as boards (branch `claude/beautiful-allen-xir4rp`, merged the same day; Claude Code)
 

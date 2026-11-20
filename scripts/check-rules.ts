@@ -226,15 +226,15 @@ eq('platforms fold: two trains, a sentence, "am" said once (John)', [platformTra
 eq('platforms fold: one train', [platformTrains(kgxYrk)!.fold, platformTrains(kgxYrk)!.text], ['Show the train with a platform', "There's a train leaving from platform 3 at 8.03pm."])
 eq('platforms fold: none, no fold', platformTrains(A('PAD-PLY')), null)
 eq('platforms fold: ten, late ones in time order, by kind, "Of the next ten trains" (John)', platformTrains(rdgPad)!.text,
-  "Of the next ten trains, fast ones are leaving at 6.32pm (platform 11A), 6.39 (was due 6.36, platform 10A), 6.43 (platform 11), 6.46 (was due 6.26, platform 14A), 6.49 (platform 10A) and 6.54 (platform 11), a slower one from platform 15A at 6.33, and Elizabeth Line trains from platforms 13 and 14 at 6.34 (was due 6.28), 6.45 and 6.59.")
+  "Of the next ten trains, fast ones are leaving at 6.32pm (platform 11A), 6.39 (was due to go at 6.36, platform 10A), 6.43 (platform 11), 6.46 (was due to go at 6.26, platform 14A), 6.49 (platform 10A) and 6.54 (platform 11), a slower one from platform 15A at 6.33, and Elizabeth Line trains from platforms 13 and 14 at 6.34 (was due to go at 6.28), 6.45 and 6.59.")
 // More than ten (John, November 19th 2026): "The next ten trains are leaving at:", no sentence about the rest.
 const bthP = platformTrains(analyse(snapOf(raw('20261117-1824-BTH-BRI.json'))))!
 eq('platforms fold: more than ten, "The next ten trains" (John)', [bthP.text, bthP.blocks![0].lead, bthP.after], ['The next ten trains are leaving from platform 1 at 6.38pm, 6.48, 7.23, 7.38, 7.49, 7.54, 7.59, 8.15, 8.23 and 8.40.', 'The next ten trains are leaving from platform 1 at:', null])
 eq('platforms fold: grouped, "The next ten trains" first, in bold (John)', platformTrains(rdgPad)!.blocks!.slice(0, 2).map((b) => [b.lead, !!b.head]), [['The next ten trains', true], ['Fast trains:', false]])
-eq('platforms fold: fast trains on 10 and 11 (10A as 10, John)', platformTrains(rp9)!.text.split(', slower')[0], 'Of the next ten trains, fast ones are leaving from platforms 10 and 11 at 9.01pm, 9.10 (was due 9.04), 9.12, 9.23, 9.26 and 9.43')
+eq('platforms fold: fast trains on 10 and 11 (10A as 10, John)', platformTrains(rp9)!.text.split(', slower')[0], 'Of the next ten trains, fast ones are leaving from platforms 10 and 11 at 9.01pm, 9.10 (was due to go at 9.04), 9.12, 9.23, 9.26 and 9.43')
 eq('platforms fold: one of a kind ("a slower one")', platformTrains(analyse(snapOf(raw('20261117-2059-PAD-RDG.json'))))!.text, 'Fast trains are leaving at 9.02pm (platform 4) and 9.04 (platform 8), a slower one from platform 10 at 9.08, and Elizabeth Line trains from platform B at 9.17, 9.47 and 10.17.')
 eq('platforms fold: one platform for all, said once (John)', platformTrains(A('TVP-PAD'))!.text, 'There are trains leaving from platform 2 at 9.30am, 10.30 and 11.29.')
-eq('platforms fold: two platforms for three or more, said once (John)', platformTrains(manMia)!.text, 'There are trains leaving from platforms 9 and 13 at 6.36pm, 6.37 (was due 6.28), 6.51, 7.04 and 7.18.')
+eq('platforms fold: two platforms for three or more, said once (John)', platformTrains(manMia)!.text, 'There are trains leaving from platforms 9 and 13 at 6.36pm, 6.37 (was due to go at 6.28), 6.51, 7.04 and 7.18.')
 eq('platforms fold: two trains, two platforms, each its own', platformTrains(mdg)!.text, 'There are trains leaving at 9.13am (platform 12A) and 10.12 (platform 2).')
 eq('platforms fold: cancelled left out', platformTrains(manMia)!.text.includes('6.28pm'), false)
 eq('arrivals: the brackets in sequence (John)', arrivals(rp9).text.split('), ').slice(0, 3).join('), ') + ')',
@@ -263,7 +263,7 @@ eq('late trains: all the same', ky({ known: 6, within3: 3, lates: [7, 7, 7], lat
 const tvp = platformTrains(A('TVP-PAD'))!
 eq('the lists: "am" once, the hour kept, laid out as rows', [tvp.text, tvp.blocks], ['There are trains leaving from platform 2 at 9.30am, 10.30 and 11.29.', [{ lead: 'There are trains leaving from platform 2 at:', rows: [{ time: '9.30am' }, { time: '10.30' }, { time: '11.29' }] }]])
 eq('the lists: on the hour keeps "pm", across midday too', arrivals(analyse(snapOf(raw('20261117-1824-BTH-BRI.json')))).text.endsWith('6.53 (the 6.38) and 7pm (the 6.48).'), true)
-eq('the lists: notes on their own rows', platformTrains(rp9)!.blocks![1], { lead: 'Fast trains, from platforms 10 and 11:', rows: [{ time: '9.01pm' }, { time: '9.10', note: 'was due 9.04' }, { time: '9.12' }, { time: '9.23' }, { time: '9.26' }, { time: '9.43' }] })
+eq('the lists: notes on their own rows', platformTrains(rp9)!.blocks![1], { lead: 'Fast trains, from platforms 10 and 11:', rows: [{ time: '9.01pm' }, { time: '9.10', note: 'was due to go at 9.04' }, { time: '9.12' }, { time: '9.23' }, { time: '9.26' }, { time: '9.43' }] })
 eq('the lists: Share words (drafts)', [listShareWords(mdg, 'platforms', platformTrains(mdg)!.prose).text, listShareWords(mdg, 'arrivals', arrivals(mdg).text).text],
   ['Here are the trains from Reading to Midgham with platforms, as of 8.22am on November 18th. There are trains leaving at 9.13am (platform 12A) and 10.12 (platform 2). From Trainchecker.', 'Here are the trains due at Midgham from Reading, as of 8.22am on November 18th. No direct trains from Reading are expected at Midgham in the next hour. From Trainchecker.'])
 eq('share: "next four hours" (John)', shareWords(bthBri).text.includes('in the next four hours'), true)
@@ -384,7 +384,7 @@ eq('stations: suggestions', [suggest('paddington')[0][1], suggest('man')[0][1], 
 // arrivals with the timetabled time; the platform once when all share one; the share words.
 {
   const pp = platformsPicture(rdgPad)!
-  eq('picture: platforms, ten rows, the leaving time, kind and lateness', [pp.rows.length, pp.rows[0], pp.rows.find((r) => r.late)], [10, { time: '6.32pm', mid: 'Fast', late: '', platform: '11A' }, { time: '6.34pm', mid: 'Elizabeth Line', late: 'was due 6.28', platform: '13', lateBy: 6 }])
+  eq('picture: platforms, ten rows, the leaving time, kind and lateness', [pp.rows.length, pp.rows[0], pp.rows.find((r) => r.late)], [10, { time: '6.32pm', mid: 'Fast', late: '', platform: '11A' }, { time: '6.34pm', mid: 'Elizabeth Line', late: 'was due to go at 6.28', platform: '13', lateBy: 6 }])
   eq('picture: platforms, the words with more than ten (John)', pp.words.text, 'The next ten trains from Reading to London Paddington with platforms, at 6.24pm on November 17th, from Trainchecker.')
   const bp = platformsPicture(analyse(snapOf(raw('20261117-1824-BTH-BRI.json'))))!
   eq('picture: one platform for all, said once, no kinds', [bp.one, bp.rows.every((r) => r.mid === '')], ['1', true])

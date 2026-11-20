@@ -199,6 +199,8 @@ details.trains-fold { margin-top: var(--space-3); }
 @media (min-width: 721px) { .bmid { display: flex; flex-wrap: wrap; } .bmid > span { white-space: nowrap; } }
 .blate { color: var(--color-accent-700); font-weight: 600; }
 /* The arrow pointing at the big time on the arrivals board (John, November 20th 2026, option D). */
+/* …on its own line under the train everywhere, so the arrow starts at the column's edge. */
+.bmid > .blate.own { display: block; flex-basis: 100%; }
 .blate .barrow svg { width: 1em; height: 1em; vertical-align: -0.14em; margin-right: 0.3em; }
 .badge { justify-self: end; min-width: 2.6em; text-align: center; padding: 3px 10px; border-radius: 10px; background: var(--color-accent-100); color: var(--color-accent-700); font-weight: 700; font-size: 16px; text-transform: none; letter-spacing: 0; }
 @media (max-width: 720px) { .bsep { display: none; } .blate { display: block; } }

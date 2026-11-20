@@ -156,8 +156,11 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
   const note = p.note ? wrap(probe, p.note, x1 - x0) : []
   const titleTop = 100, titleLh = 60
   const bandTop = titleTop + title.length * titleLh + 20
-  const headH = p.one ? 70 : 50, rowH = 90
-  const bandH = 44 + headH + p.rows.length * rowH - 18 + (note.length ? 26 + note.length * 34 : 0) + 44
+  // A late arrival's row is taller: the train, then "← two minutes late" on its own line, the arrow
+  // pointing at the big time (John, November 20th 2026).
+  const headH = p.one ? 70 : 50, rowHs = p.rows.map((r) => (r.arrow ? 110 : 90))
+  const tops = rowHs.map((_, i) => rowHs.slice(0, i).reduce((a, b) => a + b, 0)), rowsH = rowHs.reduce((a, b) => a + b, 0)
+  const bandH = 44 + headH + rowsH - 18 + (note.length ? 26 + note.length * 34 : 0) + 44
   const H = bandTop + bandH + 110
   canvas.width = LW * scale
   canvas.height = H * scale
@@ -227,7 +230,7 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
   y += headH
 
   p.rows.forEach((r, i) => {
-    const top = y + i * rowH, mid = top + 45
+    const top = y + tops[i], mid = top + rowHs[i] / 2
     ctx.strokeStyle = D.rule
     ctx.lineWidth = 1
     ctx.beginPath(); ctx.moveTo(x0, top); ctx.lineTo(x1, top); ctx.stroke()
@@ -250,7 +253,7 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
       ctx.moveTo(x + 19 * s, cy); ctx.lineTo(x + 5 * s, cy); ctx.stroke(); ctx.restore()
       return aw(size)
     }
-    const oneLine = ctx.measureText(r.mid + sep + r.late).width + aw(28) <= right - colX
+    const oneLine = !r.arrow && ctx.measureText(r.mid + sep + r.late).width + aw(28) <= right - colX
     const draw = (text: string, weight: number, colour: string, x: number, y: number, size: number) => {
       ctx.font = `${weight} ${size}px ${FIG}`; ctx.fillStyle = colour; ctx.fillText(text, x, y)
       return ctx.measureText(text).width
@@ -259,6 +262,10 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
       let x = colX
       if (r.mid) x += draw(r.mid + sep, 400, D.muted, x, mid + 10, 28)
       if (r.late) { x += arrow(x, mid + 10, 28); draw(r.late, 600, D.accent, x, mid + 10, 28) }
+    } else if (r.arrow) {
+      const z = Math.min(fitFont(ctx, r.mid, 400, 28, right - colX), fitFont(ctx, r.late, 600, 28, right - colX - aw(28)))
+      draw(r.mid, 400, D.muted, colX, mid - 8, z)
+      draw(r.late, 600, D.accent, colX + arrow(colX, mid + 30, z), mid + 30, z)
     } else {
       const z = Math.min(fitFont(ctx, r.mid, 400, 26, right - colX), fitFont(ctx, r.late, 600, 26, right - colX - aw(26)))
       draw(r.mid, 400, D.muted, colX, mid - 6, z)
@@ -268,7 +275,7 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
   if (note.length) {
     ctx.fillStyle = D.muted
     ctx.font = `24px ${FIG}`
-    const top = y + p.rows.length * rowH - 18 + 26
+    const top = y + rowsH - 18 + 26
     note.forEach((l, i) => ctx.fillText(l, x0, top + 24 + i * 34))
   }
 

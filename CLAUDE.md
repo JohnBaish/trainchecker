@@ -61,7 +61,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 20th 2026: the big time is the one to act on (branch `claude/quirky-feynman-l9a8pb`, not merged; Claude Code)
+### November 20th 2026: the big time is the one to act on (branch `claude/quirky-feynman-l9a8pb`, merged the same day; Claude Code)
 
 - **John (the live site, Reading to Paddington):** "12.59pm, the 12.35pm, Fast, arriving 11 minutes late" looked like a
   13-minute journey: 12.59 was the timetabled arrival (§12.17, a misunderstanding on November 19th: he meant the
@@ -90,6 +90,11 @@ given its own branch). Before committing there, run
   `.blate .barrow` in `global.css`; the arrow drawn on the canvas in `share.ts`. `SPEC.md` §12.24. Checks 267 + 57
   + 73; `tsc -b`, lint, build; Reading to Paddington at 390px dark, 375px light and 1200px light, and the arrivals
   picture: no errors, no sideways scroll. (Figtree, as loaded, has no "←", so the arrow is the icon, not a character.)
+- **John:** in the shared picture the arrow pointed at the train, not the time (mock-up
+  `design/board-options/picture-arrow-options.png`); the lateness now has its own line everywhere for arrivals
+  (`.blate.own`; taller rows in `share.ts`). `SPEC.md` §12.25. "That's it now … merge it straight to main." Checks
+  267 + 57 + 73, `tsc -b`, lint and build clean first; Reading to Paddington at 390px dark and 1200px light, and both
+  pictures: no errors, no sideways scroll. Merged with this note in the same push.
 
 ### November 19th 2026: the lists on the page as boards (branch `claude/beautiful-allen-xir4rp`, merged the same day; Claude Code)
 

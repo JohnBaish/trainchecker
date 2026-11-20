@@ -646,3 +646,7 @@ they differ.
     phone the note keeps its own line; on a computer and in the picture it follows the train with a gap
     rather than a dot. Screen readers hear "two minutes late". The Arrivals sentence keeps "(the 6.01
     from Reading, running two minutes late)", having no arrow.
+25. **The arrow on its own line everywhere** (John, November 20th 2026): on a computer and in the shared
+    picture, as on a phone, a late arrival's "← two minutes late" sits under the train, starting at the
+    column's edge, so the arrow points straight at the big time; in the picture those rows are taller (110
+    rather than 90) so neither line shrinks. Platforms' notes stay beside the train on a computer.

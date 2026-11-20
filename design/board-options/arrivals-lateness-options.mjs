@@ -7,7 +7,7 @@ const b = await chromium.launch()
 const s = JSON.parse(readFileSync('/home/user/trainchecker/design/mockups/snapshots/20261117-1824-RDG-PAD.json', 'utf8'))
 const snap = trim(s.from, s.to, s.taken, s.boards.map((x) => x.board))
 const out = {}
-for (const opt of ['now', 'A', 'B', 'C']) {
+for (const opt of ['now', 'A', 'B', 'C', 'D']) {
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, colorScheme: 'dark', deviceScaleFactor: 2 })
   const p = await ctx.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(e.message))
   await p.addInitScript(`{ const T = ${Date.parse(s.taken)}; const D = Date; const off = T - D.now(); globalThis.Date = class extends D { constructor(...a) { super(...(a.length ? a : [D.now() + off])) } static now() { return D.now() + off } } }`)
@@ -26,6 +26,10 @@ for (const opt of ['now', 'A', 'B', 'C']) {
       const mins = `${W[k] ?? k} ${k === 1 ? 'minute' : 'minutes'}`
       if (opt === 'A') late.textContent = `was due in at ${due}`
       if (opt === 'B') late.textContent = `${mins} later than planned`
+      if (opt === 'D') {
+        // The site's own icon style (2px stroke, round ends), drawn as a left arrow, then the minutes.
+        late.innerHTML = `<svg aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-3px;margin-right:5px" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>${mins} late`
+      }
       if (opt === 'C') {
         late.remove()
         const bt = row.querySelector('.bt'); const n = document.createElement('span')
@@ -44,12 +48,12 @@ for (const opt of ['now', 'A', 'B', 'C']) {
   out[opt] = readFileSync(`${S}/m-${opt}.png`).toString('base64')
   await ctx.close()
 }
-const cap = { now: 'Now on the branch: “running two minutes late”', A: 'A · “was due in at 6.23”', B: 'B · “two minutes later than planned”', C: 'C · the lateness under the big time' }
+const cap = { now: 'Now on the branch: “running two minutes late”', A: 'A · “was due in at 6.23”', B: 'B · “two minutes later than planned”', C: 'C · the lateness under the big time', D: 'D · an arrow pointing at the big time' }
 const font = (f) => `url(file:///home/user/trainchecker/node_modules/@fontsource/figtree/files/figtree-latin-${f}-normal.woff2)`
-writeFileSync(`${S}/mock.html`, `<!doctype html><meta charset="utf-8"><style>@font-face{font-family:F;font-weight:600;src:${font(600)}}@font-face{font-family:F;font-weight:400;src:${font(400)}}body{margin:0;background:#1c1a18;font-family:F;color:#ece3d4;padding:28px}h1{font-size:22px;font-weight:600;margin:0 0 4px}p{margin:0 0 22px;color:#b9ae9e;font-size:15px}.g{display:grid;grid-template-columns:repeat(4,400px);gap:26px}h2{font-size:16px;font-weight:600;margin:0 0 10px;color:#ea9862}img{width:400px;display:block;background:#36322d;border-radius:14px;padding:14px;box-sizing:border-box}</style>
-<h1>Arrivals: three ways to show the big time already includes the lateness</h1><p>Reading to London Paddington, the saved board from 6.24pm on November 17th, at phone width (390px), dark. Illustration only: the wording is mocked up on the real board.</p>
-<div class="g">${['now','A','B','C'].map((k) => `<div><h2>${cap[k]}</h2><img src="data:image/png;base64,${out[k]}"></div>`).join('')}</div>`)
-const ctx = await b.newContext({ viewport: { width: 1740, height: 900 }, deviceScaleFactor: 2 })
+writeFileSync(`${S}/mock.html`, `<!doctype html><meta charset="utf-8"><style>@font-face{font-family:F;font-weight:600;src:${font(600)}}@font-face{font-family:F;font-weight:400;src:${font(400)}}body{margin:0;background:#1c1a18;font-family:F;color:#ece3d4;padding:28px}h1{font-size:22px;font-weight:600;margin:0 0 4px}p{margin:0 0 22px;color:#b9ae9e;font-size:15px}.g{display:grid;grid-template-columns:repeat(5,400px);gap:26px}h2{font-size:16px;font-weight:600;margin:0 0 10px;color:#ea9862}img{width:400px;display:block;background:#36322d;border-radius:14px;padding:14px;box-sizing:border-box}</style>
+<h1>Arrivals: four ways to show the big time already includes the lateness</h1><p>Reading to London Paddington, the saved board from 6.24pm on November 17th, at phone width (390px), dark. Illustration only: the wording is mocked up on the real board.</p>
+<div class="g">${['now','A','B','C','D'].map((k) => `<div><h2>${cap[k]}</h2><img src="data:image/png;base64,${out[k]}"></div>`).join('')}</div>`)
+const ctx = await b.newContext({ viewport: { width: 2180, height: 900 }, deviceScaleFactor: 2 })
 const p = await ctx.newPage(); await p.goto(`file://${S}/mock.html`); await p.evaluate(() => document.fonts.ready)
 console.log('fonts', await p.evaluate(() => [...document.fonts].map((f) => f.weight + ':' + f.status).join(' ')))
 await p.screenshot({ path: `${S}/arrivals-options.png`, fullPage: true })

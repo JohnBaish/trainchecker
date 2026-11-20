@@ -238,9 +238,19 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
     const right = r.platform && !p.one ? x1 - badge(r.platform, x1, mid) - 20 : x1
     // The middle: the kind or "the 8.47pm" in grey, then lateness in orange; on two lines when
     // it won't fit on one at a readable size.
-    const sep = r.mid && r.late ? ' · ' : ''
+    const sep = r.mid && r.late ? (r.arrow ? '   ' : ' · ') : ''
     ctx.font = `600 28px ${FIG}`
-    const oneLine = ctx.measureText(r.mid + sep + r.late).width <= right - colX
+    // The arrivals' arrow before the lateness (John, November 20th 2026): drawn as the page's icon is.
+    const aw = (size: number) => (r.arrow ? size * 1.3 : 0)
+    const arrow = (x: number, y: number, size: number) => {
+      if (!r.arrow) return 0
+      const s = size / 24, cy = y - size * 0.34
+      ctx.save(); ctx.strokeStyle = D.accent; ctx.lineWidth = 2.75 * s; ctx.lineCap = 'round'; ctx.lineJoin = 'round'
+      ctx.beginPath(); ctx.moveTo(x + 12 * s, cy + 7 * s); ctx.lineTo(x + 5 * s, cy); ctx.lineTo(x + 12 * s, cy - 7 * s)
+      ctx.moveTo(x + 19 * s, cy); ctx.lineTo(x + 5 * s, cy); ctx.stroke(); ctx.restore()
+      return aw(size)
+    }
+    const oneLine = ctx.measureText(r.mid + sep + r.late).width + aw(28) <= right - colX
     const draw = (text: string, weight: number, colour: string, x: number, y: number, size: number) => {
       ctx.font = `${weight} ${size}px ${FIG}`; ctx.fillStyle = colour; ctx.fillText(text, x, y)
       return ctx.measureText(text).width
@@ -248,11 +258,11 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
     if (oneLine) {
       let x = colX
       if (r.mid) x += draw(r.mid + sep, 400, D.muted, x, mid + 10, 28)
-      if (r.late) draw(r.late, 600, D.accent, x, mid + 10, 28)
+      if (r.late) { x += arrow(x, mid + 10, 28); draw(r.late, 600, D.accent, x, mid + 10, 28) }
     } else {
-      const z = Math.min(fitFont(ctx, r.mid, 400, 26, right - colX), fitFont(ctx, r.late, 600, 26, right - colX))
+      const z = Math.min(fitFont(ctx, r.mid, 400, 26, right - colX), fitFont(ctx, r.late, 600, 26, right - colX - aw(26)))
       draw(r.mid, 400, D.muted, colX, mid - 6, z)
-      draw(r.late, 600, D.accent, colX, mid + 26, z)
+      draw(r.late, 600, D.accent, colX + arrow(colX, mid + 26, z), mid + 26, z)
     }
   })
   if (note.length) {

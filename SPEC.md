@@ -639,3 +639,10 @@ they differ.
 23. **"was due to go at"** (John, November 20th 2026): Platforms' late note is "was due to go at 2.19", on
     the board, in the picture and in the sentence ("6.39 (was due to go at 6.36, platform 10A)"). It
     fits on one line on a 390px phone, even with "12.28" (measured; "was due to leave at" didn't).
+24. **Arrivals: an arrow at the big time** (John, November 20th 2026, option D of four,
+    `design/board-options/arrivals-lateness-options.png`: "closer to what people actually say"): a late
+    arrival reads "6.25pm · the 5.41pm · Slower · ← two minutes late", the arrow drawn in the page's icon
+    style (Lucide's arrow-left), so the lateness belongs to the time and 6.25 plainly includes it. On a
+    phone the note keeps its own line; on a computer and in the picture it follows the train with a gap
+    rather than a dot. Screen readers hear "two minutes late". The Arrivals sentence keeps "(the 6.01
+    from Reading, running two minutes late)", having no arrow.

@@ -771,7 +771,7 @@ export function listShareWords(a: Analysis, kind: 'platforms' | 'arrivals', pros
  *  when the list is grouped, and the platform (said once in the heading when all share one).
  *  Arrivals: "the 8.47pm" from A, its timetabled departure. Delayed trains with no time are rows
  *  of their own. */
-export type PicRow = { time: string; mid: string; late: string; platform?: string; lateBy?: number }
+export type PicRow = { time: string; mid: string; late: string; platform?: string; lateBy?: number; arrow?: boolean }
 export type ListPicture = {
   kicker: string; title: string; when: string; heads: [string, string]
   one: string | null; rows: PicRow[]; note: string | null; words: { text: string; title: string; hash: string }
@@ -781,6 +781,9 @@ export type ListPicture = {
 // named by its departure (John, November 20th 2026).
 const wasDue = (now: string, due: string) => `was due to go at ${dueSay(now, due)}`
 const lateBy = (k: number) => `running ${num(k)} ${k === 1 ? 'minute' : 'minutes'} late`
+// On the arrivals board an arrow points at the big time: "← two minutes late" (John, November 20th
+// 2026, option D: closer to what people say; the arrow ties the lateness to the time).
+const minutesLate = (k: number) => `${num(k)} ${k === 1 ? 'minute' : 'minutes'} late`
 const NO_TIME = 'delayed, no new time yet'
 
 export function platformsPicture(a: Analysis): ListPicture | null {
@@ -828,7 +831,7 @@ export function arrivalsPicture(a: Analysis): ListPicture | null {
     const late = isTime(t.eta) ? diff(t.sta!, t.eta) : 0
     const mid = [`the ${t12(t.std)}`, kindOf(t)].filter(Boolean).join(' · ')
     if (delayed(t)) return { time: '?', mid, late: `delayed, was due ${t12(t.sta!)}, no new time yet` }
-    return { time: t12(when(t)), mid, late: late > 0 ? lateBy(late) : '', lateBy: late > 0 ? late : undefined }
+    return late > 0 ? { time: t12(when(t)), mid, late: minutesLate(late), lateBy: late, arrow: true } : { time: t12(when(t)), mid, late: '' }
   })
   const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
   return {

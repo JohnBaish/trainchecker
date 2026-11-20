@@ -92,7 +92,7 @@ function Board({ p }: { p: ListPicture }) {
           <span className={r.time === '?' ? 'bt q' : 'bt'} role="cell">{r.time}</span>
           <span className="bmid" role="cell">
             {r.mid && <span>{r.mid}</span>}
-            {r.late && <span className="blate">{r.mid && <span className="bsep" aria-hidden="true">{'\u00a0· '}</span>}{r.late.split(/(?<=,) /).map((x, j) => <span key={j} className="nw">{j ? ' ' : ''}{x}</span>)}</span>}
+            {r.late && <span className="blate">{r.mid && <span className="bsep" aria-hidden="true">{r.arrow ? '\u00a0\u00a0' : '\u00a0· '}</span>}{r.arrow && <span className="barrow"><Icon name="left" /></span>}{r.late.split(/(?<=,) /).map((x, j) => <span key={j} className="nw">{j ? ' ' : ''}{x}</span>)}</span>}
           </span>
           {r.platform && !p.one && <span className="badge" role="cell">{r.platform}</span>}
         </div>

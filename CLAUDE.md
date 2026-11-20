@@ -84,6 +84,12 @@ given its own branch). Before committing there, run
   at", which missed by a few pixels at 390px. `SPEC.md` §12.23. Checks 267 + 57 + 73; `tsc -b`, lint, build;
   both Reading to Paddington boards at 375, 390, 393, 402, 430 and 1200px: every note on one line, no errors,
   no sideways scroll.
+- **John:** Arrivals still left it unclear that the big time includes the lateness. Four mock-ups on a saved board
+  (`design/board-options/arrivals-lateness-options.png` and `.mjs`: A "was due in at", B "later than planned", C under
+  the time, D an arrow); **John: D**. Built: `PicRow.arrow`, `minutesLate()` in `sentences.ts`; `Icon` "left";
+  `.blate .barrow` in `global.css`; the arrow drawn on the canvas in `share.ts`. `SPEC.md` §12.24. Checks 267 + 57
+  + 73; `tsc -b`, lint, build; Reading to Paddington at 390px dark, 375px light and 1200px light, and the arrivals
+  picture: no errors, no sideways scroll. (Figtree, as loaded, has no "←", so the arrow is the icon, not a character.)
 
 ### November 19th 2026: the lists on the page as boards (branch `claude/beautiful-allen-xir4rp`, merged the same day; Claude Code)
 

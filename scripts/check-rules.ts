@@ -391,7 +391,7 @@ eq('stations: suggestions', [suggest('paddington')[0][1], suggest('man')[0][1], 
   eq('picture: platforms, fewer than ten', platformsPicture(A('TVP-PAD'))!.words.text.startsWith('The trains from Tiverton Parkway to London Paddington with platforms, at '), true)
   eq('picture: no platforms, no picture', platformsPicture(A('PAD-PLY')), null)
   const ap = arrivalsPicture(rp9)!
-  eq('picture: arrivals, the expected time, "the 8.47pm", "running … minutes late" (John, November 20th)', [ap.heads, ap.rows[2]], [['EXPECTED IN', 'FROM READING'], { time: '9.13pm', mid: 'the 8.47pm · Fast', late: 'running three minutes late', lateBy: 3 }])
+  eq('picture: arrivals, the expected time, "the 8.47pm", "← three minutes late" (John, November 20th, option D)', [ap.heads, ap.rows[2]], [['EXPECTED IN', 'FROM READING'], { time: '9.13pm', mid: 'the 8.47pm · Fast', late: 'three minutes late', lateBy: 3, arrow: true }])
   eq('picture: arrivals in the order expected (John, November 20th)', ap.rows.map((r) => r.time).join(' '), '9.01pm 9.08pm 9.13pm 9.21pm 9.24pm 9.24pm 9.33pm 9.35pm 9.44pm 9.52pm')
   eq('picture: platforms heading (John, November 20th)', pp.heads, ['EXPECTED TO LEAVE', 'PLATFORM'])
   eq('picture: arrivals, the words with more than ten', ap.words.text, 'The first ten trains due at London Paddington from Reading after 8.59pm on November 17th, from Trainchecker.')
@@ -416,7 +416,7 @@ eq('was due: pm once, kept across midday, on the hour', [dueSay('12:53', '12:47'
 {
   const one = changed('RDG-PAD', (sv, a) => { const t = sv.filter((x) => a.ahead.some((y) => y.id === x.id && y.sta && !y.ata && !y.cancelled)).sort((x, y) => (x.sta! < y.sta! ? -1 : 1))[0]; t.eta = ((h, m) => `${String(h + Math.floor((m + 1) / 60)).padStart(2, '0')}:${String((m + 1) % 60).padStart(2, '0')}`)(+t.sta!.slice(0, 2), +t.sta!.slice(3)) })
   const r = arrivalsPicture(one)!.rows.find((x) => x.lateBy === 1)
-  eq('picture: arrivals, one minute late', r?.late, 'running one minute late')
+  eq('picture: arrivals, one minute late', r?.late, 'one minute late')
   eq('arrivals: the first train late, "running … late" (John, November 20th)', arrivals(rdgPad).text.startsWith('The first ten trains in the next hour are expected at 6.25pm (the one due to leave Reading at 5.41, running two minutes late), 6.26 (the 6.01 from Reading, running two minutes late), 6.28 (the 5.32, running two minutes late)'), true)
 }
 console.log(`check-rules: ${passed} passed, ${failed} failed`)

@@ -619,3 +619,14 @@ they differ.
     three and five minutes late."; "Trainchecker can see one train due in the next hour." on a long
     journey); its fold keeps "At Reading from Midgham" (John). A delayed train's sentence, with its reason, stays
     under the board.
+21. **The big time is the one to act on** (John, November 20th 2026): in both boards and both pictures
+    the bold time is when the train is now expected to leave or arrive, and a late one says "was due
+    12.47, running late" beside it ("am" or "pm" left off when it matches, kept across midday or
+    midnight: "was due 11.58am"). Headings "EXPECTED TO LEAVE" (on one line) and "EXPECTED IN".
+    Arrivals are now in the order they're expected; "the 12.35pm" stays as the train's timetabled
+    departure from A. This replaces §12.17's timetabled arrival time: on November 19th John meant the
+    timetabled departure from A to be shown, not the big time to be the timetable (12.59 read as the
+    time expected, so "the 12.35pm … 11 minutes late" looked like a 13-minute journey). The sentences
+    under Platforms say "6.39 (was due 6.36, platform 10A)"; Arrivals' "(the one due to leave Reading
+    at 8.37 and arrive at 8.55)", "(the 8.47, which was due at 9.10)" (Claude's draft). The boards'
+    sentence counts lateness from the minutes, not the words. A late note breaks only after its comma.

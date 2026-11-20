@@ -595,7 +595,6 @@ export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind:
 
 // ---- The trains with platforms, and arrivals (John, November 18th 2026) ----
 
-const minutesWord = (k: number) => `${num(k)} ${k === 1 ? 'minute' : 'minutes'}`
 const andList = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}` : xs[0])
 
 /** A list as the page lays it out (John's option D, November 18th 2026): a lead line, then the
@@ -620,6 +619,14 @@ function clockSay() {
 }
 const said = (r: TimeRow) => `${r.time}${r.note ? ` (${r.note})` : ''}`
 
+/** The timetabled time beside the time a train is now expected (John, November 20th 2026: the big
+ *  time is the one to act on, "was due 12.47" beside it). "am" or "pm" said once: left off when it
+ *  matches the expected time's, kept across midday or midnight ("was due 11.58am" by 12.04pm). */
+export function dueSay(now: string, due: string): string {
+  const d = t12(due), m = d.match(/^(.*\.\d\d)(am|pm)$/)
+  return m && t12(now).endsWith(m[2]) ? m[1] : d
+}
+
 /** The fold under "Platforms": the next ten trains with a platform, cancelled ones left out, in the
  *  order they're expected to leave; fast, slower and Elizabeth Line trains apart when the Platforms
  *  sentence groups them. Null when none has a platform. */
@@ -643,7 +650,7 @@ export function platformTrains(a: Analysis): (Listing & { fold: string }) | null
     const once = plats.length === 1 || (plats.length === 2 && g.ts.length > 2)
     const rows = g.ts.map((t): TimeRow => {
       const late = t.late !== null && t.late > 0 && isTime(t.etd)
-      const bits = [late ? `${minutesWord(t.late!)} later than planned` : '', once ? '' : `platform ${t.platform}`].filter(Boolean)
+      const bits = [late ? `was due ${dueSay(t.etd!, t.std)}` : '', once ? '' : `platform ${t.platform}`].filter(Boolean)
       return { time: say(late ? t.etd! : t.std), note: bits.length ? bits.join(', ') : undefined }
     })
     const where = once ? (plats.length === 1 ? `platform ${plats[0]}` : `platforms ${plats[0]} and ${plats[1]}`) : null
@@ -731,7 +738,8 @@ export function arrivals(a: Analysis): Listing & { heading: string } {
     const time = say(when(t))
     const which = i === 0 ? `the one due to leave ${a.from} at ${say(t.std)}` : i === 1 ? `the ${say(t.std)} from ${a.from}` : `the ${say(t.std)}`
     const late = isTime(t.eta) ? diff(t.sta!, t.eta) : null
-    const extra = late !== null && late > 0 ? `, arriving ${minutesWord(late)} later than planned`
+    // The timetabled arrival beside the expected one (John, November 20th 2026; Claude's draft wording).
+    const extra = late !== null && late > 0 ? (i === 0 ? ` and arrive at ${dueSay(t.eta!, t.sta!)}` : `, which was due at ${dueSay(t.eta!, t.sta!)}`)
       : t.eta && t.eta !== 'On time' && !isTime(t.eta) ? ', delayed with no time given yet' : ''
     return { time, note: tenAfterWords(which + extra) }
   })
@@ -758,15 +766,17 @@ export function listShareWords(a: Analysis, kind: 'platforms' | 'arrivals', pros
 }
 
 /** The two lists as a picture (John, November 19th 2026): a row per train, in the dark colours.
- *  Platforms: the times trains are leaving, the kind of train when the list is grouped, lateness,
- *  and the platform (said once in the heading when all share one). Arrivals: the timetabled
- *  arrival, "the 8.47pm" from A, and lateness. Delayed trains with no time are rows of their own. */
-export type PicRow = { time: string; mid: string; late: string; platform?: string }
+ *  The big time is the one to act on, when the train is expected to leave or arrive, and a late
+ *  one says "was due 12.47, running late" (John, November 20th 2026). Platforms: the kind of train
+ *  when the list is grouped, and the platform (said once in the heading when all share one).
+ *  Arrivals: "the 8.47pm" from A, its timetabled departure. Delayed trains with no time are rows
+ *  of their own. */
+export type PicRow = { time: string; mid: string; late: string; platform?: string; lateBy?: number }
 export type ListPicture = {
   kicker: string; title: string; when: string; heads: [string, string]
   one: string | null; rows: PicRow[]; note: string | null; words: { text: string; title: string; hash: string }
 }
-const lateWords = (k: number) => `${num(k)} ${k === 1 ? 'minute' : 'minutes'} late`
+const runningLate = (now: string, due: string) => `was due ${dueSay(now, due)}, running late`
 const NO_TIME = 'delayed, no new time yet'
 
 export function platformsPicture(a: Analysis): ListPicture | null {
@@ -782,13 +792,13 @@ export function platformsPicture(a: Analysis): ListPicture | null {
   const rows = [...first.filter((t) => !t.unknown), ...first.filter((t) => t.unknown)].map((t): PicRow => {
     const late = t.late !== null && t.late > 0 && isTime(t.etd)
     if (t.unknown) return { time: '?', mid: [kindOf(t), `the ${t12(t.std)}`].filter(Boolean).join(' · '), late: NO_TIME, platform: t.platform! }
-    return { time: t12(late ? t.etd! : t.std), mid: kindOf(t), late: late ? lateWords(t.late!) : '', platform: t.platform! }
+    return { time: t12(late ? t.etd! : t.std), mid: kindOf(t), late: late ? runningLate(t.etd!, t.std) : '', platform: t.platform!, lateBy: late ? t.late! : undefined }
   })
   const one = rows.every((r) => r.platform === rows[0].platform) && rows.length > 1 ? rows[0].platform! : null
   const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
   return {
     kicker: 'TRAINCHECKER · PLATFORMS', title: `${a.from} to ${a.to}`, when: at,
-    heads: ['LEAVING', 'PLATFORM'], one, rows, note: null,
+    heads: ['EXPECTED TO LEAVE', 'PLATFORM'], one, rows, note: null,
     words: { text: `${limited ? 'The next ten trains' : 'The trains'} from ${a.from} to ${a.to} with platforms, at ${at}, from Trainchecker.`, title: `Trainchecker: ${a.from} to ${a.to}`, hash: `#${a.fromCrs}-${a.toCrs}` },
   }
 }
@@ -801,8 +811,9 @@ export function arrivalsPicture(a: Analysis): ListPicture | null {
   const inHour = due.filter((t) => !delayed(t) && fromNow(when(t)) >= 0 && fromNow(when(t)) <= 60).sort((x, y) => fromNow(when(x)) - fromNow(when(y)))
   const held = due.filter((t) => delayed(t) && fromNow(t.sta!) >= 0 && fromNow(t.sta!) <= 60)
   const bySta = (x: Train, y: Train) => fromNow(x.sta!) - fromNow(y.sta!)
-  // Delayed ones with no time at the bottom, "?" for their time (John, November 19th 2026).
-  const shown = [...inHour.slice(0, 10).sort(bySta), ...held.sort(bySta)]
+  // In the order they're expected; delayed ones with no time at the bottom, "?" for their time
+  // (John, November 19th and 20th 2026).
+  const shown = [...inHour.slice(0, 10), ...held.sort(bySta)]
   if (!shown.length) return null
   // The kind of train, when the journey has more than one (two "8.58am" trains can be different).
   const kinds = speedGroups({ ...a, ahead: [...a.past, ...a.ahead] }).filter((g) => g.kind !== 'all')
@@ -813,12 +824,12 @@ export function arrivalsPicture(a: Analysis): ListPicture | null {
     const late = isTime(t.eta) ? diff(t.sta!, t.eta) : 0
     const mid = [`the ${t12(t.std)}`, kindOf(t)].filter(Boolean).join(' · ')
     if (delayed(t)) return { time: '?', mid, late: `delayed, was due ${t12(t.sta!)}, no new time yet` }
-    return { time: t12(t.sta!), mid, late: late > 0 ? `arriving ${lateWords(late)}` : '' }
+    return { time: t12(when(t)), mid, late: late > 0 ? runningLate(t.eta!, t.sta!) : '', lateBy: late > 0 ? late : undefined }
   })
   const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
   return {
     kicker: 'TRAINCHECKER · ARRIVALS', title: `At ${a.to} from ${a.from}`, when: at,
-    heads: ['DUE IN', `FROM ${a.from.toUpperCase()}`], one: null, rows,
+    heads: ['EXPECTED IN', `FROM ${a.from.toUpperCase()}`], one: null, rows,
     note: longest >= 120 ? `Trains that left ${a.from} more than two hours ago aren't included, as Trainchecker can't see them.` : null,
     words: {
       text: inHour.length > 10 ? `The first ten trains due at ${a.to} from ${a.from} after ${at}, from Trainchecker.` : `The trains due at ${a.to} from ${a.from}, at ${at}, from Trainchecker.`,
@@ -831,7 +842,7 @@ export function arrivalsPicture(a: Analysis): ListPicture | null {
  *  "Seven are expected to leave on time, and three are running two minutes late." */
 export function boardSummary(rows: PicRow[], verb: 'leave' | 'arrive'): string {
   const known = rows.filter((r) => r.time !== '?')
-  const mins = known.map((r) => r.late.match(/(\w+) minutes? late/)?.[1]).filter(Boolean).map((w) => (WORDS.indexOf(w!) >= 0 ? WORDS.indexOf(w!) : Number(w)))
+  const mins = known.map((r) => r.lateBy).filter((m): m is number => !!m)
   const k = mins.length, n = known.length
   if (!n) return ''
   const on = verb === 'leave' ? 'expected to leave on time' : 'expected on time'

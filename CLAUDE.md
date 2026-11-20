@@ -58,6 +58,20 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 20th 2026: the big time is the one to act on (branch `claude/quirky-feynman-l9a8pb`, not merged; Claude Code)
+
+- **John (the live site, Reading to Paddington):** "12.59pm, the 12.35pm, Fast, arriving 11 minutes late" looked like a
+  13-minute journey: 12.59 was the timetabled arrival (§12.17, a misunderstanding on November 19th: he meant the
+  timetabled departure from A to be shown); and "12.53pm … six minutes late" under Platforms could read as leaving at
+  12.59. Agreed: in both boards and pictures the bold time is when the train is expected, with "was due 12.47, running
+  late"; headings "EXPECTED TO LEAVE" (John's choice over "Expected off" or "Now leaving") and "EXPECTED IN". `SPEC.md` §12.21.
+- **Built:** `dueSay()`, `runningLate()`, `PicRow.lateBy` (the boards' sentence counts from it) in `sentences.ts`;
+  arrivals in expected order; the sentences' notes; `.bhead` heading on one line and `.blate .nw` in `global.css`.
+  `design/previews/stage5-boards.mjs` (the boards close up, with their headings measured).
+- **Checked:** `npm run check` 265 + 57 + 73 (new: "pm" once, kept across midday and on the hour; the headings; the
+  expected order); `tsc -b`, lint, build; Reading to Paddington's saved boards at 390px dark and light and 1200px
+  light: headings on one line, no errors, no sideways scroll; both pictures read back from the clipboard at 1200px.
+
 ### November 19th 2026: the lists on the page as boards (branch `claude/beautiful-allen-xir4rp`, merged the same day; Claude Code)
 
 - **John:** the share pictures now look better than the page; could the folds look better while still

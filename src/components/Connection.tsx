@@ -25,9 +25,10 @@ export function Connection({ a }: { a: Analysis }) {
   const [places, setPlaces] = useState<Set<string> | undefined>(undefined)
   const [result, setResult] = useState<Result>({ s: 'idle' })
 
-  // The trains you might be on: not cancelled, leaving A within two hours, and not long arrived.
+  // The trains you might be on: not cancelled, leaving A within two hours, and still on their way or
+  // arrived within the last three minutes (John, November 21st 2026).
   const mines = useMemo(() => [...a.past, ...a.ahead].filter((s) => !s.cancelled && s.sta && s.rel <= 120).map((s) => ({ s, m: mineOf(s) }))
-    .filter(({ m, s }) => (m.exp ? diff(a.now, m.exp) >= -5 : s.rel >= -120)).slice(0, 8), [a])
+    .filter(({ m, s }) => (m.exp ? diff(a.now, m.exp) >= -3 : s.rel >= -120)).slice(0, 8), [a])
   const mine: Mine | null = mines.find(({ m }) => m.id === mineId)?.m ?? null
 
   useEffect(() => {

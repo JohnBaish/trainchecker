@@ -111,8 +111,8 @@ given its own branch). Before committing there, run
   Checked: `npm run check` 267 + 57 + 73 + 15, `tsc -b`, lint, build; `try.cjs` again at 1200px and 390px
   with touch, now changing journey afterwards: one card, folded, for the new journey; no sideways scroll.
 - **John:** no line under the "Connections" heading, to try (removed); the comfortable-connection
-  sentence stays after "tight too" as well. Still open: whether the train list offers a train that got
-  in within the last five minutes.
+  sentence stays after "tight too" as well. The train list offers a train that got in within
+  the last three minutes (John; it was five), no longer.
 - Key saved here now: Live Departure Board.
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)

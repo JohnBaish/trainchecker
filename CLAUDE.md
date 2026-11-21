@@ -23,8 +23,9 @@ given its own branch). Before committing there, run
 3. `PLAN.md`: the stages.
 4. `HOUSE-STYLE.md`: the shared design and ways of working.
 5. `SEO-HANDOVER.md`: when search work comes up (stage 5).
-6. `design/handover-platform-links-2026-11-21.md`: an idea for later, "over the footbridge"
-   (how platforms connect, for Connections): what was found and how to pick it up.
+6. `design/handover-platform-links-2026-11-21.md`: "over the footbridge" (how platforms connect,
+   for Connections), live since November 21st 2026; the trial and build in
+   `design/platform-links-trial/`.
 
 ## Key points
 
@@ -104,6 +105,11 @@ given its own branch). Before committing there, run
   Ivybridge–Newton Abbot–Torquay, Twyford–Reading–Swindon and –Paddington, 1200px light and 390px
   dark with touch: the drafts word for word, no errors, no sideways scroll; the credit links to
   openstreetmap.org/copyright. Not checked: Vercel's preview, a real phone.
+- **John (the preview):** "This looks great … please merge it to Main", tweaks from there. Checks
+  267 + 57 + 73 + 34, `tsc -b`, lint and build clean first; merged with this note in the same push.
+  Live now; to try on live trains in the daytime. To rebuild the table later: download a fresh UK
+  extract and run `build_table.py`, then copy the stations in the list into `src/data/` (see
+  `src/data/platform-links-LICENCE.md`).
 
 ### November 21st 2026: Connections ("Check my connection"), built and merged the same day (branch `claude/gracious-mendel-emq471`; Claude Code)
 

@@ -16,6 +16,7 @@ and for each pair of groups how the shortest walk crosses the line:
   s  a subway (tunnel=yes or layer -1 or less)
   x  across the line on the level (a path meeting a railway track)
   e  either a bridge or a subway (both used, about as often)
+  u  over or under the line, but the map doesn't say which
   r  out of the station and along a road (more than 40 metres of road)
   B, S, E  as b, s, e, but a walk on the level of at most 500 metres (round through a concourse,
      say) is there too
@@ -26,9 +27,10 @@ import osmium
 
 WALK = {'footway', 'steps', 'corridor', 'path', 'pedestrian', 'elevator', 'platform', 'cycleway'}
 NO_ENTRY = {'private', 'no'}
+DEBUG = os.environ.get('DEBUG')
 ROADS = {'service', 'residential', 'unclassified', 'tertiary', 'secondary', 'primary', 'living_street', 'track',
          'tertiary_link', 'secondary_link', 'primary_link'}
-SNAP = 6               # metres: a path ending this close to a platform's edge joins it
+SNAP = 8               # metres: a path ending this close to a platform's edge joins it
 LEVEL_EXTRA = 500       # metres: a level walk at most this long is also worth knowing about
 RAIL = {'rail', 'light_rail', 'narrow_gauge'}
 NEAR = 0.008            # degrees: how far round a station to keep things (about 550 to 900 metres)
@@ -162,7 +164,13 @@ def num(s):
     return (int(d) if d else 999, s)
 
 
-def solve(crs, st, plats, walks, lifts, rails):
+def crosses(p, q, a, b):
+    def o(a, b, c):
+        return (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+    return o(p, q, a) * o(p, q, b) < 0 and o(a, b, p) * o(a, b, q) < 0
+
+
+def solve(crs, st, plats, walks, lifts, rails, rail_segs=()):
     """plats: ref -> list of [(id, lon, lat)] shapes; walks: list of (tags, pts)."""
     lat0 = st[1]
     kx, ky = 111320 * math.cos(math.radians(lat0)), 110540
@@ -181,22 +189,34 @@ def solve(crs, st, plats, walks, lifts, rails):
 
     G = collections.defaultdict(list)
 
-    def edge(a, b, d, k):
-        G[a].append((b, d, k))
-        G[b].append((a, d, k))
+    def edge(a, b, d, k, wid=None):
+        G[a].append((b, d, k, wid))
+        G[b].append((a, d, k, wid))
 
     flat = set()
     for t, pts in walks:
         if t.get('access') in NO_ENTRY or t.get('foot') in NO_ENTRY:
             continue
         base = kind_of(t)
+        crossing_way = False
         k = base or ('r' if t.get('_road') else None)
         ids = [p[0] for p in pts]
         for a, b in zip(ids, ids[1:]):
             # A walk or road that meets a railway track crosses the line on the level.
             on_track = (a in rails or b in rails) and not (a in flat_plat_nodes or b in flat_plat_nodes)
-            edge(a, b, dist(a, b), 'x' if on_track and base is None else k)
-        if base is None:
+            kk = 'x' if on_track and base is None else k
+            # A path drawn across a track without meeting it goes over or under it, even if the
+            # map doesn't say so: how is unknown.
+            if kk is None:
+                hit = [over for r1, r2, over in rail_segs if crosses(N[a], N[b], r1, r2)]
+                if hit:
+                    # Under a railway bridge is a subway; otherwise over or under, unknown.
+                    kk = 's' if any(hit) else 'u'
+                    crossing_way = True
+            edge(a, b, dist(a, b), kk, t.get('_id'))
+        # Roads join platforms only through footpaths: a road under or beside a station
+        # would otherwise join platforms it doesn't serve.
+        if base is None and not crossing_way and not t.get('_road'):
             flat.update(ids)
     flat.update(lifts)
 
@@ -213,41 +233,68 @@ def solve(crs, st, plats, walks, lifts, rails):
                     p = N[n]
                     if min(xs) <= p[0] <= max(xs) and min(ys) <= p[1] <= max(ys) and inside(p, poly):
                         a.add(n)
-        # Paths that stop just short of the platform's edge.
+        attach[ref] = a
+    # Paths that stop just short of a platform's edge join the nearest platform (and another
+    # just as near, as on an island drawn as two lines), never one across the tracks.
+    near_p = collections.defaultdict(list)
+    for ref, shapes in plats.items():
         for s_ in shapes:
             ids = [p[0] for p in s_]
             xs = [N[i][0] for i in ids]
             ys = [N[i][1] for i in ids]
-            pad = 0.0002
+            pad = 0.00015
             for n in flat:
-                if n in a:
-                    continue
                 p = N[n]
                 if not (min(xs) - pad <= p[0] <= max(xs) + pad and min(ys) - pad <= p[1] <= max(ys) + pad):
                     continue
-                for u, v in zip(ids, ids[1:]):
-                    if seg_dist(p, N[u], N[v], kx, ky) <= SNAP:
-                        a.add(n)
-                        break
-        attach[ref] = a
+                dmin = min(seg_dist(p, N[u], N[v], kx, ky) for u, v in zip(ids, ids[1:]))
+                if dmin <= SNAP:
+                    near_p[n].append((dmin, ref))
+    for n, cands in near_p.items():
+        if any(n in attach[r] for _, r in cands):
+            continue
+        d0 = min(c[0] for c in cands)
+        for dd, ref in cands:
+            if dd <= d0 + 2:
+                attach[ref].add(n)
+    for ref, a in attach.items():
         for x, y in itertools.combinations(a, 2):
             edge(x, y, dist(x, y), None)
+
+    if DEBUG:
+        owner = {}
+        for t, pts in walks:
+            for p in pts:
+                owner.setdefault(p[0], []).append((t.get('_id'), t.get('highway')))
+        for x, y in itertools.combinations(sorted(attach), 2):
+            both = attach[x] & attach[y]
+            if both:
+                print(f'    {x} and {y} share {len(both)}: {[owner.get(n, "platform/lift") for n in list(both)[:4]]}', file=sys.stderr)
 
     def walk(src, dst, level_only=False):
         best = {n: 0.0 for n in attach[src]}
         h = [(0.0, n, ()) for n in attach[src]]
+        prev = {}
         while h:
             d, n, used = heapq.heappop(h)
             if d > best.get(n, 1e18):
                 continue
             if n in attach[dst]:
+                if DEBUG:
+                    route, x = [], n
+                    while x in prev:
+                        x, w = prev[x]
+                        if w and (not route or route[-1] != w):
+                            route.append(w)
+                    print(f'    {src}-{dst} {"level" if level_only else "any"} {d:.0f} m via ways {route[::-1]}', file=sys.stderr)
                 return d, used
-            for m, dd, k in G.get(n, ()):
+            for m, dd, k, wid in G.get(n, ()):
                 if level_only and k:
                     continue
                 u2 = used + ((k, dd),) if k else used
                 if d + dd < best.get(m, 1e18):
                     best[m] = d + dd
+                    prev[m] = (n, wid)
                     heapq.heappush(h, (d + dd, m, u2))
         return None
 
@@ -267,13 +314,15 @@ def solve(crs, st, plats, walks, lifts, rails):
                     tot[k] += dd
                 # A crossing of the tracks counts first: it is what a person would notice. A walk
                 # that goes along roads for more than a short way leaves the station.
+                known = {x: v for x, v in tot.items() if x in 'bs'}
                 if 'x' in tot:
                     k = 'x'
+                elif 'u' in tot and not known:
+                    k = 'u'
                 elif tot.get('r', 0) > 40:
                     k = 'r'
                 else:
-                    tot.pop('r', None)
-                    k = max(tot, key=tot.get) if tot else '-'
+                    k = max(known, key=known.get) if known else '-'
                 if k in 'bse':
                     lv = walk(a, b, True)
                     if lv is not None and lv[0] <= LEVEL_EXTRA:
@@ -382,12 +431,15 @@ def main():
     # Walks and rails by cell, for quick lookup.
     walk_cells = collections.defaultdict(list)
     rail_nodes = set()
+    rail_cells = collections.defaultdict(list)
     for wid, (kind, t, pts) in th.ways.items():
         if kind in ('walk', 'road'):
             for c in {cell(p[1], p[2]) for p in pts}:
                 walk_cells[c].append(wid)
         elif kind == 'rail':
             rail_nodes.update(p[0] for p in pts)
+            for u, v in zip(pts, pts[1:]):
+                rail_cells[cell(u[1], u[2])].append(((u[1], u[2]), (v[1], v[2]), kind_of(t) == 'b'))
     lift_cells = collections.defaultdict(list)
     for i, (x, y) in th.lifts.items():
         lift_cells[cell(x, y)].append(i)
@@ -405,11 +457,12 @@ def main():
         c0 = cell(lon, lat)
         cs = {(c0[0] + dx, c0[1] + dy) for dx in (-1, 0, 1) for dy in (-1, 0, 1)}
         wids = {w for c in cs for w in walk_cells.get(c, ())}
-        walks = [(dict(th.ways[w][1], _road=th.ways[w][0] == 'road'), th.ways[w][2]) for w in wids]
+        walks = [(dict(th.ways[w][1], _road=th.ways[w][0] == 'road', _id=w), th.ways[w][2]) for w in wids]
         lifts = {i: th.lifts[i] for c in cs for i in lift_cells.get(c, ())}
         global flat_plat_nodes
         flat_plat_nodes = {p[0] for shapes in plats.values() for sh in shapes for p in sh}
-        gl, xs, pair, mixed = solve(crs, st[crs], plats, walks, lifts, rail_nodes)
+        segs = [sg for c in cs for sg in rail_cells.get(c, ())]
+        gl, xs, pair, mixed = solve(crs, st[crs], plats, walks, lifts, rail_nodes, segs)
         table[crs] = {'g': gl, 'x': xs}
         line = f"{crs} {name}: {' | '.join('/'.join(g) for g in gl)}  [{xs}]"
         if '?' in xs:

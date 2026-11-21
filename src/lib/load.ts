@@ -1,6 +1,7 @@
 // Asking Trainchecker's own functions (api/live.ts, api/week.ts and api/days.ts), which ask National Rail.
 import type { Snap } from './analyse.ts'
 import type { Days } from '../../api/days.ts'
+import type { Connect, Places } from '../../api/connect.ts'
 import type { DayKind, WeekCounts } from './sentences.ts'
 
 export type LiveError = 'unknown' | 'same' | 'unavailable'
@@ -37,4 +38,17 @@ export async function fetchDays(): Promise<Days> {
   const r = await fetch('/api/days').catch(() => null)
   if (!r || !r.ok) throw new Error('unavailable')
   return (await r.json()) as Days
+}
+
+/** "Check my connection" (api/connect.ts): the stations with a train from `at` in the next two hours. */
+export async function fetchPlaces(at: string): Promise<Places> {
+  const r = await fetch(`/api/connect?at=${at}`, { cache: 'no-store' }).catch(() => null)
+  if (!r || !r.ok) throw new Error('unavailable')
+  return (await r.json()) as Places
+}
+/** The trains from `at` to `to`, and the platform your train (from `from`) comes into. */
+export async function fetchConnect(o: { at: string; to: string; from: string; train: string; arr: string }): Promise<Connect> {
+  const r = await fetch(`/api/connect?${new URLSearchParams(o)}`, { cache: 'no-store' }).catch(() => null)
+  if (!r || !r.ok) throw new Error('unavailable')
+  return (await r.json()) as Connect
 }

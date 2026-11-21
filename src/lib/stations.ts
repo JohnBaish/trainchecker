@@ -24,9 +24,15 @@ export function resolve(text: string): string | null {
 
 /** Up to eight suggestions: a matching code first, then names starting with the words, then
  *  names with a word starting with them, then any containing them. */
-export function suggest(text: string, max = 8): [string, string][] {
+export function suggest(text: string, max = 8, prefer?: Set<string>): [string, string][] {
   const t = norm(text)
   if (!t) return []
+  // "Check my connection": only the stations with a train from the changing station, when any of
+  // them matches; otherwise any station, as that list can be cut short at the busiest stations.
+  if (prefer && prefer.size) {
+    const only = suggest(text, STATIONS.length).filter(([c]) => prefer.has(c)).slice(0, max)
+    if (only.length) return only
+  }
   const code = text.trim().toUpperCase()
   const score = ([c, n]: [string, string]) => {
     const x = norm(n)

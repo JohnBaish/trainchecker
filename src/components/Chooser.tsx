@@ -6,7 +6,7 @@ import { complete, nameOf, resolve, suggest } from '../lib/stations.ts'
 import { hashOf, recentJourneys, type Journey } from '../lib/route.ts'
 import { Icon } from './Icon.tsx'
 
-function StationBox({ label, value, onChange, error, go, next, boxRef }: { label: string; value: string; onChange: (v: string) => void; error: string | null; go?: () => void; next?: () => void; boxRef?: { current: HTMLInputElement | null } }) {
+export function StationBox({ label, value, onChange, error, go, next, boxRef, prefer }: { label: string; value: string; onChange: (v: string) => void; error: string | null; go?: () => void; next?: () => void; boxRef?: { current: HTMLInputElement | null }; prefer?: Set<string> }) {
   const id = useId()
   const [open, setOpen] = useState(false)
   const [at, setAt] = useState(-1)
@@ -17,7 +17,7 @@ function StationBox({ label, value, onChange, error, go, next, boxRef }: { label
   const own = useRef<HTMLInputElement>(null)
   const box = boxRef ?? own
   useEffect(() => () => window.clearTimeout(closing.current), [])
-  const list = open ? suggest(value) : []
+  const list = open ? suggest(value, 8, prefer) : []
   const exact = complete(value, list)
   const shown = exact ? [] : list
   const choose = (name: string) => { window.clearTimeout(closing.current); onChange(name); setOpen(false); setAt(-1) }

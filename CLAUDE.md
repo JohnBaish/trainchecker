@@ -61,7 +61,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 21st 2026: "Check my connection", an idea; the live board tested (branch `claude/gracious-mendel-emq471`, notes only; Claude Code)
+### November 21st 2026: "Check my connection": the live board tested, a prototype (branch `claude/gracious-mendel-emq471`, not merged; Claude Code)
 
 - **John:** a button under the quote of the day. It takes B as the changing station, asks for the next
   destination (ideally only stations with a train from B in the next two hours), then which train you're
@@ -78,6 +78,28 @@ given its own branch). Before committing there, run
     with platforms; Clapham Junction still cut short (25 in most pieces, 191 trains seen, 260 stations).
     Sixteen requests at once took 1.9 seconds.
   - Newton Abbot's whole board: 17 trains in two hours, 52 stations, one request, 0.8 seconds.
+- **John's answers:** tight is five, four or three minutes; "looks unlikely" two or one; "You won't make
+  this" none or less. The answer opens "If you're planning to get the 3.39pm to Torquay, you should be
+  fine", with a way to ask about a different train (he wants to see it). In place under the button, not a
+  pop-up. The drafts "great", with: "expected to arrive on time" (not "in on time"); "You'd only have";
+  nothing said when the platform you come into isn't known; "worth checking again later"; "It may make up
+  time, so don't count on it" when the change only works because the onward train is late; "showing as"
+  dropped when the final destination is the one asked for; the next train after "fine" too, as "The one
+  after that is…"; the closing line when your train is more than 30 minutes from B.
+- **Built, a prototype for John to try (not merged):** `api/connect.ts` (the stations with a train from B
+  in two hours, as eight pieces; the trains from B to C for four hours; your arrival platform from B's
+  board asked only for trains that came from A, which worked: `filterType=from`); `src/lib/connection.ts`
+  (the bands, `answer()`); `Connection.tsx` under the quote; `StationBox` exported, `suggest()` prefers
+  the stations served but takes any. Still Claude's drafts: the questions and headings, "got in at", "a
+  little early", "N minutes after the … train is due to leave", the delayed and no-train messages, "The
+  3.45pm to York has been cancelled. If you're planning to get the … instead". Not built: "over the
+  footbridge", the railway's minimum connection times, a Share.
+- **Checked:** `npm run check` 267 + 57 + 73 + 15 (new `scripts/check-connection.ts`: the four answers
+  word for word on the 2.55pm boards, same platform, no change needed, cancelled); `tsc -b`, lint, build;
+  Chromium against live trains at 3.12pm (`design/previews/connection/try.cjs`), Twyford to Reading for
+  Oxford and Ivybridge to Newton Abbot for Torquay, 1200px light and 390px dark with touch: answers in
+  0.8 to 1.8 seconds, no sideways scroll, nothing under 44px on the phone; the only errors were "The days
+  ahead" (its key isn't the one saved here). **Not checked:** Vercel's preview, a real phone, Safari.
 - Key saved here now: Live Departure Board.
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)

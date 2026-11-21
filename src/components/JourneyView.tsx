@@ -17,6 +17,7 @@ import { Icon } from './Icon.tsx'
 import { DaysAhead, type DaysState } from './DaysAhead.tsx'
 import { LastWeek } from './LastWeek.tsx'
 import { QuoteCard } from './Tail.tsx'
+import { Connection } from './Connection.tsx'
 
 type State = { s: 'loading' } | { s: 'ok'; a: Analysis } | { s: 'failed'; why: string }
 
@@ -335,6 +336,8 @@ export function JourneyView({ journey }: { journey: Journey }) {
         </div>
       )}
       {!closed && <QuoteCard />}
+      {/* "Check my connection", just under the quote (John, November 21st 2026; a prototype). */}
+      {!closed && an.verdict !== 'none' && <Connection key={hashOf(journey)} a={an} />}
       {/* Across the full width, so a computer shows no gap beside it (John, November 17th
           2026, after trying the preview); after the quote (John, stage 4). */}
       {(an.verdict !== 'none' || (an.lastGone && !closed)) && <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>}

@@ -8,7 +8,7 @@ import react from '@vitejs/plugin-react'
 function functionsHere(): Plugin {
   const handle = (load: (f: string) => Promise<{ GET: (r: Request) => Promise<Response> }>): Connect.NextHandleFunction =>
     async (req, res, next) => {
-      const m = /^\/api\/(live|week|days)(\?|$)/.exec(req.url || '')
+      const m = /^\/api\/(live|week|days|connect)(\?|$)/.exec(req.url || '')
       if (!m) return next()
       try {
         const mod = await load(`/api/${m[1]}.ts`)

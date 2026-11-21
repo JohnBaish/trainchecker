@@ -4,6 +4,7 @@
   "functions": {
     "api/live.ts": { "maxDuration": 30 },
     "api/week.ts": { "maxDuration": 60 },
-    "api/days.ts": { "maxDuration": 30 }
+    "api/days.ts": { "maxDuration": 30 },
+    "api/connect.ts": { "maxDuration": 30 }
   }
 }

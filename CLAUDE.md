@@ -64,6 +64,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 21st 2026: "over the footbridge" picked up: following the drawn paths (notes and trial scripts, straight to `main`; Claude Code)
+
+- **John:** pick up the idea from the handover. Step 3 done: `design/platform-links-trial/paths.py`
+  follows the map's footways, steps, subways and lifts between every pair of platforms at the six
+  stations; results in `paths-results-2026-11-21.md`. Oxford now comes out 1/2/3 | 4 and Reading's
+  bays 1 to 7 all on the level (both wrong in the crude test); Newton Abbot and Twyford unchanged;
+  Bristol all by the subway; Clapham Junction by subway or bridge per pair. None checked at the
+  stations: for John, Reading, Twyford and Oxford.
+- **Licences (step 2):** not read. `www.openstreetmap.org`, `osmfoundation.org` and
+  `wiki.openstreetmap.org` are blocked here (`api.openstreetmap.org` isn't); the Knowledgebase
+  Stations licence isn't public either. Nothing built into the page; no visible change.
+
 ### November 21st 2026: Connections ("Check my connection"), built and merged the same day (branch `claude/gracious-mendel-emq471`; Claude Code)
 
 - **John:** a button under the quote of the day. It takes B as the changing station, asks for the next

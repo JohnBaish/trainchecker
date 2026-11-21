@@ -4,7 +4,7 @@
 // and messages here are Claude's drafts; the answer's wording is in lib/connection.ts.
 import { useEffect, useMemo, useState } from 'react'
 import { clock, diff, type Analysis } from '../lib/analyse.ts'
-import { answer, choices, firstChoice, mineOf, type Mine } from '../lib/connection.ts'
+import { answer, chipLabel, choices, firstChoice, mineOf, speeds, type Mine } from '../lib/connection.ts'
 import { fetchConnect, fetchPlaces } from '../lib/load.ts'
 import { t12 } from '../lib/sentences.ts'
 import { nameOf, resolve } from '../lib/stations.ts'
@@ -61,6 +61,7 @@ export function Connection({ a }: { a: Analysis }) {
     ? answer({ now: clock(result.d.taken), from: a.from, at: a.to, to: result.d.toName, mine, arrPlatform: result.d.arrPlatform, trains: result.d.trains, chosen })
     : null
   const others = result.s === 'ok' && mine ? choices(mine, result.d.trains) : []
+  const sp = result.s === 'ok' ? speeds(result.d.trains) : new Map()
   const picked = result.s === 'ok' && mine ? chosen ?? firstChoice(mine, result.d.trains)?.id ?? null : null
 
   return (
@@ -99,7 +100,7 @@ export function Connection({ a }: { a: Analysis }) {
               <span className="small muted">Or ask about a different train to {result.s === 'ok' ? result.d.toName : ''}:</span>
               {others.map((t) => (
                 <button key={t.id} type="button" className={`chip${t.id === picked ? ' on' : ''}`} aria-pressed={t.id === picked} onClick={() => setChosen(t.id)}>
-                  {t12(t.std)}{t.cancelled ? ' (cancelled)' : mine && t.id === mine.id ? ' (the train you’re on)' : ''}
+                  {chipLabel(t, sp)}{t.cancelled ? ' (cancelled)' : mine && t.id === mine.id ? ' (the train you’re on)' : ''}
                 </button>
               ))}
             </div>

@@ -3,6 +3,7 @@
 const { chromium } = require('playwright')
 const RUNS = [
   { name: 'TWY-RDG-OXF', hash: '#TWY-RDG', type: 'Oxf', pick: 'Oxford' },
+  { name: 'MDG-RDG-PAD', hash: '#MDG-RDG', type: 'London Padd', pick: 'London Paddington' },
   { name: 'IVY-NTA-TQY', hash: '#IVY-NTA', type: 'Torq', pick: 'Torquay' },
 ]
 const VIEWS = [

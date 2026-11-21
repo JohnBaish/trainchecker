@@ -132,7 +132,20 @@ given its own branch). Before committing there, run
 - **Handover written** at John's request: `design/handover-platform-links-2026-11-21.md` (with the
   trial's scripts, straight to `main` too, as notes: house style §10); "Read these first" points to
   it; the tracker's first idea for later names it. John will say when to merge Connections.
-- Key saved here now: Knowledgebase Stations (the Live Departure Board one to swap back for live tests).
+- **John (the preview, Midgham to Reading for Paddington):** it treats every Paddington train alike.
+  Found on the 2.55pm boards: "The one after that is the 3.29 from platform 14" was the Elizabeth Line
+  train (Paddington 4.25pm), with a Great Western 3.29 from 11A getting there at 3.55; two "3.29pm"s in
+  the row; no arrival time anywhere. **Agreed:** slower trains stay in, as people may be booked on them;
+  the answer says when you'd get there (expected, else timetabled); a later train that gets there sooner
+  is pointed out. **Built:** `Onward.operator`; `speeds()` (the page's fast, slower and Elizabeth Line
+  rule), `reaches()`, `chipLabel()` in `connection.ts`; "the 3.29pm Elizabeth Line train to London
+  Paddington", "It's expected to get there at 4.25.", "The 3.29 fast train from platform 11A leaves at the
+  same time but gets there sooner, at 3.55." (or "leaves later"); the row reads "3.29pm Elizabeth Line,
+  arrives 4.25". Claude's choice, told to John: the trains it suggests itself ("the next one", "the one
+  after that") skip a train that a later one overtakes; the first answer and anything chosen don't.
+  Checked: `npm run check` 267 + 57 + 73 + 21, `tsc -b`, lint, build; `try.cjs` live at 5.18pm, Midgham
+  to Reading for Paddington, 1200px and 390px with touch: no sideways scroll, nothing under 44px.
+- Key saved here now: Live Departure Board.
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)
 

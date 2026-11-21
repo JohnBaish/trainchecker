@@ -3,7 +3,7 @@
 // drafted by Claude on real boards and edited by John the same day; anything marked "draft" below
 // is Claude's and not yet agreed. scripts/check-connection.ts holds the agreed sentences.
 import { diff, isTime, type Service } from './analyse.ts'
-import { num, t12 } from './sentences.ts'
+import { dueSay, num, t12 } from './sentences.ts'
 import type { Onward } from '../../api/connect.ts'
 
 export type Band = 'fine' | 'tight' | 'unlikely' | 'missed'
@@ -23,12 +23,50 @@ export function mineOf(s: Service): Mine {
 /** When an onward train is expected to leave; null when it's "Delayed" with no time. */
 export const leaves = (t: Onward): string | null => (isTime(t.etd) ? t.etd : t.etd === 'Delayed' ? null : t.std)
 
+/** When an onward train reaches C: the expected time, or the timetabled one when there's no
+ *  expected time (John, November 21st 2026). */
+export const reaches = (t: Onward): string | null => (isTime(t.eta) ? t.eta : t.sta)
+
+export type Speed = 'fast' | 'slower' | 'elizabeth'
+const SPEED: Record<Speed, string> = { fast: 'fast', slower: 'slower', elizabeth: 'Elizabeth Line' }
+/** Fast, slower and Elizabeth Line trains from B to C, by the page's own rule (speedGroups() in
+ *  sentences.ts): fast is no more than a quarter longer than the quickest, or within 10 minutes of
+ *  it; the Elizabeth Line apart when it's slower; no split unless the slower ones usually take 10
+ *  minutes longer. Empty when every train is much the same. John, November 21st 2026: Reading to
+ *  Paddington's trains aren't all alike. */
+export function speeds(trains: Onward[]): Map<string, Speed> {
+  const t = trains.filter((x) => x.sta).map((x) => ({ id: x.id, mins: diff(x.std, x.sta!), eliz: /elizabeth/i.test(x.operator) }))
+  const out = new Map<string, Speed>()
+  if (!t.length) return out
+  const q = Math.min(...t.map((x) => x.mins)), lim = Math.max(q * 1.25, q + 10)
+  const eliz = t.filter((x) => x.eliz && x.mins > lim), rest = t.filter((x) => !eliz.includes(x))
+  const mid = (g: typeof t) => g.map((x) => x.mins).sort((m, n) => m - n)[Math.floor(g.length / 2)]
+  let fast = rest.filter((x) => x.mins <= lim), slow = rest.filter((x) => x.mins > lim)
+  if (slow.length && fast.length && mid(slow) - mid(fast) < 10) { fast = rest; slow = [] }
+  if (!slow.length && !eliz.length) return out
+  for (const x of fast) out.set(x.id, 'fast')
+  for (const x of slow) out.set(x.id, 'slower')
+  for (const x of eliz) out.set(x.id, 'elizabeth')
+  return out
+}
+/** A train in the row of others to ask about: "3.29pm Elizabeth Line, arrives 4.25" ("pm" once) where the
+ *  trains differ in speed, otherwise just "3.39pm". */
+export function chipLabel(t: Onward, sp: Map<string, Speed>): string {
+  const k = sp.get(t.id), there = reaches(t)
+  return `${t12(t.std)}${k ? ` ${SPEED[k]}` : ''}${sp.size && there ? `, arrives ${dueSay(t.std, there)}` : ''}`
+}
+
+/** In the order they're expected to leave; two at the same minute, the one that gets there first. */
+function ordered(arr: string, trains: Onward[]) {
+  return trains.map((t) => ({ t, exp: leaves(t), g: diff(arr, leaves(t) ?? t.std), a: reaches(t) ? diff(arr, reaches(t)!) : null }))
+    .sort((x, y) => x.g - y.g || (x.a ?? 9999) - (y.a ?? 9999))
+}
+
 /** The trains you could ask about: from ten minutes before yours gets in, in the order they're
- *  expected to leave, six at most. */
+ *  expected to leave, six at most. Slower trains stay in, as people may be booked on them (John). */
 export function choices(mine: Mine, trains: Onward[]): Onward[] {
   if (!mine.exp) return []
-  const arr = mine.exp
-  return trains.map((t) => ({ t, g: diff(arr, leaves(t) ?? t.std) })).filter((x) => x.g >= -10).sort((a, b) => a.g - b.g).slice(0, 6).map((x) => x.t)
+  return ordered(mine.exp, trains).filter((x) => x.g >= -10).slice(0, 6).map((x) => x.t)
 }
 /** The one it answers about first: your own train if it carries on to C, or the first you'd have
  *  at least a minute for (a cancelled one counts, so the page can say so). */
@@ -72,7 +110,8 @@ export function answer(o: Asked): Answer {
     return { kind: 'unknown', text: `Your train from ${o.from} is delayed, with no time given yet, so Trainchecker can’t work out your connection. It’s worth checking again later.` }
   }
   const arr = mine.exp
-  const list = o.trains.map((t) => ({ t, exp: leaves(t), g: diff(arr, leaves(t) ?? t.std) })).sort((a, b) => a.g - b.g)
+  const list = ordered(arr, o.trains)
+  const sp = speeds(o.trains)
   const first = o.chosen ? o.trains.find((t) => t.id === o.chosen) ?? null : firstChoice(mine, o.trains)
   if (!first) {
     // Draft: "four", as that's how far ahead the boards are asked.
@@ -87,11 +126,21 @@ export function answer(o: Asked): Answer {
     const i = list.findIndex((x) => x.t.id === id)
     return list.slice(i + 1).find((x) => !x.t.cancelled && x.exp && x.t.id !== mine.id && x.g >= min) ?? null
   }
-  const named = (t: Onward) => say(t.std)
+  type Row = (typeof list)[number]
+  /** Trains you could catch that leave no earlier than this one and get to C sooner. */
+  const quicker = (x: Row) => list.filter((y) => y !== x && !y.t.cancelled && y.exp && y.t.id !== mine.id && y.g >= 1 && y.g >= x.g && x.a !== null && y.a !== null && y.a < x.a)
+  /** The next one to suggest: not one that a later train overtakes. */
+  const next = (id: string, min: number) => {
+    const i = list.findIndex((x) => x.t.id === id)
+    return list.slice(i + 1).find((x) => !x.t.cancelled && x.exp && x.t.id !== mine.id && x.g >= min && !quicker(x).length) ?? null
+  }
+  // "the 3.29pm Elizabeth Line train", "the 3.27 fast train"; plain "the 3.39pm" where trains are alike.
+  const named = (t: Onward) => `${say(t.std)}${sp.has(t.id) ? ` ${SPEED[sp.get(t.id)!]} train` : ''}`
 
   let text = ''
   let c = list.find((x) => x.t.id === first.id)!
   let instead = ''
+  let over: Row | null = null
   // Line 10: the one you wanted is cancelled, so the answer is about the next.
   if (c.t.cancelled) {
     text = `The ${named(c.t)} to ${to} has been cancelled. `
@@ -133,6 +182,12 @@ export function answer(o: Asked): Answer {
     const alone = !mineP && p ? ` from platform ${p}${showing ? `, showing as the ${showing} train` : ''}` : ''
     text += `${arrive}, and ${leave}${alone}.`
     if (relies) text += ' It may make up time, so don’t count on it.'
+    // When you'd get there (John, November 21st 2026), and a later train that gets there sooner
+    // (Claude's draft, agreed in outline by John).
+    const there = reaches(c.t)
+    if (there) text += ` It’s ${isTime(c.t.eta) || c.t.eta === 'On time' ? 'expected' : 'due'} to get there at ${say(there)}.`
+    over = quicker(c).sort((x, y) => x.a! - y.a! || x.g - y.g)[0] ?? null
+    if (over) text += ` The ${named(over.t)}${over.t.platform ? ` from platform ${over.t.platform}` : ''} leaves ${over.g === c.g ? 'at the same time' : 'later'} but gets there sooner, at ${say(reaches(over.t)!)}.`
     if (mineP && p) {
       text += mineP === p ? ` You’re coming into platform ${mineP}, and the ${to} train leaves from the same platform${showing ? `, showing as the ${showing} train` : ''}.`
         : ` You’re coming into platform ${mineP} and you’ll want platform ${p}${showing ? `, where your train will be showing on the departure board as the ${showing} train` : ''}.`
@@ -142,8 +197,10 @@ export function answer(o: Asked): Answer {
   }
 
   // The next one: after "fine" too, without "if you miss it" (John: a packet of crisps).
-  const n = after(c.t.id, 1)
-  if (n) {
+  const n = next(c.t.id, 1)
+  if (n && n === over) {
+    // Already named as the quicker train.
+  } else if (n) {
     const from = n.t.platform ? ` from platform ${n.t.platform}` : ''
     const opener = kind === 'fine' ? 'The one after that is' : kind === 'tight' ? 'If you miss it, the next one is' : 'The next one is'
     const b = band(n.g)
@@ -153,7 +210,7 @@ export function answer(o: Asked): Answer {
       : `, which would give you ${aWait(n.g)}.`
     // When the next one is tight or unlikely as well, the first with six minutes or more (John,
     // November 21st 2026, for "unlikely too"; for "tight too" as well is Claude's draft).
-    const easy = b === 'fine' ? null : after(n.t.id, 6)
+    const easy = b === 'fine' ? null : next(n.t.id, 6)
     if (easy) text += ` The next connection which looks comfortable is the ${named(easy.t)}${easy.t.platform ? ` from platform ${easy.t.platform}` : ''}, which would give you ${aWait(easy.g)}.`
   } else if (kind !== 'fine') {
     text += ` Trainchecker can’t see a later train to ${to} in the next four hours.` // draft

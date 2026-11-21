@@ -30,6 +30,7 @@ export type Onward = {
   etd: string | null
   platform: string | null
   destination: string
+  operator: string // to tell Elizabeth Line trains from the others
   cancelled: boolean
   sta: string | null // timetabled arrival at C
   eta: string | null // expected (or actual) arrival at C
@@ -39,7 +40,7 @@ export type Places = { taken: string; at: string; places: string[] }
 
 type CallingPoint = { crs?: string; st?: string; et?: string; at?: string; isCancelled?: boolean }
 type RawService = {
-  serviceID: string; std: string; etd?: string; platform?: string
+  serviceID: string; std: string; etd?: string; platform?: string; operator?: string
   destination?: { locationName?: string }[]
   isCancelled?: boolean
   subsequentCallingPoints?: { callingPoint?: CallingPoint[] }[]
@@ -66,7 +67,7 @@ export function trimConnect(at: string, to: string, taken: string, onward: RawBo
       seen.set(short(s.serviceID), {
         id: short(s.serviceID), std: s.std, etd: s.etd ?? null, platform: s.platform || null,
         destination: (s.destination || []).map((x) => x.locationName).filter(Boolean).join(' and '),
-        cancelled: Boolean(s.isCancelled || p.isCancelled), sta: p.st || null, eta: p.et || p.at || null,
+        operator: s.operator || '', cancelled: Boolean(s.isCancelled || p.isCancelled), sta: p.st || null, eta: p.et || p.at || null,
       })
     }
   }

@@ -650,3 +650,60 @@ they differ.
     picture, as on a phone, a late arrival's "← two minutes late" sits under the train, starting at the
     column's edge, so the arrow points straight at the big time; in the picture those rows are taller (110
     rather than 90) so neither line shrinks. Platforms' notes stay beside the train on a computer.
+
+
+## 13. Connections (November 21st 2026)
+
+John's idea, built and agreed with him in one day; `CLAUDE.md`'s log has the order it happened in.
+The sums and sentences are in `src/lib/connection.ts`, with the agreed answers word for word in
+`scripts/check-connection.ts`.
+
+1. **What it is.** You're on a train from A to B and changing at B. A card under the quote of the
+   day, laid out as Arrivals is: the heading "Connections", then a fold, "Check trains leaving B".
+   No line under the heading. Inside: "Where are you going next?", "Which train are you on, or
+   planning to take?", then the answer in a box with a coloured edge, a row of other trains to
+   ask about, and Share.
+2. **Stations offered:** those with a train from B in the next two hours, where any match what's
+   typed; otherwise any station.
+3. **Trains offered:** those from A still on their way, or arrived in the last three minutes.
+4. **The four answers**, by the minutes you'd have: six or more, "you should be fine"; five, four
+   or three, "it's going to be tight"; two or one, "that looks unlikely"; none or less, "You won't
+   make the …". Opening: "If you're planning to get the 3.39pm to Torquay, you should be fine.
+   You'll have 10 minutes to change trains."
+5. **The times:** "Your train from Ivybridge is expected to arrive on time at 3.29, and the Torquay
+   train is expected to leave on time at 3.39, getting there at 3.49." Late: "is running six
+   minutes late and is now expected in at …"; "expected to leave two minutes later than planned
+   at …". "pm" once. The arrival is the expected time, or the timetabled one.
+6. **Only possible because the onward train is late:** "It's running five minutes late, which
+   gives you four minutes to change trains." and "It may make up time, so don't count on it."
+7. **Platforms:** "You're coming into platform 3 and you'll want platform 1, where your train will
+   be showing on the departure board as the Paignton train." The "showing as" part only when the
+   final destination isn't the one asked for. The same platform: "…leaves from the same
+   platform." When the platform you come into isn't known, nothing is said about it.
+8. **Fast, slower and Elizabeth Line trains** (the page's own rule) are named where a route has
+   more than one kind: "the 3.29pm Elizabeth Line train". Slower trains stay in, as people may
+   be booked on them. A later train that gets there sooner is pointed out: "The 3.29 fast train
+   leaves at the same time but gets there sooner, at 3.55." Then both platforms: "you'll want
+   platform 14 for the 3.29 Elizabeth Line train, or platform 11A for the 3.29 fast train." With
+   one train on such a route: "platform 10 for the 3.27". The row of trains: "3.29pm Elizabeth
+   Line, arrives 4.25". The trains the page suggests itself skip any that a later one overtakes.
+9. **The next train:** after "fine", "The one after that is the 4.05 from platform 1, which would
+   give you a 36-minute wait." (no "if you miss it"), with "two minutes later, " before the train
+   when it leaves less than ten minutes after the first. After "tight": "If you miss it, the next
+   one is …". Otherwise "The next one is …". When that one is tight or unlikely as well: "You'd
+   have five minutes to change, so that's going to be tight too. The next connection which looks
+   comfortable is the 3.48 from platform 9B, which would give you a 34-minute wait."
+10. **Long waits:** an hour or more to the nearest quarter of an hour, "almost" or "more than"
+    whichever is closer: "a wait of more than an hour and a half".
+11. **No change needed:** "You don't need to change: the train you're on carries on to Exeter St
+    Davids, and is expected there at …"
+12. **The closing line**, when your train is more than 30 minutes from B: "These times can change,
+    so it's worth checking again later."
+13. **Share:** a picture of the box in the dark colours, its edge in the answer's colour, headed
+    "Changing at Reading for London Paddington from the 5.25pm Midgham train", with "Here's how my
+    change at Reading for London Paddington looks on Trainchecker." and the journey's link.
+14. **Not agreed word for word (Claude's drafts, live):** the two questions; "got in at"; "a little
+    early"; "N minutes after the … train is due to leave"; the delayed and no-train messages; "The
+    3.45pm to York has been cancelled. If you're planning to get the … instead"; "arrives".
+15. **For later:** how to get between the platforms ("over the footbridge"):
+    `design/handover-platform-links-2026-11-21.md`.

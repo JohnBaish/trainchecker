@@ -42,15 +42,16 @@ given its own branch). Before committing there, run
   won't fit this pattern: then use the commit's Vercel "Details" link on GitHub.
 - **The app (stage 3):** Vite, React and TypeScript, parts copied from Riverwatcher
   (`organic.css`, `theme.ts`, `ThemeSwitch.tsx`, `responsive.ts`, `words.ts`) and the
-  agreed mock-ups' styles (`src/styles/global.css`). Three Vercel functions: `api/live.ts`
-  (the live board, five windows), `api/week.ts` (the history, one half hour) and `api/days.ts`
+  agreed mock-ups' styles (`src/styles/global.css`). Four Vercel functions: `api/live.ts`
+  (the live board, five windows), `api/week.ts` (the history, one half hour), `api/days.ts`
   (stage 4: the incidents feed, live to the end of Sunday; matched in the page by
-  `src/lib/incidents.ts`). The rules in
+  `src/lib/incidents.ts`) and `api/connect.ts` (Connections: the stations and trains onward from
+  the changing station; its sums and sentences in `src/lib/connection.ts`). The rules in
   `src/lib/analyse.ts`, every sentence in `src/lib/sentences.ts`. `npm run dev` and `vite
   preview` serve the functions too (`vite.config.ts`); from a cloud session run them with
   `NODE_USE_ENV_PROXY=1 RDM_LDB_KEY=proxy-injected RDM_HSP_KEY=proxy-injected RDM_KB_KEY=proxy-injected`
-  (only the key saved here works). `npm run check`: `scripts/check-rules.ts`, `scripts/check-api.ts`
-  and `scripts/check-days.ts`, on the real snapshots.
+  (only the key saved here works). `npm run check`: `scripts/check-rules.ts`, `scripts/check-api.ts`,
+  `scripts/check-days.ts` and `scripts/check-connection.ts`, on the real snapshots.
   Browser checks: `design/previews/stage3/sweep.cjs` and `try.cjs` (preview on port 4620).
 - Functions run in London (`lhr1`): the incidents licence allows UK use
   only.
@@ -63,7 +64,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 21st 2026: "Check my connection": the live board tested, a prototype (branch `claude/gracious-mendel-emq471`, not merged; Claude Code)
+### November 21st 2026: Connections ("Check my connection"), built and merged the same day (branch `claude/gracious-mendel-emq471`; Claude Code)
 
 - **John:** a button under the quote of the day. It takes B as the changing station, asks for the next
   destination (ideally only stations with a train from B in the next two hours), then which train you're
@@ -167,6 +168,12 @@ given its own branch). Before committing there, run
 - **John (Earley to Reading for Oxford):** "The one after that is two minutes later, the 6.47 from
   platform 9B, which would give you a 23-minute wait." Done after "fine", when the second train leaves
   less than ten minutes after the first (the limit is Claude's, for John to confirm).
+- **John:** "this is all great work now. Let's merge it to Main." The agreed wording is in `SPEC.md`
+  §13. Checks 267 + 57 + 73 + 23, `tsc -b`, lint and build clean first; merged with this note in the
+  same push. Still Claude's drafts, live as they are: the two questions in the fold, "got in at", "a
+  little early", the delayed and no-train messages, the cancelled opening, "arrives" in the row of
+  trains. Not built: "over the footbridge" (handover above), the railway's minimum connection times,
+  a mention of Connections in "About these figures".
 - Key saved here now: Live Departure Board.
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)

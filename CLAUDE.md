@@ -23,6 +23,8 @@ given its own branch). Before committing there, run
 3. `PLAN.md`: the stages.
 4. `HOUSE-STYLE.md`: the shared design and ways of working.
 5. `SEO-HANDOVER.md`: when search work comes up (stage 5).
+6. `design/handover-platform-links-2026-11-21.md`: an idea for later, "over the footbridge"
+   (how platforms connect, for Connections): what was found and how to pick it up.
 
 ## Key points
 
@@ -127,6 +129,9 @@ given its own branch). Before committing there, run
   Following the drawn footpaths would be the proper way: a piece of work of its own. John: no "9 and 9B
   are the same platform" wording for now. `overpass-api.de` is allowed but dropped every connection;
   `api.openstreetmap.org` worked.
+- **Handover written** at John's request: `design/handover-platform-links-2026-11-21.md` (with the
+  trial's scripts, straight to `main` too, as notes: house style §10); "Read these first" points to
+  it; the tracker's first idea for later names it. John will say when to merge Connections.
 - Key saved here now: Knowledgebase Stations (the Live Departure Board one to swap back for live tests).
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)

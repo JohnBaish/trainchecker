@@ -65,7 +65,6 @@ export function Connection({ a }: { a: Analysis }) {
   return (
     <section className="card sec block connect">
       <h3>Connections</h3>
-      <p>Changing trains at {a.to}? See whether you’ll make your next one.</p>
       <details className="advice connect-fold" onToggle={(e) => setOpen(e.currentTarget.open)}>
       <summary>Check trains leaving {a.to} <Icon name="down" /></summary>
       <div className="cstep">

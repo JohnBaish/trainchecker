@@ -159,6 +159,8 @@ given its own branch). Before committing there, run
   with the journey's link. Checked: `npm run check` 267 + 57 + 73 + 21, `tsc -b`, lint, build;
   `design/previews/connection/share.cjs` at 1200px on live trains at 5.27pm: copied, read back from the
   clipboard (`share-picture.png`), both fonts loaded, no errors. Not checked: a phone's share sheet.
+- **John:** the share sentence "is perfect" (agreed); the picture's heading is "Changing at Reading for
+  London Paddington from the 5.25pm Midgham train" (done).
 - Key saved here now: Live Departure Board.
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)

@@ -72,7 +72,9 @@ export function Connection({ a }: { a: Analysis }) {
     if (!ans || result.s !== 'ok') return
     setShared('')
     const d = result.d, taken = new Date(d.taken)
-    const canvas = answerImage({ heading: `Changing at ${a.to} for ${d.toName}`, text: ans.text, edge: EDGE[ans.kind], when: `${dayName(taken)}, ${t12(clock(d.taken))}` })
+    const left = mines.find(({ m }) => m.id === mineId)?.s.std
+    // The heading is John's (November 21st 2026).
+    const canvas = answerImage({ heading: `Changing at ${a.to} for ${d.toName}${left ? ` from the ${t12(left)} ${a.from} train` : ''}`, text: ans.text, edge: EDGE[ans.kind], when: `${dayName(taken)}, ${t12(clock(d.taken))}` })
     const r = await deliverImage(canvas, `trainchecker-connection-${a.fromCrs}-${a.toCrs}-${d.to}.png`,
       { title: 'Trainchecker: connections', text: `Here’s how my change at ${a.to} for ${d.toName} looks on Trainchecker.`, url: `${location.origin}/#${a.fromCrs}-${a.toCrs}` })
     setShared(r === 'copied' ? 'Copied' : r === 'saved' ? 'Saved as a picture' : '')

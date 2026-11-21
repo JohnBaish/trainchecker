@@ -216,7 +216,11 @@ export function answer(o: Asked): Answer {
     const from = n.t.platform ? ` from platform ${n.t.platform}` : ''
     const opener = kind === 'fine' ? 'The one after that is' : kind === 'tight' ? 'If you miss it, the next one is' : 'The next one is'
     const b = band(n.g)
-    text += ` ${opener} the ${named(n.t)}${from}`
+    // "The one after that is two minutes later, the 6.47 from platform 9B" (John, November 21st
+    // 2026), when it leaves within ten minutes of the first (the limit is Claude's).
+    const d = n.g - c.g
+    const later = kind === 'fine' && d >= 1 && d < 10 ? `${minutes(d)} later, ` : ''
+    text += ` ${opener} ${later}the ${named(n.t)}${from}`
     text += b === 'unlikely' ? `. You’d only have ${minutes(n.g)} to change, so that looks unlikely too.`
       : b === 'tight' ? `. You’d have ${minutes(n.g)} to change, so that’s going to be tight too.`
       : `, which would give you ${aWait(n.g)}.`

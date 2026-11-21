@@ -17,7 +17,7 @@ and for each pair of groups how the shortest walk crosses the line:
   x  across the line on the level (a path meeting a railway track)
   e  either a bridge or a subway (both used, about as often)
   u  over or under the line, but the map doesn't say which
-  r  out of the station and along a road (more than 40 metres of road)
+  r  out of the station: along a road for more than 25 metres, or across the line on a road
   B, S, E  as b, s, e, but a walk on the level of at most 500 metres (round through a concourse,
      say) is there too
   ?  no walk found
@@ -207,11 +207,12 @@ def solve(crs, st, plats, walks, lifts, rails, rail_segs=()):
             kk = 'x' if on_track and base is None else k
             # A path drawn across a track without meeting it goes over or under it, even if the
             # map doesn't say so: how is unknown.
-            if kk is None:
+            if kk in (None, 'r'):
                 hit = [over for r1, r2, over in rail_segs if crosses(N[a], N[b], r1, r2)]
                 if hit:
-                    # Under a railway bridge is a subway; otherwise over or under, unknown.
-                    kk = 's' if any(hit) else 'u'
+                    # Under a railway bridge is a subway. A road crossing a track it doesn't meet
+                    # goes over it on a bridge; a footpath could go either way, so unknown.
+                    kk = ('rR' if kk == 'r' else '') + ('s' if any(hit) else ('b' if kk == 'r' else 'u'))
                     crossing_way = True
             edge(a, b, dist(a, b), kk, t.get('_id'))
         # Roads join platforms only through footpaths: a road under or beside a station
@@ -311,15 +312,18 @@ def solve(crs, st, plats, walks, lifts, rails, rail_segs=()):
             else:
                 tot = collections.Counter()
                 for k, dd in used:
-                    tot[k] += dd
+                    for ch in set(k):
+                        tot[ch] += dd
                 # A crossing of the tracks counts first: it is what a person would notice. A walk
                 # that goes along roads for more than a short way leaves the station.
                 known = {x: v for x, v in tot.items() if x in 'bs'}
+                if DEBUG:
+                    print(f"    {a}-{b} totals {dict(tot)}", file=sys.stderr)
                 if 'x' in tot:
                     k = 'x'
                 elif 'u' in tot and not known:
                     k = 'u'
-                elif tot.get('r', 0) > 40:
+                elif 'R' in tot or tot.get('r', 0) > 25:
                     k = 'r'
                 else:
                     k = max(known, key=known.get) if known else '-'

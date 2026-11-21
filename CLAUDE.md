@@ -161,6 +161,9 @@ given its own branch). Before committing there, run
   clipboard (`share-picture.png`), both fonts loaded, no errors. Not checked: a phone's share sheet.
 - **John:** the share sentence "is perfect" (agreed); the picture's heading is "Changing at Reading for
   London Paddington from the 5.25pm Midgham train" (done).
+- **John (the preview on his phone, Midgham to Reading for Coventry):** a wait of an hour or more to
+  the nearest quarter of an hour, "almost" or "more than" whichever is closer: 94 minutes is "a wait of
+  more than an hour and a half" (it said "more than an hour"). `longWait()`; checks 267 + 57 + 73 + 23.
 - Key saved here now: Live Departure Board.
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)

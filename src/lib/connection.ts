@@ -76,7 +76,15 @@ export function firstChoice(mine: Mine, trains: Onward[]): Onward | null {
 }
 
 const minutes = (n: number) => `${num(n)} minute${n === 1 ? '' : 's'}`
-const aWait = (n: number) => (n >= 60 ? 'a wait of more than an hour' : `${n === 8 || n === 11 || n === 18 ? 'an' : 'a'} ${num(n)}-minute wait`)
+/** An hour or more, to the nearest quarter of an hour, with "almost" or "more than" when it isn't
+ *  exact (John, November 21st 2026): 94 minutes is "more than an hour and a half". */
+export function longWait(n: number): string {
+  const q = Math.round(n / 15) * 15, h = Math.floor(q / 60), part = q % 60
+  const amount = h === 1 ? (part === 0 ? 'an hour' : `an hour and ${part === 15 ? 'a quarter' : part === 30 ? 'a half' : 'three quarters'}`)
+    : part === 0 ? `${num(h)} hours` : `${num(h)} and ${part === 15 ? 'a quarter' : part === 30 ? 'a half' : 'three quarter'} hours`
+  return `${n < q ? 'almost ' : n > q ? 'more than ' : ''}${amount}`
+}
+export const aWait = (n: number) => (n >= 60 ? `a wait of ${longWait(n)}` : `${n === 8 || n === 11 || n === 18 ? 'an' : 'a'} ${num(n)}-minute wait`)
 
 /** "pm" said with the first time and again only when it changes. */
 function clockOnce() {

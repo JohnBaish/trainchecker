@@ -4,7 +4,7 @@
 import { readFileSync } from 'node:fs'
 import { places, trimConnect, type RawBoard } from '../api/connect.ts'
 import { trim } from '../api/live.ts'
-import { answer, band, chipLabel, choices, firstChoice, mineOf, speeds } from '../src/lib/connection.ts'
+import { aWait, answer, band, chipLabel, choices, firstChoice, longWait, mineOf, speeds } from '../src/lib/connection.ts'
 
 let passed = 0, failed = 0
 function eq(what: string, got: unknown, want: unknown) {
@@ -94,6 +94,10 @@ const elizId = pad.d.trains.find((t) => t.std === '15:29' && t.platform === '14'
 const eliz = answer({ now: NOW, from: 'Twyford', at: 'Reading', to: 'London Paddington', mine: pad.mine, arrPlatform: pad.d.arrPlatform, trains: pad.d.trains, chosen: elizId })
 eq('an Elizabeth Line train chosen by name', eliz.text,
   'If you’re planning to get the 3.29pm Elizabeth Line train to London Paddington, you should be fine. You’ll have 15 minutes to change trains. Your train from Twyford is expected to arrive on time at 3.14, and the London Paddington train is expected to leave on time at 3.29, getting there at 4.25. The 3.29 fast train leaves at the same time but gets there sooner, at 3.55. You’re coming into platform 12 and you’ll want platform 14 for the 3.29 Elizabeth Line train, or platform 11A for the 3.29 fast train. The 3.29 Elizabeth Line train will be showing on the departure board as the Abbey Wood train. The one after that is the 3.35 fast train from platform 11, which would give you a 21-minute wait.')
+
+// Long waits to the nearest quarter of an hour (John, November 21st 2026).
+eq('long waits', [60, 64, 68, 75, 86, 90, 94, 100, 105, 118, 120, 131, 150, 170, 185].map(longWait), ['an hour', 'more than an hour', 'almost an hour and a quarter', 'an hour and a quarter', 'almost an hour and a half', 'an hour and a half', 'more than an hour and a half', 'almost an hour and three quarters', 'an hour and three quarters', 'almost two hours', 'two hours', 'almost two and a quarter hours', 'two and a half hours', 'more than two and three quarter hours', 'more than three hours'])
+eq('waits in a sentence', [59, 94, 8].map(aWait), ['a 59-minute wait', 'a wait of more than an hour and a half', 'an eight-minute wait'])
 
 console.log(`check-connection: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

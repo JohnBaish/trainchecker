@@ -174,6 +174,12 @@ given its own branch). Before committing there, run
   little early", the delayed and no-train messages, the cancelled opening, "arrives" in the row of
   trains. Not built: "over the footbridge" (handover above), the railway's minimum connection times,
   a mention of Connections in "About these figures".
+- **Checked live** at trainchecker.baish.net a few minutes after merging: the new build is served, and
+  `/api/connect` answers (Newton Abbot's stations; Reading to London Paddington, 48 trains with their
+  companies and platforms). Branch tidied: "Delete merged branches" trial run 44932555906, then the
+  real run; `git ls-remote --heads origin` shows only `main`. Tracker updated (Connections live; next,
+  the baish.net overview). Not checked: the card itself on the live site in a browser, a real phone's
+  share sheet.
 - Key saved here now: Live Departure Board.
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)

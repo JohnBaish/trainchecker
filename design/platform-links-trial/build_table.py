@@ -15,9 +15,10 @@ and for each pair of groups how the shortest walk crosses the line:
   b  a bridge (bridge=yes or layer 1 or more)
   s  a subway (tunnel=yes or layer -1 or less)
   x  across the line on the level (a path meeting a railway track)
+  e  either a bridge or a subway (both used, about as often)
   ?  no walk found
 A walk using both a bridge and a subway counts as whichever it uses for longer."""
-import sys, os, json, math, heapq, itertools, collections
+import sys, os, json, pickle, types, math, heapq, itertools, collections
 import osmium
 
 WALK = {'footway', 'steps', 'corridor', 'path', 'pedestrian', 'elevator', 'platform', 'cycleway'}
@@ -251,7 +252,12 @@ def solve(crs, st, plats, walks, lifts, rails):
         if i == j:
             continue
         cross.setdefault((i, j), collections.Counter())[k] += 1
-    xs = ''.join(cross[(i, j)].most_common(1)[0][0] for i, j in itertools.combinations(range(len(gl)), 2))
+    def letter(c):
+        # Both a bridge and a subway, used about as often: either will do.
+        if c.get('b') and c.get('s') and min(c['b'], c['s']) * 2 >= max(c['b'], c['s']):
+            return 'e'
+        return c.most_common(1)[0][0]
+    xs = ''.join(letter(cross[(i, j)]) for i, j in itertools.combinations(range(len(gl)), 2))
     mixed = [(i, j, dict(c)) for (i, j), c in cross.items() if len(c) > 1]
     return gl, xs, pair, mixed
 
@@ -263,17 +269,25 @@ def main():
     src, out = sys.argv[1], sys.argv[2]
     only = set(sys.argv[3:])
     os.makedirs(out, exist_ok=True)
-    s = Stations()
-    s.apply_file(src)
-    st = s.st
+    cache = os.path.join(out, 'cache.pickle')
+    if os.path.exists(cache):
+        with open(cache, 'rb') as fh:
+            st, ways, lifts, rels = pickle.load(fh)
+        th = types.SimpleNamespace(ways=ways, lifts=lifts, rels=rels)
+    else:
+        s = Stations()
+        s.apply_file(src)
+        st = s.st
+        cells = set()
+        for lon, lat, _ in st.values():
+            for dx in (-1, 0, 1):
+                for dy in (-1, 0, 1):
+                    cells.add(cell(lon + dx * NEAR, lat + dy * NEAR))
+        th = Things(cells, s.rel_ways)
+        th.apply_file(src, locations=True, idx='sparse_mem_array')
+        with open(cache, 'wb') as fh:
+            pickle.dump((st, th.ways, th.lifts, th.rels), fh)
     print(f'{len(st)} stations with a code', file=sys.stderr)
-    cells = set()
-    for lon, lat, _ in st.values():
-        for dx in (-1, 0, 1):
-            for dy in (-1, 0, 1):
-                cells.add(cell(lon + dx * NEAR, lat + dy * NEAR))
-    th = Things(cells, s.rel_ways)
-    th.apply_file(src, locations=True, idx='sparse_mem_array')
     print(f'{len(th.ways)} ways, {len(th.lifts)} lifts, {len(th.rels)} platform relations', file=sys.stderr)
 
     # Station index by cell.

@@ -61,6 +61,25 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 21st 2026: "Check my connection", an idea; the live board tested (branch `claude/gracious-mendel-emq471`, notes only; Claude Code)
+
+- **John:** a button under the quote of the day. It takes B as the changing station, asks for the next
+  destination (ideally only stations with a train from B in the next two hours), then which train you're
+  on, and answers in a sentence ("You should be fine. You'll have 11 minutes to change trains…"), with
+  both platforms and, if possible, how to get between them. Nothing built or agreed yet.
+- **Tested at 2.55pm** (real boards in `design/mockups/snapshots/20261121-1455-connection/`):
+  - A train's id starts with the same eight digits on every station's board (`10918949IVYBDGE_` at
+    Ivybridge, `10918949NABT____` at Newton Abbot), so the train you're on can be found on B's board,
+    with its platform there (Ivybridge's 3.04pm: platform 3 at Newton Abbot).
+  - A train that ends at B isn't on B's departure board (Twyford to Reading's stopping trains), so its
+    arrival platform can't be had. Later stops on a board carry no platform.
+  - A board gives 25 rows at most, whatever `numRows` asks: Reading's whole board reached only 40
+    minutes ahead. Two hours as eight 15-minute pieces at once: Reading 67 trains, 144 stations, all
+    with platforms; Clapham Junction still cut short (25 in most pieces, 191 trains seen, 260 stations).
+    Sixteen requests at once took 1.9 seconds.
+  - Newton Abbot's whole board: 17 trains in two hours, 52 stations, one request, 0.8 seconds.
+- Key saved here now: Live Departure Board.
+
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)
 
 - **John** (who'd mixed up the weekends: National Rail's "no trains to / from London Paddington" page is for

@@ -18,7 +18,7 @@ const VIEWS = [
     page.on('pageerror', (e) => errors.push(String(e)))
     page.on('console', (m) => m.type() === 'error' && errors.push(m.text()))
     await page.goto(`http://localhost:4620/${r.hash}`)
-    const open = page.getByRole('button', { name: 'Check my connection' })
+    const open = page.locator('.connect summary')
     await open.waitFor({ timeout: 20000 })
     await open.click()
     const box = page.locator('.connect input')
@@ -44,6 +44,12 @@ const VIEWS = [
       await page.locator('.connect .chip').first().click()
       console.log('  first chip: ' + (await page.locator('.connect .canswer').innerText()))
     }
+    // A change of journey leaves one Connections card, folded, for the new journey (a duplicate key
+    // once left the old panel at the top of the page: John, November 21st 2026).
+    await page.evaluate(() => { location.hash = '#RDG-PAD' })
+    await page.locator('.strip h2', { hasText: 'Reading to London Paddington' }).waitFor()
+    await page.locator('.connect summary', { hasText: 'London Paddington' }).waitFor({ timeout: 20000 })
+    console.log('  after a change of journey: cards ' + (await page.locator('.connect').count()) + ', open ' + (await page.locator('.connect details[open]').count()) + ', ' + JSON.stringify(await page.locator('.connect summary').allInnerTexts()))
     await page.context().close()
   }
   await browser.close()

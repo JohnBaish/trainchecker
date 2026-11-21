@@ -67,7 +67,7 @@ eq('unlikely', unlikely.a, { kind: 'unlikely', text: 'If you’re planning to ge
 
 // 4. Won't make it, asked for by name: Twyford's 3.07pm and the 3.14pm to Oxford.
 const missed = ask('TWY-RDG.json', 'TWY', 'RDG', rdg, 'OXF', 'Oxford', '15:07', '15:14')
-eq('missed', missed.a, { kind: 'missed', text: 'You won’t make the 3.14pm to Oxford. Your train from Twyford is expected to arrive on time at 3.14, just as it’s due to leave. The next one is the 3.19 from platform 9B. You’d have five minutes to change, so that’s going to be tight too.' })
+eq('missed', missed.a, { kind: 'missed', text: 'You won’t make the 3.14pm to Oxford. Your train from Twyford is expected to arrive on time at 3.14, just as it’s due to leave. The next one is the 3.19 from platform 9B. You’d have five minutes to change, so that’s going to be tight too. The next connection which looks comfortable is the 3.48 from platform 9B, which would give you a 34-minute wait.' })
 // Left to itself, it answers about the first train there's a minute or more for.
 const first = ask('TWY-RDG.json', 'TWY', 'RDG', rdg, 'OXF', 'Oxford', '15:07')
 eq('first choice', [firstChoice(first.mine, first.d.trains)?.std, first.a.kind], ['15:19', 'tight'])

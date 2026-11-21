@@ -100,6 +100,16 @@ given its own branch). Before committing there, run
   Oxford and Ivybridge to Newton Abbot for Torquay, 1200px light and 390px dark with touch: answers in
   0.8 to 1.8 seconds, no sideways scroll, nothing under 44px on the phone; the only errors were "The days
   ahead" (its key isn't the one saved here). **Not checked:** Vercel's preview, a real phone, Safari.
+- **John (the preview):** "This looks great." Two faults: a second "Check my connection" box that didn't
+  work, and the panel staying at the top after a change of journey. One cause: `Connection` had the same
+  `key` as `LastWeek` beside it, and with two children of one key React left the old panel on the page.
+  The key removed (`JourneyView` is itself keyed by the journey). Laid out as Arrivals is, at his
+  suggestion: a card headed "Connections", a line (Claude's draft: "Changing trains at Reading? See
+  whether you'll make your next one."), and a fold "Check trains leaving Reading"; the button and Close
+  gone. And when the next train is unlikely too: "The next connection which looks comfortable is the 3.48
+  from platform 9B, which would give you a 34-minute wait." (also after "tight too": Claude's draft).
+  Checked: `npm run check` 267 + 57 + 73 + 15, `tsc -b`, lint, build; `try.cjs` again at 1200px and 390px
+  with touch, now changing journey afterwards: one card, folded, for the new journey; no sideways scroll.
 - Key saved here now: Live Departure Board.
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)

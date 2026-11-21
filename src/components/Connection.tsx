@@ -1,5 +1,5 @@
-// "Check my connection" (John, November 21st 2026), under the quote of the day: a button, then in
-// place, step by step: where you're going next from B, which train from A you're on, and the answer
+// "Connections" (John, November 21st 2026), under the quote of the day, laid out as Arrivals is: a
+// heading, a line, and a fold ("Check trains leaving B"); inside it, step by step: where you're going next from B, which train from A you're on, and the answer
 // in a sentence, with the other trains you could change onto. A prototype: the headings, questions
 // and messages here are Claude's drafts; the answer's wording is in lib/connection.ts.
 import { useEffect, useMemo, useState } from 'react'
@@ -47,9 +47,6 @@ export function Connection({ a }: { a: Analysis }) {
   }, [dest, mineId, arr, a.toCrs, a.fromCrs, a.taken])
 
   if (!mines.length) return null
-  if (!open) {
-    return <div className="connect-open"><button type="button" className="btn btn-secondary" onClick={() => setOpen(true)}>Check my connection</button></div>
-  }
 
   const go = () => {
     const c = resolve(text)
@@ -67,8 +64,10 @@ export function Connection({ a }: { a: Analysis }) {
 
   return (
     <section className="card sec block connect">
-      <div className="card-kicker">Check my connection</div>
-      <h3>Changing at {a.to}</h3>
+      <h3>Connections</h3>
+      <p>Changing trains at {a.to}? See whether you’ll make your next one.</p>
+      <details className="advice connect-fold" onToggle={(e) => setOpen(e.currentTarget.open)}>
+      <summary>Check trains leaving {a.to} <Icon name="down" /></summary>
       <div className="cstep">
         <p className="cq">Where are you going next?</p>
         <div className="cpick">
@@ -107,7 +106,7 @@ export function Connection({ a }: { a: Analysis }) {
           )}
         </div>
       )}
-      <div className="cend"><button type="button" className="btn btn-ghost" onClick={() => setOpen(false)}><Icon name="clear" /> Close</button></div>
+      </details>
     </section>
   )
 }

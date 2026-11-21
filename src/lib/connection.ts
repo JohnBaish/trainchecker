@@ -151,6 +151,10 @@ export function answer(o: Asked): Answer {
     text += b === 'unlikely' ? `. You’d only have ${minutes(n.g)} to change, so that looks unlikely too.`
       : b === 'tight' ? `. You’d have ${minutes(n.g)} to change, so that’s going to be tight too.`
       : `, which would give you ${aWait(n.g)}.`
+    // When the next one is tight or unlikely as well, the first with six minutes or more (John,
+    // November 21st 2026, for "unlikely too"; for "tight too" as well is Claude's draft).
+    const easy = b === 'fine' ? null : after(n.t.id, 6)
+    if (easy) text += ` The next connection which looks comfortable is the ${named(easy.t)}${easy.t.platform ? ` from platform ${easy.t.platform}` : ''}, which would give you ${aWait(easy.g)}.`
   } else if (kind !== 'fine') {
     text += ` Trainchecker can’t see a later train to ${to} in the next four hours.` // draft
   }

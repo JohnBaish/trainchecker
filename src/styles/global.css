@@ -296,7 +296,6 @@ details.trains-fold { margin-top: var(--space-3); }
 .share-row .btn-secondary:hover { color: var(--color-text); }
 
 /* Check my connection (prototype, November 21st 2026) */
-.connect-open { margin-top: var(--space-6); display: flex; justify-content: center; }
 .connect .cstep { margin-top: var(--space-4); }
 .connect .cq { font-weight: 600; margin: 0 0 var(--space-2); }
 .connect .cpick { display: grid; grid-template-columns: minmax(0, 420px) max-content; justify-content: start; gap: var(--space-3); align-items: start; }
@@ -307,5 +306,4 @@ details.trains-fold { margin-top: var(--space-3); }
 .connect .cmine span { flex-basis: 100%; }
 .connect .cmine.on, .connect .chip.on { border-color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
 .connect .canswer { margin: 0 0 var(--space-3); background: var(--color-bg); }
-.connect .cend { margin-top: var(--space-3); display: flex; justify-content: flex-end; }
 @media (max-width: 720px) { .connect .cpick { grid-template-columns: 1fr; } .connect .cpick > .btn { margin-top: 0; } }

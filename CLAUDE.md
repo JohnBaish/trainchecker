@@ -61,6 +61,24 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 21st 2026: Realtime Trains' data compared with ours; not taken further (notes only; Claude Code)
+
+- **John:** Realtime Trains seems slightly more accurate; why? Read its sources and limitations pages and
+  its API terms (July 27th 2026). It uses only Network Rail's feeds (TRUST, TD, Schedule, VSTP), some train
+  companies' train lengths, and its own model of where trains are (Offsetstore, railgeometry); no National
+  Rail data. Better than ours at where a train is and when it passed a point (from the signalling feed), with
+  its own predictions and times between A and B. By its own account weaker on platforms (timetabled,
+  "confirmed" once seen; station changes can come first) and on cancellations mid-journey (not known until
+  the train reaches that station).
+- **Its API:** api.rtt.io closed October 1st 2026; now api-portal.rtt.io. Free access personal and
+  non-commercial only; clause 8.3 bars anything that "competes with, or is a substitute for" its own
+  services (its judgement); clause 5.1 needs a visible credit and link; keys server-side only. If ever
+  wanted: ask hello@realtimetrains.com first.
+- **Network Rail's feeds directly:** free, but continuous streams needing an always-running listener and a
+  database; a different kind of project.
+- **John:** note it, not to be taken further for now. Hosts added to the Default environment for reading:
+  www.realtimetrains.co.uk, api-portal.rtt.io.
+
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)
 
 - **John** (who'd mixed up the weekends: National Rail's "no trains to / from London Paddington" page is for

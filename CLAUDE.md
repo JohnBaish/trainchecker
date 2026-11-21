@@ -120,7 +120,14 @@ given its own branch). Before committing there, run
   from this session); Network Rail's lifts and escalators feed (lifts only); TfL's station structure
   data (London only); National Rail's station plans (pictures, Rail Delivery Group's copyright).
   Proposed: try the first two on six stations before deciding.
-- Key saved here now: Live Departure Board.
+- **Then tried on six stations** (`design/platform-links-trial/`): the Knowledgebase's step-free note
+  says how a station is crossed ("via lifts and an overbridge from platform 3"), not which platforms
+  are together. OpenStreetMap has every platform, footbridge, subway and lift drawn at all six; a crude
+  straight-line test got the island platforms right but the bay platforms wrong (Oxford, Reading).
+  Following the drawn footpaths would be the proper way: a piece of work of its own. John: no "9 and 9B
+  are the same platform" wording for now. `overpass-api.de` is allowed but dropped every connection;
+  `api.openstreetmap.org` worked.
+- Key saved here now: Knowledgebase Stations (the Live Departure Board one to swap back for live tests).
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)
 

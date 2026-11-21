@@ -113,6 +113,13 @@ given its own branch). Before committing there, run
 - **John:** no line under the "Connections" heading, to try (removed); the comfortable-connection
   sentence stays after "tight too" as well. The train list offers a train that got in within
   the last three minutes (John; it was five), no longer.
+- **"Over the footbridge" looked into (John; web search only, nothing tested):** no ready-made national
+  source of how platforms connect was found. Leads: the Knowledgebase Stations feed John already has
+  (accessibility notes in words, per station; its fields not seen yet); OpenStreetMap (platforms,
+  footbridges, subways and steps drawn as map shapes; coverage unknown; its query service is blocked
+  from this session); Network Rail's lifts and escalators feed (lifts only); TfL's station structure
+  data (London only); National Rail's station plans (pictures, Rail Delivery Group's copyright).
+  Proposed: try the first two on six stations before deciding.
 - Key saved here now: Live Departure Board.
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)

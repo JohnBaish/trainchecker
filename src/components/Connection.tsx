@@ -6,7 +6,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { clock, diff, type Analysis } from '../lib/analyse.ts'
 import { answer, chipLabel, choices, firstChoice, mineOf, speeds, type Mine } from '../lib/connection.ts'
 import { fetchConnect, fetchPlaces } from '../lib/load.ts'
-import { t12 } from '../lib/sentences.ts'
+import { dayName, t12 } from '../lib/sentences.ts'
+import { answerImage, deliverImage, isTouch } from '../lib/share.ts'
 import { nameOf, resolve } from '../lib/stations.ts'
 import type { Connect } from '../../api/connect.ts'
 import { StationBox } from './Chooser.tsx'
@@ -24,6 +25,7 @@ export function Connection({ a }: { a: Analysis }) {
   const [chosen, setChosen] = useState<string | null>(null)
   const [places, setPlaces] = useState<Set<string> | undefined>(undefined)
   const [result, setResult] = useState<Result>({ s: 'idle' })
+  const [shared, setShared] = useState('')
 
   // The trains you might be on: not cancelled, leaving A within two hours, and still on their way or
   // arrived within the last three minutes (John, November 21st 2026).
@@ -63,6 +65,19 @@ export function Connection({ a }: { a: Analysis }) {
   const others = result.s === 'ok' && mine ? choices(mine, result.d.trains) : []
   const sp = result.s === 'ok' ? speeds(result.d.trains) : new Map()
   const picked = result.s === 'ok' && mine ? chosen ?? firstChoice(mine, result.d.trains)?.id ?? null : null
+
+  // Share: a picture of the answer's box with a sentence and the journey's link (John, November
+  // 21st 2026). The sentence is Claude's draft.
+  const share = async () => {
+    if (!ans || result.s !== 'ok') return
+    setShared('')
+    const d = result.d, taken = new Date(d.taken)
+    const canvas = answerImage({ heading: `Changing at ${a.to} for ${d.toName}`, text: ans.text, edge: EDGE[ans.kind], when: `${dayName(taken)}, ${t12(clock(d.taken))}` })
+    const r = await deliverImage(canvas, `trainchecker-connection-${a.fromCrs}-${a.toCrs}-${d.to}.png`,
+      { title: 'Trainchecker: connections', text: `Here’s how my change at ${a.to} for ${d.toName} looks on Trainchecker.`, url: `${location.origin}/#${a.fromCrs}-${a.toCrs}` })
+    setShared(r === 'copied' ? 'Copied' : r === 'saved' ? 'Saved as a picture' : '')
+  }
+  const touch = isTouch()
 
   return (
     <section className="card sec block connect">
@@ -105,6 +120,10 @@ export function Connection({ a }: { a: Analysis }) {
               ))}
             </div>
           )}
+          <div className="share-row in-fold">
+            <button type="button" className="btn btn-secondary" onClick={share}><Icon name={touch ? 'share' : 'copy'} /> {touch ? 'Share this answer' : 'Copy this answer'}</button>
+            <span className="share-status" role="status">{shared}</span>
+          </div>
         </div>
       )}
       </details>

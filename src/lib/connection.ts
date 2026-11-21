@@ -179,18 +179,22 @@ export function answer(o: Asked): Answer {
       : `the ${to} train is expected to leave on time at ${say(c.exp)}`
     const p = c.t.platform, mineP = o.arrPlatform
     // Where we don't know the platform you're coming into, we just don't say (John).
-    const alone = !mineP && p ? ` from platform ${p}${showing ? `, showing as the ${showing} train` : ''}` : ''
-    text += `${arrive}, and ${leave}${alone}.`
-    if (relies) text += ' It may make up time, so don’t count on it.'
-    // When you'd get there (John, November 21st 2026), and a later train that gets there sooner
-    // (Claude's draft, agreed in outline by John).
+    // "…expected to leave on time at 3.29, getting there at 4.25." (John, November 21st 2026: more
+    // natural than a sentence of its own.) The expected time, or the timetabled one.
     const there = reaches(c.t)
-    if (there) text += ` It’s ${isTime(c.t.eta) || c.t.eta === 'On time' ? 'expected' : 'due'} to get there at ${say(there)}.`
+    text += `${arrive}, and ${leave}${!mineP && p ? ` from platform ${p}` : ''}${there ? `, getting there at ${say(there)}` : ''}.`
+    if (!mineP && p && showing) text += ` It’ll be showing on the departure board as the ${showing} train.`
+    if (relies) text += ' It may make up time, so don’t count on it.'
+    // A later train that gets there sooner (John agreed, November 21st 2026).
     over = quicker(c).sort((x, y) => x.a! - y.a! || x.g - y.g)[0] ?? null
-    if (over) text += ` The ${named(over.t)}${over.t.platform ? ` from platform ${over.t.platform}` : ''} leaves ${over.g === c.g ? 'at the same time' : 'later'} but gets there sooner, at ${say(reaches(over.t)!)}.`
+    // Both platforms in one sentence where there are two trains to tell apart (John).
+    const both = !!(over && over.t.platform && mineP && p && mineP !== p)
+    if (over) text += ` The ${named(over.t)}${!both && over.t.platform ? ` from platform ${over.t.platform}` : ''} leaves ${over.g === c.g ? 'at the same time' : 'later'} but gets there sooner, at ${say(reaches(over.t)!)}.`
     if (mineP && p) {
       text += mineP === p ? ` You’re coming into platform ${mineP}, and the ${to} train leaves from the same platform${showing ? `, showing as the ${showing} train` : ''}.`
-        : ` You’re coming into platform ${mineP} and you’ll want platform ${p}${showing ? `, where your train will be showing on the departure board as the ${showing} train` : ''}.`
+        : both ? ` You’re coming into platform ${mineP} and you’ll want platform ${p} for the ${named(c.t)}, or platform ${over!.t.platform} for the ${named(over!.t)}.${showing ? ` The ${named(c.t)} will be showing on the departure board as the ${showing} train.` : ''}`
+        // "for the 3.27" where the route has more than one kind of train (John).
+        : ` You’re coming into platform ${mineP} and you’ll want platform ${p}${sp.size ? ` for the ${say(c.t.std)}` : ''}${showing ? `, where your train will be showing on the departure board as the ${showing} train` : ''}.`
     } else if (!p) {
       text += `${mineP ? ` You’re coming into platform ${mineP}.` : ''} The platform for the ${to} train hasn’t been announced yet.${showing ? ` It’ll be showing on the departure board as the ${showing} train.` : ''}`
     }

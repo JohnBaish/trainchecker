@@ -293,6 +293,66 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
 }
 
 /** "trainchecker-platforms-RDG-PAD.png" */
+/** "Connections": a picture of the answer's box, in the dark colours as the lists are (John,
+ *  November 21st 2026), its edge in the answer's colour. */
+const EDGE: Record<string, string> = { good: '#aebf92', mixed: '#dd8a56', prepared: '#f08a7e', none: '#b0a593' }
+export function answerImage(o: { heading: string; text: string; edge: string; when: string }): HTMLCanvasElement {
+  const scale = 2
+  const canvas = document.createElement('canvas')
+  const probe = canvas.getContext('2d')!
+  const textX = 110, textW = W - textX - 100
+  const size = o.text.length > 520 ? 30 : 34, lh = Math.round(size * 1.45)
+  probe.font = `${size}px ${FIG}`
+  const lines = wrap(probe, o.text, textW)
+  probe.font = `44px ${CAP}`
+  const head = wrap(probe, o.heading, W - 120)
+  const headTop = 110, bandTop = headTop + head.length * 54 + 24, pad = 50
+  const bandH = pad + lines.length * lh + pad - 10
+  const H = bandTop + bandH + 110
+  canvas.width = W * scale
+  canvas.height = H * scale
+  const ctx = canvas.getContext('2d')!
+  ctx.scale(scale, scale)
+  ctx.fillStyle = D.bg
+  ctx.fillRect(0, 0, W, H)
+  ctx.fillStyle = D.kicker
+  ctx.font = `600 18px ${FIG}`
+  ctx.fillText('TRAINCHECKER · CONNECTIONS', 60, 72)
+  ctx.fillStyle = D.muted
+  ctx.font = `20px ${FIG}`
+  ctx.textAlign = 'right'
+  ctx.fillText(o.when, W - 60, 72)
+  ctx.textAlign = 'left'
+  ctx.fillStyle = D.text
+  ctx.font = `44px ${CAP}`
+  head.forEach((l, i) => ctx.fillText(l, 60, headTop + 44 + i * 54))
+  const x0 = 40, x1 = W - 40, y0 = bandTop, y1 = bandTop + bandH
+  ctx.save()
+  ctx.beginPath()
+  ctx.roundRect(x0, y0, x1 - x0, y1 - y0, 36)
+  ctx.clip()
+  ctx.fillStyle = D.band
+  ctx.fillRect(x0, y0, x1 - x0, y1 - y0)
+  ctx.fillStyle = EDGE[o.edge] ?? EDGE.none
+  ctx.fillRect(x0, y0, 12, y1 - y0)
+  ctx.restore()
+  ctx.fillStyle = D.text
+  ctx.font = `${size}px ${FIG}`
+  lines.forEach((l, i) => ctx.fillText(l, textX, y0 + pad + size - 6 + i * lh))
+  ctx.strokeStyle = D.rule
+  ctx.lineWidth = 1
+  ctx.beginPath(); ctx.moveTo(60, y1 + 44); ctx.lineTo(W - 60, y1 + 44); ctx.stroke()
+  ctx.fillStyle = D.kicker
+  ctx.font = `30px ${CAP}`
+  ctx.fillText('Trainchecker', 60, y1 + 88)
+  ctx.fillStyle = D.muted
+  ctx.font = `20px ${FIG}`
+  ctx.textAlign = 'right'
+  ctx.fillText('trainchecker.baish.net', W - 60, y1 + 86)
+  ctx.textAlign = 'left'
+  return canvas
+}
+
 export const listFileName = (kind: 'platforms' | 'arrivals', hash: string) => `trainchecker-${kind}-${hash.slice(1)}.png`
 
 function save(blob: Blob, filename: string) {

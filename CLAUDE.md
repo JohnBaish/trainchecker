@@ -145,6 +145,20 @@ given its own branch). Before committing there, run
   after that") skip a train that a later one overtakes; the first answer and anything chosen don't.
   Checked: `npm run check` 267 + 57 + 73 + 21, `tsc -b`, lint, build; `try.cjs` live at 5.18pm, Midgham
   to Reading for Paddington, 1200px and 390px with touch: no sideways scroll, nothing under 44px.
+- **John:** "…is expected to leave on time at 3.29, getting there at 4.25." in one sentence; "you'll
+  want platform 10 for the 3.27" where trains are being told apart, and with a quicker train both
+  platforms: "platform 14 for the 3.29 Elizabeth Line train, or platform 11A for the 3.29 fast train."
+  Done in `answer()`. Claude's drafts from it: where the platform you come into isn't known, "…at 3.14
+  from platform 7, getting there at 3.38. It'll be showing on the departure board as the Manchester
+  Piccadilly train."; with two trains, "The 3.29 Elizabeth Line train will be showing on the departure
+  board as the Abbey Wood train."
+- **Share for the answer (John):** a picture of the box, in the dark colours as the lists are, its edge
+  in the answer's colour, headed "Changing at Reading for London Paddington" (`answerImage()` in
+  `share.ts`; "Share this answer" / "Copy this answer" in `Connection.tsx`). The sentence sent with it
+  is Claude's draft: "Here's how my change at Reading for London Paddington looks on Trainchecker.",
+  with the journey's link. Checked: `npm run check` 267 + 57 + 73 + 21, `tsc -b`, lint, build;
+  `design/previews/connection/share.cjs` at 1200px on live trains at 5.27pm: copied, read back from the
+  clipboard (`share-picture.png`), both fonts loaded, no errors. Not checked: a phone's share sheet.
 - Key saved here now: Live Departure Board.
 
 ### November 20th 2026: next weekend's full closures, an idea for Monday (notes only; Claude Code)

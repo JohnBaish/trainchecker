@@ -72,9 +72,21 @@ given its own branch). Before committing there, run
   bays 1 to 7 all on the level (both wrong in the crude test); Newton Abbot and Twyford unchanged;
   Bristol all by the subway; Clapham Junction by subway or bridge per pair. None checked at the
   stations: for John, Reading, Twyford and Oxford.
-- **Licences (step 2):** not read. `www.openstreetmap.org`, `osmfoundation.org` and
-  `wiki.openstreetmap.org` are blocked here (`api.openstreetmap.org` isn't); the Knowledgebase
-  Stations licence isn't public either. Nothing built into the page; no visible change.
+- **Licences (step 2):** not read at first (sites blocked). Then, at John's word ("ask me
+  yourself"), the environment allows `www.openstreetmap.org`, `osmfoundation.org`,
+  `wiki.openstreetmap.org`, `operations.osmfoundation.org`, `download.geofabrik.de`,
+  `download.openstreetmap.fr` and two Overpass servers. Read and quoted in
+  `licence-notes-2026-11-21.md`: credit "OpenStreetMap" linked to its copyright page; the table
+  is a Derivative Database, so under the Open Database Licence with a notice; the editing API isn't
+  for bulk reading, so extracts instead. The Knowledgebase Stations licence still isn't public.
+- **John:** Reading, Twyford, Oxford and Bristol Temple Meads all right; carry on.
+- **Every station:** `build_table.py` from the UK extract of November 21st 2026
+  (download.openstreetmap.fr; Geofabrik and overpass-api.de drop every connection from here).
+  1,889 of 2,616 stations have two or more platforms on the map, 1,676 with every pair answered.
+  Fixed on the way: paths stopping short of line-drawn platforms (Exeter), subways drawn without a
+  tunnel tag and a road under the station (Maidenhead, Bath Spa), a walk via a road under the
+  line (Reading West: "out of the station"). Results in `paths-results-2026-11-21.md`; 29
+  stations for John to check in `check-list-2026-11-21.md`. Nothing on the page yet.
 
 ### November 21st 2026: Connections ("Check my connection"), built and merged the same day (branch `claude/gracious-mendel-emq471`; Claude Code)
 

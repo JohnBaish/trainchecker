@@ -26,3 +26,25 @@ Walk lengths are straight lines along the drawn paths, with no allowance for sta
 What this doesn't yet do: platform labels such as 9B or Paddington's A and B (handover §6.4);
 stations whose paths don't quite join a platform (none of these six); choosing between bridge
 and subway when both are about as long.
+
+## Every station (later the same day)
+
+`build_table.py` does the same for every station with a code, from a United Kingdom extract
+(download.openstreetmap.fr, November 21st 2026, checksum checked; reading it takes about 22
+minutes, then a cache makes reruns quick). It also follows roads, joins paths that stop just short
+of a platform, treats a path drawn across a track as going over or under it, and counts a walk that
+crosses the line on a road as leaving the station. The six stations above come out as before.
+
+Of the 2,616 stations in the station list, 1,889 have two or more numbered platforms on the map;
+1,676 of those have an answer for every pair; 208 have all their platforms on the level. The
+rest (727) have one platform or none on the map: nothing would be said there.
+
+Kinds of crossing, counted over pairs of groups: bridge 1,246; subway 386; no walk found 378; out
+of the station along a road 154; across the line on the level 113; over or under, unknown 27;
+either bridge or subway 20; bridge or subway with a level walk round too 10.
+
+Known weak spots: termini (Paddington comes out oddly grouped: 1 | 2–5, 8–12, 14 | 6/7, all
+"by a bridge, or round on the level"); big stations with gaps in the map (Edinburgh Waverley,
+Glasgow Central, Exeter St Davids); "across the line on the level" may be a barrow crossing
+for staff that the map doesn't mark as private. The list for John: `check-list-2026-11-21.md`.
+The table itself isn't in the repo yet (it would need the Open Database Licence notice first).

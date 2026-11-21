@@ -4,6 +4,7 @@
 import { readFileSync } from 'node:fs'
 import { places, trimConnect, type RawBoard } from '../api/connect.ts'
 import { trim } from '../api/live.ts'
+import { howToGet, type LinksTable, type StationLinks } from '../src/lib/platformLinks.ts'
 import { aWait, answer, band, chipLabel, choices, firstChoice, longWait, mineOf, speeds } from '../src/lib/connection.ts'
 
 let passed = 0, failed = 0
@@ -98,6 +99,30 @@ eq('an Elizabeth Line train chosen by name', eliz.text,
 // Long waits to the nearest quarter of an hour (John, November 21st 2026).
 eq('long waits', [60, 64, 68, 75, 86, 90, 94, 100, 105, 118, 120, 131, 150, 170, 185].map(longWait), ['an hour', 'more than an hour', 'almost an hour and a quarter', 'an hour and a quarter', 'almost an hour and a half', 'an hour and a half', 'more than an hour and a half', 'almost an hour and three quarters', 'an hour and three quarters', 'almost two hours', 'two hours', 'almost two and a quarter hours', 'two and a half hours', 'more than two and three quarter hours', 'more than three hours'])
 eq('waits in a sentence', [59, 94, 8].map(aWait), ['a 59-minute wait', 'a wait of more than an hour and a half', 'an eight-minute wait'])
+
+// "Over the footbridge" (John, November 21st 2026): the drafts he agreed, from the table made from
+// OpenStreetMap (src/data/platform-links.json), on the same boards.
+const links: LinksTable = JSON.parse(readFileSync(new URL('../src/data/platform-links.json', import.meta.url), 'utf8'))
+const withLinks = (x: ReturnType<typeof ask>, at: string, chosen: string | null = null) =>
+  answer({ now: NOW, from: x.a.text.match(/Your train from ([^ ]+(?: [A-Z][a-z]+)*) /)![1], at: x.d.atName, to: x.d.toName, mine: x.mine, arrPlatform: x.d.arrPlatform, trains: x.d.trains, chosen, links: links[at] })
+eq('footbridge at Newton Abbot', withLinks(fine, 'NTA').text.includes('You’re coming into platform 3 and you’ll want platform 1, over the footbridge, where your train will be showing on the departure board as the Paignton train.'), true)
+eq('footbridge at Reading', withLinks(tight, 'RDG').text.includes('You’re coming into platform 12 and you’ll want platform 8, over the footbridge, where your train will be showing on the departure board as the Carmarthen train.'), true)
+eq('"for the 3.27", then the footbridge', withLinks(pad, 'RDG').text.includes('You’re coming into platform 12 and you’ll want platform 10 for the 3.27, over the footbridge.'), true)
+eq('two trains, both over the footbridge (11A is the map’s 11)', withLinks(pad, 'RDG', elizId).text.includes('You’re coming into platform 12 and you’ll want platform 14 for the 3.29 Elizabeth Line train, or platform 11A for the 3.29 fast train, both over the footbridge.'), true)
+eq('the same platform: nothing added', withLinks(same, 'NTA').text, same.a.text)
+eq('without the table, the agreed sentences are unchanged', answer({ now: NOW, from: 'Ivybridge', at: fine.d.atName, to: fine.d.toName, mine: fine.mine, arrPlatform: fine.d.arrPlatform, trains: fine.d.trains, chosen: null }).text, fine.a.text)
+// Each kind, on the real table.
+eq('the kinds', [
+  howToGet(links.BTH, '1', '2'), howToGet(links.RDG, '9', '8'), howToGet(links.RDG, '4', '7'), howToGet(links.RDW, '1', '2'),
+  howToGet(links.MDG, '1', '2'), howToGet(links.PAD, '1', '6'), howToGet(links.MAI, '1', '4'), howToGet(links.TWY, '1', '4'),
+], ['through the subway', 'just across the platform', 'on the same level', 'which means going out of the station and round by the road',
+  'across the level crossing', 'over the footbridge or round through the concourse', 'through the subway', 'over the footbridge'])
+eq('either, at Clapham Junction (1 to 3)', howToGet(links.CLJ, '1', '3'), 'over the footbridge or through the subway')
+eq('9A to 9B, a platform not on the map, or no table: nothing', [howToGet(links.RDG, '9A', '9B'), howToGet(links.RDG, '99', '1'), howToGet(undefined, '1', '2'), howToGet(links.RDG, '8', '8')], ['', '', '', ''])
+const made: StationLinks = { g: [[['1']], [['2']], [['3']], [['4']]], x: 'bsxu?r' }
+eq('pairs in order, either way round', [howToGet(made, '1', '2'), howToGet(made, '3', '1'), howToGet(made, '1', '4'), howToGet(made, '2', '3'), howToGet(made, '4', '2'), howToGet(made, '3', '4')],
+  ['over the footbridge', 'through the subway', 'across the level crossing', '', '', 'which means going out of the station and round by the road'])
+eq('the table has only stations in the list', Object.keys(links).every((c) => /^[A-Z]{3}$/.test(c)), true)
 
 console.log(`check-connection: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

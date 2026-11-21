@@ -54,6 +54,8 @@ export function Tail({ about = true, quote = true }: { about?: boolean; quote?: 
         <section className="card about">
           <h3>About these figures</h3>
           {ABOUT.map((p) => <p key={p}>{p}</p>)}
+          {/* The credit OpenStreetMap asks for; John's words (November 21st 2026). */}
+          <p>The directions between platforms in the Connections section come from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>.</p>
         </section>
       )}
       <footer className="footer-notice">

@@ -87,6 +87,23 @@ given its own branch). Before committing there, run
   tunnel tag and a road under the station (Maidenhead, Bath Spa), a walk via a road under the
   line (Reading West: "out of the station"). Results in `paths-results-2026-11-21.md`; 29
   stations for John to check in `check-list-2026-11-21.md`. Nothing on the page yet.
+- **John:** the ones he knows all look right (he offered Redhill too: 0 | 1/2 | 3, by subways);
+  the drafts (`wording-drafts-2026-11-21.md`) "just as I would write them", to see in context; the
+  island and the longer level walk told apart; no lifts; the credit "The directions between
+  platforms in the Connections section come from OpenStreetMap."
+- **Built** on branch `claude/brave-fermat-yk5elq` (not merged): `src/data/platform-links.json`
+  (the 1,889 stations in the list; 9.5 KB compressed, loaded only when Connections opens) with
+  `platform-links-LICENCE.md` (Open Database Licence); `src/lib/platformLinks.ts` (`howToGet()`,
+  9B as the map's 9 where 9B isn't drawn, nothing for 9A to 9B); `answer()` takes `links`; the
+  credit in "About these figures" (`Tail.tsx`). `build_table.py` now splits each level group into
+  islands (shapes that touch).
+- **Checked:** `npm run check` 267 + 57 + 73 + 34 (new: the three real answers with "over the
+  footbridge", the same platform unchanged, every kind on the real table, pairs in order); `tsc
+  -b`, lint, build. Browser: at 10.57pm live boards gave no answer naming both platforms, so the
+  page was fed the 2.55pm boards with its clock set then (`design/previews/connection/footbridge.mjs`):
+  Ivybridge–Newton Abbot–Torquay, Twyford–Reading–Swindon and –Paddington, 1200px light and 390px
+  dark with touch: the drafts word for word, no errors, no sideways scroll; the credit links to
+  openstreetmap.org/copyright. Not checked: Vercel's preview, a real phone.
 
 ### November 21st 2026: Connections ("Check my connection"), built and merged the same day (branch `claude/gracious-mendel-emq471`; Claude Code)
 

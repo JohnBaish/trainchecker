@@ -10,7 +10,8 @@ paths.py does for six stations. Writes a JSON table and a plain report.
 Needs pyosmium (pip install osmium) and about 6 GB of memory. The table is derived from
 OpenStreetMap, so it is under the Open Database Licence (© OpenStreetMap contributors).
 
-For each station the table holds the platforms in groups that are on the level with each other,
+For each station the table holds the platforms in groups that are on the level with each other
+(each group split into islands: platforms whose shapes touch on the map, or are one shape),
 and for each pair of groups how the shortest walk crosses the line:
   b  a bridge (bridge=yes or layer 1 or more)
   s  a subway (tunnel=yes or layer -1 or less)
@@ -467,7 +468,24 @@ def main():
         flat_plat_nodes = {p[0] for shapes in plats.values() for sh in shapes for p in sh}
         segs = [sg for c in cs for sg in rail_cells.get(c, ())]
         gl, xs, pair, mixed = solve(crs, st[crs], plats, walks, lifts, rail_nodes, segs)
-        table[crs] = {'g': gl, 'x': xs}
+        # Within each group, islands: platforms whose shapes touch or are the same shape.
+        pts_of = {r: {p[0] for sh in shapes for p in sh} for r, shapes in plats.items()}
+        isl = []
+        for g in gl:
+            ip = {r: r for r in g}
+
+            def fi(x):
+                while ip[x] != x:
+                    x = ip[x]
+                return x
+            for x, y in itertools.combinations(g, 2):
+                if pts_of[x] & pts_of[y]:
+                    ip[fi(x)] = fi(y)
+            parts = collections.defaultdict(list)
+            for r in g:
+                parts[fi(r)].append(r)
+            isl.append(sorted(parts.values(), key=lambda q: num(q[0])))
+        table[crs] = {'g': isl, 'x': xs}
         line = f"{crs} {name}: {' | '.join('/'.join(g) for g in gl)}  [{xs}]"
         if '?' in xs:
             line += '  (some pairs: no walk found)'

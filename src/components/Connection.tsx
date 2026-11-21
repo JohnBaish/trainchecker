@@ -12,6 +12,7 @@ import { nameOf, resolve } from '../lib/stations.ts'
 import type { Connect } from '../../api/connect.ts'
 import { StationBox } from './Chooser.tsx'
 import { Icon } from './Icon.tsx'
+import type { LinksTable } from '../lib/platformLinks.ts'
 
 type Result = { s: 'idle' } | { s: 'ok'; d: Connect } | { s: 'failed' }
 const EDGE = { fine: 'good', tight: 'mixed', unlikely: 'prepared', missed: 'prepared', through: 'good', none: 'none', unknown: 'none' } as const
@@ -26,6 +27,14 @@ export function Connection({ a }: { a: Analysis }) {
   const [places, setPlaces] = useState<Set<string> | undefined>(undefined)
   const [result, setResult] = useState<Result>({ s: 'idle' })
   const [shared, setShared] = useState('')
+  // How the changing station's platforms connect, loaded only once the card is opened.
+  const [links, setLinks] = useState<LinksTable | null>(null)
+  useEffect(() => {
+    if (!open || links) return
+    let current = true
+    import('../data/platform-links.json').then((m) => current && setLinks(m.default as LinksTable), () => {})
+    return () => { current = false }
+  }, [open, links])
 
   // The trains you might be on: not cancelled, leaving A within two hours, and still on their way or
   // arrived within the last three minutes (John, November 21st 2026).
@@ -60,7 +69,7 @@ export function Connection({ a }: { a: Analysis }) {
     setDest(c)
   }
   const ans = result.s === 'ok' && mine && dest === result.d.to
-    ? answer({ now: clock(result.d.taken), from: a.from, at: a.to, to: result.d.toName, mine, arrPlatform: result.d.arrPlatform, trains: result.d.trains, chosen })
+    ? answer({ now: clock(result.d.taken), from: a.from, at: a.to, to: result.d.toName, mine, arrPlatform: result.d.arrPlatform, trains: result.d.trains, chosen, links: links?.[a.toCrs] ?? null })
     : null
   const others = result.s === 'ok' && mine ? choices(mine, result.d.trains) : []
   const sp = result.s === 'ok' ? speeds(result.d.trains) : new Map()

@@ -5,6 +5,7 @@
 import { diff, isTime, type Service } from './analyse.ts'
 import { dueSay, num, t12 } from './sentences.ts'
 import type { Onward } from '../../api/connect.ts'
+import { howToGet, type StationLinks } from './platformLinks.ts'
 
 export type Band = 'fine' | 'tight' | 'unlikely' | 'missed'
 /** John, November 21st 2026: five, four or three minutes is tight; two or one looks unlikely;
@@ -106,6 +107,7 @@ export type Asked = {
   arrPlatform: string | null
   trains: Onward[]
   chosen: string | null // an onward train's id; null for the first choice
+  links?: StationLinks | null // how B's platforms connect, from OpenStreetMap
 }
 
 export function answer(o: Asked): Answer {
@@ -199,10 +201,16 @@ export function answer(o: Asked): Answer {
     const both = !!(over && over.t.platform && mineP && p && mineP !== p)
     if (over) text += ` The ${named(over.t)}${!both && over.t.platform ? ` from platform ${over.t.platform}` : ''} leaves ${over.g === c.g ? 'at the same time' : 'later'} but gets there sooner, at ${say(reaches(over.t)!)}.`
     if (mineP && p) {
+      // How to get there: "over the footbridge" and so on (John, November 21st 2026).
+      const how = howToGet(o.links, mineP, p)
+      const how2 = both ? howToGet(o.links, mineP, over!.t.platform!) : ''
+      const one = `platform ${p} for the ${named(c.t)}`, two = both ? `platform ${over!.t.platform} for the ${named(over!.t)}` : ''
+      const wants = !both ? '' : how && how === how2 ? `${one}, or ${two}, both ${how}`
+        : `${one}${how ? `, ${how},` : ','} or ${two}${how2 ? `, ${how2}` : ''}`
       text += mineP === p ? ` You’re coming into platform ${mineP}, and the ${to} train leaves from the same platform${showing ? `, showing as the ${showing} train` : ''}.`
-        : both ? ` You’re coming into platform ${mineP} and you’ll want platform ${p} for the ${named(c.t)}, or platform ${over!.t.platform} for the ${named(over!.t)}.${showing ? ` The ${named(c.t)} will be showing on the departure board as the ${showing} train.` : ''}`
+        : both ? ` You’re coming into platform ${mineP} and you’ll want ${wants}.${showing ? ` The ${named(c.t)} will be showing on the departure board as the ${showing} train.` : ''}`
         // "for the 3.27" where the route has more than one kind of train (John).
-        : ` You’re coming into platform ${mineP} and you’ll want platform ${p}${sp.size ? ` for the ${say(c.t.std)}` : ''}${showing ? `, where your train will be showing on the departure board as the ${showing} train` : ''}.`
+        : ` You’re coming into platform ${mineP} and you’ll want platform ${p}${sp.size ? ` for the ${say(c.t.std)}` : ''}${how ? `, ${how}` : ''}${showing ? `, where your train will be showing on the departure board as the ${showing} train` : ''}.`
     } else if (!p) {
       text += `${mineP ? ` You’re coming into platform ${mineP}.` : ''} The platform for the ${to} train hasn’t been announced yet.${showing ? ` It’ll be showing on the departure board as the ${showing} train.` : ''}`
     }

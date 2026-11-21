@@ -23,6 +23,8 @@ given its own branch). Before committing there, run
 3. `PLAN.md`: the stages.
 4. `HOUSE-STYLE.md`: the shared design and ways of working.
 5. `SEO-HANDOVER.md`: when search work comes up (stage 5).
+6. `design/handover-platform-links-2026-11-21.md`: an idea for later, "over the footbridge"
+   (how platforms connect, for Connections): what was found and how to pick it up.
 
 ## Key points
 

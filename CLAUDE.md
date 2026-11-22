@@ -65,7 +65,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 22nd 2026: exits named by what's near them (branch `claude/dreamy-dijkstra-swkirc`, not merged; Claude Code)
+### November 22nd 2026: exits named by what's near them; live (branch `claude/dreamy-dijkstra-swkirc`, merged the same day; Claude Code)
 
 - **John:** name exits by what's near them; the name replaces a street name (option b); a town
   centre only where it suits (from 14 London examples: the station named after the place, and near).
@@ -84,6 +84,8 @@ given its own branch). Before committing there, run
   no question when none is left. Stirling keeps Goosecroft Road (both exits suit the city centre).
   Twyford's four exits (John: the long-term car park from platform 3 only; the exit between 4 and 5
   on the level from both; platform 4 the town side) in the corrections file, sentences Claude's draft.
+- **John:** "Brilliant. Yes please": merged into `main` (fast-forward); checks 273 + 57 + 79 + 40 + 54,
+  `tsc -b`, lint and build clean first.
 - **Checked:** `npm run check` 273 + 57 + 79 + 40 + 52; `tsc -b`, lint, build; the build without the
   names matches the live table except Birmingham Curzon Street's tie (not open yet).
 

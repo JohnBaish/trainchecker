@@ -28,6 +28,8 @@ eq('Warminster: both exits named', trainLine(T.WMN, '2', false), 'Your train is 
 eq('Ivybridge: Hazel Lane is the town centre exit (John)', T.IVY.x[0][0], 'the town centre exit')
 eq('Tooting, Claygate and Northumberland Park keep their street names (John)', [T.TOO.x, T.CLG.x, T.NUM.x].flat().some((x) => /centre exit/.test(x[0] ?? '')), false)
 eq('Twickenham: the town centre exit', T.TWI.x.map((x) => x[0]), ['the town centre exit', 'Bradshaw Close'])
+eq('Twyford: the long-term car park from platform 3 (John)', trainLine(T.TWY, '3', false).startsWith('Your train is due into platform 3. The exit to the long-term car park is right there'), true)
+eq('Twyford: the station (John)', stationLine('Twyford', T.TWY), 'At Twyford, the exits are by platforms 1, 3 and 4.')
 // The others John checked.
 eq('Newton Abbot: by the station building', stationLine('Newton Abbot', T.NTA), 'At Newton Abbot, the exit is by the station building on platform 3.')
 eq('Newton Abbot: platform 1, over the bridge', trainLine(T.NTA, '1', false), 'Your train is due into platform 1, so you’ll want the footbridge to the exit, coming down from the bridge by platform 3.')

@@ -66,5 +66,26 @@
     "names": {
       "the city centre exit": "Goosecroft Road"
     }
+  },
+  "TWY": {
+    "_who": "John, November 22nd 2026: four exits since the rebuild (Hurst Road by platform 1; the long-term car park from platform 3 only; by platform 4 near the ticket machines; between platforms 4 and 5, on the level from both); platform 4 is the town side. Wording Claude's draft from it",
+    "names": {
+      "the car park exit": "the exit between platforms 4 and 5"
+    },
+    "add_exits": [
+      {
+        "name": "the long-term car park",
+        "by": [
+          "3"
+        ]
+      }
+    ],
+    "say": {
+      "1": "The exit on Hurst Road is right there, or you can go over the footbridge for the long-term car park, coming down by platform 3, or for the town side, coming down by platform 4.",
+      "2": "Go up to the footbridge: for Hurst Road, come down by platform 1; for the long-term car park, by platform 3; or for the town side, by platform 4.",
+      "3": "The exit to the long-term car park is right there, or you can go over the footbridge for Hurst Road, coming down by platform 1, or for the town side, coming down by platform 4.",
+      "4": "This is the town side: there’s an exit right there by the ticket machines, and another between platforms 4 and 5. Or you can go over the footbridge for Hurst Road or the long-term car park.",
+      "5": "This is the town side: there’s an exit right there between platforms 4 and 5, and another by the ticket machines on platform 4. Or you can go over the footbridge for Hurst Road or the long-term car park."
+    }
   }
 }

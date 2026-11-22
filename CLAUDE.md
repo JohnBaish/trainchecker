@@ -92,8 +92,8 @@ given its own branch). Before committing there, run
   in the file that isn't in the table stops the build. Checks 273 + 57 + 79 + 40 + 22.
 - Southend Airport and Chislehurst moved into the same file (`by`, `no_routes`, `no_exit`); the
   table comes out the same. Raised by John: "Trainchecker doesn't know the way out from there"
-  breaks the show-what-we-know rule; proposed instead "The exit is by platform 2." (the station's
-  own sentence), waiting for his word.
+  breaks the show-what-we-know rule; now "Your train is due into platform 1. The exit is by platform
+  2." (the station's own sentence; John agreed). Checks 273 + 57 + 79 + 40 + 25.
 
 ### November 22nd 2026: exits, a trial on six stations (notes and trial scripts, straight to `main`; Claude Code)
 

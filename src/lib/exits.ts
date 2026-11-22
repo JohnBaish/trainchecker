@@ -88,7 +88,12 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
     const i = e.x.findIndex((x) => x[1].includes(platform))
     if (i >= 0) ways = [[i, 'l', null]]
   }
-  if (!ways.length) return `${start} Trainchecker doesn’t know the way out from there.` // Draft
+  // No route known from this platform: say only what is known, the station's own sentence without
+  // "At Midgham," (John, November 22nd 2026: show what we know, don't say what we don't).
+  if (!ways.length) {
+    const line = stationLine('', e).replace(/^At , (\w)/, (_, c: string) => c.toUpperCase())
+    return `${start} ${line}`
+  }
   const [i, via, down] = ways[0]
   if (via === 'l') {
     const x = e.x[i]

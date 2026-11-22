@@ -35,6 +35,12 @@ eq('Victoria: the concourse', stationLine('London Victoria', T.VIC), 'At London 
 eq('a terminus: no platform needed', trainLine(T.VIC, null, true), 'Every platform leads to the concourse, where the exits are.')
 eq('platform not yet announced', trainLine(T.RDG, null, false), 'The platform for your train hasn’t been announced yet. Check again nearer the time.')
 eq('opening hours (Leeds, Holbeck)', trainLine(T.LDS, '9', false).endsWith('The Holbeck Urban Village exit is open from 6am to 10pm.'), true)
+// No route known from a platform: the station's own sentence, never "doesn't know" (John).
+eq('Midgham: platform 1 with no route', trainLine(T.MDG, '1', false), 'Your train is due into platform 1. The exit is by platform 2.')
+eq('Southend Airport: platform 2 with no route', trainLine(T.SIA, '2', false), 'Your train is due into platform 2. The exit is by platform 1.')
+let knows = 0
+for (const e of Object.values(T)) for (const p of ['1', '2', '3', '4']) if (/doesn’t know/.test(trainLine(e, p, false))) knows++
+eq('never "doesn’t know"', knows, 0)
 // Left out where the exits aren't known, or still in doubt (John, the cautious approach).
 eq('left out', ['KIH', 'LTT', 'MIS', 'GNB', 'HLR', 'ENC', 'SWN', 'BDG', 'GNH', 'HMC', 'BUO', 'MTN', 'BMN', 'GRP', 'NEH', 'EBT', 'CSB'].filter((c) => c in T), [])
 // Never across a barrow crossing; every route points at a real exit.

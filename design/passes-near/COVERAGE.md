@@ -39,6 +39,11 @@ Next stretch in the order: DIG-POL (Digby & Sowton to Polsloe Bridge).
 
 ## How to do the next batch
 
+**Batch size** (John agreed, November 22nd 2026): 40 stretches a batch, as since the set-up. A session
+may do two or three batches in a row, committing and pushing after each, so each finished batch is safe.
+What limits a batch is how much a session can hold while checking well (the candidates and the articles it
+reads), not the downloads, which take minutes now. Bigger batches risk weaker checking, not a crash.
+
 1. Read `README.md` here (John's decisions and the house style of the items) and the newest few items in
    `passes-near.json`, so the new ones read the same way.
 2. Make the candidates for the next 40 stretches still to do:
@@ -112,6 +117,8 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 22nd 2026 (Claude Code): batch size written down above (40, two or three a session), at
+  John's word.
 - November 22nd 2026 (Claude Code): batch 04, 40 stretches from Ashchurch for Tewkesbury to Cheltenham
   Spa through to Polsloe Bridge to St James Park (more Great Western routes: the stretches round
   Cheltenham and Gloucester, Westbury to Salisbury and Romsey, Reading to Guildford and Redhill (the North

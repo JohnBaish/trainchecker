@@ -71,6 +71,11 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": batch size recorded (notes, straight to `main`; Claude Code)
+
+- **John** agreed: 40 stretches a batch, and a session may do two or three in a row, committing after
+  each. Written into `design/passes-near/COVERAGE.md` ("Batch size"), with the reason.
+
 ### November 22nd 2026: "Your train passes near…": batch 04 (notes, straight to `main`; Claude Code)
 
 - 40 stretches, Ashchurch for Tewkesbury to Cheltenham Spa through to Polsloe Bridge to St James Park

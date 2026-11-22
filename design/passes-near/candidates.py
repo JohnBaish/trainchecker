@@ -10,11 +10,14 @@ out-dir/cache/ (so running it again costs nothing). Sources:
   map service: listed buildings of Grade I and II*, scheduled monuments, registered parks and
   gardens, registered battlefields and World Heritage Sites.
 - Wikipedia's geotagged articles (geosearch along the track), with each article's short
-  description, length and first sentences.
+  description, length and first sentences. Or, with --wiki-dump FILE (made by wiki_dump.py from
+  Wikipedia's database dumps), the nearby articles come from that file instead of the search API,
+  which refuses most requests from a cloud session; the first sentences then come from each
+  article's wikitext (/wiki/Title?action=raw, which isn't held back). Same ranking, distances, sides.
 Side is the train's side going from a to b, facing forwards (swap for b to a); None means the
 track runs through it or within 15 metres. The ranking is only a guide: choosing is by hand.
 """
-import sys, os, json, time, hashlib, argparse, urllib.parse, urllib.request
+import sys, os, re, gzip, json, time, hashlib, argparse, urllib.parse, urllib.request
 import numpy as np
 from shapely.geometry import Polygon, MultiPolygon, Point
 import os as _os, sys as _sys
@@ -126,6 +129,20 @@ def he_things(f, line):
     return out
 
 
+def wiki_score(c):
+    s = 40 + min(30, c['length'] / 1500)
+    low = c['description'].lower() + (' list of' if c['name'].startswith('List of') else '')
+    for word, minus in WIKI_DOWN:
+        if word in low:
+            s -= minus
+            break
+    return s
+
+
+def wiki_url(title):
+    return 'https://en.wikipedia.org/wiki/' + urllib.parse.quote(title.replace(' ', '_'))
+
+
 def wiki_things(f, line):
     pages = {}
     n = max(2, int(line.length // 1500) + 2)
@@ -143,7 +160,7 @@ def wiki_things(f, line):
         if dist > NEAR:
             continue
         out.append({'source': 'Wikipedia', 'kind': 'article', 'name': g['title'], 'pageid': g['pageid'],
-                    'url': 'https://en.wikipedia.org/wiki/' + urllib.parse.quote(g['title'].replace(' ', '_')),
+                    'url': wiki_url(g['title']),
                     'distanceM': int(round(dist)), 'side': side, 'lat': round(g['lat'], 5), 'lon': round(g['lon'], 5)})
     ids = [c['pageid'] for c in out]
     info = {}
@@ -155,14 +172,103 @@ def wiki_things(f, line):
         p = info.get(str(c['pageid']), {})
         c['description'] = p.get('description', '')
         c['length'] = p.get('length', 0)
-        s = 40 + min(30, c['length'] / 1500)
-        low = c['description'].lower() + (' list of' if c['name'].startswith('List of') else '')
-        for word, minus in WIKI_DOWN:
-            if word in low:
-                s -= minus
-                break
-        c['base'] = s
+        c['base'] = wiki_score(c)
     return out
+
+
+class WikiDump:
+    """Wikipedia's articles near the track from wiki_dump.py's file, not the search API."""
+
+    def __init__(self, path):
+        rows = []
+        with gzip.open(path, 'rt', encoding='utf-8') as fh:
+            for ln in fh:
+                if ln.startswith('#'):
+                    continue
+                pid, title, lat, lon, length, desc = ln.rstrip('\n').split('\t')
+                rows.append((int(pid), title, float(lat), float(lon), int(length), desc))
+        self.rows = rows
+        lon = np.array([r[3] for r in rows])
+        lat = np.array([r[2] for r in rows])
+        self.x, self.y = pn.TO_GRID.transform(lon, lat)
+        print(len(rows), 'Wikipedia articles from', path, flush=True)
+
+    def things(self, line):
+        x0, y0, x1, y1 = line.bounds
+        near = np.nonzero((self.x >= x0 - NEAR) & (self.x <= x1 + NEAR) & (self.y >= y0 - NEAR) & (self.y <= y1 + NEAR))[0]
+        out = []
+        for i in near:
+            pid, title, lat, lon, length, desc = self.rows[i]
+            side, dist = pn.side_of_point(line, float(self.x[i]), float(self.y[i]))
+            if dist > NEAR:
+                continue
+            c = {'source': 'Wikipedia', 'kind': 'article', 'name': title, 'pageid': pid, 'url': wiki_url(title),
+                 'distanceM': int(round(dist)), 'side': side, 'lat': round(lat, 5), 'lon': round(lon, 5),
+                 'description': desc, 'length': length}
+            c['base'] = wiki_score(c)
+            out.append(c)
+        return out
+
+
+def strip_braces(t, a, b):
+    out, depth, i = [], 0, 0
+    while i < len(t):
+        if t.startswith(a, i):
+            depth += 1
+            i += len(a)
+        elif depth and t.startswith(b, i):
+            depth -= 1
+            i += len(b)
+        else:
+            if not depth:
+                out.append(t[i])
+            i += 1
+    return ''.join(out)
+
+
+def first_sentences(wikitext, n=2):
+    """A rough plain-text opening from wikitext: a guide for choosing, not a source."""
+    t = re.sub(r'<!--.*?-->', '', wikitext, flags=re.S)
+    t = re.sub(r'<ref[^>/]*/>', '', t)
+    t = re.sub(r'<ref[^>]*>.*?</ref>', '', t, flags=re.S)
+    t = strip_braces(t, '{{', '}}')
+    t = strip_braces(t, '{|', '|}')
+    t = re.sub(r'\[\[(?:File|Image|Category):[^\[\]]*(?:\[\[[^\]]*\]\][^\[\]]*)*\]\]', '', t, flags=re.I)
+    t = re.sub(r'\[\[[^\]|]*\|([^\]]*)\]\]', r'\1', t)
+    t = re.sub(r'\[\[([^\]]*)\]\]', r'\1', t)
+    t = re.sub(r'\[https?://\S+ ([^\]]*)\]', r'\1', t)
+    t = re.sub(r"'{2,}", '', t)
+    t = re.sub(r'<[^>]+>', '', t)
+    t = re.sub(r'\(\s*[;,]?\s*\)\s?', '', t.replace('&nbsp;', ' '))
+    for para in t.split('\n'):
+        para = para.strip()
+        if len(para) > 40 and not para.startswith(('=', '*', '#', '|', '!', ':', ';')):
+            parts = re.split(r'(?<=[.!?])\s+(?=[A-Z])', re.sub(r'\s+', ' ', para))
+            return ' '.join(parts[:n])
+    return ''
+
+
+def raw_extracts(f, cands):
+    for c in cands:
+        if c['source'] != 'Wikipedia':
+            continue
+        path = os.path.join(f.cache, 'raw-' + hashlib.sha1(c['name'].encode()).hexdigest() + '.txt')
+        if os.path.exists(path):
+            text = open(path, encoding='utf-8').read()
+        else:
+            text = ''
+            url = wiki_url(c['name']) + '?action=raw'
+            for attempt in range(3):
+                try:
+                    req = urllib.request.Request(url, headers={'User-Agent': AGENT})
+                    with urllib.request.urlopen(req, timeout=60) as r:
+                        text = r.read().decode('utf-8', 'replace')
+                    open(path, 'w', encoding='utf-8').write(text)
+                    break
+                except Exception as e:  # noqa: BLE001
+                    print('  retry', attempt + 1, url, e, file=sys.stderr)
+                    time.sleep(3 * (attempt + 1))
+        c['extract'] = first_sentences(text)
 
 
 def extracts(f, cands):
@@ -220,6 +326,8 @@ def main():
     ap.add_argument('--region')
     ap.add_argument('--stretches')
     ap.add_argument('--top', type=int, default=15, help='candidates kept per stretch')
+    ap.add_argument('--wiki-dump', default=os.environ.get('PN_WIKI_DUMP'),
+                    help="wiki_dump.py's file: nearby articles from it, not Wikipedia's search API")
     args = ap.parse_args()
     net, data = pn.load_network(), pn.load_data()
     batch = choose(net, data, args)
@@ -227,12 +335,17 @@ def main():
         sys.exit('nothing to do')
     f = Fetcher(os.path.join(args.out, 'cache'))
     names = {c: v['name'] for c, v in net['stations'].items()}
+    dump = WikiDump(args.wiki_dump) if args.wiki_dump else None
     result = {}
     for k, st in enumerate(batch):
         print(f'{k + 1}/{len(batch)} {st["id"]}', flush=True)
         line = pn.track_line(st)
-        cands = rank(he_things(f, line) + wiki_things(f, line))[:args.top]
-        extracts(f, cands)
+        wiki = dump.things(line) if dump else wiki_things(f, line)
+        cands = rank(he_things(f, line) + wiki)[:args.top]
+        if dump:
+            raw_extracts(f, cands)
+        else:
+            extracts(f, cands)
         for c in cands:
             c.pop('base', None)
         result[st['id']] = {'a': st['a'], 'b': st['b'], 'aName': names[st['a']], 'bName': names[st['b']],

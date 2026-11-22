@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": batch 08 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Guildford to Worplesdon through to Hove to Preston Park (the Portsmouth Direct line to
+  Havant, then the West Coastway to Hove); 401 of 2,376 done, South East 96 of 384. Next: BTN-HOV
+  (Brighton to Hove).
+- Every fact checked against its article with `wiki_text.py`; `check.py` clean but for the Parson and
+  Clerk warning. Arundel Castle dropped (1.4 km from the line); items used next door replaced (COVERAGE.md
+  says which); no fatal accidents.
+- `to_site.py` run: 401 facts in `src/data/passes-near.json`, live with this push; checks and build pass.
+
 ### November 22nd 2026: "Your train passes near…": batch 07 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Shawford to Winchester through to Woking to Worplesdon (Eastleigh, Romsey and Fareham, Basingstoke

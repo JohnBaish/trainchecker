@@ -8,11 +8,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-361 of 2376 stretches done.
+401 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
-3. South East: 56 of 384 done (next).
+3. South East: 96 of 384 done (next).
 4. London: 4 of 421 done.
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: GLD-WPL (Guildford to Worplesdon).
+Next stretch in the order: BTN-HOV (Brighton to Hove).
 
 <!-- end of counts -->
 
@@ -117,6 +117,19 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 22nd 2026 (Claude Code, scheduled task): batch 08, 40 stretches from Guildford to Worplesdon
+  through to Hove to Preston Park (the Portsmouth Direct line from Guildford by Godalming, Haslemere and
+  Petersfield to Havant, then the West Coastway from Bedhampton and Hilsea by Emsworth, Chichester,
+  Bognor Regis, Arundel, Worthing and Shoreham to Hove); 401 of 2,376 done, South East 96 of 384. Every
+  fact checked against the article in `source` (`wiki_text.py`). Neighbours already used got another item:
+  Guildford to Worplesdon (the University of Surrey and Guildford Castle are on the other Guildford
+  stretches) has the cathedral; Bedhampton to Hilsea (Hilsea Lines is on Cosham to Hilsea) has the site of
+  Portsmouth Airport. Arundel Castle was dropped for Arundel to Ford, as the castle itself is 1.4 km from
+  the line (only the park's edge is near): the Slayer's Slab at Lyminster instead, and St Nicholas Church,
+  Poling for Angmering to Ford. The Phillips Memorial Cloister at Godalming (the Titanic) and Emsworth's
+  oyster poisoning were passed over. For St Hubert's Church, Idsworth the point is Historic England's; its
+  facts come from the Idsworth article (the church has none of its own). Step 8 done: 401 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 22nd 2026 (Claude Code, scheduled task): batch 07, 40 stretches from Shawford to Winchester
   through to Woking to Worplesdon (the South East's main lines round Eastleigh, the Romsey and Fareham lines,
   Basingstoke to Woking, the Alton line, Aldershot to Ascot and Bracknell, and Ascot to Weybridge by Virginia

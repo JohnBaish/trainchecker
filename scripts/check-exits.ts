@@ -19,15 +19,15 @@ eq('Reading: platform 4 (level)', trainLine(T.RDG, '4', false), 'Your train is d
 eq('Reading: platform 8 (either way off the bridge, and where each comes down)', trainLine(T.RDG, '8', false),
   'Your train is due into platform 8. Go up to the bridge, where you can turn either way: to the town centre and Station Hill, coming down from the bridge by platform 7, or to the north exit by the car park on the Caversham side, coming down by platform 15.')
 // John's corrections (design/platform-links-trial/exits-overrides.json): names, "is right there", "the bridge".
-eq('Reading: a renamed exit is right there (John)', trainLine(T.RDG, '1', false), 'Your train is due into platform 1. The way out to the town centre and Station Hill is right there.')
+eq('Reading: a renamed exit is right there (John)', trainLine(T.RDG, '1', false), 'Your train is due into platform 1. The way out to the town centre and Station Hill is right there, or you can go over the bridge for the north exit by the car park on the Caversham side.')
 eq('Reading: "the bridge", not "the footbridge" (John)', T.RDG.w, 'bridge')
 // The others John checked.
 eq('Newton Abbot: by the station building', stationLine('Newton Abbot', T.NTA), 'At Newton Abbot, the exit is by the station building on platform 3.')
 eq('Newton Abbot: platform 1, over the bridge', trainLine(T.NTA, '1', false), 'Your train is due into platform 1, so you’ll want the footbridge to the exit, coming down from the bridge by platform 3.')
-eq('Twyford: platform 1 on Hurst Road', trainLine(T.TWY, '1', false), 'Your train is due into platform 1. The exit on Hurst Road is right there.')
-eq('Bristol: platform 3', trainLine(T.BRI, '3', false), 'Your train is due into platform 3. The exit on Station Approach is right there.')
+eq('Twyford: platform 1 on Hurst Road', trainLine(T.TWY, '1', false).startsWith('Your train is due into platform 1. The exit on Hurst Road is right there'), true)
+eq('Bristol: platform 3', trainLine(T.BRI, '3', false), 'Your train is due into platform 3. The exit on Station Approach is right there, or you can go through the subway for University of Bristol.')
 eq('Bristol: the subway from platform 9', trainLine(T.BRI, '9', false).startsWith('Your train is due into platform 9. Go down to the subway, where you can turn either way: to Station Approach, coming up from the subway by platform 3'), true)
-eq('Clapham Junction: Grant Road by platform 1', trainLine(T.CLJ, '1', false), 'Your train is due into platform 1. The exit on Grant Road is right there.')
+eq('Clapham Junction: Grant Road by platform 1', trainLine(T.CLJ, '1', false), 'Your train is due into platform 1. The exit on Grant Road is right there, or you can go through the subway for St John\'s Hill.')
 eq('Southend Airport: by platform 1 only (John)', [stationLine('Southend Airport', T.SIA), Object.keys(T.SIA.p).length], ['At Southend Airport, the exit is by platform 1.', 0])
 eq('Southend Airport: platform 1 is right there', trainLine(T.SIA, '1', false).endsWith('is right there.'), true)
 eq('Chislehurst: no north car park exit (John)', T.CIT.x.some((x) => /north/i.test(x[0] ?? '')), false)

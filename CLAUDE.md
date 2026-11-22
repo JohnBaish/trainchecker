@@ -80,6 +80,10 @@ given its own branch). Before committing there, run
   (994 platforms; both exits named at 445); only Southampton has it for now. He thinks two-exit
   stations may need more work to be truly useful.
 - **Checked:** `npm run check` 273 + 57 + 79 + 40 + 44; `tsc -b`, lint, build.
+- **John:** switch the other exit on everywhere, "even if we only have street names", so people can
+  check a map. Done on branch `claude/dreamy-dijkstra-swkirc` for him to see (633 platform answers;
+  `mention_other` now unused); not merged. He also thinks naming exits by what's near them (the
+  town centre, a bus station) is worth doing: not started.
 
 ### November 22nd 2026: "Station exits" built and merged the same day (branch `claude/dreamy-dijkstra-swkirc`; Claude Code)
 

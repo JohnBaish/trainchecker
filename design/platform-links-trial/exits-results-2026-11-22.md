@@ -124,3 +124,22 @@ forecourt); the distances are along the map's lines, not measured at the station
 Theale) lists one or two "Station Map" files, as a picture or a PDF. From this session the pages
 can be read (www.nationalrail.co.uk), but the files themselves can't: images.nationalrail.co.uk
 and assets.nationalrail.co.uk are refused by the environment's network rules.
+
+## National Rail's station maps, read (November 22nd 2026)
+
+The two hosts were allowed in the environment (John). All twelve files for the six stations
+downloaded: a station map and an "Onward Travel Information" PDF each.
+
+- **Small stations** (Twyford, Newton Abbot, Oxford): a picture (800 pixels wide) drawn in one
+  style, with an "Entrance/Exit" symbol, ticket gates, the footbridge and lifts, and the road
+  named. Readable by eye; no text inside to read automatically.
+- **Network Rail's own stations** (Reading, Clapham Junction; Bristol's is a PDF of a picture): the
+  PDF has real text with positions, "Entrance/exit" and each exit's name ("Grant Road",
+  "Brighton Yard", "St John's Hill") and the platform numbers, so these could be read by script.
+- **Onward Travel Information:** a local street map with "Station Entrance/Exit" marked; not used.
+
+Against the trial: Twyford, Newton Abbot and Oxford agree (Newton Abbot's ticket gates are by
+platform 3, which fits John's "by", not "through"; Twyford's map names the road "Hurst Lane",
+the map data "Hurst Road", not settled). Clapham Junction: three ways out, Grant Road (by platform
+1, and by the subway from the others), St John's Hill (by the subway, on the platform 17 side) and
+Brighton Yard (by the footbridge, also on the platform 17 side); the trial found the first two.

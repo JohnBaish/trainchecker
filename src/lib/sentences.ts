@@ -411,6 +411,62 @@ export function platformsByKind(a: Analysis): string | null {
   return `${f.most ? 'Most ' : ''}${f.most ? name(f.kind, true) : Cap(name(f.kind, true))} ${f.most ? 'are' : 'are'} currently going from ${f.text}, with ${others.length > 1 ? `${others.slice(0, -1).join(', ')} and ${others[others.length - 1]}` : others[0]}.`
 }
 
+/** Trains still to leave before the first train with a platform, with no platform yet (John,
+ *  November 22nd 2026: at Paddington the Elizabeth Line's platform is shown an hour ahead, the main
+ *  line's much nearer the time, so a list of trains with platforms can start an hour after the next
+ *  train). In the order they're expected to leave. */
+export function earlierNoPlatform(a: Analysis): Train[] {
+  const leaves = (t: Train) => diff(a.now, t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std)
+  const running = a.ahead.filter((t) => !t.cancelled)
+  const withP = running.filter((t) => t.platform)
+  if (!withP.length) return []
+  const first = Math.min(...withP.map(leaves))
+  return running.filter((t) => !t.platform && leaves(t) < first).sort((x, y) => leaves(x) - leaves(y))
+}
+
+/** The line above the list of trains with platforms (option A, John, November 22nd 2026): "Five
+ *  earlier trains, at 7.36am, 7.38, 7.50, 7.51 and 7.53, don't have platforms yet." More than six:
+ *  the first and last times (Claude's choice, so the line stays short). */
+export function earlierLine(a: Analysis): string | null {
+  const ts = earlierNoPlatform(a)
+  if (!ts.length) return null
+  const say = clockSay()
+  const times = ts.map((t) => say(t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std))
+  if (ts.length === 1) return `One earlier train, at ${times[0]}, doesn't have a platform yet.`
+  const when = ts.length > 6 ? `from ${times[0]} to ${times[times.length - 1]}` : `at ${andList(times)}`
+  return tenAfterWords(`${Cap(num(ts.length))} earlier trains, ${when}, don't have platforms yet.`)
+}
+
+/** "So far, …" when earlier trains have no platform yet (John, November 22nd 2026): "So far,
+ *  platforms have only been announced for the Elizabeth Line trains, which are going from platform
+ *  B." or "So far, platforms have only been announced for later trains: from 8.15am, all from
+ *  platform B." */
+function soFarLater(a: Analysis): string | null {
+  if (!earlierNoPlatform(a).length) return null
+  const known = a.ahead.filter((t) => !t.cancelled && t.platform)
+  const used = new Set(known.map((t) => t.platform!))
+  const base = (p: string) => { const m = p.match(/^(\d+)[A-Z]$/); return m && used.has(m[1]) ? m[1] : p }
+  const counts = new Map<string, number>()
+  for (const t of known) counts.set(base(t.platform!), (counts.get(base(t.platform!)) ?? 0) + 1)
+  const top = [...counts].sort((x, y) => y[1] - x[1])
+  const sorted = (ps: string[]) => [...ps].sort((x, y) => parseInt(x) - parseInt(y) || x.localeCompare(y))
+  const and = (xs: string[]) => xs.join(', ').replace(/, ([^,]*)$/, ' and $1')
+  const where = (all: boolean) => top.length === 1 ? `${all ? 'all ' : ''}from platform ${top[0][0]}`
+    : top.length === 2 ? `from platforms ${and(sorted(top.map((x) => x[0])))}`
+    : top[0][1] * 2 >= known.length ? `mostly from platform ${top[0][0]}`
+    : `from platforms including ${and(top.slice(0, 4).map((x) => x[0]))}`
+  const groups = speedGroups(a).filter((g) => g.kind !== 'all')
+  const withP = groups.filter((g) => g.trains.some((t) => !t.cancelled && t.platform))
+  if (groups.length > 1 && withP.length === 1) {
+    const name = { fast: 'fast trains', slower: 'slower trains', elizabeth: 'Elizabeth Line trains' }[withP[0].kind as 'fast' | 'slower' | 'elizabeth']
+    return `So far, platforms have only been announced for the ${name}, which are going ${where(false)}.`
+  }
+  const leaves = (t: Train) => diff(a.now, t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std)
+  const first = [...known].sort((x, y) => leaves(x) - leaves(y))[0]
+  const at = first.late !== null && first.late > 0 && isTime(first.etd) ? first.etd : first.std
+  return `So far, platforms have only been announced for later trains: from ${t12(at)}, ${where(true)}.`
+}
+
 export function platforms(a: Analysis): string | null {
   if (a.verdict === 'none') return null
   // Every train cancelled: no platforms to wait for (fresh look 2.3).
@@ -427,6 +483,8 @@ export function platforms(a: Analysis): string | null {
   }
   if (a.platKnown === 1) return `So far, a platform has only been announced for one train: platform ${p1}.`
   if (a.platKnown === 2) return rest.length ? `So far, platforms have been announced for two trains: platforms ${p1} and ${rest[0][0]}.` : `So far, platforms have been announced for two trains, both platform ${p1}.`
+  const later = soFarLater(a)
+  if (later) return later
   const byKind = platformsByKind(a)
   if (byKind) return byKind
   // Every announced train from one platform: no "Most" (John, November 18th 2026).
@@ -687,7 +745,7 @@ export function platformTrains(a: Analysis): (Listing & { fold: string }) | null
   const heldLine = !held.length ? '' : held.length === 1
     ? `The ${sayH(held[0].std)}, from platform ${held[0].platform}, is delayed, with no new time given yet${because(held)}.`
     : `The ${andList(held.map((t) => `${sayH(t.std)} (platform ${t.platform})`))} are delayed, with no new times given yet${because(held)}.`
-  prose = [prose, heldLine].filter(Boolean).join(' ')
+  prose = [earlierLine(a) ?? '', prose, heldLine].filter(Boolean).join(' ')
   const after = heldLine || null
   return {
     fold: ts.length === 1 ? 'Show the train with a platform' : 'Show the trains with platforms',
@@ -775,6 +833,8 @@ export type PicRow = { time: string; mid: string; late: string; platform?: strin
 export type ListPicture = {
   kicker: string; title: string; when: string; heads: [string, string]
   one: string | null; rows: PicRow[]; note: string | null; words: { text: string; title: string; hash: string }
+  /** A line above the rows: earlier trains with no platform yet (John, November 22nd 2026). */
+  before?: string | null
 }
 // Platforms: "was due to go at 1.42" (the heading says "Expected to leave", so it's plainly late; it
 // fits on one line beside the badge on a 390px phone); arrivals: "running 15 minutes late", the train
@@ -805,7 +865,7 @@ export function platformsPicture(a: Analysis): ListPicture | null {
   const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
   return {
     kicker: 'TRAINCHECKER · PLATFORMS', title: `${a.from} to ${a.to}`, when: at,
-    heads: ['EXPECTED TO LEAVE', 'PLATFORM'], one, rows, note: null,
+    heads: ['EXPECTED TO LEAVE', 'PLATFORM'], one, rows, note: null, before: earlierLine(a),
     words: { text: `${limited ? 'The next ten trains' : 'The trains'} from ${a.from} to ${a.to} with platforms, at ${at}, from Trainchecker.`, title: `Trainchecker: ${a.from} to ${a.to}`, hash: `#${a.fromCrs}-${a.toCrs}` },
   }
 }

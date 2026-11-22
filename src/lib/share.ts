@@ -154,13 +154,16 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
   probe.font = `24px ${FIG}`
   const x0 = pad + inner, x1 = LW - pad - inner
   const note = p.note ? wrap(probe, p.note, x1 - x0) : []
+  probe.font = `26px ${FIG}`
+  const before = p.before ? wrap(probe, p.before, x1 - x0) : []
+  const beforeH = before.length ? before.length * 36 + 22 : 0
   const titleTop = 100, titleLh = 60
   const bandTop = titleTop + title.length * titleLh + 20
   // A late arrival's row is taller: the train, then "← two minutes late" on its own line, the arrow
   // pointing at the big time (John, November 20th 2026).
   const headH = p.one ? 70 : 50, rowHs = p.rows.map((r) => (r.arrow ? 110 : 90))
   const tops = rowHs.map((_, i) => rowHs.slice(0, i).reduce((a, b) => a + b, 0)), rowsH = rowHs.reduce((a, b) => a + b, 0)
-  const bandH = 44 + headH + rowsH - 18 + (note.length ? 26 + note.length * 34 : 0) + 44
+  const bandH = 44 + beforeH + headH + rowsH - 18 + (note.length ? 26 + note.length * 34 : 0) + 44
   const H = bandTop + bandH + 110
   canvas.width = LW * scale
   canvas.height = H * scale
@@ -208,6 +211,13 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
   }
   const colX = x0 + 194
   let y = y0 + 44
+  // Earlier trains with no platform yet, above the rows (John, November 22nd 2026).
+  if (before.length) {
+    ctx.fillStyle = D.text
+    ctx.font = `26px ${FIG}`
+    before.forEach((l, i) => ctx.fillText(l, x0, y + 26 + i * 36))
+    y += beforeH
+  }
   ctx.font = `600 18px ${FIG}`
   ctx.fillStyle = D.muted
   spaced(ctx, '1.4px')

@@ -65,6 +65,19 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: earlier trains with no platform yet; live (`main`; Claude Code)
+
+- **John (iPhone, Paddington to Reading at 7.10am):** Platforms said "Trains are currently going from
+  platform B" and listed 8.15am first, but trains at 7.36, 7.38, 7.50, 7.51 and 7.53 had no platform
+  yet (platform B is the Elizabeth Line's, shown early). Agreed: the "So far" sentence and option A,
+  a line above the list; straight to `main`. `SPEC.md` §12.26.
+- **Built:** `earlierNoPlatform()`, `earlierLine()`, `soFarLater()` in `sentences.ts`; `before` on
+  the platforms picture (`share.ts` draws it above the rows); `.tbefore` in `global.css`.
+- **Checked:** `npm run check` 273 + 57 + 73 + 34 (new: Paddington to Reading with only B announced,
+  Bath to Bristol with the first two trains' platforms removed, no line on any saved board); `tsc -b`,
+  lint, build; the fold at 390px dark and 1200px light on those boards, and the picture read back from
+  the clipboard: no errors, no sideways scroll. Not checked: live trains, a real iPhone.
+
 ### November 21st 2026: "over the footbridge" picked up: following the drawn paths (notes and trial scripts, straight to `main`; Claude Code)
 
 - **John:** pick up the idea from the handover. Step 3 done: `design/platform-links-trial/paths.py`

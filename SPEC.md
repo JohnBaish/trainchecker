@@ -652,6 +652,16 @@ they differ.
     rather than 90) so neither line shrinks. Platforms' notes stay beside the train on a computer.
 
 
+26. **Earlier trains with no platform yet** (John, November 22nd 2026, option A): at Paddington the
+    Elizabeth Line's platform B is shown about an hour ahead, the main line's much nearer the time, so
+    the list could start at 8.15am with five trains leaving before it. When a train still to leave
+    before the first one with a platform has none yet: Platforms says "So far, platforms have only been
+    announced for the Elizabeth Line trains, which are going from platform B." (one kind of train has
+    platforms) or "So far, platforms have only been announced for later trains: from 8.15am, all from
+    platform B."; and a line above the list (and in its picture and Share words): "Five earlier trains,
+    at 7.36am, 7.38, 7.50, 7.51 and 7.53, don't have platforms yet." Claude's choices, told to John:
+    "am"/"pm" once; more than six trains as "from 7.36am to 8.05".
+
 ## 13. Connections (November 21st 2026)
 
 John's idea, built and agreed with him in one day; `CLAUDE.md`'s log has the order it happened in.

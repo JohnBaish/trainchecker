@@ -15,7 +15,7 @@ import { count } from '../api/week.ts'
 import { analyse, diff, type Snap, type Analysis } from '../src/lib/analyse.ts'
 import {
   standIn, standInLine, standInMixedLine, tenAfterWords, verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
-  hourLabel, HOURS, quoteShareText, kindLine, platformTrains, arrivals, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type Line,
+  hourLabel, HOURS, quoteShareText, earlierLine, kindLine, platformTrains, arrivals, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type Line,
   dueSay,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
@@ -418,6 +418,20 @@ eq('was due: pm once, kept across midday, on the hour', [dueSay('12:53', '12:47'
   const r = arrivalsPicture(one)!.rows.find((x) => x.lateBy === 1)
   eq('picture: arrivals, one minute late', r?.late, 'one minute late')
   eq('arrivals: the first train late, "running … late" (John, November 20th)', arrivals(rdgPad).text.startsWith('The first ten trains in the next hour are expected at 6.25pm (the one due to leave Reading at 5.41, running two minutes late), 6.26 (the 6.01 from Reading, running two minutes late), 6.28 (the 5.32, running two minutes late)'), true)
+}
+
+// Earlier trains with no platform yet (John, November 22nd 2026, option A): at Paddington the
+// Elizabeth Line's platform B is shown an hour ahead, the main line's much later.
+{
+  const onlyB = changed('PAD-RDG', (sv) => { for (const t of sv) if (t.platform && t.platform !== 'B') t.platform = null })
+  eq('platforms: only the Elizabeth Line announced, "So far" (John)', platforms(onlyB), 'So far, platforms have only been announced for the Elizabeth Line trains, which are going from platform B.')
+  eq('platforms: the earlier trains listed above the board', /^\w+ earlier trains, (at|from) \d/.test(earlierLine(onlyB) ?? ''), true)
+  eq('platforms: the line in the picture and the share words', [platformsPicture(onlyB)!.before === earlierLine(onlyB), platformTrains(onlyB)!.prose.startsWith(earlierLine(onlyB)!)], [true, true])
+  const bth = changed('BTH-BRI', (sv, a) => { for (const id of ids(a).slice(0, 2)) sv.find((t) => t.id === id)!.platform = null })
+  const two = bth.ahead.filter((t) => !t.cancelled).slice(0, 2).map((t) => t12(t.std))
+  eq('platforms: one kind, later trains only', platforms(bth)!.startsWith('So far, platforms have only been announced for later trains: from '), true)
+  eq('platforms: two earlier trains, "am"/"pm" once', earlierLine(bth), `Two earlier trains, at ${two[0]} and ${two[1].replace(/(am|pm)$/, '')}, don't have platforms yet.`)
+  eq('platforms: none earlier, no line (the saved boards)', files.filter((f) => /^\d+-\d+-[A-Z]+-[A-Z]+\.json$/.test(f)).map((f) => earlierLine(analyse(snapOf(raw(f))))).every((x) => x === null), true)
 }
 console.log(`check-rules: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

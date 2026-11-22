@@ -113,6 +113,7 @@ function PlatformTrains({ a }: { a: Analysis }) {
   return (
     <details className="advice trains-fold">
       <summary>{p.fold} <Icon name="down" /></summary>
+      {pic.before && <p className="tbefore">{pic.before}</p>}
       {pic.words.text.startsWith('The next ten') && <p className="board-kick">The next ten trains</p>}
       <Board p={pic} />
       {p.after && <p className="tafter">{p.after}</p>}

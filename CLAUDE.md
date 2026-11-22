@@ -70,6 +70,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": batch 03 (notes, straight to `main`; Claude Code)
+
+- 40 stretches, Nailsea & Backwell to Yatton through to Ashchurch for Tewkesbury to Worcestershire Parkway
+  (Weston-super-Mare, the Severn Tunnel, Bristol Parkway to Gloucester and Cheltenham, the Golden Valley line,
+  the Cotswold Line to Hereford); 201 of 2,376 done (Great Western routes 196 of 271). Next: ASC-CNM
+  (Ashchurch for Tewkesbury to Cheltenham Spa).
+- Every fact checked against its article with `wiki_text.py`; `check.py` clean but for the Parson and Clerk
+  warning. Cheltenham Spa to Stonehouse (the curve round Gloucester) probably has no regular passenger
+  train; given an item, not skipped (COVERAGE.md says why).
+
 ### November 22nd 2026: "Your train passes near…": the Wikipedia files committed (notes, straight to `main`; Claude Code)
 
 - **John:** save the download work. `design/passes-near/wiki/`: the article locations (3.3 MB), a

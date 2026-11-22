@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-161 of 2376 stretches done.
+201 of 2376 stretches done.
 
-1. Great Western routes: 156 of 271 done (next).
+1. Great Western routes: 196 of 271 done (next).
 2. South West: 0 of 30 done.
 3. South East: 1 of 384 done.
-3. London: 4 of 421 done.
-4. East of England (East Anglia): 0 of 237 done.
-5. East Midlands: 0 of 140 done.
-6. West Midlands: 0 of 191 done.
-7. Yorkshire and The Humber: 0 of 238 done.
-8. North West: 0 of 396 done.
+4. London: 4 of 421 done.
+5. East of England (East Anglia): 0 of 237 done.
+6. East Midlands: 0 of 140 done.
+7. West Midlands: 0 of 191 done.
+8. Yorkshire and The Humber: 0 of 238 done.
+9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: NLS-YAT (Nailsea & Backwell to Yatton).
+Next stretch in the order: ASC-CNM (Ashchurch for Tewkesbury to Cheltenham Spa).
 
 <!-- end of counts -->
 
@@ -107,6 +107,20 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 22nd 2026 (Claude Code): batch 03, 40 stretches from Nailsea & Backwell to Yatton through to
+  Ashchurch for Tewkesbury to Worcestershire Parkway (Yatton to Weston-super-Mare and Highbridge, the Severn
+  Tunnel and Bristol's north side, Bristol Parkway to Gloucester and Cheltenham, the Golden Valley line to
+  Kemble and Swindon, and the Cotswold Line from Oxford to Hereford). No downloads: candidates from the
+  committed `wiki/` files (six minutes), every fact checked against the article in `source`, read with
+  `wiki_text.py`. Seven items are `crosses` (Gipsy Patch Lane Bridge, the Severn Tunnel, Huckford Viaduct,
+  the Roman town at Dorn, the Colwall and Ledbury tunnels) and one a `station` (Adlestrop, closed in 1966,
+  Edward Thomas's poem). For Blenheim, Dorn and the Evesham battlefield the point is the nearest edge of
+  the area (from Historic England's shapes), so `check.py` agrees with the distance; the train only grazes
+  Cornbury Park (six metres of track inside it), so that item says "along the edge" and its point is the
+  house. Cheltenham Spa to Stonehouse is the curve round Gloucester: the live board at Stroud (9.30pm)
+  showed its trains to Cheltenham calling at Gloucester, so probably no regular passenger train uses it;
+  given an item anyway (it does no harm), not skipped. Cam & Dursley to Cheltenham Spa is used: CrossCountry
+  trains from Bristol Parkway to Birmingham run to Cheltenham without calling at Gloucester.
 - November 22nd 2026 (Claude Code): nothing to download any more. Wikipedia's article locations
   (`wiki/gb-articles.tsv.gz`), a cut-down index of where those articles sit in the articles dump
   (`gb-index.tsv.gz`) and their redirects (`gb-redirects.tsv.gz`) are committed, 7 MB in all, from the

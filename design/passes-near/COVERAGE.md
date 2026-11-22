@@ -8,9 +8,9 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-80 of 2376 stretches done.
+81 of 2376 stretches done.
 
-1. Great Western routes: 75 of 271 done (next).
+1. Great Western routes: 76 of 271 done (next).
 2. South West: 0 of 30 done.
 3. South East: 1 of 384 done.
 4. London: 4 of 421 done.
@@ -44,8 +44,9 @@ Next stretch in the order: LTS-SER (Lelant Saltings to St Erth).
 2. Make the candidates for the next 40 stretches still to do:
    `python3 -I design/passes-near/candidates.py --next 40 design/passes-near/batches/NN` (NN the batch's
    number, 01 first). It needs `pip install shapely pyproj numpy` and the hosts `services-eu1.arcgis.com`
-   and `en.wikipedia.org` (both allowed on John's environment since November 22nd 2026). If it says
-   Wikipedia refused, run it again later: what it fetched is kept in `cache/` (not committed).
+   and `en.wikipedia.org` (both allowed on John's environment since November 22nd 2026). It names
+   trainchecker.baish.net as its contact, as Wikipedia asks (John's word). If it says Wikipedia
+   refused, run it again later: what it fetched is kept in `cache/` (not committed).
 3. For each stretch, choose one item from `candidates.md` (or anything better you know of near the
    line: a bridge or viaduct the train crosses, a river, a county boundary where nothing else is near).
    Prefer something a passenger would find interesting, and true without hedging.
@@ -78,9 +79,6 @@ Next stretch in the order: LTS-SER (Lelant Saltings to St Erth).
   line between two stations (South Wigston to Tamworth, 70 km). The same: skip it, with the reason,
   only once you're sure no passenger train uses it.
 - **Into Wales or Scotland** (16 stretches, `crosses`): the item must be in England.
-- **Stretches from the old lines that changed:** Reading West to Mortimer is now Reading West to
-  Reading Green Park and Mortimer to Reading Green Park (the station opened in 2023). Its item, the site
-  of Elm Park, is under `unplaced` for John to decide where it goes; `check.py` fails until then.
 - **A new station opening** splits a stretch: rebuild the network (below) and move the item.
 
 ## Rebuilding the network
@@ -95,3 +93,6 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 - November 22nd 2026 (Claude Code): set up. 2,376 stretches; the 81 items of the first five lines put on
   them (80 placed; the Elm Park item waits for John, above).
+- November 22nd 2026 (Claude Code): John placed Elm Park on Reading West to Reading Green Park. All 81
+  on the network. Wikipedia given trainchecker.baish.net as the contact; it was still refusing this
+  session's requests an hour later.

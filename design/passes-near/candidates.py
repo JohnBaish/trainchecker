@@ -24,9 +24,9 @@ import pn  # noqa: E402
 HE = ('https://services-eu1.arcgis.com/ZOdPfBS3aqqDYPUQ/arcgis/rest/services/'
       'National_Heritage_List_for_England_NHLE_v02_VIEW/FeatureServer')
 WIKI = 'https://en.wikipedia.org/w/api.php'
-# Wikimedia asks automated clients to name a contact in the user agent; a generic one may be refused
-# ("You are making too many requests"). Set PN_AGENT to one with a contact John has agreed to.
-AGENT = os.environ.get('PN_AGENT') or 'heritage-near-track-research/1.0 (one-off research script)'
+# Wikimedia asks automated clients to name a contact in the user agent; a generic one is refused
+# ("You are making too many requests"). The site's address, at John's word (November 22nd 2026).
+AGENT = os.environ.get('PN_AGENT') or 'TraincheckerPassesNear/1.0 (https://trainchecker.baish.net/)'
 NEAR = 1000.0
 LAYERS = [  # (layer, kind, where, score)
     (0, 'listed building', "Grade IN ('I','II*')", None),

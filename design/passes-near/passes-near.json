@@ -3042,6 +3042,18 @@
    "text": "Your train passes near Edington Priory church, on the train's {side}, built by William Edington, Bishop of Winchester, and consecrated in 1361.",
    "source": "https://en.wikipedia.org/wiki/Edington_Priory"
   },
+  "RDW-RGP": {
+   "a": "RDW",
+   "b": "RGP",
+   "kind": "near",
+   "name": "Elm Park (stadium site)",
+   "side": "right",
+   "lat": 51.4534,
+   "lon": -1.0026,
+   "distanceM": 750,
+   "text": "Your train passes near the site of Elm Park, on the train's {side}, home of Reading Football Club from 1896 to 1998.",
+   "source": "https://en.wikipedia.org/wiki/Elm_Park_(stadium)"
+  },
   "BMY-MOR": {
    "a": "MOR",
    "b": "BMY",
@@ -3345,19 +3357,5 @@
    "source": "https://historicengland.org.uk/listing/the-list/list-entry/1001544"
   }
  },
- "unplaced": [
-  {
-   "a": "RDW",
-   "b": "MOR",
-   "kind": "near",
-   "name": "Elm Park (stadium site)",
-   "side": "right",
-   "lat": 51.4534,
-   "lon": -1.0026,
-   "distanceM": 750,
-   "text": "Your train passes near the site of Elm Park, on the train's {side}, home of Reading Football Club from 1896 to 1998.",
-   "source": "https://en.wikipedia.org/wiki/Elm_Park_(stadium)"
-  }
- ],
  "skipped": {}
 }

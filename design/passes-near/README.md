@@ -36,8 +36,9 @@ were written; the items now live in `passes-near.json` itself (don't run `pilot_
 old form of the file).
 
 Since the evening of November 22nd 2026 the items sit on the whole network instead of the five lines
-(below, "Working through all of England"): 80 of the 81 fit a stretch; the site of Elm Park (Reading West
-to Mortimer) waits for John, as Reading Green Park station now stands between them.
+(below, "Working through all of England"). 80 of the 81 fitted a stretch as they were; the site of Elm Park
+(Reading West to Mortimer) is now on Reading West to Reading Green Park (John), as Reading Green Park
+station (2023) stands between them.
 
 ## The data: `passes-near.json`
 

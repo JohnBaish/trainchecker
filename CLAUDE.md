@@ -102,6 +102,9 @@ given its own branch). Before committing there, run
 - **Checked:** the build twice from the cached read; `check.py` (one error, Elm Park); `candidates.py` on
   three stretches. Not checked: the stretches against the railway itself beyond the Great Western lines'
   items, and the long ones in the report.
+- **John:** Elm Park is on Reading West to Reading Green Park (done: all 81 items on the network, `check.py`
+  clean but for the Parson and Clerk warning); Wikipedia may be given the site's address as the contact
+  (done, in `candidates.py`; still refused here an hour later, so a later session may need to run it again).
 
 ### November 22nd 2026: Paddington's Elizabeth Line platforms; up or down; live (branch `claude/dreamy-dijkstra-swkirc`, merged the same day; Claude Code)
 

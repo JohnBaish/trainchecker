@@ -70,6 +70,24 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Fact of the journey", built for John to see (branch `claude/fact-of-the-journey`, not merged; Claude Code)
+
+- **John:** the design for "Your train passes near…": a box just under the quote of the day, laid out
+  identically, called FACT OF THE JOURNEY, without the quotation marks or attribution, in a different
+  colour; the same Share button (a picture); the left-and-right note and the credits in About.
+- **Built:** `design/passes-near/to_site.py` makes `src/data/passes-near.json` (every stretch and the
+  121 items; loaded only with a journey, 28 KB compressed) with `passes-near-LICENCE.md`;
+  `src/lib/passesNear.ts` (the journey's stretches from A, the stops of the train with the most stops
+  and B, the shortest way between each pair; the side swapped for b to a; curly apostrophes; one at
+  random); `FactCard` in `Tail.tsx`, after the quote in `JourneyView.tsx`, only with a train on the
+  boards and a fact on the journey; `factImage()` in `share.ts`; `factShareText()` (draft); About's
+  paragraph (draft). Three colours behind `?fact=a|b|c` (sage, sky, stone), to come out once chosen.
+- **Checked:** `npm run check` 273 + 57 + 79 + 40 + 59 + 24 (new `scripts/check-facts.ts`, on the saved
+  Reading–Paddington both ways, Paddington–Plymouth, Bath–Bristol and Manchester–Airport boards);
+  `tsc -b`, lint, build; the three colours at 1200px and 390px with touch, light and dark
+  (`design/previews/fact/`): no errors, no sideways scroll, Share 44px. Not checked: the Share
+  picture read back, a real phone.
+
 ### November 22nd 2026: "Your train passes near…": Wikipedia from its dumps; batch 01 looked at again (notes, straight to `main`; Claude Code)
 
 - **John:** fix the Wikipedia search problem before the next batch. `dumps.wikimedia.org` added to the

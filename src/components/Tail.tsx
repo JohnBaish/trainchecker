@@ -1,9 +1,10 @@
 // The end of every page: the quote of the day, "About these figures" and the footer. The words
 // were agreed with John at the mock-ups (O8, "agreed for now"; SPEC §8.16).
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { quoteOfTheDay } from '../data/quotes.ts'
-import { quoteShareText } from '../lib/sentences.ts'
-import { deliverImage, quoteFileName, quoteImage } from '../lib/share.ts'
+import { factShareText, quoteShareText } from '../lib/sentences.ts'
+import { deliverImage, factFileName, factImage, quoteFileName, quoteImage } from '../lib/share.ts'
+import { journeyFacts, pickFact, type PnData } from '../lib/passesNear.ts'
 import { Icon } from './Icon.tsx'
 
 export const INTRO = "Trainchecker tells you, in plain English, how the trains from one station to another are running: the next four hours, which platforms they're leaving from, how the last two hours went, any engineering work before the end of the weekend and, if you ask, how they ran over the last week. For journeys with no change of train, for now."
@@ -44,6 +45,48 @@ export function QuoteCard() {
   )
 }
 
+/** "Fact of the journey" (John, November 22nd 2026): laid out as the quote is, with no quotation
+ *  marks or attribution and its own colour, just under the quote. One fact from the stretches the
+ *  journey's train runs along, picked at random on each visit; nothing at all when none of them has
+ *  one yet. Its Share makes a picture, as the quote's does. The colour is still being chosen:
+ *  `?fact=a|b|c` on the address (a mock-up switch, to come out once John has chosen). */
+export function FactCard({ from, to, fromName, toName, stops }: { from: string; to: string; fromName: string; toName: string; stops: string[] }) {
+  const [fact, setFact] = useState<string | null>(null)
+  const [status, setStatus] = useState('')
+  const stopsKey = stops.join(',')
+  useEffect(() => {
+    let current = true
+    import('../data/passes-near.json').then((m) => {
+      if (!current) return
+      const f = pickFact(journeyFacts(m.default as unknown as PnData, from, stopsKey ? stopsKey.split(',') : [], to))
+      setFact(f ? f.text : null)
+    }, () => {})
+    return () => { current = false }
+  }, [from, to, stopsKey])
+  if (!fact) return null
+  const look = /[?&]fact=([abc])/.exec(location.search)?.[1] ?? 'a'
+  const share = async () => {
+    setStatus('')
+    const now = new Date()
+    const r = await deliverImage(factImage(fact, fromName, toName, now), factFileName(now), { title: 'Trainchecker: fact of the journey', text: factShareText(fromName, toName), url: location.href })
+    setStatus(r === 'copied' ? 'Copied' : r === 'saved' ? 'Saved as a picture' : '')
+  }
+  return (
+    <section className={`qc2 fact fact-${look}`} aria-label="Fact of the journey">
+      {/* Where the quote has its opening mark: left empty, so the two texts line up. */}
+      <div aria-hidden="true"></div>
+      <div>
+        <div className="card-kicker">Fact of the journey</div>
+        <p className="qt">{fact}</p>
+      </div>
+      <div className="qend">
+        <button type="button" className="qs2" aria-label="Share this fact" title="Share this fact" onClick={share}><Icon name="share" /><span>Share</span></button>
+        <span className="qstatus" role="status">{status}</span>
+      </div>
+    </section>
+  )
+}
+
 /** On a journey's page the quote comes earlier, before "The last two hours" (John, November 17th
  *  2026, stage 4), so JourneyView shows it and `quote` is false. */
 export function Tail({ about = true, quote = true }: { about?: boolean; quote?: boolean }) {
@@ -57,6 +100,8 @@ export function Tail({ about = true, quote = true }: { about?: boolean; quote?: 
           {/* The credit OpenStreetMap asks for; John's words (November 21st 2026). */}
           {/* Extended for Station exits (Claude's draft, November 22nd 2026). */}
           <p>The directions between platforms in the Connections section, and the ways out in the Station exits section, come from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>, with National Rail’s station maps for the larger stations.</p>
+          {/* Fact of the journey (Claude's draft, November 22nd 2026, for John). */}
+          <p>The fact of the journey is something near one stretch of line between two stations on your journey, picked at random each time you visit. Left and right are as the train is going: facing backwards, look the other way. The stretches of line come from OpenStreetMap; the facts were checked against Historic England’s list of historic places, Wikipedia and other sources (contains Historic England data © Historic England 2026).</p>
         </section>
       )}
       <footer className="footer-notice">

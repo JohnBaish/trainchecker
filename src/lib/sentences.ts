@@ -924,6 +924,8 @@ export function boardSummary(rows: PicRow[], verb: 'leave' | 'arrive'): string {
 }
 
 /** The quote's Share words (SPEC §8.13). */
+/** The words sent with the fact's picture (Claude's draft, November 22nd 2026, for John). */
+export const factShareText = (from: string, to: string) => `A fact for the journey from ${from} to ${to}, from Trainchecker.`
 export const quoteShareText = (author: string, date: Date) => `The quote of the day on Trainchecker for ${dateShort(date)}, from ${author}.`
 
 // ---- The days ahead (SPEC §8.9; stage 4) ----

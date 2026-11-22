@@ -1,0 +1,7448 @@
+{
+ "RDG": {
+  "map_files": [
+   "RDG-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance/exit Station Hill (north)",
+    "by": [],
+    "note": "From the north end of the main building, beside the subway and the stairs/escalators up to the footbridge to platforms 8-15; on the same level as the west end of platforms 1-3 and 7."
+   },
+   {
+    "name": "Entrance/exit Station Hill (by ticket office)",
+    "by": [
+     "4",
+     "5",
+     "6",
+     "7"
+    ],
+    "note": "Main ground-level concourse by the ticket office."
+   },
+   {
+    "name": "Entrance/exit Forbury Road",
+    "by": [
+     "4",
+     "5",
+     "6",
+     "7"
+    ],
+    "note": "South-west corner of the main concourse."
+   },
+   {
+    "name": "Entrance/exit Apex Plaza",
+    "by": [
+     "4",
+     "5",
+     "6",
+     "7"
+    ],
+    "note": "South side of the main concourse."
+   },
+   {
+    "name": "Entrance/exit Station Car Park",
+    "by": [],
+    "note": "North side, at the north end of the footbridge ('Footbridge to all platforms'), stairs/escalator/lifts down."
+   }
+  ],
+  "routes": {
+   "4": [
+    {
+     "exit": "Forbury Road",
+     "via": "level"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "level"
+    },
+    {
+     "exit": "Station Hill (by ticket office)",
+     "via": "level"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Forbury Road",
+     "via": "level"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "level"
+    },
+    {
+     "exit": "Station Hill (by ticket office)",
+     "via": "level"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Forbury Road",
+     "via": "level"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "level"
+    },
+    {
+     "exit": "Station Hill (by ticket office)",
+     "via": "level"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Forbury Road",
+     "via": "level"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "level"
+    },
+    {
+     "exit": "Station Hill (by ticket office)",
+     "via": "level"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Station Hill",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Forbury Road",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Station Hill",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Forbury Road",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Station Hill",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Forbury Road",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Station Hill",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Forbury Road",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Station Hill",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Forbury Road",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Station Hill",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Forbury Road",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Station Hill",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Forbury Road",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "15": [
+    {
+     "exit": "Station Hill",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Forbury Road",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Apex Plaza",
+     "via": "footbridge, escalator, lift, stairs"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "1": [
+    {
+     "exit": "Station Hill (north)",
+     "via": "level (unsure)"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Hill (north)",
+     "via": "level (unsure)"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Station Hill (north)",
+     "via": "level (unsure)"
+    },
+    {
+     "exit": "Station Car Park",
+     "via": "footbridge, escalator, lift, stairs"
+    }
+   ]
+  },
+  "unsure": "Platforms 1-3 (bays at the north-west end): they appear to open onto the area by the north Station Hill entrance, but the map doesn't make the level clear. Rail Air Lounge and short-stay car park are reached down steps (left out). The car park exit is labelled 'Entrance/exit Station Car Park' so included."
+ },
+ "CLJ": {
+  "map_files": [
+   "CLJ-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance/exit Grant Road",
+    "by": [
+     "1"
+    ],
+    "note": "North side; also at the north end of the subway."
+   },
+   {
+    "name": "Entrance/exit Brighton Yard",
+    "by": [],
+    "note": "South side, beyond platform 17, at the south end of the footbridge (stairs and lift down)."
+   },
+   {
+    "name": "Entrance/exit St John's Hill",
+    "by": [],
+    "note": "South side, through the ticket office / Stop Shop shopping centre at the south end of the subway."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Grant Road",
+     "via": "level"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "15": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "16": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ],
+   "17": [
+    {
+     "exit": "Brighton Yard",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "St John's Hill",
+     "via": "subway, stairs"
+    },
+    {
+     "exit": "Grant Road",
+     "via": "subway, stairs; or footbridge, stairs, lift"
+    }
+   ]
+  },
+  "unsure": "Platforms 7/8 island: the map shows stairs to the subway at its east end; check. Platforms 16/17's subway stairs were not clearly visible (the subway curves; there are stairs at the 12/13 and 14/15 islands). Platform 6 is not shown as a separate platform face (06 sits between tracks)."
+ },
+ "LDS": {
+  "map_files": [
+   "LDS-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance/exit 1 City Centre (New Station Street)",
+    "by": [
+     "0",
+     "1",
+     "2",
+     "5",
+     "6"
+    ],
+    "note": "From the main concourse at the east end of the terminal platforms."
+   },
+   {
+    "name": "Entrance/exit 2 City Square",
+    "by": [],
+    "note": "North end of the concourse area, beyond the shops (Wellington Street side)."
+   },
+   {
+    "name": "Entrance/exit 3 Aire Street",
+    "by": [],
+    "note": "North-west of the concourse, by the short-stay car park."
+   },
+   {
+    "name": "Entrance/exit 4 Holbeck Urban Village (Granary Wharf)",
+    "by": [],
+    "note": "Lower ground floor, reached from the west footbridge down via a mezzanine (escalator, stairs, lift). Open 06.00-22.00."
+   }
+  ],
+  "routes": {
+   "0": [
+    {
+     "exit": "City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "City Square",
+     "via": "concourse"
+    },
+    {
+     "exit": "Aire Street",
+     "via": "concourse"
+    }
+   ],
+   "1": [
+    {
+     "exit": "City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "City Square",
+     "via": "concourse"
+    },
+    {
+     "exit": "Aire Street",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "City Square",
+     "via": "concourse"
+    },
+    {
+     "exit": "Aire Street",
+     "via": "concourse"
+    }
+   ],
+   "5": [
+    {
+     "exit": "City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "City Square",
+     "via": "concourse"
+    },
+    {
+     "exit": "Aire Street",
+     "via": "concourse"
+    }
+   ],
+   "6": [
+    {
+     "exit": "City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "City Square",
+     "via": "concourse"
+    },
+    {
+     "exit": "Aire Street",
+     "via": "concourse"
+    }
+   ],
+   "8": [
+    {
+     "exit": "City Centre",
+     "via": "footbridge (west: stairs, escalator, lift; or east bridges: stairs)"
+    },
+    {
+     "exit": "Holbeck Urban Village",
+     "via": "west footbridge, then down via mezzanine (escalator, stairs, lift)"
+    }
+   ],
+   "9": [
+    {
+     "exit": "City Centre",
+     "via": "footbridge (west: stairs, escalator, lift; or east bridges: stairs)"
+    },
+    {
+     "exit": "Holbeck Urban Village",
+     "via": "west footbridge, then down via mezzanine (escalator, stairs, lift)"
+    }
+   ],
+   "11": [
+    {
+     "exit": "City Centre",
+     "via": "footbridge (west: stairs, escalator, lift; or east bridges: stairs)"
+    },
+    {
+     "exit": "Holbeck Urban Village",
+     "via": "west footbridge, then down via mezzanine (escalator, stairs, lift)"
+    }
+   ],
+   "12": [
+    {
+     "exit": "City Centre",
+     "via": "footbridge (west: stairs, escalator, lift; or east bridges: stairs)"
+    },
+    {
+     "exit": "Holbeck Urban Village",
+     "via": "west footbridge, then down via mezzanine (escalator, stairs, lift)"
+    }
+   ],
+   "13": [
+    {
+     "exit": "City Centre",
+     "via": "footbridge (west: stairs, escalator, lift; or east bridges: stairs)"
+    },
+    {
+     "exit": "Holbeck Urban Village",
+     "via": "west footbridge, then down via mezzanine (escalator, stairs, lift)"
+    }
+   ],
+   "15": [
+    {
+     "exit": "City Centre",
+     "via": "footbridge (west: stairs, escalator, lift; or east bridges: stairs)"
+    },
+    {
+     "exit": "Holbeck Urban Village",
+     "via": "west footbridge, then down via mezzanine (escalator, stairs, lift)"
+    }
+   ],
+   "16": [
+    {
+     "exit": "City Centre",
+     "via": "footbridge (west: stairs, escalator, lift; or east bridges: stairs)"
+    },
+    {
+     "exit": "Holbeck Urban Village",
+     "via": "west footbridge, then down via mezzanine (escalator, stairs, lift)"
+    }
+   ],
+   "17": [
+    {
+     "exit": "City Centre",
+     "via": "footbridge (west: stairs, escalator, lift; or east bridges: stairs)"
+    },
+    {
+     "exit": "Holbeck Urban Village",
+     "via": "west footbridge, then down via mezzanine (escalator, stairs, lift)"
+    }
+   ],
+   "7": [
+    {
+     "exit": "City Centre",
+     "via": "level (unsure)"
+    }
+   ]
+  },
+  "unsure": "Platform 7 seems to run along the south edge of the concourse at its east end, but it isn't clear. Platforms 3, 4 and 10 (west bays) and 14: route not clear from the map. East footbridges show stairs only. Platform 17 reached from the west footbridge only."
+ },
+ "BHM": {
+  "map_files": [
+   "BHM-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Exit to Victoria Square",
+    "by": [],
+    "note": "Concourse level, above the platforms (north-west, Stephenson Street side)."
+   },
+   {
+    "name": "Exit to Navigation Street",
+    "by": [],
+    "note": "West, via the Navigation Street footbridge, which has stairs down to the platforms."
+   },
+   {
+    "name": "Exit to Smallbrook Queensway and Bullring",
+    "by": [],
+    "note": "Concourse level, east side."
+   },
+   {
+    "name": "Entrance/Exit Southside",
+    "by": [],
+    "note": "Concourse level, south side (Hill Street / Station Street)."
+   },
+   {
+    "name": "Grand Central (shopping centre)",
+    "by": [],
+    "note": "Up escalators from the concourse; not a street exit as such."
+   }
+  ],
+  "routes": {
+   "1A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "1B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "2A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "2B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "3A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "3B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "4A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "4B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "4C": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "5A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "5B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "6A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "6B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "7A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "7B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "8A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "8B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "9A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "9B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "10A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "10B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "11A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "11B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "12A": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "12B": [
+    {
+     "exit": "Victoria Square",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Smallbrook Queensway and Bullring",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Southside",
+     "via": "up to concourse (escalator, lift, stairs)"
+    },
+    {
+     "exit": "Navigation Street",
+     "via": "footbridge, stairs"
+    }
+   ]
+  },
+  "unsure": "All platforms are below the concourse; no exit is on the same level as a platform. Navigation Street footbridge stair links shown on the west ends; which platforms each reaches isn't labelled. Snow Hill (1000m) and Moor Street (600m) pointers are directions, not exits."
+ },
+ "EDB": {
+  "map_files": [
+   "EDB-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Way out 1 Princes Street",
+    "by": [],
+    "note": "North-east, up escalator/stairs/lift from the east end of the footbridge."
+   },
+   {
+    "name": "Way out 2 Waverley Bridge (west ramp)",
+    "by": [
+     "14",
+     "15",
+     "16"
+    ],
+    "note": "Ramp up from the concourse beside platforms 13/14 to Waverley Bridge."
+   },
+   {
+    "name": "Way out 2 Waverley Bridge (east ramp)",
+    "by": [
+     "17",
+     "19",
+     "20"
+    ],
+    "note": "Ramp up from the concourse beside platform 17 to Waverley Bridge."
+   },
+   {
+    "name": "Way out 3 Market Street",
+    "by": [],
+    "note": "West end of the footbridge across the station."
+   },
+   {
+    "name": "Way out 4 Calton Road",
+    "by": [],
+    "note": "South-east, stairs and lift near the east end of platforms 1/2."
+   }
+  ],
+  "routes": {
+   "5": [
+    {
+     "exit": "Waverley Bridge",
+     "via": "concourse, ramp"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "concourse, escalator/stairs/lift"
+    },
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs/lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Waverley Bridge",
+     "via": "concourse, ramp"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "concourse, escalator/stairs/lift"
+    },
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs/lift"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Waverley Bridge",
+     "via": "concourse, ramp"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "concourse, escalator/stairs/lift"
+    },
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs/lift"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Waverley Bridge",
+     "via": "concourse, ramp"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "concourse, escalator/stairs/lift"
+    },
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs/lift"
+    }
+   ],
+   "15": [
+    {
+     "exit": "Waverley Bridge",
+     "via": "concourse, ramp"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "concourse, escalator/stairs/lift"
+    },
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs/lift"
+    }
+   ],
+   "16": [
+    {
+     "exit": "Waverley Bridge",
+     "via": "concourse, ramp"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "concourse, escalator/stairs/lift"
+    },
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs/lift"
+    }
+   ],
+   "17": [
+    {
+     "exit": "Waverley Bridge",
+     "via": "concourse, ramp"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "concourse, escalator/stairs/lift"
+    },
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs/lift"
+    }
+   ],
+   "19": [
+    {
+     "exit": "Waverley Bridge",
+     "via": "concourse, ramp"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "concourse, escalator/stairs/lift"
+    },
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs/lift"
+    }
+   ],
+   "20": [
+    {
+     "exit": "Waverley Bridge",
+     "via": "concourse, ramp"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "concourse, escalator/stairs/lift"
+    },
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs/lift"
+    }
+   ],
+   "8w": [
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "footbridge, then escalator/stairs/lift"
+    }
+   ],
+   "9w": [
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "footbridge, then escalator/stairs/lift"
+    }
+   ],
+   "8e": [
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "footbridge, then escalator/stairs/lift"
+    }
+   ],
+   "9e": [
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "footbridge, then escalator/stairs/lift"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "footbridge, then escalator/stairs/lift"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Market Street",
+     "via": "footbridge, stairs, lift"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "footbridge, then escalator/stairs/lift"
+    }
+   ],
+   "1": [
+    {
+     "exit": "Calton Road",
+     "via": "stairs, lift"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "footbridge, stairs/lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Calton Road",
+     "via": "stairs, lift"
+    },
+    {
+     "exit": "Princes Street",
+     "via": "footbridge, stairs/lift"
+    }
+   ]
+  },
+  "unsure": "Platform layout is complex; platforms 3, 4, 7, 13, 18 not placed with confidence. Whether the through platforms 1/2, 8-12 can be walked to the concourse on the level isn't clear from the map. Treat routes as rough."
+ },
+ "VIC": {
+  "map_files": [
+   "VIC-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Way out 1 Hudson's Place",
+    "by": [
+     "1"
+    ],
+    "note": "West side, from the platform 1 side of the station building (unsure if straight off platform 1 or via concourse)."
+   },
+   {
+    "name": "Way out 2 Wilton Road",
+    "by": [],
+    "note": "South-west corner of the concourse."
+   },
+   {
+    "name": "Way out 3 Eastern Archway",
+    "by": [],
+    "note": "South side of the concourse."
+   },
+   {
+    "name": "Way out 4/5 Terminus Place",
+    "by": [],
+    "note": "South side of the concourse (buses, Underground)."
+   },
+   {
+    "name": "Way out 7 Buckingham Palace Road",
+    "by": [],
+    "note": "East side, beside the concourse for platforms 8-19."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "15": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "16": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "17": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "18": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ],
+   "19": [
+    {
+     "exit": "Wilton Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Eastern Archway",
+     "via": "concourse"
+    },
+    {
+     "exit": "Terminus Place",
+     "via": "concourse"
+    },
+    {
+     "exit": "Buckingham Palace Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Hudson's Place",
+     "via": "concourse"
+    }
+   ]
+  },
+  "unsure": "Terminus: every platform opens onto the concourse (1-7 west, 8-19 east). A 'Way out Car park' by platforms 14/15 (lift/escalator) left out as car park. No way out 6 on the map. Victoria Place shopping centre up escalator."
+ },
+ "LST": {
+  "map_files": [
+   "LST-1-1.png",
+   "LST-2.png",
+   "LST-3.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance/exit 4 Broadgate",
+    "by": [],
+    "note": "West end of the main concourse, ground level."
+   },
+   {
+    "name": "Entrance/exit 2 Bishopsgate (East)",
+    "by": [],
+    "note": "East end of the main concourse, ground level."
+   },
+   {
+    "name": "Entrance/exit Exchange Square",
+    "by": [
+     "1"
+    ],
+    "note": "North-west, along the west side by platform 1 (unsure whether straight off platform 1)."
+   },
+   {
+    "name": "Entrance/exit 1 Bishopsgate (West)",
+    "by": [],
+    "note": "Upper balcony, up stairs/escalator/lift from the concourse."
+   },
+   {
+    "name": "Entrance/exit 3 Old Broad Street",
+    "by": [],
+    "note": "Upper balcony, up from the concourse."
+   },
+   {
+    "name": "Entrance/exit 5 Sun Street",
+    "by": [],
+    "note": "Upper balcony, up from the concourse."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "15": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "16": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "17": [
+    {
+     "exit": "Broadgate",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (East)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Bishopsgate (West)",
+     "via": "concourse, then up (stairs, escalator, lift)"
+    },
+    {
+     "exit": "Old Broad Street",
+     "via": "concourse, then up"
+    },
+    {
+     "exit": "Sun Street",
+     "via": "concourse, then up"
+    }
+   ],
+   "A": [
+    {
+     "exit": "Liverpool St. exit (main station)",
+     "via": "escalator, lift"
+    },
+    {
+     "exit": "Moorgate exit",
+     "via": "escalator, lift"
+    }
+   ],
+   "B": [
+    {
+     "exit": "Liverpool St. exit (main station)",
+     "via": "escalator, lift"
+    },
+    {
+     "exit": "Moorgate exit",
+     "via": "escalator, lift"
+    }
+   ]
+  },
+  "unsure": "LST-2 and LST-3 are TfL-style Elizabeth line plans (ticket hall and platforms A/B), not the main station. Elizabeth line ticket hall's escalators lead to the Broadgate entrance/exit."
+ },
+ "GLC": {
+  "map_files": [
+   "GLC-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance/exit 1 Gordon Street",
+    "by": [],
+    "note": "North end of the concourse."
+   },
+   {
+    "name": "Entrance/exit 2 Union Street",
+    "by": [],
+    "note": "East side of the concourse; stairs shown beside it."
+   },
+   {
+    "name": "Entrance/exit 3 Hope Street",
+    "by": [],
+    "note": "West side of the concourse."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Union Street",
+     "via": "concourse (stairs shown)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Union Street",
+     "via": "concourse (stairs shown)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Union Street",
+     "via": "concourse (stairs shown)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Union Street",
+     "via": "concourse (stairs shown)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Union Street",
+     "via": "concourse (stairs shown)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Union Street",
+     "via": "concourse (stairs shown)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Union Street",
+     "via": "concourse (stairs shown)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Union Street",
+     "via": "concourse (stairs shown)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Union Street",
+     "via": "concourse (stairs shown)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Union Street",
+     "via": "concourse (stairs shown)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Union Street",
+     "via": "concourse (stairs shown)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse (unsure)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse (unsure)"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse (unsure)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse (unsure)"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse (unsure)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse (unsure)"
+    }
+   ],
+   "15": [
+    {
+     "exit": "Gordon Street",
+     "via": "concourse (unsure)"
+    },
+    {
+     "exit": "Hope Street",
+     "via": "concourse (unsure)"
+    }
+   ]
+  },
+  "unsure": "Platforms 12-15 are at the south-west end, beyond the taxi ramp; arrows point down at 12/13 and a lift is shown by 15, so their level relative to the concourse is unclear. The low level station is reached by escalator/stairs down; its platforms aren't numbered on this map."
+ },
+ "EUS": {
+  "map_files": [
+   "EUS-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance/exit Melton Street",
+    "by": [],
+    "note": "North-west corner of the concourse."
+   },
+   {
+    "name": "Entrance/exit Euston Road Melton Street",
+    "by": [],
+    "note": "South side of the concourse, to the Piazza."
+   },
+   {
+    "name": "Entrance/exit Euston Road Eversholt Street",
+    "by": [],
+    "note": "South-east side of the concourse, to the Piazza."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "15": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ],
+   "16": [
+    {
+     "exit": "Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Melton Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Euston Road Eversholt Street",
+     "via": "concourse"
+    }
+   ]
+  },
+  "unsure": "Terminus: all platforms open off the concourse (the map doesn't show the ramps from the platforms). Stairs on the Eversholt Street side (east) aren't labelled as an exit."
+ },
+ "SHF": {
+  "map_files": [
+   "SHF-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1a",
+     "1b"
+    ],
+    "note": "Concourse exits onto the pavement on the south side (street not named on the map); concourse opens onto platform 1."
+   },
+   {
+    "name": "Cross Turner Street",
+    "by": [
+     "1a"
+    ],
+    "note": "Exit at the east end of the concourse area, onto Cross Turner Street (label is the street, not an exit name)."
+   },
+   {
+    "name": "Tram Entrance Hall (Sheffield Station Tram Stop)",
+    "by": [],
+    "note": "North end of the bridge, above platform 8b side; stairs and lift."
+   }
+  ],
+  "routes": {
+   "1a": [
+    {
+     "exit": "Concourse exits",
+     "via": "level"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "1b": [
+    {
+     "exit": "Concourse exits",
+     "via": "level"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "2a": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "2b": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "2c": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "3a": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "3b": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "4a": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "4b": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "5a": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "5b": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "6a": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "6b": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "8a": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ],
+   "8b": [
+    {
+     "exit": "Concourse exits",
+     "via": "bridge, stairs, lift"
+    },
+    {
+     "exit": "Tram Entrance Hall",
+     "via": "bridge, stairs, lift"
+    }
+   ]
+  },
+  "unsure": "Platform 7 and 8a/b, 6a/b share the north island; 2/3 and 4/5 islands, all reached from the bridge by stairs/lifts. Not an official Network Rail map (copyright notice); may be old."
+ },
+ "NOT": {
+  "map_files": [
+   "NOT-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Queen's Road",
+    "by": [],
+    "note": "South side: Southern Concourse and the station building onto Queen's Road (several exit arrows)."
+   },
+   {
+    "name": "Carrington Street",
+    "by": [],
+    "note": "West side of the main building (two exit arrows)."
+   },
+   {
+    "name": "Station Street (step free access)",
+    "by": [],
+    "note": "North end of the main building, labelled 'Step free access'."
+   },
+   {
+    "name": "Station Street / Trent Street (footbridge)",
+    "by": [],
+    "note": "North end of the footbridge, by the tram stop."
+   }
+  ],
+  "routes": {
+   "1a": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "1b": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "1c": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "3a": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "3b": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "3c": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "4a": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "4b": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "5a": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "5b": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "6a": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "6b": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "6c": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "7a": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "7b": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ],
+   "7c": [
+    {
+     "exit": "Queen's Road",
+     "via": "stairs/lift at the west end to the main building, or footbridge"
+    },
+    {
+     "exit": "Carrington Street",
+     "via": "stairs/lift at the west end to the main building"
+    },
+    {
+     "exit": "Station Street / Trent Street",
+     "via": "footbridge, stairs"
+    }
+   ]
+  },
+  "unsure": "The main building sits over the west end of the tracks; stairs and lifts link each island to it. Whether the Southern Concourse is on the level with platform 7 isn't clear (it has an escalator and lift). Map is a simple diagram, possibly old."
+ },
+ "LBG": {
+  "map_files": [
+   "LBG-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance/exit St. Thomas Street",
+    "by": [],
+    "note": "Exit 1, from the lower concourse under the platforms, on St Thomas Street (south side)."
+   },
+   {
+    "name": "Entrance/exit Tooley Street",
+    "by": [],
+    "note": "Exit 2, from the lower concourse under the platforms, on Tooley Street (north side)."
+   },
+   {
+    "name": "Entrance/exit Joiner Street",
+    "by": [],
+    "note": "Exit 3, west end of the lower concourse (shops), on Joiner Street at Tooley Street; Jubilee and Northern lines nearby."
+   },
+   {
+    "name": "Entrance/exit London Bridge St.",
+    "by": [],
+    "note": "Exit 4, on the separate upper concourse plan (London Bridge Street, bus station, Jubilee/Northern lines). How the upper concourse joins the platforms isn't shown."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ],
+   "15": [
+    {
+     "exit": "Entrance/exit St. Thomas Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Tooley Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    },
+    {
+     "exit": "Entrance/exit Joiner Street",
+     "via": "down to the lower concourse (under the platforms): escalator, stairs, lift"
+    }
+   ]
+  },
+  "unsure": "All platforms are above the street-level lower concourse; each platform (1, 2/3, 4/5, 6/7, 8/9, 10, 11/12, 13/14, 15) has its own stairs/escalator/lift down to it. Treated as 'under the platforms', closer to a subway than a level concourse. The route from platforms to the London Bridge Street upper concourse (exit 4) is not shown on this map."
+ },
+ "MAN": {
+  "map_files": [
+   "MAN-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Way out Piccadilly & City Centre",
+    "by": [],
+    "note": "Exit 1, from the main concourse at the end of platforms 1 to 12 (approach towards city centre, free bus, rail replacement buses)."
+   },
+   {
+    "name": "Way out Fairfield Street Metrolink",
+    "by": [],
+    "note": "Exit 2, from the concourse near platforms 10 to 12, down stairs/escalator to the sub level (Metrolink, Fairfield Street, taxis)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "concourse, then stairs/escalator down"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "walkway from the concourse ('Platforms 13 14' arrow, waiting lounge towards platforms), escalator/lift"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "walkway from the concourse ('Platforms 13 14' arrow, waiting lounge towards platforms), escalator/lift"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Way out Piccadilly & City Centre",
+     "via": "walkway from the concourse ('Platforms 13 14' arrow, waiting lounge towards platforms), escalator/lift"
+    },
+    {
+     "exit": "Way out Fairfield Street Metrolink",
+     "via": "walkway from the concourse ('Platforms 13 14' arrow, waiting lounge towards platforms), escalator/lift"
+    }
+   ]
+  },
+  "unsure": "Platforms 13 and 14 are only shown by an arrow ('Platforms 13 14', escalator and lift icons nearby); the walkway's level changes aren't drawn. Exit 2 is reached down stairs/escalator from the concourse, which may count as 'concourse' only loosely."
+ },
+ "BRI": {
+  "map_files": [
+   "BRI-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Main Gateline Entrance/exit",
+    "by": [
+     "3"
+    ],
+    "note": "Through the station building to Station Approach ('Entrance/exit Station Approach' and 'Entrance/exit Car Park & Bike Park' are the building's street doors)."
+   },
+   {
+    "name": "Gateline Entrance/exit (Peak Time Only)",
+    "by": [
+     "3"
+    ],
+    "note": "North end of platform 3, near bay platform 1; peak times only."
+   },
+   {
+    "name": "Queen Anne Gate",
+    "by": [
+     "3"
+    ],
+    "note": "South of the main building on platform 3 (taxis/pick-up)."
+   },
+   {
+    "name": "Entrance to University of Bristol",
+    "by": [],
+    "note": "East end of the subway, beyond platform 15."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "level"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "level"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "level"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "level"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "level"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "level"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "level"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "level"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "level"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ],
+   "15": [
+    {
+     "exit": "Main Gateline Entrance/exit",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Gateline Entrance/exit (Peak Time Only)",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Queen Anne Gate",
+     "via": "subway (stairs or lift)"
+    },
+    {
+     "exit": "Entrance to University of Bristol",
+     "via": "subway (stairs or lift)"
+    }
+   ]
+  },
+  "unsure": "Platform 1 (north) and 4 (south) appear as bays at the ends of platform 3; no platform 2 or 14 label seen. Platform 3 reaching the University entrance via the subway is by the 'Stairs to subway'/'Lift to subway' by the main building. Labels are small; read from an enlargement."
+ },
+ "PAD": {
+  "map_files": [
+   "PAD-1-1.png",
+   "PAD-2-1.png",
+   "PAD-2-2.png",
+   "PAD-2-3.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance/exit Praed Street",
+    "by": [],
+    "note": "Exit 1, from the main concourse at the end of the platforms (Praed Street)."
+   },
+   {
+    "name": "Entrance/Exit (Eastbourne Terrace)",
+    "by": [],
+    "note": "Unnumbered 'Entrance/Exit' on Eastbourne Terrace, west side by the ticket office and the Elizabeth Line Entrance/Exit; seems to open off the concourse/platform 1 side."
+   },
+   {
+    "name": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+    "by": [],
+    "note": "Exit 3, on the first floor taxi rank level, reached up from the concourse on the east side by platform 12 ('Up to first floor and taxi rank'), and by the footbridge ('Way out, Taxis and Hammersmith & City')."
+   },
+   {
+    "name": "Elizabeth line street-level entrances (Departure Road / Eastbourne Terrace)",
+    "by": [],
+    "note": "From PAD-2-1 (Elizabeth line plan, street level): entrance/exit arrows onto Departure Road / Eastbourne Terrace and into the Network Rail station."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Entrance/exit Praed Street",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/Exit (Eastbourne Terrace)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Sheldon Square, Kingdom St, Paddington Basin & Bishops Bridge Rd",
+     "via": "concourse, then stairs/escalator/lift up to first floor (east side by platform 12); also the footbridge"
+    }
+   ],
+   "A": [
+    {
+     "exit": "Elizabeth line street-level entrances (Departure Road / Eastbourne Terrace)",
+     "via": "escalator or lift up to the Elizabeth line concourse, then up again to street level"
+    }
+   ],
+   "B": [
+    {
+     "exit": "Elizabeth line street-level entrances (Departure Road / Eastbourne Terrace)",
+     "via": "escalator or lift up to the Elizabeth line concourse, then up again to street level"
+    }
+   ]
+  },
+  "unsure": "Platform 1's north end shows taxi/parking (Eastbourne Terrace/Bishops Bridge Rd direction) — left out as taxi/car park. The footbridge from platforms 1 to 9 (stairs; lift at platform 1) joins the way to exit 3; which platforms 10 to 14 have stairs to it is unclear. Platforms 13 and 14: only 14 is labelled. Elizabeth line platforms A and B are below ground; their exact street exits are only arrows."
+ },
+ "YRK": {
+  "map_files": [
+   "YRK-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance",
+    "by": [
+     "3"
+    ],
+    "note": "Main entrance through the building beside platforms 1 and 3 (east side, near the city walls)."
+   }
+  ],
+  "routes": {
+   "3": [
+    {
+     "exit": "Entrance",
+     "via": "level"
+    }
+   ],
+   "1": [
+    {
+     "exit": "Entrance",
+     "via": "level"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge or subway (lift)"
+    }
+   ]
+  },
+  "unsure": "3D picture, low resolution. Platforms read: 1, 2/2A?, 3, 5/5A, 6, 7, 8, 9, 10, 11 (some labels unclear). Only one 'Entrance' is labelled; no west-side (Leeman Road) exit is labelled. The footbridge and subways (purple arrows) link the islands; which route serves which platform can't be read reliably. Platform 1 being level with the entrance is likely but unsure."
+ },
+ "NCL": {
+  "map_files": [
+   "NCL-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance",
+    "by": [
+     "2",
+     "9",
+     "10",
+     "11",
+     "12"
+    ],
+    "note": "Main entrance (portico) onto the concourse; Metro entrances also shown at the west end."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Entrance",
+     "via": "level (concourse)"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Entrance",
+     "via": "level (concourse)"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Entrance",
+     "via": "level (concourse)"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Entrance",
+     "via": "level (concourse)"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Entrance",
+     "via": "level (concourse)"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Entrance",
+     "via": "level (concourse)"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge (lift)"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge (lift)"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge (lift)"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge (lift)"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge (lift)"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge (lift)"
+    }
+   ]
+  },
+  "unsure": "3D picture, low resolution. The concourse runs beside the long platform labelled PL2 (with PL1 alongside at the west end) and the east bays 9 to 12. A footbridge crosses to the islands 3/4 and 5 to 8. Arrows at both ends of the concourse suggest further side entrances, not named. Whether platform 1 opens straight onto the concourse is unclear."
+ },
+ "NRW": {
+  "map_files": [
+   "NRW-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance",
+    "by": [],
+    "note": "Single entrance from the forecourt (Riverside / Thorpe Road, buses, taxis, drop-off) into the concourse at the end of the platforms."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Entrance",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Entrance",
+     "via": "concourse"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Entrance",
+     "via": "concourse"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Entrance",
+     "via": "concourse"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Entrance",
+     "via": "concourse"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Entrance",
+     "via": "concourse"
+    }
+   ]
+  },
+  "unsure": "Platform 6 lies beyond platform 5's platform; reached along it from the concourse, presumably level, not clearly drawn."
+ },
+ "WAT": {
+  "map_files": [
+   "WAT-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Way out Westminster Bridge Road",
+    "by": [],
+    "note": "Exit 1, east end of the main concourse beyond platform 1 (taxis)."
+   },
+   {
+    "name": "Way out Jubilee line Waterloo Road",
+    "by": [],
+    "note": "Exit 2, main concourse near platforms 1 to 4, also shown on level -1 (Jubilee line)."
+   },
+   {
+    "name": "Way out Station Approach",
+    "by": [],
+    "note": "Exit 3, middle of the main concourse (Station Approach, buses)."
+   },
+   {
+    "name": "Way out Tenison Way",
+    "by": [],
+    "note": "Exit 4, west part of the concourse; escalators/stairs nearby (level change unclear)."
+   },
+   {
+    "name": "Way out Victory Arch",
+    "by": [],
+    "note": "Exit 5, west end of the concourse near platforms 18 to 24."
+   },
+   {
+    "name": "Way out Jubilee line",
+    "by": [],
+    "note": "Exit 7, on the concourse near platforms 1 to 5."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "15": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "16": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "17": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "18": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "19": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse"
+    }
+   ],
+   "20": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse (via The Sidings area)"
+    }
+   ],
+   "21": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse (via The Sidings area)"
+    }
+   ],
+   "22": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse (via The Sidings area)"
+    }
+   ],
+   "23": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse (via The Sidings area)"
+    }
+   ],
+   "24": [
+    {
+     "exit": "Way out Westminster Bridge Road",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Jubilee line Waterloo Road",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Station Approach",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Tenison Way",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Victory Arch",
+     "via": "concourse (via The Sidings area)"
+    },
+    {
+     "exit": "Way out Jubilee line",
+     "via": "concourse (via The Sidings area)"
+    }
+   ]
+  },
+  "unsure": "Platforms 1 to 19 end on the main concourse; staircases on 1 to 17 lead down 'To subway' and the Underground (not a street exit on this map). Platforms 20 to 24 are drawn near 'The Sidings' with escalators/lifts down to the lower concourse; whether they open level onto the main concourse is unclear. Level -1 'Exit to The Curve' (from the Sidings [G]) not counted. No exit 6 shown."
+ },
+ "PRE": {
+  "map_files": [
+   "PRE-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "3",
+     "4"
+    ],
+    "note": "West entrance/exit from the island with the ticket office and shops, to the taxi rank and drop-off/pick-up."
+   },
+   {
+    "name": null,
+    "by": [
+     "7"
+    ],
+    "note": "North side entrance/exit (arrow beside the building and car park above platform 7); the footbridge and subway also end at the north side with entrance/exit arrows."
+   }
+  ],
+  "routes": {
+   "3": [
+    {
+     "exit": "west",
+     "via": "level"
+    },
+    {
+     "exit": "north",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "4": [
+    {
+     "exit": "west",
+     "via": "level"
+    },
+    {
+     "exit": "north",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "3C": [
+    {
+     "exit": "west",
+     "via": "level, along the island"
+    },
+    {
+     "exit": "north",
+     "via": "subway (lift)"
+    }
+   ],
+   "4C": [
+    {
+     "exit": "west",
+     "via": "level, along the island"
+    },
+    {
+     "exit": "north",
+     "via": "subway (lift)"
+    }
+   ],
+   "5": [
+    {
+     "exit": "west",
+     "via": "footbridge or subway"
+    },
+    {
+     "exit": "north",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "6": [
+    {
+     "exit": "west",
+     "via": "footbridge or subway"
+    },
+    {
+     "exit": "north",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "7": [
+    {
+     "exit": "north",
+     "via": "level"
+    },
+    {
+     "exit": "west",
+     "via": "footbridge or subway"
+    }
+   ],
+   "1A": [
+    {
+     "exit": "west",
+     "via": "footbridge or subway (lift)"
+    },
+    {
+     "exit": "north",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "1B": [
+    {
+     "exit": "west",
+     "via": "footbridge or subway (lift)"
+    },
+    {
+     "exit": "north",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "2A": [
+    {
+     "exit": "west",
+     "via": "footbridge or subway (lift)"
+    },
+    {
+     "exit": "north",
+     "via": "footbridge or subway (lift)"
+    }
+   ],
+   "2B": [
+    {
+     "exit": "west",
+     "via": "footbridge or subway (lift)"
+    },
+    {
+     "exit": "north",
+     "via": "footbridge or subway (lift)"
+    }
+   ]
+  },
+  "unsure": "Exits are unnamed (arrow symbols only); 'west' and 'north' are my labels. Which of the two subways and the footbridge reach islands 5/6 and 1/2 is read from stairs/lift symbols; footbridge has no lifts drawn."
+ },
+ "LIV": {
+  "map_files": [
+   "LIV-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Lime Street",
+    "by": [],
+    "note": "Concourse's west side towards Lime Street; 'Lift to Street level' and stairs suggest the street is lower. No entrance marked."
+   },
+   {
+    "name": "Lord Nelson Street",
+    "by": [],
+    "note": "North side, past the car park/taxis. No entrance marked."
+   },
+   {
+    "name": "Skelhorne Street",
+    "by": [
+     "10"
+    ],
+    "note": "South side drop-off/taxi road beside platform 10, and towards Skelhorne Street. No entrance marked."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Lime Street",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Lime Street",
+     "via": "concourse"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Lime Street",
+     "via": "concourse"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Lime Street",
+     "via": "concourse"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Lime Street",
+     "via": "concourse"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Lime Street",
+     "via": "concourse"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Lime Street",
+     "via": "concourse"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Lime Street",
+     "via": "concourse"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Lime Street",
+     "via": "concourse"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Lime Street",
+     "via": "concourse"
+    }
+   ]
+  },
+  "unsure": "The map marks no entrances or exits at all; the three are only the streets the concourse borders. Treat as low confidence. Merseyrail platform reached by lift from the concourse."
+ },
+ "KGX": {
+  "map_files": [
+   "KGX-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance/exit Kings Boulevard",
+    "by": [
+     "9",
+     "10"
+    ],
+    "note": "North end of the western concourse, beside platforms 9 and 10."
+   },
+   {
+    "name": "Entrance/exit Pancras Road",
+    "by": [],
+    "note": "West side of the western concourse (St Pancras International 50m)."
+   },
+   {
+    "name": "Entrance/exit Euston Road",
+    "by": [],
+    "note": "South side of the western concourse, to King's Cross Square."
+   },
+   {
+    "name": "Exit (King's Cross Square)",
+    "by": [],
+    "note": "Two 'Exit' doors at the south end of platforms 0 to 8, onto King's Cross Square (exit only)."
+   }
+  ],
+  "routes": {
+   "0": [
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "concourse, or footbridge (escalator, lift)"
+    }
+   ],
+   "1": [
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "concourse, or footbridge (escalator, lift)"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "concourse, or footbridge (escalator, lift)"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "concourse, or footbridge (escalator, lift)"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "concourse, or footbridge (escalator, lift)"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "concourse, or footbridge (escalator, lift)"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "concourse, or footbridge (escalator, lift)"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "concourse, or footbridge (escalator, lift)"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "concourse, or footbridge (escalator, lift)"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "level"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "level"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Entrance/exit Kings Boulevard",
+     "via": "level"
+    },
+    {
+     "exit": "Entrance/exit Pancras Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Entrance/exit Euston Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Exit (King's Cross Square)",
+     "via": "concourse"
+    }
+   ]
+  },
+  "unsure": "Platform 11 not labelled on this map (only 9 and 10). Platforms 0 to 8 reach the western concourse via the passage 'Platforms 0-8' at their south end, or the footbridge at the north. 'by' for Kings Boulevard is an approximation."
+ },
+ "CTR": {
+  "map_files": [
+   "CTR-1.png"
+  ],
+  "ignored": [
+   "CTR-2-1.png (TfW gateline upgrade notice)"
+  ],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1",
+     "3",
+     "3a",
+     "3b"
+    ],
+    "note": "Main exit from the Ticket Hall (front of station, by Metro Bar/WHSmith, onto the forecourt and Short Stay Car Park). Ticket Hall is on the platform 1/3 side; platform 2 is a bay at the west end of the same side."
+   },
+   {
+    "name": "Footpath",
+    "by": [
+     "2"
+    ],
+    "note": "Exit at the west end of platform 2 onto a footpath beside the West Car Park."
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Two exit signs at the far east end (the 'Unused platform area' beyond platform 1): steps and a ramp down into the East Car Park."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Ticket Hall (main)",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Ticket Hall (main)",
+     "via": "level"
+    },
+    {
+     "exit": "Footpath",
+     "via": "level"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Ticket Hall (main)",
+     "via": "level"
+    }
+   ],
+   "3a": [
+    {
+     "exit": "Ticket Hall (main)",
+     "via": "level"
+    }
+   ],
+   "3b": [
+    {
+     "exit": "Ticket Hall (main)",
+     "via": "level"
+    }
+   ],
+   "4a": [
+    {
+     "exit": "Ticket Hall (main)",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "4b": [
+    {
+     "exit": "Ticket Hall (main)",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Ticket Hall (main)",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Ticket Hall (main)",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "7a": [
+    {
+     "exit": "Ticket Hall (main)",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "7b": [
+    {
+     "exit": "Ticket Hall (main)",
+     "via": "footbridge, steps, lift"
+    }
+   ]
+  },
+  "unsure": "The map has no street names; exits unnamed except 'Footpath'. Whether platforms 4-7 are labelled 4a/4b/7a/7b as halves of 4 and 7 (as shown). East Car Park exit may be car-park-only. Platform 5 and 6 are bays on the far island, same footbridge."
+ },
+ "CRE": {
+  "map_files": [
+   "CRE-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Stepped access to long stay car park",
+    "by": [
+     "11",
+     "12"
+    ],
+    "note": "The only Entrance/Exit symbol on the map: steps at the west end of the platform 11/12 island to the long stay car park. Next to it, 'Access for rail replacement buses'."
+   }
+  ],
+  "routes": {
+   "11": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "level, steps"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "level, steps"
+    }
+   ],
+   "1": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "footbridge (step access only), steps"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "footbridge (step access only), steps"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "footbridge (step access only), steps"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "footbridge (step access only), steps"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Stepped access to long stay car park",
+     "via": "footbridge (step access only), steps"
+    }
+   ]
+  },
+  "unsure": "This is the platforms-only plan: the main entrance and ticket office (on the road bridge at the end of the station) are not shown, so the main way out cannot be read from it. The two footbridges' ends are guessed from the drawing: west footbridge (with lifts) links the platform 1/5 area, 6/9/10 island and 11/12; east footbridge ('step access only') links 3/4, 7/8 and 11/12. Treat routes as unsure."
+ },
+ "WFJ": {
+  "map_files": [
+   "WFJ-1.png",
+   "WFJ-2.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [],
+    "note": "Main exit from the Ticket Hall at street level (by AMT Coffee), onto the forecourt by the road and bus stops. Platforms are above, reached by stairs/lifts from the Ticket Hall/subway."
+   },
+   {
+    "name": "Long Stay Car Park",
+    "by": [
+     "9",
+     "10"
+    ],
+    "note": "Exit sign on the platform 9/10 island at its west end, into the Long Stay Car Park (which leads to the road)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Ticket Hall",
+     "via": "steps, lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Ticket Hall",
+     "via": "steps, lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Ticket Hall",
+     "via": "steps, lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Ticket Hall",
+     "via": "steps, lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Ticket Hall",
+     "via": "steps, lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Ticket Hall",
+     "via": "steps, lift"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps, lift"
+    },
+    {
+     "exit": "Long Stay Car Park",
+     "via": "level"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps, lift"
+    },
+    {
+     "exit": "Long Stay Car Park",
+     "via": "level"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps"
+    }
+   ]
+  },
+  "unsure": "Platform 10's side of the car park exit has a ramp; unclear if fully level. Platform 11 has a ramp at its west end to a 'Pathway' that may lead out by the car park, not marked as an exit. Car park exit may be mainly for car park users."
+ },
+ "STP": {
+  "map_files": [
+   "STP-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Main Entrance from Pancras Road",
+    "by": [],
+    "note": "Lower (ground) level, by The Circle/The Market."
+   },
+   {
+    "name": "Midland Road Exit",
+    "by": [],
+    "note": "Lower level, west side by The Market (north one of two)."
+   },
+   {
+    "name": "Midland Road Exit",
+    "by": [],
+    "note": "Lower level, west end of The Arcade by the Taxi Rank (south one of two)."
+   },
+   {
+    "name": "Eurostar Taxi Drop off",
+    "by": [],
+    "note": "East end of the Arcade's cross passage, Pancras Road side; may be mainly for Eurostar."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Main Entrance from Pancras Road",
+     "via": "escalator, lift, then arcade"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Main Entrance from Pancras Road",
+     "via": "escalator, lift, then arcade"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Main Entrance from Pancras Road",
+     "via": "escalator, lift, then arcade"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Main Entrance from Pancras Road",
+     "via": "escalator, lift, then arcade"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Main Entrance from Pancras Road",
+     "via": "lift, then arcade"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Main Entrance from Pancras Road",
+     "via": "lift, then arcade"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Main Entrance from Pancras Road",
+     "via": "lift, then arcade"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Midland Road Exit",
+     "via": "Eurostar arrivals, arcade"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Midland Road Exit",
+     "via": "Eurostar arrivals, arcade"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Midland Road Exit",
+     "via": "Eurostar arrivals, arcade"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Midland Road Exit",
+     "via": "Eurostar arrivals, arcade"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Midland Road Exit",
+     "via": "Eurostar arrivals, arcade"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Midland Road Exit",
+     "via": "Eurostar arrivals, arcade"
+    }
+   ],
+   "A": [
+    {
+     "exit": "Midland Road Exit",
+     "via": "escalator up to the arcade"
+    }
+   ],
+   "B": [
+    {
+     "exit": "Midland Road Exit",
+     "via": "escalator up to the arcade"
+    }
+   ]
+  },
+  "unsure": "All exits are on the lower level (arcade/undercroft); platforms 1-13 are on the upper level. The map doesn't show which escalator or lift serves which platforms except: escalators at the East Midlands (1-4) area, 'Lift to Southeastern and London Underground' by the Main Entrance, 'Lift to Grand Terrace' at the south end, escalators down to Thameslink A & B. 'Entrance from London Underground' left out (not a street exit). Eurostar 5-10 route via arrivals assumed."
+ },
+ "SRA": {
+  "map_files": [
+   "SRA-2-1.png",
+   "SRA-2-2.png"
+  ],
+  "ignored": [
+   "SRA-1-1.png (night bus map)"
+  ],
+  "exits": [
+   {
+    "name": "Gibbons Road",
+    "by": [
+     "13",
+     "14",
+     "15"
+    ],
+    "note": "Two Entrance/exit arrows on the west side of Lower Concourse B, onto Gibbons Road. Underground platforms 13-15 lead off Lower Concourse B."
+   },
+   {
+    "name": null,
+    "by": [
+     "16",
+     "17"
+    ],
+    "note": "Entrance/exit from Lower Concourse A (south side), towards Great Eastern Road, the bus station and Stratford Centre. DLR 16-17 lead off Lower Concourse A."
+   },
+   {
+    "name": "Way out (via ticket hall) to town centre, Olympic Park & Westfield",
+    "by": [
+     "3a",
+     "4"
+    ],
+    "note": "From the Upper Concourse, which is reached from platform 3a by shallow ramps; DLR platform 4 is on the same level."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Gibbons Road",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Gibbons Road",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Gibbons Road",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Gibbons Road",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Gibbons Road",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Gibbons Road",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Gibbons Road",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Gibbons Road",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "10a": [
+    {
+     "exit": "Gibbons Road",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "11": [
+    {
+     "exit": "Gibbons Road",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "12": [
+    {
+     "exit": "Gibbons Road",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "3a": [
+    {
+     "exit": "Way out (via ticket hall) to town centre, Olympic Park & Westfield",
+     "via": "level (shallow ramp)"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Way out (via ticket hall) to town centre, Olympic Park & Westfield",
+     "via": "level"
+    }
+   ],
+   "13": [
+    {
+     "exit": "Gibbons Road",
+     "via": "level"
+    }
+   ],
+   "14": [
+    {
+     "exit": "Gibbons Road",
+     "via": "level"
+    }
+   ],
+   "15": [
+    {
+     "exit": "Gibbons Road",
+     "via": "level"
+    }
+   ],
+   "16": [
+    {
+     "exit": "Lower Concourse A exit",
+     "via": "level"
+    }
+   ],
+   "17": [
+    {
+     "exit": "Lower Concourse A exit",
+     "via": "level"
+    }
+   ]
+  },
+  "unsure": "Upper-level platforms reach the lower concourses by Subways A, B and C with stairs and lifts (not every stair has a lift). North Ticket Hall has no exit arrow on the map. 'Emergency Exit only' at Subway C and at the end of platform 11 left out. Platforms 3 and 5 may join the Upper Concourse level at the west end (by DLR 4); unclear."
+ },
+ "DON": {
+  "map_files": [
+   "DON-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance",
+    "by": [
+     "1"
+    ],
+    "note": "The station entrance (orange, labelled ENTRANCE) beside platform 1 on the forecourt side; platform 2 (bay, west end) is on the same side."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Entrance",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Entrance",
+     "via": "level"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Entrance",
+     "via": "subway, steps, lift"
+    }
+   ]
+  },
+  "unsure": "Small 3D picture: platform labels (PL1-PL8) are hard to read and their pairing on islands is uncertain. Subways and lifts are shown on each island but not which subway goes where. Platform 0 not shown. Only one exit marked; others (if any) not shown."
+ },
+ "CBG": {
+  "map_files": [
+   "CBG-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance",
+    "by": [
+     "1",
+     "2",
+     "3",
+     "4"
+    ],
+    "note": "Main entrance onto Station Pl / Station Sq (bus stops, taxi rank). It opens off the main platform (platform 4 and its continuation 1, with bays 2 and 3 at the south end)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Entrance",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Entrance",
+     "via": "level"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Entrance",
+     "via": "level"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Entrance",
+     "via": "level"
+    }
+   ],
+   "4a": [
+    {
+     "exit": "Entrance",
+     "via": "level"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge, steps, lift"
+    }
+   ]
+  },
+  "unsure": "3D picture. Platforms 5 and 6 are at the north end by Cyclepoint: they look to be on the main side (so level) but the footbridge's north end lands there too; unsure. Platform 1 label is at the south end of the long platform. No exit marked by Cyclepoint, though one may exist."
+ },
+ "WIM": {
+  "map_files": [
+   "WIM-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Station Entrance",
+    "by": [],
+    "note": "Main entrance on Wimbledon Bridge (Alexandra Road corner), by the booking hall; the concourse is at bridge level above the tracks."
+   },
+   {
+    "name": "Centrecourt",
+    "by": [],
+    "note": "Second entrance at the east end of the concourse, onto Wimbledon Bridge by Centre Court (ticket machines, steps)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Entrance",
+     "via": "steps or lift up to the concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Entrance",
+     "via": "steps or lift up to the concourse"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Station Entrance",
+     "via": "steps or lift up to the concourse"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Station Entrance",
+     "via": "steps or lift up to the concourse"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Station Entrance",
+     "via": "steps or lift up to the concourse"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Station Entrance",
+     "via": "steps or lift up to the concourse"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Station Entrance",
+     "via": "steps or lift up to the concourse"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Station Entrance",
+     "via": "steps or lift up to the concourse"
+    }
+   ],
+   "9": [
+    {
+     "exit": "Station Entrance",
+     "via": "steps or lift up to the concourse"
+    }
+   ],
+   "10": [
+    {
+     "exit": "Station Entrance",
+     "via": "steps or lift up to the concourse"
+    }
+   ]
+  },
+  "unsure": "Every platform is reached by stairs down from the concourse over the tracks; three lift towers are shown but not which platforms each serves. Tramlink platforms shown but not numbered. Platforms 6, 7, 10 'not normally used'."
+ },
+ "GLQ": {
+  "map_files": [
+   "GLQ-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "North Hanover Street",
+    "by": [],
+    "note": "Off the concourse at the end of the upper platforms."
+   },
+   {
+    "name": "George Square",
+    "by": [],
+    "note": "Two Entrance/Exit arrows on the George Square side of the concourse (one north by stairs/lift, one south by the ticket office)."
+   },
+   {
+    "name": "Dundas Street",
+    "by": [],
+    "note": "Off the south side of the concourse."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "George Square",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "George Square",
+     "via": "concourse"
+    }
+   ],
+   "3": [
+    {
+     "exit": "George Square",
+     "via": "concourse"
+    }
+   ],
+   "4": [
+    {
+     "exit": "George Square",
+     "via": "concourse"
+    }
+   ],
+   "5": [
+    {
+     "exit": "George Square",
+     "via": "concourse"
+    }
+   ],
+   "6": [
+    {
+     "exit": "George Square",
+     "via": "concourse"
+    }
+   ],
+   "7": [
+    {
+     "exit": "George Square",
+     "via": "concourse"
+    }
+   ],
+   "8": [
+    {
+     "exit": "George Square",
+     "via": "steps or lift up to the concourse"
+    }
+   ],
+   "9": [
+    {
+     "exit": "George Square",
+     "via": "steps or lift up to the concourse"
+    }
+   ]
+  },
+  "unsure": "Plan of the upper platforms only; the lower level (8, 9) is not shown. Lifts to lower platforms 8 and 9 sit by Dundas Street but are not marked as street entrances. A 'Basement Area Entrance' (internal) left out."
+ },
+ "DBY": {
+  "map_files": [
+   "DBY-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Main exit from the ticket hall (south side) onto the Paved Area, bus stops and Railway Terrace; the ticket hall is beside platform 1 (1a/1b)."
+   },
+   {
+    "name": null,
+    "by": [],
+    "note": "Two exit signs at the north end of the bridge, onto Roundhouse Road / Pride Park Car Park side, reached by stairs and a lift from the bridge."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "level"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "1a": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "level"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "1b": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "level"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "2a": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "footbridge, steps, lift"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "2b": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "footbridge, steps, lift"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "3a": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "footbridge, steps, lift"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "3b": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "footbridge, steps, lift"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "4a": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "footbridge, steps, lift"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "4b": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "footbridge, steps, lift"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "5a": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "footbridge, steps, lift"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "5b": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "footbridge, steps, lift"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "6a": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "footbridge, steps, lift"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "6b": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "footbridge, steps, lift"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Main (ticket hall)",
+     "via": "footbridge, steps, lift"
+    },
+    {
+     "exit": "Roundhouse Road",
+     "via": "footbridge, steps, lift"
+    }
+   ]
+  },
+  "unsure": "Platform 1 to the ticket hall looks level but goes through gates; the bridge stairs/lift rise from the ticket hall. A subway with ramps at the east end links 1a-5a and a ramp/paved area towards Carrington Street, not marked as an exit."
+ },
+ "VXH": {
+  "map_files": [
+   "VXH-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Station Entrance",
+    "by": [],
+    "note": "West entrance by the Booking Hall, onto South Lambeth Place (steps down to the Underground nearby)."
+   },
+   {
+    "name": "Station Entrance",
+    "by": [],
+    "note": "East entrance onto South Lambeth Road; 'Exit open during peak hours'."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Station Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Station Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Station Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Station Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Station Entrance",
+     "via": "subway, steps, lift"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Station Entrance",
+     "via": "subway, steps, lift"
+    }
+   ]
+  },
+  "unsure": "Platforms are raised; all reached by stairs and lifts from the subway beneath. Which lift serves which island not clear. One stair marked 'Open Sundays and diversions only'."
+ },
+ "SOU": {
+  "map_files": [
+   "SOU-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Station Entrance (Blechynden Terrace)",
+    "by": [
+     "1"
+    ],
+    "note": "South side building with ticket office and gates, opening onto Blechynden Terrace / drop-off area. Map label is just 'Station Entrance'."
+   },
+   {
+    "name": "Station Entrance (Western Esplanade)",
+    "by": [
+     "4"
+    ],
+    "note": "North side booking hall by platform 4, towards Western Esplanade / city centre. Map label is just 'Station Entrance'."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Entrance (Blechynden Terrace)",
+     "via": "level"
+    },
+    {
+     "exit": "Station Entrance (Western Esplanade)",
+     "via": "footbridge, steps or lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Entrance (Blechynden Terrace)",
+     "via": "footbridge, steps or lift"
+    },
+    {
+     "exit": "Station Entrance (Western Esplanade)",
+     "via": "footbridge, steps or lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Station Entrance (Blechynden Terrace)",
+     "via": "footbridge, steps or lift"
+    },
+    {
+     "exit": "Station Entrance (Western Esplanade)",
+     "via": "footbridge, steps or lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Station Entrance (Western Esplanade)",
+     "via": "level"
+    },
+    {
+     "exit": "Station Entrance (Blechynden Terrace)",
+     "via": "footbridge, steps or lift"
+    }
+   ]
+  },
+  "unsure": "Platforms 2 and 3 are an island. A second footbridge at the west end is labelled 'Footbridge no access to station' and is not an exit. The second station footbridge's lift at the east end appears to reach platform 4 and the building beside it."
+ },
+ "PBO": {
+  "map_files": [
+   "PBO-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance",
+    "by": [
+     "1"
+    ],
+    "note": "Only one entrance shown, on the platform 1 side (taxis/drop-off)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Entrance",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge, steps or lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge, steps or lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge, steps or lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge, steps or lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge, steps or lift"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Entrance",
+     "via": "footbridge, steps or lift"
+    }
+   ]
+  },
+  "unsure": "Platform labels ('PL1' etc.) are tiny and hard to read; platform 2 may be a bay beside platform 1 (possibly level with the entrance) and the pairing of the islands (2/3, 4/5, 6/7) is my best reading, not certain. Lifts shown on each island. No other street exit shown."
+ },
+ "ORP": {
+  "map_files": [
+   "ORP-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "2"
+    ],
+    "note": "Station building with ticket office and gates by platform 2, onto the station car park / road side (south-west)."
+   },
+   {
+    "name": null,
+    "by": [],
+    "note": "Second station building with ticket office and gates on the north side, towards Orpington bus station; reached by the subway at the London end. There is also a gate in the fence by the bus station at the end of platforms 5 to 8."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "(platform 2 building)",
+     "via": "level, along the platform (unsure)"
+    }
+   ],
+   "2": [
+    {
+     "exit": "(platform 2 building)",
+     "via": "level"
+    },
+    {
+     "exit": "(bus station building)",
+     "via": "subway, steps"
+    }
+   ],
+   "3": [
+    {
+     "exit": "(platform 2 building)",
+     "via": "subway, steps"
+    },
+    {
+     "exit": "(bus station building)",
+     "via": "subway, steps"
+    }
+   ],
+   "4": [
+    {
+     "exit": "(platform 2 building)",
+     "via": "subway, steps"
+    },
+    {
+     "exit": "(bus station building)",
+     "via": "subway, steps"
+    }
+   ],
+   "5": [
+    {
+     "exit": "(platform 2 building)",
+     "via": "subway, steps"
+    },
+    {
+     "exit": "(bus station building)",
+     "via": "subway, steps or level from platform end (unsure)"
+    }
+   ],
+   "6": [
+    {
+     "exit": "(platform 2 building)",
+     "via": "subway, steps"
+    },
+    {
+     "exit": "(bus station building)",
+     "via": "subway, steps or level from platform end (unsure)"
+    }
+   ],
+   "7": [
+    {
+     "exit": "(bus station building)",
+     "via": "level from platform end (unsure)"
+    }
+   ],
+   "8": [
+    {
+     "exit": "(bus station building)",
+     "via": "level from platform end (unsure)"
+    }
+   ]
+  },
+  "unsure": "Exits are unnamed. Hard to tell which platforms share which island and where platforms 7/8 join the subway; 5 to 8 appear to end at a level area by the bus-station-side building. An 'overpass' with three lifts at the country end links platforms (1 and two islands) but has no exit. Platform 1 label sits at the west end of the platform 2 side: may be a bay or same platform; unsure. Subway steps shown; lifts to the subway not visible."
+ },
+ "MOG": {
+  "map_files": [
+   "MOG-1.png",
+   "MOG-2.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Moorfield (north entrance)",
+    "by": [],
+    "note": "Concourse level, above the National Rail platforms; entrance/exit onto Moorfield."
+   },
+   {
+    "name": "Moorfield (south entrance)",
+    "by": [],
+    "note": "Second entrance/exit onto Moorfield from the same concourse."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Moorfield",
+     "via": "stairs and escalators up to the concourse at the end of the platform"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Moorfield",
+     "via": "stairs and escalators up to the concourse at the end of the platform"
+    }
+   ]
+  },
+  "unsure": "Platforms 1 and 2 are one underground island. The platform plan says 'Stairs and Escalators to Elizabeth line and way out'; the concourse plan shows 'Stairs & Lift for National Rail services...' and escalators for the Elizabeth line, so the exact way up from platforms 1/2 (stairs vs escalator, and whether via a lift) is not certain."
+ },
+ "GLD": {
+  "map_files": [
+   "GLD-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance/exit Walnut Tree Close",
+    "by": [
+     "1",
+     "2"
+    ],
+    "note": "Main building with ticket office, through the gates at the end of the platform 2 side. Platform 1 is a short bay at the north end of the same platform."
+   },
+   {
+    "name": "Entrance/exit Guildford Park Road",
+    "by": [],
+    "note": "West side, at the far end of the footbridge, with steps down to Guildford Park Road."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Entrance/exit Walnut Tree Close",
+     "via": "level"
+    },
+    {
+     "exit": "Entrance/exit Guildford Park Road",
+     "via": "footbridge, steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Entrance/exit Walnut Tree Close",
+     "via": "level"
+    },
+    {
+     "exit": "Entrance/exit Guildford Park Road",
+     "via": "footbridge, steps"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Entrance/exit Walnut Tree Close",
+     "via": "subway (ramps) or footbridge (steps)"
+    },
+    {
+     "exit": "Entrance/exit Guildford Park Road",
+     "via": "footbridge, steps"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Entrance/exit Walnut Tree Close",
+     "via": "subway (ramps) or footbridge (steps)"
+    },
+    {
+     "exit": "Entrance/exit Guildford Park Road",
+     "via": "footbridge, steps"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Entrance/exit Walnut Tree Close",
+     "via": "subway (ramps) or footbridge (steps)"
+    },
+    {
+     "exit": "Entrance/exit Guildford Park Road",
+     "via": "footbridge, steps"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Entrance/exit Walnut Tree Close",
+     "via": "subway (ramps) or footbridge (steps)"
+    },
+    {
+     "exit": "Entrance/exit Guildford Park Road",
+     "via": "footbridge, steps"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Entrance/exit Walnut Tree Close",
+     "via": "subway (ramps) or footbridge (steps)"
+    },
+    {
+     "exit": "Entrance/exit Guildford Park Road",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Platforms are labelled 8a/8b, 6a/6b etc. (01, 2a/2b ...); islands read as 3/4, 5/6 and 8 with an unlabelled face (probably 7, not shown). No lifts shown: subway reached by ramps, footbridge by stairs."
+ },
+ "FPK": {
+  "map_files": [
+   "FPK-1-1.png",
+   "FPK-1-2.png"
+  ],
+  "ignored": [
+   "FPK-2-1.png (rail replacement bus leaflet)"
+  ],
+  "exits": [
+   {
+    "name": "Station Place",
+    "by": [],
+    "note": "Concourse below the platforms, with ticket office and two gate lines onto Station Place."
+   },
+   {
+    "name": null,
+    "by": [],
+    "note": "A gate line at the north end of the concourse corridor (beyond the platform 7/8 lifts); street not named on the map."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Place",
+     "via": "subway (concourse below), steps or lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Place",
+     "via": "subway (concourse below), steps or lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Station Place",
+     "via": "subway (concourse below), steps or lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Station Place",
+     "via": "subway (concourse below), steps or lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Station Place",
+     "via": "subway (concourse below), steps or lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Station Place",
+     "via": "subway (concourse below), steps or lift"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Station Place",
+     "via": "subway (concourse below), steps or lift"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Station Place",
+     "via": "subway (concourse below), steps or lift"
+    }
+   ]
+  },
+  "unsure": "Islands 1/2, 3/4, 5/6, 7/8 each have stairs and a lift down to the concourse. The north gate line's street and whether it is a public exit are not labelled. Platform labels on the platform plan are very faint."
+ },
+ "CDF": {
+  "map_files": [
+   "CDF-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [],
+    "note": "Ticket Hall, south side: two exits onto the Wood Street side and one west towards Saunders Road (taxis). Reached from all platforms by the two subways."
+   },
+   {
+    "name": null,
+    "by": [],
+    "note": "North exit beyond platform 8, by the Network Rail car park; reached from the subway with stairs/lift up from platform 8."
+   },
+   {
+    "name": null,
+    "by": [],
+    "note": "Exit at the corner of Riverside Car Park by Wood Street, near platform 0 (via a lift); may be the way out from platform 0."
+   }
+  ],
+  "routes": {
+   "0": [
+    {
+     "exit": "Ticket Hall",
+     "via": "lift (unsure)"
+    }
+   ],
+   "1": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps or lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps or lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps or lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps or lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps or lift"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps or lift"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Ticket Hall",
+     "via": "subway, steps or lift"
+    },
+    {
+     "exit": "North exit",
+     "via": "subway, steps or lift"
+    }
+   ]
+  },
+  "unsure": "Exits aren't named; streets shown are Wood Street and Saunders Road. Platforms 3a/3b, 4a/4b shown. How platform 0 links to the ticket hall and to the Riverside Car Park exit is not clear (lift icons and a path; no stairs shown). Islands: 1/2, 3/4, 6/7; 8 a side platform."
+ },
+ "CAR": {
+  "map_files": [
+   "CAR-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Station Approach",
+    "by": [
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "note": "Ticket Hall opens onto Station Approach (off Collier Road)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Approach",
+     "via": "subway (ramps) or bridge (steps)"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Approach",
+     "via": "subway (ramps) or bridge (steps)"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Station Approach",
+     "via": "subway (ramps) or bridge (steps)"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Station Approach",
+     "via": "level"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Station Approach",
+     "via": "level"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Station Approach",
+     "via": "level"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Station Approach",
+     "via": "level"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Station Approach",
+     "via": "level"
+    }
+   ]
+  },
+  "unsure": "Platforms 5/6 (west) and 7/8 (east) appear to be bays off the south platform 4; 2 a bay off the north platform 1/3. Lift icons at the subway too. A ramp/exit at the west end by the Long Stay Car Park is crossed out (closed?)."
+ },
+ "BTN": {
+  "map_files": [
+   "BTN-1-1.png",
+   "BTN-1-2.png"
+  ],
+  "ignored": [
+   "BTN-2-1.png (rail replacement bus leaflet; it says buses go from the turning circle on Stroudley Road, 'access from platform 8')"
+  ],
+  "exits": [
+   {
+    "name": null,
+    "by": [],
+    "note": "Main front of the concourse, towards the bus stops on Junction Road (Queen's Road side, not labelled)."
+   },
+   {
+    "name": "Trafalgar Street",
+    "by": [],
+    "note": "East side of the concourse, by the ticket office."
+   },
+   {
+    "name": "To pick up & drop off / taxi rank",
+    "by": [],
+    "note": "Gate at the platform 8 end of the concourse, to Stroudley Road (pick up, taxis)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "all",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "all",
+     "via": "concourse"
+    }
+   ],
+   "3": [
+    {
+     "exit": "all",
+     "via": "concourse"
+    }
+   ],
+   "4": [
+    {
+     "exit": "all",
+     "via": "concourse"
+    }
+   ],
+   "5": [
+    {
+     "exit": "all",
+     "via": "concourse"
+    }
+   ],
+   "6": [
+    {
+     "exit": "all",
+     "via": "concourse"
+    }
+   ],
+   "7": [
+    {
+     "exit": "all",
+     "via": "concourse"
+    }
+   ],
+   "8": [
+    {
+     "exit": "all",
+     "via": "concourse"
+    }
+   ]
+  },
+  "unsure": "Terminus: all platforms end at one gated concourse. The main front exit's street name isn't shown beside it. Whether the Stroudley Road gate is inside or outside the ticket gates isn't fully clear (it looks outside, off the concourse corner by platform 8)."
+ },
+ "BLY": {
+  "map_files": [
+   "BLY-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Single exit from the ticket hall (gates) onto the car park side."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "ticket hall",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "ticket hall",
+     "via": "bridge, steps or lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "ticket hall",
+     "via": "bridge, steps or lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "ticket hall",
+     "via": "bridge, steps or lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "ticket hall",
+     "via": "bridge, steps or lift"
+    }
+   ],
+   "6": [
+    {
+     "exit": "ticket hall",
+     "via": "bridge, steps"
+    }
+   ]
+  },
+  "unsure": "Islands 2/3 and 4/5; 6 and 1 side platforms. No lift icon on platform 6, only stairs. Street outside not named (only 'Car Park')."
+ },
+ "ABD": {
+  "map_files": [
+   "ABD-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Guild Street (Paved Area)",
+    "by": [
+     "6N"
+    ],
+    "note": "East end of the Main Concourse onto the paved area by blue badge parking, towards Guild Street."
+   },
+   {
+    "name": "Union Square Shopping Centre",
+    "by": [],
+    "note": "Two corridors south from the Main Concourse lead out beside Union Square Shopping Centre."
+   },
+   {
+    "name": "Travel Centre",
+    "by": [],
+    "note": "Exit through the Travel Centre to the paved area on the south side."
+   },
+   {
+    "name": "College Street",
+    "by": [],
+    "note": "North exit at the end of the bridge, by College Street multi-storey car park."
+   }
+  ],
+  "routes": {
+   "3": [
+    {
+     "exit": "Main Concourse exits",
+     "via": "concourse"
+    },
+    {
+     "exit": "College Street",
+     "via": "bridge, steps or lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Main Concourse exits",
+     "via": "concourse"
+    },
+    {
+     "exit": "College Street",
+     "via": "bridge, steps or lift"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Main Concourse exits",
+     "via": "concourse"
+    },
+    {
+     "exit": "College Street",
+     "via": "bridge, steps or lift"
+    }
+   ],
+   "6S": [
+    {
+     "exit": "Main Concourse exits",
+     "via": "concourse"
+    },
+    {
+     "exit": "College Street",
+     "via": "bridge, steps or lift"
+    }
+   ],
+   "6N": [
+    {
+     "exit": "Main Concourse exits",
+     "via": "concourse"
+    },
+    {
+     "exit": "College Street",
+     "via": "bridge, steps or lift"
+    }
+   ],
+   "7S": [
+    {
+     "exit": "Main Concourse exits",
+     "via": "bridge, steps or lift"
+    },
+    {
+     "exit": "College Street",
+     "via": "bridge"
+    }
+   ],
+   "7N": [
+    {
+     "exit": "Main Concourse exits",
+     "via": "bridge, steps or lift"
+    },
+    {
+     "exit": "College Street",
+     "via": "bridge"
+    }
+   ]
+  },
+  "unsure": "Platforms 3, 4, 5, 6S are bays ending at the main concourse; 6N runs along it. Platform 7N has a lift and stairs to the bridge; 7S is the same platform's other end. Exit names are mine from nearby labels (map labels exits only with the exit symbol)."
+ }
+}

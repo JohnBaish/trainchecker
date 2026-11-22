@@ -172,3 +172,24 @@ Results kept in the session's scratch files for now; to be saved with the nation
 
 **John on using them:** fine to use the information about public exits from the station maps,
 especially alongside another source; the maps themselves aren't reproduced.
+
+## The national run (November 22nd 2026)
+
+`exits.py all` on the UK extract of November 21st 2026 (the same file as the platform table; 30
+minutes). Results in `exits-2026-11-22/`: `exits.json` and `exits-report.txt` (OpenStreetMap,
+Open Database Licence), and `maps-read-44.json` (the 44 big stations read from their maps, with
+the brief the readers followed in `maps-brief.md`). Each platform's way out also says which
+platform the walk comes down by ("bridge by 7").
+
+- Of the 2,616 stations, 1,889 have two or more platforms on the map; 1,778 of those have at
+  least one way out found. 111 have none (80 with two platforms, 31 with three to six, e.g.
+  Stoke-on-Trent, Banbury, Hastings, Birmingham Snow Hill); at 136 more some platforms have no way
+  out. All 44 big stations have ways out from both sources.
+- The other 727 stations have fewer than two platforms on the map (mostly one-platform stations).
+
+**John's wording decisions (same day):** the drafts for exits by platforms, termini and exits
+above or below the platforms agreed; no Exits section where the exits aren't known; heading
+"Station exit at Reading" ("Station exits" for more than one); the station maps' names where
+read, otherwise streets; footbridge, subway or level only (no steps, lifts or escalators); the
+station sentence first, then "Which train are you on?"; for a bridge with two ways down, say
+which platform each way comes down by.

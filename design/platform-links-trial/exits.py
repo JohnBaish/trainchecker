@@ -55,30 +55,39 @@ def exits_of(L, buildings):
             for n in rd:
                 G[b].append((n, 10.0, None, 'bldg')); G[n].append((b, 10.0, None, 'bldg'))
 
+    onplat = collections.defaultdict(set)
+    for r, a in attach.items():
+        for n in a:
+            onplat[n].add(r)
+
     def reach(src):
+        # Also the last other platform the walk passes on its way out ("coming down from the
+        # bridge by platform 7"), or None.
         best = {n: 0.0 for n in attach[src]}
-        h = [(0.0, n, (), False) for n in attach[src]]
+        h = [(0.0, n, (), False, None) for n in attach[src]]
         got = {}
         while h:
-            d, n, used, bl = heapq.heappop(h)
+            d, n, used, bl, last = heapq.heappop(h)
             if d > best.get(n, 1e18):
                 continue
             if n in roadn and n not in attach[src]:
-                got.setdefault(n, (d, used, bl))
+                got.setdefault(n, (d, used, bl, last))
                 continue
             for m, dd, k, wid in G.get(n, ()):
                 u2 = used + ((k, dd),) if k else used
+                other = sorted(onplat.get(m, set()) - {src}, key=bt.num)
+                l2 = other[0] if other else last
                 if d + dd < best.get(m, 1e18):
                     best[m] = d + dd
-                    heapq.heappush(h, (d + dd, m, u2, bl or wid == 'bldg'))
+                    heapq.heappush(h, (d + dd, m, u2, bl or wid == 'bldg', l2))
         return got
 
     refs = sorted((r for r in attach if attach[r]), key=bt.num)
     pts = collections.defaultdict(list)
     for p in refs:
-        for n, (d, u, bl) in reach(p).items():
+        for n, (d, u, bl, last) in reach(p).items():
             if d <= 400:
-                pts[n].append((d, p, how(u), bl))
+                pts[n].append((d, p, how(u), bl, last))
 
     def road_near(a):
         best = {a: 0.0}; h = [(0.0, a)]
@@ -106,7 +115,7 @@ def exits_of(L, buildings):
         for i, c in enumerate(clusters):
             b = min((x for n in c for x in pts[n] if x[1] == p), key=lambda x: x[0], default=None)
             if b:
-                cand.append((b[0], i, b[2], b[3]))
+                cand.append((b[0], i, b[2], b[4]))
         cand.sort()
         if cand:
             lim = max(cand[0][0] + 80, cand[0][0] * 1.5)
@@ -123,7 +132,7 @@ def exits_of(L, buildings):
         lon, lat = N[c[0]]
         exits.append({'street': names, 'by': by, 'building': any(x[3] for x in allx if x[0] <= d0 + 10),
                       'at': [round(lat, 5), round(lon, 5)]})
-    plat = {p: [[num[i], round(d), h] for d, i, h, _ in v] for p, v in per.items()}
+    plat = {p: [[num[i], round(d), h, last] for d, i, h, last in v] for p, v in per.items()}
     return {'exits': exits, 'platforms': plat}
 
 
@@ -134,7 +143,7 @@ def report(crs, name, r):
         lines.append(f"  {k + 1}. onto {st}{' (by the station building)' if e['building'] else ''}, "
                      f"by platform(s) {', '.join(e['by']) or '–'}  [{e['at'][0]},{e['at'][1]}]")
     for p, v in sorted(r['platforms'].items(), key=lambda x: bt.num(x[0])):
-        lines.append(f"     {p:>4}: " + '; '.join(f"{i + 1} {d} m {'+'.join(h)}" for i, d, h in v))
+        lines.append(f"     {p:>4}: " + '; '.join(f"{i + 1} {d} m {'+'.join(h)}{f' by {last}' if last else ''}" for i, d, h, last in v))
     return '\n'.join(lines)
 
 

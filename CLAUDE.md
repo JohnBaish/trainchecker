@@ -79,6 +79,8 @@ given its own branch). Before committing there, run
   to Polsloe Bridge).
 - Every fact checked against its article with `wiki_text.py`; `check.py` clean but for the Parson and
   Clerk warning. Fatal accidents passed over as items (COVERAGE.md says which).
+- `to_site.py` run (the new step 8, from the Fact of the Journey session, merged first): 241 facts in
+  `src/data/passes-near.json`, so this push makes batch 04 live; `npm run check` and `npm run build` pass.
 
 ### November 22nd 2026: "Your train passes near…": batch 03 (notes, straight to `main`; Claude Code)
 

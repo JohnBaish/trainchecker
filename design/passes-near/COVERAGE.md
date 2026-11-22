@@ -122,7 +122,8 @@ stretch has gone end up under `unplaced`, for a person to place.
   station; Earley to Reading (Reading Abbey is on Reading to Twyford) has the siege of 1643. The Loddon
   Viaduct collapse of 1972 (three killed) was passed over for Earley to Winnersh Triangle, as was the
   Charfield crash in batch 03, as not something to greet a passenger with. Chilworth gunpowder mills'
-  point is the nearest edge of the scheduled area.
+  point is the nearest edge of the scheduled area. Step 8 done: `to_site.py` put all 241 items in
+  `src/data/passes-near.json`; `npm run check` (check-facts 24 of 24) and `npm run build` pass.
 - November 22nd 2026 (Claude Code): batch 03, 40 stretches from Nailsea & Backwell to Yatton through to
   Ashchurch for Tewkesbury to Worcestershire Parkway (Yatton to Weston-super-Mare and Highbridge, the Severn
   Tunnel and Bristol's north side, Bristol Parkway to Gloucester and Cheltenham, the Golden Valley line to

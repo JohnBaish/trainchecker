@@ -27,8 +27,10 @@ given its own branch). Before committing there, run
    for Connections), live since November 21st 2026; the trial and build in
    `design/platform-links-trial/`.
 7. `design/passes-near/README.md`: "Your train passes near…" (an interesting thing near each
-   stretch, with the train's side), researched in a Claude chat; data for five lines in `passes-near.json`, with
-   John's decisions and a prompt. Nothing built yet; John will say how it looks.
+   stretch, with the train's side), with John's decisions and the prompt for the page. Since November 22nd
+   2026 every stretch in England is in `stretches.json` (2,376) and the work goes region by region in
+   `design/passes-near/COVERAGE.md` ("Read design/passes-near/COVERAGE.md and do the next batch").
+   Nothing on the page yet; John will say how it looks.
 
 ## Key points
 
@@ -67,6 +69,39 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 22nd 2026: "Your train passes near…": every stretch in England, set up (notes and scripts, straight to `main`; Claude Code)
+
+- **John:** run the set-up prompt in `design/passes-near/README.md`.
+- **Reach:** `services-eu1.arcgis.com`, `en.wikipedia.org` and `historicengland.org.uk` added to John's
+  Default environment (approved). Historic England's list answers in full. Wikipedia answered the first
+  few hundred requests, then refused nearly all ("too many requests"); its rules ask for a contact in the
+  user agent, and none of John's was used. `candidates.py` carries on without it and can be run again.
+- **Network:** `build_stretches.py` on the UK extract of November 21st 2026 (download.openstreetmap.fr,
+  checksum checked) and ONS's country and region boundaries: 2,600 of 2,616 stations found by code, 3,024
+  stretches in the UK, **2,376 with any of them in England** (16 into Wales or Scotland). Per region: South
+  East 472, London 428, North West 396, Yorkshire and The Humber 238, East of England 237, West Midlands 203,
+  South West 194, East Midlands 140, North East 68. In John's order, Great Western routes 271 (taken from
+  the regions), then South West 30, South East 384, London 421, East of England 237, East Midlands 140, West
+  Midlands 191, Yorkshire 238, North West 396, North East 68. A station's own track is the track beside its
+  platforms; the search never turns more than 50 degrees, so never reverses.
+- **For John:** 127 stretches in England run past a third station both ends connect to (`past`): some are
+  avoiding lines no passenger train uses (round York, Didcot, Norwich), others real (Reading to Tilehurst
+  past Reading West). The map can't tell them apart, so all are kept, last in the order, to be looked at
+  in their batch and put under `skipped` with a reason if unused. 166 have no train company on the map
+  (often a gap in OpenStreetMap; some freight lines). Found on the way and fixed: the first rule dropped
+  them, and real lines with them; joining the two directions' tracks made zigzags at stations (Didcot).
+- **Items:** `passes-near.json` now holds the network and the items keyed by stretch (`to_network.py`); the
+  81 items unchanged; 80 fit. **The site of Elm Park (Reading West to Mortimer) doesn't:** Reading Green Park
+  station (2023) is between them. Left under `unplaced` for John; `check.py` fails until it's placed.
+- **Scripts:** `candidates.py` (Historic England's Grade I and II*, scheduled monuments, parks and gardens,
+  battlefields, World Heritage Sites, and Wikipedia, within 1 km, with side and distance, ranked), `check.py`
+  (all 79 sides recomputed from the points agree; Parson and Clerk's point is in the tunnel: a warning),
+  `coverage.py`, `pn.py`. `COVERAGE.md` with "How to do the next batch". README's page prompt rewritten
+  for the network (John hadn't run it). Nothing on the page.
+- **Checked:** the build twice from the cached read; `check.py` (one error, Elm Park); `candidates.py` on
+  three stretches. Not checked: the stretches against the railway itself beyond the Great Western lines'
+  items, and the long ones in the report.
 
 ### November 22nd 2026: Paddington's Elizabeth Line platforms; up or down; live (branch `claude/dreamy-dijkstra-swkirc`, merged the same day; Claude Code)
 

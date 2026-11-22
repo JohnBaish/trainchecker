@@ -31,16 +31,23 @@ it (within 1 km).
 5. Twyford to Henley-on-Thames (three stretches).
 
 Lines 2 to 5 are in `more_items.py`, added November 22nd 2026. Reading to Reading West is on lines 2 and 4
-and has one item. 81 stretches, 81 items. A journey such as Paddington to Plymouth uses lines 1 and 2: its
-stretches come from both.
+and has one item. 81 stretches, 81 items. `pilot_items.py` and `more_items.py` are the record of how these
+were written; the items now live in `passes-near.json` itself (don't run `pilot_items.py`: it writes the
+old form of the file).
+
+Since the evening of November 22nd 2026 the items sit on the whole network instead of the five lines
+(below, "Working through all of England"): 80 of the 81 fit a stretch; the site of Elm Park (Reading West
+to Mortimer) waits for John, as Reading Green Park station now stands between them.
 
 ## The data: `passes-near.json`
 
-- `lines`: each a list of station codes in order along the track, every station counted whether or not a
-  train stops. A journey's stretches come from its train's calling points: for each pair of calling points
-  in a row, take the slice of a line that holds both, in order. A fast train from Reading to Swindon covers
-  Reading–Tilehurst, …, Didcot Parkway–Swindon.
-- `items`: one per stretch.
+- `network`: what the page needs to find a journey's stretches. `stations`: every station code in the
+  network with its name. `stretches`: every stretch with any of it in England, as `[a, b, length in
+  metres]` (from `stretches.json`). A stretch is a pair of stations with no other station between them
+  along the track, whether or not trains stop. A journey's stretches come from its train's calling
+  points: for each pair of calling points in a row, the shortest way between them through the network
+  (by length). A fast train from Reading to Swindon covers Reading–Tilehurst, …, Didcot Parkway–Swindon.
+- `items`: one per stretch, keyed by the stretch's id: its two codes in alphabetical order (`AML-PAD`).
   - `a`, `b`: the stretch, written in the direction the research was done.
   - `kind`: `near`, `crosses` (a bridge, viaduct or river the train crosses), `boundary`, or `station`
     (the station itself is the interesting thing: Mortimer, whose stretch had nothing else).
@@ -50,6 +57,8 @@ stretches come from both.
   - `textReverse`: where present, the sentence for `b` to `a` (boundaries).
   - `name`, `lat`, `lon`, `distanceM` (metres from the track, rounded), `source` (where the facts were
     checked).
+- `unplaced`: items whose two stations aren't a stretch (left for a person to place; `check.py` fails
+  while there are any). `skipped`: stretches that need no item, each with its reason.
 - Every sentence follows the house wording rules (British spelling; one to nine in words; no "under/over").
 
 ## How it was made
@@ -59,7 +68,11 @@ stretches come from both.
 - **Stations:** Nominatim, matched on `ref:crs`, then placed on the track in order.
 - **Candidates within 1 km:** Historic England's National Heritage List (Grade I and II* listed buildings,
   scheduled monuments, parks and gardens, World Heritage Sites; Open Government Licence) and Wikipedia's
-  geotagged articles.
+  geotagged articles. The list's open map service:
+  `https://services-eu1.arcgis.com/ZOdPfBS3aqqDYPUQ/arcgis/rest/services/National_Heritage_List_for_England_NHLE_v02_VIEW/FeatureServer`
+  (layers: 0 listed buildings, 6 scheduled monuments, 7 parks and gardens, 8 battlefields, 10 World
+  Heritage Sites; British National Grid, `inSR=27700`). Wikipedia: `en.wikipedia.org/w/api.php`
+  (`list=geosearch`, up to 10 km round a point, 500 results).
 - **Side:** the nearest point on the track and the sign of the cross product of the track's direction and
   the line to the thing.
 - **Choosing:** one per stretch, by hand; every fact checked against its source; doubtful claims left out.
@@ -74,19 +87,27 @@ England [year]". The sentences are written afresh, not copied from Wikipedia.
 
 ## Prompt for Claude Code
 
+Rewritten on November 22nd 2026 for the network (John hadn't run the earlier one, which used the five
+lines).
+
 ```
 Read design/passes-near/README.md in JohnBaish/trainchecker. Build the data side of "Your train
 passes near…" from design/passes-near/passes-near.json, following John's decisions there: copy the
-data into src/data (loaded only when needed), work out a journey's stretches from the stops api/live.ts
-already sends (the train with the most stops) and the lines in the file, pick one item at random on each
-visit with a way to get another, swap left and right for the other direction (use textReverse where
-there is one), and add the one-line note about facing backwards. Show nothing on a journey none of
-whose stretches has an item. Add checks to npm run check on real saved boards (Reading to Paddington
-both ways, a fast Paddington to Bristol, a journey with no items; if no saved board has one, a made-up
-list of stops for Paddington to Plymouth, whose stretches come from two lines). Before building anything visible,
-ask me how I want it presented on the page, and show me options at computer and phone widths. Add the
-Historic England credit to About as a draft for me. More lines will be added to the same file later, so
-nothing should be specific to any one line.
+network and the items into src/data (loaded only when needed; leave out `unplaced` and `skipped`;
+the network is from OpenStreetMap, so add a licence note as src/data/platform-links-LICENCE.md does),
+work out a journey's stretches from the stops api/live.ts already sends (the train with the most
+stops): for each pair of calling points in a row, the shortest way between them through the
+network's stretches, by length (a stretch is [a, b, metres]). Pick one item at random from those
+stretches on each visit, with a way to get another; swap left and right when the train goes from
+the item's b to its a (use textReverse where there is one); add the one-line note about facing
+backwards. Show nothing on a journey none of whose stretches has an item. Add checks to npm run
+check on real saved boards (Reading to Paddington both ways, a fast Paddington to Bristol, a journey
+with no items; if no saved board has one, a made-up list of stops for Paddington to Plymouth, which
+runs through Reading, Westbury and Exeter). Before building anything visible, ask me how I want it
+presented on the page, and show me options at computer and phone widths. Add the Historic England
+credit to About as a draft for me, and say that the network comes from OpenStreetMap (already
+credited there). Items are being added region by region (COVERAGE.md), so nothing should be specific
+to any line or region.
 ```
 
 ## Working through all of England (John, November 22nd 2026)
@@ -104,6 +125,17 @@ John wants every stretch in England covered, worked through in a fixed order. Th
    chooses one per stretch and checks every fact against a source; John doesn't check each one.
 
 Estimate (not yet counted): about 2,000 to 2,500 stretches, a few dozen sessions.
+
+**Set up on November 22nd 2026 (Claude Code):** 2,376 stretches with any of them in England (the files
+below); the work goes on in `COVERAGE.md`.
+
+- `build_stretches.py` → `stretches.json` (each stretch's track, length, region, train companies) and
+  `stretches-report.md` (counts, stations not found, long stretches, possible avoiding lines).
+- `to_network.py`: puts the items on the network, and adds a batch's items.
+- `candidates.py`: a batch's candidates, ranked, with distance and side.
+- `check.py`: the checks, before every commit.
+- `coverage.py`: the counts in `COVERAGE.md`.
+- `pn.py`: shared by the four above.
 
 ### Prompt for Claude Code: setting it up
 

@@ -87,6 +87,13 @@ given its own branch). Before committing there, run
   `tsc -b`, lint, build; the three colours at 1200px and 390px with touch, light and dark
   (`design/previews/fact/`): no errors, no sideways scroll, Share 44px. Not checked: the Share
   picture read back, a real phone.
+- **John:** sky blue (option B); not shown once the last train has gone ("The last direct train …
+  seems to have gone"), so only with a train in the next four hours; the share words agreed; About
+  reads "The Fact of the Journey is …" and "Left and right are as the train is going. Facing
+  backwards? Look the other way." Done; the `?fact=` switch removed. Checked: checks as above, `tsc
+  -b`, lint, build; 1200px and 390px light and dark; Kings Cross to Edinburgh at 8.59pm (last train
+  gone) shows no fact; the Share picture read back from the clipboard (`design/previews/fact/
+  share-picture.png`), all fonts loaded, no errors.
 
 ### November 22nd 2026: "Your train passes near…": Wikipedia from its dumps; batch 01 looked at again (notes, straight to `main`; Claude Code)
 

@@ -131,7 +131,7 @@ export function quoteImage(q: Quote, date: Date): HTMLCanvasElement {
 
 /** The fact of the journey's picture (John, November 22nd 2026: as the quote's, without the
  *  quotation marks or attribution, in the fact's own colour), with the journey beneath the fact. */
-const FACT = { band: '#eef3e4', edge: '#7a8a5e' }
+const FACT = { band: '#e8eff5', edge: '#5d7f99' }
 export function factImage(text: string, from: string, to: string, date: Date): HTMLCanvasElement {
   const scale = 2
   const canvas = document.createElement('canvas')

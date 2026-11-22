@@ -338,9 +338,10 @@ export function JourneyView({ journey }: { journey: Journey }) {
         </div>
       )}
       {!closed && <QuoteCard />}
-      {/* Fact of the journey, just under the quote (John, November 22nd 2026). Only with a train
-          on the boards, as its stops say which way the journey goes. */}
-      {!closed && allTrains.length > 0 && <FactCard from={an.fromCrs} to={an.toCrs} fromName={an.from} toName={an.to} stops={an.stops.map(([c]) => c)} />}
+      {/* Fact of the journey, just under the quote (John, November 22nd 2026). Only with a train in
+          the next four hours (not once the last one has gone: John), as its stops say which way
+          the journey goes. */}
+      {!closed && an.verdict !== 'none' && <FactCard from={an.fromCrs} to={an.toCrs} fromName={an.from} toName={an.to} stops={an.stops.map(([c]) => c)} />}
       {/* "Connections", just under the quote (John, November 21st 2026; a prototype). No key of its
           own: it shared LastWeek's, and with two children of one key React left the old panel on the
           page after a change of journey. JourneyView is itself keyed by the journey. */}

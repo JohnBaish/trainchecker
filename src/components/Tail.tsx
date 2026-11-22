@@ -48,8 +48,7 @@ export function QuoteCard() {
 /** "Fact of the journey" (John, November 22nd 2026): laid out as the quote is, with no quotation
  *  marks or attribution and its own colour, just under the quote. One fact from the stretches the
  *  journey's train runs along, picked at random on each visit; nothing at all when none of them has
- *  one yet. Its Share makes a picture, as the quote's does. The colour is still being chosen:
- *  `?fact=a|b|c` on the address (a mock-up switch, to come out once John has chosen). */
+ *  one yet. Its Share makes a picture, as the quote's does. Sky blue (John's choice of three). */
 export function FactCard({ from, to, fromName, toName, stops }: { from: string; to: string; fromName: string; toName: string; stops: string[] }) {
   const [fact, setFact] = useState<string | null>(null)
   const [status, setStatus] = useState('')
@@ -64,7 +63,6 @@ export function FactCard({ from, to, fromName, toName, stops }: { from: string; 
     return () => { current = false }
   }, [from, to, stopsKey])
   if (!fact) return null
-  const look = /[?&]fact=([abc])/.exec(location.search)?.[1] ?? 'a'
   const share = async () => {
     setStatus('')
     const now = new Date()
@@ -72,7 +70,7 @@ export function FactCard({ from, to, fromName, toName, stops }: { from: string; 
     setStatus(r === 'copied' ? 'Copied' : r === 'saved' ? 'Saved as a picture' : '')
   }
   return (
-    <section className={`qc2 fact fact-${look}`} aria-label="Fact of the journey">
+    <section className="qc2 fact" aria-label="Fact of the journey">
       {/* Where the quote has its opening mark: left empty, so the two texts line up. */}
       <div aria-hidden="true"></div>
       <div>
@@ -100,8 +98,8 @@ export function Tail({ about = true, quote = true }: { about?: boolean; quote?: 
           {/* The credit OpenStreetMap asks for; John's words (November 21st 2026). */}
           {/* Extended for Station exits (Claude's draft, November 22nd 2026). */}
           <p>The directions between platforms in the Connections section, and the ways out in the Station exits section, come from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>, with National Rail’s station maps for the larger stations.</p>
-          {/* Fact of the journey (Claude's draft, November 22nd 2026, for John). */}
-          <p>The fact of the journey is something near one stretch of line between two stations on your journey, picked at random each time you visit. Left and right are as the train is going: facing backwards, look the other way. The stretches of line come from OpenStreetMap; the facts were checked against Historic England’s list of historic places, Wikipedia and other sources (contains Historic England data © Historic England 2026).</p>
+          {/* Fact of the journey (Claude's draft, with John's changes, November 22nd 2026). */}
+          <p>The Fact of the Journey is something near one stretch of line between two stations on your journey, picked at random each time you visit. Left and right are as the train is going. Facing backwards? Look the other way. The stretches of line come from OpenStreetMap; the facts were checked against Historic England’s list of historic places, Wikipedia and other sources (contains Historic England data © Historic England 2026).</p>
         </section>
       )}
       <footer className="footer-notice">

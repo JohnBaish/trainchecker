@@ -21,7 +21,10 @@ export function Exits({ a }: { a: Analysis }) {
   }, [])
   // The trains you might be on, as in Connections.
   const mines = useMemo(() => [...a.past, ...a.ahead].filter((s) => !s.cancelled && s.sta && s.rel <= 120).map((s) => ({ s, m: mineOf(s) }))
-    .filter(({ m, s }) => (m.exp ? diff(a.now, m.exp) >= -3 : s.rel >= -120)).slice(0, 8), [a])
+    .filter(({ m, s }) => (m.exp ? diff(a.now, m.exp) >= -3 : s.rel >= -120))
+    // A train that ends here isn't offered: its platform can't be seen (John, November 22nd 2026:
+    // "we don't ask what train they're on, so then we don't have to say we don't know").
+    .filter(({ s }) => s.destination !== a.to).slice(0, 8), [a])
   const pick = mines.find(({ m }) => m.id === mineId)
   const e = table?.[a.toCrs]
   const arr = pick ? pick.m.exp ?? pick.m.sta ?? '' : ''

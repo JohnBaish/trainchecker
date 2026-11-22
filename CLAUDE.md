@@ -80,6 +80,8 @@ given its own branch). Before committing there, run
 - 430 map-data stations gain a name (162 town centre, 174 car park, 41 bus station, 29 university,
   26 shopping centre, 25 hospital, 18 city centre, 14 stadium). For John: Stirling (Goosecroft Road as
   the city centre exit), Twyford (a car park exit by platform 4 beside an unnamed one).
+- **Then (John):** a train ending at B is no longer offered in Exits (its platform can't be seen);
+  no question when none is left. Stirling keeps Goosecroft Road (both exits suit the city centre).
 - **Checked:** `npm run check` 273 + 57 + 79 + 40 + 52; `tsc -b`, lint, build; the build without the
   names matches the live table except Birmingham Curzon Street's tie (not open yet).
 

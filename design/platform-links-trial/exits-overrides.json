@@ -60,5 +60,11 @@
       "Western Esplanade": "The town centre exit"
     },
     "mention_other": true
+  },
+  "STG": {
+    "_who": "John, November 22nd 2026: the main building's and Goosecroft Road's exits both suit the city centre, so neither is named for it",
+    "names": {
+      "the city centre exit": "Goosecroft Road"
+    }
   }
 }

@@ -8,9 +8,9 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-81 of 2376 stretches done.
+121 of 2376 stretches done.
 
-1. Great Western routes: 76 of 271 done (next).
+1. Great Western routes: 116 of 271 done (next).
 2. South West: 0 of 30 done.
 3. South East: 1 of 384 done.
 4. London: 4 of 421 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: LTS-SER (Lelant Saltings to St Erth).
+Next stretch in the order: CPN-UMB (Chapelton (Devon) to Umberleigh).
 
 <!-- end of counts -->
 
@@ -46,7 +46,11 @@ Next stretch in the order: LTS-SER (Lelant Saltings to St Erth).
    number, 01 first). It needs `pip install shapely pyproj numpy` and the hosts `services-eu1.arcgis.com`
    and `en.wikipedia.org` (both allowed on John's environment since November 22nd 2026). It names
    trainchecker.baish.net as its contact, as Wikipedia asks (John's word). If it says Wikipedia
-   refused, run it again later: what it fetched is kept in `cache/` (not committed).
+   refused, run it again later: what it fetched is kept in `cache/` (not committed). From a cloud
+   session Wikipedia's API lets through only about one request every 40 seconds; `PN_PATIENT=1` makes
+   the script wait as Wikipedia asks, but a batch then takes hours (November 22nd 2026: 9 of 40
+   stretches in 45 minutes). Ordinary article pages (`/wiki/Title?action=raw`) aren't held back, so
+   facts can be checked against articles at full speed even when the search is refused.
 3. For each stretch, choose one item from `candidates.md` (or anything better you know of near the
    line: a bridge or viaduct the train crosses, a river, a county boundary where nothing else is near).
    Prefer something a passenger would find interesting, and true without hedging.
@@ -90,6 +94,15 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 22nd 2026 (Claude Code): batch 01, 40 stretches in Cornwall and Devon (Lelant Saltings to
+  St Erth through to Portsmouth Arms to Umberleigh: the Falmouth, Newquay, Looe, St Ives, Gunnislake,
+  Paignton, Okehampton and Barnstaple branches). Wikipedia's search refused most requests, so the
+  candidates are mostly Historic England's; every fact was checked against the Wikipedia article in
+  `source` (Historic England's own pages refuse automated reading, even through a fetch agent; only the
+  name and grade from its list data were used without an article, for Roche's holy well). Nine items are
+  stations (`kind` station), where the station was the most interesting thing that could be checked.
+  SBF-SBV (51 m) is the 1941 link between the two St Budeaux lines, which Gunnislake trains use.
 
 - November 22nd 2026 (Claude Code): set up. 2,376 stretches; the 81 items of the first five lines put on
   them (80 placed; the Elm Park item waits for John, above).

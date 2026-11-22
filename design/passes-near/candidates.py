@@ -57,7 +57,10 @@ class Fetcher:
         path = os.path.join(self.cache, hashlib.sha1(q.encode()).hexdigest() + '.json')
         if os.path.exists(path):
             return json.load(open(path))
-        for attempt in range(5):
+        # Wikipedia may let through only one request every 30 to 40 seconds from a busy address,
+        # and says how long to wait (Retry-After); with PN_PATIENT=1 it is waited for, up to 60 times.
+        tries = 60 if os.environ.get('PN_PATIENT') and url == WIKI else 5
+        for attempt in range(tries):
             wait = 1.0 - (time.time() - self.last)
             if wait > 0:
                 time.sleep(wait)
@@ -75,7 +78,11 @@ class Fetcher:
                 return data
             except Exception as e:  # noqa: BLE001 (network trouble: try again, more slowly)
                 print('  retry', attempt + 1, e, file=sys.stderr)
-                time.sleep(3 * (attempt + 1))
+                after = getattr(e, 'headers', None) and e.headers.get('Retry-After')
+                if tries > 5 and after and after.isdigit():
+                    time.sleep(int(after) + 2)
+                else:
+                    time.sleep(3 * (attempt + 1))
         if url == WIKI:
             print('  Wikipedia refused: carrying on without it', file=sys.stderr)
             self.dead.add(url)

@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .data
+
+# "Your train passes near…": what candidates.py fetched (kept locally, not committed)
+design/passes-near/batches/*/cache/

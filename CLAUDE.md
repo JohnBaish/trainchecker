@@ -70,6 +70,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": batch 01 (notes, straight to `main`; Claude Code)
+
+- **John:** "Read design/passes-near/COVERAGE.md and do the next batch." 40 stretches in Cornwall and
+  Devon (the Great Western branches), one item each, every fact checked against a Wikipedia article;
+  `check.py` clean but for the known Parson and Clerk warning; 121 of 2,376 done (Great Western routes
+  116 of 271). Next: CPN-UMB (Chapelton to Umberleigh).
+- `candidates.py`: `PN_PATIENT=1` waits as long as Wikipedia asks (it allows about one search every 40
+  seconds from here). `.gitignore` now leaves out each batch's `cache/`. Historic England's own pages
+  refuse automated reading (Cloudflare), so facts come from Wikipedia; COVERAGE.md says so.
+
 ### November 22nd 2026: "Your train passes near…": every stretch in England, set up (notes and scripts, straight to `main`; Claude Code)
 
 - **John:** run the set-up prompt in `design/passes-near/README.md`.

@@ -30,7 +30,8 @@ given its own branch). Before committing there, run
    stretch, with the train's side), with John's decisions and the prompt for the page. Since November 22nd
    2026 every stretch in England is in `stretches.json` (2,376) and the work goes region by region in
    `design/passes-near/COVERAGE.md` ("Read design/passes-near/COVERAGE.md and do the next batch").
-   Nothing on the page yet; John will say how it looks.
+   On the page as "Fact of the Journey" since November 22nd 2026: after each batch, run
+   `design/passes-near/to_site.py` (COVERAGE.md step 8), or the new facts don't reach the page.
 
 ## Key points
 
@@ -70,7 +71,33 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 22nd 2026: "Fact of the journey", built for John to see (branch `claude/fact-of-the-journey`, not merged; Claude Code)
+### November 22nd 2026: "Your train passes near…": batch 03 (notes, straight to `main`; Claude Code)
+
+- 40 stretches, Nailsea & Backwell to Yatton through to Ashchurch for Tewkesbury to Worcestershire Parkway
+  (Weston-super-Mare, the Severn Tunnel, Bristol Parkway to Gloucester and Cheltenham, the Golden Valley line,
+  the Cotswold Line to Hereford); 201 of 2,376 done (Great Western routes 196 of 271). Next: ASC-CNM
+  (Ashchurch for Tewkesbury to Cheltenham Spa).
+- Every fact checked against its article with `wiki_text.py`; `check.py` clean but for the Parson and Clerk
+  warning. Cheltenham Spa to Stonehouse (the curve round Gloucester) probably has no regular passenger
+  train; given an item, not skipped (COVERAGE.md says why).
+
+### November 22nd 2026: "Your train passes near…": the Wikipedia files committed (notes, straight to `main`; Claude Code)
+
+- **John:** save the download work. `design/passes-near/wiki/`: the article locations (3.3 MB), a
+  cut-down index of the articles dump for those articles (2 MB) and their redirects (1.7 MB), from the
+  20261101 run, with a README (licence CC BY-SA 4.0; how to remake). `candidates.py` and `wiki_text.py`
+  use them by default (`--wiki-api` and `--dumps` for the old ways), so a batch needs no download.
+
+### November 22nd 2026: "Your train passes near…": batch 02 (notes, straight to `main`; Claude Code)
+
+- 40 stretches, Chapelton to Umberleigh through to Nailsea & Backwell to Parson Street (Exeter, Taunton,
+  the Heart of Wessex Line, Bath to Westbury, Bristol Parkway to Swindon, the Severn Beach line); 161 of
+  2,376 done (Great Western routes 156 of 271). Next: NLS-YAT (Nailsea & Backwell to Yatton).
+- Article pages refused (429) after eight reads, so `wiki_text.py` (new) reads articles from the
+  multistream articles dump by byte range (index downloaded, 290 MB, md5 checked); every fact checked
+  against it. `check.py` clean but for the Parson and Clerk warning.
+
+### November 22nd 2026: "Fact of the journey", built and merged the same day (branch `claude/fact-of-the-journey`; Claude Code)
 
 - **John:** the design for "Your train passes near…": a box just under the quote of the day, laid out
   identically, called FACT OF THE JOURNEY, without the quotation marks or attribution, in a different
@@ -94,6 +121,9 @@ given its own branch). Before committing there, run
   -b`, lint, build; 1200px and 390px light and dark; Kings Cross to Edinburgh at 8.59pm (last train
   gone) shows no fact; the Share picture read back from the clipboard (`design/previews/fact/
   share-picture.png`), all fonts loaded, no errors.
+- **John:** "Yes please" to merging. `main`'s batches 02 and 03 merged in first, so 201 facts go live;
+  `to_site.py` added to COVERAGE.md's batch steps (step 8) at John's request, so every batch puts its
+  facts on the page; README and "Read these first" say so. Checks, `tsc -b`, lint and build clean first.
 
 ### November 22nd 2026: "Your train passes near…": Wikipedia from its dumps; batch 01 looked at again (notes, straight to `main`; Claude Code)
 

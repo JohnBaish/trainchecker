@@ -8,9 +8,9 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-121 of 2376 stretches done.
+201 of 2376 stretches done.
 
-1. Great Western routes: 116 of 271 done (next).
+1. Great Western routes: 196 of 271 done (next).
 2. South West: 0 of 30 done.
 3. South East: 1 of 384 done.
 4. London: 4 of 421 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: CPN-UMB (Chapelton (Devon) to Umberleigh).
+Next stretch in the order: ASC-CNM (Ashchurch for Tewkesbury to Cheltenham Spa).
 
 <!-- end of counts -->
 
@@ -41,48 +41,50 @@ Next stretch in the order: CPN-UMB (Chapelton (Devon) to Umberleigh).
 
 1. Read `README.md` here (John's decisions and the house style of the items) and the newest few items in
    `passes-near.json`, so the new ones read the same way.
-2. Make Wikipedia's article locations, once per session (the container doesn't keep them): download
-   three files of one run of English Wikipedia's dumps (`dumps.wikimedia.org/enwiki/<run>/`, e.g.
-   20261101: `enwiki-<run>-geo_tags.sql.gz`, `-page.sql.gz`, `-page_props.sql.gz`, about 2.9 GB in all,
-   a few minutes), check them against that run's `md5sums.txt`, save them as `geo_tags.sql.gz`,
-   `page.sql.gz` and `page_props.sql.gz` in a folder outside the repo (or in `design/passes-near/wikidump/`,
-   which git ignores), and run
-   `python3 -I design/passes-near/wiki_dump.py DUMPS DUMPS/enwiki-<run>-gb-geo.tsv.gz` (about two minutes;
-   about 105,000 articles, 3.3 MB). For example:
-   `R=20261101; D=/home/user/wikidump; mkdir -p $D; for t in geo_tags page page_props; do curl -so
-   $D/$t.sql.gz https://dumps.wikimedia.org/enwiki/$R/enwiki-$R-$t.sql.gz; done; (cd $D && md5sum *.sql.gz)`,
-   compared by eye with `https://dumps.wikimedia.org/enwiki/$R/enwiki-$R-md5sums.txt`. A newer run is
-   fine (the dumps page lists them); keep the same run for all three. `dumps.wikimedia.org` is allowed on John's environment since
-   November 22nd 2026.
-3. Make the candidates for the next 40 stretches still to do:
-   `python3 -I design/passes-near/candidates.py --next 40 --wiki-dump DUMPS/enwiki-<run>-gb-geo.tsv.gz
-   design/passes-near/batches/NN` (NN the batch's number). It needs `pip install shapely pyproj numpy`
-   and the hosts `services-eu1.arcgis.com` and `en.wikipedia.org`. With `--wiki-dump` the nearby
-   articles, their short descriptions and lengths come from the file, and only each chosen article's
-   wikitext is fetched (`/wiki/Title?action=raw`) for its first sentences: about four minutes for 40
-   stretches. Those pages are held back too after a few hundred quick requests (429): the script waits as
-   asked and never keeps an error page. It names trainchecker.baish.net as its contact, as Wikipedia
-   asks (John's word). Without `--wiki-dump` it uses Wikipedia's search API, which from a cloud session
-   lets through only about one request every 40 seconds (`PN_PATIENT=1` waits; a batch then takes
-   hours). What it fetched is kept in `cache/` (not committed). The first sentences are a rough guide
-   made from wikitext: check facts against the article itself.
-4. For each stretch, choose one item from `candidates.md` (or anything better you know of near the
+2. Make the candidates for the next 40 stretches still to do:
+   `python3 -I design/passes-near/candidates.py --next 40 design/passes-near/batches/NN` (NN the batch's
+   number). It needs `pip install shapely pyproj numpy` and the hosts `services-eu1.arcgis.com` and
+   `en.wikipedia.org`. Nothing to download: Wikipedia's nearby articles, their short descriptions and
+   lengths come from the committed `wiki/gb-articles.tsv.gz` (see `wiki/README.md`), and only each
+   chosen article's wikitext is fetched (`/wiki/Title?action=raw`) for its first sentences: about four
+   minutes for 40 stretches. Those pages answer 429 after a few hundred quick requests (sometimes
+   after a few): the script waits as asked and never keeps an error page. It names
+   trainchecker.baish.net as its contact, as Wikipedia asks (John's word). The first sentences are a
+   rough guide made from wikitext: check facts against the article itself. `--wiki-api` uses
+   Wikipedia's search API instead (about one request every 40 seconds from a cloud session).
+   What it fetched is kept in `cache/` (not committed).
+3. For each stretch, choose one item from `candidates.md` (or anything better you know of near the
    line: a bridge or viaduct the train crosses, a river, a county boundary where nothing else is near).
    Prefer something a passenger would find interesting, and true without hedging.
-5. **Check every fact against a source** (the Historic England list entry, Wikipedia, the National
+4. **Check every fact against a source** (the Historic England list entry, Wikipedia, the National
    Trust, the owner's own site). Leave out anything doubtful. Put the source's address in `source`.
-6. Write the sentence in the house style of the existing items: "Your train passes near …, on the
+   Wikipedia's own pages refuse after a few reads, so read articles with
+   `python3 -I design/passes-near/wiki_text.py --save ARTICLES "Title" "Title" …`: it finds them in the
+   committed index (`wiki/gb-index.tsv.gz` and `gb-redirects.tsv.gz`), fetches just the blocks of the
+   articles dump that hold them (by byte range from dumps.wikimedia.org, no limit seen) and saves their
+   wikitext. An article with no coordinates isn't in that index: give `--dumps FOLDER` with the run's
+   full index (`wiki_text.py`'s notes say how). Look out for two things in the candidates: a Wikipedia
+   link beside a list entry is a guess by name and position,
+   and is sometimes wrong (Taunton Castle's pointed at the bus station); and for a park or garden the
+   distance is to the park's edge while `lat`/`lon` is its middle or the house, so `check.py` warns
+   when they differ: write about the park and give the nearest point of its edge, or choose another.
+5. Write the sentence in the house style of the existing items: "Your train passes near …, on the
    train's {side}, …"; British spelling; one to nine in words; "less than"/"more than", never
    "under"/"over" for amounts; written afresh, not copied. Give `name`, `lat`, `lon` (of the thing),
    `distanceM` and `side` from the candidates (the side is for `a` to `b`: write the item's `a` and `b`
    in the same order as the stretch, or swap the side). `kind` is `near`, `crosses`, `boundary` or
    `station`; `side` is null for the last three, and a boundary has `textReverse` for the other way.
-7. Save the batch's items as a list in `batches/NN/items.json`, then
+6. Save the batch's items as a list in `batches/NN/items.json`, then
    `python3 -I design/passes-near/to_network.py design/passes-near/batches/NN/items.json`.
-8. Run `python3 -I design/passes-near/check.py` and fix everything it lists (warnings: look, and fix if
+7. Run `python3 -I design/passes-near/check.py` and fix everything it lists (warnings: look, and fix if
    wrong). Then `python3 -I design/passes-near/coverage.py` to update the counts above.
-9. Commit straight to `main` (notes, house style §10): `batches/NN/` (candidates and items), the
-   data, this file. Add a line to the log below and to `CLAUDE.md`'s log; update the tracker's line
+8. **Put the new facts on the website** (John, November 22nd 2026): the page's "Fact of the Journey"
+   reads `src/data/passes-near.json`, not this folder, so run
+   `python3 -I design/passes-near/to_site.py`, then `npm ci` (once per session) and `npm run check`
+   (its last part, `check-facts`, must pass) and `npm run build`. Without this step the batch's facts
+   never reach the page. A fact shows only on a journey with a train in the next four hours.
+9. Commit straight to `main` (John's standing word for these batches): `batches/NN/` (candidates and
+   items), the data, `src/data/passes-near.json`, this file. That push makes the new facts live. Add a line to the log below and to `CLAUDE.md`'s log; update the tracker's line
    (baish.net-directory) when a part is finished.
 
 ## Things to look out for
@@ -110,6 +112,35 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 22nd 2026 (Claude Code): batch 03, 40 stretches from Nailsea & Backwell to Yatton through to
+  Ashchurch for Tewkesbury to Worcestershire Parkway (Yatton to Weston-super-Mare and Highbridge, the Severn
+  Tunnel and Bristol's north side, Bristol Parkway to Gloucester and Cheltenham, the Golden Valley line to
+  Kemble and Swindon, and the Cotswold Line from Oxford to Hereford). No downloads: candidates from the
+  committed `wiki/` files (six minutes), every fact checked against the article in `source`, read with
+  `wiki_text.py`. Seven items are `crosses` (Gipsy Patch Lane Bridge, the Severn Tunnel, Huckford Viaduct,
+  the Roman town at Dorn, the Colwall and Ledbury tunnels) and one a `station` (Adlestrop, closed in 1966,
+  Edward Thomas's poem). For Blenheim, Dorn and the Evesham battlefield the point is the nearest edge of
+  the area (from Historic England's shapes), so `check.py` agrees with the distance; the train only grazes
+  Cornbury Park (six metres of track inside it), so that item says "along the edge" and its point is the
+  house. Cheltenham Spa to Stonehouse is the curve round Gloucester: the live board at Stroud (9.30pm)
+  showed its trains to Cheltenham calling at Gloucester, so probably no regular passenger train uses it;
+  given an item anyway (it does no harm), not skipped. Cam & Dursley to Cheltenham Spa is used: CrossCountry
+  trains from Bristol Parkway to Birmingham run to Cheltenham without calling at Gloucester.
+- November 22nd 2026 (Claude Code): nothing to download any more. Wikipedia's article locations
+  (`wiki/gb-articles.tsv.gz`), a cut-down index of where those articles sit in the articles dump
+  (`gb-index.tsv.gz`) and their redirects (`gb-redirects.tsv.gz`) are committed, 7 MB in all, from the
+  20261101 run (`wiki/README.md`: how they were made, the licence, how to remake them).
+  `candidates.py` and `wiki_text.py` use them by default; 72 of the 74 sources of batches 01 and 02 are
+  found without any download (the other two have no coordinates).
+- November 22nd 2026 (Claude Code): batch 02, 40 stretches from Chapelton to Umberleigh through to
+  Nailsea & Backwell to Parson Street (the Tarka Line's end, Exeter, Bridgwater to Taunton, the Heart of
+  Wessex Line to Weymouth, Bruton to Westbury, Bath to Trowbridge, Chippenham to Trowbridge, Bristol
+  Parkway to Swindon, and Bristol's local lines to Severn Beach). The first batch with Wikipedia from the
+  dumps (step 2); every fact checked against the article in `source`, read from the articles dump
+  (`wiki_text.py`, new), as Wikipedia's pages refused after eight reads. Four items are `crosses`
+  (Poundbury Camp's tunnel, Avoncliff Aqueduct, Abona at Sea Mills; none is a station). Badminton House
+  was dropped for Bristol Parkway to Swindon: the line passes 13 m from its park, not through it, and
+  3.5 km from the house; the Health Hydro in Swindon instead. Tyntesfield's point is the edge of its park.
 - November 22nd 2026 (Claude Code): Wikipedia from its database dumps. The search API refused most of
   batch 01's requests, so `wiki_dump.py` (new) turns three files of the 20261101 dumps (checksums
   checked) into one file of 105,329 articles with coordinates in Great Britain, and `candidates.py

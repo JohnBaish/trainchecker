@@ -40,6 +40,15 @@ Since the evening of November 22nd 2026 the items sit on the whole network inste
 (Reading West to Mortimer) is now on Reading West to Reading Green Park (John), as Reading Green Park
 station (2023) stands between them.
 
+## On the page: "Fact of the Journey" (live since November 22nd 2026)
+
+Just under the quote of the day, laid out like it, in sky blue (John's choices): one fact picked at
+random from the journey's stretches, with a Share button; nothing when no stretch has a fact or no train
+runs in the next four hours. The page reads `src/data/passes-near.json`, which
+`to_site.py` copies from `passes-near.json`: **run it after every batch** (COVERAGE.md, step 8), or
+the new facts don't reach the page. Code: `src/lib/passesNear.ts`, `FactCard` in
+`src/components/Tail.tsx`; checks in `scripts/check-facts.ts`.
+
 ## The data: `passes-near.json`
 
 - `network`: what the page needs to find a journey's stretches. `stations`: every station code in the
@@ -134,8 +143,12 @@ below); the work goes on in `COVERAGE.md`.
   `stretches-report.md` (counts, stations not found, long stretches, possible avoiding lines).
 - `to_network.py`: puts the items on the network, and adds a batch's items.
 - `candidates.py`: a batch's candidates, ranked, with distance and side.
-- `wiki_dump.py`: Wikipedia's article locations in Great Britain from its database dumps, for
-  `candidates.py --wiki-dump` (since November 22nd 2026, as the search API refuses most requests).
+- `wiki_dump.py`: Wikipedia's article locations in Great Britain, an index of where those articles sit
+  in the articles dump, and their redirects, from Wikipedia's database dumps. The results are committed
+  in `wiki/` (see its README), so `candidates.py` and `wiki_text.py` need no download (since November
+  22nd 2026, as Wikipedia's search API and pages refuse most requests from a cloud session).
+- `wiki_text.py`: an article's wikitext from Wikipedia's articles dump, fetched by byte range, for
+  checking facts when Wikipedia's own pages refuse.
 - `check.py`: the checks, before every commit.
 - `coverage.py`: the counts in `COVERAGE.md`.
 - `pn.py`: shared by the four above.

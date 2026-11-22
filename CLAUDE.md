@@ -84,6 +84,13 @@ given its own branch). Before committing there, run
   check a map. Done on branch `claude/dreamy-dijkstra-swkirc` for him to see (633 platform answers;
   `mention_other` now unused); not merged. He also thinks naming exits by what's near them (the
   town centre, a bus station) is worth doing: not started.
+- **John:** "better than nothing" for "the exit by platform 4"; trap names that read oddly
+  (`toName()`, `hereName()` in `exits.ts`: a place from a station map takes "the … exit", "the car
+  park" takes "The exit to …", "the A82"; map-data names are always streets, left as they are);
+  Ivybridge's informant's new platform 1 sentence ("one via the platform gate to the car park and
+  buses, and one via the footbridge exit, which is quicker on foot to the town"), platform 2 Claude's
+  draft from it. Merged and live at his word, with the other exit everywhere. Next: naming exits by
+  what's near them.
 
 ### November 22nd 2026: "Station exits" built and merged the same day (branch `claude/dreamy-dijkstra-swkirc`; Claude Code)
 

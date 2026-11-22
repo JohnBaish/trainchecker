@@ -70,17 +70,42 @@ export function stationLine(name: string, e: StationExits): string {
   return `At ${name}, the exits are by ${plats(by)}.`
 }
 
+// How an exit's name reads in a sentence (John, November 22nd 2026: trap the ones that read oddly).
+// A street reads as it is ("for Station Road", "The exit on Station Road"); a place takes "the …
+// exit" ("for the University of Bristol exit"); a name already starting "the" stays ("for the car
+// park", "The exit to the car park"); a road number takes "the" ("the A82").
+const STREET = /\b(Road|Street|Lane|Avenue|Hill|Way|Place|Square|Terrace|Close|Approach|Bridge|Row|Walk|Drive|Crescent|Parade|Yard|Boulevard|Queensway|Hollow|Green|Gardens|Grove|Mews|Wharf|Quay|Court|View|Gate|Broadway|Promenade|Esplanade|Wynd|Brae|Vale|Side|Rise|Park Road|Hill South|Road South|Road North|South|North|East|West)\b( \([^)]*\))?$/
+const isRoadNumber = (n: string) => /^[ABM]\d+/.test(n)
+/** After "to" or "for". `street`: the name came from the map data, so it's always a street. */
+export function toName(n: string, street = false): string {
+  if (street) return n
+  if (/^the /.test(n)) return n
+  if (isRoadNumber(n)) return `the ${n}`
+  if (STREET.test(n)) return n
+  return `the ${n} exit`
+}
+/** Before "is right there". */
+export function hereName(n: string, street = false): string {
+  if (street) return `The exit on ${n}`
+  if (/^the /.test(n)) return /\b(exit|entrance)\b/.test(n) ? n[0].toUpperCase() + n.slice(1) : `The exit to ${n}`
+  if (isRoadNumber(n)) return `The exit on the ${n}`
+  if (STREET.test(n)) return `The exit on ${n}`
+  return `The ${n} exit`
+}
+
 /** "Station Hill", "Hurst Road", or for an exit with no name "the exit", or "the exit by platform
  *  4" where there are others (Draft). */
 const target = (e: StationExits, i: number) => {
   const x = e.x[i]
-  if (x[0]) return x[0]
+  if (x[0]) return toName(x[0], !e.m && !e.here)
   const p = x[1][0] ?? x[3]
   return e.x.length === 1 || !p ? 'the exit' : `the exit by platform ${p}`
 }
 const hoursLine = (e: StationExits, ways: Way[]) => {
   const i = ways.map((w) => w[0]).find((x) => e.h?.[String(x)])
-  return i === undefined ? '' : ` The ${e.x[i][0] ? `${e.x[i][0]} exit` : 'exit'} is open from ${e.h![String(i)]}.` // Draft
+  const n = i === undefined ? null : e.x[i][0]
+  const called = !n ? 'The exit' : /^the /.test(n) ? (/\b(exit|entrance)\b/.test(n) ? n[0].toUpperCase() + n.slice(1) : `The exit to ${n}`) : `The ${n} exit`
+  return i === undefined ? '' : ` ${called} is open from ${e.h![String(i)]}.` // Draft
 }
 
 /** For the train you're on. `platform` null: not known yet; `ends` true when the train ends at B. */
@@ -119,7 +144,7 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
     // "even if we only have street names", so people can look on a map for the one that suits them).
     const alt = ways.find((w) => w[0] !== i && (w[1] === 'b' || w[1] === 's'))
     const also = alt ? `, or you can go ${alt[1] === 'b' ? `over the ${e.w ?? 'footbridge'}` : 'through the subway'} for ${target(e, alt[0])}` : ''
-    return `${start} ${here ?? `The exit on ${nm}`} is right there${by}${also}.${hoursLine(e, [ways[0]])}`
+    return `${start} ${here ?? hereName(nm, !e.m)} is right there${by}${also}.${hoursLine(e, [ways[0]])}`
   }
   if (via === 'c') return `${start} The exits are across the concourse at the end of the platform.${hoursLine(e, ways)}` // Draft
   if (via === 'u') return `${start} The way out is ${e.k === 'below' ? 'down' : e.k === 'above' ? 'up' : 'up or down'} from the platform, to ${target(e, i)}.${hoursLine(e, [ways[0]])}` // Draft

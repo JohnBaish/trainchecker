@@ -40,10 +40,10 @@
     "level_crossing": true
   },
   "IVY": {
-    "_who": "John, November 22nd 2026 (platform 2's version is Claude's draft from John's platform 1 sentence)",
+    "_who": "John's Ivybridge informant via John, November 22nd 2026 (platform 2's version is Claude's draft from it)",
     "say": {
-      "1": "There are two exits there: one by the footbridge, which is closest to the car park and buses, and one further along, which is quicker on foot to the town.",
-      "2": "Cross the footbridge to platform 1, where there are two exits: one by the footbridge, which is closest to the car park and buses, and one further along, which is quicker on foot to the town."
+      "1": "There are two exits there, one via the platform gate to the car park and buses, and one via the footbridge exit, which is quicker on foot to the town.",
+      "2": "Go up to the footbridge: its exit is quicker on foot to the town, or cross to platform 1 and go out through the platform gate for the car park and buses."
     }
   },
   "SOU": {

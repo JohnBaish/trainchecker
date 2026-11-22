@@ -8,9 +8,9 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-201 of 2376 stretches done.
+241 of 2376 stretches done.
 
-1. Great Western routes: 196 of 271 done (next).
+1. Great Western routes: 236 of 271 done (next).
 2. South West: 0 of 30 done.
 3. South East: 1 of 384 done.
 4. London: 4 of 421 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: ASC-CNM (Ashchurch for Tewkesbury to Cheltenham Spa).
+Next stretch in the order: DIG-POL (Digby & Sowton to Polsloe Bridge).
 
 <!-- end of counts -->
 
@@ -107,6 +107,17 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 22nd 2026 (Claude Code): batch 04, 40 stretches from Ashchurch for Tewkesbury to Cheltenham
+  Spa through to Polsloe Bridge to St James Park (more Great Western routes: the stretches round
+  Cheltenham and Gloucester, Westbury to Salisbury and Romsey, Reading to Guildford and Redhill (the North
+  Downs Line), the Marlow and Windsor branches, and Exeter). Every fact checked against the article in
+  `source` (`wiki_text.py`). Stretches whose obvious item was already used nearby got another: Reading
+  West to Tilehurst (Elm Park is on Reading West to Reading Green Park) has the Reading Festival bridge;
+  Mortimer to Reading Green Park (Mortimer station is on Bramley to Mortimer) has Reading Green Park
+  station; Earley to Reading (Reading Abbey is on Reading to Twyford) has the siege of 1643. The Loddon
+  Viaduct collapse of 1972 (three killed) was passed over for Earley to Winnersh Triangle, as was the
+  Charfield crash in batch 03, as not something to greet a passenger with. Chilworth gunpowder mills'
+  point is the nearest edge of the scheduled area.
 - November 22nd 2026 (Claude Code): batch 03, 40 stretches from Nailsea & Backwell to Yatton through to
   Ashchurch for Tewkesbury to Worcestershire Parkway (Yatton to Weston-super-Mare and Highbridge, the Severn
   Tunnel and Bristol's north side, Bristol Parkway to Gloucester and Cheltenham, the Golden Valley line to

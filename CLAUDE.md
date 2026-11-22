@@ -70,6 +70,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": batch 04 (notes, straight to `main`; Claude Code)
+
+- 40 stretches, Ashchurch for Tewkesbury to Cheltenham Spa through to Polsloe Bridge to St James Park
+  (Cheltenham and Gloucester, Westbury to Salisbury and Romsey, the North Downs Line from Reading to
+  Redhill, the Marlow and Windsor branches, Exeter); 241 of 2,376 done. Next: DIG-POL (Digby & Sowton
+  to Polsloe Bridge).
+- Every fact checked against its article with `wiki_text.py`; `check.py` clean but for the Parson and
+  Clerk warning. Fatal accidents passed over as items (COVERAGE.md says which).
+
 ### November 22nd 2026: "Your train passes near…": batch 03 (notes, straight to `main`; Claude Code)
 
 - 40 stretches, Nailsea & Backwell to Yatton through to Ashchurch for Tewkesbury to Worcestershire Parkway

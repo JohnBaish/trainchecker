@@ -126,6 +126,11 @@ def main():
             e.setdefault('here', {})[str(names.index(old))] = words
         if o.get('bridge'):
             e['w'] = o['bridge']
+        for x in o.get('add_exits', []):
+            e['x'].append([x.get('name'), x['by'], 0, None])
+            names.append(x.get('name'))
+        if o.get('level_crossing'):
+            e['lc'] = 1
         for old, ps in o.get('by', {}).items():
             e['x'][names.index(old)][1] = ps
         if o.get('no_routes'):

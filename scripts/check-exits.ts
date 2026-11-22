@@ -36,11 +36,20 @@ eq('a terminus: no platform needed', trainLine(T.VIC, null, true), 'Every platfo
 eq('platform not yet announced', trainLine(T.RDG, null, false), 'The platform for your train hasn’t been announced yet. Check again nearer the time.')
 eq('opening hours (Leeds, Holbeck)', trainLine(T.LDS, '9', false).endsWith('The Holbeck Urban Village exit is open from 6am to 10pm.'), true)
 // No route known from a platform: the station's own sentence, never "doesn't know" (John).
-eq('Midgham: platform 1 with no route', trainLine(T.MDG, '1', false), 'Your train is due into platform 1. The exit is by platform 2.')
+eq('Midgham: an exit by each platform, either side of the level crossing (John)', stationLine('Midgham', T.MDG), 'At Midgham, there’s an exit by each platform, either side of the level crossing.')
+eq('Midgham: platform 1 (John)', trainLine(T.MDG, '1', false), 'Your train is due into platform 1. There’s an exit right there, by the level crossing.')
+eq('Midgham: platform 2', trainLine(T.MDG, '2', false), 'Your train is due into platform 2. The exit on Station Road is right there, by the level crossing.')
+eq('Dean: an exit by each platform, no level crossing said', stationLine('Dean', T.DEN), 'At Dean, there’s an exit by each platform.')
+eq('Dean: the bracket dropped from your own platform', trainLine(T.DEN, '1', false), 'Your train is due into platform 1. The exit on Rectory Hill is right there.')
+eq('a platform with no route: the station’s sentence (Bridlington)', trainLine(T.BDT, '1', false).startsWith('Your train is due into platform 1. ') && !/doesn’t know/.test(trainLine(T.BDT, '1', false)), true)
 eq('Southend Airport: platform 2 with no route', trainLine(T.SIA, '2', false), 'Your train is due into platform 2. The exit is by platform 1.')
 let knows = 0
 for (const e of Object.values(T)) for (const p of ['1', '2', '3', '4']) if (/doesn’t know/.test(trainLine(e, p, false))) knows++
 eq('never "doesn’t know"', knows, 0)
+// "An exit by each platform" only where every platform's way out is right there (Airdrie wasn't).
+let mismatch = 0
+for (const e of Object.values(T)) if (stationLine('X', e).includes('by each platform')) for (const p of Object.keys(e.p)) if (!/right there/.test(trainLine(e, p, false))) mismatch++
+eq('"an exit by each platform" agrees with every platform', mismatch, 0)
 // Left out where the exits aren't known, or still in doubt (John, the cautious approach).
 eq('left out', ['KIH', 'LTT', 'MIS', 'GNB', 'HLR', 'ENC', 'SWN', 'BDG', 'GNH', 'HMC', 'BUO', 'MTN', 'BMN', 'GRP', 'NEH', 'EBT', 'CSB'].filter((c) => c in T), [])
 // Never across a barrow crossing; every route points at a real exit.

@@ -24,7 +24,8 @@ export type ExitRow = [name: string | null, by: string[], building: 0 | 1, near:
 export type Way = [exit: number, via: string, down: string | null]
 /** w: John's word for the station's footbridge ("bridge" at Reading, which has shops on it);
  *  here: for an exit given a descriptive name, how to say it's right there (exit number → words). */
-export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string> }
+export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string>; lc?: 1 }
+// lc: John has confirmed the exits are either side of a public level crossing (Midgham).
 export type ExitsTable = Record<string, StationExits>
 
 const numOf = (s: string) => parseInt(s.replace(/\D/g, ''), 10) || 999
@@ -54,6 +55,11 @@ export function stationLine(name: string, e: StationExits): string {
     if (vias.size === 1 && vias.has('s')) return `At ${name}, every platform reaches the ${one ? 'exit' : 'exits'} through the subway.`
     return `At ${name}, the ${one ? 'exit isn’t' : 'exits aren’t'} on the platforms themselves.`
   }
+  // Every platform with its own exit (Midgham, Dean, Darsham: John, November 22nd 2026).
+  const all = new Set([...Object.keys(e.p), ...e.x.flatMap((x) => x[1])])
+  if (!one && all.size >= 2 && e.x.every((x) => x[1].length) && [...all].every((p) => e.x.some((x) => x[1].includes(p)))
+    && Object.values(e.p).every((ws) => ws[0]?.[1] === 'l'))
+    return `At ${name}, there’s an exit by each platform${e.lc ? ', either side of the level crossing' : ''}.`
   if (one) return `At ${name}, the exit is by ${e.x[0][2] ? `the station building on ${plats(by)}` : plats(by)}.`
   return `At ${name}, the exits are by ${plats(by)}.`
 }
@@ -97,9 +103,12 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
   const [i, via, down] = ways[0]
   if (via === 'l') {
     const x = e.x[i]
-    if (!x[0]) return `${start} ${e.x.length === 1 ? 'The exit is' : 'There’s an exit'} right there.${hoursLine(e, [ways[0]])}` // the second: Draft
+    const by = e.lc ? ', by the level crossing' : ''
+    if (!x[0]) return `${start} ${e.x.length === 1 ? 'The exit is' : 'There’s an exit'} right there${by}.${hoursLine(e, [ways[0]])}`
+    // "Rectory Hill (platform 1)" names it for the station's list; from that platform it's just Rectory Hill.
+    const nm = x[0].replace(/ \(platform [0-9A-Za-z]+( side)?\)$/, '')
     const here = e.here?.[String(i)]
-    return `${start} ${here ?? `The exit on ${x[0]}`} is right there.${hoursLine(e, [ways[0]])}`
+    return `${start} ${here ?? `The exit on ${nm}`} is right there${by}.${hoursLine(e, [ways[0]])}`
   }
   if (via === 'c') return `${start} The exits are across the concourse at the end of the platform.${hoursLine(e, ways)}` // Draft
   if (via === 'u') return `${start} The way out is ${e.k === 'below' ? 'down' : e.k === 'above' ? 'up' : 'up or down'} from the platform, to ${target(e, i)}.${hoursLine(e, [ways[0]])}` // Draft

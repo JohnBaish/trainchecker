@@ -1,5 +1,5 @@
 {
-  "_about": "John's own corrections to the Station exits table, applied last by build_exits_table.py, so they win over the station maps and the map data. Per station: 'names' renames exits (old name: the words used after 'to', as in 'to the town centre and Station Hill'); 'here' says how to put 'is right there' for a renamed exit; 'bridge' is the word for the station's footbridge. Each entry says who and when. 'by' sets the platforms an exit is by; 'no_routes' keeps no routes (only what John knows); 'no_exit' names an exit John says isn't there (the build stops if it appears).",
+  "_about": "John's own corrections to the Station exits table, applied last by build_exits_table.py, so they win over the station maps and the map data. Per station: 'names' renames exits (old name: the words used after 'to', as in 'to the town centre and Station Hill'); 'here' says how to put 'is right there' for a renamed exit; 'bridge' is the word for the station's footbridge. Each entry says who and when. 'by' sets the platforms an exit is by; 'no_routes' keeps no routes (only what John knows); 'no_exit' names an exit John says isn't there (the build stops if it appears). 'add_exits' adds exits the sources missed; 'level_crossing' says the exits are either side of a public level crossing.",
   "RDG": {
     "_who": "John, November 22nd 2026",
     "names": {
@@ -26,5 +26,17 @@
     "no_exit": [
       "north car park"
     ]
+  },
+  "MDG": {
+    "_who": "John, November 22nd 2026: exits from both platforms, either side of the level crossing (platform 1 for Newbury, 2 for Reading: National Rail's live board)",
+    "add_exits": [
+      {
+        "name": null,
+        "by": [
+          "1"
+        ]
+      }
+    ],
+    "level_crossing": true
   }
 }

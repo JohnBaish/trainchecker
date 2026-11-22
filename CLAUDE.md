@@ -94,6 +94,13 @@ given its own branch). Before committing there, run
   table comes out the same. Raised by John: "Trainchecker doesn't know the way out from there"
   breaks the show-what-we-know rule; now "Your train is due into platform 1. The exit is by platform
   2." (the station's own sentence; John agreed). Checks 273 + 57 + 79 + 40 + 25.
+- **Midgham (John):** exits from both platforms, either side of the level crossing (platform 1
+  for Newbury, 2 for Reading, from National Rail's live board at 2.59pm). Agreed: a general rule
+  "At Dean, there's an exit by each platform." where every platform's way out is on the level (574
+  stations); "either side of the level crossing" and "…right there, by the level crossing." only
+  where John has confirmed it (`level_crossing` in the corrections file, starting with Midgham,
+  whose platform 1 exit was added with `add_exits`); a "(platform 1)" bracket dropped from your own
+  platform's exit. Checks 273 + 57 + 79 + 40 + 31.
 
 ### November 22nd 2026: exits, a trial on six stations (notes and trial scripts, straight to `main`; Claude Code)
 

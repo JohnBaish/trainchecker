@@ -65,6 +65,27 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Station exits" built, for John to try (branch `claude/dreamy-dijkstra-swkirc`, not merged; Claude Code)
+
+- **John:** a section under Arrivals, "Station exit(s) at Reading": "At Reading, the exits are by
+  platforms 1, 4 and 15.", then "Which train are you on?" and the way out from its platform;
+  either way off a footbridge, saying which platform each comes down by; the station maps' names
+  where read; footbridge, subway or level only; left off where the exits aren't known; the
+  cautious approach for the 18 still in doubt (Southend Airport: by platform 1 only; Chislehurst:
+  no north car park exit). Trial and decisions: `design/platform-links-trial/exits-results-2026-11-22.md`.
+- **Built:** `design/platform-links-trial/build_exits_table.py` makes `src/data/exits.json` (1,914
+  stations, 112 from station maps read by eye into a strict shape, `exits-2026-11-22/maps-strict-*.json`;
+  the rest from OpenStreetMap; 40 KB compressed, loaded only with the section; licence in
+  `src/data/exits-LICENCE.md`); `src/lib/exits.ts` (the sentences; new ones marked Draft);
+  `src/components/Exits.tsx`; `api/connect.ts` `only=platform` (`fetchArrPlatform()` in `load.ts`);
+  the credit in About extended (draft). Barrow crossings never used; level crossings from the map
+  data left out (they can't be told from barrow crossings).
+- **Checked:** `npm run check` 273 + 57 + 79 + 40 + 20 (new `scripts/check-exits.ts`: John's
+  sentences on the real table, the stations he knows, the left-out list, every route valid); `tsc
+  -b`, lint, build; Paddington to Reading's saved board with the platform lookup answered 8 and 4,
+  1200px light and 390px dark with touch (`design/previews/exits/`): no errors, no sideways scroll,
+  train buttons 65px. Not checked: live trains, Vercel's preview, a real phone.
+
 ### November 22nd 2026: exits, a trial on six stations (notes and trial scripts, straight to `main`; Claude Code)
 
 - **John:** an "Exits" section under Arrivals: "The exits are by platforms 17 and 5", then, for the

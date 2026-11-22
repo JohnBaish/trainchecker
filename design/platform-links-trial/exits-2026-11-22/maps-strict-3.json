@@ -1,0 +1,2679 @@
+{
+ "HPQ": {
+  "exits": [
+   {
+    "name": "the ferry terminal",
+    "by": [
+     "1"
+    ]
+   },
+   {
+    "name": "the Port car park",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "l"
+    ],
+    [
+     1,
+     "b"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": "No street exit shown: the ways out go to the ferry terminal and the Port car park (at the far end of the footbridge)."
+ },
+ "HSB": {
+  "exits": [
+   {
+    "name": "Lodge Hollow",
+    "by": [
+     "1"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "l"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "b"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": ""
+ },
+ "INC": {
+  "exits": [
+   {
+    "name": "Ince Green Lane",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "u"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "u"
+    ]
+   ]
+  },
+  "kind": "above",
+  "hours": {},
+  "note": "One island platform; steps up to the road bridge."
+ },
+ "KBW": {
+  "exits": [
+   {
+    "name": "Station Approach",
+    "by": []
+   },
+   {
+    "name": "the car park",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "s"
+    ],
+    [
+     1,
+     "s"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "s"
+    ],
+    [
+     1,
+     "s"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "s"
+    ],
+    [
+     1,
+     "s"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "s"
+    ],
+    [
+     1,
+     "s"
+    ]
+   ]
+  },
+  "kind": "mixed",
+  "hours": {},
+  "note": "Both ways out are from the station building, reached by the subway (steps, no lifts shown). Platforms 2 and 3 have no trains scheduled."
+ },
+ "KGE": {
+  "exits": [
+   {
+    "name": "Kingsknowe Road South (platform 2 side)",
+    "by": [
+     "2"
+    ]
+   },
+   {
+    "name": "Kingsknowe Road South (platform 1 side)",
+    "by": [
+     "1"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     1,
+     "l"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "l"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": "No footbridge; the platforms are joined only by the road level crossing."
+ },
+ "KGX": {
+  "exits": [
+   {
+    "name": "Kings Boulevard",
+    "by": [
+     "9",
+     "10"
+    ]
+   },
+   {
+    "name": "Pancras Road",
+    "by": []
+   },
+   {
+    "name": "Euston Road",
+    "by": []
+   },
+   {
+    "name": "King's Cross Square",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "0": [
+    [
+     3,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "1": [
+    [
+     3,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "2": [
+    [
+     3,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "3": [
+    [
+     3,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "4": [
+    [
+     3,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "5": [
+    [
+     3,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "6": [
+    [
+     3,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "7": [
+    [
+     3,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "8": [
+    [
+     3,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "9": [
+    [
+     0,
+     "l"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ],
+   "10": [
+    [
+     0,
+     "l"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ]
+  },
+  "kind": "mixed",
+  "hours": {},
+  "note": "The King's Cross Square doors at the end of platforms 0 to 8 are exit only. Platform 11 isn't labelled on the map."
+ },
+ "KIH": {
+  "skip": true
+ },
+ "KRK": {
+  "exits": [
+   {
+    "name": "the car park",
+    "by": [
+     "1"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "l"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "b"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": ""
+ },
+ "KVP": {
+  "exits": [
+   {
+    "name": "Red Hill",
+    "by": [
+     "2"
+    ]
+   },
+   {
+    "name": "the car park",
+    "by": [
+     "1"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     1,
+     "l"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "l"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": "No footbridge; a road level crossing at the east end."
+ },
+ "LBG": {
+  "exits": [
+   {
+    "name": "St Thomas Street",
+    "by": []
+   },
+   {
+    "name": "Tooley Street",
+    "by": []
+   },
+   {
+    "name": "Joiner Street",
+    "by": []
+   },
+   {
+    "name": "London Bridge Street",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "5": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "6": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "7": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "8": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "9": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "10": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "11": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "12": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "13": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "14": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ],
+   "15": [
+    [
+     0,
+     "u"
+    ],
+    [
+     1,
+     "u"
+    ],
+    [
+     2,
+     "u"
+    ]
+   ]
+  },
+  "kind": "below",
+  "hours": {},
+  "note": "Every platform has stairs, escalators and a lift down to the street-level concourse under the platforms. How the London Bridge Street upper concourse joins the platforms isn't shown."
+ },
+ "LDS": {
+  "exits": [
+   {
+    "name": "City Centre",
+    "by": []
+   },
+   {
+    "name": "City Square",
+    "by": []
+   },
+   {
+    "name": "Aire Street",
+    "by": []
+   },
+   {
+    "name": "Holbeck Urban Village",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "0": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ],
+   "1": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ],
+   "5": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ],
+   "6": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ],
+   "8": [
+    [
+     0,
+     "b"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "9": [
+    [
+     0,
+     "b"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "11": [
+    [
+     0,
+     "b"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "12": [
+    [
+     0,
+     "b"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "13": [
+    [
+     0,
+     "b"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "15": [
+    [
+     0,
+     "b"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "16": [
+    [
+     0,
+     "b"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "17": [
+    [
+     0,
+     "b"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ]
+  },
+  "kind": "mixed",
+  "hours": {
+   "3": "6am to 10pm"
+  },
+  "note": "City Centre is on New Station Street; Holbeck Urban Village (Granary Wharf) is down from the west footbridge. Platforms 3, 4, 7, 10 and 14 left out: their way to the concourse isn't clear on the map."
+ },
+ "LIP": {
+  "exits": [
+   {
+    "name": "Station Road",
+    "by": [
+     "1"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "l"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "b"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": ""
+ },
+ "LIV": {
+  "exits": [
+   {
+    "name": "Lime Street",
+    "by": []
+   },
+   {
+    "name": "Lord Nelson Street",
+    "by": []
+   },
+   {
+    "name": "Skelhorne Street",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ],
+   "5": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ]
+   ],
+   "6": [
+    [
+     0,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "7": [
+    [
+     0,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "8": [
+    [
+     0,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "9": [
+    [
+     0,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "10": [
+    [
+     0,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ]
+  },
+  "kind": "concourse",
+  "hours": {},
+  "note": "The map marks no entrances: these are the streets the concourse opens onto. Lime Street is down stairs or a lift from the concourse."
+ },
+ "LLD": {
+  "exits": [
+   {
+    "name": "Augusta Street (ticket office)",
+    "by": [
+     "1",
+     "2"
+    ]
+   },
+   {
+    "name": "Augusta Street (access road)",
+    "by": [
+     "1",
+     "2",
+     "3"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "3": [
+    [
+     1,
+     "c"
+    ],
+    [
+     0,
+     "c"
+    ]
+   ]
+  },
+  "kind": "concourse",
+  "hours": {},
+  "note": "From platform 3, cross the access road at the safe crossing point."
+ },
+ "LLV": {
+  "exits": [
+   {
+    "name": "Tywi Avenue",
+    "by": [
+     "2"
+    ]
+   },
+   {
+    "name": "the car park",
+    "by": [
+     "1"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     1,
+     "l"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "l"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": "No crossing between the platforms shown."
+ },
+ "LOC": {
+  "exits": [
+   {
+    "name": "the council car park",
+    "by": [
+     "1"
+    ]
+   },
+   {
+    "name": "Access Road",
+    "by": [
+     "1"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     1,
+     "l"
+    ],
+    [
+     0,
+     "l"
+    ]
+   ],
+   "2": [
+    [
+     1,
+     "b"
+    ],
+    [
+     0,
+     "b"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": ""
+ },
+ "LPY": {
+  "exits": [
+   {
+    "name": "Car Park Access Road",
+    "by": []
+   },
+   {
+    "name": "the footpath and cycle route",
+    "by": []
+   },
+   {
+    "name": "the car park",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "5": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "6": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ]
+  },
+  "kind": "mixed",
+  "hours": {},
+  "note": "All ways out are from the ground-level concourse between the two footbridges: platforms 1 to 4 use the north one, 5 and 6 the south one."
+ },
+ "LST": {
+  "exits": [
+   {
+    "name": "Broadgate",
+    "by": []
+   },
+   {
+    "name": "Bishopsgate (East)",
+    "by": []
+   },
+   {
+    "name": "Exchange Square",
+    "by": []
+   },
+   {
+    "name": "Bishopsgate (West)",
+    "by": []
+   },
+   {
+    "name": "Old Broad Street",
+    "by": []
+   },
+   {
+    "name": "Sun Street",
+    "by": []
+   },
+   {
+    "name": "Moorgate",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "5": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "6": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "7": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "8": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "9": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "10": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "11": [
+    [
+     1,
+     "c"
+    ],
+    [
+     0,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "12": [
+    [
+     1,
+     "c"
+    ],
+    [
+     0,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "13": [
+    [
+     1,
+     "c"
+    ],
+    [
+     0,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "14": [
+    [
+     1,
+     "c"
+    ],
+    [
+     0,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "15": [
+    [
+     1,
+     "c"
+    ],
+    [
+     0,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "16": [
+    [
+     1,
+     "c"
+    ],
+    [
+     0,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "17": [
+    [
+     1,
+     "c"
+    ],
+    [
+     0,
+     "c"
+    ],
+    [
+     3,
+     "c"
+    ]
+   ],
+   "A": [
+    [
+     0,
+     "u"
+    ],
+    [
+     6,
+     "u"
+    ]
+   ],
+   "B": [
+    [
+     0,
+     "u"
+    ],
+    [
+     6,
+     "u"
+    ]
+   ]
+  },
+  "kind": "mixed",
+  "hours": {},
+  "note": "Bishopsgate (West), Old Broad Street and Sun Street are on the upper balcony, up from the concourse. A and B are the Elizabeth line."
+ },
+ "MAN": {
+  "exits": [
+   {
+    "name": "Piccadilly",
+    "by": []
+   },
+   {
+    "name": "Fairfield Street",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "5": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "6": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "7": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "8": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "9": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "10": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "11": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "12": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "13": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ]
+   ],
+   "14": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ]
+   ]
+  },
+  "kind": "mixed",
+  "hours": {},
+  "note": "Piccadilly is towards the city centre. Fairfield Street (Metrolink, taxis) is down stairs or an escalator from the concourse. Platforms 13 and 14 are reached by a walkway from the concourse."
+ },
+ "MEN": {
+  "exits": [
+   {
+    "name": "Lower Clicker Road",
+    "by": [
+     "1"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "l"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "b"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": "Through the station car park."
+ },
+ "MIS": {
+  "skip": true
+ },
+ "MOG": {
+  "exits": [
+   {
+    "name": "Moorfield",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "u"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "u"
+    ]
+   ]
+  },
+  "kind": "above",
+  "hours": {},
+  "note": "Platforms 1 and 2 are underground; stairs and a lift up to the concourse, which has two doors onto Moorfield."
+ },
+ "MTN": {
+  "skip": true
+ },
+ "NCL": {
+  "exits": [
+   {
+    "name": "the main entrance",
+    "by": [
+     "1",
+     "2",
+     "9",
+     "10",
+     "11",
+     "12"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "l"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "l"
+    ]
+   ],
+   "9": [
+    [
+     0,
+     "l"
+    ]
+   ],
+   "10": [
+    [
+     0,
+     "l"
+    ]
+   ],
+   "11": [
+    [
+     0,
+     "l"
+    ]
+   ],
+   "12": [
+    [
+     0,
+     "l"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "5": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "6": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "7": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "8": [
+    [
+     0,
+     "b"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": "Low-resolution map. Whether platform 1 opens straight onto the concourse isn't certain. The footbridge has lifts."
+ },
+ "NEH": {
+  "skip": true
+ },
+ "NOT": {
+  "exits": [
+   {
+    "name": "Queen's Road",
+    "by": []
+   },
+   {
+    "name": "Carrington Street",
+    "by": []
+   },
+   {
+    "name": "Station Street (step-free)",
+    "by": []
+   },
+   {
+    "name": "Station Street (tram stop)",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1a": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "1b": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "1c": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "2": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "3a": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "3b": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "3c": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "4a": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "4b": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "5a": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "5b": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "6a": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "6b": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "6c": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "7a": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "7b": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ],
+   "7c": [
+    [
+     1,
+     "u"
+    ],
+    [
+     0,
+     "u"
+    ],
+    [
+     3,
+     "b"
+    ]
+   ]
+  },
+  "kind": "mixed",
+  "hours": {},
+  "note": "The main building is above the west end of the platforms: stairs and lifts up from each island. The footbridge comes out on Station Street by the tram stop and Trent Street."
+ },
+ "NRW": {
+  "exits": [
+   {
+    "name": "the forecourt",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "c"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "c"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "c"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "c"
+    ]
+   ],
+   "5": [
+    [
+     0,
+     "c"
+    ]
+   ],
+   "6": [
+    [
+     0,
+     "c"
+    ]
+   ]
+  },
+  "kind": "concourse",
+  "hours": {},
+  "note": "One way out, from the concourse onto the forecourt (buses, taxis, Thorpe Road and Riverside)."
+ },
+ "OKL": {
+  "exits": [
+   {
+    "name": "Netherlands Road",
+    "by": []
+   },
+   {
+    "name": "Alverstone Avenue",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "b"
+    ],
+    [
+     1,
+     "b"
+    ]
+   ]
+  },
+  "kind": "mixed",
+  "hours": {},
+  "note": "Both ways out are at the ends of the footbridge (steps, no lifts shown). Platforms 2 and 3 have no trains scheduled."
+ },
+ "ORP": {
+  "exits": [
+   {
+    "name": "the car park",
+    "by": [
+     "1",
+     "2"
+    ]
+   },
+   {
+    "name": "the bus station",
+    "by": [
+     "5",
+     "6",
+     "7",
+     "8"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "l"
+    ],
+    [
+     1,
+     "s"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "l"
+    ],
+    [
+     1,
+     "s"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "s"
+    ],
+    [
+     1,
+     "s"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "s"
+    ],
+    [
+     1,
+     "s"
+    ]
+   ],
+   "5": [
+    [
+     1,
+     "l"
+    ],
+    [
+     0,
+     "s"
+    ]
+   ],
+   "6": [
+    [
+     1,
+     "l"
+    ],
+    [
+     0,
+     "s"
+    ]
+   ],
+   "7": [
+    [
+     1,
+     "l"
+    ],
+    [
+     0,
+     "s"
+    ]
+   ],
+   "8": [
+    [
+     1,
+     "l"
+    ],
+    [
+     0,
+     "s"
+    ]
+   ]
+  },
+  "kind": "mixed",
+  "hours": {},
+  "note": "Unnamed ways out from two station buildings: the south one by platform 2 (car park side) and the north one by the bus station. That platforms 5 to 8 reach the north building on the level is a best reading. The country-end overpass has no way out."
+ },
+ "PAD": {
+  "exits": [
+   {
+    "name": "Praed Street",
+    "by": []
+   },
+   {
+    "name": "Eastbourne Terrace",
+    "by": []
+   },
+   {
+    "name": "Sheldon Square",
+    "by": []
+   },
+   {
+    "name": "Eastbourne Terrace (Elizabeth line)",
+    "by": []
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "5": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "6": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "7": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "8": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "9": [
+    [
+     0,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ],
+    [
+     2,
+     "b"
+    ]
+   ],
+   "10": [
+    [
+     0,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "11": [
+    [
+     0,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "12": [
+    [
+     0,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "14": [
+    [
+     0,
+     "c"
+    ],
+    [
+     2,
+     "c"
+    ],
+    [
+     1,
+     "c"
+    ]
+   ],
+   "A": [
+    [
+     3,
+     "u"
+    ]
+   ],
+   "B": [
+    [
+     3,
+     "u"
+    ]
+   ]
+  },
+  "kind": "mixed",
+  "hours": {},
+  "note": "Sheldon Square (also Kingdom Street, Paddington Basin and Bishops Bridge Road) is on the first-floor taxi rank, up from the concourse by platform 12 or over the footbridge. A and B are the Elizabeth line, below ground. Platform 13 isn't labelled."
+ },
+ "PBO": {
+  "exits": [
+   {
+    "name": "the main entrance",
+    "by": [
+     "1"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     0,
+     "l"
+    ]
+   ],
+   "2": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "3": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "4": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "5": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "6": [
+    [
+     0,
+     "b"
+    ]
+   ],
+   "7": [
+    [
+     0,
+     "b"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": "Platform numbers are hard to read; platform 2 may be a bay beside platform 1, on the level. The footbridge has lifts."
+ },
+ "PRB": {
+  "exits": [
+   {
+    "name": "New Road",
+    "by": [
+     "1"
+    ]
+   },
+   {
+    "name": "the car park",
+    "by": [
+     "1"
+    ]
+   }
+  ],
+  "platforms": {
+   "1": [
+    [
+     1,
+     "l"
+    ],
+    [
+     0,
+     "l"
+    ]
+   ],
+   "2": [
+    [
+     1,
+     "b"
+    ],
+    [
+     0,
+     "b"
+    ]
+   ]
+  },
+  "kind": "by",
+  "hours": {},
+  "note": "The path to New Road may have a short flight of steps."
+ }
+}

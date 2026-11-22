@@ -1,14 +1,15 @@
 """The table behind "Station exits" (November 22nd 2026): one entry per station, from the station
 maps read by eye where we have them, otherwise from OpenStreetMap (exits.py).
 
-  python3 -I build_exits_table.py exits.json strict-dir out.json
+  python3 -I build_exits_table.py exits.json strict-dir out.json platform-links.json
 
 exits.json: exits.py's national run. strict-dir: the station maps' readings in the strict shape
 (maps-strict-*.json: exits with names and the platforms they're by, each platform's ways to them,
-a kind). Out: {CRS: {"x": [[name, [platforms], building?]], "p": {platform: [[exit, via, down]]},
+a kind). Out: {CRS: {"x": [[name, [platforms, nearest first], building?, near]], "p": {platform: [[exit, via, down]]},
 "k": kind, "h": {exit: hours}, "m": 1 if from a station map}}, where via is l (level), b
 (footbridge), s (subway), x (level crossing), c (concourse) or u (up or down), and down is the
-platform a walk over a footbridge or through a subway comes down by, where known.
+platform a walk over a footbridge or through a subway comes down by, where known; near:
+for an exit by no platform, the platform people usually come down by on the way to it.
 
 Derived partly from OpenStreetMap, so under the Open Database Licence (© OpenStreetMap
 contributors)."""
@@ -25,9 +26,14 @@ num = lambda s: (int(''.join(c for c in s if c.isdigit()) or 999), s)
 
 def from_osm(r):
     xs = []
-    for e in r['exits']:
+    near = {}
+    for pl, routes in r['platforms'].items():
+        for i, d, how, down in routes:
+            near.setdefault(i, {})[pl] = min(d, near.get(i, {}).get(pl, 1e9))
+    for k, e in enumerate(r['exits']):
         names = [n for n in e['street'] if n not in ROADWORDS]
-        xs.append([names[0] if names else None, e['by'], 1 if e.get('building') else 0])
+        by = sorted(e['by'], key=lambda pl: (near.get(k, {}).get(pl, 1e9), num(pl)))
+        xs.append([names[0] if names else None, by, 1 if e.get('building') else 0])
     p = {}
     for pl, routes in r['platforms'].items():
         out = []
@@ -49,25 +55,37 @@ def from_osm(r):
     return {'x': xs, 'p': p, 'k': kind}
 
 
-def downs(hand, osm):
+def downs(hand, osm, groups):
     """A footbridge or subway's way down from the map data, for a station read from its map: the
-    OpenStreetMap walk from the same platform, the same way, to an exit by any of the same
-    platforms."""
+    OpenStreetMap walk from the same platform, the same way, that comes down on the level with the
+    exit's platforms (Reading: the bridge comes down by platform 7, level with 1 for Station Hill);
+    for an exit by no platform, one that comes down away from every other exit's platforms (Reading's
+    car park, by platform 15)."""
     if not osm:
         return
+    level = {}
+    for g in groups:
+        flat = [p for isl in g for p in isl]
+        for p in flat:
+            level[p] = set(flat)
+    lv = lambda ps: set().union(*(level.get(p, {p}) for p in ps)) if ps else set()
+    others = lambda i: lv([p for k, x in enumerate(hand['x']) if k != i for p in x[1]])
     for pl, rs in hand['p'].items():
         for r in rs:
             if r[1] not in 'bs':
                 continue
-            by = set(hand['x'][r[0]][1])
+            by = hand['x'][r[0]][1]
             for i, d, how, down in osm['platforms'].get(pl, []):
-                if VIA.get(how[0]) == r[1] and down and by & set(osm['exits'][i]['by']):
+                if VIA.get(how[0]) != r[1] or not down:
+                    continue
+                if (by and down in lv(by)) or (not by and down not in others(r[0])):
                     r[2] = down
                     break
 
 
 def main():
     osm = json.load(open(sys.argv[1]))
+    links = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else {}
     hand = {}
     for f in sorted(glob.glob(os.path.join(sys.argv[2], 'maps-strict-*.json'))):
         hand.update(json.load(open(f)))
@@ -82,7 +100,7 @@ def main():
                  'k': h['kind'], 'm': 1}
             if h.get('hours'):
                 e['h'] = h['hours']
-            downs(e, osm.get(crs))
+            downs(e, osm.get(crs), links.get(crs, {}).get('g', []))
             # John (November 22nd 2026): Southend Airport's exit is by platform 1; nothing more is
             # known, so no routes.
             if crs == 'SIA':
@@ -92,6 +110,13 @@ def main():
             e = from_osm(osm[crs])
             if not e:
                 continue
+        # An exit by no platform: the platform people come down by on the way to it, if any.
+        for k, x in enumerate(e['x']):
+            if not x[1]:
+                ds = [w[2] for rs in e['p'].values() for w in rs if w[0] == k and w[2]]
+                x.append(max(set(ds), key=ds.count) if ds else None)
+            else:
+                x.append(None)
         out[crs] = e
     with open(sys.argv[3], 'w') as fh:
         json.dump(out, fh, separators=(',', ':'), sort_keys=True, ensure_ascii=False)

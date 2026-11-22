@@ -2,7 +2,7 @@
 // and Change; the time fetched and Check again; the verdict; Share ("Copy a link to this journey"),
 // straight under the verdict it quotes; "The next four hours" with "Platforms" beside it on a
 // computer, the two the same height; the quote of the day; "The last two hours" across the full
-// width; "The days ahead" (DaysAhead.tsx); "The last week".
+// width; "The days ahead" (DaysAhead.tsx); "The last week"; Arrivals; Exits; Fact of the Journey.
 import { useEffect, useState } from 'react'
 import { analyse, type Analysis } from '../lib/analyse.ts'
 import { fetchDays, fetchLive } from '../lib/load.ts'
@@ -338,10 +338,6 @@ export function JourneyView({ journey }: { journey: Journey }) {
         </div>
       )}
       {!closed && <QuoteCard />}
-      {/* Fact of the journey, just under the quote (John, November 22nd 2026). Only with a train in
-          the next four hours (not once the last one has gone: John), as its stops say which way
-          the journey goes. */}
-      {!closed && an.verdict !== 'none' && <FactCard from={an.fromCrs} to={an.toCrs} fromName={an.from} toName={an.to} stops={an.stops.map(([c]) => c)} />}
       {/* "Connections", just under the quote (John, November 21st 2026; a prototype). No key of its
           own: it shared LastWeek's, and with two children of one key React left the old panel on the
           page after a change of journey. JourneyView is itself keyed by the journey. */}
@@ -356,6 +352,10 @@ export function JourneyView({ journey }: { journey: Journey }) {
       )}
       {(an.verdict !== 'none' || (an.lastGone && !closed)) && <Arrivals a={an} />}
       {(an.verdict !== 'none' || (an.lastGone && !closed)) && <Exits a={an} />}
+      {/* Fact of the journey, last, just above "About these figures" (John, November 22nd 2026; it
+          was under the quote). Only with a train in the next four hours (not once the last one has
+          gone: John), as its stops say which way the journey goes. */}
+      {!closed && an.verdict !== 'none' && <FactCard from={an.fromCrs} to={an.toCrs} fromName={an.from} toName={an.to} stops={an.stops.map(([c]) => c)} />}
     </>
   )
 }

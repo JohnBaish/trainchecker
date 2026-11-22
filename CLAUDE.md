@@ -71,6 +71,14 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: Fact of the Journey moved to the bottom; live (`main`; Claude Code)
+
+- **John:** move it to the very bottom, just above "About these figures", and merge straight to `main`.
+  `JourneyView.tsx`: the FactCard now comes after Exits (it was straight under the quote); nothing else changed.
+- **Checked:** `npm run check` 273 + 57 + 79 + 40 + 59 + 24; `tsc -b`, lint, build; Reading to Paddington's
+  saved board at 1200px light and 390px dark with touch (`design/previews/fact/order.mjs`): the fact last,
+  above About; no errors, no sideways scroll.
+
 ### November 22nd 2026: "Your train passes near…": batch 06, the South West finished (notes, straight to `main`; Claude Code)
 
 - 40 stretches, Axminster to Honiton through to Micheldever to Winchester; 321 of 2,376 done, South West

@@ -71,6 +71,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": batch 09 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Brighton to Hove through to Walton-on-Thames to Weybridge (Brighton to Three Bridges, the Arun
+  Valley line to Arundel, Horsham to Leatherhead, the New Guildford Line, Esher to Weybridge); 441 of 2,376 done,
+  South East 136 of 384. Next: SUR-THD (Surbiton to Thames Ditton).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already
+  used next door replaced (COVERAGE.md says which). `to_site.py` run: 441 facts live with this push; checks and
+  build pass.
+
 ### November 22nd 2026: "Your train passes near…": batch 08 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Guildford to Worplesdon through to Hove to Preston Park (the Portsmouth Direct line to

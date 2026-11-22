@@ -8,11 +8,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-401 of 2376 stretches done.
+441 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
-3. South East: 96 of 384 done (next).
+3. South East: 136 of 384 done (next).
 4. London: 4 of 421 done.
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BTN-HOV (Brighton to Hove).
+Next stretch in the order: SUR-THD (Surbiton to Thames Ditton).
 
 <!-- end of counts -->
 
@@ -117,6 +117,19 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 22nd 2026 (Claude Code, scheduled task): batch 09, 40 stretches from Brighton to Hove through to
+  Walton-on-Thames to Weybridge (Brighton to Hassocks, the Brighton Main Line north by Burgess Hill, Haywards
+  Heath and Balcombe to Three Bridges, the Arun Valley line from Crawley by Horsham and Pulborough to Arundel,
+  Horsham to Dorking and Leatherhead, the New Guildford Line from Leatherhead and Guildford to Surbiton, and
+  Esher to Weybridge); 441 of 2,376 done, South East 136 of 384. Every fact checked against the article in
+  `source` (`wiki_text.py`). Neighbours already used got another item: Brighton to Preston Park (Preston Manor
+  is on Hove to Preston Park) has the London Road Viaduct; Guildford to London Road (the castle, cathedral and
+  university are on other Guildford stretches) has the Royal Grammar School; Bookham to Leatherhead (the Running
+  Horse is on Box Hill to Leatherhead) has the Leatherhead Theatre. Clayton Tunnel and the Ouse Valley Viaduct are
+  `crosses` (the tunnel's 1861 crash isn't mentioned); Roffey Road Halt (closed in 1937) and Ockley are `station`,
+  Holmwood to Ockley having nothing else within 1 km that could be checked. Amberley Museum's facts come from the
+  Amberley Museum Railway article (the museum's own wouldn't load from the index). Step 8 done: 441 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 22nd 2026 (Claude Code, scheduled task): batch 08, 40 stretches from Guildford to Worplesdon
   through to Hove to Preston Park (the Portsmouth Direct line from Guildford by Godalming, Haslemere and
   Petersfield to Havant, then the West Coastway from Bedhampton and Hilsea by Emsworth, Chichester,

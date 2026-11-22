@@ -24,7 +24,10 @@ export type ExitRow = [name: string | null, by: string[], building: 0 | 1, near:
 export type Way = [exit: number, via: string, down: string | null]
 /** w: John's word for the station's footbridge ("bridge" at Reading, which has shops on it);
  *  here: for an exit given a descriptive name, how to say it's right there (exit number → words). */
-export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string>; lc?: 1 }
+export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string>; lc?: 1; say?: Record<string, string>; other?: 1 }
+// say: John's own words for a platform, after "Your train is due into platform 1." (Ivybridge).
+// other: by an exit on the level, also say the other one over the bridge or through the subway
+// (Southampton Central: "…is right there, or you can go over the footbridge for the town centre exit").
 // lc: John has confirmed the exits are either side of a public level crossing (Midgham).
 export type ExitsTable = Record<string, StationExits>
 
@@ -33,7 +36,8 @@ const byNum = (a: string, b: string) => numOf(a) - numOf(b) || a.localeCompare(b
 const and = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}` : xs[0] ?? '')
 const plats = (ps: string[]) => (ps.length === 1 ? `platform ${ps[0]}` : `platforms ${and(ps)}`)
 
-export const heading = (name: string, e: StationExits) => `Station ${e.x.length === 1 ? 'exit' : 'exits'} at ${name}`
+// "Exits" (John, November 22nd 2026: the sentence under it already names the station).
+export const heading = (_name: string, e: StationExits) => (e.x.length === 1 ? 'Exit' : 'Exits')
 
 /** The sentence about the station as a whole. */
 export function stationLine(name: string, e: StationExits): string {
@@ -89,6 +93,7 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
       : 'The platform for your train hasn’t been announced yet. Check again nearer the time.'
   }
   const start = `Your train is due into platform ${platform}.`
+  if (e.say?.[platform]) return `${start} ${e.say[platform]}`
   let ways = (e.p[platform] ?? e.p[platform.replace(/[A-Z]$/, '')] ?? [])
   // An exit that opens off this platform is right there, even where no route is stored (Southend
   // Airport: John, "the exit is by platform 1").
@@ -110,7 +115,9 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
     // "Rectory Hill (platform 1)" names it for the station's list; from that platform it's just Rectory Hill.
     const nm = x[0].replace(/ \(platform [0-9A-Za-z]+( side)?\)$/, '')
     const here = e.here?.[String(i)]
-    return `${start} ${here ?? `The exit on ${nm}`} is right there${by}.${hoursLine(e, [ways[0]])}`
+    const alt = e.other ? ways.find((w) => w[0] !== i && (w[1] === 'b' || w[1] === 's')) : undefined
+    const also = alt ? `, or you can go ${alt[1] === 'b' ? `over the ${e.w ?? 'footbridge'}` : 'through the subway'} for ${target(e, alt[0])}` : ''
+    return `${start} ${here ?? `The exit on ${nm}`} is right there${by}${also}.${hoursLine(e, [ways[0]])}`
   }
   if (via === 'c') return `${start} The exits are across the concourse at the end of the platform.${hoursLine(e, ways)}` // Draft
   if (via === 'u') return `${start} The way out is ${e.k === 'below' ? 'down' : e.k === 'above' ? 'up' : 'up or down'} from the platform, to ${target(e, i)}.${hoursLine(e, [ways[0]])}` // Draft

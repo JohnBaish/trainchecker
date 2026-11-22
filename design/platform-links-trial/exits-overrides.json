@@ -1,5 +1,5 @@
 {
-  "_about": "John's own corrections to the Station exits table, applied last by build_exits_table.py, so they win over the station maps and the map data. Per station: 'names' renames exits (old name: the words used after 'to', as in 'to the town centre and Station Hill'); 'here' says how to put 'is right there' for a renamed exit; 'bridge' is the word for the station's footbridge. Each entry says who and when. 'by' sets the platforms an exit is by; 'no_routes' keeps no routes (only what John knows); 'no_exit' names an exit John says isn't there (the build stops if it appears). 'add_exits' adds exits the sources missed; 'level_crossing' says the exits are either side of a public level crossing.",
+  "_about": "John's own corrections to the Station exits table, applied last by build_exits_table.py, so they win over the station maps and the map data. Per station: 'names' renames exits (old name: the words used after 'to', as in 'to the town centre and Station Hill'); 'here' says how to put 'is right there' for a renamed exit; 'bridge' is the word for the station's footbridge. Each entry says who and when. 'by' sets the platforms an exit is by; 'no_routes' keeps no routes (only what John knows); 'no_exit' names an exit John says isn't there (the build stops if it appears). 'add_exits' adds exits the sources missed; 'level_crossing' says the exits are either side of a public level crossing. 'say' gives John's own words for a platform, after 'Your train is due into platform N.'; 'mention_other' also names the other exit over the bridge or through the subway, from a platform with an exit on the level.",
   "RDG": {
     "_who": "John, November 22nd 2026",
     "names": {
@@ -38,5 +38,24 @@
       }
     ],
     "level_crossing": true
+  },
+  "IVY": {
+    "_who": "John, November 22nd 2026 (platform 2's version is Claude's draft from John's platform 1 sentence)",
+    "say": {
+      "1": "There are two exits there: one by the footbridge, which is closest to the car park and buses, and one further along, which is quicker on foot to the town.",
+      "2": "Cross the footbridge to platform 1, where there are two exits: one by the footbridge, which is closest to the car park and buses, and one further along, which is quicker on foot to the town."
+    }
+  },
+  "SOU": {
+    "_who": "John, November 22nd 2026",
+    "names": {
+      "Blechynden Terrace": "the Blechynden Terrace exit near the Mayflower and the BBC",
+      "Western Esplanade": "the town centre exit"
+    },
+    "here": {
+      "Blechynden Terrace": "The Blechynden Terrace exit near the Mayflower and the BBC",
+      "Western Esplanade": "The town centre exit"
+    },
+    "mention_other": true
   }
 }

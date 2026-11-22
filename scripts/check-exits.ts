@@ -13,7 +13,7 @@ function eq(what: string, got: unknown, want: unknown) {
 const T = t as unknown as ExitsTable
 
 // Reading, as John agreed it.
-eq('Reading: heading', heading('Reading', T.RDG), 'Station exits at Reading')
+eq('heading: "Exits" (John)', [heading('Reading', T.RDG), heading('Newton Abbot', T.NTA)], ['Exits', 'Exit'])
 eq('Reading: the station', stationLine('Reading', T.RDG), 'At Reading, the exits are by platforms 1, 4 and 15.')
 eq('Reading: platform 4 (level)', trainLine(T.RDG, '4', false), 'Your train is due into platform 4. The exit on Forbury Road is right there.')
 eq('Reading: platform 8 (either way off the bridge, and where each comes down)', trainLine(T.RDG, '8', false),
@@ -61,6 +61,17 @@ eq('all left: on', whichTrain('15:17', [tr('14:50', 'On time'), tr('15:05', '15:
 eq('a late train whose new time is to come hasn’t left', whichTrain('15:17', [tr('15:05', '15:25')]), 'Which train are you planning to take?')
 eq('delayed with no time given yet hasn’t left', whichTrain('15:17', [tr('15:05', 'Delayed', true)]), 'Which train are you planning to take?')
 eq('across midnight', whichTrain('23:58', [tr('00:05', 'On time')]), 'Which train are you planning to take?')
+// Southampton Central and Ivybridge, in John's words (November 22nd 2026).
+eq('Southampton: platform 1, and the other exit over the footbridge', trainLine(T.SOU, '1', false),
+  'Your train is due into platform 1. The Blechynden Terrace exit near the Mayflower and the BBC is right there, or you can go over the footbridge for the town centre exit.')
+eq('Southampton: platform 4, the reverse', trainLine(T.SOU, '4', false),
+  'Your train is due into platform 4. The town centre exit is right there, or you can go over the footbridge for the Blechynden Terrace exit near the Mayflower and the BBC.')
+eq('Southampton: platform 2, either way', trainLine(T.SOU, '2', false),
+  'Your train is due into platform 2. Go up to the footbridge, where you can turn either way: to the Blechynden Terrace exit near the Mayflower and the BBC, or to the town centre exit.')
+eq('Ivybridge: platform 1 (John)', trainLine(T.IVY, '1', false),
+  'Your train is due into platform 1. There are two exits there: one by the footbridge, which is closest to the car park and buses, and one further along, which is quicker on foot to the town.')
+eq('Ivybridge: platform 2', trainLine(T.IVY, '2', false).startsWith('Your train is due into platform 2. Cross the footbridge to platform 1, where there are two exits'), true)
+eq('the other exit only where John has said so', Object.entries(T).filter(([, e]) => e.other).map(([c]) => c), ['SOU'])
 // Left out where the exits aren't known, or still in doubt (John, the cautious approach).
 eq('left out', ['KIH', 'LTT', 'MIS', 'GNB', 'HLR', 'ENC', 'SWN', 'BDG', 'GNH', 'HMC', 'BUO', 'MTN', 'BMN', 'GRP', 'NEH', 'EBT', 'CSB'].filter((c) => c in T), [])
 // Never across a barrow crossing; every route points at a real exit.

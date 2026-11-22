@@ -131,6 +131,10 @@ def main():
             names.append(x.get('name'))
         if o.get('level_crossing'):
             e['lc'] = 1
+        if o.get('say'):
+            e['say'] = o['say']
+        if o.get('mention_other'):
+            e['other'] = 1
         for old, ps in o.get('by', {}).items():
             e['x'][names.index(old)][1] = ps
         if o.get('no_routes'):

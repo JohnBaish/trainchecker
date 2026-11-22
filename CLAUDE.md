@@ -65,6 +65,22 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Exits" heading; Southampton Central and Ivybridge in John's words; live (`main`; Claude Code)
+
+- **John:** the heading and first line repeated the station ("Station exits at Southampton Central" / "At
+  Southampton Central, …"): heading now "Exits" ("Exit" for one), the sentences unchanged. Ivybridge:
+  "There are two exits there: one by the footbridge, which is closest to the car park and buses, and
+  one further along, which is quicker on foot to the town." (platform 1, John; platform 2's "Cross the
+  footbridge to platform 1, where…" Claude's draft from it). Southampton Central: "the Blechynden
+  Terrace exit near the Mayflower and the BBC" and "the town centre exit"; from platform 1 "…is right
+  there, or you can go over the footbridge for the town centre exit", platform 4 the reverse.
+  Corrections file: `say` (a platform's own words) and `mention_other` (the other exit over the
+  bridge or through the subway); table fields `say` and `other`. Straight to `main` at John's word.
+- **For John:** the "or you can go over the footbridge for …" pattern would apply at 598 stations
+  (994 platforms; both exits named at 445); only Southampton has it for now. He thinks two-exit
+  stations may need more work to be truly useful.
+- **Checked:** `npm run check` 273 + 57 + 79 + 40 + 44; `tsc -b`, lint, build.
+
 ### November 22nd 2026: "Station exits" built and merged the same day (branch `claude/dreamy-dijkstra-swkirc`; Claude Code)
 
 - **John:** a section under Arrivals, "Station exit(s) at Reading": "At Reading, the exits are by

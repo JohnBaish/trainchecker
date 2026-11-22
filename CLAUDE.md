@@ -65,7 +65,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 22nd 2026: "Station exits" built, for John to try (branch `claude/dreamy-dijkstra-swkirc`, not merged; Claude Code)
+### November 22nd 2026: "Station exits" built and merged the same day (branch `claude/dreamy-dijkstra-swkirc`; Claude Code)
 
 - **John:** a section under Arrivals, "Station exit(s) at Reading": "At Reading, the exits are by
   platforms 1, 4 and 15.", then "Which train are you on?" and the way out from its platform;
@@ -111,6 +111,11 @@ given its own branch). Before committing there, run
   second exit (an unnamed road about 65 metres along) for John to check. Checks 273 + 57 + 79 + 40 + 38;
   Paddington to Reading (all left: "on") and Reading to Midgham ("on, or planning to take") in the
   browser at 390px dark and 1200px light: no errors, no sideways scroll.
+- **John:** "Let's merge this version to Main." Checks 273 + 57 + 79 + 40 + 38, `tsc -b`, lint and
+  build clean first; fast-forwarded into `main` with this note. Still open, for this thread:
+  Ivybridge's second exit (John is asking a friend). Still Claude's drafts, live as they are: the
+  sentences marked Draft in `src/lib/exits.ts`, "The next one is due at …" in Arrivals, and the
+  extended credit in About.
 
 ### November 22nd 2026: exits, a trial on six stations (notes and trial scripts, straight to `main`; Claude Code)
 

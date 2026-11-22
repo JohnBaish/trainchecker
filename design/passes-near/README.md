@@ -40,6 +40,15 @@ Since the evening of November 22nd 2026 the items sit on the whole network inste
 (Reading West to Mortimer) is now on Reading West to Reading Green Park (John), as Reading Green Park
 station (2023) stands between them.
 
+## On the page: "Fact of the Journey" (live since November 22nd 2026)
+
+Just under the quote of the day, laid out like it, in sky blue (John's choices): one fact picked at
+random from the journey's stretches, with a Share button; nothing when no stretch has a fact or no train
+runs in the next four hours. The page reads `src/data/passes-near.json`, which
+`to_site.py` copies from `passes-near.json`: **run it after every batch** (COVERAGE.md, step 8), or
+the new facts don't reach the page. Code: `src/lib/passesNear.ts`, `FactCard` in
+`src/components/Tail.tsx`; checks in `scripts/check-facts.ts`.
+
 ## The data: `passes-near.json`
 
 - `network`: what the page needs to find a journey's stretches. `stations`: every station code in the

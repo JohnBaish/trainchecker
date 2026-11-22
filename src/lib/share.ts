@@ -129,6 +129,68 @@ export function quoteImage(q: Quote, date: Date): HTMLCanvasElement {
   return canvas
 }
 
+/** The fact of the journey's picture (John, November 22nd 2026: as the quote's, without the
+ *  quotation marks or attribution, in the fact's own colour), with the journey beneath the fact. */
+const FACT = { band: '#e8eff5', edge: '#5d7f99' }
+export function factImage(text: string, from: string, to: string, date: Date): HTMLCanvasElement {
+  const scale = 2
+  const canvas = document.createElement('canvas')
+  const probe = canvas.getContext('2d')!
+  const textX = 100, textW = W - textX - 120
+  const size = text.length > 260 ? 30 : text.length > 160 ? 34 : 40
+  probe.font = `${size}px ${FIG}`
+  const lines = wrap(probe, text, textW)
+  const lh = Math.round(size * 1.4)
+  probe.font = `22px ${FIG}`
+  const by = wrap(probe, `${from} to ${to}`, textW)
+  const bandTop = 120, padTop = 56
+  const bandH = padTop + lines.length * lh + 26 + by.length * 32 + 56
+  const H = bandTop + bandH + 110
+  canvas.width = W * scale
+  canvas.height = H * scale
+  const ctx = canvas.getContext('2d')!
+  ctx.scale(scale, scale)
+  ctx.fillStyle = C.bg
+  ctx.fillRect(0, 0, W, H)
+  ctx.fillStyle = C.kicker
+  ctx.font = `600 18px ${FIG}`
+  ctx.fillText('TRAINCHECKER · FACT OF THE JOURNEY', 60, 72)
+  ctx.fillStyle = C.muted
+  ctx.font = `20px ${FIG}`
+  ctx.textAlign = 'right'
+  ctx.fillText(dateShort(date), W - 60, 72)
+  ctx.textAlign = 'left'
+  const r = 36, x0 = 40, x1 = W - 40, y0 = bandTop, y1 = bandTop + bandH
+  ctx.save()
+  ctx.beginPath()
+  ctx.roundRect(x0, y0, x1 - x0, y1 - y0, r)
+  ctx.clip()
+  ctx.fillStyle = FACT.band
+  ctx.fillRect(x0, y0, x1 - x0, y1 - y0)
+  ctx.fillStyle = FACT.edge
+  ctx.fillRect(x0, y0, 12, y1 - y0)
+  ctx.restore()
+  ctx.fillStyle = C.text
+  ctx.font = `${size}px ${FIG}`
+  lines.forEach((l, i) => ctx.fillText(l, textX, y0 + padTop + size + i * lh))
+  ctx.fillStyle = C.muted
+  ctx.font = `22px ${FIG}`
+  const byTop = y0 + padTop + lines.length * lh + 26
+  by.forEach((l, i) => ctx.fillText(l, textX, byTop + 22 + i * 32))
+  ctx.strokeStyle = C.rule
+  ctx.lineWidth = 1
+  ctx.beginPath(); ctx.moveTo(60, y1 + 44); ctx.lineTo(W - 60, y1 + 44); ctx.stroke()
+  ctx.fillStyle = C.kicker
+  ctx.font = `30px ${CAP}`
+  ctx.fillText('Trainchecker', 60, y1 + 88)
+  ctx.fillStyle = C.muted
+  ctx.font = `20px ${FIG}`
+  ctx.textAlign = 'right'
+  ctx.fillText('trainchecker.baish.net', W - 60, y1 + 86)
+  ctx.textAlign = 'left'
+  return canvas
+}
+
 // ---- The two lists' pictures (John, November 19th 2026; options B, B1 and 3.1) ----
 
 /** The dark colours (global.css), whatever the page's own mode. */
@@ -405,4 +467,5 @@ export async function deliverImage(canvas: HTMLCanvasElement, filename: string, 
 }
 
 /** "trainchecker-quote-2026-11-17.png" */
+export const factFileName = (d: Date) => `trainchecker-fact-${new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(d)}.png`
 export const quoteFileName = (d: Date) => `trainchecker-quote-${new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(d)}.png`

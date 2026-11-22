@@ -35,6 +35,7 @@
   }
   :root[data-theme="dark"] body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   :root[data-theme="dark"] .raised { --color-accent: #ea9862; }
+  :root[data-theme="dark"] .qc2.fact { --fact-bg: #1f2c37; --fact-edge: #8fb0c8; --fact-kicker: #b4cde0; }
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -213,6 +214,11 @@ details.trains-fold { margin-top: var(--space-3); }
 .qc2 { display: grid; grid-template-columns: 56px 1fr 56px; gap: 6px; margin-top: var(--space-6); background: var(--color-accent-100); border-radius: calc(var(--radius-lg) * 1.15); padding: 22px 14px 14px 18px; box-shadow: inset 6px 0 0 var(--color-accent); }
 .qmark { font-family: var(--font-heading); font-size: 76px; line-height: 0.9; color: var(--color-accent); text-align: center; }
 .qc2 .qt { font-size: 18px; margin: 6px 0; }
+/* Fact of the journey (John, November 22nd 2026): the quote's band without the quotation marks,
+   in sky blue (John's choice of three). */
+.qc2.fact { --fact-bg: #e8eff5; --fact-edge: #5d7f99; --fact-kicker: #3f5f78; background: var(--fact-bg); box-shadow: inset 6px 0 0 var(--fact-edge); }
+.qc2.fact .card-kicker { color: var(--fact-kicker); }
+.qc2.fact .qt { margin-bottom: 10px; }
 .qc2 .qby { font-size: 13px; color: var(--color-neutral-700); margin: 0 0 8px; }
 .qend { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
 .qend .qmark { line-height: 0.55; margin-bottom: 2px; }

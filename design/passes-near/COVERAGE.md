@@ -78,8 +78,13 @@ Next stretch in the order: DIG-POL (Digby & Sowton to Polsloe Bridge).
    `python3 -I design/passes-near/to_network.py design/passes-near/batches/NN/items.json`.
 7. Run `python3 -I design/passes-near/check.py` and fix everything it lists (warnings: look, and fix if
    wrong). Then `python3 -I design/passes-near/coverage.py` to update the counts above.
-8. Commit straight to `main` (notes, house style §10): `batches/NN/` (candidates and items), the
-   data, this file. Add a line to the log below and to `CLAUDE.md`'s log; update the tracker's line
+8. **Put the new facts on the website** (John, November 22nd 2026): the page's "Fact of the Journey"
+   reads `src/data/passes-near.json`, not this folder, so run
+   `python3 -I design/passes-near/to_site.py`, then `npm ci` (once per session) and `npm run check`
+   (its last part, `check-facts`, must pass) and `npm run build`. Without this step the batch's facts
+   never reach the page. A fact shows only on a journey with a train in the next four hours.
+9. Commit straight to `main` (John's standing word for these batches): `batches/NN/` (candidates and
+   items), the data, `src/data/passes-near.json`, this file. That push makes the new facts live. Add a line to the log below and to `CLAUDE.md`'s log; update the tracker's line
    (baish.net-directory) when a part is finished.
 
 ## Things to look out for

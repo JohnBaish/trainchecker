@@ -30,7 +30,8 @@ given its own branch). Before committing there, run
    stretch, with the train's side), with John's decisions and the prompt for the page. Since November 22nd
    2026 every stretch in England is in `stretches.json` (2,376) and the work goes region by region in
    `design/passes-near/COVERAGE.md` ("Read design/passes-near/COVERAGE.md and do the next batch").
-   Nothing on the page yet; John will say how it looks.
+   On the page as "Fact of the Journey" since November 22nd 2026: after each batch, run
+   `design/passes-near/to_site.py` (COVERAGE.md step 8), or the new facts don't reach the page.
 
 ## Key points
 
@@ -104,6 +105,34 @@ given its own branch). Before committing there, run
 - Article pages refused (429) after eight reads, so `wiki_text.py` (new) reads articles from the
   multistream articles dump by byte range (index downloaded, 290 MB, md5 checked); every fact checked
   against it. `check.py` clean but for the Parson and Clerk warning.
+
+### November 22nd 2026: "Fact of the journey", built and merged the same day (branch `claude/fact-of-the-journey`; Claude Code)
+
+- **John:** the design for "Your train passes near…": a box just under the quote of the day, laid out
+  identically, called FACT OF THE JOURNEY, without the quotation marks or attribution, in a different
+  colour; the same Share button (a picture); the left-and-right note and the credits in About.
+- **Built:** `design/passes-near/to_site.py` makes `src/data/passes-near.json` (every stretch and the
+  121 items; loaded only with a journey, 28 KB compressed) with `passes-near-LICENCE.md`;
+  `src/lib/passesNear.ts` (the journey's stretches from A, the stops of the train with the most stops
+  and B, the shortest way between each pair; the side swapped for b to a; curly apostrophes; one at
+  random); `FactCard` in `Tail.tsx`, after the quote in `JourneyView.tsx`, only with a train on the
+  boards and a fact on the journey; `factImage()` in `share.ts`; `factShareText()` (draft); About's
+  paragraph (draft). Three colours behind `?fact=a|b|c` (sage, sky, stone), to come out once chosen.
+- **Checked:** `npm run check` 273 + 57 + 79 + 40 + 59 + 24 (new `scripts/check-facts.ts`, on the saved
+  Reading–Paddington both ways, Paddington–Plymouth, Bath–Bristol and Manchester–Airport boards);
+  `tsc -b`, lint, build; the three colours at 1200px and 390px with touch, light and dark
+  (`design/previews/fact/`): no errors, no sideways scroll, Share 44px. Not checked: the Share
+  picture read back, a real phone.
+- **John:** sky blue (option B); not shown once the last train has gone ("The last direct train …
+  seems to have gone"), so only with a train in the next four hours; the share words agreed; About
+  reads "The Fact of the Journey is …" and "Left and right are as the train is going. Facing
+  backwards? Look the other way." Done; the `?fact=` switch removed. Checked: checks as above, `tsc
+  -b`, lint, build; 1200px and 390px light and dark; Kings Cross to Edinburgh at 8.59pm (last train
+  gone) shows no fact; the Share picture read back from the clipboard (`design/previews/fact/
+  share-picture.png`), all fonts loaded, no errors.
+- **John:** "Yes please" to merging. `main`'s batches 02 and 03 merged in first, so 201 facts go live;
+  `to_site.py` added to COVERAGE.md's batch steps (step 8) at John's request, so every batch puts its
+  facts on the page; README and "Read these first" say so. Checks, `tsc -b`, lint and build clean first.
 
 ### November 22nd 2026: "Your train passes near…": Wikipedia from its dumps; batch 01 looked at again (notes, straight to `main`; Claude Code)
 

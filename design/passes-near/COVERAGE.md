@@ -8,10 +8,10 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-241 of 2376 stretches done.
+281 of 2376 stretches done.
 
-1. Great Western routes: 236 of 271 done (next).
-2. South West: 0 of 30 done.
+1. Great Western routes: 271 of 271 done (done).
+2. South West: 5 of 30 done (next).
 3. South East: 1 of 384 done.
 4. London: 4 of 421 done.
 5. East of England (East Anglia): 0 of 237 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: DIG-POL (Digby & Sowton to Polsloe Bridge).
+Next stretch in the order: AXM-HON (Axminster to Honiton).
 
 <!-- end of counts -->
 
@@ -117,6 +117,20 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 22nd 2026 (Claude Code): batch 05, 40 stretches from Digby & Sowton to Polsloe Bridge through
+  to Feniton to Honiton (the Exmouth branch, Southampton to Portsmouth by Netley and Fareham, the Greenford
+  branch, Gatwick to Horley, the possible avoiding lines left in the Great Western part (Westbury, Didcot,
+  Bristol, Worcestershire Parkway), then the first five South West stretches east of Exeter). This
+  finishes the Great Western routes (271 of 271). Every fact checked against the article in `source`
+  (`wiki_text.py`). Neighbours already used got another item: St Budeaux Victoria Road to Saltash has the
+  Tamar Bridge (the Royal Albert Bridge is on St Budeaux Ferry Road to Saltash); Pilning to Severn Tunnel
+  Junction has Severn Beach (the tunnel is on its other stretch; the Prince of Wales Bridge's point is
+  mid-estuary, perhaps in Wales); Pinhoe to St James Park has Exeter's underground passages; Appleford to
+  Swindon has Priory Cottages, Steventon. The avoiding lines were given items, as in batch 03, not skipped.
+  For A la Ronde, Croome Court and Titchfield Abbey the point is the nearest edge of the listed area
+  (A la Ronde's house is 1 km away, Croome Court's 2 km); Hilsea Lines is `crosses`, the railway passing
+  through a gap 4 m from the scheduled area. Greenford is a `station`. Step 8 done: 281 facts in
+  `src/data/passes-near.json`; `npm run check` (check-facts 24 of 24) and `npm run build` pass.
 - November 22nd 2026 (Claude Code): batch size written down above (40, two or three a session), at
   John's word.
 - November 22nd 2026 (Claude Code): batch 04, 40 stretches from Ashchurch for Tewkesbury to Cheltenham

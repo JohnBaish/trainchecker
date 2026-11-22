@@ -71,6 +71,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": batch 05, the Great Western routes finished (notes, straight to `main`; Claude Code)
+
+- 40 stretches, Digby & Sowton to Polsloe Bridge through to Feniton to Honiton (the Exmouth branch,
+  Southampton to Portsmouth, the Greenford branch, the remaining avoiding lines, then the first South West
+  stretches); 281 of 2,376 done, Great Western routes 271 of 271. Next: AXM-HON (Axminster to Honiton).
+- Every fact checked against its article with `wiki_text.py`; `check.py` clean but for the Parson and
+  Clerk warning. Items already used next door replaced (COVERAGE.md says which); no fatal accidents.
+- `to_site.py` run: 281 facts in `src/data/passes-near.json`, live with this push; checks and build pass.
+
 ### November 22nd 2026: "Your train passes near…": batch size recorded (notes, straight to `main`; Claude Code)
 
 - **John** agreed: 40 stretches a batch, and a session may do two or three in a row, committing after

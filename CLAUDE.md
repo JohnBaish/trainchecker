@@ -68,6 +68,12 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": all of England, the plan (notes, straight to `main`; Claude chat)
+
+- **John:** work through every stretch in England in a structured way. Plan and the Claude Code prompt to
+  set it up (every stretch from the UK extract, a coverage file, region by region, a candidates script) at
+  the end of `design/passes-near/README.md`. Not started.
+
 ### November 22nd 2026: "Your train passes near…": four more lines (notes, straight to `main`; Claude chat)
 
 - **John:** all items kept without his checking; "on the train's left/right" with the one-line note for

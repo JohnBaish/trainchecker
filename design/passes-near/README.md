@@ -88,3 +88,56 @@ ask me how I want it presented on the page, and show me options at computer and 
 Historic England credit to About as a draft for me. More lines will be added to the same file later, so
 nothing should be specific to any one line.
 ```
+
+## Working through all of England (John, November 22nd 2026)
+
+John wants every stretch in England covered, worked through in a fixed order. The plan:
+
+1. **Every stretch listed first**, from the UK OpenStreetMap extract (as used for Exits), as a network of
+   stretches between neighbouring stations, grouped by region. This replaces the separate `lines`: lines
+   overlap and leave gaps, and with the whole network the page can find any journey's stretches itself.
+2. **A coverage file**, `COVERAGE.md`: every region, how many stretches are done, and what's next.
+3. **Region by region:** the Great Western routes first, then the South West, the South East, London,
+   East Anglia, the East Midlands, the West Midlands, Yorkshire and the Humber, the North West and the
+   North East.
+4. **Each batch:** a script finds and ranks the candidates within 1 km and works out the side; Claude
+   chooses one per stretch and checks every fact against a source; John doesn't check each one.
+
+Estimate (not yet counted): about 2,000 to 2,500 stretches, a few dozen sessions.
+
+### Prompt for Claude Code: setting it up
+
+```
+Read design/passes-near/README.md in JohnBaish/trainchecker, all of it, then set up the work of covering
+every stretch of railway in England (John's plan, "Working through all of England"). Notes and scripts
+only, straight to main (house style §10); nothing on the page.
+
+1. Try whether this session can reach services-eu1.arcgis.com (Historic England's list, the URL in "How
+   it was made" below) and en.wikipedia.org (geosearch and extracts). If not, ask me to add them to the
+   environment's allowed list, as for the OpenStreetMap sites on November 21st 2026.
+2. From a fresh UK extract (see design/platform-links-trial/build_table.py and
+   src/data/platform-links-LICENCE.md for how the last one was fetched), build the network: National Rail
+   stations (matched to src/data/stations.json by code), and the track between them (railway=rail in
+   use, Elizabeth Line included; Underground, trams and heritage lines left out). A stretch is a pair of
+   stations with no other station between them along the track, whether or not trains stop. Keep a
+   stretch if any of it is in England; mark the ones that cross into Wales or Scotland (their items must
+   be in England). Give each its region (England's nine regions) and its track, simplified, for working
+   out sides. Write design/passes-near/stretches.json and the script that makes it.
+3. Fit the 81 items in passes-near.json to the stretches (the pilot's lines were built from route
+   relations, so some pairs may differ); list any that don't fit for me, without guessing. Change the
+   data to items keyed by stretch, with the network instead of lines, and update the README's prompt for
+   the page so it uses the network (I haven't run that one yet).
+4. A candidates script for one region or a list of stretches: Historic England's Grade I and II* listed
+   buildings, scheduled monuments, parks and gardens and World Heritage Sites within 1 km, and
+   Wikipedia's geotagged articles, each with distance and side (left or right from a to b), ranked, saved
+   for the batch. And a check script: every item on a real stretch, the side recomputed from its point,
+   "{side}" in the text exactly when there is a side, house wording (one to nine in words, no
+   "under/over"), no stretch with two items.
+5. COVERAGE.md: the regions in the order above, the number of stretches in each, how many are done, and
+   a short "How to do the next batch" for a later session (choose, check every fact against a source,
+   write the sentence in the house style of the existing items, run the check, commit, update coverage).
+6. Tell me the real total and the count per region, how long a batch is likely to take, and anything that
+   didn't fit. Update CLAUDE.md's log and the tracker (baish.net-directory) as usual.
+```
+
+After that, each session starts with: "Read design/passes-near/COVERAGE.md and do the next batch."

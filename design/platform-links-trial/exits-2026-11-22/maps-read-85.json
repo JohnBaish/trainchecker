@@ -1,0 +1,3115 @@
+{
+ "AGL": {
+  "map_files": [
+   "AGL-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Sea Road",
+    "by": [
+     "1"
+    ],
+    "note": "exit sign on platform 1 opens onto Sea Road"
+   },
+   {
+    "name": null,
+    "by": [
+     "2"
+    ],
+    "note": "exit sign on platform 2 leads to a ramp and car park; the roadway over the tracks is at the west end"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Sea Road",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": null,
+     "via": "level, ramp"
+    }
+   ]
+  },
+  "unsure": "No footbridge or subway shown; platforms are linked only by the public roadway over the tracks. The platform 2 exit's street isn't named."
+ },
+ "AHN": {
+  "map_files": [
+   "AHN-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Car Park",
+    "by": [],
+    "note": "single exit at the far end of the subway, into the car park south of the line"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Car Park",
+     "via": "ramp or lift, subway"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Car Park",
+     "via": "ramp or lift, subway"
+    }
+   ]
+  },
+  "unsure": "Platforms 1 and 2 appear to be one island with the concourse between them; the ramp/lift down to the subway is from that island."
+ },
+ "ALB": {
+  "map_files": [
+   "ALB-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Access Road",
+    "by": [
+     "1"
+    ],
+    "note": "exit on platform 1 onto Access Road (leads to Station Road)"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Access Road",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Access Road",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Only one exit shown; no lift shown on the bridge."
+ },
+ "ALK": {
+  "map_files": [
+   "ALK-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Dark Lane",
+    "by": [
+     "2"
+    ],
+    "note": "via a ramp at the west end of platform 2"
+   },
+   {
+    "name": "Main Street",
+    "by": [
+     "1"
+    ],
+    "note": "via a ramp at the west end of platform 1, onto Main Street / The Sidlings"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Main Street",
+     "via": "level, ramp"
+    },
+    {
+     "exit": "Dark Lane",
+     "via": "level crossing"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Dark Lane",
+     "via": "level, ramp"
+    },
+    {
+     "exit": "Main Street",
+     "via": "level crossing"
+    }
+   ]
+  },
+  "unsure": "Platforms linked by a road level crossing, not a bridge or subway; the platform 1 exit sits between Main Street and The Sidlings."
+ },
+ "AUI": {
+  "map_files": [
+   "AUI-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "A82",
+    "by": [],
+    "note": "at the end of the subway, onto the A82"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "A82",
+     "via": "steps, subway"
+    }
+   ],
+   "2": [
+    {
+     "exit": "A82",
+     "via": "steps, subway"
+    }
+   ]
+  },
+  "unsure": "Platforms 1 and 2 look like one island platform; steps down to the subway from it."
+ },
+ "BAH": {
+  "map_files": [
+   "BAH-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Bank Hall Road",
+    "by": [],
+    "note": "from the ticket office building at street level, reached by steps from the west end of the island platform"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Bank Hall Road",
+     "via": "steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Bank Hall Road",
+     "via": "steps"
+    }
+   ]
+  },
+  "unsure": "Platforms 1 and 2 appear to be one island; no lift shown."
+ },
+ "BDG": {
+  "map_files": [
+   "BDG-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Olympia Street",
+    "by": [],
+    "note": "from the ticket hall"
+   },
+   {
+    "name": "London Road",
+    "by": [],
+    "note": "from the ticket hall"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Olympia Street",
+     "via": "steps, corridor"
+    },
+    {
+     "exit": "London Road",
+     "via": "steps, corridor"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Olympia Street",
+     "via": "footbridge, steps"
+    },
+    {
+     "exit": "London Road",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Levels not clear: the ticket hall seems above the platforms, with steps down from the corridor to platform 1 and the bridge (with steps) to platform 2. Also unsure whether the corridor reaches platform 1 by the short steps or the long ones."
+ },
+ "BDT": {
+  "map_files": [
+   "BDT-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Station Approach",
+    "by": [
+     "5",
+     "6"
+    ],
+    "note": "from the concourse, which sits at the end of platform 5 and beside platform 6"
+   }
+  ],
+  "routes": {
+   "4": [
+    {
+     "exit": "Station Approach",
+     "via": "footbridge, steps"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Station Approach",
+     "via": "concourse"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Station Approach",
+     "via": "concourse"
+    }
+   ]
+  },
+  "unsure": "Platform 5 may also reach the concourse level along the platform; the bridge lands on platforms 4 and 6 (steps)."
+ },
+ "BKG": {
+  "map_files": [
+   "BKG-1.png",
+   "BKG-2.png"
+  ],
+  "ignored": [
+   "BKG-3.png (key/table of facilities, not a map)"
+  ],
+  "exits": [
+   {
+    "name": "Road",
+    "by": [],
+    "note": "two exits from the entrance-level concourse (over the platforms) onto the road on its west side"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Road",
+     "via": "steps, footbridge"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Road",
+     "via": "steps, footbridge"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Road",
+     "via": "steps, footbridge"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Road",
+     "via": "steps, footbridge"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Road",
+     "via": "steps, footbridge"
+    }
+   ],
+   "6": [
+    {
+     "exit": "Road",
+     "via": "steps, footbridge"
+    }
+   ],
+   "7": [
+    {
+     "exit": "Road",
+     "via": "steps, footbridge"
+    }
+   ],
+   "8": [
+    {
+     "exit": "Road",
+     "via": "steps, footbridge"
+    }
+   ]
+  },
+  "unsure": "Entrance level is above the platforms; each island (1/2, 3/4, 5/6, 7/8) has stairs up to it. A lift is shown on the entrance level but which platforms it serves isn't clear. A second crossing at the east end (labelled '...bway', likely subway) is reached by ramps; where it leads to the street is not shown."
+ },
+ "BKL": {
+  "map_files": [
+   "BKL-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Southborough Road",
+    "by": [],
+    "note": "from the station building at street level, over the east end of the tracks"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Southborough Road",
+     "via": "steps, footbridge"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Southborough Road",
+     "via": "steps, footbridge"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Southborough Road",
+     "via": "steps, footbridge"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Southborough Road",
+     "via": "steps, footbridge"
+    }
+   ]
+  },
+  "unsure": "Illustrated plan without exit symbols; islands 1/2 and 3/4 each have stairs up to the footbridge/building. No lifts shown."
+ },
+ "BMG": {
+  "map_files": [
+   "BMG-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "High Street",
+    "by": [
+     "2"
+    ],
+    "note": "entrance/exit by a short flight of steps from platform 2 beside the ticket office"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "High Street",
+     "via": "footbridge, steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "High Street",
+     "via": "level, steps"
+    }
+   ]
+  },
+  "unsure": "The forecourt by platform 2 also opens towards the car parks; only one entrance/exit arrow shown."
+ },
+ "BMN": {
+  "map_files": [
+   "BMN-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Sherman Road",
+    "by": [
+     "1",
+     "2"
+    ],
+    "note": "from the concourse at the end of the platforms (more than one door on this side)"
+   },
+   {
+    "name": "Tweedy Road",
+    "by": [
+     "1",
+     "2"
+    ],
+    "note": "from the concourse, east side"
+   },
+   {
+    "name": null,
+    "by": [
+     "1",
+     "2"
+    ],
+    "note": "from the concourse's south side onto the forecourt by Northside Road"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Sherman Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Tweedy Road",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Sherman Road",
+     "via": "concourse"
+    },
+    {
+     "exit": "Tweedy Road",
+     "via": "concourse"
+    }
+   ]
+  },
+  "unsure": "Terminus; entrance markers (blue) aren't labelled, so streets are inferred from their position. There is also a gate by the cycle parking near the end of platform 2 onto Sherman Road, unclear if public."
+ },
+ "BNM": {
+  "map_files": [
+   "BNM-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Car Park",
+    "by": [],
+    "note": "from the ticket hall north of the line, onto the car park off Sandringham Court"
+   },
+   {
+    "name": "Station Road",
+    "by": [],
+    "note": "from the ticket hall onto the area by Station Road"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Car Park",
+     "via": "steps or lift, subway"
+    },
+    {
+     "exit": "Station Road",
+     "via": "steps or lift, subway"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Car Park",
+     "via": "steps or lift, subway"
+    },
+    {
+     "exit": "Station Road",
+     "via": "steps or lift, subway"
+    }
+   ]
+  },
+  "unsure": "Platforms 1 and 2 are one island; the second exit's street is inferred (arrow points to the blue area next to Station Road)."
+ },
+ "BRL": {
+  "map_files": [
+   "BRL-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Car Park",
+    "by": [
+     "2"
+    ],
+    "note": "exit from platform 2 into the car park"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Car Park",
+     "via": "barrow crossing (on the level, across the tracks)"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Car Park",
+     "via": "level"
+    }
+   ]
+  },
+  "unsure": "Platform 1 is next to Access Road but no exit is marked there."
+ },
+ "BTF": {
+  "map_files": [
+   "BTF-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Car Park",
+    "by": [
+     "1"
+    ],
+    "note": "two exits from platform 1 into the car park off Station Road"
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "by a ramp at the east end of platform 1"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Car Park",
+     "via": "level"
+    },
+    {
+     "exit": null,
+     "via": "ramp"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Car Park",
+     "via": "barrow crossing (on the level, across the tracks)"
+    }
+   ]
+  },
+  "unsure": "Ramp exit's street not named."
+ },
+ "BUO": {
+  "map_files": [
+   "BUO-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Car Park",
+    "by": [
+     "2"
+    ],
+    "note": "platform 2 opens onto the car park by Station Road"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Car Park",
+     "via": "footbridge, steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Car Park",
+     "via": "level"
+    }
+   ]
+  },
+  "unsure": "No exit symbols on this illustrated map; the platform 2 exit is inferred from the layout. Insert map also mentions rail replacement bus stops (ignored)."
+ },
+ "BYF": {
+  "map_files": [
+   "BYF-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Path (to Grey Street)",
+    "by": [
+     "1"
+    ],
+    "note": "via a ramp at the west end of platform 1"
+   },
+   {
+    "name": "Path (to Grey Street)",
+    "by": [
+     "2"
+    ],
+    "note": "via a ramp at the west end of platform 2"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Path (to Grey Street)",
+     "via": "level, ramp"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Path (to Grey Street)",
+     "via": "level, ramp"
+    }
+   ]
+  },
+  "unsure": "Two separate exits, one each side; platforms also linked by a subway with steps and the Grey Street level crossing."
+ },
+ "CAT": {
+  "map_files": [
+   "CAT-1.png"
+  ],
+  "ignored": [
+   "CAT-2-1.png (rail replacement bus leaflet)"
+  ],
+  "exits": [
+   {
+    "name": "Station Avenue",
+    "by": [
+     "1",
+     "2"
+    ],
+    "note": "from the station building at the end of the platforms, via a ramp"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Avenue",
+     "via": "concourse, ramp"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Avenue",
+     "via": "concourse, ramp"
+    }
+   ]
+  },
+  "unsure": ""
+ },
+ "CBN": {
+  "map_files": [
+   "CBN-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Paved Area",
+    "by": [
+     "1"
+    ],
+    "note": "entrance/exit at the west end of platform 1"
+   },
+   {
+    "name": "Car Park",
+    "by": [
+     "2"
+    ],
+    "note": "exits from platform 2 into the car park"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Paved Area",
+     "via": "level"
+    },
+    {
+     "exit": "Car Park",
+     "via": "footbridge, steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Car Park",
+     "via": "level"
+    },
+    {
+     "exit": "Paved Area",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Icons aren't all clear: an entrance icon by the platform 1 stairs and box-arrow icons may mean entrance/exit points; the street names aren't shown."
+ },
+ "CED": {
+  "map_files": [
+   "CED-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Car Park",
+    "by": [
+     "1"
+    ],
+    "note": "two exits from the ticket/station building area by platform 1, to the car park"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Car Park",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Car Park",
+     "via": "footbridge, steps"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Car Park",
+     "via": "footbridge, steps"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Car Park",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Platforms 2 and 3 are one island. The street beyond the car park isn't named."
+ },
+ "CIT": {
+  "map_files": [
+   "CIT-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Station Approach",
+    "by": [
+     "4"
+    ],
+    "note": "from the station building on platform 4"
+   },
+   {
+    "name": "Gosshill Road",
+    "by": [],
+    "note": "via the ramp and footbridge from the west end of the station building"
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "platform 1 side appears to open onto the car park north of the line (not clearly marked)"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Approach",
+     "via": "subway, steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Approach",
+     "via": "subway, steps"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Station Approach",
+     "via": "subway, steps"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Station Approach",
+     "via": "level"
+    },
+    {
+     "exit": "Gosshill Road",
+     "via": "ramp, footbridge"
+    }
+   ]
+  },
+  "unsure": "Illustrated plan without exit symbols. Subway stairs on platform 1, the 2/3 island and by platform 4; a platform 1 exit to the north car park is not certain."
+ },
+ "CNP": {
+  "map_files": [
+   "CNP-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Europa Boulevard",
+    "by": [],
+    "note": "Exit from the ticket hall onto Europa Boulevard; the ticket hall is at the street end, with stairs and lifts to each platform"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Europa Boulevard",
+     "via": "steps or lift to ticket hall"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Europa Boulevard",
+     "via": "steps or lift to ticket hall"
+    }
+   ]
+  },
+  "unsure": "Map shows stairs and lift symbols between the ticket hall and both platforms, so platforms seem to be on a different level from the street; which way (up or down) isn't shown. Road not named on the exit symbol itself; Europa Boulevard is the street beside it."
+ },
+ "COI": {
+  "map_files": [
+   "COI-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Cathcart Road",
+    "by": [],
+    "note": "Exit at the end of the island platform, up/down steps to a paved area on Cathcart Road"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Cathcart Road",
+     "via": "steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Cathcart Road",
+     "via": "steps"
+    }
+   ]
+  },
+  "unsure": "Platforms 1 and 2 are one island platform. Steps shown between platform and paved area; no ramp or lift shown."
+ },
+ "CSB": {
+  "map_files": [
+   "CSB-1.png"
+  ],
+  "ignored": [
+   "CSB-2-1.png (rail replacement bus leaflet)"
+  ],
+  "exits": [
+   {
+    "name": "Gordon Road (by the ramp)",
+    "by": [
+     "1"
+    ],
+    "note": "Entrance/exit from platform 1 via a ramp onto Gordon Road"
+   },
+   {
+    "name": "Gordon Road (by the ticket office)",
+    "by": [
+     "1"
+    ],
+    "note": "Entrance/exit through the ticket office building by platform 1 onto Gordon Road"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Gordon Road (by the ramp)",
+     "via": "level, ramp"
+    },
+    {
+     "exit": "Gordon Road (by the ticket office)",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Gordon Road (by the ticket office)",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "No exit shown from platform 2 side; Park Hill (road bridge) has no marked entrance."
+ },
+ "CTH": {
+  "map_files": [
+   "CTH-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Station Road",
+    "by": [],
+    "note": "Ticket office on Station Road, above the tracks; connects to the footbridge"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Road",
+     "via": "footbridge, steps or lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Road",
+     "via": "footbridge, steps or lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Station Road",
+     "via": "footbridge, steps or lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Station Road",
+     "via": "footbridge, steps or lift"
+    }
+   ]
+  },
+  "unsure": "Platforms 2 and 3 are an island sharing one stair/lift. The ticket office looks to be at bridge level (tracks pass under it) but the map is a plan, not a section."
+ },
+ "DBG": {
+  "map_files": [
+   "DBG-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Side Entrance",
+    "by": [
+     "1"
+    ],
+    "note": "From platform 1 to the car park and the B3084"
+   },
+   {
+    "name": "Step Free Access",
+    "by": [
+     "2"
+    ],
+    "note": "Ramp from platform 2 to the B3084 / Barley Hill"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Side Entrance",
+     "via": "level"
+    },
+    {
+     "exit": "Step Free Access",
+     "via": "level crossing on the B3084"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Step Free Access",
+     "via": "level, ramp"
+    },
+    {
+     "exit": "Side Entrance",
+     "via": "level crossing on the B3084"
+    }
+   ]
+  },
+  "unsure": "Crossing between platforms appears to be only by the road level crossing."
+ },
+ "DEN": {
+  "map_files": [
+   "DEN-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Station Entrance (platform 1)",
+    "by": [
+     "1"
+    ],
+    "note": "Onto Rectory Hill beside the level crossing"
+   },
+   {
+    "name": "Station Entrance (platform 2)",
+    "by": [
+     "2"
+    ],
+    "note": "Onto Rectory Hill beside the level crossing"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Entrance (platform 1)",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Entrance (platform 2)",
+     "via": "level"
+    }
+   ]
+  },
+  "unsure": "Crossing between platforms appears to be only by the Rectory Hill level crossing."
+ },
+ "DSM": {
+  "map_files": [
+   "DSM-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Main Road (A12), platform 1 side",
+    "by": [
+     "1"
+    ],
+    "note": "By the level crossing"
+   },
+   {
+    "name": "Main Road (A12), platform 2 side",
+    "by": [
+     "2"
+    ],
+    "note": "Into the car park beside Main Road, by the level crossing"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Main Road (A12), platform 1 side",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Main Road (A12), platform 2 side",
+     "via": "level"
+    }
+   ]
+  },
+  "unsure": "Crossing between platforms appears to be only by the road level crossing."
+ },
+ "DUD": {
+  "map_files": [
+   "DUD-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [],
+    "note": "From the concourse at the west end onto an unnamed road"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "concourse exit",
+     "via": "steps or lift to concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "concourse exit",
+     "via": "steps or lift to concourse"
+    }
+   ]
+  },
+  "unsure": "Platforms 1 and 2 are one island platform. Steps drawn between platform and concourse, and a lift symbol in the concourse. Road not named."
+ },
+ "EBT": {
+  "map_files": [
+   "EBT-1.png"
+  ],
+  "ignored": [
+   "EBT-2-1.png (rail replacement bus leaflet)"
+  ],
+  "exits": [
+   {
+    "name": "Ticket office / car park",
+    "by": [
+     "1"
+    ],
+    "note": "Through the ticket office building to the car park (drop-off point)"
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "East end of platform 1, past the toilets"
+   },
+   {
+    "name": null,
+    "by": [
+     "2"
+    ],
+    "note": "From platform 2 by the top of the subway stairs, toward the north side"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Ticket office / car park",
+     "via": "level"
+    },
+    {
+     "exit": "north side (platform 2)",
+     "via": "subway, steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "north side (platform 2)",
+     "via": "level"
+    },
+    {
+     "exit": "Ticket office / car park",
+     "via": "subway, steps"
+    }
+   ]
+  },
+  "unsure": "Platform 2 exit arrow is small and placed by the subway stairs; where it leads isn't labelled. No street names shown."
+ },
+ "ENC": {
+  "map_files": [
+   "ENC-1.png"
+  ],
+  "ignored": [
+   "ENC-2-1.png (rail replacement bus leaflet)"
+  ],
+  "exits": [
+   {
+    "name": "Ticket office / car park (Windmill Hill)",
+    "by": [
+     "2"
+    ],
+    "note": "Entrance/exit from the ticket office by platform 2 to the car park off Windmill Hill"
+   }
+  ],
+  "routes": {
+   "2": [
+    {
+     "exit": "Ticket office / car park (Windmill Hill)",
+     "via": "level or steps (unclear)"
+    }
+   ],
+   "1": [
+    {
+     "exit": "Ticket office / car park (Windmill Hill)",
+     "via": "subway, steps"
+    }
+   ]
+  },
+  "unsure": "Steps are drawn on platform 2 next to the ticket office, so platform 2 may not be level with it. No exit shown on the platform 1 side."
+ },
+ "ETL": {
+  "map_files": [
+   "ETL-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "2"
+    ],
+    "note": "Through the building at the east end of platform 2, by the level crossing"
+   },
+   {
+    "name": "Path",
+    "by": [
+     "1"
+    ],
+    "note": "Through the building (ticket office) at the east end of platform 1 onto a path to the road"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Path",
+     "via": "level, through ticket gates"
+    }
+   ],
+   "2": [
+    {
+     "exit": "platform 2 building",
+     "via": "level, through ticket gates"
+    }
+   ]
+  },
+  "unsure": "Crossing between platforms appears to be by the road level crossing. Road not named. A blue double-arrow icon in each building may be a lift or a gate; unclear."
+ },
+ "EWR": {
+  "map_files": [
+   "EWR-1.png"
+  ],
+  "ignored": [
+   "EWR-2-1.png (rail replacement bus leaflet)"
+  ],
+  "exits": [
+   {
+    "name": "Dominion Road (north)",
+    "by": [
+     "1"
+    ],
+    "note": ""
+   },
+   {
+    "name": "Dominion Road (south)",
+    "by": [
+     "2"
+    ],
+    "note": ""
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Dominion Road (north)",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Dominion Road (south)",
+     "via": "level"
+    }
+   ]
+  },
+  "unsure": "Platforms connected only via Dominion Road, which crosses the line (bridge or crossing not stated)."
+ },
+ "FAZ": {
+  "map_files": [
+   "FAZ-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Pathway / Access Road (steps)",
+    "by": [
+     "1"
+    ],
+    "note": "From the paved area beside the ticket hall on platform 1, down steps"
+   },
+   {
+    "name": "Pathway / Access Road (ramp)",
+    "by": [
+     "1"
+    ],
+    "note": "From the paved area beside the ticket hall on platform 1, down a ramp"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Pathway / Access Road (ramp)",
+     "via": "level, then ramp"
+    },
+    {
+     "exit": "Pathway / Access Road (steps)",
+     "via": "level, then steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Pathway / Access Road (ramp)",
+     "via": "footbridge, steps or lift"
+    }
+   ]
+  },
+  "unsure": "Exit symbols are at the bottom of the steps and ramp, not on the platform itself."
+ },
+ "GBL": {
+  "map_files": [
+   "GBL-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Car park / Lea Road",
+    "by": [],
+    "note": "At the south end of the subway, into the car park on Lea Road"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Car park / Lea Road",
+     "via": "subway, steps or ramp"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Car park / Lea Road",
+     "via": "subway, steps or ramp"
+    }
+   ]
+  },
+  "unsure": ""
+ },
+ "GNB": {
+  "map_files": [
+   "GNB-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Car park",
+    "by": [
+     "2"
+    ],
+    "note": "East end of platform 2, by the barrow crossing"
+   }
+  ],
+  "routes": {
+   "2": [
+    {
+     "exit": "Car park",
+     "via": "level"
+    }
+   ],
+   "1": [
+    {
+     "exit": "Car park",
+     "via": "footbridge (steps), or ramps and barrow crossing"
+    }
+   ]
+  },
+  "unsure": "Barrow crossing shown with ramps; whether passengers may use it isn't stated."
+ },
+ "GNH": {
+  "map_files": [
+   "GNH-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Ticket office / Station Approach",
+    "by": [
+     "2"
+    ],
+    "note": "Ticket office building beside platform 2 opens onto the forecourt and bus stops on Station Approach"
+   }
+  ],
+  "routes": {
+   "2": [
+    {
+     "exit": "Ticket office / Station Approach",
+     "via": "level"
+    }
+   ],
+   "1": [
+    {
+     "exit": "Ticket office / Station Approach",
+     "via": "footbridge, steps or lift"
+    }
+   ]
+  },
+  "unsure": "3D picture with no entrance/exit symbols; exit inferred from the ticket office and forecourt layout. No exit shown on the platform 1 side."
+ },
+ "GNL": {
+  "map_files": [
+   "GNL-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Old Chester Road",
+    "by": [],
+    "note": "From the concourse onto Old Chester Road"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Old Chester Road",
+     "via": "steps to bridge, steps to concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Old Chester Road",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Concourse sits beside platform 1 but steps are drawn between it and the bridge, so platform 1 seems not to be level with it. Striped symbol outside the exit may be a crossing or steps."
+ },
+ "GRP": {
+  "map_files": [
+   "GRP-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Baring Road",
+    "by": [],
+    "note": "Ticket office building on Baring Road at the west end, above the tracks"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Baring Road",
+     "via": "walkway to platform 1 (with steps at platform end)"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Baring Road",
+     "via": "ramp to platforms 2 & 3"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Baring Road",
+     "via": "ramp to platforms 2 & 3"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Baring Road",
+     "via": "ramp to platforms 4 & 5"
+    }
+   ],
+   "5": [
+    {
+     "exit": "Baring Road",
+     "via": "ramp to platforms 4 & 5"
+    }
+   ]
+  },
+  "unsure": "An overpass at the east end links the platforms with steps; whether it also leads out (e.g. to Amblecote Meadows) isn't clear. No entrance/exit symbols other than an arrow at the Baring Road building."
+ },
+ "HBP": {
+  "map_files": [
+   "HBP-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Car park path",
+    "by": [
+     "1"
+    ],
+    "note": "From platform 1 to the path beside the car park"
+   },
+   {
+    "name": "Hookstone Road (platform 1 side)",
+    "by": [],
+    "note": "Up a ramp or steps from platform 1"
+   },
+   {
+    "name": "Hookstone Road (platform 2 side)",
+    "by": [],
+    "note": "Up a ramp or steps from platform 2"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Car park path",
+     "via": "level"
+    },
+    {
+     "exit": "Hookstone Road (platform 1 side)",
+     "via": "ramp or steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Hookstone Road (platform 2 side)",
+     "via": "ramp or steps"
+    }
+   ]
+  },
+  "unsure": "Platforms are on opposite sides of Hookstone Road; changing between them means using the road. Whether the car-park path is a separate exit or leads to the ramp isn't clear."
+ },
+ "HGY": {
+  "map_files": [
+   "HGY-1-1.png"
+  ],
+  "ignored": [
+   "HGY-2-1.png (rail replacement bus leaflet)"
+  ],
+  "exits": [
+   {
+    "name": "Paved area leading to Wightman Road",
+    "by": [],
+    "note": "North end of the footbridge"
+   },
+   {
+    "name": "Access to Quernmore Road",
+    "by": [],
+    "note": "South end of the footbridge"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Paved area leading to Wightman Road",
+     "via": "footbridge, steps"
+    },
+    {
+     "exit": "Access to Quernmore Road",
+     "via": "footbridge, steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Paved area leading to Wightman Road",
+     "via": "footbridge, steps"
+    },
+    {
+     "exit": "Access to Quernmore Road",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "No lifts shown."
+ },
+ "HIL": {
+  "map_files": [
+   "HIL-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Waterloo Road",
+    "by": [],
+    "note": "Two exits from the concourse (ticket office) onto Waterloo Road at the west end"
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Waterloo Road",
+     "via": "steps to concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Waterloo Road",
+     "via": "steps to concourse"
+    }
+   ]
+  },
+  "unsure": "Striped areas drawn between concourse and each platform read as steps; no lift or ramp shown."
+ },
+ "HLR": {
+  "map_files": [
+   "HLR-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Hall Road West",
+    "by": [
+     "2"
+    ],
+    "note": "West end of platform 2, beside the footbridge and the level crossing."
+   },
+   {
+    "name": "Hall Road West",
+    "by": [
+     "1"
+    ],
+    "note": "West end of platform 1, beside the footbridge and the level crossing."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Hall Road West (platform 1 side)",
+     "via": "level"
+    },
+    {
+     "exit": "Hall Road West (platform 2 side)",
+     "via": "footbridge, steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Hall Road West (platform 2 side)",
+     "via": "level"
+    },
+    {
+     "exit": "Hall Road West (platform 1 side)",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Both exits open onto the same road by the level crossing; the map doesn't say whether the level crossing can be used to cross."
+ },
+ "HMC": {
+  "map_files": [
+   "HMC-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1",
+     "2"
+    ],
+    "note": "Terminus: through the station building at the end of the platforms onto Hampton Court Way (A309)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Hampton Court Way",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Hampton Court Way",
+     "via": "concourse"
+    }
+   ]
+  },
+  "unsure": "No exit symbols on the map; the building's doors onto the forecourt/Hampton Court Way are inferred from the layout. Whether there is also a way out to the pay-and-display car park isn't clear."
+ },
+ "HOO": {
+  "map_files": [
+   "HOO-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Pathway / Waterworks Lane",
+    "by": [],
+    "note": "From the concourse in the station building beside the bottom (southern) platform, onto the pathway by Waterworks Lane."
+   }
+  ],
+  "routes": {
+   "2": [
+    {
+     "exit": "Pathway / Waterworks Lane",
+     "via": "footbridge, lift, steps"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Pathway / Waterworks Lane",
+     "via": "footbridge, lift, steps"
+    }
+   ]
+  },
+  "unsure": "The bottom platform beside the concourse has no number on the map (only 'Platform not in use' at its east end); it is level with the exit. The middle island is platform 2 on its north face, the other face 'not in use'. Platform numbers 1 and 4 aren't shown."
+ },
+ "HPQ": {
+  "map_files": [
+   "HPQ-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Lift access from ferry terminal",
+    "by": [
+     "1"
+    ],
+    "note": "Via the concourse beside platform 1; leads to the ferry terminal, not a street."
+   },
+   {
+    "name": "Stair and Escalator access from Ferry Terminal",
+    "by": [
+     "1"
+    ],
+    "note": "Via the concourse beside platform 1; to the ferry terminal."
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Exit symbol at the platform 1 end of the footbridge, towards the ferry terminal."
+   },
+   {
+    "name": "Lift access from car park",
+    "by": [],
+    "note": "At the far end of the footbridge, onto the Port Car Park."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "ferry terminal exits",
+     "via": "level"
+    },
+    {
+     "exit": "Lift access from car park",
+     "via": "footbridge, lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "ferry terminal exits",
+     "via": "footbridge, lift, steps"
+    },
+    {
+     "exit": "Lift access from car park",
+     "via": "footbridge, lift, steps"
+    }
+   ],
+   "3": [
+    {
+     "exit": "ferry terminal exits",
+     "via": "footbridge, lift, steps"
+    },
+    {
+     "exit": "Lift access from car park",
+     "via": "footbridge, lift, steps"
+    }
+   ]
+  },
+  "unsure": "Exits lead to the ferry terminal and a car park; none is shown opening onto a named street. Whether the concourse is exactly level with platform 1 is inferred."
+ },
+ "HSB": {
+  "map_files": [
+   "HSB-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Between the two station buildings, onto the car park and Lodge Hollow."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Lodge Hollow",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Lodge Hollow",
+     "via": "footbridge, steps"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Lodge Hollow",
+     "via": "footbridge, steps"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Lodge Hollow",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Platforms 2 and 3 appear to be one island; the bridge is at the east end."
+ },
+ "INC": {
+  "map_files": [
+   "INC-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Ince Green Lane",
+    "by": [],
+    "note": "At road level at the west end, reached by steps up to the bridge from the island platform."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Ince Green Lane",
+     "via": "steps, bridge"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Ince Green Lane",
+     "via": "steps, bridge"
+    }
+   ]
+  },
+  "unsure": "Platforms 1 and 2 are an island."
+ },
+ "KBW": {
+  "map_files": [
+   "KBW-1-1.png"
+  ],
+  "ignored": [
+   "KBW-2-1.png (rail replacement bus leaflet)"
+  ],
+  "exits": [
+   {
+    "name": "Station Approach",
+    "by": [],
+    "note": "From the station building (ticket office) south side, onto Station Approach."
+   },
+   {
+    "name": null,
+    "by": [],
+    "note": "Second entrance/exit from the west side of the station building into the car park area."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Approach",
+     "via": "subway, steps"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Station Approach",
+     "via": "subway, steps"
+    }
+   ]
+  },
+  "unsure": "Platforms 2 and 3 have no trains scheduled. Both islands reach the building by the subway with steps; no lifts shown."
+ },
+ "KGE": {
+  "map_files": [
+   "KGE-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Kingsknowe Road South",
+    "by": [
+     "2"
+    ],
+    "note": "West end of platform 2, by ramp."
+   },
+   {
+    "name": "Kingsknowe Road South",
+    "by": [
+     "1"
+    ],
+    "note": "West end of platform 1, by a path."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Kingsknowe Road South (platform 1 side)",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Kingsknowe Road South (platform 2 side)",
+     "via": "level, ramp"
+    }
+   ]
+  },
+  "unsure": "No footbridge; the only crossing shown is the road level crossing."
+ },
+ "KIH": {
+  "map_files": [
+   "KIH-1.png"
+  ],
+  "ignored": [],
+  "exits": [],
+  "routes": {
+   "1": [
+    {
+     "exit": "High Street Overbridge?",
+     "via": "steps, lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "High Street Overbridge?",
+     "via": "steps, lift"
+    }
+   ]
+  },
+  "unsure": "The map shows no exit symbol. Each platform has steps and a lift near the High Street Overbridge, which probably lead up to High Street, but the map doesn't say so."
+ },
+ "KRK": {
+  "map_files": [
+   "KRK-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "West end of platform 1, into the car park (the only way out shown)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "car park",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "car park",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "The exit opens onto a car park; no street named."
+ },
+ "KVP": {
+  "map_files": [
+   "KVP-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Red Hill",
+    "by": [
+     "2"
+    ],
+    "note": "From platform 2 onto Red Hill."
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "From platform 1 into the car park."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "car park",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Red Hill",
+     "via": "level"
+    }
+   ]
+  },
+  "unsure": "No footbridge; a road level crossing at the east end. Whether the car-park exit leads to a street isn't shown."
+ },
+ "LIP": {
+  "map_files": [
+   "LIP-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Station Entrance",
+    "by": [
+     "1"
+    ],
+    "note": "Through the station building on platform 1, onto the forecourt by Station Road."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Entrance",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Entrance",
+     "via": "footbridge, lift, steps"
+    }
+   ]
+  },
+  "unsure": "A path to the long stay car park and Midhurst Road is shown from the forecourt; no separate exit marked from platform 2."
+ },
+ "LLD": {
+  "map_files": [
+   "LLD-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Augusta Street",
+    "by": [
+     "1",
+     "2"
+    ],
+    "note": "Terminus: through the ticket office at the end of the platforms."
+   },
+   {
+    "name": "Augusta Street",
+    "by": [
+     "1",
+     "2",
+     "3"
+    ],
+    "note": "At the end of the access road, beyond the ends of the platforms; platform 3 crosses the access road at the safe crossing point."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Augusta Street",
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Augusta Street",
+     "via": "concourse"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Augusta Street",
+     "via": "concourse (across the access road at the safe crossing point)"
+    }
+   ]
+  },
+  "unsure": "Platform 3 is on the far side of the access road; the route is inferred from the 'Safe crossing point'."
+ },
+ "LLV": {
+  "map_files": [
+   "LLV-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Pathway (Tywi Ave)",
+    "by": [
+     "2"
+    ],
+    "note": "East end of platform 2, by a pathway to Tywi Ave."
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "From platform 1 between the unused station buildings and the car sales business, towards the car parks and road."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "platform 1 exit",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Pathway (Tywi Ave)",
+     "via": "level"
+    }
+   ]
+  },
+  "unsure": "No crossing between platforms shown."
+ },
+ "LOC": {
+  "map_files": [
+   "LOC-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "West: by the bridge, into the council car park."
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Onto the access road, between the bridge and the ticket office."
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Through/beside the ticket office onto the access road."
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "East end of platform 1, beyond the ticket office."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Access Road",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Access Road",
+     "via": "footbridge, lift, steps"
+    }
+   ]
+  },
+  "unsure": "Exits unnamed; they open onto the Access Road and car parks."
+ },
+ "LPY": {
+  "map_files": [
+   "LPY-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Car Park Access Road",
+    "by": [],
+    "note": "North side of the ground-level concourse between the two footbridges."
+   },
+   {
+    "name": "Footpath and Cycle Route",
+    "by": [],
+    "note": "West side of the concourse, by the bus stands."
+   },
+   {
+    "name": "Pavement (car park)",
+    "by": [],
+    "note": "East side by the ticket office, onto the pavement and car park."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "concourse exits",
+     "via": "footbridge, lift, steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "concourse exits",
+     "via": "footbridge, lift, steps"
+    }
+   ],
+   "3": [
+    {
+     "exit": "concourse exits",
+     "via": "footbridge, lift, steps"
+    }
+   ],
+   "4": [
+    {
+     "exit": "concourse exits",
+     "via": "footbridge, lift, steps"
+    }
+   ],
+   "5": [
+    {
+     "exit": "concourse exits",
+     "via": "footbridge, lift, steps"
+    }
+   ],
+   "6": [
+    {
+     "exit": "concourse exits",
+     "via": "footbridge, lift, steps"
+    }
+   ]
+  },
+  "unsure": "Platforms 1 to 4 use the north footbridge, 5 and 6 the south one; the concourse links the two. Levels inferred from the plan."
+ },
+ "MEN": {
+  "map_files": [
+   "MEN-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Entrance from platform 1 into the station parking, by Lower Clicker Road."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Parking / Lower Clicker Road",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Parking / Lower Clicker Road",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": ""
+ },
+ "MIS": {
+  "map_files": [
+   "MIS-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "High Street",
+    "by": [
+     "2"
+    ],
+    "note": "East end of platform 2, through the car park to High Street."
+   }
+  ],
+  "routes": {
+   "2": [
+    {
+     "exit": "High Street",
+     "via": "level"
+    }
+   ],
+   "1": [
+    {
+     "exit": "High Street",
+     "via": "barrow crossing (level) at the east end"
+    }
+   ]
+  },
+  "unsure": "Platform 1 seems only reachable by the barrow crossing; the map doesn't say whether passengers may use it."
+ },
+ "MTN": {
+  "map_files": [
+   "MTN-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "From platform 1 into the car park and Station Road."
+   },
+   {
+    "name": null,
+    "by": [
+     "2"
+    ],
+    "note": "East end of platform 2, a path onto Station Road by the level crossing."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "car park / Station Road",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Station Road",
+     "via": "level"
+    }
+   ]
+  },
+  "unsure": "No exit symbols; inferred from the paths drawn. Platforms connected only by the road level crossing."
+ },
+ "NEH": {
+  "map_files": [
+   "NEH-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Footscray Road",
+    "by": [
+     "1"
+    ],
+    "note": "Through the ticket office (ramp) onto Footscray Road."
+   },
+   {
+    "name": "Footscray Road - A211",
+    "by": [],
+    "note": "Steps from the east end of platform 2 up to the A211 road bridge."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Footscray Road",
+     "via": "level, ramp"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Footscray Road",
+     "via": "footbridge, lift, steps"
+    },
+    {
+     "exit": "Footscray Road - A211",
+     "via": "steps"
+    }
+   ]
+  },
+  "unsure": "The steps at the east end of platform 2 are drawn without a label; that they are a public way out to the A211 is inferred."
+ },
+ "OKL": {
+  "map_files": [
+   "OKL-1.png"
+  ],
+  "ignored": [
+   "OKL-2-1.png (rail replacement bus leaflet)"
+  ],
+  "exits": [
+   {
+    "name": "Netherlands Road",
+    "by": [],
+    "note": "North end of the footbridge."
+   },
+   {
+    "name": "Alverstone Avenue",
+    "by": [],
+    "note": "South end of the footbridge."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Netherlands Road",
+     "via": "footbridge, steps"
+    },
+    {
+     "exit": "Alverstone Avenue",
+     "via": "footbridge, steps"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Netherlands Road",
+     "via": "footbridge, steps"
+    },
+    {
+     "exit": "Alverstone Avenue",
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Platforms 2 and 3 have no trains scheduled. No lifts shown."
+ },
+ "PRB": {
+  "map_files": [
+   "PRB-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "New Road",
+    "by": [
+     "1"
+    ],
+    "note": "Path from the back of platform 1 (past the Old Station Building) out to New Road; the map draws a short flight of steps (striped) between the platform and the path."
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Unnamed way out at the east end of platform 1, beside the car park, near the foot of the bridge."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "New Road",
+     "via": "level path, steps"
+    },
+    {
+     "exit": null,
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "New Road",
+     "via": "footbridge, steps"
+    },
+    {
+     "exit": null,
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Whether the striped block between platform 1 and the New Road path is steps or a gate is not certain. The car-park exit has no name or street shown."
+ },
+ "PRN": {
+  "map_files": [
+   "PRN-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Single way out behind platform 1, next to the car park; no street named."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": null,
+     "via": "steps (or the path from the subway end)"
+    }
+   ],
+   "2": [
+    {
+     "exit": null,
+     "via": "subway, steps"
+    }
+   ]
+  },
+  "unsure": "Exit has no name or street. There is also an area with steps behind platform 2 at the top of the map, but no exit symbol there, so not counted."
+ },
+ "PRS": {
+  "map_files": [
+   "PRS-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "2"
+    ],
+    "note": "Ramp at the east end of platform 2 to the road at the east end of the station (road unnamed on the map)."
+   },
+   {
+    "name": "Station Road",
+    "by": [
+     "1"
+    ],
+    "note": "Ramp at the east end of platform 1 down to Station Road."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Station Road",
+     "via": "level, ramp"
+    }
+   ],
+   "2": [
+    {
+     "exit": null,
+     "via": "level, ramp"
+    }
+   ]
+  },
+  "unsure": "No bridge or subway between the platforms is shown; the road at the east end appears to cross the line but no crossing is labelled. Platform 2's exit street is not named."
+ },
+ "RCD": {
+  "map_files": [
+   "RCD-1.png",
+   "RCD-2.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [],
+    "note": "Subway exit at street level onto a pathway, then the car park and Station Road; reached from the platforms' concourse by stairs and lift down to the subway."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": null,
+     "via": "ramp to concourse, stairs or lift, subway"
+    }
+   ],
+   "3": [
+    {
+     "exit": null,
+     "via": "concourse, stairs or lift, subway"
+    }
+   ],
+   "4": [
+    {
+     "exit": null,
+     "via": "concourse, stairs or lift, subway"
+    }
+   ]
+  },
+  "unsure": "Map labels platforms 1, 3 and 4 only (no platform 2). The exit leads to a pathway; Station Road is beyond the car park."
+ },
+ "RHO": {
+  "map_files": [
+   "RHO-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Access Road",
+    "by": [
+     "2"
+    ],
+    "note": "Way out from platform 2 onto an access road (north side)."
+   },
+   {
+    "name": "Access Road",
+    "by": [
+     "1"
+    ],
+    "note": "Way out from platform 1 onto an access road (south side)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Access Road",
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Access Road",
+     "via": "level"
+    }
+   ]
+  },
+  "unsure": "No bridge, subway or crossing between the platforms is shown. Both exits are labelled 'Access Road' (different roads, one each side)."
+ },
+ "SDC": {
+  "map_files": [
+   "SDC-1.png",
+   "SDC-2.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Braithwaite Road",
+    "by": [],
+    "note": "Street-level concourse (ticket gates) opening onto the Braithwaite Road pavement; platforms are above, reached by stairs and lifts."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Braithwaite Road",
+     "via": "stairs or lift down to concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Braithwaite Road",
+     "via": "stairs or lift down to concourse"
+    }
+   ]
+  },
+  "unsure": "The two maps don't say which stair/lift serves which platform; each platform has its own stairs and lift."
+ },
+ "SIA": {
+  "map_files": [
+   "SIA-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Walkway",
+    "by": [],
+    "note": "Ticket hall behind platform 1 opens onto a walkway to the Access Road, between the long-stay and short-stay car parks."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Walkway",
+     "via": "unsure: ticket hall sits behind platform 1, connection not clear"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Walkway",
+     "via": "footbridge, steps or lift"
+    }
+   ]
+  },
+  "unsure": "The map doesn't clearly show how the ticket hall joins platform 1 (it may be level, or via the bridge landing). Platform 2 uses the bridge (steps and lift both sides)."
+ },
+ "SMA": {
+  "map_files": [
+   "SMA-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Golden Hillock Road",
+    "by": [],
+    "note": "Station building/ticket area at the west end, onto Golden Hillock Road; island platform 3/4 reached from it by steps."
+   }
+  ],
+  "routes": {
+   "3": [
+    {
+     "exit": "Golden Hillock Road",
+     "via": "steps"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Golden Hillock Road",
+     "via": "steps"
+    }
+   ]
+  },
+  "unsure": "Island platform 3/4 only (platforms 1/2 shown as disused). Steps lead from the building to the platform; no lift or ramp shown."
+ },
+ "SNE": {
+  "map_files": [
+   "SNE-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "2"
+    ],
+    "note": "Way out from platform 2 into the car park, leading to Station Approach."
+   }
+  ],
+  "routes": {
+   "2": [
+    {
+     "exit": null,
+     "via": "level"
+    }
+   ],
+   "1": [
+    {
+     "exit": null,
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Exit not named; Station Approach is shown beyond the car park."
+ },
+ "SRT": {
+  "map_files": [
+   "SRT-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Ticket office entrance",
+    "by": [],
+    "note": "Main entrance by the ticket office, off the station car park towards Shortlands Road; at street level below the platforms."
+   },
+   {
+    "name": "Night entrance",
+    "by": [],
+    "note": "Second entrance from the same corridor onto the station car park."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Ticket office entrance",
+     "via": "subway, steps; or footbridge, lift"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Ticket office entrance",
+     "via": "subway, steps; or footbridge, lift"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Ticket office entrance",
+     "via": "subway, steps; or footbridge, lift"
+    }
+   ],
+   "4": [
+    {
+     "exit": "Ticket office entrance",
+     "via": "subway, steps; or footbridge, lift"
+    }
+   ]
+  },
+  "unsure": "3D plan: two island platforms (1/2 and 3/4) with stairs up from a subway and lifts to a footbridge. Night entrance's opening hours not shown."
+ },
+ "SRU": {
+  "map_files": [
+   "SRU-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [],
+    "note": "Two ways out from the street-level ticket hall (west side), onto an unnamed pavement; platforms reached by subway and steps."
+   },
+   {
+    "name": null,
+    "by": [],
+    "note": "Second door of the same ticket hall."
+   }
+  ],
+  "routes": {
+   "3": [
+    {
+     "exit": null,
+     "via": "subway, steps"
+    }
+   ],
+   "4": [
+    {
+     "exit": null,
+     "via": "subway, steps"
+    }
+   ]
+  },
+  "unsure": "Street not named. The two exit symbols are on the same ticket hall frontage. Underground (Central line) platforms shown too."
+ },
+ "STJ": {
+  "map_files": [
+   "STJ-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [],
+    "note": "Way out at the foot of the bridge steps on the car-park side, next to the ticket office (beside the disused platform)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": null,
+     "via": "ramp, steps, footbridge"
+    }
+   ],
+   "2": [
+    {
+     "exit": null,
+     "via": "footbridge, steps"
+    }
+   ],
+   "3": [
+    {
+     "exit": null,
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Exit opens onto the car park; no street named. Platforms 2/3 are an island."
+ },
+ "SWN": {
+  "map_files": [
+   "SWN-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Entrance Ramp",
+    "by": [],
+    "note": "Entrance ramp from the concourse/ticket counter area beside the car park, at the west end beyond platform 1."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Entrance Ramp",
+     "via": "unsure: possibly level along the platform line"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Entrance Ramp",
+     "via": "footbridge, steps or ramp"
+    }
+   ],
+   "3": [
+    {
+     "exit": "Entrance Ramp",
+     "via": "footbridge, steps or ramp"
+    }
+   ]
+  },
+  "unsure": "Not clear whether platform 1 joins the entrance area on the level or only via the bridge; bridge has steps and ramps (grey areas) both sides. Island platform 2/3."
+ },
+ "TBW": {
+  "map_files": [
+   "TBW-1-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Platform 1 station building, by the ticket office, onto the pick-up and drop-off area."
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Second way out from the platform 1 building, by the retail units, towards the taxi rank and Vale Road."
+   },
+   {
+    "name": "Mount Pleasant Road",
+    "by": [],
+    "note": "Building above platform 2 (ticket office, taxi rank) at Mount Pleasant Road level; platform 2 reached by lift, and it links to the footbridge."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": null,
+     "via": "level"
+    },
+    {
+     "exit": "Mount Pleasant Road",
+     "via": "footbridge, steps"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Mount Pleasant Road",
+     "via": "lift"
+    },
+    {
+     "exit": null,
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "3D plan. Whether there are stairs (not only the lift) between platform 2 and the Mount Pleasant Road building isn't clear. Platform 1 exits unnamed."
+ },
+ "TEN": {
+  "map_files": [
+   "TEN-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Way out from platform 1 to the car park, by Station Road."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": null,
+     "via": "level"
+    }
+   ],
+   "2": [
+    {
+     "exit": null,
+     "via": "footbridge, steps"
+    }
+   ]
+  },
+  "unsure": "Exit unnamed; Station Road, Warren St and Clement Terrace are shown nearby."
+ },
+ "TLS": {
+  "map_files": [
+   "TLS-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [],
+    "note": "Way out at the west end of a pathway beside the car park; the pathway is reached from the island platform by the bridge."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": null,
+     "via": "footbridge, steps, pathway"
+    }
+   ],
+   "2": [
+    {
+     "exit": null,
+     "via": "footbridge, steps, pathway"
+    }
+   ]
+  },
+  "unsure": "Island platform 1/2. Exit unnamed (opens to the car park)."
+ },
+ "TRE": {
+  "map_files": [
+   "TRE-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Gwaelod-y-garth Road",
+    "by": [],
+    "note": "Subway exit onto Gwaelod-y-garth Road; island platform reached by steps down to the subway."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Gwaelod-y-garth Road",
+     "via": "steps, subway"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Gwaelod-y-garth Road",
+     "via": "steps, subway"
+    }
+   ]
+  },
+  "unsure": "Island platform 1/2."
+ },
+ "TYC": {
+  "map_files": [
+   "TYC-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Ramp Platform 1",
+    "by": [
+     "1"
+    ],
+    "note": "Ramp from platform 1 onto the unnamed road by the level crossing."
+   },
+   {
+    "name": "Ramp Platform 2",
+    "by": [
+     "2"
+    ],
+    "note": "Ramp from platform 2 onto the unnamed road by the level crossing."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Ramp Platform 1",
+     "via": "level, ramp"
+    }
+   ],
+   "2": [
+    {
+     "exit": "Ramp Platform 2",
+     "via": "level, ramp"
+    }
+   ]
+  },
+  "unsure": "Roads labelled 'Unnamed Road'. Platforms are either side of the level crossing."
+ },
+ "WMS": {
+  "map_files": [
+   "WMS-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [],
+    "note": "From the concourse, west side, into Car Park 2 (towards Shore Road)."
+   },
+   {
+    "name": null,
+    "by": [],
+    "note": "From the concourse, north-east corner, to the other car park and Shore Road."
+   },
+   {
+    "name": null,
+    "by": [],
+    "note": "From the concourse, south side, towards the Rothesay ferry and ferry ticket office ('Rothsay' on the map)."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": null,
+     "via": "concourse"
+    }
+   ],
+   "2": [
+    {
+     "exit": null,
+     "via": "concourse"
+    }
+   ]
+  },
+  "unsure": "Terminus: all three exits are off the concourse at the end of platforms 1 and 2; none named on the map."
+ },
+ "WRE": {
+  "map_files": [
+   "WRE-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": null,
+    "by": [
+     "2"
+    ],
+    "note": "Ramp from platform 2 onto the road at the level crossing."
+   },
+   {
+    "name": null,
+    "by": [
+     "1"
+    ],
+    "note": "Ramp from platform 1 onto the road at the level crossing, by the car park."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": null,
+     "via": "level, ramp"
+    }
+   ],
+   "2": [
+    {
+     "exit": null,
+     "via": "level, ramp"
+    }
+   ]
+  },
+  "unsure": "Road at the level crossing not named."
+ },
+ "YNW": {
+  "map_files": [
+   "YNW-1.png"
+  ],
+  "ignored": [],
+  "exits": [
+   {
+    "name": "Crichton Street",
+    "by": [
+     "1"
+    ],
+    "note": "From platform 1 by steps or a ramp down to a small forecourt and out onto Crichton Street."
+   }
+  ],
+  "routes": {
+   "1": [
+    {
+     "exit": "Crichton Street",
+     "via": "steps or ramp"
+    }
+   ]
+  },
+  "unsure": "Single platform."
+ }
+}

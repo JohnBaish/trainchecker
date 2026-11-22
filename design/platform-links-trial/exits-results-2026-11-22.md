@@ -193,3 +193,22 @@ above or below the platforms agreed; no Exits section where the exits aren't kno
 read, otherwise streets; footbridge, subway or level only (no steps, lifts or escalators); the
 station sentence first, then "Which train are you on?"; for a bridge with two ways down, say
 which platform each way comes down by.
+
+## Second national run, and the 85 stations' maps (November 22nd 2026)
+
+Three rule changes, found by looking at Stoke-on-Trent, Hastings, Banbury and Birmingham Snow
+Hill (all four had no way out): a station building that only touches a platform's edge is beside
+it, not over it; a door tagged as an entrance with a road within 25 metres is a way out; a station
+building drawn above or below the line (Banbury: layer 1) is reached by a bridge or subway, is
+never linked to a platform across a track, and is a last resort when a drawn path is nearly as
+short (Reading's buildings are also drawn at layer 1; its platforms 4 to 7 walk out on the level).
+Twyford, Oxford, Newton Abbot, Bristol, Clapham Junction and Reading rechecked after each change.
+
+Result (`exits-2026-11-22/exits.json`, replacing the first run's): of the stations with two or
+more platforms on the map, 85 still have no way out (67 with two platforms), and at 122 some
+platforms have none. The 85's National Rail maps read by eye (`maps-read-85.json`, same brief):
+84 have a map (Little Sutton has none); only Kings Heath's shows no exit. 18 stations left for John
+where the doubt changes the answer (Kings Heath, Little Sutton, Mistley, Gainsborough Central,
+Hall Road, Enfield Chase, Swinton, Southend Airport, Bridgeton, Greenhithe, Hampton Court,
+Bursledon, Moreton, Bromley North, Chislehurst, Grove Park, New Eltham, Edenbridge Town, and
+Carshalton Beeches with it).

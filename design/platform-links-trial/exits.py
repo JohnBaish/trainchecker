@@ -2,8 +2,8 @@
 reaches them, from OpenStreetMap.
 
 From each platform, walk along build_table.py's walking graph (footways, steps, subways,
-bridges, lifts) until a road is reached; road points joined by road within 80 metres, or within 60 metres in a straight line,
-are one way out. A station building beside a platform (not over it)
+bridges, lifts) until a road is reached; road points joined by road within 80 metres, or within 60 metres in a straight line with the same nearest
+platform, are one way out. A station building beside a platform (not over it)
 and beside a road also counts as a way out, even where no path is drawn through it (Newton
 Abbot). For each platform: its nearest way out, and any other within 80 metres or half as far
 again. A way out is "by" the platforms that reach it on the level within 10 metres of the
@@ -34,24 +34,38 @@ def how(used):
     return [NAMES[k] for k, v in tot.most_common() if v > 3] or ['level']
 
 
-def exits_of(L, buildings):
+PEN = 150     # metres added to a raised or sunken building's link while searching
+NOT_IN = {'service', 'emergency', 'staff', 'garage', 'no', 'private'}
+
+
+def exits_of(L, buildings, entrances=()):
     N, G, attach, roadn = L.N, L.G, L.attach, L.roadn
     md = lambda p, q: math.hypot((p[0] - q[0]) * L.kx, (p[1] - q[1]) * L.ky)
     dist = lambda a, b: md(N[a], N[b])
     # Station buildings beside (not over) a platform and beside a road.
-    for k, out_ in enumerate(buildings):
+    for k, (out_, bk) in enumerate(buildings):
         if not out_:
             continue
-        if any(bt.inside(N[n], out_) for a in attach.values() for n in a):
+        # Over the platforms (a train shed): most of some platform's points inside it. A building
+        # that only touches a platform's edge is beside it (Stoke-on-Trent).
+        if any(a and sum(bt.inside(N[n], out_) for n in a) * 2 > len(a) for a in attach.values()):
             continue
         near = lambda n, lim: min(md(N[n], p) for p in out_) <= lim
-        pl = [n for a in attach.values() for n in a if near(n, 10)]
+        closest = lambda n: min(out_, key=lambda p: md(N[n], p))
+        # Beside the platform, not across a track from it (Banbury's building is beside the line,
+        # reached over the footbridge).
+        pl = [n for a in attach.values() for n in a if near(n, 10)
+              and not any(bt.crosses(N[n], closest(n), r1, r2) for r1, r2, _ in L.rails)]
         rd = [n for n in roadn if n in N and near(n, 12)]
         if pl and rd:
             b = f'building{k}'
             N[b] = (sum(p[0] for p in out_) / len(out_), sum(p[1] for p in out_) / len(out_))
+            # A building drawn above the line (Banbury: layer 1) is reached by a bridge; below, a subway.
+            # Raised or sunken, it's a last resort: drawn paths win unless much longer (Reading's
+            # buildings are drawn at layer 1, but platforms 4 to 7 walk out on the level).
+            w = 15.0 + (PEN if bk else 0)
             for n in pl:
-                G[b].append((n, 15.0, None, 'bldg')); G[n].append((b, 15.0, None, 'bldg'))
+                G[b].append((n, w, bk, 'bldg')); G[n].append((b, w, bk, 'bldg'))
             for n in rd:
                 G[b].append((n, 10.0, None, 'bldg')); G[n].append((b, 10.0, None, 'bldg'))
 
@@ -59,6 +73,16 @@ def exits_of(L, buildings):
     for r, a in attach.items():
         for n in a:
             onplat[n].add(r)
+
+    # A door the walk reaches, tagged as an entrance, with a road within 25 metres: a way out even
+    # where nothing is drawn from the door to the road (Birmingham Snow Hill).
+    rn = [n for n in roadn if n in N]
+    for n, kind in entrances:
+        if n not in G or kind in NOT_IN:
+            continue
+        near = sorted((md(N[n], N[r]), r) for r in rn)[:1]
+        if near and near[0][0] <= 25:
+            G[n].append((near[0][1], near[0][0], None, 'door')); G[near[0][1]].append((n, near[0][0], None, 'door'))
 
     def reach(src):
         # Also the last other platform the walk passes on its way out ("coming down from the
@@ -71,7 +95,8 @@ def exits_of(L, buildings):
             if d > best.get(n, 1e18):
                 continue
             if n in roadn and n not in attach[src]:
-                got.setdefault(n, (d, used, bl, last))
+                pen = sum(PEN for k, dd in used if dd > PEN)
+                got.setdefault(n, (d, tuple((k, dd - PEN if dd > PEN else dd) for k, dd in used), bl, last, d - pen))
                 continue
             for m, dd, k, wid in G.get(n, ()):
                 u2 = used + ((k, dd),) if k else used
@@ -85,9 +110,9 @@ def exits_of(L, buildings):
     refs = sorted((r for r in attach if attach[r]), key=bt.num)
     pts = collections.defaultdict(list)
     for p in refs:
-        for n, (d, u, bl, last) in reach(p).items():
-            if d <= 400:
-                pts[n].append((d, p, how(u), bl, last))
+        for n, (d, u, bl, last, real) in reach(p).items():
+            if real <= 400:
+                pts[n].append((d, p, how(u), bl, last, real))
 
     def road_near(a):
         best = {a: 0.0}; h = [(0.0, a)]
@@ -99,10 +124,11 @@ def exits_of(L, buildings):
                 if m in roadn and n in roadn and d + dd <= 80 and d + dd < best.get(m, 1e18):
                     best[m] = d + dd; heapq.heappush(h, (d + dd, m))
         return set(best)
+    nearest = lambda n: min(pts[n])[1]
     clusters = []
     for n in sorted(pts, key=lambda n: min(x[0] for x in pts[n])):
         for c in clusters:
-            if n in c[1] or dist(n, c[0][0]) < 60:
+            if n in c[1] or (dist(n, c[0][0]) < 60 and nearest(n) == nearest(c[0][0])):
                 c[0].append(n); break
         else:
             clusters.append(([n], road_near(n)))
@@ -115,12 +141,12 @@ def exits_of(L, buildings):
         for i, c in enumerate(clusters):
             b = min((x for n in c for x in pts[n] if x[1] == p), key=lambda x: x[0], default=None)
             if b:
-                cand.append((b[0], i, b[2], b[4]))
+                cand.append((b[0], i, b[2], b[4], b[5]))
         cand.sort()
         if cand:
             lim = max(cand[0][0] + 80, cand[0][0] * 1.5)
             per[p] = [c for c in cand if c[0] <= lim][:3]
-    used = sorted({i for v in per.values() for _, i, _, _ in v})
+    used = sorted({i for v in per.values() for _, i, _, _, _ in v})
     num = {i: k for k, i in enumerate(used)}
     exits = []
     for i in used:
@@ -132,7 +158,7 @@ def exits_of(L, buildings):
         lon, lat = N[c[0]]
         exits.append({'street': names, 'by': by, 'building': any(x[3] for x in allx if x[0] <= d0 + 10),
                       'at': [round(lat, 5), round(lon, 5)]})
-    plat = {p: [[num[i], round(d), h, last] for d, i, h, last in v] for p, v in per.items()}
+    plat = {p: [[num[i], round(real), h, last] for d, i, h, last, real in v] for p, v in per.items()}
     return {'exits': exits, 'platforms': plat}
 
 
@@ -153,15 +179,17 @@ if mode == 'one':
     root = ET.parse(src).getroot()
     tg = lambda e: {x.get('k'): x.get('v') for x in e.findall('tag')}
     NN = {n.get('id'): (float(n.get('lon')), float(n.get('lat'))) for n in root.iter('node')}
-    bl = [[NN[x.get('ref')] for x in w.findall('nd') if x.get('ref') in NN]
+    bl = [([NN[x.get('ref')] for x in w.findall('nd') if x.get('ref') in NN], bt.kind_of(tg(w)))
           for w in root.iter('way') if tg(w).get('building') == 'train_station']
-    print(report(only, '', exits_of(bt.LAST, bl)))
+    en = [(int(n.get('id')), tg(n).get('entrance') or 'yes') for n in root.iter('node')
+          if 'entrance' in tg(n) or tg(n).get('railway') == 'train_station_entrance']
+    print(report(only, '', exits_of(bt.LAST, bl, en)))
 else:
     table, rep = {}, []
 
-    def hook(crs, name, bpts):
+    def hook(crs, name, bpts, doors):
         try:
-            r = exits_of(bt.LAST, [[(p[1], p[2]) for p in pts] for pts in bpts])
+            r = exits_of(bt.LAST, [([(p[1], p[2]) for p in pts], bt.kind_of(t)) for t, pts in bpts], doors)
         except Exception as e:      # one station's odd map shouldn't stop the run
             rep.append(f'{crs} {name}: failed ({e})'); return
         table[crs] = r

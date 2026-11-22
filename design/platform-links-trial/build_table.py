@@ -91,12 +91,16 @@ class Things(osmium.SimpleHandler):
         self.cells, self.rel_ways = cells, rel_ways
         self.ways = {}       # id -> (kind, tags, [(node id, lon, lat)])
         self.lifts = {}      # node id -> (lon, lat)
+        self.doors = {}      # node id -> (lon, lat, entrance kind), for exits.py
         self.rels = []       # (tags, [way ids])
 
     def near(self, lon, lat):
         return cell(lon, lat) in self.cells
 
     def node(self, n):
+        t = n.tags
+        if ('entrance' in t or t.get('railway') == 'train_station_entrance') and self.near(n.location.lon, n.location.lat):
+            self.doors[n.id] = (n.location.lon, n.location.lat, t.get('entrance', 'yes'))
         if n.tags.get('highway') == 'elevator' and self.near(n.location.lon, n.location.lat):
             self.lifts[n.id] = (n.location.lon, n.location.lat)
 
@@ -307,7 +311,7 @@ def solve(crs, st, plats, walks, lifts, rails, rail_segs=()):
     for t, pts in walks:
         if t.get('_road') and t.get('access') not in NO_ENTRY:
             for p in pts: roadn.setdefault(p[0], t.get('name') or t.get('highway'))
-    LAST = types.SimpleNamespace(G=G, attach=attach, N=N, kx=kx, ky=ky, roadn=roadn, walks=walks)
+    LAST = types.SimpleNamespace(G=G, attach=attach, N=N, kx=kx, ky=ky, roadn=roadn, walks=walks, rails=rail_segs)
     refs = sorted((r for r in attach if attach[r]), key=num)
     pair = {}
     for a, b in itertools.combinations(refs, 2):
@@ -390,8 +394,9 @@ def main():
     cache = os.path.join(out, 'cache.pickle')
     if os.path.exists(cache):
         with open(cache, 'rb') as fh:
-            st, ways, lifts, rels = pickle.load(fh)
-        th = types.SimpleNamespace(ways=ways, lifts=lifts, rels=rels)
+            got = pickle.load(fh)
+        st, ways, lifts, rels = got[:4]
+        th = types.SimpleNamespace(ways=ways, lifts=lifts, rels=rels, doors=got[4] if len(got) > 4 else {})
     else:
         s = Stations()
         s.apply_file(src)
@@ -404,7 +409,7 @@ def main():
         th = Things(cells, s.rel_ways)
         th.apply_file(src, locations=True, idx='sparse_mem_array')
         with open(cache, 'wb') as fh:
-            pickle.dump((st, th.ways, th.lifts, th.rels), fh)
+            pickle.dump((st, th.ways, th.lifts, th.rels, th.doors), fh)
     print(f'{len(st)} stations with a code', file=sys.stderr)
     print(f'{len(th.ways)} ways, {len(th.lifts)} lifts, {len(th.rels)} platform relations', file=sys.stderr)
 
@@ -454,6 +459,9 @@ def main():
             rail_nodes.update(p[0] for p in pts)
             for u, v in zip(pts, pts[1:]):
                 rail_cells[cell(u[1], u[2])].append(((u[1], u[2]), (v[1], v[2]), kind_of(t) == 'b'))
+    door_cells = collections.defaultdict(list)
+    for i, d in getattr(th, 'doors', {}).items():
+        door_cells[cell(d[0], d[1])].append((i, d))
     bcells = collections.defaultdict(list)
     for wid, (kind, t, pts) in th.ways.items():
         if kind == 'building':
@@ -485,7 +493,7 @@ def main():
         if HOOK:
             # exits.py: the station's walking graph is in LAST; its station buildings' outlines.
             bw = {w for c in cs for w in bcells.get(c, ())}
-            HOOK(crs, name, [th.ways[w][2] for w in bw])
+            HOOK(crs, name, [(th.ways[w][1], th.ways[w][2]) for w in bw], [(i, d[2]) for c in cs for i, d in door_cells.get(c, ())])
         # Within each group, islands: platforms whose shapes touch or are the same shape.
         pts_of = {r: {p[0] for sh in shapes for p in sh} for r, shapes in plats.items()}
         isl = []

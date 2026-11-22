@@ -65,6 +65,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: exits, a trial on six stations (notes and trial scripts, straight to `main`; Claude Code)
+
+- **John:** an "Exits" section under Arrivals: "The exits are by platforms 17 and 5", then, for the
+  train you're on, the way to the exit. Tried on the six stations of the platform trial.
+- **Done:** `design/platform-links-trial/exits.py` (on `build_table.py`, which now also keeps road
+  names and leaves its walking graph in `LAST`); results and method in
+  `exits-results-2026-11-22.md`. The map's own entrance tags are mostly shop and office doors, so
+  ways out are where the station's paths meet a road. Nothing on the page; not checked at the
+  stations.
+
 ### November 22nd 2026: engineering work about a train that has gone; live (`main`; Claude Code)
 
 - **John (Paddington to Reading at 8.23am):** "The days ahead" still showed the 12.34am's amended

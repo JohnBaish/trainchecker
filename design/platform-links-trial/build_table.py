@@ -121,7 +121,7 @@ class Things(osmium.SimpleHandler):
         if not pts or not any(self.near(p[1], p[2]) for p in pts[:: max(1, len(pts) // 8)] + [pts[-1]]):
             return
         tags = {k: v for k, v in t if k in ('highway', 'railway', 'ref', 'local_ref', 'bridge', 'tunnel', 'layer',
-                                            'access', 'foot', 'public_transport', 'train', 'subway', 'level', 'indoor')}
+                                            'access', 'foot', 'public_transport', 'train', 'subway', 'level', 'indoor', 'name')}
         self.ways[w.id] = (kind, tags, pts)
 
     def relation(self, r):
@@ -300,6 +300,12 @@ def solve(crs, st, plats, walks, lifts, rails, rail_segs=()):
                     heapq.heappush(h, (d + dd, m, u2))
         return None
 
+    global LAST
+    roadn = {}
+    for t, pts in walks:
+        if t.get('_road') and t.get('access') not in NO_ENTRY:
+            for p in pts: roadn.setdefault(p[0], t.get('name') or t.get('highway'))
+    LAST = types.SimpleNamespace(G=G, attach=attach, N=N, kx=kx, ky=ky, roadn=roadn, walks=walks)
     refs = sorted((r for r in attach if attach[r]), key=num)
     pair = {}
     for a, b in itertools.combinations(refs, 2):

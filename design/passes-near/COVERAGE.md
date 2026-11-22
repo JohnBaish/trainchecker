@@ -8,11 +8,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-321 of 2376 stretches done.
+361 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
-3. South East: 16 of 384 done (next).
+3. South East: 56 of 384 done (next).
 4. London: 4 of 421 done.
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: SHW-WIN (Shawford to Winchester).
+Next stretch in the order: GLD-WPL (Guildford to Worplesdon).
 
 <!-- end of counts -->
 
@@ -117,6 +117,20 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 22nd 2026 (Claude Code, scheduled task): batch 07, 40 stretches from Shawford to Winchester
+  through to Woking to Worplesdon (the South East's main lines round Eastleigh, the Romsey and Fareham lines,
+  Basingstoke to Woking, the Alton line, Aldershot to Ascot and Bracknell, and Ascot to Weybridge by Virginia
+  Water and Chertsey); 361 of 2,376 done, South East 56 of 384. Every fact checked against the article in
+  `source` (`wiki_text.py`). Neighbours already used got another item: Fleet and Brookwood to Farnborough
+  (St Michael's Abbey and Farnborough Hill are on the North Camp line) have Fleet Pond and the Basingstoke
+  Canal; Chandlers Ford to Romsey (Romsey Abbey and Broadlands used) has King John's House, from the Romsey
+  article (it has none of its own); Aldershot to Ash (St Peter's, Ash used) has Holy Trinity, Aldershot.
+  St Ann's Hill has no article of its own: its facts come from Chertsey's, its point is Historic England's
+  hillfort. The Chandler's Ford shooting (two killed) was passed over, as were the Jolly Farmer's hanged
+  highwayman and the deaths at Basing House. For Basing House, Bagshot Park, Brooklands and Brookwood
+  Cemetery the point is the nearest edge of the listed area. Hook to Winchfield and Fleet to Farnborough
+  have no train company on the map but are the South Western main line. Step 8 done: 361 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 22nd 2026 (Claude Code): batch 06, 40 stretches from Axminster to Honiton through to
   Micheldever to Winchester (the West of England line from Honiton to Salisbury, Gloucester to Chepstow,
   Dorchester to Bournemouth and the New Forest, then the South East's first stretches: the Lymington

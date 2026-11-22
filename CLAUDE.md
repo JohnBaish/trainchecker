@@ -71,6 +71,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": batch 07 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Shawford to Winchester through to Woking to Worplesdon (Eastleigh, Romsey and Fareham, Basingstoke
+  to Woking, the Alton line, Aldershot to Bracknell, Ascot to Weybridge); 361 of 2,376 done, South East 56 of 384.
+  Next: GLD-WPL (Guildford to Worplesdon).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already
+  used next door replaced, fatal events passed over (COVERAGE.md says which). `to_site.py` run: 361 facts live
+  with this push; checks and build pass.
+
 ### November 22nd 2026: "Your train passes near…": batch 06, the South West finished (notes, straight to `main`; Claude Code)
 
 - 40 stretches, Axminster to Honiton through to Micheldever to Winchester; 321 of 2,376 done, South West

@@ -19,7 +19,20 @@ it (within 1 km).
 5. Left and right are the train's, as it is going: "on the train's left". The card says once:
    "Left and right are as the train is going. Facing backwards? Look the other way."
 6. Where nothing is near, a county boundary is fine ("…passes from Buckinghamshire into Berkshire").
-7. All 26 pilot items kept as written; more lines to be added to the same file.
+7. All 26 pilot items kept as written; more lines to be added to the same file. Later lines' items are kept
+   without John checking each one (his word, November 22nd 2026).
+
+## Lines covered
+
+1. London Paddington to Bristol Temple Meads via Bath (the pilot, 26 stretches; `pilot_items.py`).
+2. Reading to Penzance via Newbury, Westbury, Taunton, Exeter and Plymouth (45 stretches).
+3. Didcot Parkway to Oxford (four stretches).
+4. Reading to Basingstoke (four stretches).
+5. Twyford to Henley-on-Thames (three stretches).
+
+Lines 2 to 5 are in `more_items.py`, added November 22nd 2026. Reading to Reading West is on lines 2 and 4
+and has one item. 81 stretches, 81 items. A journey such as Paddington to Plymouth uses lines 1 and 2: its
+stretches come from both.
 
 ## The data: `passes-near.json`
 
@@ -29,9 +42,10 @@ it (within 1 km).
   Reading–Tilehurst, …, Didcot Parkway–Swindon.
 - `items`: one per stretch.
   - `a`, `b`: the stretch, written in the direction the research was done.
-  - `kind`: `near`, `crosses` (a bridge, viaduct or river the train crosses) or `boundary`.
+  - `kind`: `near`, `crosses` (a bridge, viaduct or river the train crosses), `boundary`, or `station`
+    (the station itself is the interesting thing: Mortimer, whose stretch had nothing else).
   - `side`: `left` or `right` when travelling from `a` to `b`, facing forwards; swap for `b` to `a`.
-    `null` for crossings and boundaries.
+    `null` for crossings, boundaries and stations.
   - `text`: the sentence; `{side}` stands for `left` or `right`.
   - `textReverse`: where present, the sentence for `b` to `a` (boundaries).
   - `name`, `lat`, `lon`, `distanceM` (metres from the track, rounded), `source` (where the facts were
@@ -68,8 +82,9 @@ already sends (the train with the most stops) and the lines in the file, pick on
 visit with a way to get another, swap left and right for the other direction (use textReverse where
 there is one), and add the one-line note about facing backwards. Show nothing on a journey none of
 whose stretches has an item. Add checks to npm run check on real saved boards (Reading to Paddington
-both ways, a fast Paddington to Bristol, a journey with no items). Before building anything visible,
+both ways, a fast Paddington to Bristol, a journey with no items; if no saved board has one, a made-up
+list of stops for Paddington to Plymouth, whose stretches come from two lines). Before building anything visible,
 ask me how I want it presented on the page, and show me options at computer and phone widths. Add the
 Historic England credit to About as a draft for me. More lines will be added to the same file later, so
-nothing should be specific to Paddington to Bristol.
+nothing should be specific to any one line.
 ```

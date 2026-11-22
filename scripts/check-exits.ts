@@ -2,6 +2,7 @@
 // (src/data/exits.json): the sentences John agreed, and the stations he knows.
 import t from '../src/data/exits.json' with { type: 'json' }
 import { heading, stationLine, trainLine, type ExitsTable } from '../src/lib/exits.ts'
+import { whichTrain } from '../src/lib/connection.ts'
 
 let passed = 0, failed = 0
 function eq(what: string, got: unknown, want: unknown) {
@@ -50,6 +51,16 @@ eq('never "doesn’t know"', knows, 0)
 let mismatch = 0
 for (const e of Object.values(T)) if (stationLine('X', e).includes('by each platform')) for (const p of Object.keys(e.p)) if (!/right there/.test(trainLine(e, p, false))) mismatch++
 eq('"an exit by each platform" agrees with every platform', mismatch, 0)
+// Every exit by one platform (Ivybridge, the map data).
+eq('Ivybridge: both exits by platform 1', stationLine('Ivybridge', T.IVY), 'At Ivybridge, both exits are by platform 1.')
+// The question fits the trains in the list (John, November 22nd 2026), at 3.17pm.
+const tr = (std: string, etd: string | null, unknown = false) => ({ std, etd, unknown })
+eq('none left yet: planning to take', whichTrain('15:17', [tr('15:52', 'On time'), tr('16:50', 'On time')]), 'Which train are you planning to take?')
+eq('some left: on, or planning to take', whichTrain('15:17', [tr('14:50', 'On time'), tr('15:52', 'On time')]), 'Which train are you on, or planning to take?')
+eq('all left: on', whichTrain('15:17', [tr('14:50', 'On time'), tr('15:05', '15:09')]), 'Which train are you on?')
+eq('a late train whose new time is to come hasn’t left', whichTrain('15:17', [tr('15:05', '15:25')]), 'Which train are you planning to take?')
+eq('delayed with no time given yet hasn’t left', whichTrain('15:17', [tr('15:05', 'Delayed', true)]), 'Which train are you planning to take?')
+eq('across midnight', whichTrain('23:58', [tr('00:05', 'On time')]), 'Which train are you planning to take?')
 // Left out where the exits aren't known, or still in doubt (John, the cautious approach).
 eq('left out', ['KIH', 'LTT', 'MIS', 'GNB', 'HLR', 'ENC', 'SWN', 'BDG', 'GNH', 'HMC', 'BUO', 'MTN', 'BMN', 'GRP', 'NEH', 'EBT', 'CSB'].filter((c) => c in T), [])
 // Never across a barrow crossing; every route points at a real exit.

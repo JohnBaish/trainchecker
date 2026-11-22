@@ -101,6 +101,16 @@ given its own branch). Before committing there, run
   where John has confirmed it (`level_crossing` in the corrections file, starting with Midgham,
   whose platform 1 exit was added with `add_exits`); a "(platform 1)" bracket dropped from your own
   platform's exit. Checks 273 + 57 + 79 + 40 + 31.
+- **John (the preview, Newton Abbot to Ivybridge at 3.17pm):** Arrivals said nothing due in the next
+  hour while Station exits offered the 4.20pm and 5.15pm and asked "Which train are you on?".
+  Agreed: the question fits the list (`whichTrain()` in `connection.ts`, used by Connections too):
+  "Which train are you planning to take?" when none has left A, "…on?" when all have, "…on, or
+  planning to take?" otherwise (a late train counts by its new time; "Delayed" hasn't left);
+  Arrivals adds "The next one is due at 4.20pm." after "No direct trains … in the next hour." (draft);
+  "At Ivybridge, both exits are by platform 1." ("all the exits" for three or more). Ivybridge's
+  second exit (an unnamed road about 65 metres along) for John to check. Checks 273 + 57 + 79 + 40 + 38;
+  Paddington to Reading (all left: "on") and Reading to Midgham ("on, or planning to take") in the
+  browser at 390px dark and 1200px light: no errors, no sideways scroll.
 
 ### November 22nd 2026: exits, a trial on six stations (notes and trial scripts, straight to `main`; Claude Code)
 

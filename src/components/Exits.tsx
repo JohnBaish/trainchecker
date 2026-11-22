@@ -3,7 +3,7 @@
 // where the exits aren't known. The wording is in lib/exits.ts.
 import { useEffect, useMemo, useState } from 'react'
 import { diff, type Analysis } from '../lib/analyse.ts'
-import { mineOf } from '../lib/connection.ts'
+import { mineOf, whichTrain } from '../lib/connection.ts'
 import { heading, stationLine, trainLine, type ExitsTable } from '../lib/exits.ts'
 import { fetchArrPlatform } from '../lib/load.ts'
 import { t12 } from '../lib/sentences.ts'
@@ -42,7 +42,7 @@ export function Exits({ a }: { a: Analysis }) {
       <p>{stationLine(a.to, e)}</p>
       {mines.length > 0 && e.k !== 'concourse' && (
         <div className="cstep">
-          <p className="cq">Which train are you on?</p>
+          <p className="cq">{whichTrain(a.now, mines.map(({ s }) => s))}</p>
           <div className="cmines" role="group" aria-label={`Trains from ${a.from}`}>
             {mines.map(({ s, m }) => (
               <button key={m.id} type="button" className={`cmine${m.id === mineId ? ' on' : ''}`} aria-pressed={m.id === mineId}

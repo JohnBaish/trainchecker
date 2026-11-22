@@ -4,7 +4,7 @@
 // and messages here are Claude's drafts; the answer's wording is in lib/connection.ts.
 import { useEffect, useMemo, useState } from 'react'
 import { clock, diff, type Analysis } from '../lib/analyse.ts'
-import { answer, chipLabel, choices, firstChoice, mineOf, speeds, type Mine } from '../lib/connection.ts'
+import { answer, chipLabel, choices, firstChoice, mineOf, speeds, whichTrain, type Mine } from '../lib/connection.ts'
 import { fetchConnect, fetchPlaces } from '../lib/load.ts'
 import { dayName, t12 } from '../lib/sentences.ts'
 import { answerImage, deliverImage, isTouch } from '../lib/share.ts'
@@ -104,7 +104,7 @@ export function Connection({ a }: { a: Analysis }) {
       </div>
       {dest && (
         <div className="cstep">
-          <p className="cq">Which train are you on, or planning to take?</p>
+          <p className="cq">{whichTrain(a.now, mines.map(({ s }) => s))}</p>
           <div className="cmines" role="group" aria-label={`Trains from ${a.from}`}>
             {mines.map(({ s, m }) => (
               <button key={m.id} type="button" className={`cmine${m.id === mineId ? ' on' : ''}`} aria-pressed={m.id === mineId}

@@ -252,3 +252,13 @@ export function answer(o: Asked): Answer {
   }
   return { kind, text: text + far }
 }
+
+/** The question above the list of trains you might be on (John, November 22nd 2026): "planning to
+ *  take" when none has left A yet, "on" when they all have, both otherwise. A train has left once
+ *  its expected departure (or timetabled, when it has no time) has passed; one delayed with no
+ *  time given yet hasn't. */
+export function whichTrain(now: string, trains: { std: string; etd: string | null; unknown?: boolean }[]): string {
+  const left = (t: { std: string; etd: string | null; unknown?: boolean }) => !t.unknown && diff(now, isTime(t.etd) ? t.etd : t.std) < 0
+  const n = trains.filter(left).length
+  return n === 0 ? 'Which train are you planning to take?' : n === trains.length ? 'Which train are you on?' : 'Which train are you on, or planning to take?'
+}

@@ -60,6 +60,8 @@ export function stationLine(name: string, e: StationExits): string {
   if (!one && all.size >= 2 && e.x.every((x) => x[1].length) && [...all].every((p) => e.x.some((x) => x[1].includes(p)))
     && Object.values(e.p).every((ws) => ws[0]?.[1] === 'l'))
     return `At ${name}, there’s an exit by each platform${e.lc ? ', either side of the level crossing' : ''}.`
+  // Every exit by the same one platform: "both exits", "all the exits" (John, November 22nd 2026).
+  if (!one && by.length === 1) return `At ${name}, ${e.x.length === 2 ? 'both exits are' : 'all the exits are'} by platform ${by[0]}.`
   if (one) return `At ${name}, the exit is by ${e.x[0][2] ? `the station building on ${plats(by)}` : plats(by)}.`
   return `At ${name}, the exits are by ${plats(by)}.`
 }

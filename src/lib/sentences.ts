@@ -788,6 +788,9 @@ export function arrivals(a: Analysis): Listing & { heading: string } {
     const say = clockSay()
     if (gone.length === 1) text += ` The one due in at ${say(gone[0].sta!)} was cancelled.`
     else if (gone.length > 1) text += ` The ${num(gone.length)} due in at ${andList(gone.map((t) => say(t.sta!)))} were cancelled.`
+    // The next one after the hour, so Station exits' list of later trains doesn't seem to argue with
+    // this (John agreed, November 22nd 2026; the sentence is Claude's draft).
+    if (coming[0]) text += ` The next one is due at ${t12(when(coming[0]))}.`
     return plain(text)
   }
   const shown = inHour.slice(0, 10), n = inHour.length

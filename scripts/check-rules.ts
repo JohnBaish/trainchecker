@@ -245,9 +245,9 @@ eq('arrivals: two (John)', arrivals(soon(2)).text, "There are two trains arrivin
 eq('arrivals: three to ten (John)', arrivals(analyse(snapOf(raw('20261117-2059-PAD-RDG.json')))).text.startsWith('The trains arriving in the next hour are expected at 9.11pm'), true)
 eq('arrivals: long journey, what it can see (draft)', arrivals(A('TVP-PAD')).text, "Trainchecker can see one train arriving in the next hour, expected at 9.21am (the one due to leave Tiverton Parkway at 6.53). Trains that left Tiverton Parkway more than two hours ago aren't included, as Trainchecker can't see them.")
 eq('arrivals: the heading', arrivals(rp9).heading, 'At London Paddington from Reading')
-eq('arrivals: none in the next hour', arrivals(mdg).text, 'No direct trains from Reading are expected at Midgham in the next hour.')
+eq('arrivals: none in the next hour', arrivals(mdg).text, 'No direct trains from Reading are expected at Midgham in the next hour. The next one is due at 9.28am.')
 const mdgGone = changed('RDG-MDG', (sv) => { const t = sv.find((x) => x.sta)!; t.std = '08:40'; t.sta = '08:55'; t.ata = null; t.eta = null; t.cancelled = true })
-eq('arrivals: none, one cancelled (John)', arrivals(mdgGone).text, 'No direct trains from Reading are expected at Midgham in the next hour. The one due in at 8.55am was cancelled.')
+eq('arrivals: none, one cancelled (John)', arrivals(mdgGone).text, 'No direct trains from Reading are expected at Midgham in the next hour. The one due in at 8.55am was cancelled. The next one is due at 9.28am.')
 eq('arrivals: a long journey says it can\'t see them all, never "none"', [arrivals(A('PAD-PLY')).text, arrivals(kgxYrk).text.endsWith("aren't included, as Trainchecker can't see them.")],
   ["Trainchecker can only see trains that left London Paddington in the last two hours, so it can't say which trains are due at Plymouth in the next hour.", true])
 
@@ -265,7 +265,7 @@ eq('the lists: "am" once, the hour kept, laid out as rows', [tvp.text, tvp.block
 eq('the lists: on the hour keeps "pm", across midday too', arrivals(analyse(snapOf(raw('20261117-1824-BTH-BRI.json')))).text.endsWith('6.53 (the 6.38) and 7pm (the 6.48).'), true)
 eq('the lists: notes on their own rows', platformTrains(rp9)!.blocks![1], { lead: 'Fast trains, from platforms 10 and 11:', rows: [{ time: '9.01pm' }, { time: '9.10', note: 'was due to go at 9.04' }, { time: '9.12' }, { time: '9.23' }, { time: '9.26' }, { time: '9.43' }] })
 eq('the lists: Share words (drafts)', [listShareWords(mdg, 'platforms', platformTrains(mdg)!.prose).text, listShareWords(mdg, 'arrivals', arrivals(mdg).text).text],
-  ['Here are the trains from Reading to Midgham with platforms, as of 8.22am on November 18th. There are trains leaving at 9.13am (platform 12A) and 10.12 (platform 2). From Trainchecker.', 'Here are the trains due at Midgham from Reading, as of 8.22am on November 18th. No direct trains from Reading are expected at Midgham in the next hour. From Trainchecker.'])
+  ['Here are the trains from Reading to Midgham with platforms, as of 8.22am on November 18th. There are trains leaving at 9.13am (platform 12A) and 10.12 (platform 2). From Trainchecker.', 'Here are the trains due at Midgham from Reading, as of 8.22am on November 18th. No direct trains from Reading are expected at Midgham in the next hour. The next one is due at 9.28am. From Trainchecker.'])
 eq('share: "next four hours" (John)', shareWords(bthBri).text.includes('in the next four hours'), true)
 
 // "Delayed" with no time: out of the lists, a sentence of its own, with the reason when given (John, November 18th 2026).

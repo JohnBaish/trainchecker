@@ -84,8 +84,8 @@ eq('Ivybridge: platform 2', trainLine(T.IVY, '2', false).startsWith('Your train 
 eq('a place takes "the … exit"', trainLine(T.BRI, '3', false).endsWith('or you can go through the subway for the University of Bristol exit.'), true)
 eq('"the car park" after "The exit to"', /The exit on the /.test(Object.values(T).flatMap((e) => Object.keys(e.p).map((p) => trainLine(e, p, false))).join(' ')), false)
 eq('map data street names untouched ("The Ridgeway")', Object.values(T).flatMap((e) => Object.keys(e.p).map((p) => trainLine(e, p, false))).some((s) => /the The /.test(s)), false)
-eq('the other exit everywhere, even with only a street name (John)', trainLine(T.TWY, '1', false),
-  'Your train is due into platform 1. The exit on Hurst Road is right there, or you can go over the footbridge for the exit by platform 4.')
+eq('the other exit everywhere, even with only a street name (John)', trainLine(T.WOF, '1', false),
+  'Your train is due into platform 1. The exit on Foregate Street is right there, or you can go through the subway for Pierpoint Street.')
 // Left out where the exits aren't known, or still in doubt (John, the cautious approach).
 eq('left out', ['KIH', 'LTT', 'MIS', 'GNB', 'HLR', 'ENC', 'SWN', 'BDG', 'GNH', 'HMC', 'BUO', 'MTN', 'BMN', 'GRP', 'NEH', 'EBT', 'CSB'].filter((c) => c in T), [])
 // Never across a barrow crossing; every route points at a real exit.

@@ -8,11 +8,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-441 of 2376 stretches done.
+481 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
-3. South East: 136 of 384 done (next).
+3. South East: 176 of 384 done (next).
 4. London: 4 of 421 done.
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: SUR-THD (Surbiton to Thames Ditton).
+Next stretch in the order: LIH-PHR (Leigh (Kent) to Penshurst).
 
 <!-- end of counts -->
 
@@ -117,6 +117,19 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 22nd 2026 (Claude Code, scheduled task): batch 10, 40 stretches from Surbiton to Thames Ditton
+  through to Leigh to Tonbridge (the Hampton Court branch, Leatherhead to Epsom and Worcester Park, Epsom to
+  Cheam, Gatwick Airport to Three Bridges, Cooksbridge to Lewes, Brighton to Lewes, the East Coastway from Lewes
+  to Southease and by Glynde, Polegate, Eastbourne, Pevensey and Bexhill to West St Leonards, the Hastings line
+  from Crowhurst by Battle, Robertsbridge, Etchingham and Wadhurst to Tonbridge, and Leigh to Tonbridge); 481 of
+  2,376 done, South East 176 of 384. Every fact checked against the article in `source` (`wiki_text.py`).
+  Neighbours already used got another item: Cooksbridge to Plumpton (Plumpton Racecourse is on Plumpton to
+  Wivelsfield) has East Chiltington; Brighton to London Road (the London Road Viaduct is on Brighton to Preston
+  Park) has the Toy and Model Museum; Ashtead to Leatherhead (the Running Horse and the theatre are on the other
+  Leatherhead stretches) has Ashtead Common. Falmer to Lewes is `crosses` (the Greenwich meridian, at the point
+  where the track meets longitude 0°0'5.4" W, from the Lewes article), so Lewes Priory went to Lewes to
+  Southease. The Epsom riot (a police sergeant died) was passed over. Stoneleigh and Frant are `station`.
+  Step 8 done: 481 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 22nd 2026 (Claude Code, scheduled task): batch 09, 40 stretches from Brighton to Hove through to
   Walton-on-Thames to Weybridge (Brighton to Hassocks, the Brighton Main Line north by Burgess Hill, Haywards
   Heath and Balcombe to Three Bridges, the Arun Valley line from Crawley by Horsham and Pulborough to Arundel,

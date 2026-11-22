@@ -71,6 +71,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": batch 10 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Surbiton to Thames Ditton through to Leigh to Tonbridge (the Hampton Court branch, Epsom, Gatwick to
+  Three Bridges, round Lewes, the East Coastway to West St Leonards, the Hastings line from Crowhurst to Tonbridge);
+  481 of 2,376 done, South East 176 of 384. Next: LIH-PHR (Leigh to Penshurst).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, the Epsom riot passed over (COVERAGE.md says which). `to_site.py` run: 481 facts live with
+  this push; checks and build pass.
+
 ### November 22nd 2026: "Your train passes near…": batch 09 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Brighton to Hove through to Walton-on-Thames to Weybridge (Brighton to Three Bridges, the Arun

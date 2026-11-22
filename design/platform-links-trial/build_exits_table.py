@@ -92,6 +92,7 @@ def main():
     nf = os.path.join(os.path.dirname(os.path.abspath(sys.argv[1])), 'exit-names.json')
     near = json.load(open(nf)) if os.path.exists(nf) else {}
     links = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else {}
+    updown = json.load(open(os.path.join(sys.argv[2], 'u-directions.json')))
     hand = {}
     for f in sorted(glob.glob(os.path.join(sys.argv[2], 'maps-strict-*.json'))):
         hand.update(json.load(open(f)))
@@ -118,6 +119,12 @@ def main():
                 x.append(min(set(ds), key=lambda d: (-ds.count(d), num(d))) if ds else None)  # ties: the lower platform
             else:
                 x.append(None)
+        # Up or down for the station maps' 'u' routes (u-directions.json, from the readers' notes).
+        for pl, rs in e['p'].items():
+            d = updown.get(crs, {})
+            for r in rs:
+                if r[1] == 'u' and (pl in d or '*' in d):
+                    r[2] = d.get(pl, d.get('*'))
         out[crs] = e
     # John's own corrections, applied last (exits-overrides.json beside this script).
     ov = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'exits-overrides.json')))

@@ -1,0 +1,16 @@
+{
+  "_about": "Up or down from the platform, for the station maps' 'u' routes (stairs, lift or escalator to an entrance hall above or below), from the readers' notes (November 22nd 2026). Per station: platform (or '*' for the rest) to 'up', 'down' or 'unknown' (the map doesn't show which: the sentence then says only where the way out leads). Applied by build_exits_table.py; a station or platform not listed keeps its kind's word (all 'above': up; all 'below': down).",
+  "GLQ": {"8": "up", "9": "up"},
+  "LST": {"A": "up", "B": "up"},
+  "NOT": {"*": "up"},
+  "STP": {"A": "up", "B": "up", "*": "down"},
+  "TBW": {"2": "up"},
+  "WFJ": {"*": "down"},
+  "CNP": {"*": "unknown"},
+  "COI": {"*": "unknown"},
+  "DUD": {"*": "unknown"},
+  "HBP": {"*": "unknown"},
+  "HIL": {"*": "unknown"},
+  "PRN": {"*": "unknown"},
+  "SMA": {"*": "unknown"}
+}

@@ -65,14 +65,25 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 22nd 2026: Paddington's Elizabeth Line platforms (branch `claude/dreamy-dijkstra-swkirc`; Claude Code)
+### November 22nd 2026: Paddington's Elizabeth Line platforms; up or down (branch `claude/dreamy-dijkstra-swkirc`; Claude Code)
 
 - **John:** platforms A and B read "The way out is up or down from the platform, to Eastbourne Terrace
   (Elizabeth line)."; now his words, "The way out is up from the Elizabeth Line platforms to the
   Eastbourne Terrace exit." (`say` in the corrections file). Only Paddington changes in the table.
   The same "up or down" wording is at about 40 other stations (Liverpool Street, Bond Street, Ealing
   Broadway among them), for John to look at.
-- **Checked:** `npm run check` 273 + 57 + 79 + 40 + 55; `tsc -b`, build.
+- **John:** where did "up or down" come from? (Tunbridge Wells.) Two sources: the station maps'
+  "u" (stairs, lift or escalator to a hall above or below, which way not recorded) and the map data's
+  path crossing a track it doesn't meet, with no bridge or tunnel tag. Now: `exits-2026-11-22/u-directions.json`
+  gives up or down for the station maps from the readers' notes (Glasgow Queen Street 8 and 9,
+  Liverpool Street A and B, Nottingham, St Pancras (down from 1 to 13, up from A and B), Tunbridge
+  Wells 2: up; Watford Junction: down), "unknown" where the map didn't show it (Conway Park, Crosshill,
+  Duddeston, Hornbeam Park, Hillside, Parton, Small Heath); the sentence says "The way out is up from
+  the platform to X." or, where which way isn't known (and for the 37 map-data stations), "The way out
+  from the platform leads to X." (draft). Leaving the map-data routes out was tried and dropped: Ealing
+  Broadway, Putney and Streatham lost their main exits and Heathrow Terminal 5 went altogether.
+  169 answers change, all of this kind; "up or down" nowhere.
+- **Checked:** `npm run check` 273 + 57 + 79 + 40 + 59; `tsc -b`, build.
 
 ### November 22nd 2026: exits named by what's near them; live (branch `claude/dreamy-dijkstra-swkirc`, merged the same day; Claude Code)
 

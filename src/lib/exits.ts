@@ -20,7 +20,7 @@
 export type ExitRow = [name: string | null, by: string[], building: 0 | 1, near: string | null]
 /** A way from a platform to an exit: the exit's number, how (l level, b footbridge, s subway, x
  *  level crossing, c concourse, u up or down), and the platform a footbridge or subway comes down
- *  by, where known. */
+ *  by, where known (for u: 'up', 'down' or 'unknown'). */
 export type Way = [exit: number, via: string, down: string | null]
 /** w: John's word for the station's footbridge ("bridge" at Reading, which has shops on it);
  *  here: for an exit given a descriptive name, how to say it's right there (exit number → words). */
@@ -147,7 +147,13 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
     return `${start} ${here ?? hereName(nm, !e.m)} is right there${by}${also}.${hoursLine(e, [ways[0]])}`
   }
   if (via === 'c') return `${start} The exits are across the concourse at the end of the platform.${hoursLine(e, ways)}` // Draft
-  if (via === 'u') return `${start} The way out is ${e.k === 'below' ? 'down' : e.k === 'above' ? 'up' : 'up or down'} from the platform, to ${target(e, i)}.${hoursLine(e, [ways[0]])}` // Draft
+  if (via === 'u') {
+    // Up or down, where the station map shows which (John, November 22nd 2026, from Paddington:
+    // "The way out is up from the Elizabeth Line platforms to the Eastbourne Terrace exit.");
+    // otherwise only where it leads, never "up or down".
+    const dir = down === 'up' || down === 'down' ? down : down === 'unknown' ? null : e.k === 'below' ? 'down' : e.k === 'above' ? 'up' : null
+    return `${start} ${dir ? `The way out is ${dir} from the platform to` : 'The way out from the platform leads to'} ${target(e, i)}.${hoursLine(e, [ways[0]])}` // Draft
+  }
   if (via === 'x') return `${start} Cross the line at the level crossing for ${target(e, i)}.${hoursLine(e, [ways[0]])}` // Draft
   // A footbridge or subway: either way, when two ways the same kind lead to different exits.
   const same = ways.filter((w) => w[1] === via)

@@ -31,6 +31,11 @@ eq('Twickenham: the town centre exit', T.TWI.x.map((x) => x[0]), ['the town cent
 eq('Twyford: the long-term car park from platform 3 (John)', trainLine(T.TWY, '3', false).startsWith('Your train is due into platform 3. The exit to the long-term car park is right there'), true)
 eq('Twyford: the station (John)', stationLine('Twyford', T.TWY), 'At Twyford, the exits are by platforms 1, 3 and 4.')
 eq('Paddington: the Elizabeth Line platforms (John)', trainLine(T.PAD, 'A', false), 'Your train is due into platform A. The way out is up from the Elizabeth Line platforms to the Eastbourne Terrace exit.')
+// Up or down where the station map shows which; never "up or down" (John, November 22nd 2026).
+eq('Tunbridge Wells: up to Mount Pleasant Road', trainLine(T.TBW, '2', false), 'Your train is due into platform 2. The way out is up from the platform to Mount Pleasant Road.')
+eq('St Pancras: down from 1, up from A', [trainLine(T.STP, '1', false), trainLine(T.STP, 'A', false)], ['Your train is due into platform 1. The way out is down from the platform to Pancras Road.', 'Your train is due into platform A. The way out is up from the platform to Midland Road (north).'])
+eq('Ealing Broadway: which way not known, so only where it leads', trainLine(T.EAL, '2', false), 'Your train is due into platform 2. The way out from the platform leads to The Broadway.')
+{ let n = 0; for (const e of Object.values(T)) for (const p of Object.keys(e.p)) if (/up or down/.test(trainLine(e, p, false))) n++; eq('never "up or down"', n, 0) }
 // The others John checked.
 eq('Newton Abbot: by the station building', stationLine('Newton Abbot', T.NTA), 'At Newton Abbot, the exit is by the station building on platform 3.')
 eq('Newton Abbot: platform 1, over the bridge', trainLine(T.NTA, '1', false), 'Your train is due into platform 1, so you’ll want the footbridge to the exit, coming down from the bridge by platform 3.')

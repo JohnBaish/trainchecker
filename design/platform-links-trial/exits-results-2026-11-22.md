@@ -143,3 +143,23 @@ platform 3, which fits John's "by", not "through"; Twyford's map names the road 
 the map data "Hurst Road", not settled). Clapham Junction: three ways out, Grant Road (by platform
 1, and by the subway from the others), St John's Hill (by the subway, on the platform 17 side) and
 Brighton Yard (by the footbridge, also on the platform 17 side); the trial found the first two.
+
+## Reading the Network Rail maps by script (`nrmap.py`, November 22nd 2026)
+
+John: Twyford's road is Hurst Road (the map's "Hurst Lane" is wrong; it doesn't matter). The script
+finds each "Entrance/exit" label and the name under it, and platform numbers where they are text,
+and gives each exit its nearest platform labels. Tried on Reading, Clapham Junction and 18 more big
+stations' maps from their National Rail pages:
+
+- **Works fully:** Clapham Junction (Grant Road by 1, 2, 3; St John's Hill and Brighton Yard by 17,
+  16, 15). Nearly: Liverpool Street (seven exits named; platform labels partly).
+- **Exit names only** (platform numbers drawn as shapes, not text): Reading (Station Car Park,
+  Forbury Road, Station Hill twice, Apex Plaza), Guildford, London Bridge, Charing Cross, Euston,
+  Birmingham New Street (one only); some names come out jumbled (Euston).
+- **Neither:** Cannon Street, Gatwick Airport; Victoria, Waterloo, Manchester Piccadilly,
+  Edinburgh and Liverpool Lime Street have platform numbers as text but no "Entrance/exit" label
+  found; King's Cross, Leeds, Paddington and Glasgow Central gave nonsense platform matches.
+- **Pictures:** York and Stratford International (no text at all).
+
+So the maps vary too much for a script to be trusted alone: it can draft, but each big station's
+map needs reading by eye.

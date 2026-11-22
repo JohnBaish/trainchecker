@@ -13,6 +13,9 @@
 //   on Newton Abbot's own board, asked only for trains that came from Ivybridge; a train that ends
 //   at Newton Abbot isn't on it, and then the platform is null.
 //
+// GET /api/connect?at=RDG&from=MDG&train=10918949&arr=15:29&only=platform
+//   Only the platform that train comes into at Reading, for "Station exits" (November 22nd 2026).
+//
 // The key stays here (RDM_LDB_KEY, an x-apikey header). Nothing is stored or logged. Runs in
 // London (vercel.json). Self-contained on purpose, as api/live.ts.
 // scripts/check-connection.ts tries places() and trimConnect() on real boards.
@@ -102,6 +105,16 @@ const ukMinutes = (d: Date) => {
   return h * 60 + m
 }
 
+/** B's board for trains that came from A, from just before the train is due in. */
+function incomingBoard(key: string, at: string, from: string, arr: string, now: Date): Promise<RawBoard> {
+  const [h, m] = arr.split(':').map(Number)
+  let rel = h * 60 + m - ukMinutes(now)
+  if (rel < -720) rel += 1440
+  if (rel > 720) rel -= 1440
+  const off = Math.max(-120, Math.min(119, rel - 5))
+  return board(key, at, off, 60, `&filterCrs=${from}&filterType=from`)
+}
+
 export async function GET(request: Request): Promise<Response> {
   const q = new URL(request.url).searchParams
   const code = (k: string) => (q.get(k) || '').toUpperCase()
@@ -114,6 +127,11 @@ export async function GET(request: Request): Promise<Response> {
   const now = new Date()
   const taken = now.toISOString()
   try {
+    if (q.get('only') === 'platform') {
+      if (!ok(from) || !/^\d{6,8}$/.test(train) || !/^\d\d:\d\d$/.test(arr)) return json({ error: 'stations' }, 400)
+      const inc = await incomingBoard(key, at, from, arr, now).then((b) => [b], () => [])
+      return json({ taken, at, arrPlatform: trimConnect(at, at, taken, [], inc, train).arrPlatform })
+    }
     if (!to) {
       const boards = await Promise.all(PLACE_WINDOWS.map(([off, win]) => board(key, at, off, win)))
       return json({ taken, at, places: places(boards) } satisfies Places)
@@ -122,13 +140,8 @@ export async function GET(request: Request): Promise<Response> {
     // The train you're on: B's board for trains that came from A, from just before it's due in.
     let incoming: Promise<RawBoard[]> = Promise.resolve([])
     if (ok(from) && /^\d{6,8}$/.test(train) && /^\d\d:\d\d$/.test(arr)) {
-      const [h, m] = arr.split(':').map(Number)
-      let rel = h * 60 + m - ukMinutes(now)
-      if (rel < -720) rel += 1440
-      if (rel > 720) rel -= 1440
-      const off = Math.max(-120, Math.min(119, rel - 5))
       // If this board can't be had, the answer goes without the arrival platform.
-      incoming = board(key, at, off, 60, `&filterCrs=${from}&filterType=from`).then((b) => [b], () => [])
+      incoming = incomingBoard(key, at, from, arr, now).then((b) => [b], () => [])
     }
     const [onward, inc] = await Promise.all([Promise.all(ONWARD_WINDOWS.map(([off, win]) => board(key, at, off, win, `&filterCrs=${to}&filterType=to`))), incoming])
     return json(trimConnect(at, to, taken, onward, inc, train))

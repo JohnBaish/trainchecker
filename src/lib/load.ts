@@ -52,3 +52,11 @@ export async function fetchConnect(o: { at: string; to: string; from: string; tr
   if (!r || !r.ok) throw new Error('unavailable')
   return (await r.json()) as Connect
 }
+
+/** Only the platform a train from A comes into at B ("Station exits"). Null when it isn't known,
+ *  as for a train that ends at B. */
+export async function fetchArrPlatform(o: { at: string; from: string; train: string; arr: string }): Promise<string | null> {
+  const r = await fetch(`/api/connect?${new URLSearchParams({ ...o, only: 'platform' })}`, { cache: 'no-store' }).catch(() => null)
+  if (!r || !r.ok) throw new Error('unavailable')
+  return ((await r.json()) as { arrPlatform: string | null }).arrPlatform
+}

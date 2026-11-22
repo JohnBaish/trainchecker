@@ -55,7 +55,8 @@ export function Tail({ about = true, quote = true }: { about?: boolean; quote?: 
           <h3>About these figures</h3>
           {ABOUT.map((p) => <p key={p}>{p}</p>)}
           {/* The credit OpenStreetMap asks for; John's words (November 21st 2026). */}
-          <p>The directions between platforms in the Connections section come from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>.</p>
+          {/* Extended for Station exits (Claude's draft, November 22nd 2026). */}
+          <p>The directions between platforms in the Connections section, and the ways out in the Station exits section, come from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>, with National Rail’s station maps for the larger stations.</p>
         </section>
       )}
       <footer className="footer-notice">

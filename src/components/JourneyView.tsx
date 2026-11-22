@@ -18,6 +18,7 @@ import { DaysAhead, type DaysState } from './DaysAhead.tsx'
 import { LastWeek } from './LastWeek.tsx'
 import { QuoteCard } from './Tail.tsx'
 import { Connection } from './Connection.tsx'
+import { Exits } from './Exits.tsx'
 
 type State = { s: 'loading' } | { s: 'ok'; a: Analysis } | { s: 'failed'; why: string }
 
@@ -350,6 +351,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
         <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth && endOut} noRecord={noRecord} standIn={stand ? { ...stand, left: stand.side === 'to' ? an.to : an.from } : null} others={others} />
       )}
       {(an.verdict !== 'none' || (an.lastGone && !closed)) && <Arrivals a={an} />}
+      {(an.verdict !== 'none' || (an.lastGone && !closed)) && <Exits a={an} />}
     </>
   )
 }

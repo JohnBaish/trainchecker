@@ -112,6 +112,8 @@ class Things(osmium.SimpleHandler):
             kind = 'walk' if hw in WALK else 'member'
         elif hw in ROADS:
             kind = 'road'
+        elif t.get('building') == 'train_station':
+            kind = 'building'   # for exits.py: a station building beside a platform
         else:
             return
         try:
@@ -121,7 +123,7 @@ class Things(osmium.SimpleHandler):
         if not pts or not any(self.near(p[1], p[2]) for p in pts[:: max(1, len(pts) // 8)] + [pts[-1]]):
             return
         tags = {k: v for k, v in t if k in ('highway', 'railway', 'ref', 'local_ref', 'bridge', 'tunnel', 'layer',
-                                            'access', 'foot', 'public_transport', 'train', 'subway', 'level', 'indoor', 'name')}
+                                            'access', 'foot', 'public_transport', 'train', 'subway', 'level', 'indoor', 'name', 'building')}
         self.ways[w.id] = (kind, tags, pts)
 
     def relation(self, r):
@@ -378,6 +380,7 @@ def solve(crs, st, plats, walks, lifts, rails, rail_segs=()):
 
 
 flat_plat_nodes = set()
+HOOK = None   # exits.py sets this to look at each station after solve()
 
 
 def main():
@@ -451,6 +454,11 @@ def main():
             rail_nodes.update(p[0] for p in pts)
             for u, v in zip(pts, pts[1:]):
                 rail_cells[cell(u[1], u[2])].append(((u[1], u[2]), (v[1], v[2]), kind_of(t) == 'b'))
+    bcells = collections.defaultdict(list)
+    for wid, (kind, t, pts) in th.ways.items():
+        if kind == 'building':
+            for c in {cell(p[1], p[2]) for p in pts}:
+                bcells[c].append(wid)
     lift_cells = collections.defaultdict(list)
     for i, (x, y) in th.lifts.items():
         lift_cells[cell(x, y)].append(i)
@@ -474,6 +482,10 @@ def main():
         flat_plat_nodes = {p[0] for shapes in plats.values() for sh in shapes for p in sh}
         segs = [sg for c in cs for sg in rail_cells.get(c, ())]
         gl, xs, pair, mixed = solve(crs, st[crs], plats, walks, lifts, rail_nodes, segs)
+        if HOOK:
+            # exits.py: the station's walking graph is in LAST; its station buildings' outlines.
+            bw = {w for c in cs for w in bcells.get(c, ())}
+            HOOK(crs, name, [th.ways[w][2] for w in bw])
         # Within each group, islands: platforms whose shapes touch or are the same shape.
         pts_of = {r: {p[0] for sh in shapes for p in sh} for r, shapes in plats.items()}
         isl = []

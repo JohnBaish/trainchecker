@@ -163,3 +163,12 @@ stations' maps from their National Rail pages:
 
 So the maps vary too much for a script to be trusted alone: it can draft, but each big station's
 map needs reading by eye.
+
+## The 44 biggest stations' maps read by eye (November 22nd 2026)
+
+Every station with eight or more platforms in the platform table (44), its National Rail station
+map read by eye (four helpers, then spot checks: Carlisle, Clapham Junction, Reading, Bristol).
+Results kept in the session's scratch files for now; to be saved with the national run.
+
+**John on using them:** fine to use the information about public exits from the station maps,
+especially alongside another source; the maps themselves aren't reproduced.

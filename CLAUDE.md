@@ -26,6 +26,9 @@ given its own branch). Before committing there, run
 6. `design/handover-platform-links-2026-11-21.md`: "over the footbridge" (how platforms connect,
    for Connections), live since November 21st 2026; the trial and build in
    `design/platform-links-trial/`.
+7. `design/passes-near/README.md`: "Your train passes near…" (an interesting thing near each
+   stretch, with the train's side), researched in a Claude chat; data for five lines in `passes-near.json`, with
+   John's decisions and a prompt. Nothing built yet; John will say how it looks.
 
 ## Key points
 
@@ -85,6 +88,31 @@ given its own branch). Before committing there, run
   169 answers change, all of this kind; "up or down" nowhere.
 - **Checked:** `npm run check` 273 + 57 + 79 + 40 + 59; `tsc -b`, build.
 - **John:** "Yes please!": merged into `main` (fast-forward); checks, `tsc -b`, lint and build clean first.
+
+### November 22nd 2026: "Your train passes near…": all of England, the plan (notes, straight to `main`; Claude chat)
+
+- **John:** work through every stretch in England in a structured way. Plan and the Claude Code prompt to
+  set it up (every stretch from the UK extract, a coverage file, region by region, a candidates script) at
+  the end of `design/passes-near/README.md`. Not started.
+
+### November 22nd 2026: "Your train passes near…": four more lines (notes, straight to `main`; Claude chat)
+
+- **John:** all items kept without his checking; "on the train's left/right" with the one-line note for
+  facing backwards; carry on with the research, then a prompt for Claude Code (he'll say how it looks).
+- **Done:** Reading to Penzance (45 stretches), Didcot Parkway to Oxford, Reading to Basingstoke and Twyford
+  to Henley-on-Thames added to `design/passes-near/passes-near.json` by `more_items.py`: 81 stretches, one
+  item each (Reading to Reading West shared). New kind `station` (Mortimer). Facts checked against Historic
+  England, Wikipedia, the National Trust and others; sides from the OpenStreetMap track. The README lists the
+  lines and holds the prompt. Nothing on the page.
+
+### November 22nd 2026: "Your train passes near…": data for Paddington to Bristol (notes, straight to `main`; Claude chat)
+
+- **John:** one interesting thing near each stretch between neighbouring stations, with which side
+  of the train it's on; one picked at random from the journey's stretches each visit; England only.
+- **Done:** `design/passes-near/` (README with method, decisions and the prompt for Claude Code;
+  `passes-near.json`, 26 items for Paddington to Bristol via Bath; `pilot_items.py` writes it).
+  Every fact checked against a source; all kept by John. More lines to come in the same file.
+  Nothing on the page.
 
 ### November 22nd 2026: exits named by what's near them; live (branch `claude/dreamy-dijkstra-swkirc`, merged the same day; Claude Code)
 

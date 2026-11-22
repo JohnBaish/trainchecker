@@ -108,3 +108,19 @@ Junction are marked as such.
 **Limits seen:** a way out that is no platform's nearest is left out (Clapham Junction's Brighton
 Yard, over the footbridge); some names are only "service" (a road with no name, often a car park or
 forecourt); the distances are along the map's lines, not measured at the station.
+
+## John's check (November 22nd 2026)
+
+- Oxford, Twyford and Bristol Temple Meads: right. Clapham Junction: sounds right, not sure.
+- Newton Abbot: right, but say "by the station building", not "through": there may be a gate.
+- Reading: platforms 4 to 7 can all use the exit near Forbury Road. From platforms 8 to 15 you
+  can go either way off the bridge: to Station Approach South or Forbury Road, or to Trooper Potts
+  Way (the north side). That way isn't level: there's an escalator.
+- Network Rail's Reading station map (shown by John) names the ways out as people see them:
+  Station Hill (two), Forbury Road, Apex Plaza, and Station Car Park on the north side. The map
+  data has road names instead ("Trooper Potts Way" for the north side).
+
+**National Rail's station maps:** every station page tried (the six, and Midgham, Earley and
+Theale) lists one or two "Station Map" files, as a picture or a PDF. From this session the pages
+can be read (www.nationalrail.co.uk), but the files themselves can't: images.nationalrail.co.uk
+and assets.nationalrail.co.uk are refused by the environment's network rules.

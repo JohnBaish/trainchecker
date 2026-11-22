@@ -106,10 +106,10 @@ eq('closed: Share', closedShare('buses', { from: 'Derby', to: 'Matlock', now: '1
 // The summaries above the fold (John, November 18th 2026: National Rail's own sentences), the
 // single services grouped, and the route check, on the saved feed and the 6.24pm boards.
 const it = (re: RegExp) => days.items.find((i) => re.test(i.summary))!
-eq('gist: Reading to Paddington, Sunday (no "throughout")', gist(it(/via London Paddington on Sunday/), 'RDG', 'PAD'), [
+eq('gist: Reading to Paddington, Sunday (no "throughout")', gist(it(/via London Paddington on Sunday/), 'RDG', 'PAD', new Date('2026-11-18T06:35:00Z')), [
   'Engineering work is taking place between London Paddington and Southall, closing two out of four lines throughout the day.',
   'The 6.20am Reading to London Paddington service will start at 6.39am.'])
-eq('gist: the other way', gist(it(/via London Paddington on Sunday/), 'PAD', 'RDG')[1], 'The 6.38am London Paddington to Reading service will not run.')
+eq('gist: the other way', gist(it(/via London Paddington on Sunday/), 'PAD', 'RDG', new Date('2026-11-18T06:35:00Z'))[1], 'The 6.38am London Paddington to Reading service will not run.')
 eq('gist: a "will:" list joined', gist(it(/23:45 Didcot/), 'RDG', 'PAD')[1], 'The 11.45pm Didcot Parkway to London Paddington service will not call at Taplow or Burnham and terminate at Ealing Broadway.')
 eq('gist: a single train', gist(it(/05:31 Bedwyn/), 'RDG', 'PAD')[1], 'The 5.31am Bedwyn to London Paddington will terminate at Reading.')
 eq('gist: disruption, between either way round, no ways round it', gist(it(/Disruption between Manchester Airport/), 'MAN', 'MIA')[1], 'Trains between Manchester Airport and Manchester Piccadilly may be delayed by up to 30 minutes or revised or cancelled.')
@@ -171,5 +171,20 @@ eq('summaries reworded', [
 ])
 eq('summaries: nothing lost or broken on any real item', days.items.filter((i) => { const p = plainSummary(i.summary); return !p || /undefined|\/ |  /.test(p) || p.length < 15 }).map((i) => i.summary), [])
 
+
+// A train that has already left A today (John, November 22nd 2026), on the feed as the live site
+// served it at 8.26am that Sunday: the 12.34am's own item drops out after 12.34am for Paddington to
+// Reading, and the day-long item's summary stops naming the 6.38am (or the 6.20am the other way).
+{
+  const d22 = JSON.parse(gunzipSync(readFileSync(new URL('../design/mockups/snapshots/20261122-0826-days.json.gz', import.meta.url))).toString())
+  const at = (a: string, b: string, A: string, B: string, t: string) => { const now = new Date(t); const j = forJourney(d22, { fromCrs: a, toCrs: b, from: A, to: B }, now); return [...j.now, ...j.planned].map((i) => [plainSummary(i.summary), gist(i, a, b, now).join(' ')]) }
+  const early = at('PAD', 'RDG', 'London Paddington', 'Reading', '2026-11-22T00:20:00Z'), late = at('PAD', 'RDG', 'London Paddington', 'Reading', '2026-11-22T08:23:00Z')
+  eq('gone: before 12.34am both items, the 6.38am named', [early.length, early[0][0], early[1][1].endsWith('The 6.38am London Paddington to Reading service will not run.')], [2, 'Amended 12.34am London Paddington to Reading service', true])
+  eq('gone: at 8.23am the single train dropped, the day-long item kept without the 6.38am', late, [['Amended trains to, from and through London Paddington', 'Engineering work is taking place between London Paddington and Southall, closing two out of four lines throughout the day.']])
+  eq('gone: the other way, the 6.20am dropped at 8.23am', at('RDG', 'PAD', 'Reading', 'London Paddington', '2026-11-22T08:23:00Z')[0][1].includes('6.20am'), false)
+  eq('gone: kept at 12.33am', at('PAD', 'RDG', 'London Paddington', 'Reading', '2026-11-22T00:33:00Z').length, 2)
+  eq('gone: a train that starts elsewhere is kept (Slough to Reading at 8.23am)', at('SLO', 'RDG', 'Slough', 'Reading', '2026-11-22T08:23:00Z').some(([s]) => s.startsWith('Amended 12.34am')), at('SLO', 'RDG', 'Slough', 'Reading', '2026-11-22T00:20:00Z').some(([s]) => s.startsWith('Amended 12.34am')))
+  eq('gone: not on an earlier day of the item (the saved feed, Sunday\'s item on the Wednesday)', gist(it(/via London Paddington on Sunday/), 'PAD', 'RDG', new Date('2026-11-18T08:23:00Z'))[1], 'The 6.38am London Paddington to Reading service will not run.')
+}
 console.log(`check-days: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

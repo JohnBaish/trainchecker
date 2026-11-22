@@ -179,7 +179,7 @@ const CHANGE = /will not run|will (start|terminate|depart|arrive|run|call|divert
  *  amended train, the sentence about it),
  *  leaving out ways round it ("you can use … at no extra cost"). At most two sentences. One tidy
  *  (John): "…, and run later than usual throughout" dropped, as it goes without saying. */
-export function gist({ advice, summary }: Pick<Item, 'advice' | 'summary'>, from: string, to: string, now = new Date()): string[] {
+export function gist({ advice, summary, end }: Pick<Item, 'advice' | 'summary'> & Partial<Pick<Item, 'end'>>, from: string, to: string, now = new Date()): string[] {
   // A sentence ending in a colon before a longer list (kept in the fold) ends at the colon ("…will
   // run to a temporary timetable, as follows:" → "…timetable."), or, when it only introduces the
   // list ("The following trains …:"), isn't used (fresh look 5.3).
@@ -187,6 +187,8 @@ export function gist({ advice, summary }: Pick<Item, 'advice' | 'summary'>, from
     .filter((l) => !(/:$/.test(l) && /\bfollowing\b/i.test(l)))
     .map((l) => l.replace(/,? as follows:$|:$/, '.'))
     .map((l) => sincePast(l, now))
+    // A train from A that has already gone today isn't the news any more (John, November 22nd 2026).
+    .filter((l, k) => k === 0 || !goneSentence(l, from, end, now))
   if (!all.length) return []
   const out = [all[0]]
   const mine = all.slice(1).filter((l) => {
@@ -230,6 +232,26 @@ export function sincePast(l: string, now: Date): string {
   return l
 }
 
+const ukDay = (d: Date) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(d)
+const ukClock = (d: Date) => new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d)
+/** Whether a train at this time, leaving one of these stations, has already gone from A on the
+ *  item's last day (John, November 22nd 2026: drop it once we've passed its time). Only when A is
+ *  where it starts: a train that reaches A later may still be to come. */
+function trainGone(time: string, starts: string[], from: string, end: string | null | undefined, now: Date): boolean {
+  return !!end && starts.includes(from) && ukDay(new Date(end)) === ukDay(now) && ukClock(now) >= time
+}
+/** One amended train that has already left A today, on the item's last day: not worth showing. */
+export function goneSingle(i: Pick<Item, 'summary' | 'end'>, from: string, now = new Date()): boolean {
+  const one = singleTrain(i.summary)
+  return !!one && trainGone(one.time, one.from, from, i.end, now)
+}
+/** A sentence about one train from A that has already left today ("The 06:38 London Paddington to
+ *  Reading service will not run."), on the item's last day: not used for the summary. */
+function goneSentence(l: string, from: string, end: string | null | undefined, now: Date): boolean {
+  const m = l.match(/^(?:As a result,?\s+)?The (\d\d:\d\d) (.+?) to /)
+  return !!m && trainGone(m[1], stationsIn(m[2]).map((x) => x.code), from, end, now)
+}
+
 export type DaysJourney = { fromCrs: string; toCrs: string; from: string; to: string; route?: string[] }
 
 /** Single trains very early or late (before 7am, or from 10pm), grouped as one entry when there
@@ -259,8 +281,10 @@ export function wordNumbers(t: string): string {
 
 /** The journey's items: those that count (disruption first, then planned work by date), and those
  *  that may affect it, with the stations they involve. */
-export function forJourney(d: Days, p: DaysJourney) {
+export function forJourney(d0: Days, p: DaysJourney, now = new Date()) {
   addNames([[p.fromCrs, p.from], [p.toCrs, p.to]])
+  // One amended train that has already left A today drops out (John, November 22nd 2026).
+  const d = { ...d0, items: d0.items.filter((i) => !goneSingle(i, p.fromCrs, now)) }
   const byStart = (a: Item, b: Item) => (a.planned === b.planned ? (a.start ?? '').localeCompare(b.start ?? '') : a.planned ? 1 : -1)
   const counted = d.items.filter((i) => matches(i, p.fromCrs, p.toCrs)).sort(byStart)
   const may = d.items.filter((i) => mayAffect(i, p.fromCrs, p.toCrs, p.route)).sort(byStart)

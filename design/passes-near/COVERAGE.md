@@ -53,10 +53,10 @@ Next stretch in the order: NLS-YAT (Nailsea & Backwell to Yatton).
    rough guide made from wikitext: check facts against the article itself. `--wiki-api` uses
    Wikipedia's search API instead (about one request every 40 seconds from a cloud session).
    What it fetched is kept in `cache/` (not committed).
-4. For each stretch, choose one item from `candidates.md` (or anything better you know of near the
+3. For each stretch, choose one item from `candidates.md` (or anything better you know of near the
    line: a bridge or viaduct the train crosses, a river, a county boundary where nothing else is near).
    Prefer something a passenger would find interesting, and true without hedging.
-5. **Check every fact against a source** (the Historic England list entry, Wikipedia, the National
+4. **Check every fact against a source** (the Historic England list entry, Wikipedia, the National
    Trust, the owner's own site). Leave out anything doubtful. Put the source's address in `source`.
    Wikipedia's own pages refuse after a few reads, so read articles with
    `python3 -I design/passes-near/wiki_text.py --save ARTICLES "Title" "Title" …`: it finds them in the
@@ -68,17 +68,17 @@ Next stretch in the order: NLS-YAT (Nailsea & Backwell to Yatton).
    and is sometimes wrong (Taunton Castle's pointed at the bus station); and for a park or garden the
    distance is to the park's edge while `lat`/`lon` is its middle or the house, so `check.py` warns
    when they differ: write about the park and give the nearest point of its edge, or choose another.
-6. Write the sentence in the house style of the existing items: "Your train passes near …, on the
+5. Write the sentence in the house style of the existing items: "Your train passes near …, on the
    train's {side}, …"; British spelling; one to nine in words; "less than"/"more than", never
    "under"/"over" for amounts; written afresh, not copied. Give `name`, `lat`, `lon` (of the thing),
    `distanceM` and `side` from the candidates (the side is for `a` to `b`: write the item's `a` and `b`
    in the same order as the stretch, or swap the side). `kind` is `near`, `crosses`, `boundary` or
    `station`; `side` is null for the last three, and a boundary has `textReverse` for the other way.
-7. Save the batch's items as a list in `batches/NN/items.json`, then
+6. Save the batch's items as a list in `batches/NN/items.json`, then
    `python3 -I design/passes-near/to_network.py design/passes-near/batches/NN/items.json`.
-8. Run `python3 -I design/passes-near/check.py` and fix everything it lists (warnings: look, and fix if
+7. Run `python3 -I design/passes-near/check.py` and fix everything it lists (warnings: look, and fix if
    wrong). Then `python3 -I design/passes-near/coverage.py` to update the counts above.
-9. Commit straight to `main` (notes, house style §10): `batches/NN/` (candidates and items), the
+8. Commit straight to `main` (notes, house style §10): `batches/NN/` (candidates and items), the
    data, this file. Add a line to the log below and to `CLAUDE.md`'s log; update the tracker's line
    (baish.net-directory) when a part is finished.
 

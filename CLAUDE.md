@@ -70,6 +70,13 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": the Wikipedia files committed (notes, straight to `main`; Claude Code)
+
+- **John:** save the download work. `design/passes-near/wiki/`: the article locations (3.3 MB), a
+  cut-down index of the articles dump for those articles (2 MB) and their redirects (1.7 MB), from the
+  20261101 run, with a README (licence CC BY-SA 4.0; how to remake). `candidates.py` and `wiki_text.py`
+  use them by default (`--wiki-api` and `--dumps` for the old ways), so a batch needs no download.
+
 ### November 22nd 2026: "Your train passes near…": batch 02 (notes, straight to `main`; Claude Code)
 
 - 40 stretches, Chapelton to Umberleigh through to Nailsea & Backwell to Parson Street (Exeter, Taunton,

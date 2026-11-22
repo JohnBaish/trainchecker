@@ -134,8 +134,10 @@ below); the work goes on in `COVERAGE.md`.
   `stretches-report.md` (counts, stations not found, long stretches, possible avoiding lines).
 - `to_network.py`: puts the items on the network, and adds a batch's items.
 - `candidates.py`: a batch's candidates, ranked, with distance and side.
-- `wiki_dump.py`: Wikipedia's article locations in Great Britain from its database dumps, for
-  `candidates.py --wiki-dump` (since November 22nd 2026, as the search API refuses most requests).
+- `wiki_dump.py`: Wikipedia's article locations in Great Britain, an index of where those articles sit
+  in the articles dump, and their redirects, from Wikipedia's database dumps. The results are committed
+  in `wiki/` (see its README), so `candidates.py` and `wiki_text.py` need no download (since November
+  22nd 2026, as Wikipedia's search API and pages refuse most requests from a cloud session).
 - `wiki_text.py`: an article's wikitext from Wikipedia's articles dump, fetched by byte range, for
   checking facts when Wikipedia's own pages refuse.
 - `check.py`: the checks, before every commit.

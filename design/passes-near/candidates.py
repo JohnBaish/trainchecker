@@ -9,11 +9,11 @@ out-dir/cache/ (so running it again costs nothing). Sources:
 - Historic England's National Heritage List for England (Open Government Licence), from its open
   map service: listed buildings of Grade I and II*, scheduled monuments, registered parks and
   gardens, registered battlefields and World Heritage Sites.
-- Wikipedia's geotagged articles (geosearch along the track), with each article's short
-  description, length and first sentences. Or, with --wiki-dump FILE (made by wiki_dump.py from
-  Wikipedia's database dumps), the nearby articles come from that file instead of the search API,
-  which refuses most requests from a cloud session; the first sentences then come from each
-  article's wikitext (/wiki/Title?action=raw, which isn't held back). Same ranking, distances, sides.
+- Wikipedia's geotagged articles: by default from wiki/gb-articles.tsv.gz (committed; made by
+  wiki_dump.py from Wikipedia's database dumps), with each article's short description and length,
+  and its first sentences from its wikitext (/wiki/Title?action=raw, which waits when refused).
+  --wiki-dump FILE uses another such file; --wiki-api uses Wikipedia's search API instead (the old
+  way, which refuses most requests from a cloud session). Same ranking, distances and sides.
 Side is the train's side going from a to b, facing forwards (swap for b to a); None means the
 track runs through it or within 15 metres. The ranking is only a guide: choosing is by hand.
 """
@@ -334,8 +334,9 @@ def main():
     ap.add_argument('--region')
     ap.add_argument('--stretches')
     ap.add_argument('--top', type=int, default=15, help='candidates kept per stretch')
-    ap.add_argument('--wiki-dump', default=os.environ.get('PN_WIKI_DUMP'),
-                    help="wiki_dump.py's file: nearby articles from it, not Wikipedia's search API")
+    ap.add_argument('--wiki-dump', default=os.environ.get('PN_WIKI_DUMP') or os.path.join(pn.HERE, 'wiki', 'gb-articles.tsv.gz'),
+                    help="wiki_dump.py's file (default: the committed wiki/gb-articles.tsv.gz)")
+    ap.add_argument('--wiki-api', action='store_true', help="Wikipedia's search API instead of the file")
     args = ap.parse_args()
     net, data = pn.load_network(), pn.load_data()
     batch = choose(net, data, args)
@@ -343,7 +344,7 @@ def main():
         sys.exit('nothing to do')
     f = Fetcher(os.path.join(args.out, 'cache'))
     names = {c: v['name'] for c, v in net['stations'].items()}
-    dump = WikiDump(args.wiki_dump) if args.wiki_dump else None
+    dump = None if args.wiki_api else WikiDump(args.wiki_dump)
     result = {}
     for k, st in enumerate(batch):
         print(f'{k + 1}/{len(batch)} {st["id"]}', flush=True)

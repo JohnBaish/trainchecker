@@ -65,6 +65,19 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: Connections, a long wait; live (`main`; Claude Code)
+
+- **John (live trains, Paddington to Reading for Midgham at 7.18am):** a 91-minute gap read "you
+  should be fine. You'll have 91 minutes to change trains." Agreed: more than 40 minutes opens "The
+  next connecting train to Midgham is the 9.43am, which is going to give you quite a wait at
+  Reading.", "between trains", words from 70 minutes, "currently expected", and the cases in
+  `SPEC.md` §13.16. Straight to `main`.
+- **Built:** `answer()` in `connection.ts` (`long`, `isNext`).
+- **Checked:** `npm run check` 273 + 57 + 73 + 40 (new: the next train, the same train chosen, a
+  later one chosen, 45 minutes in digits, a late onward train, 36 minutes unchanged, on the saved
+  Newton Abbot boards); `tsc -b`, lint. Not checked in a browser (the answer is one paragraph of
+  text) or on live trains.
+
 ### November 22nd 2026: earlier trains with no platform yet; live (`main`; Claude Code)
 
 - **John (iPhone, Paddington to Reading at 7.10am):** Platforms said "Trains are currently going from

@@ -181,10 +181,21 @@ export function answer(o: Asked): Answer {
     text += `You won’t make the ${lead} to ${to}${instead}. ${arrive}, ${when}.`
   } else {
     const told = relies && kind === 'tight'
-    text += `If you’re planning to get the ${lead} to ${to}${instead}, ${kind === 'fine' ? 'you should be fine' : kind === 'tight' ? 'it’s going to be tight' : 'that looks unlikely'}. `
-    text += told ? `It’s running ${minutes(late)} late, which gives you ${minutes(gap)} to change trains. `
-      : kind === 'unlikely' ? `You’d only have ${minutes(gap)} to change trains. ` : `You’ll have ${minutes(gap)} to change trains. `
+    // A long wait, more than 40 minutes (John, November 22nd 2026): a firm opening rather than "you
+    // should be fine", "between trains", and "currently expected"; the time in words from 70 minutes.
+    const long = kind === 'fine' && gap > 40
+    const isNext = !instead && (!o.chosen || o.chosen === firstChoice(mine, o.trains)?.id)
+    if (long) {
+      text += isNext ? `The next connecting train to ${to} is the ${lead}, which is going to give you quite a wait at ${o.at}. `
+        : `If you’re planning to get the ${lead} to ${to}${instead}, that’s quite a wait at ${o.at}. `
+      text += `You’ll have ${gap >= 70 ? longWait(gap) : minutes(gap)} between trains. `
+    } else {
+      text += `If you’re planning to get the ${lead} to ${to}${instead}, ${kind === 'fine' ? 'you should be fine' : kind === 'tight' ? 'it’s going to be tight' : 'that looks unlikely'}. `
+      text += told ? `It’s running ${minutes(late)} late, which gives you ${minutes(gap)} to change trains. `
+        : kind === 'unlikely' ? `You’d only have ${minutes(gap)} to change trains. ` : `You’ll have ${minutes(gap)} to change trains. `
+    }
     const leave = told ? `the ${to} train is now expected to leave at ${say(c.exp)}`
+      : long ? (late >= 1 ? `the ${to} train is currently expected to leave ${minutes(late)} late, at ${say(c.exp)}` : `the ${to} train is currently expected to leave on time`)
       : late >= 1 ? `the ${to} train is expected to leave ${minutes(late)} later than planned at ${say(c.exp)}`
       : `the ${to} train is expected to leave on time at ${say(c.exp)}`
     const p = c.t.platform, mineP = o.arrPlatform

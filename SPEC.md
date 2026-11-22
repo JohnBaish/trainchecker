@@ -717,3 +717,12 @@ The sums and sentences are in `src/lib/connection.ts`, with the agreed answers w
     3.45pm to York has been cancelled. If you're planning to get the … instead"; "arrives".
 15. **For later:** how to get between the platforms ("over the footbridge"):
     `design/handover-platform-links-2026-11-21.md`.
+16. **A long wait, more than 40 minutes** (John, November 22nd 2026, after Paddington to Midgham
+    showed "you should be fine … 91 minutes to change trains"): "The next connecting train to Midgham
+    is the 9.43am, which is going to give you quite a wait at Reading. You'll have more than an hour
+    and a half between trains. … and the Midgham train is currently expected to leave on time, getting
+    there at 9.59." Digits under 70 minutes ("52 minutes between trains"), words from 70. Only when
+    it's really the next train you can make; a later one chosen: "If you're planning to get the
+    10.43am to Midgham, that's quite a wait at Reading." A late onward train keeps its time
+    ("currently expected to leave four minutes late, at 9.47"). Judged on the gap after lateness, so a
+    gap shrunk to tight uses the tight wording.

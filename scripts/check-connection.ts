@@ -124,5 +124,27 @@ eq('pairs in order, either way round', [howToGet(made, '1', '2'), howToGet(made,
   ['over the footbridge', 'through the subway', 'across the level crossing', '', '', 'which means going out of the station and round by the road'])
 eq('the table has only stations in the list', Object.keys(links).every((c) => /^[A-Z]{3}$/.test(c)), true)
 
+
+// A long wait, more than 40 minutes (John, November 22nd 2026). Ivybridge's 3.04pm gets into
+// Newton Abbot at 3.29; the trains to Torquay that day leave at 3.06, 3.39, 4.05 and 4.45.
+{
+  const base = fine.d
+  const late4 = (t: typeof base.trains[number]) => ({ ...t, etd: '16:49' })
+  const ask2 = (o: { from?: string; chosen?: string; exp?: string; late?: boolean }) => {
+    const trains = base.trains.filter((t) => t.std >= (o.from ?? '00:00')).map((t) => (o.late && t.std === '16:45' ? late4(t) : t))
+    const mine = o.exp ? { ...fine.mine, sta: o.exp, exp: o.exp } : fine.mine
+    return answer({ now: NOW, from: 'Ivybridge', at: base.atName, to: base.toName, mine, arrPlatform: null, trains, chosen: o.chosen ? trains.find((t) => t.std === o.chosen)!.id : null }).text
+  }
+  const tail = ' It’ll be showing on the departure board as the Paignton train. These times can change, so it’s worth checking again later.'
+  eq('long wait: the next train, in words from 70 minutes (John)', ask2({ from: '16:15' }),
+    'The next connecting train to Torquay is the 4.45pm, which is going to give you quite a wait at Newton Abbot. You’ll have more than an hour and a quarter between trains. Your train from Ivybridge is expected to arrive on time at 3.29, and the Torquay train is currently expected to leave on time from platform 2, getting there at 4.55.' + tail)
+  eq('long wait: the same train chosen is still "the next"', ask2({ from: '16:15', chosen: '16:45' }), ask2({ from: '16:15' }))
+  eq('long wait: a later train chosen', ask2({ chosen: '16:45' }).split('. ').slice(0, 2).join('. '),
+    'If you’re planning to get the 4.45pm to Torquay, that’s quite a wait at Newton Abbot. You’ll have more than an hour and a quarter between trains')
+  eq('long wait: 40 to 70 minutes, digits and "between trains"', ask2({ from: '16:00', exp: '15:20' }).split('. ').slice(0, 2).join('. '),
+    'The next connecting train to Torquay is the 4.05pm, which is going to give you quite a wait at Newton Abbot. You’ll have 45 minutes between trains')
+  eq('long wait: the onward train late keeps its time', ask2({ from: '16:15', late: true }).includes('the Torquay train is currently expected to leave four minutes late, at 4.49 from platform 2'), true)
+  eq('40 minutes or less: "you should be fine" as before', ask2({ from: '16:00' }).startsWith('If you’re planning to get the 4.05pm to Torquay, you should be fine. You’ll have 36 minutes to change trains.'), true)
+}
 console.log(`check-connection: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

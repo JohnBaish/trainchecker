@@ -115,7 +115,9 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
     // "Rectory Hill (platform 1)" names it for the station's list; from that platform it's just Rectory Hill.
     const nm = x[0].replace(/ \(platform [0-9A-Za-z]+( side)?\)$/, '')
     const here = e.here?.[String(i)]
-    const alt = e.other ? ways.find((w) => w[0] !== i && (w[1] === 'b' || w[1] === 's')) : undefined
+    // The other exit over the bridge or through the subway, everywhere (John, November 22nd 2026:
+    // "even if we only have street names", so people can look on a map for the one that suits them).
+    const alt = ways.find((w) => w[0] !== i && (w[1] === 'b' || w[1] === 's'))
     const also = alt ? `, or you can go ${alt[1] === 'b' ? `over the ${e.w ?? 'footbridge'}` : 'through the subway'} for ${target(e, alt[0])}` : ''
     return `${start} ${here ?? `The exit on ${nm}`} is right there${by}${also}.${hoursLine(e, [ways[0]])}`
   }

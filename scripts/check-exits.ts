@@ -71,7 +71,8 @@ eq('Southampton: platform 2, either way', trainLine(T.SOU, '2', false),
 eq('Ivybridge: platform 1 (John)', trainLine(T.IVY, '1', false),
   'Your train is due into platform 1. There are two exits there: one by the footbridge, which is closest to the car park and buses, and one further along, which is quicker on foot to the town.')
 eq('Ivybridge: platform 2', trainLine(T.IVY, '2', false).startsWith('Your train is due into platform 2. Cross the footbridge to platform 1, where there are two exits'), true)
-eq('the other exit only where John has said so', Object.entries(T).filter(([, e]) => e.other).map(([c]) => c), ['SOU'])
+eq('the other exit everywhere, even with only a street name (John)', trainLine(T.TWY, '1', false),
+  'Your train is due into platform 1. The exit on Hurst Road is right there, or you can go over the footbridge for the exit by platform 4.')
 // Left out where the exits aren't known, or still in doubt (John, the cautious approach).
 eq('left out', ['KIH', 'LTT', 'MIS', 'GNB', 'HLR', 'ENC', 'SWN', 'BDG', 'GNH', 'HMC', 'BUO', 'MTN', 'BMN', 'GRP', 'NEH', 'EBT', 'CSB'].filter((c) => c in T), [])
 // Never across a barrow crossing; every route points at a real exit.

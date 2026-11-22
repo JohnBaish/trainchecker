@@ -21,6 +21,13 @@ eq('Reading: platform 8 (either way off the bridge, and where each comes down)',
 // John's corrections (design/platform-links-trial/exits-overrides.json): names, "is right there", "the bridge".
 eq('Reading: a renamed exit is right there (John)', trainLine(T.RDG, '1', false), 'Your train is due into platform 1. The way out to the town centre and Station Hill is right there, or you can go over the bridge for the north exit by the car park on the Caversham side.')
 eq('Reading: "the bridge", not "the footbridge" (John)', T.RDG.w, 'bridge')
+// Exits named by what's near them (John, November 22nd 2026; name_exits.py): the name takes the
+// place of a street's, a town centre only where the station is named after the town (within 600 m).
+eq('Oxford: the city centre exit', trainLine(T.OXF, '1', false), 'Your train is due into platform 1. The city centre exit is right there, or you can go over the footbridge for Roger Dudman Way.')
+eq('Warminster: both exits named', trainLine(T.WMN, '2', false), 'Your train is due into platform 2. The car park exit is right there, or you can go over the footbridge for the town centre exit.')
+eq('Ivybridge: Hazel Lane is the town centre exit (John)', T.IVY.x[0][0], 'the town centre exit')
+eq('Tooting, Claygate and Northumberland Park keep their street names (John)', [T.TOO.x, T.CLG.x, T.NUM.x].flat().some((x) => /centre exit/.test(x[0] ?? '')), false)
+eq('Twickenham: the town centre exit', T.TWI.x.map((x) => x[0]), ['the town centre exit', 'Bradshaw Close'])
 // The others John checked.
 eq('Newton Abbot: by the station building', stationLine('Newton Abbot', T.NTA), 'At Newton Abbot, the exit is by the station building on platform 3.')
 eq('Newton Abbot: platform 1, over the bridge', trainLine(T.NTA, '1', false), 'Your train is due into platform 1, so you’ll want the footbridge to the exit, coming down from the bridge by platform 3.')

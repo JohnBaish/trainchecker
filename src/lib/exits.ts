@@ -78,16 +78,16 @@ const STREET = /\b(Road|Street|Lane|Avenue|Hill|Way|Place|Square|Terrace|Close|A
 const isRoadNumber = (n: string) => /^[ABM]\d+/.test(n)
 /** After "to" or "for". `street`: the name came from the map data, so it's always a street. */
 export function toName(n: string, street = false): string {
+  if (/^the /.test(n)) return n            // also "the town centre exit", named by what's near it
   if (street) return n
-  if (/^the /.test(n)) return n
   if (isRoadNumber(n)) return `the ${n}`
   if (STREET.test(n)) return n
   return `the ${n} exit`
 }
 /** Before "is right there". */
 export function hereName(n: string, street = false): string {
-  if (street) return `The exit on ${n}`
   if (/^the /.test(n)) return /\b(exit|entrance)\b/.test(n) ? n[0].toUpperCase() + n.slice(1) : `The exit to ${n}`
+  if (street) return `The exit on ${n}`
   if (isRoadNumber(n)) return `The exit on the ${n}`
   if (STREET.test(n)) return `The exit on ${n}`
   return `The ${n} exit`

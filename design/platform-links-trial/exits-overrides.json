@@ -40,10 +40,13 @@
     "level_crossing": true
   },
   "IVY": {
-    "_who": "John's Ivybridge informant via John, November 22nd 2026 (platform 2's version is Claude's draft from it)",
+    "_who": "John's Ivybridge informant via John, November 22nd 2026 (platform 2's version is Claude's draft from it); Hazel Lane is the town centre exit (John, November 22nd 2026)",
     "say": {
       "1": "There are two exits there, one via the platform gate to the car park and buses, and one via the footbridge exit, which is quicker on foot to the town.",
       "2": "Go up to the footbridge: its exit is quicker on foot to the town, or cross to platform 1 and go out through the platform gate for the car park and buses."
+    },
+    "names": {
+      "Hazel Lane": "the town centre exit"
     }
   },
   "SOU": {

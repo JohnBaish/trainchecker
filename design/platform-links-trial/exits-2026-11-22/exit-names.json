@@ -1,0 +1,1458 @@
+{
+ "ACK": {
+  "0": "the car park exit"
+ },
+ "ACL": {
+  "0": "the town centre exit"
+ },
+ "ACR": {
+  "0": "the car park exit"
+ },
+ "ACT": {
+  "0": "the car park exit"
+ },
+ "AFK": {
+  "1": "the car park exit"
+ },
+ "AGS": {
+  "0": "the shopping centre exit"
+ },
+ "AGV": {
+  "2": "the town centre exit"
+ },
+ "AHT": {
+  "0": "the town centre exit"
+ },
+ "ALT": {
+  "0": "the car park exit",
+  "1": "the bus station exit",
+  "2": "the town centre exit"
+ },
+ "ALV": {
+  "1": "the car park exit"
+ },
+ "AMR": {
+  "0": "the town centre exit"
+ },
+ "AMT": {
+  "1": "the car park exit"
+ },
+ "ANG": {
+  "0": "the car park exit"
+ },
+ "APB": {
+  "0": "the car park exit"
+ },
+ "ASD": {
+  "0": "the university exit"
+ },
+ "AUD": {
+  "0": "the car park exit"
+ },
+ "AUK": {
+  "0": "the car park exit"
+ },
+ "AVM": {
+  "1": "the car park exit"
+ },
+ "AWT": {
+  "0": "the car park exit"
+ },
+ "AYR": {
+  "0": "the town centre exit"
+ },
+ "AYS": {
+  "0": "the university exit"
+ },
+ "BAB": {
+  "0": "the car park exit"
+ },
+ "BAC": {
+  "1": "the car park exit"
+ },
+ "BBG": {
+  "1": "the town centre exit"
+ },
+ "BBL": {
+  "0": "the hospital exit"
+ },
+ "BBN": {
+  "0": "the town centre exit"
+ },
+ "BCE": {
+  "1": "the town centre exit"
+ },
+ "BCZ": {
+  "2": "the car park exit"
+ },
+ "BDK": {
+  "0": "the town centre exit"
+ },
+ "BDQ": {
+  "1": "the city centre exit"
+ },
+ "BEB": {
+  "0": "the car park exit"
+ },
+ "BEH": {
+  "0": "the town centre exit"
+ },
+ "BEY": {
+  "0": "the car park exit"
+ },
+ "BFR": {
+  "2": "the university exit"
+ },
+ "BGD": {
+  "1": "the town centre exit"
+ },
+ "BHI": {
+  "1": "the car park exit"
+ },
+ "BIT": {
+  "0": "the car park exit"
+ },
+ "BIW": {
+  "0": "the bus station exit",
+  "1": "the town centre exit"
+ },
+ "BIY": {
+  "2": "the town centre exit"
+ },
+ "BKJ": {
+  "0": "the car park exit"
+ },
+ "BKM": {
+  "0": "the car park exit"
+ },
+ "BKN": {
+  "2": "the car park exit"
+ },
+ "BLH": {
+  "0": "the shopping centre exit"
+ },
+ "BLT": {
+  "0": "the town centre exit"
+ },
+ "BLY": {
+  "0": "the car park exit",
+  "1": "the town centre exit"
+ },
+ "BMH": {
+  "0": "the bus station exit"
+ },
+ "BNG": {
+  "0": "the city centre exit"
+ },
+ "BNI": {
+  "2": "the town centre exit"
+ },
+ "BNW": {
+  "1": "the town centre exit"
+ },
+ "BNY": {
+  "1": "the town centre exit"
+ },
+ "BON": {
+  "1": "the university exit"
+ },
+ "BOT": {
+  "0": "the car park exit"
+ },
+ "BPN": {
+  "1": "the car park exit"
+ },
+ "BRN": {
+  "0": "the town centre exit"
+ },
+ "BSD": {
+  "0": "the car park exit"
+ },
+ "BSE": {
+  "0": "the car park exit"
+ },
+ "BSO": {
+  "2": "the town centre exit"
+ },
+ "BSV": {
+  "0": "the car park exit"
+ },
+ "BTH": {
+  "2": "the bus station exit"
+ },
+ "BTS": {
+  "2": "the town centre exit"
+ },
+ "BUG": {
+  "2": "the shopping centre exit"
+ },
+ "BUW": {
+  "0": "the car park exit"
+ },
+ "BUX": {
+  "0": "the town centre exit"
+ },
+ "BYD": {
+  "1": "the town centre exit"
+ },
+ "CAA": {
+  "0": "the stadium exit"
+ },
+ "CAN": {
+  "0": "the town centre exit"
+ },
+ "CAR": {
+  "2": "the car park exit"
+ },
+ "CBG": {
+  "2": "the car park exit"
+ },
+ "CBS": {
+  "0": "the town centre exit"
+ },
+ "CDF": {
+  "0": "the shopping centre exit",
+  "2": "the bus station exit",
+  "4": "the university exit"
+ },
+ "CDN": {
+  "1": "the town centre exit"
+ },
+ "CDQ": {
+  "1": "the shopping centre exit"
+ },
+ "CDS": {
+  "0": "the town centre exit"
+ },
+ "CFD": {
+  "0": "the town centre exit"
+ },
+ "CFN": {
+  "1": "the car park exit"
+ },
+ "CHC": {
+  "1": "the hospital exit"
+ },
+ "CHD": {
+  "1": "the town centre exit"
+ },
+ "CHM": {
+  "0": "the bus station exit"
+ },
+ "CHU": {
+  "1": "the car park exit"
+ },
+ "CKS": {
+  "0": "the town centre exit"
+ },
+ "CLH": {
+  "1": "the bus station exit"
+ },
+ "CLS": {
+  "2": "the hospital exit"
+ },
+ "CMN": {
+  "1": "the car park exit"
+ },
+ "CNF": {
+  "1": "the town centre exit"
+ },
+ "COL": {
+  "3": "the city centre exit"
+ },
+ "COV": {
+  "0": "the bus station exit"
+ },
+ "COW": {
+  "1": "the town centre exit"
+ },
+ "CPH": {
+  "2": "the bus station exit"
+ },
+ "CPK": {
+  "1": "the car park exit"
+ },
+ "CRA": {
+  "0": "the town centre exit",
+  "1": "the bus station exit"
+ },
+ "CRK": {
+  "0": "the car park exit"
+ },
+ "CRM": {
+  "2": "the town centre exit"
+ },
+ "CRO": {
+  "0": "the car park exit"
+ },
+ "CRV": {
+  "0": "the town centre exit",
+  "1": "the car park exit"
+ },
+ "CRW": {
+  "1": "the town centre exit"
+ },
+ "CSA": {
+  "1": "the bus station exit"
+ },
+ "CSR": {
+  "0": "the stadium exit"
+ },
+ "CST": {
+  "2": "the shopping centre exit"
+ },
+ "CTR": {
+  "0": "the university exit",
+  "1": "the car park exit"
+ },
+ "CTT": {
+  "0": "the town centre exit"
+ },
+ "CUF": {
+  "0": "the car park exit"
+ },
+ "CUH": {
+  "0": "the car park exit"
+ },
+ "CUP": {
+  "1": "the town centre exit"
+ },
+ "CWC": {
+  "0": "the car park exit"
+ },
+ "CWM": {
+  "2": "the bus station exit"
+ },
+ "CYK": {
+  "0": "the town centre exit",
+  "2": "the bus station exit"
+ },
+ "DBC": {
+  "1": "the town centre exit"
+ },
+ "DBY": {
+  "0": "the city centre exit",
+  "2": "the car park exit"
+ },
+ "DEE": {
+  "1": "the shopping centre exit"
+ },
+ "DEW": {
+  "0": "the town centre exit"
+ },
+ "DFD": {
+  "1": "the town centre exit"
+ },
+ "DFE": {
+  "1": "the city centre exit"
+ },
+ "DFL": {
+  "0": "the hospital exit"
+ },
+ "DHM": {
+  "0": "the car park exit",
+  "2": "the bus station exit"
+ },
+ "DIN": {
+  "0": "the hospital exit",
+  "1": "the town centre exit"
+ },
+ "DIS": {
+  "0": "the car park exit"
+ },
+ "DKG": {
+  "2": "the car park exit"
+ },
+ "DLJ": {
+  "1": "the shopping centre exit"
+ },
+ "DLS": {
+  "0": "the car park exit"
+ },
+ "DLY": {
+  "1": "the town centre exit"
+ },
+ "DMK": {
+  "0": "the hospital exit"
+ },
+ "DON": {
+  "1": "the city centre exit"
+ },
+ "DRF": {
+  "1": "the town centre exit"
+ },
+ "DRU": {
+  "0": "the car park exit"
+ },
+ "DUN": {
+  "0": "the car park exit"
+ },
+ "DWL": {
+  "1": "the town centre exit"
+ },
+ "DWN": {
+  "0": "the town centre exit"
+ },
+ "EBD": {
+  "2": "the car park exit"
+ },
+ "EBN": {
+  "2": "the town centre exit"
+ },
+ "EBR": {
+  "0": "the car park exit"
+ },
+ "ECC": {
+  "0": "the town centre exit"
+ },
+ "ECR": {
+  "0": "the bus station exit"
+ },
+ "EDB": {
+  "1": "the car park exit",
+  "6": "the university exit"
+ },
+ "EDR": {
+  "1": "the bus station exit"
+ },
+ "EGR": {
+  "2": "the town centre exit"
+ },
+ "ELT": {
+  "0": "the car park exit"
+ },
+ "ELW": {
+  "1": "the bus station exit"
+ },
+ "ELY": {
+  "0": "the car park exit",
+  "1": "the city centre exit"
+ },
+ "EMS": {
+  "1": "the town centre exit"
+ },
+ "EPS": {
+  "1": "the shopping centre exit"
+ },
+ "ERL": {
+  "3": "the town centre exit"
+ },
+ "ESH": {
+  "2": "the car park exit"
+ },
+ "ESL": {
+  "1": "the shopping centre exit"
+ },
+ "EUS": {
+  "4": "the bus station exit"
+ },
+ "EVE": {
+  "0": "the town centre exit"
+ },
+ "EWW": {
+  "1": "the town centre exit"
+ },
+ "EXC": {
+  "0": "the city centre exit",
+  "1": "the shopping centre exit"
+ },
+ "FAV": {
+  "1": "the car park exit"
+ },
+ "FBY": {
+  "0": "the town centre exit"
+ },
+ "FEA": {
+  "1": "the town centre exit"
+ },
+ "FIL": {
+  "0": "the town centre exit"
+ },
+ "FKC": {
+  "0": "the hospital exit"
+ },
+ "FKG": {
+  "1": "the car park exit"
+ },
+ "FLE": {
+  "0": "the car park exit"
+ },
+ "FLT": {
+  "0": "the town centre exit",
+  "1": "the bus station exit"
+ },
+ "FML": {
+  "0": "the town centre exit"
+ },
+ "FMR": {
+  "1": "the bus station exit"
+ },
+ "FNB": {
+  "1": "the town centre exit"
+ },
+ "FNY": {
+  "1": "the shopping centre exit"
+ },
+ "FPK": {
+  "3": "the bus station exit"
+ },
+ "FST": {
+  "3": "the university exit"
+ },
+ "FTW": {
+  "0": "the hospital exit",
+  "1": "the university exit"
+ },
+ "GBS": {
+  "0": "the car park exit"
+ },
+ "GCR": {
+  "2": "the city centre exit"
+ },
+ "GFN": {
+  "0": "the town centre exit"
+ },
+ "GIL": {
+  "0": "the town centre exit"
+ },
+ "GLC": {
+  "2": "the city centre exit"
+ },
+ "GLD": {
+  "0": "the town centre exit"
+ },
+ "GLG": {
+  "1": "the car park exit"
+ },
+ "GLH": {
+  "0": "the car park exit"
+ },
+ "GLM": {
+  "2": "the car park exit",
+  "3": "the town centre exit"
+ },
+ "GMB": {
+  "1": "the town centre exit"
+ },
+ "GOM": {
+  "0": "the car park exit"
+ },
+ "GOR": {
+  "1": "the shopping centre exit"
+ },
+ "GRK": {
+  "0": "the town centre exit"
+ },
+ "GRV": {
+  "2": "the town centre exit"
+ },
+ "GSY": {
+  "0": "the stadium exit",
+  "1": "the town centre exit"
+ },
+ "GTN": {
+  "1": "the car park exit"
+ },
+ "GUN": {
+  "2": "the university exit"
+ },
+ "GYM": {
+  "0": "the car park exit"
+ },
+ "HAT": {
+  "1": "the car park exit"
+ },
+ "HAV": {
+  "0": "the town centre exit"
+ },
+ "HAY": {
+  "2": "the shopping centre exit"
+ },
+ "HBL": {
+  "0": "the car park exit"
+ },
+ "HDG": {
+  "0": "the car park exit"
+ },
+ "HDH": {
+  "1": "the hospital exit"
+ },
+ "HEX": {
+  "1": "the town centre exit"
+ },
+ "HFD": {
+  "1": "the bus station exit"
+ },
+ "HGD": {
+  "1": "the town centre exit"
+ },
+ "HGT": {
+  "2": "the town centre exit"
+ },
+ "HHD": {
+  "2": "the car park exit"
+ },
+ "HIG": {
+  "1": "the town centre exit"
+ },
+ "HKW": {
+  "1": "the university exit"
+ },
+ "HMN": {
+  "2": "the hospital exit"
+ },
+ "HNB": {
+  "0": "the car park exit",
+  "1": "the town centre exit"
+ },
+ "HNC": {
+  "1": "the town centre exit"
+ },
+ "HNF": {
+  "0": "the shopping centre exit",
+  "1": "the town centre exit"
+ },
+ "HNK": {
+  "0": "the car park exit"
+ },
+ "HNL": {
+  "0": "the car park exit"
+ },
+ "HNW": {
+  "1": "the stadium exit"
+ },
+ "HOH": {
+  "1": "the town centre exit"
+ },
+ "HOR": {
+  "1": "the car park exit",
+  "2": "the town centre exit"
+ },
+ "HPD": {
+  "1": "the hospital exit"
+ },
+ "HPL": {
+  "0": "the car park exit",
+  "1": "the shopping centre exit"
+ },
+ "HRL": {
+  "0": "the town centre exit"
+ },
+ "HRW": {
+  "0": "the car park exit"
+ },
+ "HTW": {
+  "0": "the car park exit"
+ },
+ "HUY": {
+  "0": "the car park exit",
+  "1": "the town centre exit"
+ },
+ "HWH": {
+  "1": "the hospital exit"
+ },
+ "HWN": {
+  "1": "the car park exit"
+ },
+ "HWV": {
+  "1": "the bus station exit"
+ },
+ "HWY": {
+  "0": "the car park exit"
+ },
+ "HXM": {
+  "2": "the car park exit"
+ },
+ "HYC": {
+  "0": "the town centre exit"
+ },
+ "HYN": {
+  "1": "the hospital exit"
+ },
+ "IFD": {
+  "0": "the town centre exit"
+ },
+ "IGD": {
+  "2": "the town centre exit"
+ },
+ "INK": {
+  "0": "the car park exit",
+  "1": "the town centre exit"
+ },
+ "INR": {
+  "2": "the town centre exit"
+ },
+ "INT": {
+  "0": "the town centre exit"
+ },
+ "INV": {
+  "0": "the car park exit",
+  "1": "the city centre exit"
+ },
+ "IRV": {
+  "0": "the town centre exit"
+ },
+ "IVA": {
+  "0": "the car park exit"
+ },
+ "JEQ": {
+  "2": "the university exit"
+ },
+ "JHN": {
+  "0": "the town centre exit",
+  "1": "the car park exit"
+ },
+ "KDY": {
+  "0": "the town centre exit",
+  "2": "the car park exit"
+ },
+ "KEI": {
+  "0": "the car park exit",
+  "1": "the town centre exit"
+ },
+ "KEM": {
+  "0": "the car park exit"
+ },
+ "KGX": {
+  "3": "the shopping centre exit"
+ },
+ "KLN": {
+  "1": "the bus station exit"
+ },
+ "KMK": {
+  "1": "the town centre exit",
+  "2": "the car park exit"
+ },
+ "KNF": {
+  "0": "the town centre exit"
+ },
+ "KNG": {
+  "1": "the bus station exit"
+ },
+ "KNW": {
+  "0": "the car park exit"
+ },
+ "KWB": {
+  "2": "the stadium exit"
+ },
+ "KWD": {
+  "2": "the car park exit"
+ },
+ "KWN": {
+  "3": "the town centre exit"
+ },
+ "KYN": {
+  "1": "the car park exit"
+ },
+ "LAN": {
+  "0": "the stadium exit"
+ },
+ "LAR": {
+  "0": "the town centre exit"
+ },
+ "LAW": {
+  "1": "the car park exit"
+ },
+ "LBG": {
+  "1": "the hospital exit"
+ },
+ "LCN": {
+  "0": "the university exit"
+ },
+ "LDS": {
+  "7": "the university exit"
+ },
+ "LEI": {
+  "0": "the car park exit"
+ },
+ "LEO": {
+  "0": "the car park exit",
+  "2": "the town centre exit"
+ },
+ "LEU": {
+  "1": "the car park exit"
+ },
+ "LGN": {
+  "0": "the town centre exit"
+ },
+ "LHD": {
+  "0": "the town centre exit"
+ },
+ "LIN": {
+  "0": "the town centre exit"
+ },
+ "LIV": {
+  "0": "the car park exit",
+  "2": "the university exit",
+  "7": "the city centre exit"
+ },
+ "LNK": {
+  "1": "the town centre exit"
+ },
+ "LNW": {
+  "0": "the car park exit"
+ },
+ "LNZ": {
+  "0": "the car park exit"
+ },
+ "LOH": {
+  "1": "the car park exit"
+ },
+ "LRD": {
+  "0": "the car park exit"
+ },
+ "LRH": {
+  "1": "the town centre exit"
+ },
+ "LSK": {
+  "2": "the car park exit"
+ },
+ "LTN": {
+  "0": "the car park exit"
+ },
+ "LUD": {
+  "0": "the town centre exit"
+ },
+ "LUT": {
+  "2": "the town centre exit"
+ },
+ "LVC": {
+  "0": "the city centre exit",
+  "1": "the university exit"
+ },
+ "LVG": {
+  "0": "the car park exit"
+ },
+ "LVJ": {
+  "1": "the shopping centre exit",
+  "3": "the bus station exit"
+ },
+ "LWM": {
+  "0": "the bus station exit"
+ },
+ "MAG": {
+  "1": "the car park exit"
+ },
+ "MAN": {
+  "5": "the car park exit",
+  "6": "the city centre exit"
+ },
+ "MAO": {
+  "0": "the car park exit"
+ },
+ "MAT": {
+  "1": "the car park exit"
+ },
+ "MBR": {
+  "2": "the bus station exit"
+ },
+ "MCB": {
+  "0": "the university exit"
+ },
+ "MCE": {
+  "1": "the shopping centre exit"
+ },
+ "MCM": {
+  "0": "the town centre exit",
+  "1": "the bus station exit"
+ },
+ "MCV": {
+  "0": "the bus station exit"
+ },
+ "MDE": {
+  "0": "the stadium exit"
+ },
+ "MEL": {
+  "0": "the car park exit"
+ },
+ "MFL": {
+  "2": "the hospital exit"
+ },
+ "MFT": {
+  "0": "the hospital exit",
+  "1": "the car park exit",
+  "2": "the town centre exit"
+ },
+ "MHS": {
+  "1": "the bus station exit"
+ },
+ "MIK": {
+  "0": "the car park exit"
+ },
+ "MIM": {
+  "0": "the town centre exit"
+ },
+ "MIR": {
+  "0": "the town centre exit"
+ },
+ "MKT": {
+  "0": "the car park exit"
+ },
+ "MLM": {
+  "1": "the town centre exit",
+  "2": "the car park exit"
+ },
+ "MLN": {
+  "1": "the town centre exit"
+ },
+ "MNE": {
+  "1": "the car park exit"
+ },
+ "MOG": {
+  "0": "the university exit"
+ },
+ "MPL": {
+  "1": "the car park exit"
+ },
+ "MRF": {
+  "1": "the shopping centre exit"
+ },
+ "MRN": {
+  "0": "the car park exit"
+ },
+ "MSN": {
+  "0": "the car park exit"
+ },
+ "MSO": {
+  "1": "the car park exit"
+ },
+ "MSR": {
+  "1": "the car park exit"
+ },
+ "MSW": {
+  "1": "the car park exit"
+ },
+ "MTH": {
+  "1": "the town centre exit"
+ },
+ "MVL": {
+  "1": "the hospital exit"
+ },
+ "MYB": {
+  "3": "the university exit"
+ },
+ "MYL": {
+  "0": "the university exit"
+ },
+ "NBT": {
+  "1": "the hospital exit"
+ },
+ "NCL": {
+  "0": "the bus station exit",
+  "1": "the car park exit"
+ },
+ "NCM": {
+  "1": "the car park exit"
+ },
+ "NGT": {
+  "0": "the car park exit"
+ },
+ "NMN": {
+  "0": "the car park exit"
+ },
+ "NMP": {
+  "2": "the university exit"
+ },
+ "NOT": {
+  "5": "the car park exit"
+ },
+ "NQY": {
+  "0": "the car park exit"
+ },
+ "NRW": {
+  "1": "the city centre exit"
+ },
+ "NTR": {
+  "2": "the car park exit"
+ },
+ "NWM": {
+  "2": "the car park exit"
+ },
+ "NWT": {
+  "1": "the town centre exit"
+ },
+ "NXG": {
+  "0": "the car park exit",
+  "1": "the university exit"
+ },
+ "OKM": {
+  "0": "the town centre exit"
+ },
+ "OKN": {
+  "1": "the town centre exit"
+ },
+ "ORP": {
+  "3": "the car park exit"
+ },
+ "OXF": {
+  "1": "the city centre exit"
+ },
+ "OXT": {
+  "0": "the hospital exit"
+ },
+ "PAD": {
+  "1": "the car park exit"
+ },
+ "PAR": {
+  "0": "the car park exit"
+ },
+ "PBO": {
+  "1": "the city centre exit"
+ },
+ "PCD": {
+  "0": "the town centre exit"
+ },
+ "PET": {
+  "1": "the car park exit"
+ },
+ "PGN": {
+  "0": "the bus station exit",
+  "1": "the town centre exit"
+ },
+ "PKG": {
+  "0": "the town centre exit",
+  "1": "the car park exit"
+ },
+ "PMR": {
+  "1": "the bus station exit"
+ },
+ "PMS": {
+  "0": "the university exit",
+  "3": "the city centre exit"
+ },
+ "PNR": {
+  "1": "the town centre exit"
+ },
+ "POO": {
+  "2": "the stadium exit"
+ },
+ "POT": {
+  "0": "the stadium exit",
+  "2": "the town centre exit"
+ },
+ "PRE": {
+  "0": "the city centre exit"
+ },
+ "PRT": {
+  "0": "the town centre exit",
+  "1": "the car park exit"
+ },
+ "PSC": {
+  "0": "the town centre exit"
+ },
+ "PST": {
+  "0": "the car park exit"
+ },
+ "PTA": {
+  "1": "the bus station exit",
+  "2": "the stadium exit"
+ },
+ "PTK": {
+  "1": "the bus station exit"
+ },
+ "PTR": {
+  "0": "the hospital exit"
+ },
+ "PUR": {
+  "1": "the hospital exit"
+ },
+ "PYL": {
+  "0": "the car park exit",
+  "1": "the town centre exit"
+ },
+ "RAI": {
+  "1": "the town centre exit"
+ },
+ "RDH": {
+  "2": "the town centre exit"
+ },
+ "REE": {
+  "1": "the car park exit"
+ },
+ "RHL": {
+  "1": "the car park exit",
+  "3": "the bus station exit"
+ },
+ "RMF": {
+  "0": "the shopping centre exit"
+ },
+ "RRN": {
+  "1": "the car park exit"
+ },
+ "RTR": {
+  "0": "the town centre exit"
+ },
+ "RUN": {
+  "0": "the car park exit",
+  "1": "the town centre exit"
+ },
+ "RUT": {
+  "1": "the town centre exit"
+ },
+ "SAC": {
+  "0": "the city centre exit",
+  "3": "the car park exit"
+ },
+ "SAL": {
+  "0": "the car park exit",
+  "1": "the city centre exit"
+ },
+ "SAU": {
+  "1": "the bus station exit"
+ },
+ "SAV": {
+  "0": "the hospital exit"
+ },
+ "SAX": {
+  "1": "the car park exit"
+ },
+ "SAY": {
+  "0": "the car park exit",
+  "1": "the town centre exit"
+ },
+ "SCA": {
+  "1": "the town centre exit"
+ },
+ "SDW": {
+  "3": "the town centre exit"
+ },
+ "SDY": {
+  "0": "the car park exit"
+ },
+ "SER": {
+  "0": "the car park exit"
+ },
+ "SFA": {
+  "2": "the bus station exit"
+ },
+ "SHF": {
+  "0": "the city centre exit"
+ },
+ "SHS": {
+  "0": "the town centre exit"
+ },
+ "SHY": {
+  "3": "the car park exit"
+ },
+ "SLO": {
+  "1": "the shopping centre exit"
+ },
+ "SLQ": {
+  "0": "the town centre exit"
+ },
+ "SLT": {
+  "0": "the car park exit"
+ },
+ "SLY": {
+  "0": "the car park exit"
+ },
+ "SNO": {
+  "0": "the car park exit"
+ },
+ "SNS": {
+  "1": "the bus station exit"
+ },
+ "SOB": {
+  "0": "the car park exit"
+ },
+ "SOC": {
+  "0": "the university exit",
+  "1": "the bus station exit"
+ },
+ "SOM": {
+  "0": "the car park exit"
+ },
+ "SOO": {
+  "2": "the town centre exit"
+ },
+ "SOT": {
+  "1": "the university exit"
+ },
+ "SOU": {
+  "0": "the car park exit",
+  "3": "the city centre exit"
+ },
+ "SOV": {
+  "1": "the shopping centre exit"
+ },
+ "SPB": {
+  "0": "the shopping centre exit"
+ },
+ "SPL": {
+  "0": "the shopping centre exit"
+ },
+ "SPS": {
+  "1": "the town centre exit"
+ },
+ "SPT": {
+  "2": "the car park exit",
+  "3": "the town centre exit"
+ },
+ "SQE": {
+  "0": "the shopping centre exit"
+ },
+ "SQH": {
+  "0": "the town centre exit"
+ },
+ "SSS": {
+  "0": "the town centre exit"
+ },
+ "STA": {
+  "1": "the car park exit"
+ },
+ "STD": {
+  "2": "the town centre exit"
+ },
+ "STG": {
+  "1": "the city centre exit"
+ },
+ "STI": {
+  "2": "the car park exit"
+ },
+ "STL": {
+  "0": "the town centre exit"
+ },
+ "STM": {
+  "1": "the university exit"
+ },
+ "STP": {
+  "2": "the university exit"
+ },
+ "STR": {
+  "0": "the car park exit"
+ },
+ "STS": {
+  "1": "the town centre exit"
+ },
+ "STW": {
+  "0": "the university exit"
+ },
+ "SUN": {
+  "0": "the university exit"
+ },
+ "SUR": {
+  "2": "the car park exit"
+ },
+ "SVG": {
+  "1": "the town centre exit"
+ },
+ "SWA": {
+  "3": "the city centre exit"
+ },
+ "SWI": {
+  "1": "the town centre exit"
+ },
+ "SWT": {
+  "0": "the car park exit"
+ },
+ "SYB": {
+  "0": "the town centre exit"
+ },
+ "SYD": {
+  "1": "the town centre exit"
+ },
+ "SYH": {
+  "1": "the car park exit"
+ },
+ "SYT": {
+  "1": "the car park exit"
+ },
+ "TAP": {
+  "1": "the car park exit"
+ },
+ "TAY": {
+  "0": "the car park exit"
+ },
+ "THB": {
+  "0": "the town centre exit"
+ },
+ "TIP": {
+  "1": "the town centre exit"
+ },
+ "TOT": {
+  "1": "the town centre exit"
+ },
+ "TRI": {
+  "0": "the car park exit"
+ },
+ "TRN": {
+  "0": "the town centre exit"
+ },
+ "TRU": {
+  "2": "the city centre exit"
+ },
+ "TWI": {
+  "0": "the town centre exit"
+ },
+ "TWY": {
+  "1": "the car park exit"
+ },
+ "UNI": {
+  "1": "the hospital exit",
+  "3": "the car park exit"
+ },
+ "UTT": {
+  "0": "the town centre exit"
+ },
+ "VXH": {
+  "3": "the car park exit"
+ },
+ "WAC": {
+  "0": "the bus station exit",
+  "2": "the town centre exit"
+ },
+ "WAF": {
+  "0": "the car park exit"
+ },
+ "WAT": {
+  "4": "the city centre exit"
+ },
+ "WBP": {
+  "2": "the shopping centre exit"
+ },
+ "WCX": {
+  "2": "the stadium exit"
+ },
+ "WET": {
+  "0": "the car park exit"
+ },
+ "WEY": {
+  "1": "the car park exit"
+ },
+ "WFH": {
+  "0": "the car park exit"
+ },
+ "WFJ": {
+  "2": "the bus station exit"
+ },
+ "WGA": {
+  "2": "the town centre exit"
+ },
+ "WGC": {
+  "1": "the town centre exit",
+  "2": "the car park exit"
+ },
+ "WHC": {
+  "0": "the bus station exit",
+  "1": "the university exit"
+ },
+ "WHI": {
+  "2": "the town centre exit"
+ },
+ "WHL": {
+  "2": "the stadium exit"
+ },
+ "WHN": {
+  "2": "the town centre exit"
+ },
+ "WHY": {
+  "0": "the car park exit"
+ },
+ "WIA": {
+  "0": "the car park exit",
+  "1": "the town centre exit"
+ },
+ "WIC": {
+  "1": "the town centre exit"
+ },
+ "WIM": {
+  "0": "the shopping centre exit"
+ },
+ "WIN": {
+  "1": "the city centre exit"
+ },
+ "WIV": {
+  "0": "the town centre exit"
+ },
+ "WLN": {
+  "0": "the town centre exit",
+  "1": "the car park exit"
+ },
+ "WLP": {
+  "0": "the car park exit",
+  "1": "the town centre exit"
+ },
+ "WMG": {
+  "0": "the car park exit"
+ },
+ "WMN": {
+  "0": "the town centre exit",
+  "1": "the car park exit"
+ },
+ "WMW": {
+  "0": "the town centre exit"
+ },
+ "WOF": {
+  "2": "the city centre exit"
+ },
+ "WOK": {
+  "2": "the car park exit"
+ },
+ "WOO": {
+  "0": "the car park exit"
+ },
+ "WRX": {
+  "2": "the stadium exit"
+ },
+ "WSF": {
+  "0": "the hospital exit",
+  "1": "the car park exit"
+ },
+ "WSL": {
+  "1": "the town centre exit"
+ },
+ "WTB": {
+  "1": "the town centre exit"
+ },
+ "WTE": {
+  "0": "the car park exit"
+ },
+ "WTM": {
+  "1": "the car park exit"
+ },
+ "WVF": {
+  "0": "the car park exit",
+  "1": "the stadium exit"
+ },
+ "WVH": {
+  "0": "the university exit",
+  "3": "the bus station exit",
+  "4": "the car park exit"
+ },
+ "YRM": {
+  "0": "the car park exit"
+ },
+ "YSM": {
+  "0": "the town centre exit"
+ },
+ "ZBP": {
+  "2": "the hospital exit"
+ },
+ "ZBS": {
+  "4": "the university exit"
+ },
+ "ZEK": {
+  "4": "the university exit"
+ },
+ "ZFD": {
+  "0": "the university exit"
+ },
+ "ZHS": {
+  "2": "the university exit"
+ },
+ "ZLW": {
+  "2": "the car park exit"
+ },
+ "ZMH": {
+  "2": "the shopping centre exit"
+ },
+ "ZSK": {
+  "0": "the hospital exit"
+ },
+ "ZTL": {
+  "0": "the bus station exit"
+ },
+ "ZTM": {
+  "0": "the university exit"
+ }
+}

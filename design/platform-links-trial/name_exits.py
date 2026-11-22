@@ -6,17 +6,20 @@ For a station with two or more exits, a landmark names the exit it is clearly ne
 other exit by at least half the distance between the two exits (so it lies in that exit's
 direction, however far away) and by at least 40 metres. In order of preference:
 
-  the town or city centre (a place=town|city point within 1.2 km)   "the town centre exit"
+  the town or city centre (a town point within 600 m or a city point within 1.2 km, the station
+  named after it)
+                                                                         "the town centre exit"
   a bus station, hospital, university, shopping centre or stadium within 400 m
                                                                          "the bus station exit"
   a car park within 60 m of one exit, and at least twice as far (and 60 m more) from the others, (only for an exit with no street name)
                                                                          "the car park exit"
 
 A name given to two exits at one station is dropped. Writes {CRS: {exit number in exits.json: name}} and prints a report."""
-import sys, json, math, re
+import sys, json, math, re, os
 
 lm, ex = json.load(open(sys.argv[1])), json.load(open(sys.argv[2]))
 only = set(sys.argv[4:])
+STN = dict(json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../src/data/stations.json'))))
 ROADWORDS = {'unclassified', 'track', 'primary', 'secondary', 'tertiary', 'residential', 'service', 'living_street',
              'trunk', 'road', 'primary_link', 'secondary_link', 'tertiary_link', 'trunk_link', 'motorway', 'None'}
 
@@ -45,9 +48,12 @@ for crs, r in sorted(lm.items()):
     exits = r['exits']
     names = {}
     near = r['near']
-    # The town or city centre: the nearest town or city point (place=town|city) within 1.2 km.
+    # The town or city centre: the nearest town point within 600 m or city point within 1.2 km, and
+    # only where the station is named after that place (John, November 22nd 2026: otherwise, as at
+    # Claygate (Esher) or Tooting (a kilometre off), the street name is more use).
     centres = [f for f in near if f['k'] in ('city centre', 'town centre')
-               and min(metres(e, (f['lat'], f['lon'])) for e in exits) <= 1200]
+               and min(metres(e, (f['lat'], f['lon'])) for e in exits) <= (1200 if f['k'] == 'city centre' else 600)
+               and f.get('name') and re.search(r'\b' + re.escape(f['name'].lower()) + r'\b', STN.get(crs, '').lower())]
     if centres:
         c = min(centres, key=lambda f: min(metres(e, (f['lat'], f['lon'])) for e in exits))
         i = clearly_nearest(exits, (c['lat'], c['lon']))

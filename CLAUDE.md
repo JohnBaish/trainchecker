@@ -65,6 +65,24 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: exits named by what's near them (branch `claude/dreamy-dijkstra-swkirc`, not merged; Claude Code)
+
+- **John:** name exits by what's near them; the name replaces a street name (option b); a town
+  centre only where it suits (from 14 London examples: the station named after the place, and near).
+- **Built:** `design/platform-links-trial/landmarks.py` (town and city points, bus stations,
+  hospitals, universities, shopping centres, stadiums and car parks within 2 km of 1,195 stations,
+  from the UK extract) and `name_exits.py` (the one exit that faces a landmark: nearer than every
+  other by half the distance between them, and 40 m; a town point within 600 m or a city point within
+  1.2 km, the station named after it; others within 400 m; a car park beside one unnamed exit; a
+  name fitting two exits dropped). Output `exits-2026-11-22/exit-names.json`, read by
+  `build_exits_table.py`; its tie-break made fixed (the lower platform). `toName()`/`hereName()` read
+  "the … exit" before the street rule. Ivybridge's Hazel Lane is the town centre exit (John).
+- 430 map-data stations gain a name (162 town centre, 174 car park, 41 bus station, 29 university,
+  26 shopping centre, 25 hospital, 18 city centre, 14 stadium). For John: Stirling (Goosecroft Road as
+  the city centre exit), Twyford (a car park exit by platform 4 beside an unnamed one).
+- **Checked:** `npm run check` 273 + 57 + 79 + 40 + 52; `tsc -b`, lint, build; the build without the
+  names matches the live table except Birmingham Curzon Street's tie (not open yet).
+
 ### November 22nd 2026: "Exits" heading; Southampton Central and Ivybridge in John's words; live (`main`; Claude Code)
 
 - **John:** the heading and first line repeated the station ("Station exits at Southampton Central" / "At

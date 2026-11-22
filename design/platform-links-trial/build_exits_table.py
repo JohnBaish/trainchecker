@@ -5,7 +5,8 @@ maps read by eye where we have them, otherwise from OpenStreetMap (exits.py).
 
 exits.json: exits.py's national run. strict-dir: the station maps' readings in the strict shape
 (maps-strict-*.json: exits with names and the platforms they're by, each platform's ways to them,
-a kind). Out: {CRS: {"x": [[name, [platforms, nearest first], building?, near]], "p": {platform: [[exit, via, down]]},
+a kind), and exit-names.json beside exits.json (name_exits.py: exits named by what's near them,
+which take the place of a street name). Out: {CRS: {"x": [[name, [platforms, nearest first], building?, near]], "p": {platform: [[exit, via, down]]},
 "k": kind, "h": {exit: hours}, "m": 1 if from a station map}}, where via is l (level), b
 (footbridge), s (subway), x (level crossing), c (concourse) or u (up or down), and down is the
 platform a walk over a footbridge or through a subway comes down by, where known; near:
@@ -24,7 +25,7 @@ SKIP = {'KIH', 'LTT', 'MIS', 'GNB', 'HLR', 'ENC', 'SWN', 'BDG', 'GNH', 'HMC', 'B
 num = lambda s: (int(''.join(c for c in s if c.isdigit()) or 999), s)
 
 
-def from_osm(r):
+def from_osm(r, labels=None):
     xs = []
     near = {}
     for pl, routes in r['platforms'].items():
@@ -32,6 +33,8 @@ def from_osm(r):
             near.setdefault(i, {})[pl] = min(d, near.get(i, {}).get(pl, 1e9))
     for k, e in enumerate(r['exits']):
         names = [n for n in e['street'] if n not in ROADWORDS]
+        if labels and str(k) in labels:          # named by what's near it (name_exits.py)
+            names = [labels[str(k)]]
         by = sorted(e['by'], key=lambda pl: (near.get(k, {}).get(pl, 1e9), num(pl)))
         xs.append([names[0] if names else None, by, 1 if e.get('building') else 0])
     p = {}
@@ -85,6 +88,9 @@ def downs(hand, osm, groups):
 
 def main():
     osm = json.load(open(sys.argv[1]))
+    # Exits named by what's near them ("the town centre exit"), from name_exits.py, beside exits.json.
+    nf = os.path.join(os.path.dirname(os.path.abspath(sys.argv[1])), 'exit-names.json')
+    near = json.load(open(nf)) if os.path.exists(nf) else {}
     links = json.load(open(sys.argv[4])) if len(sys.argv) > 4 else {}
     hand = {}
     for f in sorted(glob.glob(os.path.join(sys.argv[2], 'maps-strict-*.json'))):
@@ -102,14 +108,14 @@ def main():
                 e['h'] = h['hours']
             downs(e, osm.get(crs), links.get(crs, {}).get('g', []))
         else:
-            e = from_osm(osm[crs])
+            e = from_osm(osm[crs], near.get(crs))
             if not e:
                 continue
         # An exit by no platform: the platform people come down by on the way to it, if any.
         for k, x in enumerate(e['x']):
             if not x[1]:
                 ds = [w[2] for rs in e['p'].values() for w in rs if w[0] == k and w[2]]
-                x.append(max(set(ds), key=ds.count) if ds else None)
+                x.append(min(set(ds), key=lambda d: (-ds.count(d), num(d))) if ds else None)  # ties: the lower platform
             else:
                 x.append(None)
         out[crs] = e

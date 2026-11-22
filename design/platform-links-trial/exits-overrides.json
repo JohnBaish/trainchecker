@@ -87,5 +87,12 @@
       "4": "This is the town side: there’s an exit right there by the ticket machines, and another between platforms 4 and 5. Or you can go over the footbridge for Hurst Road or the long-term car park.",
       "5": "This is the town side: there’s an exit right there between platforms 4 and 5, and another by the ticket machines on platform 4. Or you can go over the footbridge for Hurst Road or the long-term car park."
     }
+  },
+  "PAD": {
+    "_who": "John, November 22nd 2026: the Elizabeth Line platforms' way out",
+    "say": {
+      "A": "The way out is up from the Elizabeth Line platforms to the Eastbourne Terrace exit.",
+      "B": "The way out is up from the Elizabeth Line platforms to the Eastbourne Terrace exit."
+    }
   }
 }

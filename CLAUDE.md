@@ -65,6 +65,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: Paddington's Elizabeth Line platforms (branch `claude/dreamy-dijkstra-swkirc`; Claude Code)
+
+- **John:** platforms A and B read "The way out is up or down from the platform, to Eastbourne Terrace
+  (Elizabeth line)."; now his words, "The way out is up from the Elizabeth Line platforms to the
+  Eastbourne Terrace exit." (`say` in the corrections file). Only Paddington changes in the table.
+  The same "up or down" wording is at about 40 other stations (Liverpool Street, Bond Street, Ealing
+  Broadway among them), for John to look at.
+- **Checked:** `npm run check` 273 + 57 + 79 + 40 + 55; `tsc -b`, build.
+
 ### November 22nd 2026: exits named by what's near them; live (branch `claude/dreamy-dijkstra-swkirc`, merged the same day; Claude Code)
 
 - **John:** name exits by what's near them; the name replaces a street name (option b); a town

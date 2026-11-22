@@ -65,7 +65,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 22nd 2026: Paddington's Elizabeth Line platforms; up or down (branch `claude/dreamy-dijkstra-swkirc`; Claude Code)
+### November 22nd 2026: Paddington's Elizabeth Line platforms; up or down; live (branch `claude/dreamy-dijkstra-swkirc`, merged the same day; Claude Code)
 
 - **John:** platforms A and B read "The way out is up or down from the platform, to Eastbourne Terrace
   (Elizabeth line)."; now his words, "The way out is up from the Elizabeth Line platforms to the
@@ -84,6 +84,7 @@ given its own branch). Before committing there, run
   Broadway, Putney and Streatham lost their main exits and Heathrow Terminal 5 went altogether.
   169 answers change, all of this kind; "up or down" nowhere.
 - **Checked:** `npm run check` 273 + 57 + 79 + 40 + 59; `tsc -b`, build.
+- **John:** "Yes please!": merged into `main` (fast-forward); checks, `tsc -b`, lint and build clean first.
 
 ### November 22nd 2026: exits named by what's near them; live (branch `claude/dreamy-dijkstra-swkirc`, merged the same day; Claude Code)
 

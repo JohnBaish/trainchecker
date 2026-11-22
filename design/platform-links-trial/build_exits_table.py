@@ -118,6 +118,19 @@ def main():
             else:
                 x.append(None)
         out[crs] = e
+    # John's own corrections, applied last (exits-overrides.json beside this script).
+    ov = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'exits-overrides.json')))
+    for crs, o in ov.items():
+        if crs.startswith('_'):
+            continue
+        e = out[crs]
+        names = [x[0] for x in e['x']]
+        for old, new in o.get('names', {}).items():
+            e['x'][names.index(old)][0] = new      # a name that isn't there stops the build
+        for old, words in o.get('here', {}).items():
+            e.setdefault('here', {})[str(names.index(old))] = words
+        if o.get('bridge'):
+            e['w'] = o['bridge']
     with open(sys.argv[3], 'w') as fh:
         json.dump(out, fh, separators=(',', ':'), sort_keys=True, ensure_ascii=False)
     print(f"{len(out)} stations; {sum(1 for v in out.values() if v.get('m'))} from station maps", file=sys.stderr)

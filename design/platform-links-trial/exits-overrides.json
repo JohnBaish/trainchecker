@@ -1,0 +1,15 @@
+{
+  "_about": "John's own corrections to the Station exits table, applied last by build_exits_table.py, so they win over the station maps and the map data. Per station: 'names' renames exits (old name: the words used after 'to', as in 'to the town centre and Station Hill'); 'here' says how to put 'is right there' for a renamed exit; 'bridge' is the word for the station's footbridge. Each entry says who and when.",
+  "RDG": {
+    "_who": "John, November 22nd 2026",
+    "names": {
+      "Station Hill (north)": "the town centre and Station Hill",
+      "Station Car Park": "the north exit by the car park on the Caversham side"
+    },
+    "here": {
+      "Station Hill (north)": "The way out to the town centre and Station Hill",
+      "Station Car Park": "The north exit by the car park on the Caversham side"
+    },
+    "bridge": "bridge"
+  }
+}

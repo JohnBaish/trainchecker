@@ -22,7 +22,9 @@ export type ExitRow = [name: string | null, by: string[], building: 0 | 1, near:
  *  level crossing, c concourse, u up or down), and the platform a footbridge or subway comes down
  *  by, where known. */
 export type Way = [exit: number, via: string, down: string | null]
-export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1 }
+/** w: John's word for the station's footbridge ("bridge" at Reading, which has shops on it);
+ *  here: for an exit given a descriptive name, how to say it's right there (exit number → words). */
+export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string> }
 export type ExitsTable = Record<string, StationExits>
 
 const numOf = (s: string) => parseInt(s.replace(/\D/g, ''), 10) || 999
@@ -48,7 +50,7 @@ export function stationLine(name: string, e: StationExits): string {
   if (!by.length || reps.some((p) => !p)) {
     const vias = new Set(Object.values(e.p).flatMap((ws) => ws.map((w) => w[1])))
     if (vias.has('c')) return `At ${name}, the ${one ? 'exit is' : 'exits are'} off the concourse.`
-    if (vias.size === 1 && vias.has('b')) return `At ${name}, every platform reaches the ${one ? 'exit' : 'exits'} over the footbridge.`
+    if (vias.size === 1 && vias.has('b')) return `At ${name}, every platform reaches the ${one ? 'exit' : 'exits'} over the ${e.w ?? 'footbridge'}.`
     if (vias.size === 1 && vias.has('s')) return `At ${name}, every platform reaches the ${one ? 'exit' : 'exits'} through the subway.`
     return `At ${name}, the ${one ? 'exit isn’t' : 'exits aren’t'} on the platforms themselves.`
   }
@@ -91,14 +93,16 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
   if (via === 'l') {
     const x = e.x[i]
     if (!x[0]) return `${start} ${e.x.length === 1 ? 'The exit is' : 'There’s an exit'} right there.${hoursLine(e, [ways[0]])}` // the second: Draft
-    return `${start} The exit on ${x[0]} is right there.${hoursLine(e, [ways[0]])}`
+    const here = e.here?.[String(i)]
+    return `${start} ${here ?? `The exit on ${x[0]}`} is right there.${hoursLine(e, [ways[0]])}`
   }
   if (via === 'c') return `${start} The exits are across the concourse at the end of the platform.${hoursLine(e, ways)}` // Draft
   if (via === 'u') return `${start} The way out is ${e.k === 'below' ? 'down' : e.k === 'above' ? 'up' : 'up or down'} from the platform, to ${target(e, i)}.${hoursLine(e, [ways[0]])}` // Draft
   if (via === 'x') return `${start} Cross the line at the level crossing for ${target(e, i)}.${hoursLine(e, [ways[0]])}` // Draft
   // A footbridge or subway: either way, when two ways the same kind lead to different exits.
   const same = ways.filter((w) => w[1] === via)
-  const thing = via === 'b' ? 'footbridge' : 'subway'
+  const bridge = e.w ?? 'footbridge'
+  const thing = via === 'b' ? bridge : 'subway'
   const off = via === 'b' ? 'coming down from the bridge' : 'coming up from the subway'
   const offAgain = via === 'b' ? 'coming down' : 'coming up'
   if (same.length >= 2 && same[0][0] !== same[1][0]) {
@@ -106,7 +110,7 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
     const said = (w: Way) => w[2] && !target(e, w[0]).endsWith(`platform ${w[2]}`)
     const one = `to ${target(e, a[0])}${said(a) ? `, ${off} by platform ${a[2]}` : ''}`
     const two = `to ${target(e, b[0])}${said(b) ? `, ${said(a) ? offAgain : off} by platform ${b[2]}` : ''}`
-    return `${start} Go ${via === 'b' ? 'up to the footbridge' : 'down to the subway'}, where you can turn either way: ${one}, or ${two}.${hoursLine(e, same.slice(0, 2))}`
+    return `${start} Go ${via === 'b' ? `up to the ${bridge}` : 'down to the subway'}, where you can turn either way: ${one}, or ${two}.${hoursLine(e, same.slice(0, 2))}`
   }
   const t = target(e, i)
   return `Your train is due into platform ${platform}, so you’ll want the ${thing} to ${t}${down && !t.endsWith(`platform ${down}`) ? `, ${off} by platform ${down}` : ''}.${hoursLine(e, [ways[0]])}`

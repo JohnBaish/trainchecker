@@ -85,6 +85,11 @@ given its own branch). Before committing there, run
   -b`, lint, build; Paddington to Reading's saved board with the platform lookup answered 8 and 4,
   1200px light and 390px dark with touch (`design/previews/exits/`): no errors, no sideways scroll,
   train buttons 65px. Not checked: live trains, Vercel's preview, a real phone.
+- **John's corrections file** (`design/platform-links-trial/exits-overrides.json`, applied last by
+  the build): Reading's names "the town centre and Station Hill" and "the north exit by the car
+  park on the Caversham side", and "the bridge" (it has shops on it), not "the footbridge". New
+  table fields `w` (the word for the bridge) and `here` (a renamed exit's "is right there"); a name
+  in the file that isn't in the table stops the build. Checks 273 + 57 + 79 + 40 + 22.
 
 ### November 22nd 2026: exits, a trial on six stations (notes and trial scripts, straight to `main`; Claude Code)
 

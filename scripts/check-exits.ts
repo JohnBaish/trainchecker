@@ -16,7 +16,10 @@ eq('Reading: heading', heading('Reading', T.RDG), 'Station exits at Reading')
 eq('Reading: the station', stationLine('Reading', T.RDG), 'At Reading, the exits are by platforms 1, 4 and 15.')
 eq('Reading: platform 4 (level)', trainLine(T.RDG, '4', false), 'Your train is due into platform 4. The exit on Forbury Road is right there.')
 eq('Reading: platform 8 (either way off the bridge, and where each comes down)', trainLine(T.RDG, '8', false),
-  'Your train is due into platform 8. Go up to the footbridge, where you can turn either way: to Station Hill (north), coming down from the bridge by platform 7, or to Station Car Park, coming down by platform 15.')
+  'Your train is due into platform 8. Go up to the bridge, where you can turn either way: to the town centre and Station Hill, coming down from the bridge by platform 7, or to the north exit by the car park on the Caversham side, coming down by platform 15.')
+// John's corrections (design/platform-links-trial/exits-overrides.json): names, "is right there", "the bridge".
+eq('Reading: a renamed exit is right there (John)', trainLine(T.RDG, '1', false), 'Your train is due into platform 1. The way out to the town centre and Station Hill is right there.')
+eq('Reading: "the bridge", not "the footbridge" (John)', T.RDG.w, 'bridge')
 // The others John checked.
 eq('Newton Abbot: by the station building', stationLine('Newton Abbot', T.NTA), 'At Newton Abbot, the exit is by the station building on platform 3.')
 eq('Newton Abbot: platform 1, over the bridge', trainLine(T.NTA, '1', false), 'Your train is due into platform 1, so you’ll want the footbridge to the exit, coming down from the bridge by platform 3.')

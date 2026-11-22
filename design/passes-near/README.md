@@ -134,6 +134,8 @@ below); the work goes on in `COVERAGE.md`.
   `stretches-report.md` (counts, stations not found, long stretches, possible avoiding lines).
 - `to_network.py`: puts the items on the network, and adds a batch's items.
 - `candidates.py`: a batch's candidates, ranked, with distance and side.
+- `wiki_dump.py`: Wikipedia's article locations in Great Britain from its database dumps, for
+  `candidates.py --wiki-dump` (since November 22nd 2026, as the search API refuses most requests).
 - `check.py`: the checks, before every commit.
 - `coverage.py`: the counts in `COVERAGE.md`.
 - `pn.py`: shared by the four above.

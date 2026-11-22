@@ -231,6 +231,7 @@ def first_sentences(wikitext, n=2):
     t = re.sub(r'<!--.*?-->', '', wikitext, flags=re.S)
     t = re.sub(r'<ref[^>/]*/>', '', t)
     t = re.sub(r'<ref[^>]*>.*?</ref>', '', t, flags=re.S)
+    t = re.sub(r'\{\{(?:convert|cvt)\|([\d.,]+)\|([a-z]+)[^{}]*\}\}', r'\1 \2', t, flags=re.I)
     t = strip_braces(t, '{{', '}}')
     t = strip_braces(t, '{|', '|}')
     t = re.sub(r'\[\[(?:File|Image|Category):[^\[\]]*(?:\[\[[^\]]*\]\][^\[\]]*)*\]\]', '', t, flags=re.I)
@@ -258,7 +259,13 @@ def raw_extracts(f, cands):
         else:
             text = ''
             url = wiki_url(c['name']) + '?action=raw'
-            for attempt in range(3):
+            # Article pages are held back far less than the API, but not never: after a few hundred
+            # quick requests they answer 429 for a while. Wait as asked; never keep an error page.
+            for attempt in range(8):
+                wait = 1.0 - (time.time() - f.last)
+                if wait > 0:
+                    time.sleep(wait)
+                f.last = time.time()
                 try:
                     req = urllib.request.Request(url, headers={'User-Agent': AGENT})
                     with urllib.request.urlopen(req, timeout=60) as r:
@@ -267,7 +274,8 @@ def raw_extracts(f, cands):
                     break
                 except Exception as e:  # noqa: BLE001
                     print('  retry', attempt + 1, url, e, file=sys.stderr)
-                    time.sleep(3 * (attempt + 1))
+                    after = getattr(e, 'headers', None) and e.headers.get('Retry-After')
+                    time.sleep(int(after) + 2 if after and after.isdigit() else 15 * (attempt + 1))
         c['extract'] = first_sentences(text)
 
 

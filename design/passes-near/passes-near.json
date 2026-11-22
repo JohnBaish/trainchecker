@@ -2493,14 +2493,14 @@
   "FMT-PNM": {
    "a": "FMT",
    "b": "PNM",
-   "kind": "station",
-   "name": "Penmere station",
-   "side": null,
-   "lat": 50.15038,
-   "lon": -5.08326,
-   "distanceM": 50,
-   "text": "Penmere station, at one end of this stretch, was opened by the Great Western Railway on July 1st 1925. Sidings to an oil depot there were in use from 1940 to 1967.",
-   "source": "https://en.wikipedia.org/wiki/Penmere_railway_station"
+   "kind": "near",
+   "name": "National Maritime Museum Cornwall",
+   "side": "right",
+   "lat": 50.15139,
+   "lon": -5.06167,
+   "distanceM": 404,
+   "text": "Your train passes near the National Maritime Museum Cornwall, on the train's {side}, in a harbourside building that opened in February 2003. It looks after the National Small Boat Collection, which came from the National Maritime Museum in Greenwich.",
+   "source": "https://en.wikipedia.org/wiki/National_Maritime_Museum_Cornwall"
   },
   "FAL-FMT": {
    "a": "FAL",
@@ -3117,14 +3117,14 @@
   "COP-MRD": {
    "a": "COP",
    "b": "MRD",
-   "kind": "station",
-   "name": "Morchard Road station",
-   "side": null,
-   "lat": 50.83169,
-   "lon": -3.77614,
-   "distanceM": 50,
-   "text": "Morchard Road station, at one end of this stretch, opened with the North Devon Railway on August 1st 1854.",
-   "source": "https://en.wikipedia.org/wiki/Morchard_Road_railway_station"
+   "kind": "near",
+   "name": "Church of St Mary the Virgin, Down St Mary",
+   "side": "left",
+   "lat": 50.826,
+   "lon": -3.78618,
+   "distanceM": 957,
+   "text": "Your train passes near the church of St Mary the Virgin at Down St Mary, on the train's {side}, listed Grade I and rebuilt in the 1400s. One of the two old crosses in its churchyard was found being used as a paving slab in Bow, and put back up between 1897 and 1909.",
+   "source": "https://en.wikipedia.org/wiki/Down_St_Mary"
   },
   "LAP-MRD": {
    "a": "LAP",
@@ -3177,14 +3177,14 @@
   "PMA-UMB": {
    "a": "PMA",
    "b": "UMB",
-   "kind": "station",
-   "name": "Portsmouth Arms station",
-   "side": null,
-   "lat": 50.95698,
-   "lon": -3.95128,
-   "distanceM": 0,
-   "text": "Portsmouth Arms station, at one end of this stretch, is far from any village, so it is named after the nearby pub, itself named after the Earl of Portsmouth.",
-   "source": "https://en.wikipedia.org/wiki/Portsmouth_Arms_railway_station"
+   "kind": "near",
+   "name": "Brightley Barton",
+   "side": "right",
+   "lat": 50.98695,
+   "lon": -3.97787,
+   "distanceM": 415,
+   "text": "Your train passes near Brightley Barton, on the train's {side}, on a hillside above the River Taw. From the early 1500s to 1715 it was the seat of the Giffard family, and the medieval stone walls of their house's moat still survive, a great rarity in North Devon.",
+   "source": "https://en.wikipedia.org/wiki/Brightley,_Chittlehampton"
   },
   "EXD-TVP": {
    "a": "TVP",

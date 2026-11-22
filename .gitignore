@@ -26,6 +26,7 @@ dist-ssr
 
 # "Your train passes near…": what candidates.py fetched (kept locally, not committed)
 design/passes-near/batches/*/cache/
+design/passes-near/batches/*/*/cache/
 # Wikipedia's dumps and wiki_dump.py's file (large; remade from the dumps): keep them outside the repo,
 # or in design/passes-near/wikidump/
 design/passes-near/wikidump/

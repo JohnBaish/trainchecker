@@ -70,6 +70,19 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": Wikipedia from its dumps; batch 01 looked at again (notes, straight to `main`; Claude Code)
+
+- **John:** fix the Wikipedia search problem before the next batch. `dumps.wikimedia.org` added to the
+  Default environment (approved). `wiki_dump.py` (new) makes one file of 105,329 articles with
+  coordinates in Great Britain from the 20261101 dumps (checksums checked; kept outside git);
+  `candidates.py --wiki-dump` takes nearby articles from it, same ranking, distances and sides, first
+  sentences from `/wiki/Title?action=raw` (also refused (429) after a few hundred quick requests: it waits).
+  Batch 01 again in four minutes, 223 Wikipedia candidates (`batches/01/rerun/`).
+- Three items replaced, facts checked against their articles: FMT-PNM (National Maritime Museum
+  Cornwall), COP-MRD (Down St Mary church), PMA-UMB (Brightley Barton). The other five stations and
+  Roche's holy well kept (nothing better that could be checked). Batch 01 had eight station items, not
+  nine. `check.py` clean but for the known Parson and Clerk warning. COVERAGE.md's steps rewritten.
+
 ### November 22nd 2026: "Your train passes near…": batch 01 (notes, straight to `main`; Claude Code)
 
 - **John:** "Read design/passes-near/COVERAGE.md and do the next batch." 40 stretches in Cornwall and

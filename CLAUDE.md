@@ -71,6 +71,14 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": batch 06, the South West finished (notes, straight to `main`; Claude Code)
+
+- 40 stretches, Axminster to Honiton through to Micheldever to Winchester; 321 of 2,376 done, South West
+  30 of 30 (with the Great Western routes, both parts done). Next: SHW-WIN (Shawford to Winchester), the
+  South East.
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning.
+  `candidates.py` fixed for an empty Historic England shape. `to_site.py` run: 321 facts live with this push.
+
 ### November 22nd 2026: "Your train passes near…": batch 05, the Great Western routes finished (notes, straight to `main`; Claude Code)
 
 - 40 stretches, Digby & Sowton to Polsloe Bridge through to Feniton to Honiton (the Exmouth branch,

@@ -8,11 +8,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-281 of 2376 stretches done.
+321 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
-2. South West: 5 of 30 done (next).
-3. South East: 1 of 384 done.
+2. South West: 30 of 30 done (done).
+3. South East: 16 of 384 done (next).
 4. London: 4 of 421 done.
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: AXM-HON (Axminster to Honiton).
+Next stretch in the order: SHW-WIN (Shawford to Winchester).
 
 <!-- end of counts -->
 
@@ -117,6 +117,18 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 22nd 2026 (Claude Code): batch 06, 40 stretches from Axminster to Honiton through to
+  Micheldever to Winchester (the West of England line from Honiton to Salisbury, Gloucester to Chepstow,
+  Dorchester to Bournemouth and the New Forest, then the South East's first stretches: the Lymington
+  branch, Andover and Basingstoke to Winchester). This finishes the South West (30 of 30). Every fact
+  checked against the article in `source` (`wiki_text.py`). Yeovil Junction to Yeovil Pen Mill has no
+  train company on the map; given an item, not skipped (it does no harm). Clarendon Palace was dropped
+  for Dean to Grateley (1.5 km away), Borbach Chantry instead; Sway Tower is 1.4 km from the line, so the
+  item is Sway itself, mentioning the tower. Points on the nearest edge of the listed area: Wardour
+  Castle's park (Old Wardour's ruins have no coordinates in the index), Offa's Dyke at Sedbury; Newenham
+  Abbey and Bishop's Dyke are `crosses` (the line runs through them). `candidates.py` now uses a list
+  entry's point when its shape is empty (one near Poole stopped the script). Step 8 done: 321 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 22nd 2026 (Claude Code): batch 05, 40 stretches from Digby & Sowton to Polsloe Bridge through
   to Feniton to Honiton (the Exmouth branch, Southampton to Portsmouth by Netley and Fareham, the Greenford
   branch, Gatwick to Horley, the possible avoiding lines left in the Great Western part (Westbury, Didcot,

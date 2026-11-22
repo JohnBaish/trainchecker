@@ -113,6 +113,8 @@ def he_things(f, line):
                     rings = (ft.get('geometry') or {}).get('rings') or []
                     polys = [Polygon(r) for r in rings if len(r) >= 4]
                     geom = MultiPolygon(polys).buffer(0) if polys else Point(a['Easting'], a['Northing'])
+                    if geom.is_empty:   # a degenerate shape (seen near Poole): use the entry's point
+                        geom = Point(a['Easting'], a['Northing'])
                 side, dist = pn.side_of_shape(line, geom)
                 if dist > NEAR:
                     continue

@@ -101,11 +101,6 @@ def main():
             if h.get('hours'):
                 e['h'] = h['hours']
             downs(e, osm.get(crs), links.get(crs, {}).get('g', []))
-            # John (November 22nd 2026): Southend Airport's exit is by platform 1; nothing more is
-            # known, so no routes.
-            if crs == 'SIA':
-                e['x'] = [[e['x'][0][0] if e['x'] else None, ['1'], 0]]
-                e['p'] = {}
         else:
             e = from_osm(osm[crs])
             if not e:
@@ -131,6 +126,13 @@ def main():
             e.setdefault('here', {})[str(names.index(old))] = words
         if o.get('bridge'):
             e['w'] = o['bridge']
+        for old, ps in o.get('by', {}).items():
+            e['x'][names.index(old)][1] = ps
+        if o.get('no_routes'):
+            e['p'] = {}
+        for bad in o.get('no_exit', []):
+            if any(bad.lower() in (x[0] or '').lower() for x in e['x']):
+                sys.exit(f'{crs}: an exit "{bad}" is in the table, but John says there is none')
     with open(sys.argv[3], 'w') as fh:
         json.dump(out, fh, separators=(',', ':'), sort_keys=True, ensure_ascii=False)
     print(f"{len(out)} stations; {sum(1 for v in out.values() if v.get('m'))} from station maps", file=sys.stderr)

@@ -90,6 +90,10 @@ given its own branch). Before committing there, run
   park on the Caversham side", and "the bridge" (it has shops on it), not "the footbridge". New
   table fields `w` (the word for the bridge) and `here` (a renamed exit's "is right there"); a name
   in the file that isn't in the table stops the build. Checks 273 + 57 + 79 + 40 + 22.
+- Southend Airport and Chislehurst moved into the same file (`by`, `no_routes`, `no_exit`); the
+  table comes out the same. Raised by John: "Trainchecker doesn't know the way out from there"
+  breaks the show-what-we-know rule; proposed instead "The exit is by platform 2." (the station's
+  own sentence), waiting for his word.
 
 ### November 22nd 2026: exits, a trial on six stations (notes and trial scripts, straight to `main`; Claude Code)
 

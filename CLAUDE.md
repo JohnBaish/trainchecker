@@ -70,6 +70,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: "Your train passes near…": batch 02 (notes, straight to `main`; Claude Code)
+
+- 40 stretches, Chapelton to Umberleigh through to Nailsea & Backwell to Parson Street (Exeter, Taunton,
+  the Heart of Wessex Line, Bath to Westbury, Bristol Parkway to Swindon, the Severn Beach line); 161 of
+  2,376 done (Great Western routes 156 of 271). Next: NLS-YAT (Nailsea & Backwell to Yatton).
+- Article pages refused (429) after eight reads, so `wiki_text.py` (new) reads articles from the
+  multistream articles dump by byte range (index downloaded, 290 MB, md5 checked); every fact checked
+  against it. `check.py` clean but for the Parson and Clerk warning.
+
 ### November 22nd 2026: "Your train passes near…": Wikipedia from its dumps; batch 01 looked at again (notes, straight to `main`; Claude Code)
 
 - **John:** fix the Wikipedia search problem before the next batch. `dumps.wikimedia.org` added to the

@@ -136,6 +136,8 @@ below); the work goes on in `COVERAGE.md`.
 - `candidates.py`: a batch's candidates, ranked, with distance and side.
 - `wiki_dump.py`: Wikipedia's article locations in Great Britain from its database dumps, for
   `candidates.py --wiki-dump` (since November 22nd 2026, as the search API refuses most requests).
+- `wiki_text.py`: an article's wikitext from Wikipedia's articles dump, fetched by byte range, for
+  checking facts when Wikipedia's own pages refuse.
 - `check.py`: the checks, before every commit.
 - `coverage.py`: the counts in `COVERAGE.md`.
 - `pn.py`: shared by the four above.

@@ -8,9 +8,9 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-121 of 2376 stretches done.
+161 of 2376 stretches done.
 
-1. Great Western routes: 116 of 271 done (next).
+1. Great Western routes: 156 of 271 done (next).
 2. South West: 0 of 30 done.
 3. South East: 1 of 384 done.
 4. London: 4 of 421 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: CPN-UMB (Chapelton (Devon) to Umberleigh).
+Next stretch in the order: NLS-YAT (Nailsea & Backwell to Yatton).
 
 <!-- end of counts -->
 
@@ -71,6 +71,15 @@ Next stretch in the order: CPN-UMB (Chapelton (Devon) to Umberleigh).
    Prefer something a passenger would find interesting, and true without hedging.
 5. **Check every fact against a source** (the Historic England list entry, Wikipedia, the National
    Trust, the owner's own site). Leave out anything doubtful. Put the source's address in `source`.
+   Wikipedia's own pages refuse after a few dozen quick reads, so read articles from the dump instead:
+   download the run's `enwiki-<run>-pages-articles-multistream-index.txt.bz2` (about 290 MB; check its
+   md5) into DUMPS as `articles-index.txt.bz2`, then
+   `python3 -I design/passes-near/wiki_text.py --save ARTICLES DUMPS "Title" "Title" …` fetches just the
+   blocks holding those articles (by byte range, no limit seen) and saves their wikitext. Look out for
+   two things in the candidates: a Wikipedia link beside a list entry is a guess by name and position,
+   and is sometimes wrong (Taunton Castle's pointed at the bus station); and for a park or garden the
+   distance is to the park's edge while `lat`/`lon` is its middle or the house, so `check.py` warns
+   when they differ: write about the park and give the nearest point of its edge, or choose another.
 6. Write the sentence in the house style of the existing items: "Your train passes near …, on the
    train's {side}, …"; British spelling; one to nine in words; "less than"/"more than", never
    "under"/"over" for amounts; written afresh, not copied. Give `name`, `lat`, `lon` (of the thing),
@@ -110,6 +119,15 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 22nd 2026 (Claude Code): batch 02, 40 stretches from Chapelton to Umberleigh through to
+  Nailsea & Backwell to Parson Street (the Tarka Line's end, Exeter, Bridgwater to Taunton, the Heart of
+  Wessex Line to Weymouth, Bruton to Westbury, Bath to Trowbridge, Chippenham to Trowbridge, Bristol
+  Parkway to Swindon, and Bristol's local lines to Severn Beach). The first batch with Wikipedia from the
+  dumps (step 2); every fact checked against the article in `source`, read from the articles dump
+  (`wiki_text.py`, new), as Wikipedia's pages refused after eight reads. Four items are `crosses`
+  (Poundbury Camp's tunnel, Avoncliff Aqueduct, Abona at Sea Mills; none is a station). Badminton House
+  was dropped for Bristol Parkway to Swindon: the line passes 13 m from its park, not through it, and
+  3.5 km from the house; the Health Hydro in Swindon instead. Tyntesfield's point is the edge of its park.
 - November 22nd 2026 (Claude Code): Wikipedia from its database dumps. The search API refused most of
   batch 01's requests, so `wiki_dump.py` (new) turns three files of the 20261101 dumps (checksums
   checked) into one file of 105,329 articles with coordinates in Great Britain, and `candidates.py

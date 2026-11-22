@@ -662,6 +662,13 @@ they differ.
     at 7.36am, 7.38, 7.50, 7.51 and 7.53, don't have platforms yet." Claude's choices, told to John:
     "am"/"pm" once; more than six trains as "from 7.36am to 8.05".
 
+27. **Engineering work about a train that has already gone** (John, November 22nd 2026, Paddington to
+    Reading at 8.23am, still showing "Amended 12.34am …" and "The 6.38am … will not run"): on the
+    item's last day, once a train's time has passed and it starts at A, an item about that one train
+    drops out, and a day-long item's summary stops naming it (its first sentence stays, as the work
+    goes on all day). Kept when the train starts elsewhere (it may still be to come at A) and on an
+    earlier day of a longer item; no margin after its time. Claude's choices, agreed by John.
+
 ## 13. Connections (November 21st 2026)
 
 John's idea, built and agreed with him in one day; `CLAUDE.md`'s log has the order it happened in.

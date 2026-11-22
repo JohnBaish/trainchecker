@@ -65,6 +65,19 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 22nd 2026: engineering work about a train that has gone; live (`main`; Claude Code)
+
+- **John (Paddington to Reading at 8.23am):** "The days ahead" still showed the 12.34am's amended
+  item and "The 6.38am … will not run". Agreed (`SPEC.md` §12.27): `goneSingle()` (used in
+  `forJourney()`, which now takes `now`) and the summary skipping a gone train's sentence (`gist()`
+  takes the item's `end`) in `incidents.ts`. The day-long item stays, as its work runs all day.
+- **Checked:** `npm run check` 273 + 57 + 79 + 40 (new, on the live feed saved at 8.26am,
+  `design/mockups/snapshots/20261122-0826-days.json.gz`: before and after 12.34am, the 6.38am and
+  6.20am dropped from the summary at 8.23am, a train starting elsewhere kept, an earlier day of the
+  item kept; two older checks given the feed's own date, as they had used the real clock); `tsc -b`,
+  lint, build. Not checked in a browser or on a phone. Pushed first to `claude/dreamy-dijkstra-swkirc`
+  for John, then to `main` at his word.
+
 ### November 22nd 2026: Connections, a long wait; live (`main`; Claude Code)
 
 - **John (live trains, Paddington to Reading for Midgham at 7.18am):** a 91-minute gap read "you

@@ -8,12 +8,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-801 of 2376 stretches done.
+841 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
-4. London: 116 of 421 done (next).
+4. London: 156 of 421 done (next).
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BOP-PAL (Bowes Park to Palmers Green).
+Next stretch in the order: BCV-WHL (Bruce Grove to White Hart Lane).
 
 <!-- end of counts -->
 
@@ -117,6 +117,33 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 19, 40 stretches of north, central and east London from Bowes
+  Park to Palmers Green through to Bruce Grove to Seven Sisters (the Hertford loop from Bowes Park by Palmers Green,
+  Winchmore Hill, Grange Park and Enfield Chase to Gordon Hill and Crews Hill; Finsbury Park to Harringay; the Northern
+  City line from Finsbury Park by Drayton Park, Highbury & Islington and Essex Road to Old Street and Moorgate; the North
+  London line from Caledonian Road & Barnsbury by Highbury & Islington and Canonbury; the Elizabeth line from London
+  Paddington by Bond Street, Tottenham Court Road, Farringdon and Moorgate to Whitechapel; the East London line from
+  Whitechapel by Shoreditch High Street, Hoxton and Haggerston to Dalston Junction and Dalston Kingsland; the North
+  London line by Hackney Central, Homerton and Hackney Wick to Stratford, with High Speed 1's tunnels from Dalston
+  Kingsland and Homerton to Stratford International; Bethnal Green to Liverpool Street, Stratford and Cambridge Heath;
+  London Fields and Hackney Downs; and the Chingford and Enfield lines by Rectory Road, Stoke Newington and Stamford Hill
+  to Seven Sisters and Bruce Grove); 841 of 2,376 done, London 156 of 421. Every fact checked against the article in
+  `source` (`wiki_text.py`). Neighbours already used got another item: Bounds Green tube station (on Alexandra Palace
+  to Bowes Park) gave way to Broomfield House; within the batch, the Museum of the Home and Hoxton Hall share the
+  stretches by Hoxton, the Clowns Gallery, the Vortex Jazz Club and the Rio Cinema those by Dalston, St Augustine's
+  Tower, Sutton House and the Hackney Empire those round Hackney Central, and V&A East, the Aquatics Centre and the
+  Orbit those by Stratford. Passed over: the 2017 Finsbury Park van attack, the 21 July 2005 bombings, the Siege of
+  Sidney Street, the Hackney siege, the Wood Green ricin plot and a murder by Rectory Road; and the earthworks at Old
+  Park, as no source here says they are the hill fort the Enfield Old Park article describes. Points from Historic
+  England's list rather than an article: Broomfield House, John Wesley's House, the London Charterhouse (the Master's
+  Lodge), Sir John Soane's Museum, 25 Brook Street, Marble Arch, Christ Church Spitalfields, The Theatre, the Museum of
+  the Home, Hoxton Hall, St Augustine's Tower, Sutton House, St Mary of Eton, the Young V&A, Keeling House and the
+  Hackney Empire. Bunhill Fields and Abney Park Cemetery take their articles' points (the middle), not the nearest edge
+  of the listed park. No point is our own calculation. The farthest items are All Hallows-on-the-Wall (436 m), The
+  Theatre (402 m) and Broomfield House (362 m); the rest are within 340 m. High Speed 1's two stretches (Dalston
+  Kingsland and Homerton to Stratford International) run in tunnel with no stop; given items, not skipped, as on
+  earlier stretches of that kind. Step 8 done: 841 facts in `src/data/passes-near.json`; `npm run check` and `npm run
+  build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 18, 40 stretches of west and north London from Clapham
   Junction to Wandsworth Common through to Alexandra Palace to Bowes Park (Clapham Junction to Wandsworth Common; the
   West London line from Clapham Junction over the Thames by Imperial Wharf, West Brompton, Kensington Olympia and

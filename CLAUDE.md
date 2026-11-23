@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 19 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Bowes Park to Palmers Green through to Bruce Grove to Seven Sisters (the Hertford loop to Crews Hill,
+  the Northern City line to Moorgate, the Elizabeth line from Paddington to Whitechapel, the East London line to
+  Dalston, the North London line to Stratford, Bethnal Green and Hackney, and Rectory Road to Seven Sisters); 841 of
+  2,376 done, London 156 of 421. Next: BCV-WHL (Bruce Grove to White Hart Lane).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, attacks, sieges and a murder passed over; no point is our own calculation (COVERAGE.md says which
+  come from Historic England). `to_site.py` run: 841 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 18 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Clapham Junction to Wandsworth Common through to Alexandra Palace to Bowes Park (the West London line

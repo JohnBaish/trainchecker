@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 18 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Clapham Junction to Wandsworth Common through to Alexandra Palace to Bowes Park (the West London line
+  over the Thames to Willesden Junction, the West Coast Main Line and Watford DC line to Hatch End, round Acton and
+  Gunnersbury, the North London line to Kentish Town West, the Gospel Oak to Barking line to Harringay Green Lanes,
+  and Hornsey to New Barnet and Bowes Park); 801 of 2,376 done, London 116 of 421. Next: BOP-PAL (Bowes Park to
+  Palmers Green).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, fatal events passed over; every point is the article's own (COVERAGE.md says which).
+  `to_site.py` run: 801 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 17 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches of south and south-west London, Isleworth to Syon Lane through to Balham to Wandsworth Common (Putney

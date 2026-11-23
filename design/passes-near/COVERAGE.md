@@ -8,12 +8,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-761 of 2376 stretches done.
+801 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
-4. London: 76 of 421 done (next).
+4. London: 116 of 421 done (next).
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: CLJ-WSW (Clapham Junction to Wandsworth Common).
+Next stretch in the order: BOP-PAL (Bowes Park to Palmers Green).
 
 <!-- end of counts -->
 
@@ -117,6 +117,30 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 18, 40 stretches of west and north London from Clapham
+  Junction to Wandsworth Common through to Alexandra Palace to Bowes Park (Clapham Junction to Wandsworth Common; the
+  West London line from Clapham Junction over the Thames by Imperial Wharf, West Brompton, Kensington Olympia and
+  Shepherd's Bush to Willesden Junction; the West Coast Main Line and the Watford DC line from Willesden Junction by
+  Harlesden, Stonebridge Park, Wembley Central, North Wembley, South Kenton, Kenton and Harrow & Wealdstone to Headstone
+  Lane and Hatch End; Acton Central to Willesden Junction, South Acton, Gunnersbury and Kew Gardens; the North London
+  line from Willesden Junction by Kensal Rise, Brondesbury, West Hampstead, Finchley Road & Frognal and Hampstead Heath
+  to Gospel Oak and Kentish Town West; the Gospel Oak to Barking line by Upper Holloway, Crouch Hill and Harringay Green
+  Lanes; and the Hertford loop and East Coast Main Line from Harringay and Hornsey by Alexandra Palace to New Southgate,
+  Oakleigh Park, New Barnet, Hadley Wood and Bowes Park); 801 of 2,376 done, London 116 of 421. Every fact checked
+  against the article in `source` (`wiki_text.py`). Neighbours already used got another item: the Falcon and Wandsworth
+  Common Windmill (on Clapham Junction to Wandsworth Town and to Earlsfield) and Chez Bruce (on Balham to Wandsworth
+  Common) gave way to the Royal Victoria Patriotic Building, and the Palm House (on Kew Gardens to Richmond) to the
+  National Archives; within the batch, the Ace Cafe, Stonebridge Park power station, Wembley Central Mosque and Our Lady
+  of Willesden share the stretches round Stonebridge Park, Keats House and Parliament Hill Lido those by Hampstead Heath,
+  and Harringay Arena and Railway Fields the two lines from Crouch Hill. Passed over: the Clapham Junction, Harrow and
+  Wealdstone and Wembley Central rail crashes, the Kentish Town rail accident, the Grenfell Tower fire and two murders;
+  the London Welsh School (it left Stonebridge Park in 2015), Alexandra Palace (the palace is 840 m from
+  the line) and items known only from Historic England's list, whose pages can't be read from here (Pinner Park Farm's
+  deer park, All Souls at Harlesden, All Hallows at Gospel Oak, the Goldsmiths' almshouses at Acton). Battersea Railway
+  Bridge is `crosses`; Hatch End station is `station`; Camden Town Brewery, in the arches under Kentish Town West
+  station, has no side. Every point is the article's own; none is our own calculation. The farthest item is Harrow
+  Skate Park (478 m), the rest are within 400 m. Step 8 done: 801 facts in `src/data/passes-near.json`; `npm run
+  check` and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 17, 40 stretches of south and south-west London from
   Isleworth to Syon Lane through to Balham to Wandsworth Common (Isleworth to Syon Lane; Barnes by Putney and Wandsworth
   Town to Clapham Junction; the main line from Clapham Junction by Earlsfield to Wimbledon and Raynes Park, New Malden,

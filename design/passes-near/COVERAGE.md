@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1801 of 2376 stretches done.
+1841 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -17,11 +17,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 5. East of England (East Anglia): 237 of 237 done (done).
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
-8. Yorkshire and The Humber: 127 of 238 done (next).
+8. Yorkshire and The Humber: 167 of 238 done (next).
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: CNS-MEX (Conisbrough to Mexborough).
+Next stretch in the order: EGN-GBD (Eastrington to Gilberdyke).
 
 <!-- end of counts -->
 
@@ -117,6 +117,36 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 44, 40 stretches of Yorkshire and The Humber from Conisbrough to
+  Mexborough through to Gilberdyke to Saltmarshe (Conisbrough, Mexborough, Swinton and Rotherham Central to Meadowhall;
+  Meadowhall to Chapeltown, Elsecar, Wombwell and Barnsley; Meadowhall, Darnall and Dore & Totley to Sheffield; Dore & Totley
+  to Grindleford through Totley Tunnel; Darnall, Woodhouse, the two Kiveton stations and Shireoaks; Swinton by
+  Bolton-upon-Dearne, Goldthorpe and Thurnscoe to Moorthorpe; Church Fenton to Sherburn-in-Elmet; Doncaster to Retford, the
+  two Gainsborough stations, York, Selby and Kirk Sandall; Kirk Sandall, Hatfield & Stainforth and the two Thorne stations;
+  Goole to Thorne North, Rawcliffe and Saltmarshe; Rawcliffe, Snaith, Hensall, Whitley Bridge, Knottingley and Pontefract
+  Monkhill; Gilberdyke to Saltmarshe); 1,841 of 2,376 done, Yorkshire and The Humber 167 of 238. 39 items and one stretch
+  skipped: Doncaster to Sherburn-in-Elmet runs over the south-to-west curve at Hambleton Junction, the same reason as the
+  four Doncaster stretches skipped in batch 43. Kept: Hatfield & Stainforth to Kirk Sandall (no train company on the map,
+  but the Doncaster to Thorne lines' trains use it) and Doncaster to Gainsborough Central (not sure no passenger train uses
+  it). Every fact checked against the article in `source` (`wiki_text.py`). Totley Tunnel and the Goole railway swing bridge
+  are `crosses`. Already used next door, so others chosen: Conisbrough Castle (so the Earth Centre), Doncaster Minster (so the
+  Mansion House), Selby Abbey, the toll bridge and Corunna House (so Abbot's Staith), the Bar Convent (so Goddards for
+  Doncaster to York), St Mary's Church, Church Fenton (so the Old Vicarage). Shared out among neighbours: Sheffield (the Old
+  Queen's Head, the Darnall Works), Rotherham (the bridge chapel, the Minster), Elsecar (the Milton Ironworks, Earl
+  Fitzwilliam's station), Hatfield and Stainforth (the colliery, the greyhound stadium), Hensall (Butterfield's church and
+  his Red House), Goole (Siemens's factory, Timm's Mill, the swing bridge). Wikipedia's Roman Ridge article is about the
+  Roman road north of Doncaster, not the earthwork by Meadowhall, so Tinsley Viaduct instead. Passed over: the Cadeby Main
+  and Oaks pit disasters, the Barnsley Public Hall disaster, the Selby (Great Heck) rail crash, the Battle of Orgreave, the
+  deaths building Norwood Tunnel and those remembered at Hickleton Main, the Padley martyrs, and Tinsley Viaduct's box-girder
+  controversy. Points: Wikipedia's geotags, except Historic England's list points for Rotherham Bridge's chapel, Earl
+  Fitzwilliam's station (Elsecar Central Workshops' buildings 13 to 14), the Darnall Works' crucible shops and Shireoaks Hall
+  (the listed house, not the park's middle); Norwood Tunnel's point is its eastern portal as given in its article. No point
+  is our own calculation; every distance is to the item's point. Darnall New Ground's and Gulliver's Valley's geotags are
+  coarse (given to three decimal places). Norwood Tunnel's length differs between sources (2,550 or 2,884 yards), so the
+  text says "more than a mile". The farthest items are Earl Fitzwilliam's station (660 m), Shireoaks Hall (663 m), the Old
+  Vicarage (625 m), Tinsley Viaduct and All Saints Church, Gainsborough (601 m each); the rest are within 565 m. Step 8 done:
+  1,823 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 43, 40 stretches of Yorkshire and The Humber from East Garforth to
   Garforth through to Conisbrough to Doncaster (East Garforth, Garforth and Cross Gates to Leeds; Leeds to Woodlesford and

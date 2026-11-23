@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 44 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Conisbrough to Mexborough through to Gilberdyke to Saltmarshe (round Rotherham, Meadowhall and Sheffield,
+  Elsecar and Barnsley, Totley Tunnel, Kiveton to Shireoaks, the Dearne Valley to Moorthorpe, Doncaster's lines to Retford,
+  Gainsborough, York, Selby and Kirk Sandall, round Hatfield, Thorne and Goole, Snaith to Knottingley); 39 items and one
+  stretch skipped (Doncaster to Sherburn-in-Elmet, over the Hambleton south curve); 1,841 of 2,376 done, Yorkshire and The
+  Humber 167 of 238. Next: EGN-GBD (Eastrington to Gilberdyke).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Disasters and a rail crash
+  passed over; no point is our own calculation. `to_site.py` run: 1,823 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 43 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, East Garforth to Garforth through to Conisbrough to Doncaster (Garforth and Cross Gates to Leeds, Leeds to

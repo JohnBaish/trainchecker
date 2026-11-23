@@ -8,11 +8,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-481 of 2376 stretches done.
+521 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
-3. South East: 176 of 384 done (next).
+3. South East: 216 of 384 done (next).
 4. London: 4 of 421 done.
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: LIH-PHR (Leigh (Kent) to Penshurst).
+Next stretch in the order: BEG-PDW (Beltring to Paddock Wood).
 
 <!-- end of counts -->
 
@@ -117,6 +117,22 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 11, 40 stretches from Leigh to Penshurst through to
+  Beltring to Yalding (the Redhill to Tonbridge line from Penshurst to Redhill, Coulsdon South to Redhill, Tonbridge
+  by Hildenborough to Sevenoaks and Knockholt, the Maidstone line from Sevenoaks by Otford, Eynsford and Swanley to
+  Longfield, High Speed 1 from Ashford, Ebbsfleet to Gravesend, the North Kent line from Crayford to Strood, and
+  the Medway Valley line from Strood by Maidstone to Beltring); 521 of 2,376 done, South East 216 of 384. Every
+  fact checked against the article in `source` (`wiki_text.py`). Neighbours already used got another item:
+  Hildenborough to Tonbridge (Tonbridge Castle is on High Brooms to Tonbridge) has the site of Tonbridge Priory;
+  Bat & Ball to Otford has Otford's Roman villa, as the palace (nearer Otford to Shoreham's line) went there; the
+  Shoreham Memorial Cross was dropped, its point being more than 1 km from the track. Our own points, not sourced
+  figures: the South Darenth viaduct (a point on the track near the Darent, from the village article), the Medway
+  Viaduct and Merstham Tunnel (the track's nearest point to each article's coordinates); Otford Palace's point is
+  the nearest edge of the scheduled area, Penshurst Place's and Knole's of their listed parks. Redhill Tunnel is
+  `crosses` (the Tonbridge line passes over its covered way) with the article's point, 309 m off. Ashford to
+  Farningham Road is the Fawkham Junction link from High Speed 1, probably with no regular passenger train; given
+  an item, not skipped, as with earlier possible avoiding lines. Merstham Tunnel's 1905 murder was passed over.
+  Step 8 done: 521 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 22nd 2026 (Claude Code, scheduled task): batch 10, 40 stretches from Surbiton to Thames Ditton
   through to Leigh to Tonbridge (the Hampton Court branch, Leatherhead to Epsom and Worcester Park, Epsom to
   Cheam, Gatwick Airport to Three Bridges, Cooksbridge to Lewes, Brighton to Lewes, the East Coastway from Lewes

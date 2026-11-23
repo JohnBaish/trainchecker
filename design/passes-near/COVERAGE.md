@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1401 of 2376 stretches done.
+1441 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
 4. London: 421 of 421 done (done).
 5. East of England (East Anglia): 237 of 237 done (done).
-6. East Midlands: 58 of 140 done (next).
+6. East Midlands: 98 of 140 done (next).
 7. West Midlands: 0 of 191 done.
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: CWD-WWL (Creswell to Whitwell (Derbyshire)).
+Next stretch in the order: BSN-HBB (Boston to Hubberts Bridge).
 
 <!-- end of counts -->
 
@@ -117,6 +117,46 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 34, 40 stretches of the East Midlands from Creswell to
+  Whitwell (Derbyshire) through to Hubberts Bridge to Swineshead (the Robin Hood line from Creswell by Whitwell to
+  Shireoaks and Worksop; Worksop to Retford; the East Coast Main Line from Newark Northgate to Retford and Grantham;
+  Gainsborough Central and Gainsborough Lea Road to Retford, and Gainsborough Lea Road to Saxilby; Saxilby and Hykeham
+  round Lincoln; the Nottingham to Lincoln line from Nottingham by Carlton, Burton Joyce, Lowdham, Thurgarton, Bleasby,
+  Fiskerton, Rolleston, Newark Castle, Collingham and Swinderby to Hykeham, and Collingham to Newark Northgate; the
+  Nottingham to Grantham line by Netherfield, Radcliffe, Bingham, Aslockton, Elton & Orston and Bottesford; and the
+  Poacher line from Grantham and Bottesford by Ancaster, Rauceby, Sleaford, Heckington and Swineshead to Hubberts
+  Bridge, with Ruskington and Spalding to Sleaford); 1,441 of 2,376 done, East Midlands 98 of 140. 39 items, every
+  fact checked against the article in `source` (`wiki_text.py`); nearby Wikipedia articles were also listed from
+  `wiki/gb-articles.tsv.gz`. One stretch skipped, with its reason in `skipped` (the first entry there): Newark Castle to
+  Retford, which turns from the Nottingham to Lincoln line at the Newark flat crossing onto the main line north, a way
+  no passenger train goes. Kept, though they may carry few or no regular passenger trains: Hykeham to Saxilby (round
+  Lincoln), Ancaster to Bottesford (by the Allington chord, avoiding Grantham), and Ruskington to Sleaford and Sleaford
+  to Spalding (no train company on the map, but Lincoln to Peterborough trains use them). Neighbouring stretches share
+  sights out: Worksop Town's ground (Worksop to Whitwell), Steetley Colliery (Shireoaks to Whitwell), Mr Straw's House
+  (Shireoaks to Worksop) and Worksop Priory (Retford to Worksop); Gainsborough Old Hall and the West Burton power
+  stations on the two Gainsborough to Retford stretches; the Newark flat crossing (Newark Northgate to Retford),
+  Langford church (Collingham to Newark Northgate), Winthorpe Bridge (Collingham to Newark Castle) and Newark Castle
+  (Newark Castle to Rolleston); in Grantham, the Trigge library (Grantham to Newark Northgate) and the Guildhall
+  (Ancaster to Grantham), with Sedgebrook church (Bottesford to Grantham) and Newbo Abbey (Ancaster to Bottesford);
+  St Mary's in the Lace Market and Meadow Lane on the two stretches into Nottingham; Cranmer's Mound and Bingham church
+  either side of Aslockton; in Sleaford, the castle, Cogglesford Mill, the Bass Maltings and Car Dyke on four
+  stretches. Passed over: the 1906 Grantham and 1870 Newark rail crashes, St Thomas's Church, Aslockton (its window
+  recalls a vicar drowned in a shipwreck), the Battle of Worksop (its place is uncertain), Honington church (its
+  article and the list disagree on its grade) and Creswell Crags (819 m). One station item: Thurgarton station
+  (Bleasby to Thurgarton), as nothing else near that short stretch could be checked. No point is our own calculation:
+  Worksop Priory, Gainsborough Old Hall, Winthorpe Bridge, Newark Castle, Bingham church, Cranmer's Mound, Bottesford
+  church, Sedgebrook church, Wilsford church, Car Dyke at Helpringham and the Bass Maltings use Historic England's list
+  points (facts from the Wikipedia article in `source`; Sedgebrook's and Wilsford's churches from the village articles,
+  Cranmer's Mound from the Aslockton article); the rest are Wikipedia's geotags, some rounded (West Burton, the Battle
+  of Gainsborough, Lincoln Racecourse, Saxondale). Car Dyke's list point is 310 m from the track, though the candidates
+  measured its scheduled area at 127 m; Cranmer's Mound's point is 277 m (its area 193 m). Bingham church's list point
+  is 203 m from the track; its article's point is about 600 m away, so the list's was used. Two crossings: the Newark
+  flat crossing and Rectory Junction Viaduct (`crosses`). The farthest items are Worksop Priory (662 m), Mr Straw's
+  House (652 m), Gainsborough Old Hall (621 m), Southwell Racecourse (620 m) and Cogglesford Mill (606 m); the rest are
+  within 560 m. Some items are about one of the stretch's own stations' places (Creswell's church, Burton Joyce's
+  church, Hubberts Bridge), so the page may add no "Between …". Step 8 done: 1,433 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 33, 40 stretches of the East Midlands from Narborough to
   South Wigston through to Creswell to Langwith-Whaley Thorns (Hinckley by Narborough and South Wigston to Leicester;

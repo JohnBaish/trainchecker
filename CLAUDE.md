@@ -71,6 +71,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 34 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Creswell to Whitwell (Derbyshire) through to Hubberts Bridge to Swineshead (Worksop and Retford, the
+  East Coast Main Line from Grantham to Retford, the Gainsborough lines, round Lincoln, the Nottingham to Lincoln line,
+  the Nottingham to Grantham line and the Poacher line to Hubberts Bridge); 39 items and one stretch skipped (Newark
+  Castle to Retford, across the Newark flat crossing, a way no passenger train goes); 1,441 of 2,376 done, East
+  Midlands 98 of 140. Next: BSN-HBB (Boston to Hubberts Bridge).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Neighbours' sights
+  shared out, the Grantham and Newark rail crashes and a shipwreck passed over; no point is our own calculation
+  (COVERAGE.md says which come from Historic England). `to_site.py` run: 1,433 facts live with this push; checks and
+  build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 33 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Narborough to South Wigston through to Creswell to Langwith-Whaley Thorns (Leicester to Loughborough,

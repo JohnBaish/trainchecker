@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 22 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Brockley to New Cross Gate through to Bickley to St Mary Cray (out of London Bridge and Cannon Street,
+  the South London line, the East London line through the Thames Tunnel to Shadwell, Greenwich to Charlton, the Hayes
+  line, Beckenham Junction to Bromley South and St Mary Cray, and the Catford Loop to Nunhead); 961 of 2,376 done,
+  London 276 of 421. Next: BKL-PET (Bickley to Petts Wood).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, fatal crashes, murders and attacks passed over; no point is our own calculation (COVERAGE.md
+  says which come from Wikipedia's geotags). `to_site.py` run: 961 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 21 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Balham to Mitcham Eastfields through to Brockley to Honor Oak Park (Mitcham and Hackbridge, Streatham,

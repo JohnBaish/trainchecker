@@ -8,12 +8,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-921 of 2376 stretches done.
+961 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
-4. London: 236 of 421 done (next).
+4. London: 276 of 421 done (next).
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BCY-NXG (Brockley to New Cross Gate).
+Next stretch in the order: BKL-PET (Bickley to Petts Wood).
 
 <!-- end of counts -->
 
@@ -117,6 +117,31 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 22, 40 stretches of south-east London from Brockley to New
+  Cross Gate through to Bickley to St Mary Cray (London Bridge to New Cross Gate, New Cross, South Bermondsey and
+  Deptford, and Cannon Street to London Bridge; Queens Road Peckham to South Bermondsey, Peckham Rye and Surrey Quays;
+  the East London line from Surrey Quays by Canada Water and Rotherhithe through the Thames Tunnel to Wapping and
+  Shadwell, and from New Cross Gate and New Cross to Surrey Quays; New Cross by St Johns to Lewisham; Deptford by
+  Greenwich, Maze Hill and Westcombe Park to Charlton; the Hayes line from Ladywell by Catford Bridge, Lower Sydenham,
+  New Beckenham, Clock House, Elmers End and Eden Park to West Wickham and Hayes, and New Beckenham to Beckenham
+  Junction; Beckenham Junction to Shortlands, Ravensbourne and Beckenham Hill, Bellingham, Catford and Crofton Park to
+  Nunhead; Shortlands by Bromley South to Bickley and St Mary Cray); 961 of 2,376 done, London 276 of 421. Every fact
+  checked against the article in `source` (`wiki_text.py`). Neighbours already used got another item: Telegraph Hill,
+  Nunhead Cemetery, the Rivoli Ballroom, St George's Church, Beckenham and The Valley are on stretches next door, so
+  these have New Cross Gate Cutting, the Brockley Jack Theatre, Catford Stadium, Kent Championships and Woodlands House
+  instead; within the batch, the five stretches out of London Bridge share out Southwark Cathedral, St James's Church,
+  Bermondsey, Maltby Street Market, Neckinger Mills and the London and Greenwich Railway's viaduct, and East Greenwich
+  Pleasaunce goes to Maze Hill to Westcombe Park, which its article says it lies beside. Cannon Street to London Bridge
+  has Southwark Cathedral, not the Thames crossing, as Cannon Street Railway Bridge has no article or position of its
+  own. Passed over: the New Cross house fire, the 1957 Lewisham and 1898 St Johns rail crashes, the Spa Road Junction
+  crash, the 2022 Bermondsey stabbing, the murder of Maxwell Confait, the Ratcliff Highway murders, the Siege of Sidney
+  Street and the Battle of Cable Street; and the Elmers End moated site, known here only from Historic England's list,
+  whose pages can't be read from here. Every point is its article's own; the Bowie Bandstand's and Long Lane Wood's come
+  from Wikipedia's geotags, as their articles' text has none. No point is our own calculation. The farthest items are
+  the Bowie Bandstand (637 m), St Mary the Virgin, Hayes (632 m), Beckenham Place Park (581 m), the Wellcome Research
+  Laboratories (572 m), Woodlands House (558 m) and Kent Championships (542 m); the rest are within 500 m. Peckham Rye
+  is a `station` item; the viaduct and the Thames Tunnel are `crosses`. Step 8 done: 961 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 21, 40 stretches of south London from Balham to Mitcham
   Eastfields through to Brockley to Honor Oak Park (Balham and Streatham to Mitcham Eastfields and Mitcham Junction, by
   Hackbridge to Carshalton; Streatham Common to Streatham; Balham to Streatham Hill; Herne Hill by Tulse Hill and West

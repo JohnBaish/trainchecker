@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 30 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Great Bentley to Weeley through to Brandon to Thetford (the Sunshine Coast and Mayflower lines, round
+  Ipswich and the Felixstowe branch, the East Suffolk line to Oulton Broad, the Wherry line to Norwich, and the
+  Breckland line to Thetford and Brandon); 1,281 of 2,376 done, East of England 175 of 237. Next: BND-LAK (Brandon to
+  Lakenheath).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, a fatal crash and other deaths passed over; two points (Thorpe Hall's gardens, Cockfield Hall's
+  park) are our own calculation from Historic England's outlines (COVERAGE.md says which). `to_site.py` run: 1,281
+  facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 29 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Needham Market to Westerfield through to Alresford (Essex) to Great Bentley (round Ipswich, the Great

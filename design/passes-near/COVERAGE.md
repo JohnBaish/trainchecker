@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1241 of 2376 stretches done.
+1281 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
 4. London: 421 of 421 done (done).
-5. East of England (East Anglia): 135 of 237 done (next).
+5. East of England (East Anglia): 175 of 237 done (next).
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: GRB-WEE (Great Bentley to Weeley).
+Next stretch in the order: BND-LAK (Brandon to Lakenheath).
 
 <!-- end of counts -->
 
@@ -117,6 +117,33 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 30, 40 stretches of the East of England from Great Bentley
+  to Weeley through to Brandon to Thetford (the Sunshine Coast line from Great Bentley by Weeley and Thorpe-le-Soken to
+  Clacton-on-Sea, Kirby Cross, Frinton-on-Sea and Walton-on-the-Naze; the Mayflower line from Manningtree by Mistley and
+  Wrabness to Harwich International, Dovercourt and Harwich Town; round Ipswich by Westerfield and Derby Road, and the
+  Felixstowe branch by Trimley; the East Suffolk line from Westerfield by Woodbridge, Melton, Wickham Market,
+  Saxmundham, Darsham, Halesworth, Brampton and Beccles to Oulton Broad South and Oulton Broad North; the Wherry line
+  from Oulton Broad North by Somerleyton, Haddiscoe, Reedham, Cantley, Buckenham and Brundall to Norwich; and the
+  Breckland line from Norwich by Wymondham, Spooner Row, Attleborough, Eccles Road and Harling Road to Thetford and
+  Brandon); 1,281 of 2,376 done, East of England 175 of 237. Every fact checked against the article in `source`
+  (`wiki_text.py`); nearby Wikipedia articles were also listed from `wiki/gb-articles.tsv.gz`. Neighbours already used
+  got another item: St Mary at Stoke and Portman Road (used on Ipswich to Manningtree and Ipswich to Needham Market)
+  were passed over for the Sir Bobby Robson Bridge on Ipswich to Westerfield; within the batch, Thorpe Hall's gardens go
+  to Kirby Cross to Thorpe-le-Soken only, Mistley Towers to Mistley to Manningtree only (Bradfield on Mistley to
+  Wrabness), Somerleyton Swing Bridge to Haddiscoe to Somerleyton (the former lifeboat station on Oulton Broad North to
+  Somerleyton), and Beccles bell tower to Beccles to Brampton (Castle Marshes on Beccles to Oulton Broad South).
+  Passed over: the Thorpe rail accident of 1874 near Brundall (fatal), Great Bentley's martyrs of 1557, and the West
+  End Bathing Place's drownings. Two points are our own calculation: the nearest edge of Thorpe Hall's registered
+  gardens (339 m) and of Cockfield Hall's park (260 m), from Historic England's mapped outlines; St Andrew's Church,
+  Bramfield, St Andrew's Church, Roudham, and Attleborough's church use Historic England's list points; the rest are
+  Wikipedia's geotags. Three crossings: Somerleyton, Reedham and Trowse swing bridges (`crosses`). The farthest items
+  are Weeley (627 m), Wymondham Bridewell (603 m), Frinton-on-Sea (579 m) and RAF Halesworth (499 m); the rest are
+  within 490 m. Five items are about one of the stretch's own stations' places (Great Bentley, Weeley, Frinton-on-Sea,
+  Cantley, Spooner Row), so the page adds no "Between …". The Sunshine Coast and Mayflower lines, Ipswich to
+  Westerfield and Derby Road, and the Felixstowe branch have no train company on the map but carry Greater Anglia
+  trains; all given items, none skipped. Step 8 done: 1,281 facts in `src/data/passes-near.json`; `npm run check` and
+  `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 29, 40 stretches of the East of England from Needham Market to
   Westerfield through to Alresford (Essex) to Great Bentley (Needham Market to Westerfield and Ipswich; the Great Eastern

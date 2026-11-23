@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 45 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Eastrington to Gilberdyke through to Battersby to Great Ayton (Howden and Wressle, Selby to York, Malton to
+  York and Seamer, the Yorkshire coast from Scarborough to Bridlington, the Hull to Scarborough line by Driffield and
+  Beverley, round Hull and along the Humber, Thorne South to Scunthorpe, Barnetby to Cleethorpes by Grimsby, Bradford Forster
+  Square to Frizinghall, Battersby to Great Ayton); 1,881 of 2,376 done, Yorkshire and The Humber 207 of 238. Next: BTT-KLD
+  (Battersby to Kildale).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; Cottingham to
+  Hessle (a curve avoiding Hull Paragon) given an item; rail crashes and the Bradford fire passed over; no point is our own
+  calculation. `to_site.py` run: 1,863 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 44 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Conisbrough to Mexborough through to Gilberdyke to Saltmarshe (round Rotherham, Meadowhall and Sheffield,

@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1841 of 2376 stretches done.
+1881 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -17,11 +17,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 5. East of England (East Anglia): 237 of 237 done (done).
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
-8. Yorkshire and The Humber: 167 of 238 done (next).
+8. Yorkshire and The Humber: 207 of 238 done (next).
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: EGN-GBD (Eastrington to Gilberdyke).
+Next stretch in the order: BTT-KLD (Battersby to Kildale).
 
 <!-- end of counts -->
 
@@ -117,6 +117,27 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 45, 40 stretches of Yorkshire and The Humber from Eastrington to Gilberdyke through to Battersby to Great Ayton (Eastrington,
+  Howden, Wressle and Selby; Selby to York by Hambleton; Malton to York and to Seamer; Scarborough, Seamer, Filey, Hunmanby,
+  Bempton and Bridlington; Bridlington, Nafferton, Driffield, Hutton Cranswick, Arram, Beverley and Cottingham; Cottingham,
+  Hessle and Hull; Gilberdyke, Broomfleet, Brough and Ferriby to Hessle; Thorne South, Crowle, Althorpe and Scunthorpe to
+  Barnetby; Barnetby, Habrough, Ulceby, Stallingborough, Healing, Great Coates and the Grimsby stations to New Clee and
+  Cleethorpes; Bradford Forster Square to Frizinghall; Battersby to Great Ayton); 1,881 of 2,376 done, Yorkshire and The
+  Humber 207 of 238. 40 items, none skipped. Kept, though possibly little used by passenger trains: Cottingham to Hessle (a
+  curve avoiding Hull Paragon; not sure no passenger train uses it), and Malton to York, Scarborough to Seamer and others with
+  no train company on the map (the York to Scarborough and Hull lines' trains use them). Every fact checked against the
+  article in `source` (`wiki_text.py`); the two Stallingborough items both come from the village's article. Keadby Bridge is
+  `crosses`, on Althorpe to Scunthorpe: Althorpe station is on the west bank of the Trent, west of the bridge (Althorpe
+  railway station article), so Althorpe to Crowle has the power stations instead. Already used next door, so others chosen:
+  Selby Abbey and its neighbours (so Cochrane's shipyard), the Bar Convent and Goddards (so Bishopsbarns), the Wool Exchange
+  (so Bradford Cathedral). Wressle Castle went to Howden to Wressle; Scampston Hall dropped (its listed point is its park,
+  the house 811 m away), so Malton Priory. Passed over: the Lockington and Wrawby Junction rail crashes, the Howden rail
+  accident and the Bradford City stadium fire. Points: Wikipedia's geotags, except Historic England's list point for St
+  Peter and St Paul's Church, Stallingborough; no point is our own calculation, and every distance is to the item's point.
+  Keadby Bridge's geotag is 1 m from the track. The farthest items are Cochrane Shipbuilders (714 m), Bridlington Spa (594
+  m), Gilberdyke (587 m) and the Church of St Oswald, Filey (569 m); the rest are within 565 m. Step 8 done: 1,863 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 44, 40 stretches of Yorkshire and The Humber from Conisbrough to
   Mexborough through to Gilberdyke to Saltmarshe (Conisbrough, Mexborough, Swinton and Rotherham Central to Meadowhall;

@@ -55,11 +55,12 @@ eq('Paddington to Plymouth: a joined-up route', ppLegs.every((l, i) => i === 0 |
 eq('Paddington to Plymouth: dozens of facts to pick from', journeyFacts(D, pp.from, pp.stops, pp.to).length > 40, true)
 
 // Bath Spa to Bristol: the pilot's stretches; Manchester to the Airport: facts since batch 50.
-// Acklington to Alnmouth (the North East, not reached yet): no facts there yet, so nothing.
+// Acklington to Alnmouth (the last part done, batch 58): every stretch in England now has a fact or a
+// reason it needs none, so a journey there has a fact too.
 const bb = board('20261117-1824-BTH-BRI.json'), mm = board('20261117-1824-MAN-MIA.json')
 eq('Bath to Bristol: facts', journeyFacts(D, bb.from, bb.stops, bb.to).length > 0, true)
 eq('Manchester to the Airport: facts', journeyFacts(D, mm.from, mm.stops, mm.to).length > 0, true)
-eq('Acklington to Alnmouth: no fact yet, so the card is left off', journeyFacts(D, 'ACK', [], 'ALM'), [])
+eq('Acklington to Alnmouth: a fact now the network is finished', journeyFacts(D, 'ACK', [], 'ALM').length > 0, true)
 
 // Stations outside the network (Cardiff Central) and the same station twice give nothing, not a guess.
 eq('a station outside the network: no way found', shortestLegs(D, 'CDF', 'RDG'), [])

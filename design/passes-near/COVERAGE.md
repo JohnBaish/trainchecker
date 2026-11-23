@@ -6,9 +6,13 @@ East Anglia (the East of England), the East Midlands, the West Midlands, Yorkshi
 North West and the North East. One item per stretch. Start each session with: "Read
 design/passes-near/COVERAGE.md and do the next batch."
 
+**All 2,376 stretches in England are now done** (batch 58, November 23rd 2026): 2,349 with an item, 27
+under `skipped` with a reason. From now on the work is upkeep: a new station or a rebuilt network
+("Rebuilding the network", below) can bring new stretches, which `coverage.py` will show as to do.
+
 <!-- counts: made by coverage.py -->
 
-2361 of 2376 stretches done.
+2376 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -19,9 +23,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
 9. North West: 396 of 396 done (done).
-10. North East: 53 of 68 done (next).
-
-Next stretch in the order: BEJ-MPT (Bedlington to Morpeth).
+10. North East: 68 of 68 done (done).
 
 <!-- end of counts -->
 
@@ -118,6 +120,31 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 58, the last 15 stretches, all in the North East, finishing the
+  North East (68 of 68) and every part: **all 2,376 stretches in England are done** (2,349 items, 27 skipped). The
+  Northumberland Line from Ashington by Bedlington, Blyth Bebside, Newsham and Seaton Delaval to Northumberland Park;
+  Bedlington to Morpeth and to Pegswood; the East Coast Main Line from Pegswood by Widdrington, Acklington, Alnmouth and
+  Chathill to Berwick-upon-Tweed and Reston; and the two lines through Gateshead to Heworth, from Chester-le-Street and from
+  Dunston. 15 items, none skipped. Given items though they may carry no regular passenger trains (for John): Bedlington to
+  Morpeth and Bedlington to Pegswood (no train company on the map; the Northumberland Line's trains run Newcastle to
+  Ashington), and Chester-le-Street and Dunston to Heworth (`past` Newcastle: they stay in Gateshead, south of the Tyne,
+  where Newcastle's trains all call at Newcastle). Berwick-upon-Tweed to Reston runs into Scotland: its item, Berwick
+  Castle, is in England. Every fact checked against the article in `source` (`wiki_text.py`). `crosses`: the Royal Border
+  Bridge; `station`: Blyth Bebside; sites of closed stations at Seghill, Ashington Colliery Junction, Chevington and
+  Warkworth (Seghill and Warkworth with no side, as the track runs through them). Shared out: Morpeth Castle was on Morpeth
+  to Pegswood, so Morpeth Court for Bedlington to Morpeth (described without naming Morpeth); New Hartley Ponds rather than
+  the Hartley Colliery disaster (left out) for Newsham to Seaton Delaval; St Mary's Church, Gateshead (its fact from the
+  Gateshead article, leaving out the burning of 1080) for Dunston to Heworth and Trinity Square (the 'Get Carter' car park)
+  for Chester-le-Street to Heworth. Kept for John to note, naming a stretch's own place: Berwick Castle (Berwick-upon-Tweed
+  to Reston), Blyth Bebside station (a `station` item) and 'a grammar school' for Bedlington Academy (Bedlington to Blyth
+  Bebside, its name kept out of the text). Thin stretches given modest items: Chevington's station site (Acklington to
+  Widdrington) and Warkworth's (Acklington to Alnmouth; Lesbury Bridge, 598 m, had no source here to check). Points:
+  Wikipedia's geotags, except Historic England's list points for the Royal Border Bridge and St Mary's, Gateshead; no point
+  is our own calculation. Berwick Castle's geotag (98 m) and Fallodon's (536 m, the hamlet) are general points; the
+  farthest items are Fallodon, Morpeth Court (401 m) and Trinity Square (301 m); the rest are within 190 m.
+  `check-facts`' "no fact yet" journey, Acklington to Alnmouth, now has a fact, and no journey in England is left without
+  one, so that check now says it has a fact. Step 8 done: 2,349 facts in `src/data/passes-near.json`; `npm run check` and
+  `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 57, 40 stretches of the North East from Chester-le-Street to
   Newcastle through to Morpeth to Pegswood (the East Coast Main Line into Newcastle and out by Manors, Heaton, Cramlington and
   Morpeth; Manors to Northumberland Park; Heworth to Newcastle and Sunderland; the Durham Coast line from Sunderland by Seaham,

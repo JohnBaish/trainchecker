@@ -139,6 +139,10 @@ Estimate (not yet counted): about 2,000 to 2,500 stretches, a few dozen sessions
 **Set up on November 22nd 2026 (Claude Code):** 2,376 stretches with any of them in England (the files
 below); the work goes on in `COVERAGE.md`.
 
+**Finished on November 23rd 2026 (batch 58):** all 2,376 stretches in England are done, 2,349 with an item
+and 27 skipped with a reason (`COVERAGE.md`). What remains is upkeep: when the network is rebuilt, new
+stretches show up in `COVERAGE.md` as to do.
+
 - `build_stretches.py` → `stretches.json` (each stretch's track, length, region, train companies) and
   `stretches-report.md` (counts, stations not found, long stretches, possible avoiding lines).
 - `to_network.py`: puts the items on the network, and adds a batch's items.
@@ -188,4 +192,5 @@ only, straight to main (house style §10); nothing on the page.
    didn't fit. Update CLAUDE.md's log and the tracker (baish.net-directory) as usual.
 ```
 
-After that, each session starts with: "Read design/passes-near/COVERAGE.md and do the next batch."
+After that, each session started with: "Read design/passes-near/COVERAGE.md and do the next batch." (All done
+since November 23rd 2026.)

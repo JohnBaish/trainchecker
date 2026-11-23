@@ -28,10 +28,10 @@ given its own branch). Before committing there, run
    `design/platform-links-trial/`.
 7. `design/passes-near/README.md`: "Your train passes near…" (an interesting thing near each
    stretch, with the train's side), with John's decisions and the prompt for the page. Since November 22nd
-   2026 every stretch in England is in `stretches.json` (2,376) and the work goes region by region in
-   `design/passes-near/COVERAGE.md` ("Read design/passes-near/COVERAGE.md and do the next batch").
-   On the page as "Fact of the Journey" since November 22nd 2026: after each batch, run
-   `design/passes-near/to_site.py` (COVERAGE.md step 8), or the new facts don't reach the page.
+   2026 every stretch in England is in `stretches.json` (2,376), and since November 23rd 2026 all of them
+   are done (`design/passes-near/COVERAGE.md`; what remains is upkeep when the network is rebuilt).
+   On the page as "Fact of the Journey" since November 22nd 2026: after any change to the items, run
+   `design/passes-near/to_site.py` (COVERAGE.md step 8), or the change doesn't reach the page.
 
 ## Key points
 
@@ -70,6 +70,19 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 23rd 2026: "Your train passes near…": batch 58, every stretch in England done (notes, straight to `main`; Claude Code, scheduled task)
+
+- The last 15 stretches, all in the North East (the Northumberland Line from Ashington to Northumberland Park, Bedlington
+  to Morpeth and Pegswood, the East Coast Main Line from Pegswood to Berwick-upon-Tweed and Reston, and the two lines
+  through Gateshead to Heworth); 15 items, none skipped. **All 2,376 stretches in England are now done** (2,349 items, 27
+  skipped); COVERAGE.md and the passes-near README say so.
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning; no point is our own
+  calculation. For John: Bedlington to Morpeth and to Pegswood, and Chester-le-Street and Dunston to Heworth (through
+  Gateshead without calling at Newcastle) may carry no regular passenger trains, given items; Berwick Castle names a
+  station's town; the Hartley Colliery disaster and the burning at St Mary's, Gateshead, in 1080 passed over.
+- `check-facts`: Acklington to Alnmouth, the "no fact yet" journey, now has a fact and no uncovered journey remains, so
+  the check now says it has one. `to_site.py` run: 2,349 facts live with this push; checks and build pass.
 
 ### November 23rd 2026: "Your train passes near…": batch 57 (notes, straight to `main`; Claude Code, scheduled task)
 

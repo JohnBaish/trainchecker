@@ -71,6 +71,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 14 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Dover Priory to Martin Mill through to Bicester North to Kings Sutton (the Seaford branch, the Windsor
+  branch, Oxford to Kings Sutton and Bicester, the Chiltern Main Line to Denham, the Aylesbury line to Chorleywood,
+  Bicester to Bletchley); 641 of 2,376 done, South East 336 of 384. Next: BLY-MKC (Bletchley to Milton Keynes Central).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, fatal crashes passed over; six points are our own calculation (COVERAGE.md says which).
+  `to_site.py` run: 641 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 13 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Adisham to Bekesbourne through to Martin Mill to Walmer (Canterbury East to Faversham, the Chatham

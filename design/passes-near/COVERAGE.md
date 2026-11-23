@@ -8,11 +8,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-601 of 2376 stretches done.
+641 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
-3. South East: 296 of 384 done (next).
+3. South East: 336 of 384 done (next).
 4. London: 4 of 421 done.
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: DVP-MTM (Dover Priory to Martin Mill).
+Next stretch in the order: BLY-MKC (Bletchley to Milton Keynes Central).
 
 <!-- end of counts -->
 
@@ -117,6 +117,27 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 14, 40 stretches from Dover Priory to Martin Mill through to
+  Bicester North to Kings Sutton (Dover Priory to Martin Mill, the Seaford branch from Southease by Newhaven to Seaford,
+  Egham to Staines, the Windsor branch from Staines by Wraysbury and Datchet to Windsor & Eton Riverside, Ashford
+  (Surrey) to Staines, Millbrook to Southampton Central, the Cherwell valley from Oxford by Tackley and Heyford to Kings
+  Sutton, Oxford by Oxford Parkway and Islip to Bicester Village, the Chiltern Main Line from Bicester to Haddenham,
+  Princes Risborough, High Wycombe, Beaconsfield, Gerrards Cross and Denham, the Aylesbury line from Princes Risborough
+  and Aylesbury Vale Parkway by Aylesbury, Wendover and Amersham to Chorleywood, Bicester Village to Bletchley, and
+  Bicester North to Kings Sutton); 641 of 2,376 done, South East 336 of 384. Every fact checked against the article in
+  `source` (`wiki_text.py`). Neighbours already used got another item: Windsor Castle (on Slough to Windsor & Eton
+  Central) gave way to Eton College on Datchet to Windsor & Eton Riverside, Dover Priory (on Dover Priory to Kearsney)
+  to the Maison Dieu, and St Barnabas, Oxford (on Hinksey to Oxford) to Port Meadow and the Radcliffe Observatory; Kings
+  Sutton's church went to Bicester North to Kings Sutton and Somerton's to Heyford to Kings Sutton. Dropped: Chequers
+  (the house is 2 km from the line), Wotton House (1.4 km; the park's edge is near, the house isn't) and the Small Dean
+  Viaduct (it carries HS2, not this line). Passed over: the Seer Green rail crash (1981) and BEA Flight 548 (1972), both
+  fatal, and the Amersham Martyrs Memorial. Our own points, not sourced figures: the nearest edges of the scheduled areas
+  for the Saxon palace at Old Windsor, the Roman settlement at Fleet Marston, Alchester (`crosses`), Notley Abbey and The
+  Mount at Princes Risborough, and the Buckinghamshire to Hertfordshire boundary between Chalfont & Latimer and
+  Chorleywood (`boundary`, where the track meets the county boundary on OpenStreetMap). Port Meadow's point is the
+  article's (640 m), the meadow's edge being nearer. Bicester Village to Bletchley (East West Rail, no train company on
+  the map) was given an item, as with earlier such stretches. Step 8 done: 641 facts in `src/data/passes-near.json`;
+  `npm run check` and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 13, 40 stretches from Adisham to Bekesbourne through to
   Martin Mill to Walmer (the Dover line from Adisham by Canterbury East and Selling to Faversham, the Chatham Main
   Line from Faversham by Teynham, Sittingbourne, Newington, Rainham, Gillingham and Chatham to Rochester and Strood,

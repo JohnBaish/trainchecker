@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1961 of 2376 stretches done.
+2001 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -18,10 +18,10 @@ design/passes-near/COVERAGE.md and do the next batch."
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
-9. North West: 49 of 396 done (next).
+9. North West: 89 of 396 done (next).
 10. North East: 0 of 68 done.
 
-Next stretch in the order: MAG-MNS (Maghull to Maghull North).
+Next stretch in the order: LEY-PRE (Leyland to Preston (Lancs)).
 
 <!-- end of counts -->
 
@@ -117,6 +117,27 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 48, 40 stretches of the North West from Maghull to Maghull North
+  through to Euxton Balshaw Lane to Leyland (the Ormskirk line by Maghull, Old Roan, Aintree, Orrell Park and Walton to
+  Kirkdale; the Southport line from Kirkdale by Bootle, Seaforth, Waterloo, Blundellsands, Hall Road, Hightown, Formby,
+  Freshfield, Ainsdale, Hillside and Birkdale to Southport; the Manchester to Southport line from Southport by Meols Cop,
+  Bescar Lane, New Lane, Burscough Bridge, Hoscar, Parbold, Appley Bridge, Gathurst and Pemberton to Wigan Wallgate; the
+  Kirkby line by Orrell, Upholland, Rainford and Headbolt Lane to Kirkby; Kirkby by Fazakerley and Rice Lane to Walton;
+  Wigan Wallgate to Wigan North Western; and the West Coast Main Line from Wigan North Western by Euxton Balshaw Lane to
+  Leyland); 2,001 of 2,376 done, North West 89 of 396. 40 items, none skipped. Kept: Bootle Oriel Road to Kirkdale (no
+  train company on the map; Merseyrail's Southport trains use it). Every fact checked against the article in `source`
+  (`wiki_text.py`). Station items for Maghull North, New Lane, Rainford and Headbolt Lane (nothing else of interest near
+  enough). Gathurst Viaduct and the Burscough Curves have no side (the train passes under the viaduct, and through the
+  site of the curves). Aintree Institute and HM Prison Liverpool each kept to one stretch, so Devonfield Garden for Rice
+  Lane to Walton. Left out: deaths (the prison's 1940 bombing and executions, Valentine's Brook's fatalities, the Hall Road
+  rail accident); the 2021 Kirkby train crash passed over. Points: Wikipedia's geotags, except Historic England's list
+  points for Old Christ Church (Waterloo), St John the Baptist Church (Burscough), All Saints' Church (Wigan), St Matthew's
+  Church (Highfield) and St Chad's Church (Kirkby); no point is our own calculation, and every distance is to the item's
+  point. For John: Crosby Beach (Another Place) is 738 m away, a little beyond the usual 700 m, kept as too good to miss.
+  The other farthest items are Devonfield Garden (637 m), Our Lady and All Saints Church, Parbold (573 m), the Appley Bridge
+  meteorite (551 m) and Crosby Battery (546 m); the rest are within 510 m. Step 8 done: 1,979 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 47, 40 stretches of the North West from Millom to Silecroft
   through to Maghull North to Town Green (the Cumbrian Coast line by Millom, Green Road, Foxfield, Kirkby-in-Furness and

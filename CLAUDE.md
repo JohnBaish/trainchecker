@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 48 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Maghull to Maghull North through to Euxton Balshaw Lane to Leyland (the Ormskirk line to Kirkdale, the
+  Southport line by Bootle, Crosby and Formby to Southport, Southport to Wigan Wallgate by Parbold, the Kirkby line by
+  Upholland and Rainford, Kirkby to Walton, and Wigan North Western to Leyland); 2,001 of 2,376 done, North West 89 of 396.
+  Next: LEY-PRE (Leyland to Preston (Lancs)).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; deaths
+  passed over; no point is our own calculation. For John: Crosby Beach is 738 m from the line. `to_site.py` run: 1,979
+  facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 47 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Millom to Silecroft through to Maghull North to Town Green (the Cumbrian Coast to Barrow, the Furness line

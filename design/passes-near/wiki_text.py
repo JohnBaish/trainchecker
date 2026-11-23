@@ -39,7 +39,7 @@ def gb_offsets(title):
                 if ln.startswith('#'):
                     continue
                 start, nxt, _pid, t = ln.rstrip('\n').split('\t', 3)
-                _gb[t] = (int(start), int(nxt) if nxt else None)
+                _gb[html.unescape(t)] = (int(start), int(nxt) if nxt else None)   # the index escapes '&'
         if os.path.exists(GB_REDIRECTS):
             with gzip.open(GB_REDIRECTS, 'rt', encoding='utf-8') as f:
                 for ln in f:

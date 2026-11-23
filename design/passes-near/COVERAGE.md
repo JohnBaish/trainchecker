@@ -8,12 +8,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-681 of 2376 stretches done.
+721 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
-3. South East: 376 of 384 done (next).
-4. London: 4 of 421 done.
+3. South East: 384 of 384 done (done).
+4. London: 36 of 421 done (next).
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: AHS-ERI (Ashurst (Kent) to Eridge).
+Next stretch in the order: ISL-SYL (Isleworth to Syon Lane).
 
 <!-- end of counts -->
 
@@ -117,6 +117,27 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 16, 40 stretches from Ashurst (Kent) to Eridge through to
+  Brentford to Syon Lane (the Uckfield branch from Ashurst by Eridge, Crowborough and Buxted to Uckfield, Angmering and
+  Arundel to Littlehampton, Addlestone to Byfleet & New Haw, Sandwich to Thanet Parkway, then London: the Chiltern Main
+  Line from Denham by West Ruislip, South Ruislip, Northolt Park and Sudbury to Wembley Stadium and Marylebone,
+  Harrow-on-the-Hill to Marylebone and to Rickmansworth, the Heathrow branches, Ashford (Surrey) to Feltham, the
+  Hounslow Loop to Whitton, Isleworth, Brentford and Barnes Bridge, the Shepperton branch from Hampton by Fulwell and
+  Strawberry Hill to Twickenham, and Twickenham by Richmond, Mortlake and Barnes); 721 of 2,376 done. This finishes the
+  South East (384 of 384) and starts London (36 of 421). Every fact checked against the article in `source`
+  (`wiki_text.py`, which now unescapes the index's titles, so articles with "&" in the name are found). Neighbours
+  already used got another item: Brooklands and its Concorde gave way to the London Bus Museum on Addlestone to Byfleet
+  & New Haw, Richborough and St Augustine's Cross to White Mill on Sandwich to Thanet Parkway, and Lyminster church
+  (the Slayer's Slab is in it) to Littlehampton and its lifeboat station; within the batch, Lord's and Abbey Road
+  Studios share the approach to Marylebone, Hounslow Heath and Feltham marshalling yard the line round Feltham, and
+  Strawberry Hill House and Fulwell bus garage the stretches by Strawberry Hill. Passed over: the Ruislip, Northolt and
+  Heathrow air crashes, the Barnes rail crash, Marc Bolan's shrine and the 1838 Harrow rail accident, all fatal.
+  Harefield Road (never built) is `station`; Richmond and Barnes railway bridges are `crosses`. Points from Historic
+  England's list rather than an article: the iron furnace near Buxted, Sudbury Town station, The More and the Palm House
+  at Kew. Our own point, not a sourced figure: Bushy Park's (the nearest edge of the listed park, 176 m). The farthest
+  items are Littlehampton (634 m), the Palm House (582 m) and the London Bus Museum (575 m), nothing nearer on those
+  stretches being as good. Step 8 done: 721 facts in `src/data/passes-near.json`; `npm run check` and `npm run build`
+  pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 15, 40 stretches from Bletchley to Milton Keynes Central
   through to Ashurst (Kent) to Cowden (Kent) (the West Coast Main Line from Wolverton by Milton Keynes Central, Bletchley,
   Leighton Buzzard and Cheddington to Tring, the Marston Vale line from Bletchley by Fenny Stratford and Bow Brickhill to

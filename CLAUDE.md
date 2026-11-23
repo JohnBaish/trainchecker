@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 16, the South East finished (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Ashurst (Kent) to Eridge through to Brentford to Syon Lane (the Uckfield branch, Littlehampton, Sandwich
+  to Thanet Parkway, then London: the Chiltern lines into Marylebone, Harrow to Rickmansworth, Heathrow, the Hounslow
+  Loop, Twickenham, Richmond and Barnes); 721 of 2,376 done, South East 384 of 384 (finished), London 36 of 421. Next:
+  ISL-SYL (Isleworth to Syon Lane).
+- Every fact checked with `wiki_text.py` (now finds titles with "&"); `check.py` clean but for the Parson and Clerk
+  warning. Items already used next door replaced, fatal crashes passed over; Bushy Park's point is our own calculation
+  (COVERAGE.md says which). `to_site.py` run: 721 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 15 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Bletchley to Milton Keynes Central through to Ashurst (Kent) to Cowden (Kent) (the West Coast Main Line

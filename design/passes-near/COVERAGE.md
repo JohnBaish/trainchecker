@@ -8,12 +8,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-841 of 2376 stretches done.
+881 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
-4. London: 156 of 421 done (next).
+4. London: 196 of 421 done (next).
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BCV-WHL (Bruce Grove to White Hart Lane).
+Next stretch in the order: BAL-MTC (Balham to Mitcham Eastfields).
 
 <!-- end of counts -->
 
@@ -117,6 +117,31 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 20, 40 stretches of north, east and south London from Bruce
+  Grove to White Hart Lane through to Balham to Tooting (the Enfield Town and Cheshunt lines from Bruce Grove by White
+  Hart Lane, Silver Street, Edmonton Green and Bush Hill Park to Enfield Town, and by Southbury to Turkey Street; Clapton
+  to Hackney Downs and Tottenham Hale; the Lea Valley line from Lea Bridge and Tottenham Hale by Northumberland Park,
+  Meridian Water, Ponders End, Brimsdown and Enfield Lock to Waltham Cross, and Lea Bridge to Stratford; the Elizabeth
+  line from Stratford, Shadwell and Canary Wharf to Whitechapel, Custom House to Canary Wharf, and Custom House by
+  Woolwich to Abbey Wood; the North Kent line from Abbey Wood by Plumstead, Woolwich Arsenal and Woolwich Dockyard to
+  Charlton and Blackheath, and Blackheath to Lewisham; Lewisham by Nunhead to Peckham Rye; Denmark Hill and East
+  Dulwich to Peckham Rye, East Dulwich by North Dulwich to Tulse Hill; Streatham to Tulse Hill and Tooting; Haydons
+  Road to Tooting and Wimbledon; and Balham to Tooting); 881 of 2,376 done, London 196 of 421. Every fact checked
+  against the article in `source` (`wiki_text.py`). Neighbours already used got another item: Tooting Bec Lido (on
+  Balham to Streatham Common) gave way to The Bedford, and Mossbourne Community Academy (on Hackney Central to Rectory
+  Road) to the Clapton Cinematograph Theatre; within the batch, the Royal Arsenal's buildings are shared out (the Grand
+  Store, the Royal Brass Foundry, and the Manor Ground for Arsenal's early days), and Ripaults Factory and St James'
+  Church share the stretches either side of Southbury. Passed over: the killing of Mark Duggan, the Lewisham rail
+  crash, the murder of Lee Rigby, the Siege of Sidney Street, the Ratcliff Highway murders, the 2020 Streatham
+  stabbing, the 1938 Hawker Audax crash, the Lakanal House fire, the Enfield poltergeist, Drumsheds (its licence under
+  review after incidents) and the Charles Bravo inquest at The Bedford. Points from Historic England's list rather than
+  an article: Bruce Castle, All Saints' Church, Edmonton, the Eleanor Cross, St Dunstan's, Trinity Green, St Anne's
+  Limehouse, the Grand Store, St Nicholas Church, the Royal Brass Foundry and Morden College. Telegraph Hill and Nunhead
+  Cemetery take their articles' points (an area and the cemetery's middle). No point is our own calculation. The
+  farthest items are the Eleanor Cross (506 m), Enfield Power Station (477 m) and the Lee Valley VeloPark (473 m); the
+  rest are within 380 m. Lewisham to Nunhead has no train company on the map but carries Southeastern trains, and
+  Balham to Tooting (4.5 km, by the Streatham curves) has few passenger trains; both given items, not skipped. Step 8
+  done: 881 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 19, 40 stretches of north, central and east London from Bowes
   Park to Palmers Green through to Bruce Grove to Seven Sisters (the Hertford loop from Bowes Park by Palmers Green,
   Winchmore Hill, Grange Park and Enfield Chase to Gordon Hill and Crews Hill; Finsbury Park to Harringay; the Northern

@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 20 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Bruce Grove to White Hart Lane through to Balham to Tooting (the Enfield Town and Cheshunt lines, the
+  Lea Valley line to Waltham Cross, the Elizabeth line round Whitechapel, Canary Wharf and Woolwich, the North Kent line
+  to Charlton and Lewisham, Nunhead, Peckham Rye and the Dulwich stations, Streatham, Tooting and Wimbledon); 881 of
+  2,376 done, London 196 of 421. Next: BAL-MTC (Balham to Mitcham Eastfields).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, killings, crashes and attacks passed over; no point is our own calculation (COVERAGE.md says
+  which come from Historic England). `to_site.py` run: 881 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 19 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Bowes Park to Palmers Green through to Bruce Grove to Seven Sisters (the Hertford loop to Crews Hill,

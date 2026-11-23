@@ -1,6 +1,7 @@
 // "Fact of the journey" (John, November 22nd 2026; design/passes-near/README.md): one interesting
 // thing near a stretch of the journey, with the train's side, picked at random on each visit.
 // The data is src/data/passes-near.json (design/passes-near/to_site.py), loaded only when needed.
+import { nameOf } from './stations.ts'
 
 export type PnItem = { a: string; b: string; kind: 'near' | 'crosses' | 'boundary' | 'station'; side?: 'left' | 'right'; text: string; textReverse?: string }
 export type PnData = { stretches: [string, string, number][]; items: Record<string, PnItem> }
@@ -72,6 +73,26 @@ export function sentenceFor(item: PnItem, leg: Leg): string {
 /** Curly apostrophes and quotation marks, as the page's other text has (the data has straight ones). */
 export const curly = (s: string) => s.replace(/(\w)'/g, '$1’').replace(/'(\w)/g, '‘$1').replace(/'/g, '’').replace(/"(\S)/g, '“$1').replace(/"/g, '”')
 
+/** A station's name for the middle of a sentence: the list's bracketed note dropped ("Bramley
+ *  (Hampshire)", "Woolwich (Elizabeth line)"), as the stretch's neighbour already places it. */
+export const placeName = (code: string) => nameOf(code).replace(/\s*\([^)]*\)/g, '').replace(/^(Earlswood|Gillingham|Seaford) (Surrey|Kent|Sussex)$/, '$1').trim()
+
+/** "Between Southall and Hayes & Harlington, your train passes…" (John, November 23rd 2026), the
+ *  stations in the order the train meets them. Only for a fact that starts "Your train" (the
+ *  others already say where they are: "Mortimer station, at one end of this stretch…", "While
+ *  your train is in Box Tunnel…", the boundaries' own "Between…"), and not when the stretch is the
+ *  whole journey, where it would only repeat the journey. */
+export function withPlace(text: string, leg: Leg, journey: { from: string; to: string }): string {
+  if (!/^Your train\b/.test(text)) return text
+  if (leg.from === journey.from && leg.to === journey.to) return text
+  // A fact about one of the two stations' own places ("Your train passes Newington, on the train's
+  // left…") already says where it is: "Between Newington and Rainham" would only repeat it.
+  const a = placeName(leg.from), b = placeName(leg.to)
+  const what = text.split(/[,.]/)[0].replace(/^Your train (passes|runs|crosses)( near| past| along| through| over| under)? (the site of )?/, '')
+  if (what === a || what === b) return text
+  return `Between ${a} and ${b}, y${text.slice(1)}`
+}
+
 /** The journey's facts, one per stretch that has an item, in the order the train meets them. */
 export function journeyFacts(d: PnData, from: string, stops: string[], to: string): { id: string; text: string }[] {
   const seen = new Set<string>()
@@ -80,7 +101,7 @@ export function journeyFacts(d: PnData, from: string, stops: string[], to: strin
     const item = d.items[leg.id]
     if (!item || seen.has(leg.id)) continue
     seen.add(leg.id)
-    out.push({ id: leg.id, text: sentenceFor(item, leg) })
+    out.push({ id: leg.id, text: withPlace(sentenceFor(item, leg), leg, { from, to }) })
   }
   return out
 }

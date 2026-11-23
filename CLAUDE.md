@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 36, the East Midlands finished (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Dronfield to Grindleford through to Rugeley Trent Valley to Rugeley Town (the last two of the East
+  Midlands, then the West Midlands: round Shrewsbury, the Welsh Marches line to Abergavenny, the Heart of Wales line to
+  Knucklas, Wellington to Wolverhampton, Stafford, Stoke-on-Trent, Uttoxeter and Rugeley); 1,521 of 2,376 done, East
+  Midlands 140 of 140 (finished), West Midlands 38 of 191. Next: HNF-RGT (Hednesford to Rugeley Town).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; three
+  possible avoiding lines given items; rail crashes passed over; no point is our own calculation (Wolverhampton railway
+  works' geotag is rounded). For John: Chirk Viaduct (Chirk to Gobowen) is half in Wales. `to_site.py` run: 1,510 facts
+  live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 35 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Boston to Hubberts Bridge through to Leicester to Market Harborough (Boston and the Skegness line, the

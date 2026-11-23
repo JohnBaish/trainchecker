@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1481 of 2376 stretches done.
+1521 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
 4. London: 421 of 421 done (done).
 5. East of England (East Anglia): 237 of 237 done (done).
-6. East Midlands: 138 of 140 done (next).
-7. West Midlands: 0 of 191 done.
+6. East Midlands: 140 of 140 done (done).
+7. West Midlands: 38 of 191 done (next).
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: DRO-GRN (Dronfield to Grindleford).
+Next stretch in the order: HNF-RGT (Hednesford to Rugeley Town).
 
 <!-- end of counts -->
 
@@ -117,6 +117,33 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 36, the last two stretches of the East Midlands (Dronfield to
+  Grindleford, Melton Mowbray to Sileby) and the first 38 of the West Midlands, from Shrewsbury to Welshpool through to
+  Rugeley Trent Valley to Rugeley Town (round Shrewsbury: to Welshpool, Gobowen, Church Stretton, Yorton and Wellington;
+  Chirk to Gobowen; the Welsh Marches line from Church Stretton by Craven Arms, Ludlow and Leominster to Hereford and on to
+  Abergavenny; the Heart of Wales line from Craven Arms by Broome, Hopton Heath and Bucknell to Knighton and Knucklas;
+  Wellington by Oakengates, Telford Central, Shifnal, Cosford, Albrighton, Codsall and Bilbrook to Wolverhampton; Bilbrook
+  to Penkridge and Stafford; Crewe to Stafford; Stone to Stafford and Stoke-on-Trent; Kidsgrove and Longport to Stoke;
+  Stoke by Longton and Blythe Bridge to Uttoxeter and Tutbury & Hatton; Rugeley Trent Valley to Stone, Stafford and Rugeley
+  Town); 1,521 of 2,376 done, East Midlands 140 of 140 (finished), West Midlands 38 of 191. 40 items, none skipped, every
+  fact checked against the article in `source` (`wiki_text.py`); nearby Wikipedia articles were also listed from
+  `wiki/gb-articles.tsv.gz`. Kept, though they may carry few or no regular passenger trains: Dronfield to Grindleford (past
+  Dore, by the Dore South curve), Melton Mowbray to Sileby (the curve at Syston) and Bilbrook to Penkridge (avoiding
+  Wolverhampton). Five stretches round Shrewsbury share the town out: the Abbey (to Welshpool), Gay Meadow (Church
+  Stretton), the Flaxmill Maltings (Yorton), the Castle (Wellington), with Whittington Castle for Gobowen; in Melton, St
+  Mary's church, as Brooksby Hall is used on Melton to Syston; in Uttoxeter, the town itself with Johnson's penance (Blythe
+  Bridge) and the racecourse (Tutbury). Three stretches run into Wales (Shrewsbury to Welshpool, Knighton to Knucklas,
+  Abergavenny to Hereford): their items are in England. **For John:** Chirk to Gobowen's item is Chirk Viaduct (`crosses`),
+  which the border crosses at an angle, so it is half in Wales. Passed over: the Hixon and Colwich rail crashes, the 1996
+  Stafford rail crash, the Shrewsbury rail accident and Bathpool Park (Kidsgrove to Longport). No point is our own
+  calculation: most are Historic England's list points (facts from the Wikipedia article in `source`; Penkridge's church
+  from History of Penkridge, St Cuthbert's at Donington from Donington, Shropshire, Clungunford church from Clungunford,
+  the Offa's Dyke section near Nether Skyborry from Offa's Dyke, Stoke Minster's point the Anglo-Scandinavian cross in its
+  churchyard); the rest are Wikipedia's geotags, one rounded (Wolverhampton railway works, 52.6, -2.131). Two crossings:
+  Chirk Viaduct and Shugborough Tunnel. The farthest items are Kilpeck church (641 m), Albrighton Moat (595 m), St
+  Cuthbert's at Clungunford (547 m) and the Offa's Dyke section (508 m); the rest are within 470 m. Step 8 done: 1,510
+  facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 35, 40 stretches of the East Midlands from Boston to
   Hubberts Bridge through to Leicester to Market Harborough (Boston to Hubberts Bridge; the line to Skegness by Thorpe

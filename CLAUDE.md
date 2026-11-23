@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 42 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Berry Brow to Honley through to East Garforth to Micklefield (the Penistone line to Barnsley, Darton and
+  Wakefield Kirkgate; round Mirfield and Dewsbury; Batley and Morley to Leeds; the Harrogate line from Leeds to York; the
+  East Coast Main Line from York to Darlington and Northallerton to Yarm; Ulleskelf, Church Fenton and Micklefield);
+  1,761 of 2,376 done, Yorkshire and The Humber 87 of 238. Next: EGF-GRF (East Garforth to Garforth).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; disasters,
+  rail crashes and construction deaths passed over; no point is our own calculation. `to_site.py` run: 1,748 facts live
+  with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 41 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Hellifield to Long Preston through to Berry Brow to Lockwood (the Airedale line from Hellifield to Shipley,

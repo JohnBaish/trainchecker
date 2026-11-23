@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1721 of 2376 stretches done.
+1761 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -17,11 +17,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 5. East of England (East Anglia): 237 of 237 done (done).
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
-8. Yorkshire and The Humber: 47 of 238 done (next).
+8. Yorkshire and The Humber: 87 of 238 done (next).
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BBW-HOY (Berry Brow to Honley).
+Next stretch in the order: EGF-GRF (East Garforth to Garforth).
 
 <!-- end of counts -->
 
@@ -117,6 +117,30 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 42, 40 stretches of Yorkshire and The Humber from Berry Brow to
+  Honley through to East Garforth to Micklefield (the Penistone line from Berry Brow by Honley, Brockholes, Stocksmoor,
+  Shepley, Denby Dale, Penistone, Silkstone Common and Dodworth to Barnsley, and Barnsley to Darton and Wakefield Kirkgate;
+  Ravensthorpe to Wakefield Kirkgate; Deighton, Mirfield, Ravensthorpe and Dewsbury; the Huddersfield line by Batley, Morley
+  and Cottingley to Leeds; the Harrogate line from Leeds by Burley Park, Headingley, Horsforth, Weeton, Pannal, Hornbeam Park,
+  Harrogate, Starbeck, Knaresborough, Cattal and Hammerton to Poppleton and York; the East Coast Main Line from York to
+  Thirsk, Northallerton and Darlington, and Northallerton to Yarm; Ulleskelf to York; Church Fenton to Ulleskelf and
+  Micklefield; East Garforth to Micklefield); 1,761 of 2,376 done, Yorkshire and The Humber 87 of 238. 40 items, none skipped
+  (none of the 40 is a possible avoiding line). Every fact checked against the article in `source` (`wiki_text.py`). Denby
+  Dale Viaduct, Arthington Viaduct and Crimple Valley Viaduct are `crosses`. Shared out among neighbours: the Wakefield
+  approach (the Chantry Chapel for Darton, and Horbury church for Ravensthorpe), York (the National Railway Museum for
+  Poppleton, St Everilda's Church at Nether Poppleton for Thirsk, the Bar Convent for Ulleskelf), Knaresborough (Mother
+  Shipton's Cave for Starbeck, the castle for Cattal), Kirkstall (Abbey House Museum, as the abbey is used next door).
+  Passed over: the Huskar Pit and Barnsley Public Hall disasters, the Thirsk, Darlington and Dalton Junction rail crashes, the
+  deaths building Bramhope Tunnel and Arthington Viaduct, the Colne Bridge Mill fire, and the murder behind Dewsbury's
+  Devil's Knell and Becket's killers at Knaresborough Castle. One stretch has little near it but its stations' own villages,
+  so Silkstone Common (Dodworth to Silkstone Common) is about the station's own place. Points: Historic England's list points
+  for the listed buildings (facts from the Wikipedia article in `source`), Wikipedia's geotags for the rest; no point is our
+  own calculation. For Wilstrop, Lower Cumberworth, Barkston Ash and Thunder Bridge the point is the place's geotag. Two
+  articles disagree with themselves, so the facts avoid them: Grove House's building dates (1745 or 1752 to 1754) and
+  whether it was the first house lit by water gas in Yorkshire or in the world. The farthest items are Thunder Bridge
+  (675 m), St Peter and St Leonard's Church, Horbury (579 m) and Barkston Ash (577 m); the rest are within 535 m. Step 8 done:
+  1,748 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 41, 40 stretches of Yorkshire and The Humber from Hellifield to
   Long Preston through to Berry Brow to Lockwood (Hellifield to Long Preston; the Airedale line from Hellifield by Gargrave,

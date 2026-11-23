@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1521 of 2376 stretches done.
+1561 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -16,12 +16,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 4. London: 421 of 421 done (done).
 5. East of England (East Anglia): 237 of 237 done (done).
 6. East Midlands: 140 of 140 done (done).
-7. West Midlands: 38 of 191 done (next).
+7. West Midlands: 78 of 191 done (next).
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: HNF-RGT (Hednesford to Rugeley Town).
+Next stretch in the order: SGB-SMR (Smethwick Galton Bridge to Smethwick Rolfe Street).
 
 <!-- end of counts -->
 
@@ -117,6 +117,31 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 37, 40 stretches of the West Midlands from Hednesford to
+  Rugeley Town through to Birmingham New Street to Smethwick Rolfe Street (the Chase line from Rugeley Town by Hednesford,
+  Cannock, Landywood and Bloxwich to Walsall; Walsall, Darlaston and Willenhall; Penkridge to Willenhall and to Wolverhampton;
+  the Stour Valley line from Coseley by Tipton, Dudley Port and Sandwell & Dudley to Smethwick Galton Bridge; Langley Green,
+  Rowley Regis, Old Hill, Cradley Heath, Lye and Stourbridge Junction to Hagley, Blakedown, Kidderminster, Hartlebury and
+  Droitwich Spa; Droitwich and Worcestershire Parkway to Bromsgrove; the Lickey Incline to Barnt Green; Redditch and
+  Alvechurch; the Cross-City line by Longbridge, Northfield, Kings Norton, Bournville, Selly Oak, University and Five Ways to
+  New Street; New Street to Smethwick Rolfe Street); 1,561 of 2,376 done, West Midlands 78 of 191. 40 items, none skipped,
+  every fact checked against the article in `source` (`wiki_text.py`); nearby Wikipedia articles were also listed from
+  `wiki/gb-articles.tsv.gz`. Kept, though they may carry few regular passenger trains: Penkridge to Willenhall (by Bushbury,
+  avoiding Wolverhampton) and Darlaston to Walsall (no train company on the map, but Wolverhampton to Walsall trains use it).
+  Items already used next door avoided: the Grand Theatre (Bilbrook to Wolverhampton) and Penkridge church (Penkridge to
+  Stafford), so St Peter's Collegiate Church and HM Prison Oakwood; Penkridge Viaduct is north of the village, on Penkridge
+  to Stafford. Three salt stories round Droitwich are shared out: the brine (Droitwich to Hartlebury), Chateau Impney
+  (Bromsgrove to Droitwich) and Corbett's Stoke Works (Bromsgrove to Worcestershire Parkway). Passed over: the Tipton
+  Catastrophe of 1922; the Museum of Carpet (closed in December 2025) and St Agnes' Church, Cotteridge (demolished).
+  **For John:** Stambermill Viaduct (Lye to Stourbridge Junction, `crosses`) uses its article's own point, 286 m from the
+  track, though the train crosses it; it has not been moved. No point is our own calculation: most are Historic England's
+  list points (facts from the Wikipedia article in `source`; Alvechurch's church from Alvechurch, Droitwich's salt remains
+  from Droitwich Spa, Churchill Forge from Churchill Forge Mill, Forge Mill from Forge Mill Needle Museum, Metchley's
+  scheduled area from Metchley Fort); the rest are Wikipedia's geotags. Four crossings: Stambermill Viaduct, the Lickey
+  Incline, Metchley Fort and the Holliday Street Aqueduct (under it). The farthest items are Horseley Ironworks (676 m),
+  Kings Norton Stop Lock (643 m) and All Saints', Bloxwich (591 m); the rest are within 540 m. Step 8 done: 1,550 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 36, the last two stretches of the East Midlands (Dronfield to
   Grindleford, Melton Mowbray to Sileby) and the first 38 of the West Midlands, from Shrewsbury to Welshpool through to

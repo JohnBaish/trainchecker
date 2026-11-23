@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 37 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Hednesford to Rugeley Town through to Birmingham New Street to Smethwick Rolfe Street (the Chase line to
+  Walsall, Willenhall and Darlaston, Penkridge to Wolverhampton and Willenhall, the Stour Valley line to Galton Bridge,
+  the Stourbridge line to Kidderminster and Droitwich, the Lickey Incline, Redditch and the Cross-City line); 1,561 of
+  2,376 done, West Midlands 78 of 191. Next: SGB-SMR (Smethwick Galton Bridge to Smethwick Rolfe Street).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; no point is
+  our own calculation. For John: Stambermill Viaduct's point (its article's) is 286 m from the track it carries.
+  `to_site.py` run: 1,550 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 36, the East Midlands finished (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Dronfield to Grindleford through to Rugeley Trent Valley to Rugeley Town (the last two of the East

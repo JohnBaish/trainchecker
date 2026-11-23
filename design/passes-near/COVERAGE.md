@@ -8,12 +8,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-961 of 2376 stretches done.
+1001 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
-4. London: 276 of 421 done (next).
+4. London: 316 of 421 done (next).
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BKL-PET (Bickley to Petts Wood).
+Next stretch in the order: IFD-MNP (Ilford to Manor Park).
 
 <!-- end of counts -->
 
@@ -117,6 +117,30 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 23, 40 stretches of south-east and east London from Bickley to
+  Petts Wood through to Forest Gate to Manor Park (the Bickley and Chislehurst loops to Petts Wood and St Mary Cray, St
+  Mary Cray to Swanley; Chislehurst by Elmstead Woods to Grove Park, Sundridge Park and Bromley North; Petts Wood by
+  Orpington and Chelsfield to Knockholt; the Bexleyheath line from Blackheath by Kidbrooke, Eltham, Falconwood, Welling,
+  Bexleyheath and Barnehurst to Slade Green; Abbey Wood by Belvedere and Erith to Slade Green, and Slade Green to
+  Dartford and Crayford; the Sidcup line from Hither Green by Lee, Mottingham, New Eltham, Sidcup, Albany Park and
+  Bexley to Crayford; Fenchurch Street to Limehouse, and Limehouse to West Ham and Stratford; Barking to West Ham and
+  Woodgrange Park; and Stratford by Maryland and Forest Gate to Manor Park and Woodgrange Park, and Stratford
+  International to Stratford); 1,001 of 2,376 done, London 316 of 421. Every fact checked against the article in
+  `source` (`wiki_text.py`). Neighbours already used got another item: Chislehurst Junction (on Bickley to St Mary Cray)
+  gave way to Jubilee Country Park and Chislehurst Caves, and the Orbit, the Aquatics Centre, V&A East and the VeloPark
+  round Stratford to Stratford Works, the Theatre Royal and Tower Hamlets Cemetery Park; within the batch, the Daylight
+  Inn, Chislehurst Caves, Elmstead Pit, Slade Green Depot and Crofton Roman Villa each go to the one stretch nearest
+  them. Passed over: the murder of Stephen Lawrence, the Eltham Well Hall and Hither Green rail crashes, the West Ham
+  station attack, the bombing of Sandhurst Road School and the Battle of Cable Street; and items known here only from
+  Historic England's list, whose pages can't be read from here (the Fordcroft and Howbury monuments, the St Mary Cray,
+  Erith and Bexley churches). Eltham Palace (693 m) and Barking Abbey (734 m) were left as too far, for Eltham College and
+  London Sri Murugan Temple. Points are the articles' own, from Wikipedia's geotags; the Tower of London's is its
+  article's centre (326 m), not the World Heritage Site's edge. No point is our own calculation. The farthest items are
+  St Augustine's Church, Slade Green (535 m), Jubilee Country Park (515 m), Lamorbey Park (483 m) and Eltham College
+  (472 m); the rest are within 465 m. Barnehurst is a `station` item; Orpington's engine shed is beside the line, with
+  no side. Bickley to Petts Wood, Limehouse to Stratford and Forest Gate to Woodgrange Park have no train company on the
+  map; given items, not skipped. Step 8 done: 1,001 facts in `src/data/passes-near.json`; `npm run check` and `npm run
+  build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 22, 40 stretches of south-east London from Brockley to New
   Cross Gate through to Bickley to St Mary Cray (London Bridge to New Cross Gate, New Cross, South Bermondsey and
   Deptford, and Cannon Street to London Bridge; Queens Road Peckham to South Bermondsey, Peckham Rye and Surrey Quays;

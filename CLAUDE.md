@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 23 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Bickley to Petts Wood through to Forest Gate to Manor Park (the Bickley and Chislehurst loops, Grove
+  Park to Bromley North, Orpington to Knockholt, the Bexleyheath line, Abbey Wood to Dartford, the Sidcup line,
+  Fenchurch Street to Limehouse, West Ham and Stratford, Barking to Woodgrange Park, and Stratford to Manor Park);
+  1,001 of 2,376 done, London 316 of 421. Next: IFD-MNP (Ilford to Manor Park).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, killings, crashes and attacks passed over; no point is our own calculation. `to_site.py` run:
+  1,001 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 22 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Brockley to New Cross Gate through to Bickley to St Mary Cray (out of London Bridge and Cannon Street,

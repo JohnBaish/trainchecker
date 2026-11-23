@@ -4,7 +4,7 @@
 import { readFileSync } from 'node:fs'
 import d from '../src/data/passes-near.json' with { type: 'json' }
 import { trim, type RawBoard } from '../api/live.ts'
-import { journeyFacts, journeyLegs, pickFact, sentenceFor, shortestLegs, type PnData } from '../src/lib/passesNear.ts'
+import { journeyFacts, journeyLegs, pickFact, placeName, sentenceFor, shortestLegs, withPlace, type PnData } from '../src/lib/passesNear.ts'
 
 let passed = 0, failed = 0
 function eq(what: string, got: unknown, want: unknown) {
@@ -72,6 +72,23 @@ eq('picking from nothing', pickFact([]), null)
 const known = new Set(D.stretches.map(([a, b]) => [a, b].sort().join('-')))
 eq('every item on a stretch', Object.keys(D.items).every((k) => known.has(k)), true)
 eq('"{side}" exactly when there is a side', Object.values(D.items).every((i) => i.text.includes('{side}') === Boolean(i.side)), true)
+
+// "Between X and Y, your train…" (John, November 23rd 2026): the two stations in the order the train
+// meets them, only before "Your train", never when the stretch is the whole journey.
+const pf = journeyFacts(D, pr.from, pr.stops, pr.to), rf = rpFacts
+const hay = (fs: typeof pf) => fs.find((f) => f.id === 'HAY-STL')!.text
+eq('the gurdwara, Paddington to Reading', hay(pf).startsWith('Between Southall and Hayes & Harlington, your train passes near Gurdwara'), true)
+eq('the gurdwara, Reading to Paddington', hay(rf).startsWith('Between Hayes & Harlington and Southall, your train passes near Gurdwara'), true)
+eq('the River Colne, Reading to Paddington', rf.find((f) => f.id === 'IVR-WDT')!.text.startsWith('Between Iver and West Drayton, your train crosses the River Colne'), true)
+eq('every "Your train" fact on both journeys gets its stations', [...pf, ...rf].filter((f) => /^Your train/.test(f.text)).map((f) => f.id), [])
+eq('a boundary keeps its own "Between"', rf.find((f) => f.id === 'IVR-LNY')!.text.startsWith('Between Langley and Iver, your train passes from'), true)
+const st = Object.entries(D.items).find(([, i]) => i.kind === 'station' && !/^Your train/.test(i.text))!
+eq('a station fact is left as it is', withPlace(st[1].text, { id: st[0], from: st[1].a, to: st[1].b }, { from: 'PAD', to: 'RDG' }), st[1].text)
+eq('a stretch that is the whole journey: no "Between"', withPlace('Your train crosses X.', { id: 'TAP-MAI', from: 'TAP', to: 'MAI' }, { from: 'TAP', to: 'MAI' }), 'Your train crosses X.')
+eq('brackets dropped from a name', [placeName('BMY'), placeName('WWC'), placeName('SEF')], ['Bramley', 'Woolwich', 'Seaford'])
+eq('a fact about the station’s own place keeps no "Between"', withPlace('Your train passes Newington, on the train’s left.', { id: 'NGT-RAI', from: 'NGT', to: 'RAI' }, { from: 'VIC', to: 'RAM' }), 'Your train passes Newington, on the train’s left.')
+eq('…but a place named after it does', withPlace('Your train passes near Strawberry Hill House.', { id: 'STW-TWI', from: 'STW', to: 'TWI' }, { from: 'WAT', to: 'RDG' }).startsWith('Between Strawberry Hill and Twickenham, your'), true)
+eq('every station on the network has a name', D.stretches.flat().filter((c) => typeof c === 'string').every((c) => placeName(c as string) !== c), true)
 
 console.log(`check-facts: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

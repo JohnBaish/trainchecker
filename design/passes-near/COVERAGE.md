@@ -74,7 +74,8 @@ reads), not the downloads, which take minutes now. Bigger batches risk weaker ch
    distance is to the park's edge while `lat`/`lon` is its middle or the house, so `check.py` warns
    when they differ: write about the park and give the nearest point of its edge, or choose another.
 5. Write the sentence in the house style of the existing items: "Your train passes near …, on the
-   train's {side}, …"; British spelling; one to nine in words; "less than"/"more than", never
+   train's {side}, …" (start with "Your train", and don't open by naming the stretch's two stations:
+   the page adds "Between X and Y, " itself, John, November 23rd 2026); British spelling; one to nine in words; "less than"/"more than", never
    "under"/"over" for amounts; written afresh, not copied. Give `name`, `lat`, `lon` (of the thing),
    `distanceM` and `side` from the candidates (the side is for `a` to `b`: write the item's `a` and `b`
    in the same order as the stretch, or swap the side). `kind` is `near`, `crosses`, `boundary` or

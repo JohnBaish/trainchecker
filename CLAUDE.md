@@ -81,6 +81,19 @@ given its own branch). Before committing there, run
   next door replaced, crashes, riots and attacks passed over; four points are calculated from Historic England's mapped
   outlines (COVERAGE.md says which). `to_site.py` run: 1,121 facts live with this push; checks and build pass.
 
+### November 23rd 2026: "Between X and Y, your train…" in Fact of the Journey (branch `claude/eloquent-brown-y333xz`, merged the same day; Claude Code)
+
+- **John:** start the fact with the stretch's two stations, so a long journey's facts say where they are.
+  `withPlace()` and `placeName()` in `src/lib/passesNear.ts`: "Between Southall and Hayes & Harlington, your train
+  passes…", in the order the train meets them, only before "Your train" (station facts, "While your train…" and the
+  boundaries' own "Between…" left alone); not when the stretch is the whole journey, nor when the fact is about one of
+  the two stations' own places ("your train passes Newington", 32 facts); brackets and the three unbracketed county
+  names dropped ("Bramley", "Seaford"). COVERAGE.md step 5 tells batches not to name the two stations themselves.
+- **Checked:** `npm run check` 273 + 57 + 79 + 40 + 59 + 35 (new: both directions, the boundary, a station fact, the
+  whole journey, the own place, names); `tsc -b`, lint, build; Tiverton Parkway to Paddington and Bath to Bristol at
+  1200px and 390px, light and dark (`design/previews/fact/between.mjs`): no errors, no sideways scroll.
+- **John:** "Yes please" to merging. Checks, `tsc -b`, lint and build clean first; merged into `main` with this note.
+
 ### November 23rd 2026: "Your train passes near…": batch 25 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Elstree & Borehamwood to Mill Hill Broadway through to Brixton to Denmark Hill (the Thameslink core

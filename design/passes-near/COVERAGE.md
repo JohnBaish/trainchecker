@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1881 of 2376 stretches done.
+1921 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -17,11 +17,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 5. East of England (East Anglia): 237 of 237 done (done).
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
-8. Yorkshire and The Humber: 207 of 238 done (next).
-9. North West: 0 of 396 done.
+8. Yorkshire and The Humber: 238 of 238 done (done).
+9. North West: 9 of 396 done (next).
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BTT-KLD (Battersby to Kildale).
+Next stretch in the order: MLM-SIC (Millom to Silecroft).
 
 <!-- end of counts -->
 
@@ -117,6 +117,30 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 46, the last 31 stretches of Yorkshire and The Humber, from Battersby
+  to Kildale through to Poppleton to Selby (the Esk Valley line by Kildale, Commondale, Castleton Moor, Danby, Lealholm,
+  Glaisdale, Egton, Grosmont, Sleights and Ruswarp to Whitby; Brigg to Kirton Lindsey; the Barton line by Barrow Haven, New
+  Holland, Goxhill and Thornton Abbey; Burnley Manchester Road to Hebden Bridge by the Copy Pit line; Fitzwilliam to
+  Normanton and Normanton to Streethouse; Meadowhall to Swinton; and the long stretches through York and Northallerton),
+  then the first nine of the North West (the Cumbrian Coast from Corkickle and St Bees to Silecroft); 1,921 of 2,376 done,
+  Yorkshire and The Humber 238 of 238 (finished), North West 9 of 396. 36 items and four stretches skipped: Bramley,
+  Kirkstall Forge, Cottingley and Outwood to Woodlesford run through Leeds without calling there, and every passenger train
+  calls at Leeds. Kept, though possibly little used: the stretches through York without calling (Doncaster, Selby and
+  Poppleton to Thirsk, Ulleskelf and each other: a train that runs through York without stopping would use them), Thirsk to Yarm past Northallerton,
+  Meadowhall to Swinton past Rotherham Central, Fitzwilliam to Normanton and Normanton to Streethouse past Wakefield Kirkgate
+  (not sure no passenger train uses them), and Drigg to Seascale, Drigg to Ravenglass and Bootle to Silecroft (no train
+  company on the map; the Cumbrian Coast line's trains use them). Every fact checked against the article in `source`
+  (`wiki_text.py`). The York sights already used (the Bar Convent, Goddards, Bishopsbarns) and Doncaster's (the Minster, the
+  Mansion House), so the Cold War Bunker, the Elmbank Hotel, Holgate Windmill and the Corn Exchange instead. Larpool Viaduct
+  is `near`, not `crosses`: the train passes under it, and its point (mid-valley) is on the right going to Whitby. Points:
+  Wikipedia's geotags, or Historic England's list points (Castleton castle mound, Duck Bridge, Lealholm's chapel, Beggar's
+  Bridge, Thornton Abbey's gatehouse, Towneley Hall, the York Cold War Bunker, the Elmbank Hotel, the Corn Exchange, All
+  Saints' Bolton Percy, St Bees Priory, Grey Croft and the Ravenglass bath house); no point is our own calculation, and every
+  distance is to the item's point. For John: THORP's geotag is the same as the Magnox Reprocessing Plant's, so probably a
+  point for that part of Sellafield rather than the building itself (638 m). The farthest items are the York Cold War Bunker
+  (643 m), Castleton castle mound (634 m), THORP (638 m) and Thornton Abbey's gatehouse (607 m); the rest are within 600 m.
+  Step 8 done: 1,899 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 45, 40 stretches of Yorkshire and The Humber from Eastrington to Gilberdyke through to Battersby to Great Ayton (Eastrington,
   Howden, Wressle and Selby; Selby to York by Hambleton; Malton to York and to Seamer; Scarborough, Seamer, Filey, Hunmanby,

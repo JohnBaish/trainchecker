@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 46, Yorkshire and The Humber finished (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Battersby to Kildale through to Bootle (Cumbria) to Silecroft (the Esk Valley line to Whitby, Brigg to Kirton
+  Lindsey, the Barton line, the Copy Pit line, round Wakefield and Rotherham, the long stretches through York and Northallerton,
+  then the Cumbrian Coast from Corkickle to Silecroft); 36 items and four stretches skipped (through Leeds to Woodlesford);
+  1,921 of 2,376 done, Yorkshire and The Humber 238 of 238 (finished), North West 9 of 396. Next: MLM-SIC (Millom to Silecroft).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. No point is our own
+  calculation; THORP's geotag looks like a general Sellafield point (for John). `to_site.py` run: 1,899 facts live with this
+  push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 45 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Eastrington to Gilberdyke through to Battersby to Great Ayton (Howden and Wressle, Selby to York, Malton to

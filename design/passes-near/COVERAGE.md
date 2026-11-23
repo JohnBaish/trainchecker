@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-2321 of 2376 stretches done.
+2361 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -19,9 +19,9 @@ design/passes-near/COVERAGE.md and do the next batch."
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
 9. North West: 396 of 396 done (done).
-10. North East: 13 of 68 done (next).
+10. North East: 53 of 68 done (next).
 
-Next stretch in the order: CLS-NCL (Chester-le-Street to Newcastle).
+Next stretch in the order: BEJ-MPT (Bedlington to Morpeth).
 
 <!-- end of counts -->
 
@@ -118,6 +118,36 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 57, 40 stretches of the North East from Chester-le-Street to
+  Newcastle through to Morpeth to Pegswood (the East Coast Main Line into Newcastle and out by Manors, Heaton, Cramlington and
+  Morpeth; Manors to Northumberland Park; Heworth to Newcastle and Sunderland; the Durham Coast line from Sunderland by Seaham,
+  Horden and Hartlepool to Seaton Carew and Billingham; Billingham to Stockton; Stockton and Eaglescliffe to Thornaby and
+  Middlesbrough; Eaglescliffe to Yarm; the Tees Valley line from Eaglescliffe by Allens West and Dinsdale to Darlington, North
+  Road, Heighington, Newton Aycliffe, Shildon and Bishop Auckland; Darlington to Durham and Durham to Chester-le-Street;
+  Middlesbrough to South Bank, Redcar, Longbeck, Marske and Saltburn; and the Esk Valley line from Middlesbrough by James Cook,
+  Marton and Gypsy Lane to Nunthorpe and Great Ayton); 2,361 of 2,376 done, North East 53 of 68. 40 items, none skipped (no
+  `past` stretch in the batch). Every fact checked against the article in `source` (`wiki_text.py`). `crosses`: the High Level
+  Bridge, Durham Viaduct, Skerne Bridge, Yarm Viaduct and Ouseburn Viaduct; Teesside Airport station (Allens West to Dinsdale,
+  5 m) is `near` with no side, as the train runs through it (its service has been suspended since May 2022). The Angel of the
+  North (591 m) is on Chester-le-Street to Newcastle, as batch 56 left it; the Castle Keep is 27 m from the track, which runs
+  between it and the Black Gate. Shared out: Ouseburn Viaduct to Cramlington to Manors, so the Byker Wall (596 m) for Manors to
+  Northumberland Park; HMS Trincomalee to Hartlepool to Horden, so PS Wingfield Castle for Hartlepool to Seaton Carew; Preston
+  Hall to Eaglescliffe to Stockton, so the Stockton and Darlington Railway's 1825 station for Eaglescliffe to Thornaby; the
+  Transporter Bridge to Middlesbrough to South Bank, so the Middlesbrough meteorite (41 m) for James Cook to Middlesbrough;
+  Marske Hall to Longbeck to Marske, so Saltburn Cliff Lift for Marske to Saltburn. Station names avoided in the text where
+  there was a choice (Seaham Hall, the cliff lift, Morpeth Castle and Cramlington Aerodrome described without naming them; the
+  meteorite without Middlesbrough); kept for John to note: Marske Hall (Longbeck to Marske) and the story of Nunthorpe's name
+  (Gypsy Lane to Nunthorpe, which ends "it has been Nunthorpe ever since"). Thin stretches given modest items: Teesside High
+  School (Allens West to Eaglescliffe, 506 m) and RAF Greatham (Billingham to Seaton Carew). Left out: Emily Davison's grave at
+  St Mary's, Morpeth (Cramlington Aerodrome instead), the deaths at ROF Aycliffe, the Victoria Hall disaster, the Darlington
+  and Morpeth rail crashes, the Battle of Neville's Cross, the drowning in the Zetland's crew in 1836 and Grainger's death after
+  finishing Yarm Viaduct. Points: Wikipedia's geotags, except Historic England's list points for St Peter's, Monkwearmouth and
+  St Andrew's, South Church (whose facts come from the South Church article); no point is our own calculation. Nunthorpe's
+  point is the village article's general point (248 m) and Teesside Steelworks' (429 m) a point for a works that stretched for
+  miles. The farthest items are the Captain Cook Birthplace Museum (735 m), St Mary's, Norton (701 m), Ormesby Hall (670 m)
+  and the Transporter Bridge (661 m); the rest are within 610 m. `check-facts`' "no fact yet" journey, Acklington to Alnmouth,
+  is still uncovered, so it stays. Step 8 done: 2,334 facts in `src/data/passes-near.json`; `npm run check` and `npm run
+  build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 56, 40 stretches from Langwathby to Lazonby & Kirkoswald through to
   Chester-le-Street to Dunston, finishing the North West and starting the North East: the Settle to Carlisle line from Lazonby by
   Langwathby, Appleby, Kirkby Stephen, Garsdale and Dent to Ribblehead; Wetheral to Brampton and Haltwhistle; the Windermere branch

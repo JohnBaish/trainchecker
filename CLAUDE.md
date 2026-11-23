@@ -71,6 +71,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 57 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Chester-le-Street to Newcastle through to Morpeth to Pegswood (the main line into Newcastle and north to
+  Morpeth, Manors to Northumberland Park, Heworth to Sunderland, the Durham Coast line to Billingham, round Stockton, Thornaby
+  and Middlesbrough, the Tees Valley line to Bishop Auckland, Darlington to Durham and Chester-le-Street, the coast to Saltburn
+  and the Esk Valley line to Great Ayton); 2,361 of 2,376 done, North East 53 of 68. Next: BEJ-MPT (Bedlington to Morpeth).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; deaths and
+  rail crashes passed over (Emily Davison's grave too); no point is our own calculation. For John: Marske Hall (Longbeck to
+  Marske) and the story of Nunthorpe's name (Gypsy Lane to Nunthorpe) name a station's place. `check-facts`' "no fact yet"
+  journey, Acklington to Alnmouth, still has none, so unchanged. `to_site.py` run: 2,334 facts live with this push; checks and
+  build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 56, the North West finished (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Langwathby to Lazonby & Kirkoswald through to Chester-le-Street to Dunston (the last 27 of the North West: the

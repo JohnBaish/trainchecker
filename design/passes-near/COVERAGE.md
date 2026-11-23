@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1921 of 2376 stretches done.
+1961 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -18,10 +18,10 @@ design/passes-near/COVERAGE.md and do the next batch."
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
-9. North West: 9 of 396 done (next).
+9. North West: 49 of 396 done (next).
 10. North East: 0 of 68 done.
 
-Next stretch in the order: MLM-SIC (Millom to Silecroft).
+Next stretch in the order: MAG-MNS (Maghull to Maghull North).
 
 <!-- end of counts -->
 
@@ -117,6 +117,27 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 47, 40 stretches of the North West from Millom to Silecroft
+  through to Maghull North to Town Green (the Cumbrian Coast line by Millom, Green Road, Foxfield, Kirkby-in-Furness and
+  Askam to Barrow-in-Furness; the Furness line by Roose, Dalton, Ulverston, Cark, Kents Bank, Grange-over-Sands, Arnside,
+  Silverdale and Carnforth to Bare Lane; the Morecambe and Heysham Port branch; Bare Lane to Lancaster and Lancaster to
+  Preston; Preston to Salwick, Kirkham & Wesham, Poulton-le-Fylde, Layton and Blackpool North; the South Fylde line by Moss
+  Side, Lytham, Ansdell & Fairhaven, St Annes and Squires Gate to Blackpool South; Preston to Croston, Rufford and Burscough
+  Junction; and the Ormskirk line by Aughton Park and Town Green to Maghull North); 1,961 of 2,376 done, North West 49 of
+  396. 40 items, none skipped. Kept: the Cumbrian Coast stretches with no train company on the map (the line's trains use
+  them). Every fact checked against the article in `source` (`wiki_text.py`). Leven Viaduct and Arnside Viaduct are
+  `crosses`. The Lindal railway incident (no one was hurt: the driver jumped clear) has no side: its point is 13 m from the
+  track, and the engine lies beneath the railway. Leven Viaduct's 1903 storm (34 injured, none killed) is mentioned; the
+  Lifeboat Memorial at Lytham (an 1886 disaster) and the Burscough Junction rail crash were passed over, and Duddon Inshore
+  Rescue's item leaves out the drownings that led to it. Heysham Port, Askam and Ireleth, and Arnside are the stretches'
+  own places, so Heysham's nuclear power stations, Duddon Inshore Rescue and Trowbarrow Quarry instead; Foxfield and
+  Kirkby-in-Furness are kept (nothing else near). The Roman fort at Burscough is mentioned in the town's item, as Historic
+  England's point for it is 785 m from the track. Points: Wikipedia's geotags, except Historic England's list points for
+  Giant's Grave, Furness Abbey, St Walburge's Church, Penwortham Old Bridge, Rufford Old Hall and Burscough Priory; no
+  point is our own calculation, and every distance is to the item's point. The farthest items are Greenhalgh Castle (664
+  m), Lytham Hall (584 m), Duddon Inshore Rescue (579 m), the Midland Hotel (572 m) and St Annes Pier (565 m); the rest are
+  within 550 m. Step 8 done: 1,939 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 46, the last 31 stretches of Yorkshire and The Humber, from Battersby
   to Kildale through to Poppleton to Selby (the Esk Valley line by Kildale, Commondale, Castleton Moor, Danby, Lealholm,

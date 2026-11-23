@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 47 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Millom to Silecroft through to Maghull North to Town Green (the Cumbrian Coast to Barrow, the Furness line
+  to Carnforth, Morecambe and Heysham, Lancaster to Preston, the Fylde lines to Blackpool North and Blackpool South, Preston
+  to Burscough Junction and Ormskirk to Maghull North); 1,961 of 2,376 done, North West 49 of 396. Next: MAG-MNS (Maghull
+  to Maghull North).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; fatal
+  accidents passed over; no point is our own calculation. `to_site.py` run: 1,939 facts live with this push; checks and
+  build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 46, Yorkshire and The Humber finished (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Battersby to Kildale through to Bootle (Cumbria) to Silecroft (the Esk Valley line to Whitby, Brigg to Kirton

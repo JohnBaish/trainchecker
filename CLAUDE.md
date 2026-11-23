@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 38 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Smethwick Galton Bridge to Smethwick Rolfe Street through to Danzey to Henley-in-Arden (round Smethwick,
+  central Birmingham's lines from New Street, Moor Street and Snow Hill, the Chase line to Walsall, Aston, the Camp Hill
+  line and the North Warwickshire line to Henley-in-Arden); 1,601 of 2,376 done, West Midlands 118 of 191. Next: HNL-WWW
+  (Henley-in-Arden to Wootton Wawen).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; four
+  possible avoiding lines given items; the Stechford rail crash passed over; no point is our own calculation.
+  `to_site.py` run: 1,590 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 37 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Hednesford to Rugeley Town through to Birmingham New Street to Smethwick Rolfe Street (the Chase line to

@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1561 of 2376 stretches done.
+1601 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -16,12 +16,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 4. London: 421 of 421 done (done).
 5. East of England (East Anglia): 237 of 237 done (done).
 6. East Midlands: 140 of 140 done (done).
-7. West Midlands: 78 of 191 done (next).
+7. West Midlands: 118 of 191 done (next).
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: SGB-SMR (Smethwick Galton Bridge to Smethwick Rolfe Street).
+Next stretch in the order: HNL-WWW (Henley-in-Arden to Wootton Wawen).
 
 <!-- end of counts -->
 
@@ -117,6 +117,31 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 38, 40 stretches of the West Midlands from Smethwick Galton
+  Bridge to Smethwick Rolfe Street through to Danzey to Henley-in-Arden (round Smethwick and The Hawthorns; the Snow Hill
+  lines by Jewellery Quarter to Snow Hill and Moor Street and out by Bordesley and Small Heath; New Street to Small Heath,
+  Duddeston, Adderley Park, Water Orton, Moseley Village and, by the Soho loop, Perry Barr; Perry Barr to Smethwick Rolfe
+  Street; the Chase line from Perry Barr by Hamstead, Tame Bridge Parkway and Bescot Stadium to Walsall and Darlaston; Perry
+  Barr, Witton, Aston, Gravelly Hill, Duddeston and Stechford; the Camp Hill line by Moseley Village, Kings Heath and
+  Pineapple Road, and its curves to Water Orton; the North Warwickshire line from Tyseley by Spring Road, Hall Green,
+  Yardley Wood, Shirley, Whitlocks End, Wythall, Earlswood, The Lakes, Wood End and Danzey to Henley-in-Arden); 1,601 of
+  2,376 done, West Midlands 118 of 191. 40 items, none skipped, every fact checked against the article in `source`
+  (`wiki_text.py`); nearby Wikipedia articles were also listed from `wiki/gb-articles.tsv.gz`. Kept, though they may
+  carry few regular passenger trains: Aston to Stechford (no train company on the map), New Street to Perry Barr (the Soho
+  loop), Moseley Village to Water Orton and Small Heath to Water Orton (curves avoiding New Street). Birmingham's centre is
+  shared out among the nine stretches from New Street, Moor Street and Snow Hill: St Philip's Cathedral, the Old Crown,
+  Curzon Street station, the Town Hall, the Proof House, St Martin in the Bull Ring and St Paul's, with the Library of
+  Birmingham and the Holliday Street Aqueduct already used; Galton Bridge and Chance's glassworks were used next door, so
+  the Lions of the Great War and Summit Bridge. The Hawthorns stadium was passed over, as the station shares its name. Five
+  quiet stretches of the North Warwickshire line have the station itself (`station`: Yardley Wood, Wythall, Earlswood, The
+  Lakes) or a village (Major's Green). Passed over: the Stechford rail crash and the 2013
+  Smethwick fire. No point is our own calculation: Historic England's list points for St Paul's, St Philip's, the Old
+  Crown, the Town Hall, the Engine Arm Aqueduct, Aston Hall, Stratford House, Highbury Hall, the Church of the Ascension,
+  Tanworth church and Beaudesert Castle (facts from the Wikipedia article in `source`); the rest are Wikipedia's geotags.
+  The farthest items are St Mary Magdalene's, Tanworth-in-Arden (611 m), Highbury Hall (599 m) and the Church of the
+  Ascension (523 m); the rest are within 520 m. Step 8 done: 1,590 facts in `src/data/passes-near.json`; `npm run check`
+  and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 37, 40 stretches of the West Midlands from Hednesford to
   Rugeley Town through to Birmingham New Street to Smethwick Rolfe Street (the Chase line from Rugeley Town by Hednesford,

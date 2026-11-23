@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 13 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Adisham to Bekesbourne through to Martin Mill to Walmer (Canterbury East to Faversham, the Chatham
+  Main Line to Rochester and Strood, Rochester to Longfield, the Sheerness line, the Kent coast to Ramsgate, Minster
+  to Canterbury West and Wye, Minster to Walmer); 601 of 2,376 done, South East 296 of 384. Next: DVP-MTM (Dover
+  Priory to Martin Mill).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Fatal events passed
+  over; three points are our own calculation (COVERAGE.md says which). `to_site.py` run: 601 facts live with this
+  push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 12 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Beltring to Paddock Wood through to Adisham to Aylesham (Paddock Wood to Pluckley and Tonbridge,

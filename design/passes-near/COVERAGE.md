@@ -8,11 +8,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-561 of 2376 stretches done.
+601 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
-3. South East: 256 of 384 done (next).
+3. South East: 296 of 384 done (next).
 4. London: 4 of 421 done.
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: ADM-BKS (Adisham to Bekesbourne).
+Next stretch in the order: DVP-MTM (Dover Priory to Martin Mill).
 
 <!-- end of counts -->
 
@@ -117,6 +117,23 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 13, 40 stretches from Adisham to Bekesbourne through to
+  Martin Mill to Walmer (the Dover line from Adisham by Canterbury East and Selling to Faversham, the Chatham Main
+  Line from Faversham by Teynham, Sittingbourne, Newington, Rainham, Gillingham and Chatham to Rochester and Strood,
+  Rochester by Sole Street and Meopham to Longfield, the Sheerness line from Sittingbourne and Newington by Kemsley
+  and Swale to Sheerness, the Kent coast from Faversham by Whitstable, Herne Bay, Margate and Broadstairs to Ramsgate,
+  Ramsgate by Thanet Parkway and Minster to Sturry, Canterbury West, Chartham, Chilham and Wye, and Minster by
+  Sandwich and Deal to Walmer and Martin Mill); 601 of 2,376 done, South East 296 of 384. Every fact checked against
+  the article in `source` (`wiki_text.py`). Fort Pitt went to Chatham to Rochester (142 m) rather than Chatham to
+  Gillingham (505 m), which has the Chatham Naval Memorial. Passed over: the memorials to the Faversham munitions
+  explosion (1916), the Deal barracks bombing, and a death at Ripple Mill (not mentioned). Our own points, not
+  sourced figures: the Medway crossing (`crosses`, the track's nearest point to Rochester Bridge's article
+  coordinates), the Kingsferry Bridge (`crosses`, likewise) and Godmersham Park (the nearest edge of the listed
+  park; the facts come from the Godmersham article, as Godmersham Park's own has no coordinates). Kemsley to
+  Newington (the chord avoiding Sittingbourne) and Minster to Sandwich (no train company on the map) were given
+  items, as with earlier such stretches. Two items are about 600 m off (the Dickens House Museum and the Montefiore
+  Synagogue), nothing nearer on those short Thanet stretches being as good. Step 8 done: 601 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 12, 40 stretches from Beltring to Paddock Wood through to
   Adisham to Aylesham (Paddock Wood to Tonbridge, the South Eastern Main Line from Paddock Wood by Marden and
   Staplehurst to Headcorn and Pluckley, the Maidstone line from Ashford by Charing, Lenham, Hollingbourne and Bearsted

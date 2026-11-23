@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-2081 of 2376 stretches done.
+2121 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -18,10 +18,10 @@ design/passes-near/COVERAGE.md and do the next batch."
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
-9. North West: 169 of 396 done (next).
+9. North West: 209 of 396 done (next).
 10. North East: 0 of 68 done.
 
-Next stretch in the order: CRE-SDB (Crewe to Sandbach).
+Next stretch in the order: HSB-INE (Helsby to Ince & Elton (Cheshire)).
 
 <!-- end of counts -->
 
@@ -117,6 +117,28 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 51, 40 stretches of the North West from Crewe to Sandbach
+  through to Ince & Elton (Cheshire) to Stanlow & Thornton (Crewe to Sandbach; Crewe to Chester; Chester to Shotton and to
+  Wrexham General (both partly in Wales: their items are in Chester); the Wirral Line from Chester by Bache, Capenhurst,
+  Hooton, Eastham Rake, Bromborough, Bromborough Rake, Spital, Port Sunlight, Bebington, Rock Ferry, Green Lane and
+  Birkenhead Central to Birkenhead Hamilton Square, Conway Park, Birkenhead Park, Birkenhead North and Bidston, and under the
+  Mersey to Liverpool James Street; the West Kirby branch by Leasowe, Moreton, Meols, Manor Road and Hoylake; the New
+  Brighton branch by Wallasey Village and Wallasey Grove Road; the Borderlands line from Bidston by Upton, Heswall and Neston
+  to Hawarden Bridge (partly in Wales: its item is at Burton); and Hooton by Little Sutton, Overpool, Ellesmere Port and
+  Stanlow & Thornton to Ince & Elton); 2,121 of 2,376 done, North West 209 of 396. 40 items, none skipped. Every fact checked
+  against the article in `source` (`wiki_text.py`). Station items for Eastham Rake, Bromborough and Stanlow & Thornton (it
+  stands inside the refinery), where nothing else as good was near. Bidston Hall left out (no article to check it against);
+  Thornton Manor's house (about 1.4 km) and New Brighton Tower and Fort Perch Rock (more than 740 m) too far; the Battle of
+  Rowton Heath, the Argyle Theatre's bombing and the Wallasey pub shooting passed over. Points: Wikipedia's geotags, except
+  Historic England's list points for the Shot Tower, Bonewaldesthorne's Tower (the item is about it and the Water Tower,
+  joined by a spur wall), the Phoenix Tower, St Andrew's Church (Bebington), Birkenhead Priory (the scheduled monument), the
+  Grand Entrance to Birkenhead Park, St Mary and St Helen (Neston), the Burton Point fort, Oriel Chambers, St Paul's Church
+  (Hooton) and Ince Manor; Chester Cathedral's and Hamilton Square's are their articles' geotags. No point is our own
+  calculation, and every distance is to the item's point. The farthest items are Bidston Hill (711 m), the National
+  Waterways Museum (706 m), Poulton Hall (700 m), Hoylake Lifeboat Station (698 m) and Leasowe (672 m, a village's centre
+  point; Meols and Barnston are too); the rest are within 630 m. Step 8 done: 2,097 facts in `src/data/passes-near.json`;
+  `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 50, 40 stretches of the North West from Liverpool South Parkway
   to Runcorn through to Holmes Chapel to Sandbach (the Liverpool branch of the West Coast Main Line over the Mersey to

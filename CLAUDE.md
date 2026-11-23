@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 51 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Crewe to Sandbach through to Ince & Elton to Stanlow & Thornton (Crewe to Chester, out of Chester towards
+  Shotton and Wrexham, the Wirral Line by Hooton and Birkenhead under the Mersey to James Street, the West Kirby, New
+  Brighton and Borderlands lines, and the Ellesmere Port line); 2,121 of 2,376 done, North West 209 of 396. Next: HSB-INE
+  (Helsby to Ince & Elton (Cheshire)).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; the items on
+  the stretches into Wales are in England; battles, a bombing and a shooting passed over; no point is our own calculation.
+  `to_site.py` run: 2,097 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 50 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Liverpool South Parkway to Runcorn through to Holmes Chapel to Sandbach (over the Mersey to Runcorn, the

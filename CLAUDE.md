@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 49 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Leyland to Preston (Lancs) through to Brunswick to Liverpool Central (round Preston, Leyland and Bamber
+  Bridge, Chorley to Westhoughton, Hindley and Ince to Wigan, the Liverpool to Wigan line by St Helens and Huyton, Edge
+  Hill to Lime Street and Mossley Hill, the Northern Line round Sandhills and Bootle, and Liverpool South Parkway to
+  Liverpool Central); 38 items and two stretches skipped (Broad Green and Edge Hill to Kirkdale, the freight-only Bootle
+  branch); 2,041 of 2,376 done, North West 129 of 396. Next: LPY-RUN (Liverpool South Parkway to Runcorn).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Deaths passed over; no
+  point is our own calculation. `to_site.py` run: 2,017 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 48 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Maghull to Maghull North through to Euxton Balshaw Lane to Leyland (the Ormskirk line to Kirkdale, the

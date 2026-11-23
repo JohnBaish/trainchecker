@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-2001 of 2376 stretches done.
+2041 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -18,10 +18,10 @@ design/passes-near/COVERAGE.md and do the next batch."
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
-9. North West: 89 of 396 done (next).
+9. North West: 129 of 396 done (next).
 10. North East: 0 of 68 done.
 
-Next stretch in the order: LEY-PRE (Leyland to Preston (Lancs)).
+Next stretch in the order: LPY-RUN (Liverpool South Parkway to Runcorn).
 
 <!-- end of counts -->
 
@@ -117,6 +117,31 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 49, 40 stretches of the North West from Leyland to Preston
+  (Lancs) through to Brunswick to Liverpool Central (Leyland and Lostock Hall to Preston; Bamber Bridge to Lostock Hall
+  and Leyland; Buckshaw Parkway to Leyland and Chorley; Chorley by Adlington, Blackrod, Horwich Parkway and Lostock to
+  Westhoughton; Westhoughton to Hindley, Ince and Wigan North Western; the Liverpool to Wigan line from Wigan North Western
+  by Bryn, Garswood, St Helens Central, Thatto Heath, Eccleston Park, Prescot, Huyton, Roby and Broad Green to Wavertree
+  Technology Park and Edge Hill; Edge Hill to Liverpool Lime Street and Mossley Hill; Mossley Hill by West Allerton to
+  Liverpool South Parkway; Merseyrail's Northern Line from Moorfields, Bank Hall and Kirkdale to Sandhills and Bank Hall to
+  Bootle Oriel Road; and from Liverpool South Parkway by Cressington, Aigburth, St Michaels and Brunswick to Liverpool
+  Central); 2,041 of 2,376 done, North West 129 of 396. 38 items and two stretches skipped: Broad Green to Kirkdale and
+  Edge Hill to Kirkdale are the Bootle branch (the Canada Dock line), a freight line to the Port of Liverpool that no
+  passenger train uses. Kept: Ince to Wigan North Western (the map's stretch for Ince's trains into Wigan; they run on to
+  Wigan Wallgate). Every fact checked against the article in `source` (`wiki_text.py`). Cressington is a station item
+  (a listed station with unusually narrow platforms). Miller Park and Avenham Park (parks whose distance is to their edge)
+  left out for Winckley Square and West Cliff; the Prescot Playhouse left out, as its site isn't known for sure; Bootle
+  Town Hall, Bootle War Memorial, the British Commercial Vehicle Museum and Wigan Pier already used, so the Statue of
+  Edward VII, Buckshaw Hall and Trencherfield Mill instead. Left out: deaths (the Battle of Bamber Bridge, the Battle of
+  Preston, the Pretoria Pit disaster, the Whiston murders). Points: Wikipedia's geotags, except Historic England's list
+  points for Buckshaw Hall, St George's Church (Chorley), Lostock Hall Gatehouse, the Jubilee tank house (World of Glass),
+  the Tate & Lyle Sugar Silo, the Royal Liver Building, the Metropolitan Cathedral, Greenbank Drive Synagogue, Robin
+  Hood's Stone, St Michael-in-the-Hamlet, Toxteth Unitarian Chapel and Liverpool Cathedral; no point is our own
+  calculation, and every distance is to the item's point. Westhoughton, Wingates and Garswood are places' centre points.
+  The farthest items are the Flat Iron Building (660 m), Monk's Well (654 m), Trencherfield Mill (526 m), the Preston
+  England Temple (527 m) and Court Hey Hall (513 m); the rest are within 510 m. Step 8 done: 2,017 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 48, 40 stretches of the North West from Maghull to Maghull North
   through to Euxton Balshaw Lane to Leyland (the Ormskirk line by Maghull, Old Roan, Aintree, Orrell Park and Walton to

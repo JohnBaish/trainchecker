@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 54 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Hyde Central to Hyde North through to Blackburn to Darwen (the Hyde loop, Reddish Vale, Marple, Rose Hill and
+  Strines, the Glossop line to Broadbottom, Stalybridge through Standedge Tunnel to Marsden, Hazel Grove and Disley to Middlewood
+  and New Mills Newtown, Hindley by Atherton and Walkden to Salford Crescent, Clifton to Bolton, Bolton to Lostock, and the Ribble
+  Valley line to Blackburn); 2,241 of 2,376 done, North West 329 of 396. Next: BBN-MLH (Blackburn to Mill Hill (Lancs)).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; pit disasters, the
+  Burnden Park disaster and an execution passed over; no point is our own calculation (Lyme Park left out for that reason). For
+  John: Hall i' th' Wood is the item for Bromley Cross to Hall-i'-th'-Wood, the station's namesake. `to_site.py` run: 2,216 facts
+  live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 53 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Cheadle Hulme to Handforth through to Guide Bridge to Hyde North (Stockport and its lines, the Mid-Cheshire line

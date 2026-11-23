@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-2201 of 2376 stretches done.
+2241 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -18,10 +18,10 @@ design/passes-near/COVERAGE.md and do the next batch."
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
-9. North West: 289 of 396 done (next).
+9. North West: 329 of 396 done (next).
 10. North East: 0 of 68 done.
 
-Next stretch in the order: HYC-HYT (Hyde Central to Hyde North).
+Next stretch in the order: BBN-MLH (Blackburn to Mill Hill (Lancs)).
 
 <!-- end of counts -->
 
@@ -117,6 +117,31 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 54, 40 stretches of the North West from Hyde Central to Hyde North
+  through to Blackburn to Darwen (the Hyde loop by Woodley, Romiley and Bredbury; Brinnington, Reddish Vale and Reddish North to
+  Ryder Brow and Belle Vue; Romiley to Marple and Rose Hill Marple, and Marple to Strines; the Glossop line by Flowery Field, Newton
+  for Hyde, Godley and Hattersley to Broadbottom; the Huddersfield line from Stalybridge by Mossley and Greenfield through Standedge
+  Tunnel to Marsden; the Buxton line from Hazel Grove to Middlewood, and Disley to Middlewood and New Mills Newtown; the line from
+  Hindley by Daisy Hill, Hag Fold, Atherton, Walkden, Moorside and Swinton to Salford Crescent; Salford Crescent by Clifton,
+  Kearsley, Farnworth and Moses Gate to Bolton; Bolton to Lostock; and the Ribble Valley line from Bolton by Hall-i'-th'-Wood,
+  Bromley Cross, Entwistle and Darwen to Blackburn); 2,241 of 2,376 done, North West 329 of 396. 40 items, none skipped. Every fact
+  checked against the article in `source` (`wiki_text.py`). Standedge Tunnel is `crosses` (the item is in England: the whole stretch
+  is). Items naming the stretch's own stations avoided (Brinnington, Hazel Grove, Disley, Flowery Field, Woodley), so the Works
+  Recording Studio, Middlewood Higher station, the Gritstone Trail, Newton and Chadkirk Chapel instead; Hall i' th' Wood kept for
+  Bromley Cross to Hall-i'-th'-Wood (the station is named after it, for John: the page will say "Between Bromley Cross and
+  Hall-i'-th'-Wood, your train passes near Hall i' th' Wood"). Already used next door, so others chosen: Ashton-under-Lyne War
+  Memorial (so Stayley Hall, not Stalybridge War Memorial), the Toughsheet Community Stadium (so Burnden Park's site), Torr Vale Mill
+  and Torrs Hydro (so the Gritstone Trail). Lyme Park (Disley to Middlewood, its edge on the line) left out: its point would have
+  been our own calculation, so St Mary's Church, Disley. Left out: the Astley Deep Pit and Pretoria Pit disasters, the Burnden Park
+  disaster, Stepping Hill Hospital (the poisonings there) and St Ambrose Barlow's execution (Wardley Hall is the item, that not
+  mentioned); India Mill's chimney (no article in the index), so St Peter's Church, Darwen. Points: Wikipedia's geotags, except
+  Historic England's list points for Apethorn Farmhouse, Chadkirk Chapel, Brookfield Unitarian Church, Marple Aqueduct, St Martin's
+  (Marple), Stayley Hall, St Mary's (Disley), St James' (Daisy Hill), Wardley Hall, St Augustine's (Pendlebury), Bolton Parish
+  Church, Hall i' th' Wood, Turton Tower and St Peter's (Darwen). No point is our own calculation, and every distance is to the
+  item's point; Newton's is a rounded area point (53.46, -2.09). The farthest items are Chadkirk Chapel (608 m), Newton (580 m), the
+  Works Recording Studio's site (576 m) and St James' Church (547 m); the rest are within 490 m. Step 8 done: 2,216 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 53, 40 stretches of the North West from Cheadle Hulme to Handforth
   through to Guide Bridge to Hyde North (Cheadle Hulme to Handforth, Wilmslow and Stockport; the Mid-Cheshire line from Stockport

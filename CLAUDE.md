@@ -71,6 +71,23 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 56, the North West finished (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Langwathby to Lazonby & Kirkoswald through to Chester-le-Street to Dunston (the last 27 of the North West: the
+  Settle to Carlisle line from Lazonby to Ribblehead, Wetheral to Haltwhistle, the Windermere branch, the Liverpool loop and
+  Northern line stations, Carnforth to Lancaster, the lines round Salford and Deansgate, Manchester Airport to Styal, Piccadilly to
+  Mauldeth Road and Levenshulme; then the North East: the Tyne Valley from Haltwhistle to Newcastle, and Chester-le-Street to
+  Dunston); 38 items and two stretches skipped (Bache to Shotton and to Wrexham General, through Chester, where every train calls and
+  Merseyrail's trains end); 2,321 of 2,376 done, North West 396 of 396 (finished), North East 13 of 68. Next: CLS-NCL
+  (Chester-le-Street to Newcastle).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Deaths passed over (Ribblehead
+  Viaduct's builders, the drowning at the Irwell bridge); no point is our own calculation (Smardale Viaduct and St Margaret's Tower
+  are Historic England's list points). The Angel of the North kept for Chester-le-Street to Newcastle. For John: Kendal Castle,
+  Liverpool Town Hall and Salford Cathedral and Lads' Club name a station's town; Chester-le-Street to Dunston (the Team Valley line
+  to the Dunston side of King Edward VII Bridge) may carry no regular passenger trains, given an item. `check-facts`' "no fact
+  yet" journey, Acklington to Alnmouth, still has none, so unchanged. `to_site.py` run: 2,294 facts live with this push; checks and
+  build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 55 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Blackburn to Mill Hill (Lancs) through to Armathwaite to Lazonby & Kirkoswald (round Blackburn, the East Lancashire

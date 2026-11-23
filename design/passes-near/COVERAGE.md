@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-2281 of 2376 stretches done.
+2321 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -18,10 +18,10 @@ design/passes-near/COVERAGE.md and do the next batch."
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
-9. North West: 369 of 396 done (next).
-10. North East: 0 of 68 done.
+9. North West: 396 of 396 done (done).
+10. North East: 13 of 68 done (next).
 
-Next stretch in the order: LGW-LZB (Langwathby to Lazonby & Kirkoswald).
+Next stretch in the order: CLS-NCL (Chester-le-Street to Newcastle).
 
 <!-- end of counts -->
 
@@ -118,6 +118,33 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 56, 40 stretches from Langwathby to Lazonby & Kirkoswald through to
+  Chester-le-Street to Dunston, finishing the North West and starting the North East: the Settle to Carlisle line from Lazonby by
+  Langwathby, Appleby, Kirkby Stephen, Garsdale and Dent to Ribblehead; Wetheral to Brampton and Haltwhistle; the Windermere branch
+  from Oxenholme by Kendal, Burneside and Staveley; the Liverpool loop and Northern line (James Street, Moorfields, Lime Street,
+  Central); Carnforth to Lancaster; Eccles, Deansgate, Salford Central and Salford Crescent; Manchester Airport to Styal; Manchester
+  Piccadilly to Mauldeth Road and to Levenshulme; Bache to Shotton and to Wrexham General; then the Tyne Valley from Haltwhistle by
+  Bardon Mill, Haydon Bridge, Hexham, Corbridge, Riding Mill, Stocksfield, Prudhoe, Wylam, Blaydon, MetroCentre and Dunston to
+  Newcastle, and Chester-le-Street to Dunston. 2,321 of 2,376 done; North West 396 of 396 (finished), North East 13 of 68. 38 items;
+  skipped: Bache to Shotton and Bache to Wrexham General, which run through Chester without calling, where every passenger train
+  calls and the only trains through Bache (Merseyrail) end. The other `past` stretches are real: the Liverpool loop runs James
+  Street, Moorfields, Lime Street, Central; Carnforth to Lancaster is the West Coast Main Line; the Salford ones are the Chat Moss,
+  Ordsall and Windsor lines; Manchester Airport to Styal and the two out of Piccadilly are Styal and Stockport lines. Kept with an
+  item though it may carry no regular passenger train: Chester-le-Street to Dunston (the Team Valley line to the Dunston side of
+  King Edward VII Bridge). Every fact checked against the article in `source` (`wiki_text.py`). `crosses`: Smardale Viaduct,
+  Dandry Mire Viaduct, Rise Hill Tunnel, Ribblehead Viaduct, Corby Bridge (Wetheral Viaduct), Carlisle Bridge at Lancaster, the
+  River Derwent, King Edward VII Bridge and Chester Burn Viaduct. Smardale Viaduct and St Margaret's Tower, Staveley, are Historic
+  England's list points; Dandry Mire Viaduct's article point is 70 m off the track (a crossing all the same); no point is our own
+  calculation. Items used next door passed over: Slade Hall, Hyde Road, Store Street Aqueduct, London Road Fire Station, the Royal
+  Liver Building, Oriel Chambers, both Liverpool cathedrals, Liverpool Road station, Beetham Tower, Lancaster Castle, the Apprentice
+  House at Styal. The Angel of the North left for Chester-le-Street to Newcastle (the main line). St Anne's Church, Ings, isn't in
+  the committed index, so School Knott; Holy Cross Church, Haltwhistle, likewise, so Unthank Hall. Station names avoided in the text
+  where there was a choice (Constantius Bridge and Dilston Castle rather than Hexham Abbey; Ovingham Bridge rather than Prudhoe
+  Castle; Corbridge Bridge described without naming it); kept for John to note: Kendal Castle, Liverpool Town Hall, Salford
+  Cathedral and Salford Lads' Club. Left out: the deaths building Ribblehead Viaduct, the drowning at the River Irwell bridge in
+  1830, the Manchester Martyrs, the Ais Gill and Little Salkeld rail crashes, the air crashes near Manchester Airport, the 1996
+  Manchester bombing and the execution of the 3rd Earl of Derwentwater. `check-facts`' "no fact yet" journey, Acklington to
+  Alnmouth, is still uncovered, so it stays. `to_site.py` run (2,294 facts); `npm run check` and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 55, 40 stretches of the North West from Blackburn to Mill Hill
   (Lancs) through to Armathwaite to Lazonby & Kirkoswald (Blackburn to Mill Hill, Cherry Tree and Pleasington to Bamber Bridge;
   Blackburn to Rishton and the East Lancashire line by Church & Oswaldtwistle, Accrington, Huncoat, Hapton and Rose Grove to the

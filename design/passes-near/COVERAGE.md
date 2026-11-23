@@ -8,11 +8,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-521 of 2376 stretches done.
+561 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
-3. South East: 216 of 384 done (next).
+3. South East: 256 of 384 done (next).
 4. London: 4 of 421 done.
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BEG-PDW (Beltring to Paddock Wood).
+Next stretch in the order: ADM-BKS (Adisham to Bekesbourne).
 
 <!-- end of counts -->
 
@@ -117,6 +117,23 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 12, 40 stretches from Beltring to Paddock Wood through to
+  Adisham to Aylesham (Paddock Wood to Tonbridge, the South Eastern Main Line from Paddock Wood by Marden and
+  Staplehurst to Headcorn and Pluckley, the Maidstone line from Ashford by Charing, Lenham, Hollingbourne and Bearsted
+  to Maidstone East, then Barming, West Malling and Borough Green to Otford, the Marshlink line from Ashford by Ham
+  Street, Appledore, Rye and Winchelsea to Ore and Hastings, Hastings to West St Leonards, Ashford to Wye and to
+  Westenhanger, Sandling and Folkestone to Dover, and the Dover line from Dover Priory to Adisham); 561 of 2,376 done,
+  South East 256 of 384. Every fact checked against the article in `source` (`wiki_text.py`). Neighbours already
+  used got another item: Beltring to Paddock Wood (the Hop Farm is on Beltring to Yalding) has the John Brunt V.C.
+  pub; Kemsing to Otford (Otford Palace and the Roman villa are on the other Otford stretches) has Greatness
+  Brickworks; Barming to Maidstone East and Bearsted to Maidstone East (the Archbishop's Palace and Allington Castle
+  used) have Maidstone Museum and Mote Park. Passed over: the Staplehurst rail crash (1865) and the Marden collision
+  (1969), both fatal, and a 2021 murder at Snowdown; Becket's murder is not mentioned for Saltwood Castle, and the
+  Securitas robbery near Tonbridge was left for Somerhill House. Our own points, not sourced figures: Godinton Park
+  and Leeds Castle (inside or on the edge of the listed park), Oldbury hillfort, Winchelsea and Saltwood Castle
+  (inside the scheduled area, nearest the track), and where the Marshlink line crosses the Royal Military
+  Canal (`crosses`, where the track meets the scheduled area). Doleham is `station`. Hollingbourne House was dropped (its stated place on the hilltop doesn't match its point).
+  Step 8 done: 561 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 11, 40 stretches from Leigh to Penshurst through to
   Beltring to Yalding (the Redhill to Tonbridge line from Penshurst to Redhill, Coulsdon South to Redhill, Tonbridge
   by Hildenborough to Sevenoaks and Knockholt, the Maidstone line from Sevenoaks by Otford, Eynsford and Swanley to

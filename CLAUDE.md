@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 12 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Beltring to Paddock Wood through to Adisham to Aylesham (Paddock Wood to Pluckley and Tonbridge,
+  Ashford by Charing and Maidstone East to Otford, the Marshlink line to Hastings and West St Leonards, Ashford to
+  Wye, Folkestone and Dover, and Dover to Adisham); 561 of 2,376 done, South East 256 of 384. Next: ADM-BKS
+  (Adisham to Bekesbourne).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already
+  used next door replaced, fatal crashes and a murder passed over (COVERAGE.md says which). `to_site.py` run: 561
+  facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 11 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Leigh to Penshurst through to Beltring to Yalding (Redhill to Tonbridge, Sevenoaks, the Maidstone

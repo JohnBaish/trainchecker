@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-2041 of 2376 stretches done.
+2081 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -18,10 +18,10 @@ design/passes-near/COVERAGE.md and do the next batch."
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
-9. North West: 129 of 396 done (next).
+9. North West: 169 of 396 done (next).
 10. North East: 0 of 68 done.
 
-Next stretch in the order: LPY-RUN (Liverpool South Parkway to Runcorn).
+Next stretch in the order: CRE-SDB (Crewe to Sandbach).
 
 <!-- end of counts -->
 
@@ -117,6 +117,34 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 50, 40 stretches of the North West from Liverpool South Parkway
+  to Runcorn through to Holmes Chapel to Sandbach (the Liverpool branch of the West Coast Main Line over the Mersey to
+  Runcorn; the Cheshire Lines route from Liverpool South Parkway by Hunts Cross, Halewood, Hough Green, Widnes, Sankey for
+  Penketh, Warrington West, Warrington Central, Padgate, Birchwood, Glazebrook, Irlam, Flixton, Chassen Road, Urmston,
+  Humphrey Park and Trafford Park to Deansgate; Deansgate to Salford Central and Manchester Oxford Road; Manchester
+  Victoria to Salford Central, Moston, Ashton-under-Lyne and Ashburys; Ashburys to Ardwick; Ardwick to Manchester
+  Piccadilly and Mauldeth Road; Piccadilly to Oxford Road; the Styal line by Burnage, East Didsbury, Gatley and Heald Green
+  to Manchester Airport, Styal and Wilmslow; and the Crewe line from Wilmslow by Alderley Edge, Chelford, Goostrey and
+  Holmes Chapel to Sandbach); 2,081 of 2,376 done, North West 169 of 396. 40 items, none skipped. Kept: Ashburys to
+  Manchester Victoria (no train company on the map; not sure no passenger train uses it). Every fact checked against the
+  article in `source` (`wiki_text.py`). Station items for Hunts Cross, Hough Green, Warrington West, Padgate, Irlam,
+  Urmston, Humphrey Park and Manchester Airport, where nothing else as good was near; Runcorn Railway Bridge is `crosses`.
+  Jodrell Bank, the Arena and Manchester Cathedral sit near several stretches, so shared out (the Lovell Telescope,
+  Chetham's Library, the National Football Museum, the Etihad Stadium, St Luke's Church at Holmes Chapel and Twemlow Hall
+  for its neighbours). County boundaries (Merseyside into Cheshire, Cheshire into Greater Manchester) not used, as no
+  boundary point was to hand. Left out: deaths (the Manchester Arena and 1996 bombings, the Warrington bombings, the
+  Manchester Martyrs, the 1951 and 1957 air crashes near the airport). Points: Wikipedia's geotags, except Historic
+  England's list points for Allerton Hall, St Luke's Church (Farnworth), Warrington Town Hall, St Elphin's Church,
+  St Michael's Church (Flixton), Liverpool Road station (its station master's house), Manchester Cathedral, Chetham's
+  (the hospital), Store Street Aqueduct, Slade Hall, St Nicholas (Burnage), Parrs Wood House, The Towers, the Apprentice
+  House at Quarry Bank, St Bartholomew's (Wilmslow), St Philip's (Alderley Edge), Chorley Old Hall and St Luke's (Holmes
+  Chapel); the National Football Museum's point is the English Football Hall of Fame's geotag (the same Urbis building).
+  No point is our own calculation, and every distance is to the item's point. The farthest items are Allerton Hall (672
+  m), Barnes Hospital (646 m), Widnes War Memorial (546 m), the Apprentice House (543 m) and St Luke's, Holmes Chapel (525
+  m); the rest are within 520 m. `scripts/check-facts.ts`: Manchester to the Airport now has facts, so its "no fact yet"
+  check moved to Acklington to Alnmouth (the North East, not reached yet). Step 8 done: 2,057 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 49, 40 stretches of the North West from Leyland to Preston
   (Lancs) through to Brunswick to Liverpool Central (Leyland and Lostock Hall to Preston; Bamber Bridge to Lostock Hall

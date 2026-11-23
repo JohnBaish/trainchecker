@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 50 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Liverpool South Parkway to Runcorn through to Holmes Chapel to Sandbach (over the Mersey to Runcorn, the
+  Cheshire Lines route by Widnes, Warrington, Irlam and Urmston to Deansgate, round central Manchester, Ardwick and
+  Ashburys, the Styal line to Manchester Airport and Wilmslow, and Alderley Edge to Sandbach); 2,081 of 2,376 done, North
+  West 169 of 396. Next: CRE-SDB (Crewe to Sandbach).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; bombings
+  and air crashes passed over; no point is our own calculation. `check-facts.ts`'s "no fact yet" journey moved from
+  Manchester to the Airport (now has facts) to Acklington to Alnmouth. `to_site.py` run: 2,057 facts live with this push;
+  checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 49 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Leyland to Preston (Lancs) through to Brunswick to Liverpool Central (round Preston, Leyland and Bamber

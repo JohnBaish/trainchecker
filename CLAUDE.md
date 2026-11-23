@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 27 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Lidlington to Ridgmont through to Elsenham (Essex) to Stansted Mountfitchet (the Marston Vale line to
+  Woburn Sands, the West Coast Main Line from Tring to Watford Junction, the Abbey line, Chorleywood to Rickmansworth,
+  round Peterborough, the East Coast Main Line to Stevenage, the Cambridge line to Cambridge, and the West Anglia line
+  to Stansted Mountfitchet); 1,161 of 2,376 done, East of England 55 of 237. Next: BIS-SST (Bishops Stortford to
+  Stansted Mountfitchet).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Crashes and a murder
+  passed over; four points come from Historic England's list entries, none is our own calculation (COVERAGE.md says
+  which). `to_site.py` run: 1,161 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 26, London finished (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Brixton to Herne Hill through to Lidlington to Millbrook (Bedfordshire) (the last of London, round

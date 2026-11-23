@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1121 of 2376 stretches done.
+1161 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
 4. London: 421 of 421 done (done).
-5. East of England (East Anglia): 15 of 237 done (next).
+5. East of England (East Anglia): 55 of 237 done (next).
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: LID-RID (Lidlington to Ridgmont).
+Next stretch in the order: BIS-SST (Bishops Stortford to Stansted Mountfitchet).
 
 <!-- end of counts -->
 
@@ -117,6 +117,30 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 27, 40 stretches of the East of England from Lidlington to
+  Ridgmont through to Elsenham (Essex) to Stansted Mountfitchet (the Marston Vale line from Lidlington by Ridgmont and
+  Aspley Guise to Woburn Sands; the West Coast Main Line from Tring by Berkhamsted, Hemel Hempstead, Apsley and Kings
+  Langley to Watford Junction; the Abbey line from Watford Junction by Watford North, Garston, Bricket Wood, How Wood
+  and Park Street to St Albans Abbey; Chorleywood to Rickmansworth; Peterborough to Stamford and Whittlesea; the East
+  Coast Main Line from Peterborough by Huntingdon, St Neots, Sandy, Biggleswade and Arlesey to Hitchin and Stevenage;
+  the Cambridge line from Hitchin by Letchworth Garden City, Baldock, Ashwell & Morden, Royston, Meldreth, Shepreth
+  and Foxton to Cambridge South and Cambridge; and the West Anglia line from Cambridge South by Shelford, Whittlesford
+  Parkway, Great Chesterford, Audley End and Newport to Elsenham and Stansted Mountfitchet); 1,161 of 2,376 done, East
+  of England 55 of 237. Every fact checked against the article in `source` (`wiki_text.py`); nearby Wikipedia articles
+  were also listed from `wiki/gb-articles.tsv.gz`. The Spirella Building has no article of its own, so its facts come
+  from the Letchworth article. Passed over: the Bourne End, 1895 St Neots, Abbots Ripton and Connington South rail
+  crashes, and the murder of Ross Parker; Soul Survivor (closed after a scandal); Quendon Hall (more than 850 m away)
+  and Aspley Guise & Woburn Sands Golf Club (its name repeats both stations); Borough Hill, Sawston (an article of one
+  sentence). Three items are about a station's own place (Woburn Sands, Shepreth and
+  Elsenham), so the page leaves "Between X and Y" off them. Points are the articles' own, except four
+  from Historic England's list entries: the Möhne Dam model at the Building Research Establishment, Wilbury Hill Camp,
+  the Spirella Building and Therfield Heath (the five bowl barrows' entry). No point is our own calculation. The
+  farthest items are Moor Mill Quarry (723 m, a little more than the usual 700 m), the Royal Masonic School for Girls
+  (685 m), Royston Cave (660 m), the Six Hills (647 m), the Botanic Garden (631 m; its article's point, not the
+  garden's edge) and Spielplatz (616 m); the rest are within 600 m. The Watford Tunnels and the Nene Viaduct are
+  `crosses`; Husborne Crawley's old station is on the line, with no side. Step 8 done: 1,161 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 26, 40 stretches from Brixton to Herne Hill through to
   Lidlington to Millbrook (Bedfordshire), finishing London and starting the East of England (Brixton, Herne Hill,

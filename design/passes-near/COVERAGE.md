@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1081 of 2376 stretches done.
+1121 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
-4. London: 396 of 421 done (next).
-5. East of England (East Anglia): 0 of 237 done.
+4. London: 421 of 421 done (done).
+5. East of England (East Anglia): 15 of 237 done (next).
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BRX-HNH (Brixton to Herne Hill).
+Next stretch in the order: LID-RID (Lidlington to Ridgmont).
 
 <!-- end of counts -->
 
@@ -116,6 +116,31 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 26, 40 stretches from Brixton to Herne Hill through to
+  Lidlington to Millbrook (Bedfordshire), finishing London and starting the East of England (Brixton, Herne Hill,
+  Loughborough Junction and Denmark Hill; Cannon Street, Blackfriars and London Bridge to Waterloo East; Croydon to
+  Norwood Junction; Canonbury to Dalston; Bethnal Green and Hackney Wick to Lea Bridge; Hither Green, Ladywell, Lewisham
+  and St Johns; Grove Park to Hither Green and Lee; Barking to Stratford; Barnehurst to Crayford and Dartford; then the
+  Midland Main Line from Elstree & Borehamwood by Radlett, St Albans, Harpenden, Luton and Flitwick to Bedford and
+  Wellingborough, and the Marston Vale line from Bedford to Millbrook); 1,121 of 2,376 done, London 421 of 421
+  (finished), East of England 15 of 237. Every fact checked against the article in `source` (`wiki_text.py`); nearby
+  Wikipedia articles were also listed from `wiki/gb-articles.tsv.gz` (up to 700 m). Neighbours already used got another
+  item: the Maudsley Hospital, Southwark Cathedral, Holy Innocents South Norwood, Brookmill Road nature reserve, the River
+  Quaggy, Chinbrook Meadows, the Orbit, V&A East, Crayford Stadium, Slade Green Depot, Dartford Priory, Holy Trinity
+  Dartford, Gate Studios, the Union Chapel, Barking Abbey and the Theatre Royal Stratford East were passed over; within
+  the batch, Borough Market, the George Inn, the Rose and the Menier Chocolate Factory go one each to the four stretches
+  round London Bridge. The Migration Museum was passed over (it left Lewisham in 2025). Passed over: the 1981 Brixton
+  riot, the 1857 and 1957 Lewisham, 1898 St Johns, 1967 Hither Green and 2026 Bedford rail crashes, the 2017 and 2019
+  London Bridge attacks, the Marchioness disaster, the murder of Gordon Semple and the bombing of Sandhurst Road School.
+  Points are the articles' own, from Wikipedia's geotags, except St Mary's Church, Little Ilford (Historic England's
+  list entry point) and four calculated as the nearest point of Historic England's mapped outline: the park of Luton
+  Hoo (36 m), the grounds of Napsbury Hospital (20 m), Beech Bottom Dyke (21 m) and Waulud's Bank (179 m; the article's
+  point is 398 m away). The farthest items are the Forest of Marston Vale (550 m), Millbrook Proving Ground (535 m),
+  Stewartby (427 m), Trinity Green Almshouses (394 m), Kenilworth Road (391 m) and the Katherine cross (383 m); the rest
+  are within 375 m. Cannon Street to Waterloo East and London Bridge to Waterloo East have no train company on the map;
+  given items, not skipped. Step 8 done: 1,121 facts in `src/data/passes-near.json`; `npm run check` and `npm run
+  build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 25, 40 stretches of London from Elstree & Borehamwood to
   Mill Hill Broadway through to Brixton to Denmark Hill (the Midland Main Line from Elstree to Mill Hill; the Thameslink

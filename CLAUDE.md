@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 26, London finished (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Brixton to Herne Hill through to Lidlington to Millbrook (Bedfordshire) (the last of London, round
+  Brixton, London Bridge, Croydon, Dalston, Hackney Wick, Lewisham, Grove Park, Barking and Barnehurst, then the Midland
+  Main Line from Elstree to Bedford and Wellingborough and the Marston Vale line to Millbrook); 1,121 of 2,376 done,
+  London 421 of 421 (finished), East of England 15 of 237. Next: LID-RID (Lidlington to Ridgmont).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, crashes, riots and attacks passed over; four points are calculated from Historic England's mapped
+  outlines (COVERAGE.md says which). `to_site.py` run: 1,121 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 25 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Elstree & Borehamwood to Mill Hill Broadway through to Brixton to Denmark Hill (the Thameslink core

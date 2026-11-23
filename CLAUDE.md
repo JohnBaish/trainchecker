@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 43 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, East Garforth to Garforth through to Conisbrough to Doncaster (Garforth and Cross Gates to Leeds, Leeds to
+  Woodlesford and Outwood, round Wakefield, Pontefract and Castleford, by Burton Salmon to Sherburn-in-Elmet and Selby, the
+  Wakefield line to Doncaster, Selby and Micklefield to South Milford); 36 items and four stretches skipped (Doncaster over
+  the Hambleton Junction south-to-west curve: freight and occasional diversions only); 1,801 of 2,376 done, Yorkshire and
+  The Humber 127 of 238. Next: CNS-MEX (Conisbrough to Mexborough).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Neighbours' sights shared
+  out, mining disasters, the Barnbow explosion and other deaths passed over; no point is our own calculation.
+  `to_site.py` run: 1,784 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 42 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Berry Brow to Honley through to East Garforth to Micklefield (the Penistone line to Barnsley, Darton and

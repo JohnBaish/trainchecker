@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1761 of 2376 stretches done.
+1801 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -17,11 +17,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 5. East of England (East Anglia): 237 of 237 done (done).
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
-8. Yorkshire and The Humber: 87 of 238 done (next).
+8. Yorkshire and The Humber: 127 of 238 done (next).
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: EGF-GRF (East Garforth to Garforth).
+Next stretch in the order: CNS-MEX (Conisbrough to Mexborough).
 
 <!-- end of counts -->
 
@@ -117,6 +117,37 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 43, 40 stretches of Yorkshire and The Humber from East Garforth to
+  Garforth through to Conisbrough to Doncaster (East Garforth, Garforth and Cross Gates to Leeds; Leeds to Woodlesford and
+  Outwood; Outwood, Sandal & Agbrigg, Fitzwilliam, Normanton and Streethouse to the two Wakefield stations; Featherstone,
+  Streethouse and the Pontefract stations; Glasshoughton, Castleford, Woodlesford and Normanton; Castleford, the Pontefract
+  stations and Selby to Sherburn-in-Elmet and Selby by Burton Salmon and Gascoigne Wood; Moorthorpe, Fitzwilliam, South
+  Elmsall, Adwick and Bentley to Doncaster; Selby and Micklefield to South Milford; Conisbrough to Doncaster); 1,801 of 2,376
+  done, Yorkshire and The Humber 127 of 238. 36 items and four stretches skipped: Castleford to Doncaster, Doncaster to
+  Pontefract Monkhill, Doncaster to Pontefract Baghill and Doncaster to South Milford all run over the south-to-west curve at
+  Hambleton Junction, which the Hambleton Junction article says carries freight and only occasional diverted LNER trains.
+  Kept, though they have no train company on the map: Castleford, Pontefract Monkhill and Pontefract Baghill to Selby (by
+  Gascoigne Wood; not sure no passenger train uses them). Castleford to Sherburn-in-Elmet is now used by TransPennine
+  Express's Castleford to York trains (Castleford railway station's article). Every fact checked against the article in
+  `source` (`wiki_text.py`). Already used next door, so others chosen: Tower Works and Temple Works (so the Round Foundry and
+  Stank Hall Barn), the Chantry Chapel at Wakefield (so the Theatre Royal, the Hepworth and Kirkthorpe Hydro). Shared out
+  among neighbours: Wakefield (the prison, County Hall, the Theatre Royal, Belle Vue, the Hepworth), Pontefract (the castle,
+  the barracks, the Hermitage, the Prince of Wales Colliery), Castleford (Lagentium, Queen's Mill, Wheldon Road), Monk Fryston
+  (the hall and St Wilfrid's Church), Selby (the abbey, the toll bridge, Corunna House, Gascoigne Wood Mine), Fitzwilliam and
+  Kinsley. Passed over: the Barnbow explosion (so Austhorpe Hall for Cross Gates to Garforth, leaving out the death at its
+  Newcomen engine), the Beeston and Wheldale mining disasters, the Stank New Hall arson, the 1228 collapse of the bridge at
+  Ferrybridge and the Selby ferry sinking, and Tickle Cock Bridge for its name. Pontefract Priory was left out: Wikipedia's
+  point and Historic England's St John's Priory are on opposite sides of the line. One stretch has little near it but
+  its stations' own villages, so Fitzwilliam (Fitzwilliam to Moorthorpe) is about the station's own place. Points:
+  Historic England's list points for the listed buildings and scheduled monuments (Austhorpe Hall, the Corn Exchange, the
+  Round Foundry, Stank Hall Barn, Pontefract Castle, Corunna House, Doncaster Minster, Conisbrough Castle; facts from the
+  Wikipedia article in `source`), Wikipedia's geotags for the rest (Gascoigne Wood Mine's from the Selby Coalfield article);
+  no point is our own calculation, and every distance is to the item's point, so Pontefract Castle reads 441 m and
+  Conisbrough Castle 518 m (the scheduled areas' edges are nearer). For Walton, Methley, Fitzwilliam and Kinsley the point is
+  the place's geotag. The farthest items are St Mary's Church, South Milford (605 m), Walton (569 m) and Pontefract Barracks
+  (520 m); the rest are within 520 m. Step 8 done: 1,784 facts in `src/data/passes-near.json`; `npm run check` and
+  `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 42, 40 stretches of Yorkshire and The Humber from Berry Brow to
   Honley through to East Garforth to Micklefield (the Penistone line from Berry Brow by Honley, Brockholes, Stocksmoor,

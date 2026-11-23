@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 29 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Needham Market to Westerfield through to Alresford (Essex) to Great Bentley (round Ipswich, the Great
+  Eastern Main Line from Ipswich to Harold Wood, the Southend Victoria line, the Crouch Valley line, the Braintree branch,
+  the Gainsborough line to Sudbury, and Colchester by Hythe to Great Bentley); 1,241 of 2,376 done, East of England 135
+  of 237. Next: GRB-WEE (Great Bentley to Weeley).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Fatal crashes passed
+  over; no point is our own calculation (COVERAGE.md says which come from Historic England). `to_site.py` run: 1,241
+  facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 28 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Bishops Stortford to Stansted Mountfitchet through to Needham Market to Stowmarket (the West Anglia

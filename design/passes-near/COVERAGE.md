@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1201 of 2376 stretches done.
+1241 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
 4. London: 421 of 421 done (done).
-5. East of England (East Anglia): 95 of 237 done (next).
+5. East of England (East Anglia): 135 of 237 done (next).
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: NMT-WFI (Needham Market to Westerfield).
+Next stretch in the order: GRB-WEE (Great Bentley to Weeley).
 
 <!-- end of counts -->
 
@@ -117,6 +117,30 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 29, 40 stretches of the East of England from Needham Market to
+  Westerfield through to Alresford (Essex) to Great Bentley (Needham Market to Westerfield and Ipswich; the Great Eastern
+  Main Line from Ipswich by Manningtree, Colchester, Marks Tey, Kelvedon, Witham, Hatfield Peverel, Beaulieu Park and
+  Chelmsford to Ingatestone, Shenfield, Brentwood and Harold Wood; the Southend Victoria line from Shenfield by
+  Billericay, Wickford, Rayleigh, Hockley, Rochford, Southend Airport and Prittlewell to Southend Victoria; the Crouch
+  Valley line from Wickford by Battlesbridge, South Woodham Ferrers, North Fambridge, Althorne and Burnham-on-Crouch to
+  Southminster; the Braintree branch from Witham by White Notley, Cressing and Braintree Freeport to Braintree; the
+  Gainsborough line from Marks Tey by Chappel & Wakes Colne and Bures to Sudbury; and Colchester and Colchester Town by
+  Hythe to Wivenhoe, Alresford and Great Bentley); 1,241 of 2,376 done, East of England 135 of 237. Every fact checked
+  against the article in `source` (`wiki_text.py`); nearby Wikipedia articles were also listed from
+  `wiki/gb-articles.tsv.gz`. Three items take their facts from a wider article: Combretovium (the Baylham article), the
+  Golden Fleece (Brook Street, Essex) and St Etheldreda's church (White Notley). Rayleigh's sights are shared out
+  (Rayleigh Castle on Rayleigh to Wickford, the Dutch Cottage on Hockley to Rayleigh), and the Prittlewell burial and
+  Southend Central Museum, which shows its finds, go to neighbouring stretches. Passed over: the Witham rail crash (1905)
+  and the Little Cornard derailment (2010); Copford's church wall paintings (no position for the church). No point is our
+  own calculation: Combretovium's, the Golden Fleece's and St Etheldreda's are Historic England's list points (the
+  scheduled area at Baylham is 98 m from the track by its outline, its point 452 m), the rest Wikipedia's geotags. The
+  farthest items are Blue House Farm and St Etheldreda's church (both 752 m, a little more than the usual 700 m),
+  Brentwood Cathedral (687 m), Gainsborough's House (583 m), Witham's town hall (556 m) and Alec Hunter Academy (584 m);
+  the rest are within 540 m. Chappel Viaduct is `crosses`. North Fambridge to South Woodham Ferrers, Althorne to North
+  Fambridge, Colchester to Hythe and Colchester Town to Hythe have no train company on the map but carry Greater Anglia
+  trains; Needham Market to Westerfield (round Ipswich) may carry few regular passenger trains. All given items, none
+  skipped. Step 8 done: 1,241 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 28, 40 stretches of the East of England from Bishops
   Stortford to Stansted Mountfitchet through to Needham Market to Stowmarket (the West Anglia line from Stansted

@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-2241 of 2376 stretches done.
+2281 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -18,10 +18,10 @@ design/passes-near/COVERAGE.md and do the next batch."
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
-9. North West: 329 of 396 done (next).
+9. North West: 369 of 396 done (next).
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BBN-MLH (Blackburn to Mill Hill (Lancs)).
+Next stretch in the order: LGW-LZB (Langwathby to Lazonby & Kirkoswald).
 
 <!-- end of counts -->
 
@@ -117,6 +117,35 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 55, 40 stretches of the North West from Blackburn to Mill Hill
+  (Lancs) through to Armathwaite to Lazonby & Kirkoswald (Blackburn to Mill Hill, Cherry Tree and Pleasington to Bamber Bridge;
+  Blackburn to Rishton and the East Lancashire line by Church & Oswaldtwistle, Accrington, Huncoat, Hapton and Rose Grove to the
+  Burnley stations, Brierfield, Nelson and Colne; Burnley Manchester Road to Todmorden; the Ribble Valley line from Blackburn by
+  Ramsgreave & Wilpshire, Langho, Whalley and Clitheroe to Hellifield; Carnforth to Wennington and to Oxenholme; Oxenholme to
+  Penrith and Carlisle; Carlisle to Lockerbie and Gretna Green; the Cumbrian Coast from Carlisle by Dalston, Wigton, Aspatria,
+  Maryport, Flimby, Workington and Harrington to Parton and Whitehaven; Carlisle to Wetheral; and the Settle to Carlisle line from
+  Carlisle by Armathwaite to Lazonby & Kirkoswald); 2,281 of 2,376 done, North West 369 of 396. 40 items, none skipped. Kept:
+  Carnforth to Wennington and the Cumbrian Coast stretches with no train company on the map (passenger lines). Carlisle to
+  Lockerbie and to Gretna Green run into Scotland: their items, Carlisle Castle and Tullie House, are in Carlisle. Every fact
+  checked against the article in `source` (`wiki_text.py`). Gisburn Tunnel is `crosses`; Kemp Howe (Oxenholme to Penrith, 11 m)
+  and Milefortlet 25 (Flimby to Maryport, 5 m) are `near` with no side, as the track runs over or beside them. Whalley Viaduct
+  has no position in the index (and its article tells of deaths in building it), so Whalley Abbey; Corby Bridge (Wetheral
+  Viaduct) is east of Wetheral, on the next stretch, so Carlisle Turkish baths for Carlisle to Wetheral. The Carlisle items shared
+  out (Castle, Tullie House, Citadel, Turkish baths); Penrith Castle passed over for St Mary's Church, Wreay, and Carnforth MPD
+  (used next door). Items naming the stretch's own stations avoided where there was a choice, or the station's name left out of
+  the text (Todmorden's Unitarian church, St Mary's Church in Nelson, St James' Church in Whitehaven, Brookfield for Wigton School,
+  Lowca for the raid on Lowca and Parton); kept for John to note: Clitheroe Castle, Whalley Abbey, Hapton Castle, River Brun
+  (Burnley's name) and St Michael's Church, Workington. Left out: the Grayrigg, Shap, Tebay, Wennington, Quintinshill and
+  Kirtlebridge rail crashes, Hapton Valley Colliery, the Whalley Viaduct collapse, the man-eating crocodile at Cardew Lodge and
+  the 2026 cannabis find at St Mary's, Nelson. Hapton Castle's point is Historic England's list point (437 m), with the fact from
+  the Hapton article; the Spigot mortar position (346 m) was passed over as its facts couldn't be checked. Points: Wikipedia's
+  geotags, except Historic England's list points for Blackburn Cathedral, Hoghton Tower, Hapton Castle and Kemp Howe (the Shap
+  large regular stone circle). No point is our own calculation, and every distance is to the item's point; Gisburn Tunnel's
+  geotag is 102 m from the track it carries (a rounded point), Lowca's (28 m) and Bullgill's (48 m) are villages' points. The
+  farthest items are Shuttleworth Hall (652 m), St Gabriel's Church (628 m) and the River Blakewater (488 m, its article's
+  point); the rest are within 460 m. Step 8 done: 2,256 facts in `src/data/passes-near.json`; `npm run check` and `npm run
+  build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 54, 40 stretches of the North West from Hyde Central to Hyde North
   through to Blackburn to Darwen (the Hyde loop by Woodley, Romiley and Bredbury; Brinnington, Reddish Vale and Reddish North to

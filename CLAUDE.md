@@ -71,6 +71,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 55 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Blackburn to Mill Hill (Lancs) through to Armathwaite to Lazonby & Kirkoswald (round Blackburn, the East Lancashire
+  line by Accrington and Burnley to Colne, Burnley to Todmorden, the Ribble Valley line to Hellifield, Carnforth to Wennington and
+  Oxenholme, the West Coast Main Line to Penrith and Carlisle and on towards Lockerbie and Gretna Green, the Cumbrian Coast from
+  Carlisle to Whitehaven, Carlisle to Wetheral, and the Settle to Carlisle line to Lazonby); 2,281 of 2,376 done, North West 369 of
+  396. Next: LGW-LZB (Langwathby to Lazonby & Kirkoswald).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; rail crashes and a
+  colliery passed over; no point is our own calculation (four are Historic England's list points). For John: Clitheroe Castle,
+  Whalley Abbey, Hapton Castle, River Brun and St Michael's Church, Workington name a station's town. `to_site.py` run: 2,256
+  facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 54 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Hyde Central to Hyde North through to Blackburn to Darwen (the Hyde loop, Reddish Vale, Marple, Rose Hill and

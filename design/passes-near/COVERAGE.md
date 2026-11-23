@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1161 of 2376 stretches done.
+1201 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
 4. London: 421 of 421 done (done).
-5. East of England (East Anglia): 55 of 237 done (next).
+5. East of England (East Anglia): 95 of 237 done (next).
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BIS-SST (Bishops Stortford to Stansted Mountfitchet).
+Next stretch in the order: NMT-WFI (Needham Market to Westerfield).
 
 <!-- end of counts -->
 
@@ -117,6 +117,31 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 28, 40 stretches of the East of England from Bishops
+  Stortford to Stansted Mountfitchet through to Needham Market to Stowmarket (the West Anglia line from Stansted
+  Mountfitchet by Bishops Stortford, Sawbridgeworth, Harlow Mill, Harlow Town and Roydon to Broxbourne, Cheshunt and
+  Waltham Cross, and Cheshunt to Theobalds Grove and Turkey Street; the Hertford East branch from Broxbourne by Rye
+  House, St Margarets and Ware to Hertford East; the Stansted Airport branch from Stansted Mountfitchet and Elsenham;
+  Cambridge to Cambridge North, Waterbeach and Ely, and Cambridge to Dullingham and Newmarket; round Ely to Manea,
+  March, Whittlesea, Shippea Hill, Soham and Littleport, with the two curves Littleport to Manea and Manea to Shippea
+  Hill; the Fen line from Littleport by Downham Market and Watlington to Kings Lynn; Soham to Kennett, Newmarket and
+  Bury St Edmunds; and Bury St Edmunds by Thurston and Elmswell to Stowmarket, with Diss and Needham Market to
+  Stowmarket); 1,201 of 2,376 done, East of England 95 of 237. Every fact checked against the article in `source`
+  (`wiki_text.py`); nearby Wikipedia articles were also listed from `wiki/gb-articles.tsv.gz`. Neighbours already used
+  got another item: Mountfitchet Castle (on Elsenham to Stansted Mountfitchet) and the Eleanor Cross at Waltham Cross
+  (on Enfield Lock to Waltham Cross) were passed over; within the batch, Theobalds and Cedars Park go to one stretch
+  only (Theobalds Grove to Turkey Street), and the Ely stretches share out Ely Cathedral, the 2021 Boat Race, Queen
+  Adelaide, Prickwillow, Ely Pits and Meadows and Hawk Bridge. Passed over: the Soham rail disaster and the Stowmarket
+  Guncotton Explosion (both fatal); Bishop's Stortford Museum (Cecil Rhodes's birthplace), for Thorley Wash; the Food
+  Museum at Stowmarket (more than 700 m from the line by its article's point). Every point is its article's own, from
+  Wikipedia's geotags, except Devil's Dyke's, which is our own calculation: the nearest point of Historic England's
+  mapped outline to the track (7 m; the railway cutting is left out of the scheduled area). The farthest items are the
+  Lee Valley White Water Centre (714 m, a little more than the usual 700 m), Ely Cathedral (693 m), Denver Windmill
+  (660 m) and the Glen Chalk Caves (556 m); the rest are within 460 m. Hawk Bridge and Devil's Dyke are `crosses`.
+  Littleport to Manea and Manea to Shippea Hill (curves round Ely that may carry no regular passenger train) and Kennett
+  to Soham (no train company on the map, though Ipswich to Peterborough trains use it) were given items, not skipped.
+  Step 8 done: 1,201 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 27, 40 stretches of the East of England from Lidlington to
   Ridgmont through to Elsenham (Essex) to Stansted Mountfitchet (the Marston Vale line from Lidlington by Ridgmont and

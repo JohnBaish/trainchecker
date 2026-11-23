@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 28 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Bishops Stortford to Stansted Mountfitchet through to Needham Market to Stowmarket (the West Anglia
+  line to Cheshunt and Waltham Cross, the Hertford East branch, the Stansted Airport branch, Cambridge to Waterbeach,
+  Ely and Newmarket, round Ely, March and Whittlesea, the Fen line to Kings Lynn, Soham to Bury St Edmunds, and on to
+  Stowmarket, Diss and Needham Market); 1,201 of 2,376 done, East of England 95 of 237. Next: NMT-WFI (Needham Market
+  to Westerfield).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, the Soham and Stowmarket explosions passed over; Devil's Dyke's point is our own calculation
+  (COVERAGE.md says which). `to_site.py` run: 1,201 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 27 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Lidlington to Ridgmont through to Elsenham (Essex) to Stansted Mountfitchet (the Marston Vale line to

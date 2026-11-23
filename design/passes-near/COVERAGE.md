@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1641 of 2376 stretches done.
+1681 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -16,12 +16,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 4. London: 421 of 421 done (done).
 5. East of England (East Anglia): 237 of 237 done (done).
 6. East Midlands: 140 of 140 done (done).
-7. West Midlands: 158 of 191 done (next).
-8. Yorkshire and The Humber: 0 of 238 done.
+7. West Midlands: 191 of 191 done (done).
+8. Yorkshire and The Humber: 7 of 238 done (next).
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BKT-SEN (Blake Street to Shenstone).
+Next stretch in the order: HLD-LPR (Hellifield to Long Preston).
 
 <!-- end of counts -->
 
@@ -117,6 +117,34 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 40, the last 33 stretches of the West Midlands and the first
+  seven of Yorkshire and The Humber, from Blake Street to Shenstone through to Horton-in-Ribblesdale to Ribblehead (the
+  Cross-City line from Shenstone by Blake Street, Butlers Lane, Four Oaks, Sutton Coldfield, Wylde Green, Chester Road and
+  Erdington to Gravelly Hill; Burton-on-Trent to Lichfield Trent Valley, Tamworth and Willington; Tamworth, Polesworth,
+  Atherstone and Nuneaton; Nuneaton to Bermuda Park, Bedworth and Coventry Arena, and to Hinckley; Banbury to Leamington
+  Spa; the Stourbridge Town branch; Yorton, Wem, Prees and Whitchurch; Droitwich Spa to both Worcester stations; Langley
+  Green, Hamstead and New Street to Smethwick Rolfe Street and Hamstead; Kings Norton and Bournville to Pineapple Road;
+  Claverdon to Lapworth; then the Bentham line from Wennington by Bentham, Clapham and Giggleswick to Long Preston, and the
+  Settle to Carlisle line from Long Preston by Settle and Horton-in-Ribblesdale to Ribblehead); 1,681 of 2,376 done, West
+  Midlands 191 of 191 (finished), Yorkshire and The Humber 7 of 238. 38 items and two stretches skipped: Wellington to
+  Welshpool and Church Stretton to Wellington run over the Abbey Foregate loop, which avoids Shrewsbury station and,
+  Shrewsbury railway station's article says, carries freight and occasional specials but no regular passenger trains.
+  Every fact checked against the article in `source` (`wiki_text.py`). Kept, though few passenger trains use them: Burton
+  to Lichfield Trent Valley (by Wichnor Junction: one or two Birmingham to Derby trains a day, the Lichfield Trent Valley
+  article says), New Street to Hamstead and Kings Norton to Pineapple Road. Already used next door, so others chosen:
+  Pinley Priory, Shrewley Tunnel and Kingswood (so Shrewley village for Claverdon to Lapworth), Kings Norton Stop Lock and
+  Cadbury World (so Lifford Reservoir and Hazelwell), Galton Bridge, Chance's glassworks, Summit Bridge and the Engine Arm
+  Aqueduct (so the Ruskin Pottery and Soho Foundry), Tamworth Castle, Worcester Cathedral and the Commandery. Stourbridge
+  Town has the station itself (`station`). Passed over: the Sutton Coldfield, Nuneaton and Wennington Junction rail crashes,
+  and Alvecote Priory's founding story. Points: Historic England's list points for the listed buildings and scheduled
+  monuments (facts from the Wikipedia article in `source`; Mancetter's church from Mancetter, Hazlitt House from Wem, The
+  Folly from Settle, the Hoffmann kiln from Langcliffe), Wikipedia's geotags for the rest; no point is our own calculation.
+  Two distances are to Historic England's points rather than to the areas' edges: the Hoffmann kiln (190 m; the scheduled
+  area reaches the line) and Polesworth Abbey (555 m). The Battle of Cropredy Bridge's point was 1.4 km away, so Cropredy
+  village (159 m) instead; the Ribblehead construction camps' point was 792 m away, so Ribblehead Quarry. The farthest items
+  are Mediolanum (625 m), the Sutton Coldfield transmitting station (582 m) and Hawkesbury Junction (569 m); the rest are
+  within 560 m. Step 8 done: 1,668 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 39, 40 stretches of the West Midlands from Henley-in-Arden to
   Wootton Wawen through to Lichfield City to Shenstone (the North Warwickshire line to Wilmcote and Stratford-upon-Avon;

@@ -71,6 +71,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 40, the West Midlands finished (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Blake Street to Shenstone through to Horton-in-Ribblesdale to Ribblehead (the last 33 of the West
+  Midlands: the Cross-City line to Gravelly Hill, round Burton, Tamworth and Nuneaton, Banbury to Leamington, the
+  Stourbridge Town branch, Wem and Whitchurch, Droitwich to Worcester, round Smethwick and Pineapple Road; then the
+  Bentham line and the Settle to Carlisle line to Ribblehead); 38 items and two stretches skipped (over the Abbey Foregate
+  loop at Shrewsbury); 1,681 of 2,376 done, West Midlands 191 of 191 (finished), Yorkshire and The Humber 7 of 238. Next:
+  HLD-LPR (Hellifield to Long Preston).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Neighbours' sights shared
+  out, three rail crashes passed over; no point is our own calculation (the Hoffmann kiln's and Polesworth Abbey's
+  distances are to Historic England's points). `to_site.py` run: 1,668 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 39 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Henley-in-Arden to Wootton Wawen through to Lichfield City to Shenstone (Stratford-upon-Avon and its

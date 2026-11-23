@@ -8,12 +8,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1001 of 2376 stretches done.
+1041 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
-4. London: 316 of 421 done (next).
+4. London: 356 of 421 done (next).
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: IFD-MNP (Ilford to Manor Park).
+Next stretch in the order: ELS-MIL (Elstree & Borehamwood to Mill Hill Broadway).
 
 <!-- end of counts -->
 
@@ -117,6 +117,35 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 24, 40 stretches of east and north London from Ilford to Manor
+  Park through to Hendon to Mill Hill Broadway (the Great Eastern Main Line from Manor Park by Ilford, Seven Kings,
+  Goodmayes and Chadwell Heath to Romford, Gidea Park and Harold Wood; the Romford to Upminster line by Emerson Park;
+  Barking to Upminster, Dagenham Dock and Barking Riverside; Dagenham Dock by Rainham to Purfleet, and Upminster to
+  Ockendon; the Gospel Oak to Barking line from Woodgrange Park by Wanstead Park, Leytonstone High Road, Leyton Midland
+  Road, Walthamstow Queen's Road and Blackhorse Road to South Tottenham and Harringay Green Lanes; the Chingford line from
+  Clapton by St James Street, Walthamstow Central, Wood Street and Highams Park to Chingford; Camden Road to Kentish Town
+  West, South Hampstead and St Pancras; the Watford DC line from Euston by South Hampstead and Kilburn High Road to
+  Queens Park and Kensal Green; and the Midland Main Line from St Pancras by Kentish Town, West Hampstead Thameslink,
+  Cricklewood, Brent Cross West and Hendon to Mill Hill Broadway); 1,041 of 2,376 done, London 356 of 421. Every fact
+  checked against the article in `source` (`wiki_text.py`). Neighbours already used got another item: Kensal Green
+  Cemetery (on two stretches already) gave way to Kensal Rise Library, and Woodgrange Park and Manor Park cemeteries,
+  Walthamstow Marshes, the Markfield Beam Engine, Harringay Arena, the Kiln Theatre and Keats House were passed over;
+  within the batch, Hare Hall goes to Gidea Park to Harold Wood (Romford Market to Gidea Park to Romford), Eastbury
+  Manor House to Barking to Dagenham Dock (Barking Abbey to Barking Riverside to Barking), Upminster Windmill to Barking
+  to Upminster (Hornchurch Cutting to Emerson Park to Upminster), Rainham Hall and St Helen and St Giles one each, and
+  St Pancras Old Church to Camden Road to St Pancras (Coal Drops Yard to Kentish Town to St Pancras). Passed over: the
+  1915 and 1944 Ilford rail crashes, the Freshwater Road fire, the Leytonstone tube station attack, the killing of Mark
+  Duggan, the Staples Corner bombing, the Ladbroke Grove rail crash and the murder of Richard Everitt; Wanstead Park,
+  whose article's point is 1.5 km away; and items known here only from Historic England's list, whose pages can't be
+  read from here (Chestnuts House, the Purfleet magazine, the Soane tomb on its own). Points are the articles' own, from
+  Wikipedia's geotags, except three from Historic England's list: the City of London Cemetery (the park's entry point,
+  534 m; its edge is 16 m from the line), the Alexandra Road Estate and the Isokon Flats (the article's point for the
+  estate, 139 m away, would have given it a side; the list's is beside the line). No point is our own calculation. The
+  farthest items are Barking Abbey (574 m), the City of London Cemetery (534 m), St Peter-in-the-Forest (499 m) and
+  Romford Market (475 m); the rest are within 410 m. Hornchurch Cutting and the Primrose Hill tunnels are `crosses`,
+  Welsh Harp (closed in 1903) a `station` item, and the Alexandra Road Estate is beside the line with no side. Camden
+  Road to South Hampstead and Camden Road to St Pancras have no train company on the map; given items, not skipped.
+  Step 8 done: 1,041 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 23, 40 stretches of south-east and east London from Bickley to
   Petts Wood through to Forest Gate to Manor Park (the Bickley and Chislehurst loops to Petts Wood and St Mary Cray, St
   Mary Cray to Swanley; Chislehurst by Elmstead Woods to Grove Park, Sundridge Park and Bromley North; Petts Wood by

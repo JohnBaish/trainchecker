@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 24 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Ilford to Manor Park through to Hendon to Mill Hill Broadway (the Great Eastern Main Line to Harold Wood,
+  Romford to Upminster, Barking to Upminster, Dagenham Dock, Rainham and Purfleet, the Gospel Oak to Barking line, the
+  Chingford line, round Camden Road, the Watford DC line to Kensal Green, and the Midland Main Line to Mill Hill
+  Broadway); 1,041 of 2,376 done, London 356 of 421. Next: ELS-MIL (Elstree & Borehamwood to Mill Hill Broadway).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, crashes, attacks and a murder passed over; no point is our own calculation (COVERAGE.md says
+  which come from Historic England). `to_site.py` run: 1,041 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 23 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Bickley to Petts Wood through to Forest Gate to Manor Park (the Bickley and Chislehurst loops, Grove

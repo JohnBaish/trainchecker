@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1441 of 2376 stretches done.
+1481 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
 4. London: 421 of 421 done (done).
 5. East of England (East Anglia): 237 of 237 done (done).
-6. East Midlands: 98 of 140 done (next).
+6. East Midlands: 138 of 140 done (next).
 7. West Midlands: 0 of 191 done.
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BSN-HBB (Boston to Hubberts Bridge).
+Next stretch in the order: DRO-GRN (Dronfield to Grindleford).
 
 <!-- end of counts -->
 
@@ -117,6 +117,43 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 35, 40 stretches of the East Midlands from Boston to
+  Hubberts Bridge through to Leicester to Market Harborough (Boston to Hubberts Bridge; the line to Skegness by Thorpe
+  Culvert, Wainfleet and Havenhouse; the joint line from Peterborough to Spalding and on by Ruskington and Metheringham to
+  Lincoln; Lincoln to Saxilby, Hykeham and Market Rasen, and on by Barnetby to Brigg; the East Coast Main Line from
+  Grantham to Peterborough; Gainsborough Central to Kirton Lindsey; the Derwent Valley line from Belper by Ambergate,
+  Whatstandwell, Cromford and Matlock Bath to Matlock; Chesterfield by Dronfield to Dore & Totley; Syston by Melton
+  Mowbray and Oakham to Stamford, and Corby to Oakham over the Welland Viaduct; Corby, Market Harborough and
+  Wellingborough to Kettering; Banbury to Kings Sutton; the West Coast Main Line from Rugby to Wolverton and the
+  Northampton loop by Long Buckby and Northampton; Glossop to Hadfield; Leicester to Market Harborough); 1,481 of 2,376
+  done, East Midlands 138 of 140. 37 items, every fact checked against the article in `source` (`wiki_text.py`); nearby
+  Wikipedia articles were also listed from `wiki/gb-articles.tsv.gz`. Three stretches skipped, with reasons in `skipped`
+  (the first entries there): Lichfield Trent Valley, Tamworth and Burton-on-Trent to Market Harborough run over the
+  Leicester to Burton freight line, as their South Wigston twins (skipped in batch 32) do. Kept: Ruskington to Spalding (the
+  Sleaford avoiding line; no train company on the map, and Lincoln to Peterborough trains may call at Sleaford instead);
+  Corby to Oakham, which the Welland Viaduct article says carries two return trains each weekday between Melton Mowbray
+  and London; Glossop to Hadfield past Dinting, which Glossop's trains to Hadfield use after reversing (the station
+  article lists Hadfield as Glossop's next stop); Leicester to Market Harborough, the Midland Main Line itself, shorter than
+  the way by South Wigston, which is on the Birmingham line. Neighbouring stretches share sights out: in Boston, the
+  Guildhall (to Hubberts Bridge) and the Stump (to Thorpe Culvert); in Wainfleet, Batemans Brewery (Thorpe Culvert) and
+  Magdalen College School (Havenhouse); in Lincoln, St Mary le Wigford (Hykeham), the Stonebow (Saxilby), Greyfriars
+  (Metheringham) and Monks Abbey (Market Rasen); Belper North Mill and the Great British Car Journey either side of
+  Ambergate; Leawood Pump House, Lovers' Walks and the Heights of Abraham cable car on the three stretches by Cromford and
+  Matlock Bath; Kilsby Tunnel (Rugby to Wolverton) and Wolverton Viaduct (Northampton to Wolverton). Passed over: the
+  Wrawby Junction rail crashes (1898 and 1983), the Nocton rail crash, Toadmoor Tunnel (it may be on the main line beside
+  Ambergate rather than the Matlock branch), North Road at Glossop (used on Dinting to Glossop), Welford Road (Leicester to
+  South Wigston) and St Martin's, Stamford (Peterborough to Stamford). No point is our own calculation: Boston's Stump,
+  Rowston church, Greyfriars, the Stonebow, St Mary le Wigford, St Pega's church, Tapton House, Ashwell church, Oakham
+  Castle, the Triangular Lodge, Tooley's Boatyard and Northampton Castle use Historic England's list points (facts from
+  the Wikipedia article in `source`; Rowston's church from the Rowston article, St Pega's from Peakirk, Magdalen College
+  School from Wainfleet All Saints); the rest are Wikipedia's geotags, some rounded (Sheffield F.C.'s ground, Monks Abbey,
+  which is the priory article's point, and the epicentre of the 2008 Market Rasen earthquake). Three crossings: Stoke Bank,
+  the Welland Viaduct and Wolverton Viaduct, with Kilsby Tunnel (`crosses`; its article's point is 44 m from the track).
+  The farthest items are Boston Guildhall (589 m), Tooley's Boatyard (488 m) and Oakham Castle (449 m); the rest are
+  within 420 m. Some items are about one of the stretch's own stations' places (the Stump, Wainfleet's school, the
+  Leicester museum), so the page may add no "Between …". Step 8 done: 1,470 facts in `src/data/passes-near.json`;
+  `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 34, 40 stretches of the East Midlands from Creswell to
   Whitwell (Derbyshire) through to Hubberts Bridge to Swineshead (the Robin Hood line from Creswell by Whitwell to

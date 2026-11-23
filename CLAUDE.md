@@ -71,6 +71,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 35 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Boston to Hubberts Bridge through to Leicester to Market Harborough (Boston and the Skegness line, the
+  joint line from Peterborough by Spalding to Lincoln, round Lincoln to Market Rasen and Brigg, Grantham to Peterborough,
+  the Derwent Valley line, Chesterfield to Dore, Syston to Stamford, Corby and Kettering, Banbury to Kings Sutton, the
+  West Coast Main Line from Rugby and the Northampton loop, Glossop to Hadfield); 37 items and three stretches skipped
+  (to Market Harborough over the Leicester to Burton freight line); 1,481 of 2,376 done, East Midlands 138 of 140. Next:
+  DRO-GRN (Dronfield to Grindleford).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Neighbours' sights
+  shared out, three rail crashes passed over; no point is our own calculation (COVERAGE.md says which come from
+  Historic England). `to_site.py` run: 1,470 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 34 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Creswell to Whitwell (Derbyshire) through to Hubberts Bridge to Swineshead (Worksop and Retford, the

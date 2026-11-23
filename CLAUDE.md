@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 21 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Balham to Mitcham Eastfields through to Brockley to Honor Oak Park (Mitcham and Hackbridge, Streatham,
+  Herne Hill, Tulse Hill and the Dulwich and Norwood stations, round Crystal Palace, Penge and Beckenham, Norwood
+  Junction to Croydon, Purley, Coulsdon and Kenley, the Oxted line to Upper Warlingham, and Anerley to Honor Oak Park);
+  921 of 2,376 done, London 236 of 421. Next: BCY-NXG (Brockley to New Cross Gate).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, crashes, a stabbing and the Croydon poisonings passed over; no point is our own calculation
+  (COVERAGE.md says which come from Historic England). `to_site.py` run: 921 facts live with this push; checks and
+  build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 20 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Bruce Grove to White Hart Lane through to Balham to Tooting (the Enfield Town and Cheshunt lines, the

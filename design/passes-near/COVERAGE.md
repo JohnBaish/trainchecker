@@ -8,12 +8,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-881 of 2376 stretches done.
+921 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
-4. London: 196 of 421 done (next).
+4. London: 236 of 421 done (next).
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BAL-MTC (Balham to Mitcham Eastfields).
+Next stretch in the order: BCY-NXG (Brockley to New Cross Gate).
 
 <!-- end of counts -->
 
@@ -117,6 +117,31 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 21, 40 stretches of south London from Balham to Mitcham
+  Eastfields through to Brockley to Honor Oak Park (Balham and Streatham to Mitcham Eastfields and Mitcham Junction, by
+  Hackbridge to Carshalton; Streatham Common to Streatham; Balham to Streatham Hill; Herne Hill by Tulse Hill and West
+  Dulwich, West Norwood to Gipsy Hill and Crystal Palace; Sydenham Hill by Penge East and Kent House to Beckenham
+  Junction and Birkbeck; Crystal Palace to Birkbeck, Norwood Junction and Sydenham; Norwood Junction by Selhurst to East
+  Croydon, South Croydon, Purley Oaks and Purley; Purley by Reedham to Coulsdon Town, Woodmansterne and Coulsdon South,
+  and Purley by Kenley to Whyteleafe; South Croydon by Sanderstead and Riddlesdown to Upper Warlingham; and Norwood
+  Junction by Anerley, Penge West, Sydenham and Forest Hill to Honor Oak Park and Brockley); 921 of 2,376 done, London
+  236 of 421. Every fact checked against the article in `source` (`wiki_text.py`). Neighbours already used got another
+  item: Tooting Bec Lido, The Bedford, Streatham Ice and Leisure Centre, the Herne Hill Velodrome, Carshalton House,
+  Croydon Common Athletic Ground and RAF Kenley (its fighter pens) are on stretches next door, so these have the site of
+  Battersea Grammar School, Oakleigh Way, St Leonard's Church, the Half Moon, Wilderness Island, No. 1 Croydon (the "50p
+  Building") and Whyteleafe instead; within the batch, Crystal Palace Park is shared out (the Dinosaurs, the National
+  Sports Centre and the transmitting station), and Riddlesdown and Riddlesdown Common take the two stretches by
+  Riddlesdown. Passed over: the 2020 Streatham stabbing, the Purley rail crash, the 1924 and 1928 Imperial Airways
+  crashes, the Croydon poisonings and the 1913 arson at Sanderstead station; St Bartholomew's, Sydenham, the Newe Ditch
+  on Riddlesdown and the Streatham waterworks pumping station, known here only from Historic England's list, whose pages
+  can't be read from here; and Riddlesdown Tunnel, which has no sourced position. Points from Historic England's list
+  rather than an article: the Half Moon, Dulwich College's main building, Six Pillars, St George's Church, Beckenham,
+  St John the Evangelist, Upper Norwood, Holy Innocents, South Norwood, the Croydon, Merstham and Godstone Railway's
+  embankment at Coulsdon (the list entry the Surrey Iron Railway article cites) and the Horniman Museum. West Norwood
+  Cemetery takes its article's point (the middle), not the nearest edge of the listed park; the Croydon Canal item takes
+  Betts Park's point. No point is our own calculation. The farthest items are Mitcham Cricket Green (585 m), the
+  Horniman Museum (561 m) and Whitgift School (550 m); the rest are within 500 m. Coulsdon Town is a `station` item.
+  Step 8 done: 921 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 20, 40 stretches of north, east and south London from Bruce
   Grove to White Hart Lane through to Balham to Tooting (the Enfield Town and Cheshunt lines from Bruce Grove by White
   Hart Lane, Silver Street, Edmonton Green and Bush Hill Park to Enfield Town, and by Southbury to Turkey Street; Clapton

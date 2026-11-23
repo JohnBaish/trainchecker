@@ -8,11 +8,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-641 of 2376 stretches done.
+681 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
-3. South East: 336 of 384 done (next).
+3. South East: 376 of 384 done (next).
 4. London: 4 of 421 done.
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BLY-MKC (Bletchley to Milton Keynes Central).
+Next stretch in the order: AHS-ERI (Ashurst (Kent) to Eridge).
 
 <!-- end of counts -->
 
@@ -117,6 +117,26 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 15, 40 stretches from Bletchley to Milton Keynes Central
+  through to Ashurst (Kent) to Cowden (Kent) (the West Coast Main Line from Wolverton by Milton Keynes Central, Bletchley,
+  Leighton Buzzard and Cheddington to Tring, the Marston Vale line from Bletchley by Fenny Stratford and Bow Brickhill to
+  Woburn Sands, the Island Line from Ryde Pier Head to Shanklin, the Shepperton branch from Hampton, the Tattenham Corner
+  line from Woodmansterne, Banstead to Epsom Downs and Belmont, the Quarry line from Coulsdon Town to Earlswood, Earlswood
+  by Salfords to Horley, the Caterham branch, and the Oxted line from Upper Warlingham by Oxted to East Grinstead and
+  Ashurst); 681 of 2,376 done, South East 376 of 384. Every fact checked against the article in `source`
+  (`wiki_text.py`). Neighbours already used got another item: Bletchley Park (on Bicester Village to Bletchley) gave way
+  to the National Bowl on Bletchley to Milton Keynes Central, the Royal Earlswood Hospital (on Earlswood to Redhill) to
+  East Surrey Hospital, and Jaques of London (on Edenbridge to Penshurst) to the Eden Valley Museum; Red Bull Racing went
+  to Bow Brickhill to Woburn Sands (184 m) rather than Bow Brickhill to Fenny Stratford, which has Magiovinium. Passed
+  over: the Cowden rail crash (1994, fatal) and Emily Davison's death at Tattenham Corner (1913). Smallbrook Junction,
+  Shepperton, Upper Halliford, Woodmansterne and Woldingham are `station`, those stretches having nothing better that
+  could be checked. Our own points, not sourced figures: the nearest edges of the scheduled areas for Magiovinium (599
+  m), Sandown Barrack Battery, Brading Roman villa, the Gally Hills barrows, Farthing Downs and the RAF Kenley fighter
+  pens (576 m); and Oxted Tunnel and Limpsfield Tunnel (`crosses`), placed on the track 1.2 km and 400 m from Oxted, as
+  no source gives their positions. Epsom College (583 m) and Magiovinium are the farthest items. Bletchley to Fenny
+  Stratford (the Marston Vale line, no train company on the map) and Coulsdon Town to Earlswood (the Quarry line) were
+  given items, as with earlier such stretches. Step 8 done: 681 facts in `src/data/passes-near.json`; `npm run check`
+  and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 14, 40 stretches from Dover Priory to Martin Mill through to
   Bicester North to Kings Sutton (Dover Priory to Martin Mill, the Seaford branch from Southease by Newhaven to Seaford,
   Egham to Staines, the Windsor branch from Staines by Wraysbury and Datchet to Windsor & Eton Riverside, Ashford

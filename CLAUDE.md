@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 15 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Bletchley to Milton Keynes Central through to Ashurst (Kent) to Cowden (Kent) (the West Coast Main Line
+  from Wolverton to Tring, the Marston Vale line to Woburn Sands, the Island Line, the Shepperton branch, the Tattenham
+  Corner and Epsom Downs branches, the Quarry line, the Caterham branch, the Oxted line to East Grinstead and Ashurst);
+  681 of 2,376 done, South East 376 of 384. Next: AHS-ERI (Ashurst (Kent) to Eridge).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, fatal events passed over; eight points are our own calculation (COVERAGE.md says which).
+  `to_site.py` run: 681 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 14 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Dover Priory to Martin Mill through to Bicester North to Kings Sutton (the Seaford branch, the Windsor

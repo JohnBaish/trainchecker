@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1601 of 2376 stretches done.
+1641 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -16,12 +16,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 4. London: 421 of 421 done (done).
 5. East of England (East Anglia): 237 of 237 done (done).
 6. East Midlands: 140 of 140 done (done).
-7. West Midlands: 118 of 191 done (next).
+7. West Midlands: 158 of 191 done (next).
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: HNL-WWW (Henley-in-Arden to Wootton Wawen).
+Next stretch in the order: BKT-SEN (Blake Street to Shenstone).
 
 <!-- end of counts -->
 
@@ -117,6 +117,28 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 39, 40 stretches of the West Midlands from Henley-in-Arden to
+  Wootton Wawen through to Lichfield City to Shenstone (the North Warwickshire line to Wilmcote and Stratford-upon-Avon;
+  Bearley, Claverdon and Hatton; the Chiltern line from Lapworth by Dorridge, Widney Manor, Solihull, Olton and Acocks
+  Green to Tyseley; Hatton, Warwick Parkway, Warwick and Leamington Spa; Kenilworth and Coventry; the West Coast Main Line
+  from Coventry by Canley, Tile Hill, Berkswell, Hampton-in-Arden, Birmingham International, Marston Green and Lea Hall to
+  Stechford and Adderley Park; Coventry Arena; Coventry to Rugby, and Nuneaton to Rugby; Coleshill Parkway to Nuneaton and
+  Water Orton; Water Orton, Coleshill Parkway, Wilnecote and Tamworth; the Trent Valley line from Tamworth by Lichfield
+  Trent Valley to Rugeley Trent Valley; Lichfield City); 1,641 of 2,376 done, West Midlands 158 of 191. 40 items, none
+  skipped, every fact checked against the article in `source` (`wiki_text.py`). Kept, though they may carry few regular
+  passenger trains: Coleshill Parkway to Wilnecote (by Whitacre and Kingsbury) and Nuneaton to Rugby (no train company on
+  the map, but the Trent Valley line). Already used next door, so others chosen: Mary Arden's Farm (Bearley to Wilmcote, so
+  the village's quarries for Stratford Parkway to Wilmcote), Edstone Aqueduct (Wilmcote to Wootton Wawen, so St Peter's
+  Church for Henley), Beaudesert Castle, Tyseley Locomotive Works and Holy Trinity, Coventry; Whitacre Pumping Station went
+  to Coleshill Parkway to Wilnecote, so Nuneaton Priory for Coleshill Parkway to Nuneaton. Packwood House was passed over
+  (only its park, with a middle point, was a candidate), so Kingswood. Bearley to Claverdon has the station itself
+  (`station`). Passed over: the Knowle and Dorridge, Stechford and Nuneaton rail crashes, and the deaths at Ford's Hospital
+  in 1940. Points: Historic England's list points for the listed buildings and scheduled monuments (facts from the
+  Wikipedia article in `source`), Wikipedia's geotags for the rest. For Nuneaton Priory, the distance is that of Historic
+  England's point for the scheduled area (474 m, worked out by `check.py`), not the candidate's 199 m to the area's edge.
+  The farthest items are Lichfield Cathedral (691 m), Ford's Hospital (670 m) and Tamworth Castle (615 m); the rest are
+  within 600 m. Step 8 done: 1,630 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 38, 40 stretches of the West Midlands from Smethwick Galton
   Bridge to Smethwick Rolfe Street through to Danzey to Henley-in-Arden (round Smethwick and The Hawthorns; the Snow Hill

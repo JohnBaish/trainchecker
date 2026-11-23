@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 39 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Henley-in-Arden to Wootton Wawen through to Lichfield City to Shenstone (Stratford-upon-Avon and its
+  branch, the Chiltern line from Hatton to Tyseley, Warwick and Leamington, Coventry, the West Coast Main Line to
+  Stechford, Coventry to Rugby and Nuneaton, round Water Orton and Tamworth, the Trent Valley line to Rugeley Trent
+  Valley, Lichfield); 1,641 of 2,376 done, West Midlands 158 of 191. Next: BKT-SEN (Blake Street to Shenstone).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; rail
+  crashes passed over; Nuneaton Priory's distance is to Historic England's point (474 m), not the area's edge.
+  `to_site.py` run: 1,630 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 38 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Smethwick Galton Bridge to Smethwick Rolfe Street through to Danzey to Henley-in-Arden (round Smethwick,

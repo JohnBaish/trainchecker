@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1321 of 2376 stretches done.
+1361 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
 4. London: 421 of 421 done (done).
-5. East of England (East Anglia): 215 of 237 done (next).
-6. East Midlands: 0 of 140 done.
+5. East of England (East Anglia): 237 of 237 done (done).
+6. East Midlands: 18 of 140 done (next).
 7. West Midlands: 0 of 191 done.
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: ETL-SFO (East Tilbury to Stanford-le-Hope).
+Next stretch in the order: NBR-SWS (Narborough to South Wigston).
 
 <!-- end of counts -->
 
@@ -117,6 +117,39 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 32, 40 stretches from East Tilbury to Stanford-le-Hope
+  through to Burton-on-Trent to South Wigston, finishing the East of England and starting the East Midlands (the London,
+  Tilbury and Southend line from East Tilbury by Stanford-le-Hope to Pitsea, and from Upminster by West Horndon, Laindon,
+  Basildon, Pitsea, Benfleet, Leigh-on-Sea, Chalkwell, Westcliff, Southend Central, Southend East and Thorpe Bay to
+  Shoeburyness; Watford High Street and Bushey to Watford Junction; Colchester Town to Colchester; Ipswich to Mistley;
+  then the Hope Valley line from New Mills Central by Chinley, Edale, Hope, Bamford and Hathersage to Grindleford, the
+  Glossop line from Broadbottom by Dinting to Hadfield and Glossop, and the Buxton line from New Mills Newtown by Furness
+  Vale, Whaley Bridge, Chapel-en-le-Frith and Dove Holes to Buxton); 1,361 of 2,376 done, East of England 237 of 237
+  (finished), East Midlands 18 of 140. 33 items, every fact checked against the article in `source` (`wiki_text.py`).
+  Seven stretches skipped, with reasons in `skipped` (the first entries there): Brundall Gardens to Wymondham, Salhouse
+  to Wymondham, Diss to Salhouse and Brundall Gardens to Diss run through Norwich, a terminus where every train stops and
+  reverses; Lichfield Trent Valley, Tamworth and Burton-on-Trent to South Wigston are the Leicester to Burton freight line
+  by Coalville. Kept, though possibly avoiding lines: Watford High Street to Watford Junction (the DC line), Bushey to
+  Watford Junction, Colchester Town to Colchester, and Ipswich to Mistley (the curve avoiding Manningtree, perhaps used by
+  few or no passenger trains). Neighbours already used got another item: Mistley Towers (on Mistley to Manningtree), so
+  the Willis Building for Ipswich to Mistley; Vicarage Road and Oxhey Chapel (near Bushey), so St Matthew's, Oxhey;
+  Upminster Windmill (Barking to Upminster), so St Laurence's Church; within the batch, St Margaret of Antioch at
+  Stanford-le-Hope was passed over for the Bata shoe factory and All Saints, Vange, Cliffs Pavilion goes to Southend
+  Central to Westcliff (the Palace Theatre on Chalkwell to Westcliff), Southchurch Hall to Southend East to Thorpe Bay
+  (the Cliff Railway on Southend Central to Southend East), Torr Vale Mill to New Mills Central to Strines (Bugsworth Basin
+  on Chinley to New Mills Central), and Navio to Bamford to Hope (Edale's church on Edale to Hope). Passed over: the
+  Watford rail crash, the Padley martyrs (Padley Gorge used, not the chapel), Reginald Warneford's memorial at Oxhey, and
+  the Cliffs Pavilion's tribute concert. No point is our own calculation: the Danish Camp, the Bull Ring, the Whaley Bridge
+  warehouse, the Willis Building, Hathersage church, Colchester Castle's keep and Southchurch Hall use Historic England's
+  list points (their facts from the Wikipedia article in `source`); the rest are Wikipedia's geotags, some rounded
+  (Hadfield, Langdon Nature Reserve, Torrs Hydro). The Danish Camp's text gives Hastein's camp of about 894 as a separate
+  fact, as the article does not say it was the same site. Two crossings: Cowburn Tunnel and Dinting Viaduct (`crosses`).
+  The farthest items are Hathersage church (740 m, a little more than the usual 700 m, for Little John's grave), the
+  Willis Building (709 m), the Palace Theatre (687 m), Gloucester Park (680 m) and Torrs Hydro (665 m); the rest are
+  within 645 m. Some items are about one of the stretch's own stations' places (Hadfield, Basildon Town Centre, Edale's
+  church), so the page may add no "Between …". Step 8 done: 1,354 facts in `src/data/passes-near.json`; `npm run check`
+  and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 31, 40 stretches of the East of England from Brandon to
   Lakenheath through to East Tilbury to Tilbury Town (the Breckland line from Brandon by Lakenheath to Shippea Hill; Diss

@@ -71,6 +71,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 32, the East of England finished (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, East Tilbury to Stanford-le-Hope through to Burton-on-Trent to South Wigston (the London, Tilbury and
+  Southend line to Shoeburyness, Watford, Colchester Town, Ipswich to Mistley, then the Hope Valley, Glossop and Buxton
+  lines in Derbyshire); 33 items and seven stretches skipped (four through Norwich, a terminus; three on the Leicester
+  to Burton freight line); 1,361 of 2,376 done, East of England 237 of 237 (finished), East Midlands 18 of 140. Next:
+  NBR-SWS (Narborough to South Wigston).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, the Watford rail crash and the Padley martyrs passed over; no point is our own calculation
+  (COVERAGE.md says which come from Historic England). `to_site.py` run: 1,354 facts live with this push; checks and
+  build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 31 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Brandon to Lakenheath through to East Tilbury to Tilbury Town (the Breckland line to Shippea Hill,

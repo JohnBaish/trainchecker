@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 25 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Elstree & Borehamwood to Mill Hill Broadway through to Brixton to Denmark Hill (the Thameslink core
+  from St Pancras to Elephant & Castle and Loughborough Junction, the lines round Battersea, Vauxhall, Clapham and
+  Victoria, Waterloo to Charing Cross and Waterloo East, Teddington, Wembley Central, Finsbury Park to St Pancras and
+  King's Cross, Purley and Streatham Hill); 1,081 of 2,376 done, London 396 of 421. Next: BRX-HNH (Brixton to Herne
+  Hill).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, crashes, attacks and fires passed over; no point is our own calculation (COVERAGE.md says which
+  are a district's or a cemetery's middle). `to_site.py` run: 1,081 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 24 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Ilford to Manor Park through to Hendon to Mill Hill Broadway (the Great Eastern Main Line to Harold Wood,

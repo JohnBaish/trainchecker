@@ -8,12 +8,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1041 of 2376 stretches done.
+1081 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
-4. London: 356 of 421 done (next).
+4. London: 396 of 421 done (next).
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: ELS-MIL (Elstree & Borehamwood to Mill Hill Broadway).
+Next stretch in the order: BRX-HNH (Brixton to Herne Hill).
 
 <!-- end of counts -->
 
@@ -117,6 +117,36 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 25, 40 stretches of London from Elstree & Borehamwood to
+  Mill Hill Broadway through to Brixton to Denmark Hill (the Midland Main Line from Elstree to Mill Hill; the Thameslink
+  core from St Pancras and King's Cross by City Thameslink and Blackfriars to Elephant & Castle and Loughborough
+  Junction; the tangle of lines round Battersea Park, Queenstown Road, Wandsworth Road, Clapham High Street, Vauxhall,
+  Imperial Wharf, Clapham Junction and Victoria; Waterloo to Vauxhall, Charing Cross and Waterloo East; Fulwell and
+  Strawberry Hill to Teddington; Drayton Green to Hanwell; Kensal Green, Harlesden and Shepherd's Bush to Wembley
+  Central; Camden Road and Caledonian Road & Barnsbury to Finsbury Park and St Pancras; Finsbury Park to King's Cross;
+  Coulsdon Town to Purley; Streatham Hill to Tulse Hill and West Norwood; and Brixton to Clapham High Street and
+  Denmark Hill); 1,081 of 2,376 done, London 396 of 421. Every fact checked against the article in `source`
+  (`wiki_text.py`). The candidates for central London were all Historic England entries, so Wikipedia's nearby articles
+  were also listed from the committed `wiki/gb-articles.tsv.gz` (up to 700 m). Neighbours already used got another
+  item: Kensal Green Cemetery, St Pancras Old Church, Coal Drops Yard, HM Prison Pentonville, the Wharncliffe Viaduct,
+  Strawberry Hill House, the Falcon, St Luke's Church and West Norwood Cemetery, the Purley Council Offices, the Fulwell
+  bus garage and Battersea Railway Bridge were passed over; within the batch, the 16 stretches round Battersea and
+  Vauxhall share out Battersea Power Station, the Dogs & Cats Home, Longhedge Works, Grosvenor Bridge, Chelsea Bridge,
+  the Grosvenor Canal, 575 Wandsworth Road, St Paul's Clapham, the Grand, the Brown Dog's Latchmere Recreation Ground,
+  the Shaftesbury Park Estate, Lots Road Power Station, the US Embassy, New Covent Garden Market and the London
+  Necropolis station, one each. Passed over: the King's Cross fire, the 1945 King's Cross, 1937 Battersea Park, 1984
+  Wembley Central and 1989 Purley rail crashes, the 1928 Vickers Vulcan crash, the Vauxhall helicopter crash, the 2000
+  MI6 attack, the Chelsea Barracks bombing, the Finsbury Park van attack, the Grenfell Tower fire and the death of
+  Gareth Williams. Every point is its article's own, from Wikipedia's geotags; Smithfield Market's is the Smithfield
+  district's (157 m), and Teddington Cemetery's is its middle (133 m; Historic England puts its edge 12 m from the
+  line). No point is our own calculation. The farthest items are the Brown Dog's recreation ground (331 m), Lots Road
+  Power Station (328 m), Streatham Hill Theatre (271 m) and 575 Wandsworth Road (250 m); the rest are within 240 m.
+  Blackfriars Railway Bridge, Grosvenor Bridge and Hungerford Bridge are `crosses`, as is the Gasworks Tunnel, and
+  Drayton Green is a `station` item. Charing Cross to Waterloo, Drayton Green to Hanwell, Imperial Wharf to Queenstown
+  Road and to Victoria, Clapham Junction to Victoria, Queenstown Road to Vauxhall, Vauxhall to Wandsworth Road,
+  Caledonian Road & Barnsbury to Camden Road, and Streatham Hill to Tulse Hill and to West Norwood have no train
+  company on the map; given items, not skipped. Step 8 done: 1,081 facts in `src/data/passes-near.json`; `npm run
+  check` and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 24, 40 stretches of east and north London from Ilford to Manor
   Park through to Hendon to Mill Hill Broadway (the Great Eastern Main Line from Manor Park by Ilford, Seven Kings,
   Goodmayes and Chadwell Heath to Romford, Gidea Park and Harold Wood; the Romford to Upminster line by Emerson Park;

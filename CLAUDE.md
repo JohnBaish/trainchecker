@@ -71,6 +71,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 53 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Cheadle Hulme to Handforth through to Guide Bridge to Hyde North (Stockport and its lines, the Mid-Cheshire line
+  from Stockport by Altrincham and Knutsford to Greenbank, Chinley to Hazel Grove, the Buxton line, Levenshulme and Ardwick, the
+  Reddish line, Guide Bridge to Gorton and Ashburys, the lines round Miles Platting, the Calder Valley line by Rochdale and Summit
+  Tunnel to Walsden, and Ashton to Stalybridge and Hyde North); 2,201 of 2,376 done, North West 289 of 396. Next: HYC-HYT (Hyde
+  Central to Hyde North).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Chinley to Navigation Road
+  skipped (the freight-only Midland line by Cheadle Heath); for John, three curves round Miles Platting given items though they
+  may carry no regular passenger trains. Deaths and disasters passed over; no point is our own calculation. `to_site.py` run:
+  2,176 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 52 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Helsby to Ince & Elton (Cheshire) through to Bramhall to Cheadle Hulme (Chester to Helsby and Mouldsworth, the

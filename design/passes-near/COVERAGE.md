@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-2161 of 2376 stretches done.
+2201 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -18,10 +18,10 @@ design/passes-near/COVERAGE.md and do the next batch."
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
-9. North West: 249 of 396 done (next).
+9. North West: 289 of 396 done (next).
 10. North East: 0 of 68 done.
 
-Next stretch in the order: CHU-HTH (Cheadle Hulme to Handforth).
+Next stretch in the order: HYC-HYT (Hyde Central to Hyde North).
 
 <!-- end of counts -->
 
@@ -117,6 +117,32 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 53, 40 stretches of the North West from Cheadle Hulme to Handforth
+  through to Guide Bridge to Hyde North (Cheadle Hulme to Handforth, Wilmslow and Stockport; the Mid-Cheshire line from Stockport
+  by Navigation Road, Altrincham, Hale, Ashley, Mobberley, Knutsford, Plumley and Lostock Gralam to Northwich and Greenbank; the
+  Hope Valley line from Chinley to Hazel Grove; the Buxton line by Woodsmoor and Davenport to Stockport; Stockport to Heaton Chapel,
+  Levenshulme and Ardwick; the Reddish line by Reddish South and Denton to Guide Bridge; Guide Bridge by Fairfield and Gorton to
+  Ashburys and Belle Vue; the lines round Miles Platting between Ashburys, Ashton-under-Lyne and Moston; the Calder Valley line by
+  Mills Hill, Castleton, Rochdale and Smithy Bridge to Littleborough and through Summit Tunnel to Walsden; and Ashton-under-Lyne and
+  Guide Bridge to Stalybridge and Hyde North); 2,201 of 2,376 done, North West 289 of 396. 39 items; one skipped: Chinley to
+  Navigation Road (CLY-NVR, 30 km, the old Midland line by Disley Tunnel and Cheadle Heath, freight only). Kept: Altrincham to
+  Navigation Road and to Hale, Ashley to Hale, Knutsford to Mobberley, Greenbank to Northwich and Ashburys to Gorton (no train
+  company on the map; passenger lines), and three possible curves round Miles Platting, given items though they may carry no
+  regular passenger trains (for John): Ashburys to Moston (no train company on the map), Ashburys to Ashton-under-Lyne and
+  Ashton-under-Lyne to Moston. Every fact checked against the article in `source` (`wiki_text.py`). Stockport Viaduct and Summit
+  Tunnel are `crosses`. Already used next door, so others chosen: St Bartholomew's, Wilmslow (Styal to Wilmslow), so Handforth Hall
+  for Handforth to Wilmslow and Cheadle Hulme School for Cheadle Hulme to Handforth; Slade Hall and the Etihad Stadium. Left out:
+  Stepping Hill Hospital (the poisonings there), the Manchester Martyrs' ambush by the Ardwick line, the Astley Deep Pit disaster,
+  the Ashton munitions explosion, the deaths building Summit Tunnel and the 1984 fire, and the collapse of a viewing platform at
+  Ashton's war memorial. Clegg Hall (Rochdale to Smithy Bridge) and Houldsworth Mill (Reddish) have no article in the index, so
+  St Chad's Church and the Hat Works instead. Points: Wikipedia's geotags, except Historic England's list points for Handforth Hall,
+  Baguley Hall, Brook Street Chapel, Holford Hall, St Helen's (Witton), Torr Vale Mill, the Stockport War Memorial Art Gallery,
+  Stockport Viaduct, St Elisabeth's (Reddish), Foxdenton Hall, Elm Street School, St John the Baptist (Rochdale), St Chad's
+  (Rochdale), Stubley Old Hall, Ashton-under-Lyne War Memorial, St Michael and All Angels (Ashton) and Old Hall Chapel. No point is
+  our own calculation, and every distance is to the item's point. The farthest items are Foxdenton Hall (677 m), Stockport School
+  (649 m), St Helen's at Witton (629 m), Holford Hall (594 m) and St Chad's (562 m); the rest are within 490 m. Step 8 done: 2,176
+  facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 52, 40 stretches of the North West from Helsby to Ince & Elton
   (Cheshire) through to Bramhall to Cheadle Hulme (Helsby to Ince & Elton; Chester to Helsby and to Mouldsworth; the Mid-Cheshire

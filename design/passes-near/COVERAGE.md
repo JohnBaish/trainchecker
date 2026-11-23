@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1281 of 2376 stretches done.
+1321 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
 4. London: 421 of 421 done (done).
-5. East of England (East Anglia): 175 of 237 done (next).
+5. East of England (East Anglia): 215 of 237 done (next).
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: BND-LAK (Brandon to Lakenheath).
+Next stretch in the order: ETL-SFO (East Tilbury to Stanford-le-Hope).
 
 <!-- end of counts -->
 
@@ -117,6 +117,40 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 31, 40 stretches of the East of England from Brandon to
+  Lakenheath through to East Tilbury to Tilbury Town (the Breckland line from Brandon by Lakenheath to Shippea Hill; Diss
+  to Norwich; the Bittern line from Norwich by Salhouse, Hoveton & Wroxham, Worstead, North Walsham, Gunton and Roughton
+  Road to Cromer, West Runton and Sheringham; the Wherry line from Brundall by Lingwood and Acle to Great Yarmouth, and
+  Berney Arms to Great Yarmouth and Reedham; Lowestoft to Oulton Broad North; the East Coast Main Line from Stevenage by
+  Knebworth, Welwyn North, Welwyn Garden City, Hatfield, Welham Green, Brookmans Park and Potters Bar to Hadley Wood; the
+  Hertford loop from Stevenage by Watton-at-Stone, Hertford North, Bayford and Cuffley to Crews Hill; the Watford DC line
+  from Watford High Street by Bushey and Carpenders Park to Hatch End; High Speed 1 from Ebbsfleet International to
+  Rainham; and the Tilbury lines from Purfleet by Grays, Chafford Hundred Lakeside and Ockendon, and Grays by Tilbury Town
+  to East Tilbury); 1,321 of 2,376 done, East of England 215 of 237. Every fact checked against the article in `source`
+  (`wiki_text.py`); nearby Wikipedia articles were also listed from `wiki/gb-articles.tsv.gz`. Neighbours already used got
+  another item: the Six Hills (on Hitchin to Stevenage) for Broadhall Way and Stevenage's clock tower, Rainham Hall and
+  St Helen and St Giles (on Dagenham Dock and Purfleet to Rainham) and Baker's Hole (on Ebbsfleet to Gravesend) for High
+  House, Purfleet, on Ebbsfleet to Rainham, and Carrow Road and Trowse Swing Bridge near Norwich for Forncett's church
+  and the Rosary Cemetery; within the batch, Cromer Hall goes to Cromer to Roughton Road only (the West Runton Mammoth's
+  cliffs on Cromer to West Runton), Acle church to Acle to Lingwood only (Stracey Arms on Acle to Great Yarmouth), Berney
+  Arms Windmill to Berney Arms to Great Yarmouth (Polkey's Mill on Berney Arms to Reedham), and the State Cinema to Grays
+  to Tilbury Town (Lakeside on Chafford Hundred to Grays). Passed over: the Welwyn Tunnel, Hatfield (2000 and 1870) and
+  Potters Bar rail crashes, and the Essex lorry deaths; Cromer Tunnel (its article's point, 304 m from the line, doesn't
+  fit a tunnel said to pass under this line); the HS1 Thames tunnel (no position in the index). Two points are our own
+  calculation, from Historic England's mapped outlines: the nearest edge of Tilbury Fort's scheduled area (291 m; the
+  fort's middle is 873 m) and the nearest of the four scheduled sections of Grim's Ditch (47 m, on the right; one other
+  section is 376 m away on the left). The wayside cross by Norwich Road, North Walsham, and High House's dovecote use
+  Historic England's points, taken as the relocated battle cross by the town's water works and as High House from their
+  list titles; the rest are Historic England's list points or Wikipedia's geotags (the Rosary Cemetery's, Berney Arms
+  Windmill's, Bayfordbury Observatory's, Tolmers Park's and Potters Bar Tunnel's from their articles). Two crossings:
+  Digswell Viaduct and Potters Bar Tunnel (`crosses`). The farthest items are Brandon (715 m, a little more than the usual
+  700 m, the town's point), Tolmers Park (644 m), Berney Arms Windmill (611 m) and Bayfordbury Observatory (570 m); the
+  rest are within 560 m. Some items are about one of the stretch's own stations' places (Brandon, Brookmans Park,
+  Cuffley, Watton-at-Stone's church, North Walsham's church), so the page may add no "Between …". Ebbsfleet International
+  to Rainham is High Speed 1 running past Rainham with no station of its own there; the Wherry line stretches have no
+  train company on the map but carry Greater Anglia trains; all given items, none skipped. Step 8 done: 1,321 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 30, 40 stretches of the East of England from Great Bentley
   to Weeley through to Brandon to Thetford (the Sunshine Coast line from Great Bentley by Weeley and Thorpe-le-Soken to

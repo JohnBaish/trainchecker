@@ -71,6 +71,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 31 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Brandon to Lakenheath through to East Tilbury to Tilbury Town (the Breckland line to Shippea Hill,
+  Diss to Norwich, the Bittern line to Sheringham, the Wherry line to Great Yarmouth and Reedham, Lowestoft, the East
+  Coast Main Line from Stevenage to Hadley Wood, the Hertford loop to Crews Hill, the Watford DC line, Ebbsfleet to
+  Rainham, and the Tilbury lines); 1,321 of 2,376 done, East of England 215 of 237. Next: ETL-SFO (East Tilbury to
+  Stanford-le-Hope).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, the rail crashes near Welwyn, Hatfield and Potters Bar passed over; two points (Tilbury Fort's
+  scheduled area, Grim's Ditch's nearest section) are our own calculation from Historic England's outlines
+  (COVERAGE.md says which). `to_site.py` run: 1,321 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 30 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Great Bentley to Weeley through to Brandon to Thetford (the Sunshine Coast and Mayflower lines, round

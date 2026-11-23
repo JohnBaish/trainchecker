@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1681 of 2376 stretches done.
+1721 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -17,11 +17,11 @@ design/passes-near/COVERAGE.md and do the next batch."
 5. East of England (East Anglia): 237 of 237 done (done).
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
-8. Yorkshire and The Humber: 7 of 238 done (next).
+8. Yorkshire and The Humber: 47 of 238 done (next).
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: HLD-LPR (Hellifield to Long Preston).
+Next stretch in the order: BBW-HOY (Berry Brow to Honley).
 
 <!-- end of counts -->
 
@@ -117,6 +117,32 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 41, 40 stretches of Yorkshire and The Humber from Hellifield to
+  Long Preston through to Berry Brow to Lockwood (Hellifield to Long Preston; the Airedale line from Hellifield by Gargrave,
+  Skipton, Cononley, Steeton & Silsden, Keighley, Crossflatts, Bingley and Saltaire to Shipley; Frizinghall, Baildon and
+  Apperley Bridge to Shipley; Apperley Bridge and Guiseley to Kirkstall Forge; the Wharfedale line by Baildon, Guiseley,
+  Menston, Burley-in-Wharfedale and Ben Rhydding to Ilkley; Kirkstall Forge and Bramley to Leeds; Bramley, New Pudsey and
+  Bradford Interchange; Bradford Interchange, Low Moor and Halifax; the Calder Valley line from Halifax by Sowerby Bridge,
+  Mytholmroyd, Hebden Bridge and Todmorden to Walsden; Brighouse to Sowerby Bridge, Halifax, Mirfield and Deighton; Deighton
+  to Huddersfield; Huddersfield to Slaithwaite and Marsden; Huddersfield, Lockwood and Berry Brow); 1,721 of 2,376 done,
+  Yorkshire and The Humber 47 of 238. 40 items, none skipped (none of the 40 is a possible avoiding line; several have no
+  train company on the map, but all carry passenger trains). Every fact checked against the article in `source`
+  (`wiki_text.py`). Already used next door, so another chosen: St Mary's Church, Long Preston (so the engine shed for
+  Hellifield to Long Preston). Shared out among neighbours: Saltaire (the church and Salts Mill), Halifax (Shibden Hall, the
+  Piece Hall and the Minster), Huddersfield (the station itself, `station`, for Deighton to Huddersfield, and the George
+  Hotel for Huddersfield to Lockwood), Todmorden (the Town Hall and Dobroyd Castle). Thackley Tunnel and Lockwood Viaduct are
+  `crosses`; Hebden Bridge's old signal box is on the line, so has no side. Passed over: the Esholt Junction and Low Moor
+  disasters, the Colne Bridge Mill fire and the Huddersfield factory fire. High Royds Hospital's points (the park's middle,
+  784 m, and the article's, about 800 m) were too far, so the High Royds Hospital Railway (340 m) instead. Points: Historic
+  England's list points for the listed buildings and scheduled monuments (facts from the Wikipedia article in `source`: the
+  Kirk Sink villa from Gargrave, Kildwick Bridge from Kildwick, the Manor House from Ilkley), Wikipedia's geotags for the
+  rest; no point is our own calculation, and every distance is worked out from the item's point (the Kirk Sink villa 179 m to
+  Historic England's point, rather than the candidate's 116 m to the area's edge). Two facts with differing figures in their
+  articles were written to avoid them: Tuel Lane Lock's fall (19 feet 5 inches or 8.5 inches, so "about six metres") and
+  Thackley Tunnel's length (left out). The farthest items are the Ben Rhydding Hydro (570 m), the Manor House (490 m) and the
+  Wool Exchange (475 m); the rest are within 430 m. Step 8 done: 1,708 facts in `src/data/passes-near.json`; `npm run check`
+  and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 40, the last 33 stretches of the West Midlands and the first
   seven of Yorkshire and The Humber, from Blake Street to Shenstone through to Horton-in-Ribblesdale to Ribblehead (the

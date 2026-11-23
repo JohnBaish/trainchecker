@@ -71,6 +71,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 41 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Hellifield to Long Preston through to Berry Brow to Lockwood (the Airedale line from Hellifield to Shipley,
+  Shipley to Leeds, the Wharfedale line to Ilkley, round Bradford, Halifax and Brighouse, the Calder Valley line to Walsden,
+  and Huddersfield to Slaithwaite and Berry Brow); 1,721 of 2,376 done, Yorkshire and The Humber 47 of 238. Next: BBW-HOY
+  (Berry Brow to Honley).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; disasters and
+  fires passed over; no point is our own calculation. `to_site.py` run: 1,708 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 40, the West Midlands finished (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Blake Street to Shenstone through to Horton-in-Ribblesdale to Ribblehead (the last 33 of the West

@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 17 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches of south and south-west London, Isleworth to Syon Lane through to Balham to Wandsworth Common (Putney
+  and Wandsworth, Clapham Junction to Wimbledon and Surbiton, the Kingston loop, the Chessington branch, the Sutton
+  loop and lines round Sutton, Wallington and West Croydon, Selhurst to Balham); 761 of 2,376 done, London 76 of 421.
+  Next: CLJ-WSW (Clapham Junction to Wandsworth Common).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. Items already used
+  next door replaced, fatal crashes and a murder passed over; no point is our own calculation (COVERAGE.md says which
+  come from Historic England). `to_site.py` run: 761 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 16, the South East finished (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Ashurst (Kent) to Eridge through to Brentford to Syon Lane (the Uckfield branch, Littlehampton, Sandwich

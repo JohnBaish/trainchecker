@@ -8,12 +8,12 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-721 of 2376 stretches done.
+761 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
-4. London: 36 of 421 done (next).
+4. London: 76 of 421 done (next).
 5. East of England (East Anglia): 0 of 237 done.
 6. East Midlands: 0 of 140 done.
 7. West Midlands: 0 of 191 done.
@@ -21,7 +21,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: ISL-SYL (Isleworth to Syon Lane).
+Next stretch in the order: CLJ-WSW (Clapham Junction to Wandsworth Common).
 
 <!-- end of counts -->
 
@@ -117,6 +117,25 @@ stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
 
+- November 23rd 2026 (Claude Code, scheduled task): batch 17, 40 stretches of south and south-west London from
+  Isleworth to Syon Lane through to Balham to Wandsworth Common (Isleworth to Syon Lane; Barnes by Putney and Wandsworth
+  Town to Clapham Junction; the main line from Clapham Junction by Earlsfield to Wimbledon and Raynes Park, New Malden,
+  Berrylands and Surbiton; the Kingston loop from New Malden by Norbiton and Kingston to Hampton Wick and Teddington;
+  the Chessington branch from Motspur Park by Malden Manor and Tolworth to Chessington South; Motspur Park to Worcester
+  Park; the Sutton loop from Wimbledon by Wimbledon Chase, South Merton, Morden South, St Helier, Sutton Common and West
+  Sutton to Sutton; Cheam, Belmont, Carshalton and Carshalton Beeches to Sutton; Carshalton Beeches by Wallington and
+  Waddon to West Croydon; and Selhurst by Thornton Heath and Norbury to Streatham Common and Balham); 761 of 2,376
+  done, London 76 of 421. Every fact checked against the article in `source` (`wiki_text.py`). Neighbours already used
+  got another item: Isleworth Studios (on Hounslow to Isleworth) gave way to the Quaker meeting house on Isleworth to
+  Syon Lane, and Surbiton Studios and Seething Wells to Surbiton station on Berrylands to Surbiton; within the batch,
+  Baitul Futuh and St Lawrence Church share the stretches by Morden South, the Pyl Brook and Gander Green Lane those by
+  Sutton Common, and the Falcon and Wandsworth Common Windmill those by Clapham Junction. Passed over: the Barnes and
+  Clapham Junction rail crashes, Marc Bolan's shrine (all fatal) and a murder near Clapham Junction. Kingston Railway
+  Bridge is `crosses`; Surbiton and Raynes Park stations are `station`. Points from Historic England's list rather
+  than an article: the Lovekyn Chapel, Normansfield, Whitehall at Cheam and Carshalton House. No point is our own
+  calculation. The farthest item is the Norbury Estate (723 m, the article's point for the estate as a whole), nothing
+  nearer on Norbury to Streatham Common being as good; the rest are within 500 m. Step 8 done: 761 facts in
+  `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 - November 23rd 2026 (Claude Code, scheduled task): batch 16, 40 stretches from Ashurst (Kent) to Eridge through to
   Brentford to Syon Lane (the Uckfield branch from Ashurst by Eridge, Crowborough and Buxted to Uckfield, Angmering and
   Arundel to Littlehampton, Addlestone to Byfleet & New Haw, Sandwich to Thanet Parkway, then London: the Chiltern Main

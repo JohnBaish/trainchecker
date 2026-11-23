@@ -8,20 +8,20 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-1361 of 2376 stretches done.
+1401 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
 3. South East: 384 of 384 done (done).
 4. London: 421 of 421 done (done).
 5. East of England (East Anglia): 237 of 237 done (done).
-6. East Midlands: 18 of 140 done (next).
+6. East Midlands: 58 of 140 done (next).
 7. West Midlands: 0 of 191 done.
 8. Yorkshire and The Humber: 0 of 238 done.
 9. North West: 0 of 396 done.
 10. North East: 0 of 68 done.
 
-Next stretch in the order: NBR-SWS (Narborough to South Wigston).
+Next stretch in the order: CWD-WWL (Creswell to Whitwell (Derbyshire)).
 
 <!-- end of counts -->
 
@@ -117,6 +117,38 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 33, 40 stretches of the East Midlands from Narborough to
+  South Wigston through to Creswell to Langwith-Whaley Thorns (Hinckley by Narborough and South Wigston to Leicester;
+  Market Harborough to South Wigston; the Midland Main Line from Leicester by Syston, Sileby and Barrow-upon-Soar to
+  Loughborough and East Midlands Parkway; the lines round Trent Junction to Long Eaton, Attenborough and Ilkeston; the
+  Erewash Valley line from Ilkeston by Langley Mill and Alfreton to Chesterfield, and Belper to Chesterfield; Derby to
+  Duffield and Belper, Peartree, Willington, Tutbury & Hatton, Spondon and Long Eaton; Beeston, Ilkeston and Bulwell to
+  Nottingham; and the Robin Hood line from Bulwell by Hucknall, Newstead, Kirkby-in-Ashfield, Sutton Parkway, Mansfield,
+  Mansfield Woodhouse, Shirebrook and Langwith-Whaley Thorns to Creswell); 1,401 of 2,376 done, East Midlands 58 of 140.
+  40 items, every fact checked against the article in `source` (`wiki_text.py`); nearby Wikipedia articles were also
+  listed from `wiki/gb-articles.tsv.gz`. None skipped. Kept, though they may carry few or no regular passenger trains:
+  Beeston to Ilkeston and Beeston to Bulwell (curves round Lenton that avoid Nottingham), and Market Harborough to South
+  Wigston (Midland Main Line trains to Leicester run past South Wigston without calling, so the page routes them this
+  way). Neighbouring stretches share sights out: Ratcliffe-on-Soar Power Station on Attenborough to East Midlands Parkway,
+  the Trent Viaducts on East Midlands Parkway to Long Eaton, St Giles' Church, Sandiacre, on East Midlands Parkway to
+  Ilkeston and Toton Sidings on Ilkeston to Long Eaton; Nottingham Castle (Ilkeston to Nottingham), Boots D10 (Beeston to
+  Nottingham), Lenton Priory (Bulwell to Nottingham) and the Nottingham Tennis Centre (Beeston to Ilkeston); St Mary's
+  Church, Attenborough, and the nature reserve on separate stretches; Taylor's Bell Foundry and Brush's Falcon Works on
+  either side of Loughborough; Chesterfield's crooked spire on Alfreton to Chesterfield, Wingfield station on Belper to
+  Chesterfield. Passed over: the Barrow upon Soar rail crash (2008), the 2012 Derby arson attack, Creswell Crags (806 m)
+  and Codnor Castle (971 m). No point is our own calculation: St Mary in Arden, St Mary's Church, Sileby, Taylor's Bell
+  Foundry, St Giles' Church, Sandiacre, Bennerley Viaduct, the Crooked Spire, Wingfield station, Duffield Castle, the
+  Midland Railway War Memorial, Tutbury Castle, St Mary's Church, Attenborough, Boots D10, Lenton Priory and Hucknall's
+  church use Historic England's list points (facts from the Wikipedia article in `source`; Sileby's church from the
+  Sileby article, as the candidate's Wikipedia link pointed at the Wesleyan chapel); the rest are Wikipedia's geotags,
+  some rounded (Narborough Bog, Croft and Huncote Quarry, Barrow upon Soar, Ironville, Kirkby-in-Ashfield, British
+  Celanese, Creswell Model Village). The Museum of Making's point is the Derby Silk Mill article's; its facts about the
+  mill come from the Lombe's Mill article. One crossing: the Trent Viaducts (`crosses`). The farthest items are Notts Golf
+  Club (659 m), Croft and Huncote Quarry (648 m), Tutbury Castle (612 m), Pride Park Stadium (595 m) and St Chad's Church,
+  Pleasley Vale (587 m); the rest are within 565 m. Barrow upon Soar and Kirkby-in-Ashfield are about one of the stretch's
+  own stations' places, so the page may add no "Between …". Step 8 done: 1,394 facts in `src/data/passes-near.json`;
+  `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 32, 40 stretches from East Tilbury to Stanford-le-Hope
   through to Burton-on-Trent to South Wigston, finishing the East of England and starting the East Midlands (the London,

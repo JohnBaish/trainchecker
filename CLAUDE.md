@@ -71,6 +71,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 33 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Narborough to South Wigston through to Creswell to Langwith-Whaley Thorns (Leicester to Loughborough,
+  round Trent Junction, the Erewash Valley line to Chesterfield, round Derby, into Nottingham, and the Robin Hood line to
+  Creswell); 1,401 of 2,376 done, East Midlands 58 of 140. Next: CWD-WWL (Creswell to Whitwell (Derbyshire)).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; Beeston
+  to Ilkeston, Beeston to Bulwell and Market Harborough to South Wigston may carry few regular passenger trains (given
+  items); the Barrow upon Soar crash and the 2012 Derby arson attack passed over; no point is our own calculation.
+  `to_site.py` run: 1,394 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 32, the East of England finished (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, East Tilbury to Stanford-le-Hope through to Burton-on-Trent to South Wigston (the London, Tilbury and

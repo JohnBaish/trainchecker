@@ -8,7 +8,7 @@ design/passes-near/COVERAGE.md and do the next batch."
 
 <!-- counts: made by coverage.py -->
 
-2121 of 2376 stretches done.
+2161 of 2376 stretches done.
 
 1. Great Western routes: 271 of 271 done (done).
 2. South West: 30 of 30 done (done).
@@ -18,10 +18,10 @@ design/passes-near/COVERAGE.md and do the next batch."
 6. East Midlands: 140 of 140 done (done).
 7. West Midlands: 191 of 191 done (done).
 8. Yorkshire and The Humber: 238 of 238 done (done).
-9. North West: 209 of 396 done (next).
+9. North West: 249 of 396 done (next).
 10. North East: 0 of 68 done.
 
-Next stretch in the order: HSB-INE (Helsby to Ince & Elton (Cheshire)).
+Next stretch in the order: CHU-HTH (Cheadle Hulme to Handforth).
 
 <!-- end of counts -->
 
@@ -117,6 +117,33 @@ copy `stretches.json` and `stretches-report.md` here, then `to_network.py` and `
 stretch has gone end up under `unplaced`, for a person to place.
 
 ## Log
+
+- November 23rd 2026 (Claude Code, scheduled task): batch 52, 40 stretches of the North West from Helsby to Ince & Elton
+  (Cheshire) through to Bramhall to Cheadle Hulme (Helsby to Ince & Elton; Chester to Helsby and to Mouldsworth; the Mid-Cheshire
+  line by Delamere, Cuddington and Greenbank; Acton Bridge to Greenbank, Hartford, Runcorn and Warrington Bank Quay; Frodsham to
+  Helsby, Runcorn and Runcorn East; Runcorn East to Warrington Bank Quay; Earlestown to Warrington Bank Quay, St Helens Junction
+  and Newton-le-Willows; the Liverpool and Manchester line by Lea Green, Rainhill, Whiston and Huyton; Newton-le-Willows and
+  Warrington Bank Quay to Wigan North Western; Patricroft to Wigan North Western and Newton-le-Willows; Eccles to Patricroft;
+  Hartford to Winsford and Crewe; Crewe by Nantwich and Wrenbury to Whitchurch (Shropshire); Crewe by Alsager to Kidsgrove; and
+  Kidsgrove by Congleton, Macclesfield, Prestbury, Adlington, Poynton and Bramhall to Cheadle Hulme); 2,161 of 2,376 done, North
+  West 249 of 396. 40 items, none skipped. Kept: Delamere to Mouldsworth, Cuddington to Delamere, Newton-le-Willows to Wigan North
+  Western, Warrington Bank Quay to Wigan North Western and Crewe to Winsford (no train company on the map; passenger lines).
+  Every fact checked against the article in `source` (`wiki_text.py`). A station item for Rainhill (with Stephenson's skew bridge);
+  Dutton Viaduct and the Sankey Viaduct are `crosses`. Plegmund's well and St Peter's Church at Plemstall shared out between the
+  two lines from Chester; Hefferston Grange used once, St John's Church and Hartford Manor for the other Hartford stretches. Left
+  out: the Battle of Winwick, Parkside (Huskisson's death), the Winsford, Winwick, Warrington and Eccles rail crashes, and the
+  murders at the Stadt Moers landfill (the park is the item, the murders not mentioned). Combermere Abbey (about 1.75 km) and Chat
+  Moss's own point (about 940 m) too far: Astley and Bedford Mosses, a fragment of Chat Moss, used instead; Vale Royal Abbey
+  (about 750 m) too, so Winsford Mine for Hartford to Winsford. Points: Wikipedia's
+  geotags, except Historic England's list points for Helsby hill fort, St Plegmund's Well, St Peter's Church (Plemstall), 159 to
+  163 Crow Lane East, Old St Ann's Church, Light Oaks Hall, St Mary the Virgin (Eccles), the Warrington Transporter Bridge, Hefferston
+  Grange, Lea Hall, Churche's Mansion, St Mary's Church (Nantwich), the Old Sunday School
+  (Macclesfield), Arighi Bianchi, St Peter's Church (Prestbury) and Adlington Hall; the two viaducts' and Rainhill station's are their
+  articles' geotags. No point is our own calculation, and every distance is to the item's point. The farthest items are Adlington Hall
+  (744 m, for John: its registered park is 110 m from the line, but the distance is to the house), Helsby hill fort (655 m, to its list
+  entry's point; its edge is 557 m), St
+  Peter's Church at Prestbury (604 m) and Oakmere Hall (600 m); Rainhill (239 m) and Bramhall (343 m) are villages' centre points.
+  The rest are within 490 m. Step 8 done: 2,137 facts in `src/data/passes-near.json`; `npm run check` and `npm run build` pass.
 
 - November 23rd 2026 (Claude Code, scheduled task): batch 51, 40 stretches of the North West from Crewe to Sandbach
   through to Ince & Elton (Cheshire) to Stanlow & Thornton (Crewe to Sandbach; Crewe to Chester; Chester to Shotton and to

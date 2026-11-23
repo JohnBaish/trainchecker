@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 23rd 2026: "Your train passes near…": batch 52 (notes, straight to `main`; Claude Code, scheduled task)
+
+- 40 stretches, Helsby to Ince & Elton (Cheshire) through to Bramhall to Cheadle Hulme (Chester to Helsby and Mouldsworth, the
+  Mid-Cheshire line, Frodsham and Runcorn, Acton Bridge and Hartford, round Warrington, Earlestown and Newton-le-Willows, the
+  Liverpool and Manchester line by Rainhill to Huyton, Patricroft and Eccles, the lines to Wigan North Western, Crewe to Winsford,
+  Whitchurch and Kidsgrove, and the Macclesfield line to Cheadle Hulme); 2,161 of 2,376 done, North West 249 of 396. Next:
+  CHU-HTH (Cheadle Hulme to Handforth).
+- Every fact checked with `wiki_text.py`; `check.py` clean but for the Parson and Clerk warning. None skipped; battles, Huskisson's
+  death and rail crashes passed over; no point is our own calculation. For John: Adlington Hall is 744 m from the line (its park
+  110 m). `to_site.py` run: 2,137 facts live with this push; checks and build pass.
+
 ### November 23rd 2026: "Your train passes near…": batch 51 (notes, straight to `main`; Claude Code, scheduled task)
 
 - 40 stretches, Crewe to Sandbach through to Ince & Elton to Stanlow & Thornton (Crewe to Chester, out of Chester towards

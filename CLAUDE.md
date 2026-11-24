@@ -103,6 +103,8 @@ given its own branch). Before committing there, run
   264 + 57 + 79 + 40 + 59 + 36, `tsc -b`, lint and build clean; Reading to Paddington at 390px dark and 1200px light,
   Bath to Bristol at 390px light: no errors, no sideways scroll, badges 44px on a phone. Merged into `main`
   (fast-forward). Not checked: a real phone, the live site in a browser.
+- Branches tidied: "Delete merged branches" trial run 45388926667, then the real run; `git ls-remote --heads origin`
+  shows only `main` (it also removed `claude/eloquent-brown-y333xz`, merged on November 23rd). Tracker updated.
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

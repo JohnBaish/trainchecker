@@ -17,6 +17,8 @@
 /** Each exit: its name (null when not known), the platforms it opens off on the level (nearest
  *  first), 1 when it's by the station building, and for an exit by no platform, the platform people
  *  come down by on the way to it (or null). */
+import { numberWord } from './words.ts'
+
 export type ExitRow = [name: string | null, by: string[], building: 0 | 1, near: string | null]
 /** A way from a platform to an exit: the exit's number, how (l level, b footbridge, s subway, x
  *  level crossing, c concourse, u up or down), and the platform a footbridge or subway comes down
@@ -47,15 +49,30 @@ export function stationLine(name: string, e: StationExits): string {
   if (e.k === 'concourse') return `At ${name}, every platform leads to the concourse, where the exits are.`
   // Draft: John agreed "up on the bridge" and "up on the concourse" for these; the table doesn't
   // say which, so neither is named.
-  if (e.k === 'above') return `At ${name}, the exits are up above the platforms.`
-  if (e.k === 'below') return `At ${name}, the exits are down below the platforms.`
+  // (Not where some exit is on the level by a platform: Edinburgh's are, so this was untrue there.)
+  const someLevel = e.x.some((x) => x[1].length)
+  if (e.k === 'above' && !someLevel) return `At ${name}, the exits are up above the platforms.`
+  if (e.k === 'below' && !someLevel) return `At ${name}, the exits are down below the platforms.`
   // One platform for each exit, as John's "the exits are by platforms 1, 4 and 15" (Reading):
   // the nearest it opens off, or for an exit up on a footbridge, the platform it comes down by.
   const reps = e.x.map((x) => x[1][0] ?? x[3])
   const by = [...new Set(reps.filter((p): p is string => !!p))].sort(byNum)
   const one = e.x.length === 1
   // Only where every exit has a platform to name; otherwise how you get to them (Drafts).
-  if (!by.length || reps.some((p) => !p)) {
+  // Some exits by a platform and some not (Guildford, Newbury, Tonbridge: John, November 24th 2026):
+  // name only the ones by a platform, as a catch-all below would ignore them and say something untrue.
+  // "There's an exit by platform 1." leaves room for the others, which each platform's own line names.
+  if (by.length && reps.some((p) => !p)) {
+    const n = reps.filter((p) => p).length
+    // The rest off the concourse, where that's the way to them (King's Cross, Aberdeen), as before.
+    const loose = reps.filter((p) => !p).length
+    const viaC = Object.values(e.p).some((ws) => ws.some((w) => w[1] === 'c' && !reps[w[0]]))
+    const rest = viaC ? `, and ${loose === 1 ? 'another' : 'others'} off the concourse` : ''
+    if (n === 1) return `At ${name}, there’s an exit by platform ${by[0]}${rest}.`
+    if (by.length === 1) return `At ${name}, there are ${numberWord(n)} exits by platform ${by[0]}${rest}.`
+    return `At ${name}, there are exits by ${plats(by)}${rest}.`
+  }
+  if (!by.length) {
     const vias = new Set(Object.values(e.p).flatMap((ws) => ws.map((w) => w[1])))
     if (vias.has('c')) return `At ${name}, the ${one ? 'exit is' : 'exits are'} off the concourse.`
     if (vias.size === 1 && vias.has('b')) return `At ${name}, every platform reaches the ${one ? 'exit' : 'exits'} over the ${e.w ?? 'footbridge'}.`

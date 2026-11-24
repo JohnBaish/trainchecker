@@ -101,5 +101,17 @@ for (const e of Object.values(T)) for (const ws of Object.values(e.p)) for (cons
 eq('every route points at a real exit, with a known way', bad, 0)
 eq('every station has at least one exit', Object.values(T).every((e) => e.x.length > 0), true)
 
+// Some exits by a platform and some not (John, November 24th 2026, from Guildford): the station's sentence
+// names the ones by a platform, never a catch-all that ignores them.
+eq('Guildford (John)', stationLine('Guildford', T.GLD), 'At Guildford, the main town centre exit is by platforms 1 and 2, and the Guildford Park Road exit at the back is over the footbridge.')
+eq('Newbury: exits by 1 and 2', stationLine('Newbury', T.NBY), 'At Newbury, there are exits by platforms 1 and 2.')
+eq('Tonbridge: an exit by 3', stationLine('Tonbridge', T.TON), 'At Tonbridge, there’s an exit by platform 3.')
+eq('Theale: two exits by 3', stationLine('Theale', T.THE), 'At Theale, there are two exits by platform 3.')
+eq('Kings Cross: the rest off the concourse', stationLine('London Kings Cross', T.KGX), 'At London Kings Cross, there’s an exit by platform 9, and others off the concourse.')
+eq('Edinburgh: not "up above" when some are on the level', stationLine('Edinburgh', T.EDB), 'At Edinburgh, there are exits by platforms 8w, 13 and 17.')
+const untrue = Object.entries(T).filter(([, e]) => e.x.some((x) => x[1].length)
+  && /aren’t on the platforms|isn’t on the platforms|every platform reaches|up above the platforms|down below the platforms/.test(stationLine('X', e))).map(([c]) => c)
+eq('no station with an exit by a platform says a catch-all', untrue, [])
+
 console.log(`check-exits: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

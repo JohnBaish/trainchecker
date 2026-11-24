@@ -114,6 +114,15 @@ given its own branch). Before committing there, run
   names the other exit the other way ("…the subway to the main town centre exit, or the footbridge to the Guildford
   Park Road exit at the back."), as the level answers already did: 48 answers at 34 stations. Checks, `tsc -b`,
   lint, build. Straight to `main` at John's word.
+- **Why Guildford's sentence was wrong (John asked):** `stationLine()` needs a platform for every exit; one exit by no
+  platform (Guildford Park Road, off the footbridge) sent it to a catch-all that ignored the exit by platforms 1 and 2.
+  The same at 162 stations ("the exits aren't on the platforms themselves", Falconwood's and West Hampstead
+  Thameslink's "every platform reaches…", Edinburgh's "up above"). **John:** the safe version now ("option 2"), the
+  fuller rule perhaps later. Now: "At Newbury, there are exits by platforms 1 and 2.", "…there's an exit by platform
+  3.", "…two exits by platform 3."; King's Cross and Aberdeen keep "and others off the concourse". 175 sentences
+  change (the 162, those two, and internal codes). New checks, including a sweep that fails if any station with an
+  exit by a platform says a catch-all (it finds all 162 on the old code). Checks, `tsc -b`, lint, build. Straight to
+  `main` at John's word. Not done: naming the other exits in that sentence (each platform's own line names them).
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

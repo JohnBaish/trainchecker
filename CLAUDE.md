@@ -103,6 +103,10 @@ given its own branch). Before committing there, run
   trains and platforms" is everything). He'll try it at length (`?mock=B` on the branch preview) before anything goes
   live. Not merged; to do when he says: make B the page (take out `?mock=`, option A and the old four-hour panel),
   checks for `windows.ts`, `SPEC.md`.
+- **John:** "There's about one fast train and five slow ones per hour." (St Pancras to Bedford read "about one fast
+  train an hour and about five slower ones an hour"). Done in the second panel's short wording: the rate once at the end
+  ("per hour", John's word), "about" once at the start when any figure is rounded; "slower" kept (agreed November 18th).
+  Checks unchanged; `tsc -b`.
 
 ### November 24th 2026: "How do I get to my platform?", tapping a platform for a rough location guide; live (branch `claude/cool-sagan-k0e2ao`, merged the same day; Claude Code)
 

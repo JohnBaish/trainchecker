@@ -322,9 +322,25 @@ export function trainsAnHour(a: Analysis, h = 4, span = 'in the next four hours'
     if (i === 0) return `${n} ${adj}${co}${one ? 'train' : 'trains'}${few ? '' : ' an hour'}${short ? '' : ` from ${a.from} to ${a.to} ${span}`}`
     return `${n} ${adj}${co}${one ? (co ? 'train' : 'one') : (co ? 'trains' : 'ones')}${hr}${all}${time}`
   }
+  const single = totals ? gs[0].k === 1 : gs[0].k === 1 || (gs[0].k >= h && Math.round(gs[0].k / h) === 1)
+  if (short && !totals) {
+    // "There's about one fast train and five slower ones per hour." (John, November 24th 2026): the
+    // rate said once at the end, "about" once at the start when any figure is rounded.
+    const about = gs.some((g) => g.k % h) ? 'about ' : ''
+    const rate = gs.map((g, i) => {
+      const n = num(Math.round(g.k / h)), one = Math.round(g.k / h) === 1
+      const time = i > 0 && i < gs.length - 1 ? ` (taking about ${num(Math.round(g.mins / 5) * 5)} minutes)` : ''
+      if (g.kind === 'elizabeth') return `${n} on the Elizabeth Line${time}`
+      const co = g.company ? `${g.company} ` : ''
+      const adj = g.kind === 'all' ? '' : `${g.kind} `
+      if (i === 0) return `${n} ${adj}${co}${one ? 'train' : 'trains'}`
+      return `${n} ${adj}${co}${one ? (co ? 'train' : 'one') : (co ? 'trains' : 'ones')}${time}`
+    })
+    const rl = rate.length > 1 ? `${rate.slice(0, -1).join(', ')} and ${rate[rate.length - 1]}` : rate[0]
+    return `${single ? "There's" : 'There are'} ${about}${rl} per hour.`
+  }
   const ps = gs.map(phrase)
   const list = ps.length > 1 ? `${ps.slice(0, -1).join(', ')} and ${ps[ps.length - 1]}` : ps[0]
-  const single = totals ? gs[0].k === 1 : gs[0].k === 1 || (gs[0].k >= h && Math.round(gs[0].k / h) === 1)
   return short ? `${single ? "There's" : 'There are'} ${list}.` : `There ${single ? 'is' : 'are'} ${list}.`
 }
 

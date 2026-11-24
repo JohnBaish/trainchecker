@@ -84,8 +84,9 @@ export function laterPanel(a: Analysis, s = split(a)): { heading: string; next: 
   if (!n) return { heading, next: null, lines: [s.stretched ? `There are no more direct trains from ${a.from} to ${a.to} in the next four hours.` : `There are no more direct trains from ${a.from} to ${a.to} in the following three hours.`], platLine: null, later: l }
   const first = s.stretched
     ? (n === 1 ? 'There\'s one more train in the next four hours.' : `There are ${num(n)} more ${trainsWord(n)} in the next four hours.`)
-    : (n === 1 ? `There's one train from ${a.from} to ${a.to} in the following three hours.` : `There are ${num(n)} trains from ${a.from} to ${a.to} in the following three hours.`)
-  const next = nextFour(l, s.stretched ? { first } : { first, hours: 3, span: 'in the following three hours' })
+    : (n === 1 ? "There's one train." : `There are ${num(n)} trains.`)
+  // Short, as the heading says the period (John, November 24th 2026).
+  const next = nextFour(l, s.stretched ? { first } : { first, hours: 3, short: true })
   return { heading, next, lines: next ? next.lines : [first], platLine: laterPlatforms(l), later: l }
 }
 

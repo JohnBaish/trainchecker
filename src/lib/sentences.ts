@@ -301,26 +301,31 @@ const perHour = (k: number, h = 4) => (k % h ? 'about ' : '') + num(Math.round(k
  *  Line." "An hour" after every group (John, November 18th 2026); one "and"; journey times only for the groups in the middle (people know the fastest
  *  and slowest). A group of fewer than four trains: "three on the Elizabeth Line in that time"
  *  (Claude's draft). */
-export function trainsAnHour(a: Analysis, h = 4, span = 'in the next four hours'): string | null {
+export function trainsAnHour(a: Analysis, h = 4, span = 'in the next four hours', short = false): string | null {
   if (a.ahead.length <= 2 * h) return null
   const gs = speedGroups(a)
+  // PROTOTYPE (November 24th 2026, John): in the shorter wording, when any group has fewer than one
+  // train an hour, every group is said as a total ("There's one fast train and nine slower ones."),
+  // never totals and "an hour" mixed.
+  const totals = short && gs.some((g) => g.k < h)
   const phrase = (g: Group, i: number) => {
-    const few = g.k < h
+    const few = totals || g.k < h
     const n = few ? num(g.k) : perHour(g.k, h)
     const one = few ? g.k === 1 : Math.round(g.k / h) === 1
     const time = i > 0 && i < gs.length - 1 ? ` (taking about ${num(Math.round(g.mins / 5) * 5)} minutes)` : ''
     // "An hour" after every group (John, November 18th 2026), so no figure can be read as a total.
-    const all = few && i > 0 ? ' in that time' : ''
+    const all = few && !totals && i > 0 ? ' in that time' : ''
     const hr = few ? '' : ' an hour'
     if (g.kind === 'elizabeth') return `${n}${hr} on the Elizabeth Line${all}${time}`
     const co = g.company ? `${g.company} ` : ''
     const adj = g.kind === 'all' ? '' : `${g.kind} `
-    if (i === 0) return `${n} ${adj}${co}${one ? 'train' : 'trains'}${few ? '' : ' an hour'} from ${a.from} to ${a.to} ${span}`
+    if (i === 0) return `${n} ${adj}${co}${one ? 'train' : 'trains'}${few ? '' : ' an hour'}${short ? '' : ` from ${a.from} to ${a.to} ${span}`}`
     return `${n} ${adj}${co}${one ? (co ? 'train' : 'one') : (co ? 'trains' : 'ones')}${hr}${all}${time}`
   }
   const ps = gs.map(phrase)
   const list = ps.length > 1 ? `${ps.slice(0, -1).join(', ')} and ${ps[ps.length - 1]}` : ps[0]
-  return `There ${gs[0].k === 1 || (gs[0].k >= h && Math.round(gs[0].k / h) === 1) ? 'is' : 'are'} ${list}.`
+  const single = totals ? gs[0].k === 1 : gs[0].k === 1 || (gs[0].k >= h && Math.round(gs[0].k / h) === 1)
+  return short ? `${single ? "There's" : 'There are'} ${list}.` : `There ${single ? 'is' : 'are'} ${list}.`
 }
 
 /** What follows "Cancelled" or "Expected 6.45pm, 7 minutes late" on the same line, in the
@@ -336,12 +341,12 @@ export function why(reason: string | null, operator: string): string {
 }
 
 /** PROTOTYPE (November 24th 2026): the first and later panels pass their own opening line. */
-export type Span = { first: string | null; hours?: number; span?: string }
+export type Span = { first: string | null; hours?: number; span?: string; short?: boolean }
 export function nextFour(a: Analysis, o?: Span): NextFour | null {
   if (a.verdict === 'none' || !a.ahead.length) return null
   const n = a.ahead.length
   const v = (k: number) => (k === 1 ? 'is' : 'are')
-  const lines = [o ? (o.hours ? trainsAnHour(a, o.hours, o.span) : null) ?? o.first ?? '' : trainsAnHour(a) ?? (n === 1 ? `There's one train from ${a.from} to ${a.to} in the next four hours.` : `There are ${num(n)} trains from ${a.from} to ${a.to} in the next four hours.`)]
+  const lines = [o ? (o.hours ? trainsAnHour(a, o.hours, o.span, o.short) : null) ?? o.first ?? '' : trainsAnHour(a) ?? (n === 1 ? `There's one train from ${a.from} to ${a.to} in the next four hours.` : `There are ${num(n)} trains from ${a.from} to ${a.to} in the next four hours.`)]
   // Trains leaving on time but expected at B more than five minutes late are said apart (fresh
   // look 2.2), so this never says they're all on time under "badly disrupted".
   const onTime = a.ahead.filter((s) => s.late !== null && s.late <= 3 && !a.arrLate.includes(s)).length

@@ -87,6 +87,13 @@ given its own branch). Before committing there, run
   trains' platforms; B: that line and a fold with them. Pictures and `shoot.mjs` in `design/previews/next-hour/`.
 - **Checked:** `npm run check` unchanged (264 + 57 + 79 + 40 + 76 + 36), `tsc -b`, build; 13 saved boards' sentences
   read through; pictures at 1200px light and 390px dark with touch: no errors, no sideways scroll.
+- **John:** 1 (three trains) and 2 ("The next three trains") yes; 3 the board uncapped is fine (it's folded); 4 A or B
+  to decide after looking on his phone; 5 the second panel's opening shortened, as its heading says the period ("There
+  are about five trains an hour."); 6 "not yet" kept; 7 never totals and "an hour" mixed. Done: `trainsAnHour(…, short)`,
+  used only by the second panel; when any group has fewer than one train an hour there, every group is a total
+  ("There's one fast train and nine slower ones.", Euston to Milton Keynes at 8.59pm). Survey of the saved boards, moved
+  back by up to two hours: the only mixed openings were that one and "… and three on the Elizabeth Line in that time"
+  (agreed November 18th, still on the live four-hour panel). Checks unchanged; `tsc -b`.
 
 ### November 24th 2026: "How do I get to my platform?", tapping a platform for a rough location guide; live (branch `claude/cool-sagan-k0e2ao`, merged the same day; Claude Code)
 

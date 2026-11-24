@@ -94,6 +94,11 @@ given its own branch). Before committing there, run
   ("There's one fast train and nine slower ones.", Euston to Milton Keynes at 8.59pm). Survey of the saved boards, moved
   back by up to two hours: the only mixed openings were that one and "… and three on the Elizabeth Line in that time"
   (agreed November 18th, still on the live four-hour panel). Checks unchanged; `tsc -b`.
+- **John:** each panel's sentences as one paragraph (done); "not yet" kept; **B** for the later trains, and they
+  should be shown as the first panel shows its trains: every later train with its platform or "not yet" (done:
+  `trainsPicture()` for both panels, the cancelled line under it; the old "Two earlier trains…" line gone). Found and
+  fixed: with no platform on any row, "PLATFORM" sat over "EXPECTED TO LEAVE". Checks unchanged; `tsc -b`, lint, build;
+  Paddington to Reading at 390px dark and Euston to Milton Keynes at 390px light: no errors, no sideways scroll.
 
 ### November 24th 2026: "How do I get to my platform?", tapping a platform for a rough location guide; live (branch `claude/cool-sagan-k0e2ao`, merged the same day; Claude Code)
 

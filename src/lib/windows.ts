@@ -45,7 +45,7 @@ export function firstPanel(a: Analysis, s = split(a)) {
       : `${s.inHour === 1 ? "There's only one train" : `There are only ${num(s.inHour)} trains`} in the next hour, so here are the next ${num(k)}.`)
     : `There are ${num(n)} trains in the next hour.`
   const nf = nextFour(f, { first: open })
-  return { heading, lines: nf ? nf.lines : [open], picture: firstPicture(f), cancelled: cancelledLine(f) }
+  return { heading, lines: nf ? nf.lines : [open], picture: trainsPicture(f), cancelled: cancelledLine(f) }
 }
 
 /** "The 7.15pm is cancelled, because of a fault on this train." For the fold, after the board. */
@@ -56,7 +56,7 @@ function cancelledLine(f: Analysis): string | null {
 }
 
 /** Every running train in the first panel, each with its platform or "not yet". */
-function firstPicture(f: Analysis): ListPicture | null {
+export function trainsPicture(f: Analysis): ListPicture | null {
   const ts = f.ahead.filter((t) => !t.cancelled).sort((x, y) => leaves(f, x) - leaves(f, y))
   if (!ts.length) return null
   const groups = speedGroups(f).filter((g) => g.kind !== 'all')
@@ -78,16 +78,16 @@ function firstPicture(f: Analysis): ListPicture | null {
 
 /** The second panel: its heading and sentences (the trains an hour, the ones that aren't on time,
  *  with their fold), and a line about the platforms already announced for these later trains. */
-export function laterPanel(a: Analysis, s = split(a)): { heading: string; next: NextFour | null; lines: string[]; platLine: string | null; later: Analysis } {
+export function laterPanel(a: Analysis, s = split(a)): { heading: string; next: NextFour | null; lines: string[]; platLine: string | null; later: Analysis; picture: ListPicture | null; cancelled: string | null } {
   const l = s.later, n = l.ahead.length
   const heading = s.stretched ? 'Later' : 'The following three hours'
-  if (!n) return { heading, next: null, lines: [s.stretched ? `There are no more direct trains from ${a.from} to ${a.to} in the next four hours.` : `There are no more direct trains from ${a.from} to ${a.to} in the following three hours.`], platLine: null, later: l }
+  if (!n) return { heading, next: null, lines: [s.stretched ? `There are no more direct trains from ${a.from} to ${a.to} in the next four hours.` : `There are no more direct trains from ${a.from} to ${a.to} in the following three hours.`], platLine: null, later: l, picture: null, cancelled: null }
   const first = s.stretched
     ? (n === 1 ? 'There\'s one more train in the next four hours.' : `There are ${num(n)} more ${trainsWord(n)} in the next four hours.`)
     : (n === 1 ? "There's one train." : `There are ${num(n)} trains.`)
   // Short, as the heading says the period (John, November 24th 2026).
   const next = nextFour(l, s.stretched ? { first } : { first, hours: 3, short: true })
-  return { heading, next, lines: next ? next.lines : [first], platLine: laterPlatforms(l), later: l }
+  return { heading, next, lines: next ? next.lines : [first], platLine: laterPlatforms(l), later: l, picture: trainsPicture(l), cancelled: cancelledLine(l) }
 }
 
 /** "Platforms have already been announced for 16 of these, mostly platform 9." (Claude's draft.) */

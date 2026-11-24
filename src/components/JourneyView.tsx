@@ -112,7 +112,7 @@ function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
   const [openRow, setOpenRow] = useState<string | null>(null)
   const tap = dirs ?? null
   const toggle = (k: string) => setOpenRow(openRow === k ? null : k)
-  const second = p.rows.some((r) => r.platform)
+  const second = p.rows.some((r) => r.platform || (r as { noPlat?: boolean }).noPlat)
   const simple = !!p.one && p.rows.every((r) => !r.mid && !r.late)
   return (
     <div className="board" role={simple ? undefined : 'table'}>
@@ -244,7 +244,8 @@ function FirstPanel({ a }: { a: Analysis }) {
   return (
     <section className="card sec">
       <h3>{f.heading}</h3>
-      {f.lines.map((l) => <p key={l} className="lead">{l}</p>)}
+      {/* One paragraph (John, November 24th 2026). */}
+      <p className="lead">{f.lines.join(' ')}</p>
       {(pic || f.cancelled) && (
         <details className="advice trains-fold">
           <summary>{k === 1 ? 'Show the train and its platform' : 'Show the trains and platforms'} <Icon name="down" /></summary>
@@ -260,13 +261,23 @@ function FirstPanel({ a }: { a: Analysis }) {
 /** PROTOTYPE: the rest of the four hours. */
 function LaterPanel({ a, fold }: { a: Analysis; fold: boolean }) {
   const l = laterPanel(a)
+  const pic = l.picture
+  const dirs = useDirs(fold && pic && pic.rows.some((r) => r.platform) ? a.fromCrs : '')
   return (
     <section className="card sec">
       <h3>{l.heading}</h3>
-      {l.lines.map((x) => <p key={x} className="lead">{x}</p>)}
+      <p className="lead">{l.lines.join(' ')}</p>
       {l.next && <Trains n={l.next} />}
       {l.platLine && <p>{l.platLine}</p>}
-      {fold && l.platLine && <PlatformTrains a={l.later} fold="Show these trains with platforms" />}
+      {/* B: every later train, its platform or "not yet", as in the first panel (John, November 24th 2026). */}
+      {fold && pic && (
+        <details className="advice trains-fold">
+          <summary>{pic.rows.length === 1 ? 'Show the train and its platform' : 'Show the trains and platforms'} <Icon name="down" /></summary>
+          {dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
+          <Board p={pic} dirs={dirs} />
+          {l.cancelled && <p className="tafter">{l.cancelled}</p>}
+        </details>
+      )}
     </section>
   )
 }

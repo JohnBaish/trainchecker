@@ -1,0 +1,4 @@
+{
+  "_about": "John's corrections for directions to a platform (src/lib/toPlatform.ts). level: only these entrances (their names in exits.json) named as on the level with these platforms.",
+  "RDG": { "_who": "John, November 24th 2026", "level": { "4,5,6,7": ["Station Hill (south)"] } }
+}

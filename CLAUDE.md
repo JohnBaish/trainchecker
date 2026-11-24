@@ -78,6 +78,11 @@ given its own branch). Before committing there, run
   stations he knows, and mock-ups A (tap a badge on the board) and B ("How do I get to my platform?" under the board),
   behind `?mock=A|B`: `design/platform-directions/` (README with the points for John and every sentence).
 - **Checked:** `tsc -b`, lint, build; both at 1200px and 390px with touch, light and dark: no errors, no sideways scroll.
+- **John:** A is better; "Tap a platform for directions."; Reading's wording. Wired in as general rules in
+  `toPlatform.ts` (README "What John's Reading notes changed": "or from", the missing "by platform" filled in from the
+  rest of the station, entrances added with "then walk to platform 4" from `platform-links.json`, "come down on
+  platform 15A"); one exception file, `src/data/to-platform.json` (Reading 4 to 7: the south entrance only).
+  Checks pass; `tsc -b`, lint, build; Reading 15A at 390px light and 1200px dark: no errors, no sideways scroll.
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

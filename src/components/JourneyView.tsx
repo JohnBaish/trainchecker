@@ -12,7 +12,7 @@ import { useIsNarrow } from '../lib/responsive.ts'
 import { NO_RECORD_AT, arrivals, platformTrains, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type ListPicture, Cap, num, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
 import { deliverImage, isTouch, listFileName, listImage, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
-import { toPlatform } from '../lib/toPlatform.ts'
+import { toPlatform, type Fix, type Links } from '../lib/toPlatform.ts'
 import type { ExitsTable } from '../lib/exits.ts'
 import { Chooser } from './Chooser.tsx'
 import { Icon } from './Icon.tsx'
@@ -79,15 +79,16 @@ const MOCK = new URLSearchParams(location.search).get('mock')
 type Dirs = (platform: string) => string[] | null
 
 function useDirs(crs: string): Dirs | null {
-  const [table, setTable] = useState<ExitsTable | null>(null)
+  const [got, setGot] = useState<{ t: ExitsTable; l: Record<string, Links>; f: Record<string, Fix> } | null>(null)
   useEffect(() => {
     if (!MOCK) return
     let current = true
-    import('../data/exits.json').then((m) => current && setTable(m.default as unknown as ExitsTable), () => {})
+    Promise.all([import('../data/exits.json'), import('../data/platform-links.json'), import('../data/to-platform.json')])
+      .then(([t, l, f]) => current && setGot({ t: t.default as unknown as ExitsTable, l: l.default as unknown as Record<string, Links>, f: f.default as unknown as Record<string, Fix> }), () => {})
     return () => { current = false }
   }, [])
-  const e = table?.[crs]
-  return e ? (pl: string) => toPlatform(e, pl) : null
+  const e = got?.t[crs]
+  return e ? (pl: string) => toPlatform(e, pl, got!.l[crs], got!.f[crs]) : null
 }
 
 function DirLines({ lines }: { lines: string[] }) {
@@ -157,7 +158,7 @@ function PlatformTrains({ a }: { a: Analysis }) {
       <summary>{p.fold} <Icon name="down" /></summary>
       {pic.before && <p className="tbefore">{pic.before}</p>}
       {pic.words.text.startsWith('The next ten') && <p className="board-kick">The next ten trains</p>}
-      {MOCK === 'A' && dirs && <p className="ptaphint">Tap a platform for how to get there.</p>}
+      {MOCK === 'A' && dirs && <p className="ptaphint">Tap a platform for directions.</p>}
       <Board p={pic} dirs={dirs} />
       {p.after && <p className="tafter">{p.after}</p>}
       {MOCK === 'B' && dirs && <AskPlatform pic={pic} dirs={dirs} />}

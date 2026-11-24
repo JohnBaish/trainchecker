@@ -172,18 +172,21 @@ export function laterShare(a: Analysis, kind: LaterShareKind, s = split(a)): Lis
       : `The trains from ${a.from} to ${a.to} ${period}${s.stretched ? ',' : ''} were all expected to be on time, according to Trainchecker.`
     return { ...base, heads: ['DUE TO LEAVE', ''], rows, before: lp.lines.join(' '), words: words(text, a) }
   }
-  // C: hour by hour.
+  // C: hour by hour (John: no platforms said, a time range rather than "FROM").
   const start = s.stretched ? s.cut : 60
   const rows: PicRow[] = []
+  const range = (f: number, t: number) => {
+    const a1 = t12(plus(a.now, f)), a2 = t12(plus(a.now, t))
+    const m1 = a1.match(/^(.*?)(am|pm)$/), m2 = a2.match(/(am|pm)$/)
+    return `${m1 && m2 && m1[2] === m2[1] && /\./.test(a1) ? m1[1] : a1} to ${a2}`
+  }
   for (let from = start; from < 240; from += 60) {
     const to = Math.min(from + 60, 240)
     const ts = l.ahead.filter((t) => { const m = leaves(a, t); return m > from && m <= to })
-    if (!ts.length) continue
-    const run = ts.filter((t) => !t.cancelled), withP = run.filter((t) => t.platform).length
     const c = ts.filter((t) => t.cancelled).length, late = ts.filter((t) => l.late5.includes(t) || l.arrLate.includes(t) || t.unknown).length
     const bad = [c ? `${num(c)} cancelled` : '', late ? `${num(late)} late` : ''].filter(Boolean).join(', ')
-    rows.push({ time: t12(plus(a.now, from)), mid: `${num(ts.length)} ${trainsWord(ts.length)}${withP ? ` · ${withP === run.length ? 'all with platforms' : `${num(withP)} with platforms`}` : ''}`, late: bad || '' })
+    rows.push({ time: range(from, to), mid: ts.length ? `${num(ts.length)} ${trainsWord(ts.length)}` : 'no trains', late: bad })
   }
   const text = s.stretched ? `The later trains from ${a.from} to ${a.to} hour by hour, ${when}, from Trainchecker.` : `The trains from ${a.from} to ${a.to} hour by hour from ${when}, from Trainchecker.`
-  return { ...base, heads: ['FROM', ''], rows, before: lp.lines.join(' '), words: words(text, a) }
+  return { ...base, heads: ['', ''], rows, before: lp.lines.join(' '), layout: 'hours', words: words(text, a) }
 }

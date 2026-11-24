@@ -83,6 +83,11 @@ given its own branch). Before committing there, run
   train (Reading to Paddington: 34 rows, a very long picture); B the panel's sentence and only the trains not on time,
   each with its reason; C hour by hour. Pictures in `design/previews/next-hour/share/` (`share-pics.mjs` reads them back
   from the clipboard). Checks unchanged; `tsc -b`, lint, build; fonts loaded, no errors.
+- **John:** C, but "FROM" isn't obvious, the line has room for another layout, and no "with platforms" that far ahead.
+  Now `hoursImage()` in `share.ts` (`ListPicture.layout: 'hours'`): no header; each row "7.24 to 8.24pm" on the left,
+  "seven trains" on the right, and under them in orange "three cancelled, one late"; an hour with none, "no trains".
+  Checks unchanged; `tsc -b`, lint, build; Manchester, Reading to Paddington, Kings Cross to York (stretched) and
+  Euston to Milton Keynes read back from the clipboard, fonts loaded, no errors.
 
 ### November 24th 2026: "The next hour" first, then the rest; live (branch `claude/ecstatic-dijkstra-w0herd`, merged the same day; Claude Code)
 

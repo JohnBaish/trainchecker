@@ -867,6 +867,8 @@ export type ListPicture = {
   one: string | null; rows: PicRow[]; note: string | null; words: { text: string; title: string; hash: string }
   /** A line above the rows: earlier trains with no platform yet (John, November 22nd 2026). */
   before?: string | null
+  /** "hours": the later panel's hour-by-hour picture (option C, November 24th 2026). */
+  layout?: 'hours'
 }
 // Platforms: "was due to go at 1.42" (the heading says "Expected to leave", so it's plainly late; it
 // fits on one line beside the badge on a 390px phone); arrivals: "running 15 minutes late", the train

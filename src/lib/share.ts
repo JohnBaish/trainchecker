@@ -208,6 +208,7 @@ function fitFont(ctx: CanvasRenderingContext2D, text: string, weight: number, si
 }
 
 export function listImage(p: ListPicture): HTMLCanvasElement {
+  if (p.layout === 'hours') return hoursImage(p)
   const LW = 1080, scale = 2, pad = 60, inner = 52
   const canvas = document.createElement('canvas')
   const probe = canvas.getContext('2d')!
@@ -356,6 +357,80 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
     note.forEach((l, i) => ctx.fillText(l, x0, top + 24 + i * 34))
   }
 
+  ctx.strokeStyle = D.rule
+  ctx.beginPath(); ctx.moveTo(pad, y1 + 44); ctx.lineTo(LW - pad, y1 + 44); ctx.stroke()
+  ctx.fillStyle = D.kicker
+  ctx.font = `30px ${CAP}`
+  ctx.fillText('Trainchecker', pad, y1 + 88)
+  ctx.fillStyle = D.muted
+  ctx.font = `20px ${FIG}`
+  ctx.textAlign = 'right'
+  ctx.fillText('trainchecker.baish.net', LW - pad, y1 + 86)
+  ctx.textAlign = 'left'
+  return canvas
+}
+
+/** The later panel hour by hour (option C, DRAFT, November 24th 2026): the panel's sentence, then a row
+ *  per hour: "7.24 to 8.24pm" on the left, "11 trains" on the right, and under them, in orange, any
+ *  that aren't on time ("one cancelled, one late"). */
+function hoursImage(p: ListPicture): HTMLCanvasElement {
+  const LW = 1080, scale = 2, pad = 60, inner = 52
+  const canvas = document.createElement('canvas')
+  const probe = canvas.getContext('2d')!
+  probe.font = `52px ${CAP}`
+  const title = wrap(probe, p.title, LW - pad * 2)
+  const x0 = pad + inner, x1 = LW - pad - inner
+  probe.font = `28px ${FIG}`
+  const lead = p.before ? wrap(probe, p.before, x1 - x0) : []
+  const leadH = lead.length ? lead.length * 40 + 30 : 0
+  const titleTop = 100, titleLh = 60
+  const bandTop = titleTop + title.length * titleLh + 20
+  const rowHs = p.rows.map((r) => (r.late ? 124 : 92))
+  const rowsH = rowHs.reduce((a, b) => a + b, 0)
+  const bandH = 44 + leadH + rowsH + 30
+  const H = bandTop + bandH + 110
+  canvas.width = LW * scale
+  canvas.height = H * scale
+  const ctx = canvas.getContext('2d')!
+  ctx.scale(scale, scale)
+  ctx.fillStyle = D.bg
+  ctx.fillRect(0, 0, LW, H)
+  ctx.fillStyle = D.kicker
+  ctx.font = `600 20px ${FIG}`
+  spaced(ctx, '1.6px')
+  ctx.fillText(p.kicker, pad, 72)
+  spaced(ctx, '0px')
+  ctx.fillStyle = D.muted
+  ctx.font = `20px ${FIG}`
+  ctx.textAlign = 'right'
+  ctx.fillText(p.when, LW - pad, 72)
+  ctx.textAlign = 'left'
+  ctx.fillStyle = D.text
+  ctx.font = `52px ${CAP}`
+  title.forEach((l, i) => ctx.fillText(l, pad, titleTop + 36 + i * titleLh))
+  const y0 = bandTop, y1 = bandTop + bandH
+  ctx.save()
+  ctx.beginPath(); ctx.roundRect(pad, y0, LW - pad * 2, bandH, 36); ctx.clip()
+  ctx.fillStyle = D.band; ctx.fillRect(pad, y0, LW - pad * 2, bandH)
+  ctx.fillStyle = D.accent; ctx.fillRect(pad, y0, 10, bandH)
+  ctx.restore()
+  let y = y0 + 44
+  ctx.fillStyle = D.text
+  ctx.font = `28px ${FIG}`
+  lead.forEach((l, i) => ctx.fillText(l, x0, y + 28 + i * 40))
+  y += leadH
+  p.rows.forEach((r, i) => {
+    const h = rowHs[i]
+    ctx.strokeStyle = D.rule; ctx.lineWidth = 1
+    ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke()
+    const mid = y + 56
+    ctx.fillStyle = D.text; ctx.font = `700 34px ${FIG}`
+    ctx.fillText(r.time, x0, mid)
+    ctx.fillStyle = D.muted; ctx.font = `30px ${FIG}`; ctx.textAlign = 'right'
+    ctx.fillText(r.mid, x1, mid); ctx.textAlign = 'left'
+    if (r.late) { ctx.fillStyle = D.accent; ctx.font = `600 28px ${FIG}`; ctx.fillText(r.late, x0, mid + 40) }
+    y += h
+  })
   ctx.strokeStyle = D.rule
   ctx.beginPath(); ctx.moveTo(pad, y1 + 44); ctx.lineTo(LW - pad, y1 + 44); ctx.stroke()
   ctx.fillStyle = D.kicker

@@ -506,27 +506,32 @@ export function shareWords(a: Analysis): { text: string; title: string; hash: st
   const title = `Trainchecker: ${a.from} to ${a.to}`, hash = `#${a.fromCrs}-${a.toCrs}`
   if (a.verdict === 'none' && a.lastGone) return { text: `Here's what Trainchecker found at ${at}: the last direct train from ${a.from} to ${a.to} had gone, at ${t12(a.lastGone.std)}, with no other in the next four hours.`, title, hash }
   if (a.verdict === 'none') return { text: `Here's what Trainchecker found at ${at}: no direct train from ${a.from} to ${a.to} in the next four hours.`, title, hash }
-  const lead = `Here's how the trains from ${a.from} to ${a.to} were looking at ${at}: `
+  // The verdict first (John, November 24th 2026): "Good news, when the trains … were checked at
+  // 6.39am on November 24th they were running well."; "It's a mixed bag for trains …, according to
+  // a check at …"; "Be prepared for the train journey from … At … a check showed that, …".
   const was = (k: number) => (k === 1 ? 'was' : 'were')
-  let body: string
-  if (a.verdict === 'good' && !a.worse) body = 'good news, they were running well.'
-  else if (a.verdict === 'good') {
+  let text: string
+  if (a.verdict === 'good') {
     const L = a.last
-    const why = L.known && L.within3 / L.known < 0.75
-      ? `only ${share(L.within3, L.known).bare} of the trains in the couple of hours before got there within three minutes of their planned time`
-      : `${num(L.cancelled.length)} trains were cancelled in the couple of hours before`
-    body = `good news, they were leaving on time, though ${why}.`
+    const why = !a.worse ? '' : L.known && L.within3 / L.known < 0.75
+      ? `, though only ${share(L.within3, L.known).bare} of the trains in the couple of hours before got there within three minutes of their planned time`
+      : `, though ${num(L.cancelled.length)} trains were cancelled in the couple of hours before`
+    text = `Good news, when the trains from ${a.from} to ${a.to} were checked at ${at} they were ${a.worse ? 'leaving on time' : 'running well'}${why}.`
   } else if (a.verdict === 'mixed') {
     const bits: string[] = []
     if (a.cancelled.length) bits.push(`${num(a.cancelled.length)} ${was(a.cancelled.length)} cancelled`)
     const late = a.late5.length + a.unknown.length
     if (late) bits.push(`${num(late)} ${was(late)} running late`)
-    body = `a mixed bag. Most were running, but ${bits.join(' and ').replace(/^(\w+)/, `$1 of the ${num(a.ahead.length)} in the next four hours`)}.`
+    text = `It's a mixed bag for trains from ${a.from} to ${a.to}, according to a check at ${at}. Most were running, but ${bits.join(' and ').replace(/^(\w+)/, `$1 of the ${num(a.ahead.length)} in the next four hours`)}.`
   } else {
     // The same counts as the verdict, never "zero were cancelled" (fresh look 2.1).
-    body = `be prepared.${preparedCounts(a, 'past')}${arrivingNow(a, 'past')}`
+    const n = a.ahead.length
+    const counts = preparedCounts(a, 'past').replace(/^ Of the next (\w+),/, (_m, w) => ` of the next ${w}${n === 1 ? '' : ' trains'},`)
+    const now = arrivingNow(a, 'past')
+    const showed = counts ? `a check showed that,${counts}${now}` : now ? `a check showed that ${now.trim().replace(/^S/, 's')}` : ''
+    text = `Be prepared for the train journey from ${a.from} to ${a.to}.` + (showed ? ` At ${at} ${showed}` : ` That's according to a check at ${at}.`)
   }
-  return { text: tenAfterWords(lead + body + ' From Trainchecker.'), title, hash }
+  return { text: tenAfterWords(text + ' From Trainchecker.'), title, hash }
 }
 
 // ---- The last week (SPEC §8.10) ----

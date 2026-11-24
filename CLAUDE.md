@@ -71,6 +71,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
+
+- **John:** reword the Share message at the top: "Good news, when the trains from Reading to Guildford were
+  checked at 6.39am on November 24th they were running well."; "It's a mixed bag for trains from A to B,
+  according to a check at …"; "Be prepared for the train journey from A to B. At … a check showed …".
+  Full examples agreed (date kept; "of the next 30 trains"; the no-train messages unchanged). `shareWords()`
+  in `sentences.ts`; `SPEC.md` §12.28. Straight to `main` at John's word.
+- **Checked:** `npm run check` 264 + 57 + 79 + 40 + 59 + 36 (each verdict word for word on the saved boards,
+  and be prepared from late arrivals only; the old comparison with the mock-ups' Share words removed);
+  `tsc -b`, lint, build. Not checked in a browser (text only).
+
 ### November 23rd 2026: "Your train passes near…": batch 58, every stretch in England done (notes, straight to `main`; Claude Code, scheduled task)
 
 - The last 15 stretches, all in the North East (the Northumberland Line from Ashington to Northumberland Park, Bedlington

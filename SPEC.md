@@ -669,6 +669,19 @@ they differ.
     goes on all day). Kept when the train starts elsewhere (it may still be to come at A) and on an
     earlier day of a longer item; no margin after its time. Claude's choices, agreed by John.
 
+28. **The Share button's words, verdict first** (John, November 24th 2026), replacing "Here's how
+    the trains from A to B were looking at …:":
+    - "Good news, when the trains from Reading to Guildford were checked at 6.39am on November 24th
+      they were running well." (or "…they were leaving on time, though …");
+    - "It's a mixed bag for trains from A to B, according to a check at 6.24pm on November 17th.
+      Most were running, but two of the 18 in the next four hours were cancelled.";
+    - "Be prepared for the train journey from A to B. At 6.24pm on November 17th a check showed
+      that, of the next 30 trains, 10 were cancelled and two were running late, mostly because of
+      …"; with no counts, "…a check showed that someone arriving at the station then was expected
+      to reach B about 55 minutes later than the timetable said."
+    Then "From Trainchecker." and the link, as before. The date kept (§17); the no-train messages
+    unchanged. Agreed by John.
+
 ## 13. Connections (November 21st 2026)
 
 John's idea, built and agreed with him in one day; `CLAUDE.md`'s log has the order it happened in.

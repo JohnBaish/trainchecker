@@ -84,11 +84,7 @@ for (const f of files) {
   // Since November 18th 2026 (John) more than two late trains are given as a range, and "expected" is said once, so only the
   // boards where neither applies are compared.
   if (!a.last.cancelled.length && a.last.lates.length <= 2 && a.last.tense === 'past') eq(`${f}: last two hours`, lastTwoLines(a).slice(1), (S.lastTwoLines(m) as string[]).map(digits).map(tenAfterWords).slice(1))
-  const when = { time: t12(m.now), date: dayName(new Date(m.taken)).replace(/^\w+ /, '') }
-  // Since the fresh look (November 18th 2026), "Be prepared"'s Share sentence gives the late trains
-  // too, as the verdict does, so it's compared with the mock-up only for the other verdicts. "Their
-  // planned time" rather than "the timetable" since November 18th 2026 (John, stage 5).
-  if (!a.lastGone && a.verdict !== 'prepared') eq(`${f}: share`, shareWords(a).text, S.shareWords(m, when).text.replace('of the timetable. From', 'of their planned time. From').replace('following four hours', 'next four hours'))
+  // The Share words were reworded on November 24th 2026 (John), so they're no longer compared with the mock-ups; checked below.
   const bad = pageText(a).filter((t) => /undefined|null|NaN|\[object/.test(t))
   eq(`${f}: no undefined, null or NaN`, bad, [])
 }
@@ -109,7 +105,10 @@ eq('long journey (O1, John)', lastTwoLines(kgxYrk), [
   'Seven of the eight trains leaving London Kings Cross in the last couple of hours are expected to reach York within three minutes of their planned time.',
   'The other is set to be six minutes late.',
 ])
-eq('share (P2)', shareWords(rdgPad).text, "Here's how the trains from Reading to London Paddington were looking at 6.24pm on November 17th: good news, they were leaving on time, though only half of the trains in the couple of hours before got there within three minutes of their planned time. From Trainchecker.")
+eq('share (P2, reworded November 24th)', shareWords(rdgPad).text, "Good news, when the trains from Reading to London Paddington were checked at 6.24pm on November 17th they were leaving on time, though only half of the trains in the couple of hours before got there within three minutes of their planned time. From Trainchecker.")
+eq('share: mixed bag (John, November 24th)', shareWords(bthBri).text, "It's a mixed bag for trains from Bath Spa to Bristol Temple Meads, according to a check at 6.24pm on November 17th. Most were running, but two of the 18 in the next four hours were cancelled. From Trainchecker.")
+eq('share: running well (John, November 24th)', shareWords(padRdg).text, "Good news, when the trains from London Paddington to Reading were checked at 6.24pm on November 17th they were running well. From Trainchecker.")
+eq('share: be prepared (John, November 24th)', shareWords(manMia).text, "Be prepared for the train journey from Manchester Piccadilly to Manchester Airport. At 6.24pm on November 17th a check showed that, of the next 30 trains, 10 were cancelled and two were running late, mostly because of a fault with the signalling system. From Trainchecker.")
 eq('share link and title', [shareWords(rdgPad).hash, shareWords(rdgPad).title], ['#RDG-PAD', 'Trainchecker: Reading to London Paddington'])
 eq('fold', nextFour(rdgPad)!.fold, "Show the three trains that aren't on time")
 
@@ -349,11 +348,12 @@ eq('366 quotes', QUOTES.length, 366)
   const lates = analyse(board([5, 35, 65, 95, 125, 155].map((r, i) => tr(i, r, { etd: at(T, r + 50), eta: at(T, r + 70) }))))
   eq('be prepared, late trains only: no "zero are cancelled" (2.1)', [lineText(verdict(lates).lines)[0], shareWords(lates).text], [
     '<b>Be prepared:</b> trains from Bath Spa to Bristol Temple Meads are badly disrupted this evening. Of the next six, all six are running late. Someone arriving at the station now is expected to reach Bristol Temple Meads about 50 minutes later than the timetable says.',
-    "Here's how the trains from Bath Spa to Bristol Temple Meads were looking at 6.24pm on November 17th: be prepared. Of the next six, all six were running late. Someone arriving at the station then was expected to reach Bristol Temple Meads about 50 minutes later than the timetable said. From Trainchecker."])
+    "Be prepared for the train journey from Bath Spa to Bristol Temple Meads. At 6.24pm on November 17th a check showed that, of the next six trains, all six were running late. Someone arriving at the station then was expected to reach Bristol Temple Meads about 50 minutes later than the timetable said. From Trainchecker."])
   const arrive = analyse(board([5, 65, 125, 185].map((r, i) => tr(i, r, { eta: at(T, r + 75) }))))
   eq('be prepared from late arrivals: said, and not "All are expected on time" (2.2)', [lineText(verdict(arrive).lines)[0], nextFour(arrive)!.lines[1], nextFour(arrive)!.rows[0].what], [
     '<b>Be prepared:</b> trains from Bath Spa to Bristol Temple Meads are badly disrupted this evening. Someone arriving at the station now is expected to reach Bristol Temple Meads about 55 minutes later than the timetable says.',
     'All four are expected to leave on time but reach Bristol Temple Meads more than five minutes late.', 'Expected at Bristol Temple Meads 7.44pm, 55 minutes late'])
+  eq('share: be prepared from late arrivals only (John, November 24th)', shareWords(arrive).text, "Be prepared for the train journey from Bath Spa to Bristol Temple Meads. At 6.24pm on November 17th a check showed that someone arriving at the station then was expected to reach Bristol Temple Meads about 55 minutes later than the timetable said. From Trainchecker.")
   const delayed = analyse(board([5, 35, 65, 95, 125, 155].map((r, i) => tr(i, r, i < 2 ? { etd: 'Delayed', eta: 'Delayed' } : {}))))
   eq('two "Delayed" trains alone: a mixed bag, not badly disrupted (2.2)', [delayed.badly, delayed.verdict], [false, 'mixed'])
   const gone = analyse(board([5, 35, 65, 95].map((r, i) => tr(i, r, { cancelled: true, etd: 'Cancelled', platform: null, reason: 'This train has been cancelled because of a fault on this train' }))))

@@ -294,7 +294,7 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
     ctx.textAlign = 'left'
   } else {
     ctx.fillText(p.heads[0], x0, y + 14)
-    const second = p.rows.some((r) => r.platform)
+    const second = p.rows.some((r) => r.platform || r.noPlat)
     if (second) { ctx.textAlign = 'right'; ctx.fillText(p.heads[1], x1, y + 14); ctx.textAlign = 'left' }
     else ctx.fillText(p.heads[1], colX, y + 14)
   }
@@ -311,6 +311,11 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
     ctx.font = `700 36px ${FIG}`
     ctx.fillText(r.time, x0, mid + 13)
     const right = r.platform && !p.one ? x1 - badge(r.platform, x1, mid) - 20 : x1
+    // A train with no platform yet: "not yet" where the badge would be (November 24th 2026).
+    if (r.noPlat && !p.one) {
+      ctx.font = `italic 26px ${FIG}`; ctx.fillStyle = D.muted; ctx.textAlign = 'right'
+      ctx.fillText('not yet', x1, mid + 9); ctx.textAlign = 'left'
+    }
     // The middle: the kind or "the 8.47pm" in grey, then lateness in orange; on two lines when
     // it won't fit on one at a readable size.
     const sep = r.mid && r.late ? (r.arrow ? '   ' : ' · ') : ''

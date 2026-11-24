@@ -861,7 +861,7 @@ export function listShareWords(a: Analysis, kind: 'platforms' | 'arrivals', pros
  *  when the list is grouped, and the platform (said once in the heading when all share one).
  *  Arrivals: "the 8.47pm" from A, its timetabled departure. Delayed trains with no time are rows
  *  of their own. */
-export type PicRow = { time: string; mid: string; late: string; platform?: string; lateBy?: number; arrow?: boolean }
+export type PicRow = { time: string; mid: string; late: string; platform?: string; lateBy?: number; arrow?: boolean; noPlat?: boolean }
 export type ListPicture = {
   kicker: string; title: string; when: string; heads: [string, string]
   one: string | null; rows: PicRow[]; note: string | null; words: { text: string; title: string; hash: string }

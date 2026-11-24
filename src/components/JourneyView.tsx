@@ -22,7 +22,10 @@ import { LastWeek } from './LastWeek.tsx'
 import { FactCard, QuoteCard } from './Tail.tsx'
 import { Connection } from './Connection.tsx'
 import { Exits } from './Exits.tsx'
-import { firstPanel, laterPanel } from '../lib/windows.ts'
+import { firstPanel, firstShare, laterPanel, laterShare, type LaterShareKind } from '../lib/windows.ts'
+
+// PROTOTYPE (November 24th 2026): the later panel's share picture, three ways (?share=A|B|C; A when left out).
+const LATER_SHARE = (['A', 'B', 'C'].includes(new URLSearchParams(location.search).get('share') ?? '') ? new URLSearchParams(location.search).get('share') : 'A') as LaterShareKind
 
 type State = { s: 'loading' } | { s: 'ok'; a: Analysis } | { s: 'failed'; why: string }
 
@@ -109,7 +112,7 @@ function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
   const [openRow, setOpenRow] = useState<string | null>(null)
   const tap = dirs ?? null
   const toggle = (k: string) => setOpenRow(openRow === k ? null : k)
-  const second = p.rows.some((r) => r.platform || (r as { noPlat?: boolean }).noPlat)
+  const second = p.rows.some((r) => r.platform || r.noPlat)
   const simple = !!p.one && p.rows.every((r) => !r.mid && !r.late)
   return (
     <div className="board" role={simple ? undefined : 'table'}>
@@ -138,7 +141,7 @@ function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
           {r.platform && !p.one && (tap && tap(r.platform)
             ? <span role="cell" className="bcell"><TapBadge pl={r.platform} open={openRow === String(i)} onTap={() => toggle(String(i))} /></span>
             : <span className="badge" role="cell">{r.platform}</span>)}
-          {(r as { noPlat?: boolean }).noPlat && !p.one && <span className="bnoplat" role="cell">not yet</span>}
+          {r.noPlat && !p.one && <span className="bnoplat" role="cell">not yet</span>}
           {tap && r.platform && openRow === String(i) && <DirLines lines={tap(r.platform)!} />}
         </div>
       ))}
@@ -229,6 +232,7 @@ function FirstPanel({ a }: { a: Analysis }) {
           {pic && dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
           {pic && <Board p={pic} dirs={dirs} />}
           {f.cancelled && <p className="tafter">{f.cancelled}</p>}
+          {(() => { const sp = firstShare(a); return sp && <PicShare pic={sp} what="these trains" file="next-hour" /> })()}
         </details>
       )}
     </section>
@@ -253,9 +257,28 @@ function LaterPanel({ a }: { a: Analysis }) {
           {dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
           <Board p={pic} dirs={dirs} />
           {l.cancelled && <p className="tafter">{l.cancelled}</p>}
+          {(() => { const sp = laterShare(a, LATER_SHARE); return sp && <PicShare pic={sp} what="these trains" file="later" /> })()}
         </details>
       )}
     </section>
+  )
+}
+
+/** Share for a panel's board: its picture with the words and the journey's link (house style §17). */
+function PicShare({ pic, what, file }: { pic: ListPicture; what: string; file: string }) {
+  const [status, setStatus] = useState('')
+  const touch = isTouch()
+  const go = async () => {
+    setStatus('')
+    const w = pic.words
+    const r = await deliverImage(listImage(pic), `trainchecker-${file}-${w.hash.slice(1)}.png`, { title: w.title, text: w.text, url: `${location.origin}/${w.hash}` })
+    setStatus(r === 'copied' ? 'Copied' : r === 'saved' ? 'Saved as a picture' : r === 'failed' ? 'Sorry, this browser wouldn’t copy it.' : '')
+  }
+  return (
+    <div className="share-row in-fold">
+      <button type="button" className="btn btn-secondary" onClick={go}><Icon name={touch ? 'share' : 'copy'} /> {touch ? `Share ${what}` : `Copy ${what}`}</button>
+      <span className="share-status" role="status">{status}</span>
+    </div>
   )
 }
 

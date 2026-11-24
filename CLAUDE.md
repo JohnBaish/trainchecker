@@ -74,6 +74,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 24th 2026: Share for the two panels, mock-ups (branch `claude/ecstatic-dijkstra-w0herd`, not merged; Claude Code)
+
+- **John:** the Share buttons back, certainly on "The next hour"; for the later panel, find a way if one works; mock-ups
+  and sentences first. Built (drafts): `firstShare()` and `laterShare(a, 'A'|'B'|'C')` in `windows.ts`; `PicShare` in
+  `JourneyView.tsx`, "Copy/Share these trains" at the foot of each panel's "trains and platforms" fold; `listImage()`
+  draws "not yet" (`PicRow.noPlat`). The later picture three ways behind `?share=A|B|C` (A when left out): A every later
+  train (Reading to Paddington: 34 rows, a very long picture); B the panel's sentence and only the trains not on time,
+  each with its reason; C hour by hour. Pictures in `design/previews/next-hour/share/` (`share-pics.mjs` reads them back
+  from the clipboard). Checks unchanged; `tsc -b`, lint, build; fonts loaded, no errors.
+
 ### November 24th 2026: "The next hour" first, then the rest; live (branch `claude/ecstatic-dijkstra-w0herd`, merged the same day; Claude Code)
 
 - **John:** show the information in the order people need it. Swap "The next four hours" and "Platforms"; the first panel

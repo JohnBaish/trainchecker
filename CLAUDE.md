@@ -148,6 +148,12 @@ given its own branch). Before committing there, run
   39 stations send people over a bridge or through a subway to an entrance by or nearest their own platform (29 were
   already there; Aberdare, Ashford International): probably an entrance across a road, for John. Checks 264 + 57 + 79
   + 40 + 76 + 36, `tsc -b`, lint, build; the Reading list unchanged. Straight to `main`.
+- **(3) continued:** National Rail's maps for the three fetched again (assets and images.nationalrail.co.uk now
+  answer) and read: Nottingham's step-free Station Street is at the main building's north-west corner, reached as
+  Carrington Street; St Pancras's Eurostar taxi drop-off is off the lower-level arcade, as Midland Road (south)
+  (`same_as`, new, in `exits-overrides.json`). London Bridge Street: the map shows it on the upper concourse,
+  reached from the lower concourse ("To Upper Concourse"), but not how the upper concourse meets the platforms;
+  left out, for John.
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

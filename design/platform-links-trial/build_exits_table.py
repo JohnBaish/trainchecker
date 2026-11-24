@@ -206,6 +206,14 @@ def main():
             for rs in e['p'].values():
                 if not any(r[0] == k for r in rs):
                     rs.append([k, via, None])
+        # An exit reached exactly as its neighbour is, from the station map (Nottingham's step-free Station Street
+        # as Carrington Street; St Pancras's Eurostar taxi drop-off as Midland Road (south)).
+        for name, like in o.get('same_as', {}).items():
+            k, n = names.index(name), names.index(like)
+            for rs in e['p'].values():
+                for r in [r for r in rs if r[0] == n]:
+                    if not any(q[0] == k for q in rs):
+                        rs.append([k, r[1], r[2]])
         if o.get('no_routes'):
             e['p'] = {}
         for bad in o.get('no_exit', []):

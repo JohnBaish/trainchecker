@@ -337,5 +337,17 @@
       "Bishopsgate (West)": "c"
     },
     "_who": "Claude, November 24th 2026, from the map reading: \"concourse, then up\" from every platform, as Bishopsgate (West); Bishopsgate (West) also from every platform (it was missing from some)"
+  },
+  "NOT": {
+    "same_as": {
+      "Station Street (step-free)": "Carrington Street"
+    },
+    "_who": "Claude, November 24th 2026, from National Rail's Nottingham station map: \"Step free access\" at the north-west corner of the main building, reached through it as Carrington Street is"
+  },
+  "STP": {
+    "same_as": {
+      "the Eurostar taxi drop-off": "Midland Road (south)"
+    },
+    "_who": "Claude, November 24th 2026, from National Rail's St Pancras station map: the Eurostar taxi drop-off is off the lower-level arcade, beside the Midland Road exit"
   }
 }

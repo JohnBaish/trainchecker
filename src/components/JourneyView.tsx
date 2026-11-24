@@ -226,6 +226,7 @@ function FirstPanel({ a }: { a: Analysis }) {
       <h3>{f.heading}</h3>
       {/* One paragraph (John, November 24th 2026). */}
       <p className="lead">{f.lines.join(' ')}</p>
+      {f.platLine && <p>{f.platLine}</p>}
       {(pic || f.cancelled) && (
         <details className="advice trains-fold">
           <summary>{k === 1 ? 'Show the train and its platform' : 'Show the trains and platforms'} <Icon name="down" /></summary>

@@ -92,6 +92,16 @@ given its own branch). Before committing there, run
   hours; and the orange line didn't say whether its trains were among the count on the right: now "three of them
   cancelled, one late" ("cancelled" or "running late" for a single train). Checks unchanged; `tsc -b`, lint, build;
   pictures read back as before.
+- **John:** counts and rates of trains running, cancelled ones "more" (Manchester: "about seven per hour" counted
+  cancelled trains; five are running per hour): first panel "There are five trains in the next hour. Three more are
+  cancelled…"; second "There are five trains per hour. Seven more in that time are cancelled…" (`Span.more` in
+  `nextFour()`; the rate from the running trains); the stretched heading counts running trains again; hour by hour
+  "four trains" / "one of these is late, three more are cancelled"; "…, hour by hour, from…" (commas); and the first
+  panel's platforms line back above its fold ("Platforms have been announced for all of these: platform 1.", the
+  second keeps "already"; "mostly" now needs three or more trains and a real majority: Reading to Midgham's two read
+  "mostly platform 12A"). `check-windows` 391 (new: "more" on every saved board, the words, the rows; setting three to
+  two made 22 fail). Checks, `tsc -b`, lint, build; Manchester at 1200px light and 390px dark, its picture read back:
+  no errors, no sideways scroll.
 
 ### November 24th 2026: "The next hour" first, then the rest; live (branch `claude/ecstatic-dijkstra-w0herd`, merged the same day; Claude Code)
 

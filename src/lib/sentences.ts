@@ -357,7 +357,9 @@ export function why(reason: string | null, operator: string): string {
 }
 
 /** The first and later panels (windows.ts) pass their own opening line (November 24th 2026). */
-export type Span = { first: string | null; hours?: number; span?: string; short?: boolean }
+/** `more`: the opening counted only the trains running, so the cancelled ones are "more" ("Seven more in
+ *  that time are cancelled", John, November 24th 2026); its text goes after "more" (" in that time" or ""). */
+export type Span = { first: string | null; hours?: number; span?: string; short?: boolean; more?: string }
 export function nextFour(a: Analysis, o?: Span): NextFour | null {
   if (a.verdict === 'none' || !a.ahead.length) return null
   const n = a.ahead.length
@@ -371,7 +373,8 @@ export function nextFour(a: Analysis, o?: Span): NextFour | null {
   if (onTime === n) lines.push(n === 1 ? "It's expected to be on time." : n === 2 ? 'Both of them are expected to be on time.' : "They're all expected to be on time.")
   else {
     const g: [number, string][] = []
-    if (a.cancelled.length) g.push([a.cancelled.length, `${v(a.cancelled.length)} cancelled${because(a.cancelled)}`])
+    const more = o?.more !== undefined && a.cancelled.length < n
+    if (a.cancelled.length) g.push([a.cancelled.length, `${more ? `more${o!.more} ` : ''}${v(a.cancelled.length)} cancelled${because(a.cancelled)}`])
     if (a.late5.length) g.push([a.late5.length, `${v(a.late5.length)} expected to be more than five minutes late${because(a.late5)}`])
     if (a.arrLate.length) g.push([a.arrLate.length, `${v(a.arrLate.length)} expected to leave on time but reach ${a.to} more than five minutes late${because(a.arrLate)}`])
     if (little.length) g.push([little.length, `${v(little.length)} expected to be a few minutes late`])
@@ -379,7 +382,7 @@ export function nextFour(a: Analysis, o?: Span): NextFour | null {
     // "All four are cancelled" when every train is (fresh look 2.3).
     const ps = g.map(([k, t]) => `${k === n && g.length === 1 ? howMany(k, n) : num(k)} ${t}`)
     let s = ps.length > 1 ? `${ps.slice(0, -1).join(', ')}, and ${ps[ps.length - 1]}` : ps[0]
-    s = g[0][0] >= 10 ? `Of these, ${s}.` : `${Cap(s)}.`
+    s = g[0][0] >= 10 && !(more && a.cancelled.length) ? `Of these, ${s}.` : `${Cap(s)}.`
     lines.push(s)
     if (onTime) lines.push(onTime === 1 ? 'The other one is expected to be on time.' : 'The rest are expected to be on time.')
   }

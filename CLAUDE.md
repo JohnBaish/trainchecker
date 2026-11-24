@@ -88,6 +88,10 @@ given its own branch). Before committing there, run
   "seven trains" on the right, and under them in orange "three cancelled, one late"; an hour with none, "no trains".
   Checks unchanged; `tsc -b`, lint, build; Manchester, Reading to Paddington, Kings Cross to York (stretched) and
   Euston to Milton Keynes read back from the clipboard, fonts loaded, no errors.
+- **John:** (b): when the first panel is stretched, the later picture lists the few later trains (as A) instead of
+  hours; and the orange line didn't say whether its trains were among the count on the right: now "three of them
+  cancelled, one late" ("cancelled" or "running late" for a single train). Checks unchanged; `tsc -b`, lint, build;
+  pictures read back as before.
 
 ### November 24th 2026: "The next hour" first, then the rest; live (branch `claude/ecstatic-dijkstra-w0herd`, merged the same day; Claude Code)
 

@@ -172,6 +172,8 @@ export function laterShare(a: Analysis, kind: LaterShareKind, s = split(a)): Lis
       : `The trains from ${a.from} to ${a.to} ${period}${s.stretched ? ',' : ''} were all expected to be on time, according to Trainchecker.`
     return { ...base, heads: ['DUE TO LEAVE', ''], rows, before: lp.lines.join(' '), words: words(text, a) }
   }
+  // Stretched: few later trains, so the trains themselves rather than hours (John, November 24th 2026, (b)).
+  if (s.stretched) return laterShare(a, 'A', s)
   // C: hour by hour (John: no platforms said, a time range rather than "FROM").
   const start = s.stretched ? s.cut : 60
   const rows: PicRow[] = []
@@ -184,7 +186,9 @@ export function laterShare(a: Analysis, kind: LaterShareKind, s = split(a)): Lis
     const to = Math.min(from + 60, 240)
     const ts = l.ahead.filter((t) => { const m = leaves(a, t); return m > from && m <= to })
     const c = ts.filter((t) => t.cancelled).length, late = ts.filter((t) => l.late5.includes(t) || l.arrLate.includes(t) || t.unknown).length
-    const bad = [c ? `${num(c)} cancelled` : '', late ? `${num(late)} late` : ''].filter(Boolean).join(', ')
+    // "of them", so it's plain these are among the trains counted on the right (John, November 24th 2026).
+    const bits = [c ? `${num(c)} cancelled` : '', late ? `${num(late)} late` : ''].filter(Boolean)
+    const bad = !bits.length ? '' : ts.length === 1 ? (c ? 'cancelled' : 'running late') : `${bits[0].replace(/^(\w+) /, '$1 of them ')}${bits[1] ? `, ${bits[1]}` : ''}`
     rows.push({ time: range(from, to), mid: ts.length ? `${num(ts.length)} ${trainsWord(ts.length)}` : 'no trains', late: bad })
   }
   const text = s.stretched ? `The later trains from ${a.from} to ${a.to} hour by hour, ${when}, from Trainchecker.` : `The trains from ${a.from} to ${a.to} hour by hour from ${when}, from Trainchecker.`

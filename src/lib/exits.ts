@@ -115,9 +115,24 @@ export function hereName(n: string, street = false): string {
 
 /** "Station Hill", "Hurst Road", or for an exit with no name "the exit", or "the exit by platform
  *  4" where there are others (Draft). */
-const target = (e: StationExits, i: number) => {
+/** Two exits onto the same road, on different sides (Broadbottom's two Moss Lanes): which platform this
+ *  one is by, so a sentence never names the same exit twice (John, November 24th 2026). */
+export function twinTag(e: StationExits, i: number, shown?: Set<number>): string {
   const x = e.x[i]
-  if (x[0]) return toName(x[0], !e.m && !e.here)
+  if (!hasTwin(e, i, shown)) return ''
+  const p = x[1][0] ?? x[3]
+  return p ? ` by platform ${p}` : ''
+}
+/** Another exit of the same name, among those this answer names (all of them when not given). */
+export const hasTwin = (e: StationExits, i: number, shown?: Set<number>) =>
+  !!e.x[i][0] && e.x.some((y, j) => j !== i && y[0] === e.x[i][0] && (!shown || shown.has(j)))
+const target = (e: StationExits, i: number, shown?: Set<number>) => {
+  const x = e.x[i]
+  if (x[0]) {
+    const tag = twinTag(e, i, shown)
+    if (!tag && hasTwin(e, i, shown)) return `the other ${toName(x[0], !e.m && !e.here).replace(/^the /, '')}${/ exit$/.test(toName(x[0], !e.m && !e.here)) ? '' : ' exit'}`
+    return toName(x[0], !e.m && !e.here) + tag
+  }
   const p = x[1][0] ?? x[3]
   return e.x.length === 1 || !p ? 'the exit' : `the exit by platform ${p}`
 }
@@ -163,7 +178,7 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
     // The other exit over the bridge or through the subway, everywhere (John, November 22nd 2026:
     // "even if we only have street names", so people can look on a map for the one that suits them).
     const alt = ways.find((w) => w[0] !== i && (w[1] === 'b' || w[1] === 's'))
-    const also = alt ? `, or you can go ${alt[1] === 'b' ? `over the ${e.w ?? 'footbridge'}` : 'through the subway'} for ${target(e, alt[0])}` : ''
+    const also = alt ? `, or you can go ${alt[1] === 'b' ? `over the ${e.w ?? 'footbridge'}` : 'through the subway'} for ${target(e, alt[0], new Set([i, alt[0]]))}` : ''
     return `${start} ${here ?? hereName(nm, !e.m)} is right there${by}${also}.${hoursLine(e, [ways[0]])}`
   }
   if (via === 'c') return `${start} The exits are across the concourse at the end of the platform.${hoursLine(e, ways)}` // Draft
@@ -172,9 +187,9 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
     // "The way out is up from the Elizabeth Line platforms to the Eastbourne Terrace exit.");
     // otherwise only where it leads, never "up or down".
     const dir = down === 'up' || down === 'down' ? down : down === 'unknown' ? null : e.k === 'below' ? 'down' : e.k === 'above' ? 'up' : null
-    return `${start} ${dir ? `The way out is ${dir} from the platform to` : 'The way out from the platform leads to'} ${target(e, i)}.${hoursLine(e, [ways[0]])}` // Draft
+    return `${start} ${dir ? `The way out is ${dir} from the platform to` : 'The way out from the platform leads to'} ${target(e, i, new Set([i]))}.${hoursLine(e, [ways[0]])}` // Draft
   }
-  if (via === 'x') return `${start} Cross the line at the level crossing for ${target(e, i)}.${hoursLine(e, [ways[0]])}` // Draft
+  if (via === 'x') return `${start} Cross the line at the level crossing for ${target(e, i, new Set([i]))}.${hoursLine(e, [ways[0]])}` // Draft
   // A footbridge or subway: either way, when two ways the same kind lead to different exits.
   const same = ways.filter((w) => w[1] === via)
   const bridge = e.w ?? 'footbridge'
@@ -183,15 +198,18 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
   const offAgain = via === 'b' ? 'coming down' : 'coming up'
   if (same.length >= 2 && same[0][0] !== same[1][0]) {
     const [a, b] = same
-    const said = (w: Way) => w[2] && !target(e, w[0]).endsWith(`platform ${w[2]}`)
-    const one = `to ${target(e, a[0])}${said(a) ? `, ${off} by platform ${a[2]}` : ''}`
-    const two = `to ${target(e, b[0])}${said(b) ? `, ${said(a) ? offAgain : off} by platform ${b[2]}` : ''}`
+    const pair = new Set([a[0], b[0]])
+    const said = (w: Way) => w[2] && !target(e, w[0], pair).endsWith(`platform ${w[2]}`)
+    const one = `to ${target(e, a[0], pair)}${said(a) ? `, ${off} by platform ${a[2]}` : ''}`
+    const two = `to ${target(e, b[0], pair)}${said(b) ? `, ${said(a) ? offAgain : off} by platform ${b[2]}` : ''}`
     return `${start} Go ${via === 'b' ? `up to the ${bridge}` : 'down to the subway'}, where you can turn either way: ${one}, or ${two}.${hoursLine(e, same.slice(0, 2))}`
   }
-  const t = target(e, i)
+  const alt0 = ways.find((w) => w[0] !== i && (w[1] === 'b' || w[1] === 's') && w[1] !== via)
+  const shown = new Set([i, ...(alt0 ? [alt0[0]] : [])])
+  const t = target(e, i, shown)
   // The other exit, the other way (John, November 24th 2026, Guildford: the footbridge to Guildford Park
   // Road wasn't mentioned for the platforms reached by the subway), as the level answers already do.
   const alt = ways.find((w) => w[0] !== i && (w[1] === 'b' || w[1] === 's') && w[1] !== via)
-  const also = alt ? `, or the ${alt[1] === 'b' ? bridge : 'subway'} to ${target(e, alt[0])}` : ''
+  const also = alt ? `, or the ${alt[1] === 'b' ? bridge : 'subway'} to ${target(e, alt[0], shown)}` : ''
   return `Your train is due into platform ${platform}, so you’ll want the ${thing} to ${t}${down && !t.endsWith(`platform ${down}`) ? `, ${off} by platform ${down}` : ''}${also}.${hoursLine(e, [ways[0]])}`
 }

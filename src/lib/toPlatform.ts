@@ -2,18 +2,26 @@
 // (data/exits.json, built for "Exits") read the other way round: from each entrance of A to the
 // platform a train leaves from. A line for each entrance (John); entrances with the same way are
 // joined into one line. Every sentence here is Claude's draft.
-import type { StationExits, Way } from './exits.ts'
+import { hasTwin, twinTag, type StationExits, type Way } from './exits.ts'
 
 const and = (xs: string[], word = 'and') => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} ${word} ${xs[xs.length - 1]}` : xs[0] ?? '')
 
 /** What an entrance is called, for "From …". */
-export function entranceName(e: StationExits, i: number, fix?: Fix): string {
+export function entranceName(e: StationExits, i: number, fix?: Fix, shown?: Set<number>): string {
   const own = fix?.names?.[String(i)]
   if (own) return own
+  const tag = twinTag(e, i, shown)
+  // A twin by no platform, beside one that is (Benfleet's second Ferry Road): "the other …".
+  if (!tag && hasTwin(e, i, shown)) return baseName(e, i).replace(/^the /, 'the other ')
+  return baseName(e, i) + tag
+}
+function baseName(e: StationExits, i: number): string {
   const [n, by, building, near] = e.x[i]
   if (!n) {
     if (e.x.length === 1) return building ? 'the entrance by the station building' : 'the entrance'
-    if (building) return 'the entrance by the station building'
+    // Two unnamed entrances by the station building (Berkhamsted): told apart by their platforms.
+    const twins = e.x.filter((y) => !y[0] && y[2]).length > 1
+    if (building && !(twins && (by[0] ?? near))) return 'the entrance by the station building'
     const p = by[0] ?? near
     return p ? `the entrance by platform ${p}` : 'the other entrance'
   }
@@ -101,13 +109,6 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
   const own = e.x.length > 1 ? level.filter((i) => !e.x[i][0] && !fix?.names?.[String(i)] && !e.x[i][2] && e.x[i][1].includes(platform)) : []
   const by = level.filter((i) => !own.includes(i))
   const lc = e.lc ? ', by the level crossing' : ''
-  if (level.length) {
-    const joined = joinNames([...new Set(by.map((i) => entranceName(e, i, fix)))], 'and')
-    const opens = by.length === 1 ? openLine(e, by[0]) : ''
-    lines.push(!by.length ? `Platform ${platform} has its own entrance${lc}.`
-      : own.length ? `Platform ${platform} has its own entrance, and is right by ${joined}${lc}.${opens}`
-      : `Platform ${platform} is right by ${joined}${lc}.${opens}`)
-  }
   // The rest, a line for each way, entrances with the same way joined. An entrance reached by a
   // bridge or subway elsewhere at the station but with no way stored from this platform is added
   // (Reading's north entrance to platforms 4 to 7), where the bridge's other end comes down on
@@ -119,14 +120,29 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
     const via = ['b', 's'].find((v) => Object.values(e.p).some((ws) => ws.some((w) => w[0] === i && w[1] === v)))
     if (via) all.push([i, via, null])
   })
-  const rest = new Map<string, number[]>()
+  // A line for each entrance; an entrance reached two ways gets both in one sentence ("…, or go up to the
+  // footbridge…": Carlisle's Station Approach); entrances with the same ways are joined.
+  const hows = new Map<number, string[]>()
   for (const w of all) {
     const s = how(w, platform, bridge, e, links, fix)
-    if (!s) continue
-    rest.set(s, [...(rest.get(s) ?? []), w[0]])
+    if (s && !(hows.get(w[0]) ?? []).includes(s)) hows.set(w[0], [...(hows.get(w[0]) ?? []), s])
   }
+  const rest = new Map<string, number[]>()
+  for (const [i, hs] of hows) {
+    const s = hs.length === 1 ? hs[0] : hs.map((h, k) => (k < hs.length - 1 ? h.replace(/\.$/, '') : h)).join(', or ')
+    rest.set(s, [...(rest.get(s) ?? []), i])
+  }
+  // The entrances this answer names: a name shared with another of them gets its platform.
+  const shown = new Set([...by, ...hows.keys()])
   for (const [s, is] of rest) {
-    lines.push(`From ${fromNames([...new Set(is.map((i) => entranceName(e, i, fix)))])}, ${s}${is.length === 1 ? openLine(e, is[0]) : ''}`)
+    lines.push(`From ${fromNames([...new Set(is.map((i) => entranceName(e, i, fix, shown)))])}, ${s}${is.length === 1 ? openLine(e, is[0]) : ''}`)
+  }
+  if (level.length) {
+    const joined = joinNames([...new Set(by.map((i) => entranceName(e, i, fix, shown).replace(` by platform ${platform}`, '')))], 'and')
+    const opens = by.length === 1 ? openLine(e, by[0]) : ''
+    lines.unshift(!by.length || joined === 'the entrance' ? `Platform ${platform} has its own entrance${lc}.`
+      : own.length ? `Platform ${platform} has its own entrance, and is right by ${joined}${lc}.${opens}`
+      : `Platform ${platform} is right by ${joined}${lc}.${opens}`)
   }
   return lines
 }

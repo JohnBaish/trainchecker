@@ -86,6 +86,36 @@ def downs(hand, osm, groups):
                     break
 
 
+def merge_twins(e):
+    """Two exits with the same name by the same platform (or both by none) are one exit drawn twice on the
+    map (Abergavenny's two Station Roads, both by platform 1: "turn either way: to Station Road, or to
+    Station Road"). Keep the first; its platforms gain the other's; routes to the other point at it, once.
+    Same-named exits by different platforms stay apart, and the sentences say which platform each is by."""
+    keep, into = [], {}
+    for k, x in enumerate(e['x']):
+        anchor = (x[1][0] if x[1] else x[3])
+        twin = next((j for j in keep if x[0] and e['x'][j][0] == x[0] and (e['x'][j][1][0] if e['x'][j][1] else e['x'][j][3]) == anchor), None)
+        if twin is None:
+            into[k] = len(keep); keep.append(k)
+        else:
+            into[k] = into[twin]
+            for pl in x[1]:
+                if pl not in e['x'][twin][1]:
+                    e['x'][twin][1].append(pl)
+    if len(keep) == len(e['x']):
+        return
+    e['x'] = [e['x'][k] for k in keep]
+    for pl, rs in e['p'].items():
+        seen, new = set(), []
+        for r in rs:
+            r[0] = into[r[0]]
+            if r[0] not in seen:
+                seen.add(r[0]); new.append(r)
+        e['p'][pl] = new
+    if e.get('h'):
+        e['h'] = {str(into[int(k)]): v for k, v in e['h'].items()}
+
+
 def main():
     osm = json.load(open(sys.argv[1]))
     # Exits named by what's near them ("the town centre exit"), from name_exits.py, beside exits.json.
@@ -129,6 +159,7 @@ def main():
             for r in rs:
                 if r[1] == 'u' and (pl in d or '*' in d):
                     r[2] = d.get(pl, d.get('*'))
+        merge_twins(e)
         out[crs] = e
     # The rest of John's corrections, applied last.
     for crs, o in ov.items():

@@ -1,5 +1,6 @@
 // npm run check (part 5): "Station exits" (John, November 22nd 2026) on the real table
 // (src/data/exits.json): the sentences John agreed, and the stations he knows.
+import { toPlatform } from '../src/lib/toPlatform.ts'
 import t from '../src/data/exits.json' with { type: 'json' }
 import { heading, stationLine, trainLine, type ExitsTable } from '../src/lib/exits.ts'
 import { whichTrain } from '../src/lib/connection.ts'
@@ -112,6 +113,22 @@ eq('Edinburgh: not "up above" when some are on the level', stationLine('Edinburg
 const untrue = Object.entries(T).filter(([, e]) => e.x.some((x) => x[1].length)
   && /aren’t on the platforms|isn’t on the platforms|every platform reaches|up above the platforms|down below the platforms/.test(stationLine('X', e))).map(([c]) => c)
 eq('no station with an exit by a platform says a catch-all', untrue, [])
+
+// Two exits with the same name (John, November 24th 2026): one drawn twice is merged in the build; two on
+// different sides are told apart by platform, and no answer names the same one twice.
+eq('Abergavenny: one Station Road, not "either way … or to Station Road"', T.AGV.x.filter((x) => x[0] === 'Station Road').length, 1)
+eq('Broadbottom: the other Moss Lane by its platform', trainLine(T.BDB, '1', false), 'Your train is due into platform 1. The exit on Moss Lane is right there, or you can go over the footbridge for Moss Lane by platform 2.')
+eq('Broadbottom directions', toPlatform(T.BDB, '1')!.join(' '), 'Platform 1 is right by the Moss Lane entrance. From the Moss Lane entrance by platform 2, go up to the footbridge and cross to platform 1.')
+eq('Carlisle: one entrance, two ways, one sentence', toPlatform(T.CAR, '1')!.join(' '), 'From the Station Approach entrance, go down to the subway and come up on platform 1, or go up to the footbridge by platform 4 and cross to platform 1.')
+eq('Ealing Broadway: no platform when only one Broadway is named', trainLine(T.EAL, '2', false), 'Your train is due into platform 2. The way out from the platform leads to The Broadway.')
+const repeats: string[] = []
+for (const [c, e] of Object.entries(T)) for (const p of Object.keys(e.p)) {
+  const froms = [...(toPlatform(e, p) ?? []).join(' ').matchAll(/From ([^,]+?), /g)].map((m) => m[1])
+  if (new Set(froms).size < froms.length) repeats.push(`${c} ${p}`)
+  const t = trainLine(e, p, false)
+  if (e.x.some((x, i) => x[0] && e.x.some((y, j) => j !== i && y[0] === x[0]) && (t.match(new RegExp(` ${x[0].replace(/[()]/g, '.')}[,.]`, 'g')) ?? []).length > 1)) repeats.push(`${c} ${p} exits`)
+}
+eq('no answer names the same exit or entrance twice', repeats, [])
 
 console.log(`check-exits: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

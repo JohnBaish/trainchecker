@@ -123,6 +123,16 @@ given its own branch). Before committing there, run
   change (the 162, those two, and internal codes). New checks, including a sweep that fails if any station with an
   exit by a platform says a catch-all (it finds all 162 on the old code). Checks, `tsc -b`, lint, build. Straight to
   `main` at John's word. Not done: naming the other exits in that sentence (each platform's own line names them).
+- **John asked what else the sweep found about entrances:** (1) same-named exits named twice (72 direction answers
+  at 43 stations, 68 in Exits); (2) entrances left out of a platform's directions (1,096 answers at 552 stations);
+  (3) six exits never mentioned (New Street, London Bridge, Liverpool Street ×2, Nottingham, St Pancras); (4) "the
+  other entrance" (28 answers at 20 stations). **John:** do 1 and merge; samples of 2 first; 3 from the station maps;
+  4 by Claude. **Done (1):** `merge_twins()` in `build_exits_table.py` (same name by the same platform: one exit drawn
+  twice; 73 merged at 70 stations, none of those with corrections); `twinTag()`/`hasTwin()` in `exits.ts` (the
+  platform added only where both are named in the same answer: "for Moss Lane by platform 2"; "the other Ferry Road
+  entrance" where one is by no platform; Berkhamsted's two building entrances by platform); `toPlatform()` joins two
+  ways to one entrance in one sentence (Carlisle). New checks, with a sweep for any answer naming one twice. Checks
+  264 + 57 + 79 + 40 + 72 + 36, `tsc -b`, lint, build; the Reading list unchanged. Straight to `main`.
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

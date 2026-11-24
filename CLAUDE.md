@@ -99,6 +99,10 @@ given its own branch). Before committing there, run
   `trainsPicture()` for both panels, the cancelled line under it; the old "Two earlier trains…" line gone). Found and
   fixed: with no platform on any row, "PLATFORM" sat over "EXPECTED TO LEAVE". Checks unchanged; `tsc -b`, lint, build;
   Paddington to Reading at 390px dark and Euston to Milton Keynes at 390px light: no errors, no sideways scroll.
+- **John:** both folds stay in the second panel ("Show the trains that aren't on time" is the bad news, "Show the
+  trains and platforms" is everything). He'll try it at length (`?mock=B` on the branch preview) before anything goes
+  live. Not merged; to do when he says: make B the page (take out `?mock=`, option A and the old four-hour panel),
+  checks for `windows.ts`, `SPEC.md`.
 
 ### November 24th 2026: "How do I get to my platform?", tapping a platform for a rough location guide; live (branch `claude/cool-sagan-k0e2ao`, merged the same day; Claude Code)
 

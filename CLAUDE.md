@@ -25,7 +25,10 @@ given its own branch). Before committing there, run
 5. `SEO-HANDOVER.md`: when search work comes up (stage 5).
 6. `design/handover-platform-links-2026-11-21.md`: "over the footbridge" (how platforms connect,
    for Connections), live since November 21st 2026; the trial and build in
-   `design/platform-links-trial/`.
+   `design/platform-links-trial/`. Since November 24th 2026 the same tables give a rough location guide
+   when a platform is tapped (`design/platform-directions/`; John's corrections in
+   `exits-overrides.json`, `links-overrides.json` and `src/data/to-platform.json`; Reading in full,
+   numbered, in `reading.md`).
 7. `design/passes-near/README.md`: "Your train passes near…" (an interesting thing near each
    stretch, with the train's side), with John's decisions and the prompt for the page. Since November 22nd
    2026 every stretch in England is in `stretches.json` (2,376), and since November 23rd 2026 all of them
@@ -71,7 +74,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 24th 2026: "How do I get to my platform?", a trial and two mock-ups (branch `claude/cool-sagan-k0e2ao`, not merged; Claude Code)
+### November 24th 2026: "How do I get to my platform?", tapping a platform for a rough location guide; live (branch `claude/cool-sagan-k0e2ao`, merged the same day; Claude Code)
 
 - **John:** can tapping a platform in Platforms give directions to it, from the data we have? Yes, mostly: the exits
   table read the other way round (`src/lib/toPlatform.ts`, drafts), a line for each entrance (John). Trial on 12
@@ -94,6 +97,12 @@ given its own branch). Before committing there, run
   "go down to platform 7"; Twyford "the entrance on the town side"; Bath Spa's Railway Place on platform 2 a map error.
   These change the live Exits and Connections at Reading once merged. Checks 264 + 57 + 79 + 40 + 59 + 36; `tsc -b`,
   lint, build.
+- **John:** no more changes; "please merge to Main". Option A made permanent (the `?mock=` switch and option B taken
+  out; the tables load only for a board with platforms). The numbered Reading list stays in
+  `design/platform-directions/reading.md` for referring to by number (`reading-list.ts` remakes it). Checks
+  264 + 57 + 79 + 40 + 59 + 36, `tsc -b`, lint and build clean; Reading to Paddington at 390px dark and 1200px light,
+  Bath to Bristol at 390px light: no errors, no sideways scroll, badges 44px on a phone. Merged into `main`
+  (fast-forward). Not checked: a real phone, the live site in a browser.
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

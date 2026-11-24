@@ -73,21 +73,20 @@ function onceAmPm(times: string[]): string[] {
 /** The two lists laid out as the share pictures are, in the page's own colours (John, November
  *  19th 2026, option B). A simple one-platform list, with nothing to say about any train, is a
  *  line of times with dots instead. */
-// Mock-ups (John, November 24th 2026, not agreed): directions to a platform. ?mock=A: tap a
-// platform on the board; ?mock=B: a question under the board. Prototype only.
-const MOCK = new URLSearchParams(location.search).get('mock')
+// Directions to a platform (John, November 24th 2026, option A): tap a platform on the Platforms
+// board for a rough location guide, from the exits table read the other way round (lib/toPlatform.ts).
 type Dirs = (platform: string) => string[] | null
 
 function useDirs(crs: string): Dirs | null {
   const [got, setGot] = useState<{ t: ExitsTable; l: Record<string, Links>; f: Record<string, Fix> } | null>(null)
   useEffect(() => {
-    if (!MOCK) return
+    if (!crs) return
     let current = true
     Promise.all([import('../data/exits.json'), import('../data/platform-links.json'), import('../data/to-platform.json')])
       .then(([t, l, f]) => current && setGot({ t: t.default as unknown as ExitsTable, l: l.default as unknown as Record<string, Links>, f: f.default as unknown as Record<string, Fix> }), () => {})
     return () => { current = false }
-  }, [])
-  const e = got?.t[crs]
+  }, [crs])
+  const e = crs ? got?.t[crs] : undefined
   return e ? (pl: string) => toPlatform(e, pl, got!.l[crs], got!.f[crs]) : null
 }
 
@@ -95,7 +94,7 @@ function DirLines({ lines }: { lines: string[] }) {
   return <div className="pdirs" aria-live="polite">{lines.map((l, i) => <p key={i}>{l}</p>)}</div>
 }
 
-/** Option A: the platform badge is a button; its directions open under it. */
+/** The platform badge is a button; its directions open under it (John, option A). */
 function TapBadge({ pl, open, onTap }: { pl: string; open: boolean; onTap: () => void }) {
   return (
     <button type="button" className={`badge tapbadge${open ? ' on' : ''}`} aria-expanded={open} aria-label={`How to get to platform ${pl}`} onClick={onTap}>
@@ -106,7 +105,7 @@ function TapBadge({ pl, open, onTap }: { pl: string; open: boolean; onTap: () =>
 
 function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
   const [openRow, setOpenRow] = useState<string | null>(null)
-  const tap = MOCK === 'A' && dirs ? dirs : null
+  const tap = dirs ?? null
   const toggle = (k: string) => setOpenRow(openRow === k ? null : k)
   const second = p.rows.some((r) => r.platform)
   const simple = !!p.one && p.rows.every((r) => !r.mid && !r.late)
@@ -151,42 +150,19 @@ function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
 function PlatformTrains({ a }: { a: Analysis }) {
   const p = platformTrains(a)
   const pic = platformsPicture(a)
-  const dirs = useDirs(a.fromCrs)
+  // Only for a board with platforms: the tables load then, not on every journey.
+  const dirs = useDirs(pic ? a.fromCrs : '')
   if (!p || !pic) return null
   return (
     <details className="advice trains-fold">
       <summary>{p.fold} <Icon name="down" /></summary>
       {pic.before && <p className="tbefore">{pic.before}</p>}
       {pic.words.text.startsWith('The next ten') && <p className="board-kick">The next ten trains</p>}
-      {MOCK === 'A' && dirs && <p className="ptaphint">Tap a platform for a rough location guide.</p>}
+      {dirs && <p className="ptaphint">Tap a platform for a rough location guide.</p>}
       <Board p={pic} dirs={dirs} />
       {p.after && <p className="tafter">{p.after}</p>}
-      {MOCK === 'B' && dirs && <AskPlatform pic={pic} dirs={dirs} />}
       <ListShare a={a} kind="platforms" prose={p.prose} />
     </details>
-  )
-}
-
-/** Option B: "How do I get to my platform?" under the board, a button for each platform on it. */
-function AskPlatform({ pic, dirs }: { pic: ListPicture; dirs: Dirs }) {
-  const [pick, setPick] = useState<string | null>(null)
-  const ps = [...new Set(pic.one ? [pic.one] : pic.rows.map((r) => r.platform).filter((x): x is string => !!x))]
-    .filter((x) => dirs(x))
-    .sort((x, y) => (parseInt(x, 10) || 999) - (parseInt(y, 10) || 999) || x.localeCompare(y))
-  if (!ps.length) return null
-  const lines = pick ? dirs(pick) : null
-  return (
-    <div className="askplat">
-      <p className="cq">How do I get to my platform?</p>
-      <div className="pchips" role="group" aria-label="Platforms">
-        {ps.map((x) => (
-          <button key={x} type="button" className={`pchip${x === pick ? ' on' : ''}`} aria-pressed={x === pick} onClick={() => setPick(x === pick ? null : x)}>
-            Platform {x}
-          </button>
-        ))}
-      </div>
-      {lines && <DirLines lines={lines} />}
-    </div>
   )
 }
 

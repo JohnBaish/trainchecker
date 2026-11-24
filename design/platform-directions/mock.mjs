@@ -15,7 +15,7 @@ const errors = []
 p.on('pageerror', (e) => errors.push(e.message))
 await p.addInitScript(`{ const T = ${Date.parse(s.taken)}; const D = Date; const off = T - D.now(); globalThis.Date = class extends D { constructor(...a) { super(...(a.length ? a : [D.now() + off])) } static now() { return D.now() + off } } }`)
 await p.route('**/api/live?**', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(snap) }))
-await p.goto(`http://localhost:4620/?mock=${mock}#${s.from}-${s.to}`)
+await p.goto(`http://localhost:4620/#${s.from}-${s.to}`)
 await p.waitForSelector('.verdict', { timeout: 8000 })
 const fold = p.locator('details.trains-fold').last()
 await fold.locator('summary').click()

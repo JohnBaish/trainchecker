@@ -1,4 +1,4 @@
-// PROTOTYPE (November 24th 2026, for John): the four hours split in two, in the order people need
+// The four hours split in two (John, November 24th 2026; live since then), in the order people need
 // them. "The next hour" (every train in it, each with its platform when there is one), stretched to
 // the next three trains when the hour has fewer ("The next three trains"); then the rest, "The
 // following three hours", or "Later" when the first panel was stretched. No train is in both.

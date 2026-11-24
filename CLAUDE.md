@@ -74,7 +74,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 24th 2026: "The next hour" first, then the rest; a prototype (branch `claude/ecstatic-dijkstra-w0herd`, not merged; Claude Code)
+### November 24th 2026: "The next hour" first, then the rest; live (branch `claude/ecstatic-dijkstra-w0herd`, merged the same day; Claude Code)
 
 - **John:** show the information in the order people need it. Swap "The next four hours" and "Platforms"; the first panel
   named for its period, the second covering only what comes after it. His answers: the next hour, stretched to the next
@@ -112,6 +112,17 @@ given its own branch). Before committing there, run
   trains (Peterborough to Kings Cross): three running and one cancelled under "The next three trains" read "One is
   cancelled … and two … The other one …", four trains; the heading now counts the cancelled one too ("The next four
   trains"). Checks unchanged; `tsc -b`, lint.
+- **John:** "really excellent … merge it to Main"; he may later ask what the page did before. Made B the page: the
+  `?mock=` switch, option A, the old "The next four hours" and "Platforms" panels and `PlatformTrains` taken out of
+  `JourneyView.tsx` (the page before: `main` at `6d64697`, the last commit before this merge; their
+  sentence functions, `nextFour()`, `platforms()`, `platformTrains()`, `platformsPicture()`, stay in `sentences.ts`
+  with their checks). New `scripts/check-windows.ts` (385: every saved board, moved back by up to two hours: each train
+  in one panel, three running first, the headings, no "an hour" or "in that time" in the second panel, the agreed
+  wording; setting three to two made 20 fail). `SPEC.md` §12.29. Checks 264 + 57 + 79 + 40 + 76 + 36 + 385, `tsc -b`,
+  lint, build; six saved boards at 1200px light and 390px dark, two at 844×390, all with touch on phones
+  (`design/previews/next-hour/live-*`): no errors, no sideways scroll. **Not carried over** from the old Platforms
+  panel, for John: its summary sentence ("Most fast trains are currently going from platforms 10 and 11…") and its
+  Share button for the list as a picture. Not checked: a real phone, the live site in a browser.
 
 ### November 24th 2026: "How do I get to my platform?", tapping a platform for a rough location guide; live (branch `claude/cool-sagan-k0e2ao`, merged the same day; Claude Code)
 

@@ -682,6 +682,27 @@ they differ.
     Then "From Trainchecker." and the link, as before. The date kept (§17); the no-train messages
     unchanged. Agreed by John.
 
+29. **"The next hour" first, then "The following three hours"** (John, November 24th 2026), replacing
+    "The next four hours" with "Platforms" beside it, so the page goes in the order people need it.
+    No train is in both panels.
+    - **The first panel** covers the next hour. With fewer than three trains running in it, it
+      stretches to the third running train and is headed by its count, cancelled trains included
+      ("The next three trains", "The next four trains"), with no opening sentence. Otherwise it
+      opens "There are 15 trains in the next hour." The on-time sentence follows in the same
+      paragraph. Folded under "Show the trains and platforms": a board of every running train in
+      it, each with its platform badge (tap for the rough location guide) or "not yet"; cancelled
+      trains not on the board but in a line under it ("The 7.13pm is cancelled, because of …").
+    - **The second panel** is "The following three hours", or "Later" when the first was
+      stretched. Its opening is short, as the heading gives the period: "There are about seven fast
+      trains, two slower ones (taking about 40 minutes) and two on the Elizabeth Line per hour."
+      ("per hour" here only; "about" once, when any figure is rounded); when any group has fewer than
+      one train an hour, totals for every group ("There's one fast train and nine slower ones."),
+      never totals and rates mixed; "There are three trains." for a few; when stretched, "There are
+      two more trains in the next four hours." Then the on-time sentence; "Show the trains that
+      aren't on time" (the bad news); "Platforms have already been announced for 11 of these: from
+      platforms 10, 11 and 13."; and "Show the trains and platforms" (everything), as in the first
+      panel. Side by side on a computer. Checked in `scripts/check-windows.ts`.
+
 ## 13. Connections (November 21st 2026)
 
 John's idea, built and agreed with him in one day; `CLAUDE.md`'s log has the order it happened in.

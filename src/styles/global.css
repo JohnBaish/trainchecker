@@ -323,7 +323,7 @@ details.trains-fold { margin-top: var(--space-3); }
 .tapbadge.on { border-color: var(--color-accent); }
 .tapbadge.on svg { transform: rotate(180deg); }
 .bcell { justify-self: end; }
-/* PROTOTYPE (November 24th 2026): a train with no platform yet, in the first panel's board. */
+/* A train with no platform yet, "not yet", in the two panels' boards (November 24th 2026). */
 .bnoplat { justify-self: end; min-width: 2.6em; text-align: center; font-size: 13px; color: var(--color-neutral-700); font-style: italic; }
 .brow .pdirs { grid-column: 1 / -1; }
 .pdirs { margin: 4px 0 0; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--color-bg); }

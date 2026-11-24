@@ -1,7 +1,8 @@
 // A journey's page (SPEC §8.1, §9.2 and §10), top to bottom: the strip "TRAINS TO CHECK" with Swap
 // and Change; the time fetched and Check again; the verdict; Share ("Copy a link to this journey"),
-// straight under the verdict it quotes; "The next four hours" with "Platforms" beside it on a
-// computer, the two the same height; the quote of the day; "The last two hours" across the full
+// straight under the verdict it quotes; "The next hour" with "The following three hours" beside it
+// on a computer (John, November 24th 2026; before that, "The next four hours" and "Platforms": see
+// git history before the merge of `claude/ecstatic-dijkstra-w0herd`); the quote of the day; "The last two hours" across the full
 // width; "The days ahead" (DaysAhead.tsx); "The last week"; Arrivals; Exits; Fact of the Journey.
 import { useEffect, useState } from 'react'
 import { analyse, type Analysis } from '../lib/analyse.ts'
@@ -9,7 +10,7 @@ import { fetchDays, fetchLive } from '../lib/load.ts'
 import { closedNow, forJourney } from '../lib/incidents.ts'
 import { hashOf, remember, type Journey } from '../lib/route.ts'
 import { useIsNarrow } from '../lib/responsive.ts'
-import { NO_RECORD_AT, arrivals, platformTrains, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type ListPicture, Cap, num, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, nextFour, platforms, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
+import { NO_RECORD_AT, arrivals, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type ListPicture, Cap, num, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
 import { deliverImage, isTouch, listFileName, listImage, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
 import { toPlatform, type Fix, type Links } from '../lib/toPlatform.ts'
@@ -21,11 +22,7 @@ import { LastWeek } from './LastWeek.tsx'
 import { FactCard, QuoteCard } from './Tail.tsx'
 import { Connection } from './Connection.tsx'
 import { Exits } from './Exits.tsx'
-import { firstPanel, laterPanel, split } from '../lib/windows.ts'
-
-// PROTOTYPE (November 24th 2026): "The next hour" first, then the rest (?mock=A: a line about the
-// later trains' platforms; ?mock=B: that line and a fold with them).
-const MOCK = new URLSearchParams(location.search).get('mock')
+import { firstPanel, laterPanel } from '../lib/windows.ts'
 
 type State = { s: 'loading' } | { s: 'ok'; a: Analysis } | { s: 'failed'; why: string }
 
@@ -151,27 +148,6 @@ function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
   )
 }
 
-/** The trains with a platform, folded under "Platforms": the board, then any delayed train's
- *  sentence with its reason (John, November 18th and 19th 2026). */
-function PlatformTrains({ a, fold }: { a: Analysis; fold?: string }) {
-  const p = platformTrains(a)
-  const pic = platformsPicture(a)
-  // Only for a board with platforms: the tables load then, not on every journey.
-  const dirs = useDirs(pic ? a.fromCrs : '')
-  if (!p || !pic) return null
-  return (
-    <details className="advice trains-fold">
-      <summary>{fold ?? p.fold} <Icon name="down" /></summary>
-      {pic.before && <p className="tbefore">{pic.before}</p>}
-      {pic.words.text.startsWith('The next ten') && <p className="board-kick">The next ten trains</p>}
-      {dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
-      <Board p={pic} dirs={dirs} />
-      {p.after && <p className="tafter">{p.after}</p>}
-      <ListShare a={a} kind="platforms" prose={p.prose} />
-    </details>
-  )
-}
-
 /** Arrivals at B, after the last week: a sentence first, then the board folded under "Show the
  *  arrivals" (John, November 19th 2026, option B; the sentence is Claude's draft). */
 function Arrivals({ a }: { a: Analysis }) {
@@ -235,7 +211,8 @@ function Trains({ n }: { n: NextFour }) {
   )
 }
 
-/** PROTOTYPE: the first panel, every train in it with its platform or "not yet", folded. */
+/** "The next hour" (or "The next three trains"), first: every train in it with its platform or "not yet",
+ *  folded (John, November 24th 2026; it replaced "The next four hours" and "Platforms"). */
 function FirstPanel({ a }: { a: Analysis }) {
   const f = firstPanel(a)
   const pic = f.picture
@@ -258,19 +235,19 @@ function FirstPanel({ a }: { a: Analysis }) {
   )
 }
 
-/** PROTOTYPE: the rest of the four hours. */
-function LaterPanel({ a, fold }: { a: Analysis; fold: boolean }) {
+/** "The following three hours" (or "Later"): the rest of the four hours, the trains that aren't on time
+ *  folded ("the bad news"), then every train with its platform or "not yet" ("everything", John). */
+function LaterPanel({ a }: { a: Analysis }) {
   const l = laterPanel(a)
   const pic = l.picture
-  const dirs = useDirs(fold && pic && pic.rows.some((r) => r.platform) ? a.fromCrs : '')
+  const dirs = useDirs(pic && pic.rows.some((r) => r.platform) ? a.fromCrs : '')
   return (
     <section className="card sec">
       <h3>{l.heading}</h3>
       <p className="lead">{l.lines.join(' ')}</p>
       {l.next && <Trains n={l.next} />}
       {l.platLine && <p>{l.platLine}</p>}
-      {/* B: every later train, its platform or "not yet", as in the first panel (John, November 24th 2026). */}
-      {fold && pic && (
+      {pic && (
         <details className="advice trains-fold">
           <summary>{pic.rows.length === 1 ? 'Show the train and its platform' : 'Show the trains and platforms'} <Icon name="down" /></summary>
           {dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
@@ -389,7 +366,6 @@ export function JourneyView({ journey }: { journey: Journey }) {
   if (closed) { v.kind = 'prepared'; v.lines = closedVerdict(closed, an.from, an.to) }
   else if (v.kind === 'prepared' && mine?.now.length) v.lines = [...v.lines, { text: disruptionAdvice }]
   const taken = new Date(an.taken)
-  const next = nextFour(an)
   const elizabeth = [...an.ahead, ...an.past].some((s) => /Elizabeth/i.test(s.operator))
   // Where National Rail's record leaves the Elizabeth Line out at an end (Paddington, Bond Street):
   // measured to the nearest station it covers instead (John, November 18th 2026). Every train on the
@@ -423,20 +399,11 @@ export function JourneyView({ journey }: { journey: Journey }) {
           3.1, John, November 18th 2026). Otherwise the whole page. One list, so "The last week"
           keeps its answer when a check changes which of these it is. */}
       {an.verdict === 'none' && !closed && !an.lastGone && !changing && <Chooser journey={journey} />}
-      {an.verdict !== 'none' && MOCK && split(an) && (
+      {/* The next hour first, then the rest of the four hours (John, November 24th 2026). */}
+      {an.verdict !== 'none' && (
         <div className="grid">
           <FirstPanel a={an} />
-          <LaterPanel a={an} fold={MOCK === 'B'} />
-        </div>
-      )}
-      {an.verdict !== 'none' && !MOCK && (
-        <div className="grid">
-          <section className="card sec">
-            <h3>The next four hours</h3>
-            {next!.lines.map((l) => <p key={l} className="lead">{l}</p>)}
-            <Trains n={next!} />
-          </section>
-          <section className="card sec"><h3>Platforms</h3><p>{platforms(an)}</p><PlatformTrains a={an} /></section>
+          <LaterPanel a={an} />
         </div>
       )}
       {!closed && <QuoteCard />}

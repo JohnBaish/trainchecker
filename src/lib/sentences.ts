@@ -304,7 +304,7 @@ const perHour = (k: number, h = 4) => (k % h ? 'about ' : '') + num(Math.round(k
 export function trainsAnHour(a: Analysis, h = 4, span = 'in the next four hours', short = false): string | null {
   if (a.ahead.length <= 2 * h) return null
   const gs = speedGroups(a)
-  // PROTOTYPE (November 24th 2026, John): in the shorter wording, when any group has fewer than one
+  // In the shorter wording (the later panel; John, November 24th 2026), when any group has fewer than one
   // train an hour, every group is said as a total ("There's one fast train and nine slower ones."),
   // never totals and "an hour" mixed.
   const totals = short && gs.some((g) => g.k < h)
@@ -356,7 +356,7 @@ export function why(reason: string | null, operator: string): string {
   return `. ${Cap(r.replace(/[.\s]+$/, ''))} ${co}.`
 }
 
-/** PROTOTYPE (November 24th 2026): the first and later panels pass their own opening line. */
+/** The first and later panels (windows.ts) pass their own opening line (November 24th 2026). */
 export type Span = { first: string | null; hours?: number; span?: string; short?: boolean }
 export function nextFour(a: Analysis, o?: Span): NextFour | null {
   if (a.verdict === 'none' || !a.ahead.length) return null

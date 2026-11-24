@@ -3,6 +3,7 @@
 // platform a train leaves from. A line for each entrance (John); entrances with the same way are
 // joined into one line. Every sentence here is Claude's draft.
 import { hasTwin, twinTag, type StationExits, type Way } from './exits.ts'
+import { howToGet } from './platformLinks.ts'
 
 const and = (xs: string[], word = 'and') => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} ${word} ${xs[xs.length - 1]}` : xs[0] ?? '')
 
@@ -94,7 +95,7 @@ function downFor(e: StationExits, i: number, via: string, own: string | null): s
 }
 
 /** The words for one platform at A: null where nothing is known. */
-export function toPlatform(e: StationExits, platform: string, links?: Links, fix?: Fix): string[] | null {
+export function toPlatform(e: StationExits, platform: string, links?: Links, fix?: Fix, fill = false): string[] | null {
   if (e.k === 'concourse') return [`Every platform is off the concourse, where the entrances are.`]
   const eo = new Set(e.eo ?? [])
   const ways = waysFor(e, platform).filter((w) => !eo.has(w[0]))
@@ -123,9 +124,26 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
   // A line for each entrance; an entrance reached two ways gets both in one sentence ("…, or go up to the
   // footbridge…": Carlisle's Station Approach); entrances with the same ways are joined.
   const hows = new Map<number, string[]>()
+  const fillFrom = new Map<number, string>()
   for (const w of all) {
     const s = how(w, platform, bridge, e, links, fix)
     if (s && !(hows.get(w[0]) ?? []).includes(s)) hows.set(w[0], [...(hows.get(w[0]) ?? []), s])
+  }
+  // Entrances on the level with another platform, with no way stored from this one (Acklington's car park,
+  // by platform 2, for platform 1): the way between the two platforms, from the platform links
+  // (Connections' table). Drafts, for John (November 24th 2026); off until he agrees.
+  // Not where John has corrected the station: those answers stay as he agreed them (Reading's list).
+  if (fill && links && !fix) {
+    e.x.forEach((x, i) => {
+      if (eo.has(i) || hows.has(i) || level.includes(i) || !x[1].length || x[1].includes(platform)) return
+      // Not a second St George's Square when one is already named here (Huddersfield).
+      if (x[0] && [...level, ...hows.keys()].some((j) => e.x[j][0] === x[0])) return
+      const q = x[1][0]
+      const h = howToGet({ ...links, x: (links as Links & { x: string }).x } as never, q, platform)
+      const s = fillWords(h, platform, bridge)
+      if (s) hows.set(i, [`${s}`])
+      if (s) fillFrom.set(i, q)
+    })
   }
   const rest = new Map<string, number[]>()
   for (const [i, hs] of hows) {
@@ -135,7 +153,7 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
   // The entrances this answer names: a name shared with another of them gets its platform.
   const shown = new Set([...by, ...hows.keys()])
   for (const [s, is] of rest) {
-    lines.push(`From ${fromNames([...new Set(is.map((i) => entranceName(e, i, fix, shown)))])}, ${s}${is.length === 1 ? openLine(e, is[0]) : ''}`)
+    lines.push(`From ${fromNames([...new Set(is.map((i) => withPlatform(entranceName(e, i, fix, shown), fillFrom.get(i))))])}, ${s}${is.length === 1 ? openLine(e, is[0]) : ''}`)
   }
   if (level.length) {
     const joined = joinNames([...new Set(by.map((i) => entranceName(e, i, fix, shown).replace(` by platform ${platform}`, '')))], 'and')
@@ -145,6 +163,18 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
       : `Platform ${platform} is right by ${joined}${lc}.${opens}`)
   }
   return lines
+}
+
+const withPlatform = (name: string, q?: string) => (q && !/platform/.test(name) ? `${name} by platform ${q}` : name)
+
+/** The words for the walk between two platforms (platformLinks' phrases), from an entrance by one of them. */
+function fillWords(h: string, p: string, bridge: string): string | null {
+  if (!h) return null
+  if (h === 'just across the platform') return `platform ${p} is just across the platform.`
+  if (h === 'on the same level') return `walk along to platform ${p}, on the same level.`
+  if (h.startsWith('which means going out')) return `there's no way through the station: go out and round by the road to platform ${p}.`
+  if (h === 'across the level crossing') return `cross the line at the level crossing to platform ${p}.`
+  return `go ${h.replace('footbridge', bridge)} to platform ${p}.`
 }
 
 /** The way in, from an entrance to platform P (the stored way out, reversed); null for an added

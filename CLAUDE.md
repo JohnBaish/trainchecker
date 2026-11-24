@@ -133,6 +133,11 @@ given its own branch). Before committing there, run
   entrance" where one is by no platform; Berkhamsted's two building entrances by platform); `toPlatform()` joins two
   ways to one entrance in one sentence (Carlisle). New checks, with a sweep for any answer naming one twice. Checks
   264 + 57 + 79 + 40 + 72 + 36, `tsc -b`, lint, build; the Reading list unchanged. Straight to `main`.
+- **(2), samples for John:** `toPlatform(…, fill)` adds the left-out entrances on the level with another platform,
+  with the walk between the two from the platform links ("From the Rigg Approach entrance by platform 2, go over the
+  footbridge to platform 1."; "…there's no way through the station: go out and round by the road…"; "…platform 4 is
+  just across the platform."); off (`fill` false) until John agrees; never at his corrected stations. 11 numbered
+  samples in `design/platform-directions/fill-samples.md` (`fill-samples.ts`): about 840 answers would change.
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

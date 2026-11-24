@@ -22,10 +22,8 @@ import { LastWeek } from './LastWeek.tsx'
 import { FactCard, QuoteCard } from './Tail.tsx'
 import { Connection } from './Connection.tsx'
 import { Exits } from './Exits.tsx'
-import { firstPanel, firstShare, laterPanel, laterShare, type LaterShareKind } from '../lib/windows.ts'
+import { firstPanel, firstShare, laterPanel, laterShare } from '../lib/windows.ts'
 
-// PROTOTYPE (November 24th 2026): the later panel's share picture, three ways (?share=A|B|C; A when left out).
-const LATER_SHARE = (['A', 'B', 'C'].includes(new URLSearchParams(location.search).get('share') ?? '') ? new URLSearchParams(location.search).get('share') : 'A') as LaterShareKind
 
 type State = { s: 'loading' } | { s: 'ok'; a: Analysis } | { s: 'failed'; why: string }
 
@@ -258,7 +256,7 @@ function LaterPanel({ a }: { a: Analysis }) {
           {dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
           <Board p={pic} dirs={dirs} />
           {l.cancelled && <p className="tafter">{l.cancelled}</p>}
-          {(() => { const sp = laterShare(a, LATER_SHARE); return sp && <PicShare pic={sp} what="these trains" file="later" /> })()}
+          {(() => { const sp = laterShare(a); return sp && <PicShare pic={sp} what="these trains" file="later" /> })()}
         </details>
       )}
     </section>

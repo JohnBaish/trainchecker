@@ -370,7 +370,7 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
   return canvas
 }
 
-/** The later panel hour by hour (option C, DRAFT, November 24th 2026): the panel's sentence, then a row
+/** The later panel hour by hour (agreed by John, November 24th 2026): the panel's sentence, then a row
  *  per hour: "7.24 to 8.24pm" on the left, "11 trains" on the right, and under them, in orange, any
  *  that aren't on time ("one cancelled, one late"). */
 function hoursImage(p: ListPicture): HTMLCanvasElement {

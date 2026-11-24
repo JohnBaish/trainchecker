@@ -74,7 +74,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 24th 2026: Share for the two panels, mock-ups (branch `claude/ecstatic-dijkstra-w0herd`, not merged; Claude Code)
+### November 24th 2026: Share for the two panels, counts of trains running; live (branch `claude/ecstatic-dijkstra-w0herd`, merged the same day; Claude Code)
 
 - **John:** the Share buttons back, certainly on "The next hour"; for the later panel, find a way if one works; mock-ups
   and sentences first. Built (drafts): `firstShare()` and `laterShare(a, 'A'|'B'|'C')` in `windows.ts`; `PicShare` in
@@ -102,6 +102,10 @@ given its own branch). Before committing there, run
   "mostly platform 12A"). `check-windows` 391 (new: "more" on every saved board, the words, the rows; setting three to
   two made 22 fail). Checks, `tsc -b`, lint, build; Manchester at 1200px light and 390px dark, its picture read back:
   no errors, no sideways scroll.
+- **John:** "Let's do it." Hour by hour made the picture (the `?share=` switch and options A and B taken out;
+  `laterShare(a)`); `SPEC.md` §12.30. Checks 264 + 57 + 79 + 40 + 76 + 36 + 391, `tsc -b`, lint, build; the page
+  without the switch at 1200px light, 390px dark and 844×390 with touch, the pictures read back: no errors, no
+  sideways scroll. Merged into `main` (fast-forward). Not checked: a real phone's share sheet, the live site in a browser.
 
 ### November 24th 2026: "The next hour" first, then the rest; live (branch `claude/ecstatic-dijkstra-w0herd`, merged the same day; Claude Code)
 

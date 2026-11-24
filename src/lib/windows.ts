@@ -3,7 +3,7 @@
 // the next three trains when the hour has fewer ("The next three trains"); then the rest, "The
 // following three hours", or "Later" when the first panel was stretched. No train is in both.
 import { diff, isTime, type Analysis, type Train } from './analyse.ts'
-import { Cap, becauseOf, dateShort, earlierLine, nextFour, num, reasonText, speedGroups, t12, trainsAnHour, type ListPicture, type NextFour, type PicRow } from './sentences.ts'
+import { Cap, becauseOf, dateShort, earlierLine, nextFour, num, speedGroups, t12, trainsAnHour, type ListPicture, type NextFour, type PicRow } from './sentences.ts'
 
 /** When a train is expected to leave, in minutes from now (a cancelled one: its timetabled time). */
 const leaves = (a: Analysis, t: Train) => diff(a.now, !t.cancelled && t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std)
@@ -115,7 +115,7 @@ function platformsLine(l: Analysis, already: string): string | null {
 export { earlierLine }
 
 
-// ---- Share pictures and their words (DRAFTS, November 24th 2026, for John) ----
+// ---- Share pictures and their words (agreed by John, November 24th 2026) ----
 
 /** "HH:MM" plus some minutes. */
 const plus = (hhmm: string, m: number) => { const [h, mi] = hhmm.split(':').map(Number); const t = (h * 60 + mi + m + 1440) % 1440; return `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}` }
@@ -141,41 +141,22 @@ function laterWhen(a: Analysis, s: Split) {
   return s.stretched ? `up to ${end} on ${date}` : `${t12(plus(a.now, 60))} to ${end} on ${date}`
 }
 
-export type LaterShareKind = 'A' | 'B' | 'C'
-
-/** The later panel's picture, three ways for John to compare:
- *  A, every later train with its platform or "not yet" (as the fold);
- *  B, the panel's sentence and only the trains that aren't on time, each with its reason;
- *  C, hour by hour: how many trains, how many with platforms, any not on time. */
-export function laterShare(a: Analysis, kind: LaterShareKind, s = split(a)): ListPicture | null {
+/** The later panel's picture (John, November 24th 2026): hour by hour, each row the hour, the trains
+ *  running and, in orange, any of these late and any more cancelled; when the first panel was stretched,
+ *  the few later trains themselves, each with its platform or "not yet". */
+export function laterShare(a: Analysis, s = split(a)): ListPicture | null {
   const l = s.later
   if (!l.ahead.length) return null
   const lp = laterPanel(a, s)
   const when = laterWhen(a, s)
-  const base = { kicker: `TRAINCHECKER · ${lp.heading.toUpperCase()}`, title: `${a.from} to ${a.to}`, when, one: null as string | null, note: null as string | null }
-  if (kind === 'A') {
+  if (s.stretched) {
     const pic = trainsPicture(l)
     if (!pic) return null
-    return { ...pic, kicker: base.kicker, when, words: words(`${s.stretched ? `The later trains from ${a.from} to ${a.to}, ${when}` : `The trains from ${a.from} to ${a.to} leaving between ${when.replace(' to ', ' and ')}`}, with the platforms announced so far, from Trainchecker.`, a) }
+    return { ...pic, kicker: `TRAINCHECKER · ${lp.heading.toUpperCase()}`, when, words: words(`The later trains from ${a.from} to ${a.to}, ${when}, with the platforms announced so far, from Trainchecker.`, a) }
   }
-  if (kind === 'B') {
-    const bad = [...l.cancelled, ...l.late5, ...l.arrLate, ...l.unknown].sort((x, y) => x.rel - y.rel)
-    const rows = bad.map((t): PicRow => {
-      const r = reasonText(t.reason)
-      const status = t.cancelled ? 'cancelled' : t.unknown ? 'delayed, no time yet'
-        : l.arrLate.includes(t) && isTime(t.eta) && t.sta ? `${num(diff(t.sta, t.eta))} minutes late in` : `${num(t.late!)} minutes late`
-      return { time: t12(t.std), mid: r ? Cap(r) : '', late: status }
-    })
-    const period = s.stretched ? `later, ${when}` : `between ${when.replace(' to ', ' and ')}`
-    const text = rows.length
-      ? `The trains from ${a.from} to ${a.to} that weren't expected to be on time ${period}, from Trainchecker.`
-      : `The trains from ${a.from} to ${a.to} ${period}${s.stretched ? ',' : ''} were all expected to be on time, according to Trainchecker.`
-    return { ...base, heads: ['DUE TO LEAVE', ''], rows, before: lp.lines.join(' '), words: words(text, a) }
-  }
-  // Stretched: few later trains, so the trains themselves rather than hours (John, November 24th 2026, (b)).
-  if (s.stretched) return laterShare(a, 'A', s)
-  // C: hour by hour (John: no platforms said, a time range rather than "FROM").
-  const start = s.stretched ? s.cut : 60
+  const base = { kicker: `TRAINCHECKER · ${lp.heading.toUpperCase()}`, title: `${a.from} to ${a.to}`, when, one: null as string | null, note: null as string | null }
+  // Hour by hour (John: no platforms said, a time range rather than "FROM").
+  const start = 60
   const rows: PicRow[] = []
   const range = (f: number, t: number) => {
     const a1 = t12(plus(a.now, f)), a2 = t12(plus(a.now, t))

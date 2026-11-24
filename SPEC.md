@@ -703,6 +703,27 @@ they differ.
       platforms 10, 11 and 13."; and "Show the trains and platforms" (everything), as in the first
       panel. Side by side on a computer. Checked in `scripts/check-windows.ts`.
 
+30. **Counts of trains running, cancelled ones "more"; the platforms line; Share for both panels** (John,
+    November 24th 2026). Counts and rates in both panels are of the trains running, and cancelled trains
+    are said as "more": "There are five trains in the next hour. Three more are cancelled, because of …";
+    "There are five trains per hour. Seven more in that time are cancelled, mostly because of …"; the
+    stretched heading counts the trains running ("The next three trains … One more is cancelled").
+    The next hour's platforms line above its fold, as the second panel's: "Platforms have been announced
+    for all of these: platform 1." (the second: "…have already been announced…"); "mostly" only with
+    three or more trains and a real majority. Share at the foot of each panel's "Show the trains and
+    platforms" fold ("Copy these trains" on a computer, "Share these trains" on a phone):
+    - the next hour: a picture of its board, "not yet" for a train with no platform, headed "THE NEXT
+      HOUR · 6.24pm to 7.24pm on November 17th", with "The trains from A to B leaving between 6.24pm and
+      7.24pm on November 17th, with the platforms announced so far, from Trainchecker." (stretched: "The
+      next three trains from A to B after 7.47pm on November 17th, …");
+    - the following three hours: hour by hour, the panel's sentence then a row per hour, "7.24 to
+      8.24pm" on the left, the trains running on the right ("four trains"; "no trains running", "no
+      trains"), and under them in orange "one of these is late, three more are cancelled" ("it's running
+      late" for a single train), with "The trains from A to B, hour by hour, from 7.24pm to 10.24pm on
+      November 17th, from Trainchecker."; when the first panel was stretched, the few later trains
+      themselves, with "The later trains from A to B, up to 11.47pm on November 17th, with the platforms
+      announced so far, from Trainchecker."
+
 ## 13. Connections (November 21st 2026)
 
 John's idea, built and agreed with him in one day; `CLAUDE.md`'s log has the order it happened in.

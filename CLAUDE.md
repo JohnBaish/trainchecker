@@ -105,6 +105,9 @@ given its own branch). Before committing there, run
   (fast-forward). Not checked: a real phone, the live site in a browser.
 - Branches tidied: "Delete merged branches" trial run 45388926667, then the real run; `git ls-remote --heads origin`
   shows only `main` (it also removed `claude/eloquent-brown-y333xz`, merged on November 23rd). Tracker updated.
+- **John (iPhone, Guildford to Reading):** with one platform, "Tap “8” for a rough platform location guide." Done in
+  `JourneyView.tsx`; checks, `tsc -b`, lint, build; Bath to Bristol (one platform) at 390px and 1200px, Reading to
+  Paddington (several) at 390px: the right line, no errors, no sideways scroll. Straight to `main` at John's word.
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

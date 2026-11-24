@@ -149,6 +149,8 @@ def main():
             e['lc'] = 1
         if o.get('say'):
             e['say'] = o['say']
+        if o.get('line'):
+            e['sl'] = o['line']
         if o.get('mention_other'):
             e['other'] = 1
         for old, ps in o.get('by', {}).items():

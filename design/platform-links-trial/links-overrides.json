@@ -1,0 +1,8 @@
+{
+  "_about": "John's corrections to src/data/platform-links.json, applied by apply_links_overrides.py after build_table.py. islands: the station's islands as they really are (each group's list replaced where it holds these platforms). w: the word for the station's footbridge.",
+  "RDG": {
+    "_who": "John, November 24th 2026: platform 3 is round a small corner from 7, not across the platform from it; Reading's footbridge is \"the bridge\"",
+    "islands": [["1", "2"], ["3"], ["7"], ["4"], ["5", "6"]],
+    "w": "bridge"
+  }
+}

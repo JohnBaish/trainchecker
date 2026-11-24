@@ -24,10 +24,11 @@ export type ExitRow = [name: string | null, by: string[], building: 0 | 1, near:
 export type Way = [exit: number, via: string, down: string | null]
 /** w: John's word for the station's footbridge ("bridge" at Reading, which has shops on it);
  *  here: for an exit given a descriptive name, how to say it's right there (exit number → words). */
-export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string>; lc?: 1; say?: Record<string, string>; other?: 1; eo?: number[] }
+export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string>; lc?: 1; say?: Record<string, string>; other?: 1; eo?: number[]; sl?: string }
 // say: John's own words for a platform, after "Your train is due into platform 1." (Ivybridge).
 // other: by an exit on the level, also say the other one over the bridge or through the subway
 // (Southampton Central: "…is right there, or you can go over the footbridge for the town centre exit").
+// sl: John's own sentence for the station as a whole (Reading).
 // eo: exits people come out of but wouldn't go in by (Reading's Apex Plaza); never offered as a way in.
 // lc: John has confirmed the exits are either side of a public level crossing (Midgham).
 export type ExitsTable = Record<string, StationExits>
@@ -42,6 +43,7 @@ export const heading = (_name: string, e: StationExits) => (e.x.length === 1 ? '
 
 /** The sentence about the station as a whole. */
 export function stationLine(name: string, e: StationExits): string {
+  if (e.sl) return e.sl
   if (e.k === 'concourse') return `At ${name}, every platform leads to the concourse, where the exits are.`
   // Draft: John agreed "up on the bridge" and "up on the concourse" for these; the table doesn't
   // say which, so neither is named.

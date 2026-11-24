@@ -43,12 +43,15 @@ If not, they come out of the exits table, which mends the Exits section too.
   (the main Station Hill entrance by 7 and 1 to 3; Station Road (Edward VII) by 4 to 6, the map's
   "Forbury Road"; Apex Plaza an exit only, round the concourse; the north exit off the bridge), so
   the Exits section changes too. Everything Trainchecker says about Reading, numbered, with the
-  questions still open: `reading.md` (`reading-list.ts` makes it).
+  answers to its questions: `reading.md` (`reading-list.ts` makes it). His own sentence for the station
+  and platforms 1 to 3 in Exits; Apex Plaza for 4 to 6; platform 3 round a corner from 7 and Reading's
+  "bridge" in Connections (`design/platform-links-trial/links-overrides.json`, applied by
+  `apply_links_overrides.py`); "go down to platform 7" where the bridge comes down on the platform itself.
 - **Paddington A and B:** "go down to platform A" (`to-platform.json`, `dir`).
-- **Twyford:** platform 5 names only the entrance between 4 and 5; the unnamed one by 4 is "the town
-  side entrance" (draft name).
+- **Twyford:** platform 5 names only the entrance between 4 and 5; the unnamed one by 4 is "the
+  entrance on the town side" (John).
 - **Bath Spa:** the two entrances on platform 1 are "the rear entrances near the car park". The map
-  also had Railway Place on the level with platform 2; left out there (for John to confirm).
+  also had Railway Place on the level with platform 2: a map error (John), left out.
 - **Redhill:** the footbridge from Noke Drive is real.
 - **The walk rule:** only at stations read from their maps (above).
 

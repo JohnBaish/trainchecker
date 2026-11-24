@@ -157,6 +157,8 @@ function how(w: Way, platform: string, bridge: string, e: StationExits, links?: 
       const down = via === 'b' ? `cross the ${thing} and go down by platform ${land}` : `go through it and come up by platform ${land}`
       return `${start}, ${down}, then walk to platform ${platform}.`
     }
+    // The bridge's far end comes down on this very platform (John, Reading's 7: "go down to platform 7").
+    if (land && land === base(platform)) return via === 'b' ? `${start}, cross the ${thing} and go down to platform ${platform}.` : `${start}, go through it and come up on platform ${platform}.`
     if (added && !(land && sameIsland)) return null
     // The bridge comes down by this very platform on the way out (Reading's 15 for the north entrance).
     if (near === base(platform)) return via === 'b' ? `go up to the ${bridge} and come down on platform ${platform}.` : `go down to the subway and come up on platform ${platform}.`

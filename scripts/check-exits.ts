@@ -13,14 +13,14 @@ function eq(what: string, got: unknown, want: unknown) {
 const T = t as unknown as ExitsTable
 
 // Reading, as John agreed it; the four sentences below changed with his corrections of November 24th
-// 2026 (design/platform-directions/reading.md, items 20, 21, 24 and 28), awaiting his review.
+// 2026 (design/platform-directions/reading.md, items 20, 21, 24 and 28), all agreed by him the same day.
 eq('heading: "Exits" (John)', [heading('Reading', T.RDG), heading('Newton Abbot', T.NTA)], ['Exits', 'Exit'])
-eq('Reading: the station', stationLine('Reading', T.RDG), 'At Reading, the exits are by platforms 4, 7 and 15.')
-eq('Reading: platform 4 (level)', trainLine(T.RDG, '4', false), 'Your train is due into platform 4. The exit on Station Road (Edward VII) is right there, or you can go over the bridge for the north exit by the car park on the Caversham side.')
+eq('Reading: the station', stationLine('Reading', T.RDG), 'At Reading, the exits are on the town side by platforms 4 and 7, and on the north side down from the bridge by platform 15.')
+eq('Reading: platform 4 (level)', trainLine(T.RDG, '4', false), 'Your train is due into platform 4. The exit on Station Road (Edward VII) is right there, the Apex Plaza exit is round the concourse, or you can go over the bridge for the north exit by the car park on the Caversham side.')
 eq('Reading: platform 8 (either way off the bridge, and where each comes down)', trainLine(T.RDG, '8', false),
   'Your train is due into platform 8. Go up to the bridge, where you can turn either way: to the main Station Hill exit on the town centre side, coming down from the bridge by platform 7, or to the north exit by the car park on the Caversham side, coming down by platform 15.')
 // John's corrections (design/platform-links-trial/exits-overrides.json): names, "is right there", "the bridge".
-eq('Reading: a renamed exit is right there (John)', trainLine(T.RDG, '1', false), 'Your train is due into platform 1. The main Station Hill exit on the town centre side is right there, or you can go over the bridge for the north exit by the car park on the Caversham side.')
+eq('Reading: a renamed exit is right there (John)', trainLine(T.RDG, '1', false), 'Your train is due into platform 1. The main Station Hill exit on the town centre side is nearby on the same level, by platform 7, or you can go over the bridge for the north exit by the car park on the Caversham side.')
 eq('Reading: "the bridge", not "the footbridge" (John)', T.RDG.w, 'bridge')
 // Exits named by what's near them (John, November 22nd 2026; name_exits.py): the name takes the
 // place of a street's, a town centre only where the station is named after the town (within 600 m).

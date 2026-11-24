@@ -88,6 +88,12 @@ given its own branch). Before committing there, run
   Exits sentences change too: `check-exits` updated, awaiting John); Paddington A and B "go down", Twyford and Bath Spa
   named (`to-platform.json`); the walk rule only at stations read from their maps. Everything about Reading, numbered,
   with eight questions: `design/platform-directions/reading.md`. Checks pass; `tsc -b`, lint.
+- **John answered all eight:** his sentence for the station and platforms 1 to 3 (Exits, `line` and `say` in
+  `exits-overrides.json`); Apex Plaza for 4 to 6 (draft); platform 3 round a corner from 7 and "over the bridge" in
+  Connections (new `links-overrides.json` and `apply_links_overrides.py`; `platformLinks.ts` takes the station's word);
+  "go down to platform 7"; Twyford "the entrance on the town side"; Bath Spa's Railway Place on platform 2 a map error.
+  These change the live Exits and Connections at Reading once merged. Checks 264 + 57 + 79 + 40 + 59 + 36; `tsc -b`,
+  lint, build.
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

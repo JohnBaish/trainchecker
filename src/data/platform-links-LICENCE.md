@@ -17,3 +17,7 @@ each other, each group split into islands (platforms whose shapes touch on the m
 letter for each pair of groups, in order (1–2, 1–3, …, 2–3, …): `b` bridge, `s` subway, `e`
 either, `r` out of the station by road, `x` level crossing, `u` over or under (not known which),
 `?` no walk found, and `B`, `S`, `E` as `b`, `s`, `e` with a walk round on the level too.
+
+John's own corrections (`design/platform-links-trial/links-overrides.json`: Reading's islands and its
+"bridge") are applied after each rebuild with `python3 -I design/platform-links-trial/apply_links_overrides.py
+src/data/platform-links.json`.

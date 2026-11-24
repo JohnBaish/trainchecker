@@ -106,9 +106,10 @@ const links: LinksTable = JSON.parse(readFileSync(new URL('../src/data/platform-
 const withLinks = (x: ReturnType<typeof ask>, at: string, chosen: string | null = null) =>
   answer({ now: NOW, from: x.a.text.match(/Your train from ([^ ]+(?: [A-Z][a-z]+)*) /)![1], at: x.d.atName, to: x.d.toName, mine: x.mine, arrPlatform: x.d.arrPlatform, trains: x.d.trains, chosen, links: links[at] })
 eq('footbridge at Newton Abbot', withLinks(fine, 'NTA').text.includes('You’re coming into platform 3 and you’ll want platform 1, over the footbridge, where your train will be showing on the departure board as the Paignton train.'), true)
-eq('footbridge at Reading', withLinks(tight, 'RDG').text.includes('You’re coming into platform 12 and you’ll want platform 8, over the footbridge, where your train will be showing on the departure board as the Carmarthen train.'), true)
-eq('"for the 3.27", then the footbridge', withLinks(pad, 'RDG').text.includes('You’re coming into platform 12 and you’ll want platform 10 for the 3.27, over the footbridge.'), true)
-eq('two trains, both over the footbridge (11A is the map’s 11)', withLinks(pad, 'RDG', elizId).text.includes('You’re coming into platform 12 and you’ll want platform 14 for the 3.29 Elizabeth Line train, or platform 11A for the 3.29 fast train, both over the footbridge.'), true)
+// Reading's is "the bridge" (John, November 24th 2026: links-overrides.json).
+eq('the bridge at Reading', withLinks(tight, 'RDG').text.includes('You’re coming into platform 12 and you’ll want platform 8, over the bridge, where your train will be showing on the departure board as the Carmarthen train.'), true)
+eq('"for the 3.27", then the bridge', withLinks(pad, 'RDG').text.includes('You’re coming into platform 12 and you’ll want platform 10 for the 3.27, over the bridge.'), true)
+eq('two trains, both over the bridge (11A is the map’s 11)', withLinks(pad, 'RDG', elizId).text.includes('You’re coming into platform 12 and you’ll want platform 14 for the 3.29 Elizabeth Line train, or platform 11A for the 3.29 fast train, both over the bridge.'), true)
 eq('the same platform: nothing added', withLinks(same, 'NTA').text, same.a.text)
 eq('without the table, the agreed sentences are unchanged', answer({ now: NOW, from: 'Ivybridge', at: fine.d.atName, to: fine.d.toName, mine: fine.mine, arrPlatform: fine.d.arrPlatform, trains: fine.d.trains, chosen: null }).text, fine.a.text)
 // Each kind, on the real table.

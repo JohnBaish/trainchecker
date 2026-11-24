@@ -15,18 +15,18 @@
     }
   },
   "TWY": {
-    "_who": "John, November 24th 2026: platform 5 names only the entrance between 4 and 5; the unnamed one by 4 is the town side",
+    "_who": "John, November 24th 2026: platform 5 names only the entrance between 4 and 5; the unnamed one by 4 is \"the entrance on the town side\"",
     "level": {
       "5": [
         "the exit between platforms 4 and 5"
       ]
     },
     "names": {
-      "2": "the town side entrance"
+      "2": "the entrance on the town side"
     }
   },
   "BTH": {
-    "_who": "John, November 24th 2026: two rear entrances near the car park on platform 1",
+    "_who": "John, November 24th 2026: two rear entrances near the car park on platform 1; Railway Place on the level with platform 2 was a map error",
     "names": {
       "0": "the rear entrances near the car park",
       "1": "the rear entrances near the car park"

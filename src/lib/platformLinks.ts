@@ -6,7 +6,7 @@
 /** One station: its platforms in groups on the level with each other, each group split into
  *  islands (platforms whose shapes touch on the map); and, for each pair of groups in order
  *  (1–2, 1–3, …, 2–3, …), one letter for how the walk crosses the line. */
-export type StationLinks = { g: string[][][]; x: string }
+export type StationLinks = { g: string[][][]; x: string; w?: string }
 export type LinksTable = Record<string, StationLinks>
 
 const WORDS: Record<string, string> = {
@@ -44,5 +44,6 @@ export function howToGet(st: StationLinks | null | undefined, from: string, to: 
   const n = st.g.length
   // Pairs in order: (0,1), (0,2), …, (1,2), …
   const k = i * n - (i * (i + 1)) / 2 + (j - i - 1)
-  return WORDS[st.x[k]] ?? ''
+  // The station's own word for its footbridge, where John has given one (Reading's "bridge").
+  return (WORDS[st.x[k]] ?? '').replace('footbridge', st.w ?? 'footbridge')
 }

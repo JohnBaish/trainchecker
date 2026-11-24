@@ -1,7 +1,7 @@
 {
   "_about": "John's own corrections to the Station exits table, applied last by build_exits_table.py, so they win over the station maps and the map data. Per station: 'names' renames exits (old name: the words used after 'to', as in 'to the town centre and Station Hill'); 'here' says how to put 'is right there' for a renamed exit; 'bridge' is the word for the station's footbridge. Each entry says who and when. 'by' sets the platforms an exit is by; 'no_routes' keeps no routes (only what John knows); 'no_exit' names an exit John says isn't there (the build stops if it appears). 'add_exits' adds exits the sources missed; 'level_crossing' says the exits are either side of a public level crossing. 'say' gives John's own words for a platform, after 'Your train is due into platform N.'; 'mention_other' also names the other exit over the bridge or through the subway, from a platform with an exit on the level.",
   "RDG": {
-    "_who": "John, November 22nd and 24th 2026",
+    "_who": "John, November 22nd and 24th 2026 (the station's sentence and platforms 1 to 3 his words; 4 to 6 Claude's draft from his \"could do\")",
     "bridge": "bridge",
     "reading": {
       "_why": "John, November 24th 2026: the main Station Hill entrance is by platform 7 and 1 to 3 (on the level with 4 to 6 too, but much nearer 1 to 3 and 7); the map's Forbury Road is Station Road (Edward VII), by 4, 5 and 6; Apex Plaza is round the concourse from 4, 5 and 6, an exit only; the north exit is at the north end of the bridge. Platforms 14 and 15 use the same bridge as 8 to 13, so it comes down by platform 7 for Station Hill (and by 15 for the north exit from 14).",
@@ -222,7 +222,16 @@
     },
     "exit_only": [
       "Apex Plaza"
-    ]
+    ],
+    "line": "At Reading, the exits are on the town side by platforms 4 and 7, and on the north side down from the bridge by platform 15.",
+    "say": {
+      "1": "The main Station Hill exit on the town centre side is nearby on the same level, by platform 7, or you can go over the bridge for the north exit by the car park on the Caversham side.",
+      "2": "The main Station Hill exit on the town centre side is nearby on the same level, by platform 7, or you can go over the bridge for the north exit by the car park on the Caversham side.",
+      "3": "The main Station Hill exit on the town centre side is nearby on the same level, by platform 7, or you can go over the bridge for the north exit by the car park on the Caversham side.",
+      "4": "The exit on Station Road (Edward VII) is right there, the Apex Plaza exit is round the concourse, or you can go over the bridge for the north exit by the car park on the Caversham side.",
+      "5": "The exit on Station Road (Edward VII) is right there, the Apex Plaza exit is round the concourse, or you can go over the bridge for the north exit by the car park on the Caversham side.",
+      "6": "The exit on Station Road (Edward VII) is right there, the Apex Plaza exit is round the concourse, or you can go over the bridge for the north exit by the car park on the Caversham side."
+    }
   },
   "SIA": {
     "_who": "John, November 22nd 2026: the exit is definitely by platform 1, but no more detail",

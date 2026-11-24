@@ -172,5 +172,9 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
     return `${start} Go ${via === 'b' ? `up to the ${bridge}` : 'down to the subway'}, where you can turn either way: ${one}, or ${two}.${hoursLine(e, same.slice(0, 2))}`
   }
   const t = target(e, i)
-  return `Your train is due into platform ${platform}, so you’ll want the ${thing} to ${t}${down && !t.endsWith(`platform ${down}`) ? `, ${off} by platform ${down}` : ''}.${hoursLine(e, [ways[0]])}`
+  // The other exit, the other way (John, November 24th 2026, Guildford: the footbridge to Guildford Park
+  // Road wasn't mentioned for the platforms reached by the subway), as the level answers already do.
+  const alt = ways.find((w) => w[0] !== i && (w[1] === 'b' || w[1] === 's') && w[1] !== via)
+  const also = alt ? `, or the ${alt[1] === 'b' ? bridge : 'subway'} to ${target(e, alt[0])}` : ''
+  return `Your train is due into platform ${platform}, so you’ll want the ${thing} to ${t}${down && !t.endsWith(`platform ${down}`) ? `, ${off} by platform ${down}` : ''}${also}.${hoursLine(e, [ways[0]])}`
 }

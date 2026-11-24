@@ -315,5 +315,13 @@
       "A": "The way out is up from the Elizabeth Line platforms to the Eastbourne Terrace exit.",
       "B": "The way out is up from the Elizabeth Line platforms to the Eastbourne Terrace exit."
     }
+  },
+  "GLD": {
+    "_who": "John, November 24th 2026: the names; the station's sentence is Claude's draft",
+    "names": {
+      "Walnut Tree Close": "the main town centre exit",
+      "Guildford Park Road": "the Guildford Park Road exit at the back"
+    },
+    "line": "At Guildford, the main town centre exit is by platforms 1 and 2, and the Guildford Park Road exit at the back is over the footbridge."
   }
 }

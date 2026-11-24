@@ -108,6 +108,12 @@ given its own branch). Before committing there, run
 - **John (iPhone, Guildford to Reading):** with one platform, "Tap “8” for a rough platform location guide." Done in
   `JourneyView.tsx`; checks, `tsc -b`, lint, build; Bath to Bristol (one platform) at 390px and 1200px, Reading to
   Paddington (several) at 390px: the right line, no errors, no sideways scroll. Straight to `main` at John's word.
+- **John (Guildford):** Walnut Tree Close is "the main town centre exit/entrance", Guildford Park Road "the Guildford
+  Park Road exit/entrance at the back" (`names` in `exits-overrides.json`; the station's sentence is Claude's draft,
+  `line`); and Exits didn't mention Guildford Park Road from platforms 3 to 8. Now a subway or footbridge answer also
+  names the other exit the other way ("…the subway to the main town centre exit, or the footbridge to the Guildford
+  Park Road exit at the back."), as the level answers already did: 48 answers at 34 stations. Checks, `tsc -b`,
+  lint, build. Straight to `main` at John's word.
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

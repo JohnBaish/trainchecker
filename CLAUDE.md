@@ -74,6 +74,20 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 24th 2026: "The next hour" first, then the rest; a prototype (branch `claude/ecstatic-dijkstra-w0herd`, not merged; Claude Code)
+
+- **John:** show the information in the order people need it. Swap "The next four hours" and "Platforms"; the first panel
+  named for its period, the second covering only what comes after it. His answers: the next hour, stretched to the next
+  three trains when the hour has fewer (1b), no train in both panels; headings "The next hour" and "The following three
+  hours", or "The next three trains" (Claude's draft) and "Later" when stretched (2); cancelled trains not on the board,
+  said in the fold (3); the board folded (4); later trains' platforms shown if a nice way is found (5); side by side (6).
+- **Built behind `?mock=A` / `?mock=B`** (the live page unchanged without it): `src/lib/windows.ts` (`split()`, `only()`,
+  `firstPanel()`, `laterPanel()`); `nextFour()` and `trainsAnHour()` take the panel's own span; `FirstPanel` and
+  `LaterPanel` in `JourneyView.tsx`; "not yet" for a train with no platform (`.bnoplat`). A: a line about the later
+  trains' platforms; B: that line and a fold with them. Pictures and `shoot.mjs` in `design/previews/next-hour/`.
+- **Checked:** `npm run check` unchanged (264 + 57 + 79 + 40 + 76 + 36), `tsc -b`, build; 13 saved boards' sentences
+  read through; pictures at 1200px light and 390px dark with touch: no errors, no sideways scroll.
+
 ### November 24th 2026: "How do I get to my platform?", tapping a platform for a rough location guide; live (branch `claude/cool-sagan-k0e2ao`, merged the same day; Claude Code)
 
 - **John:** can tapping a platform in Platforms give directions to it, from the data we have? Yes, mostly: the exits

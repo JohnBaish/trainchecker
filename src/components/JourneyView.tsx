@@ -21,6 +21,11 @@ import { LastWeek } from './LastWeek.tsx'
 import { FactCard, QuoteCard } from './Tail.tsx'
 import { Connection } from './Connection.tsx'
 import { Exits } from './Exits.tsx'
+import { firstPanel, laterPanel, split } from '../lib/windows.ts'
+
+// PROTOTYPE (November 24th 2026): "The next hour" first, then the rest (?mock=A: a line about the
+// later trains' platforms; ?mock=B: that line and a fold with them).
+const MOCK = new URLSearchParams(location.search).get('mock')
 
 type State = { s: 'loading' } | { s: 'ok'; a: Analysis } | { s: 'failed'; why: string }
 
@@ -136,6 +141,7 @@ function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
           {r.platform && !p.one && (tap && tap(r.platform)
             ? <span role="cell" className="bcell"><TapBadge pl={r.platform} open={openRow === String(i)} onTap={() => toggle(String(i))} /></span>
             : <span className="badge" role="cell">{r.platform}</span>)}
+          {(r as { noPlat?: boolean }).noPlat && !p.one && <span className="bnoplat" role="cell">not yet</span>}
           {tap && r.platform && openRow === String(i) && <DirLines lines={tap(r.platform)!} />}
         </div>
       ))}
@@ -147,7 +153,7 @@ function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
 
 /** The trains with a platform, folded under "Platforms": the board, then any delayed train's
  *  sentence with its reason (John, November 18th and 19th 2026). */
-function PlatformTrains({ a }: { a: Analysis }) {
+function PlatformTrains({ a, fold }: { a: Analysis; fold?: string }) {
   const p = platformTrains(a)
   const pic = platformsPicture(a)
   // Only for a board with platforms: the tables load then, not on every journey.
@@ -155,7 +161,7 @@ function PlatformTrains({ a }: { a: Analysis }) {
   if (!p || !pic) return null
   return (
     <details className="advice trains-fold">
-      <summary>{p.fold} <Icon name="down" /></summary>
+      <summary>{fold ?? p.fold} <Icon name="down" /></summary>
       {pic.before && <p className="tbefore">{pic.before}</p>}
       {pic.words.text.startsWith('The next ten') && <p className="board-kick">The next ten trains</p>}
       {dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
@@ -226,6 +232,42 @@ function Trains({ n }: { n: NextFour }) {
         </table>
       )}
     </details>
+  )
+}
+
+/** PROTOTYPE: the first panel, every train in it with its platform or "not yet", folded. */
+function FirstPanel({ a }: { a: Analysis }) {
+  const f = firstPanel(a)
+  const pic = f.picture
+  const dirs = useDirs(pic && pic.rows.some((r) => r.platform) ? a.fromCrs : '')
+  const k = pic?.rows.length ?? 0
+  return (
+    <section className="card sec">
+      <h3>{f.heading}</h3>
+      {f.lines.map((l) => <p key={l} className="lead">{l}</p>)}
+      {(pic || f.cancelled) && (
+        <details className="advice trains-fold">
+          <summary>{k === 1 ? 'Show the train and its platform' : 'Show the trains and platforms'} <Icon name="down" /></summary>
+          {pic && dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
+          {pic && <Board p={pic} dirs={dirs} />}
+          {f.cancelled && <p className="tafter">{f.cancelled}</p>}
+        </details>
+      )}
+    </section>
+  )
+}
+
+/** PROTOTYPE: the rest of the four hours. */
+function LaterPanel({ a, fold }: { a: Analysis; fold: boolean }) {
+  const l = laterPanel(a)
+  return (
+    <section className="card sec">
+      <h3>{l.heading}</h3>
+      {l.lines.map((x) => <p key={x} className="lead">{x}</p>)}
+      {l.next && <Trains n={l.next} />}
+      {l.platLine && <p>{l.platLine}</p>}
+      {fold && l.platLine && <PlatformTrains a={l.later} fold="Show these trains with platforms" />}
+    </section>
   )
 }
 
@@ -370,7 +412,13 @@ export function JourneyView({ journey }: { journey: Journey }) {
           3.1, John, November 18th 2026). Otherwise the whole page. One list, so "The last week"
           keeps its answer when a check changes which of these it is. */}
       {an.verdict === 'none' && !closed && !an.lastGone && !changing && <Chooser journey={journey} />}
-      {an.verdict !== 'none' && (
+      {an.verdict !== 'none' && MOCK && split(an) && (
+        <div className="grid">
+          <FirstPanel a={an} />
+          <LaterPanel a={an} fold={MOCK === 'B'} />
+        </div>
+      )}
+      {an.verdict !== 'none' && !MOCK && (
         <div className="grid">
           <section className="card sec">
             <h3>The next four hours</h3>

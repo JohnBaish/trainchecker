@@ -293,7 +293,7 @@ export function speedGroups(a: Analysis): Group[] {
 
 /** "about eight" a hour from k trains in four hours ("about" unless exact); fewer than four: the
  *  real count, "three … in all". */
-const perHour = (k: number) => (k % 4 ? 'about ' : '') + num(Math.round(k / 4))
+const perHour = (k: number, h = 4) => (k % h ? 'about ' : '') + num(Math.round(k / h))
 
 /** The first line of "The next four hours" with more than eight trains (John, November 18th 2026):
  *  "There are about eight fast trains an hour from Reading to London Paddington in the next four
@@ -301,13 +301,13 @@ const perHour = (k: number) => (k % 4 ? 'about ' : '') + num(Math.round(k / 4))
  *  Line." "An hour" after every group (John, November 18th 2026); one "and"; journey times only for the groups in the middle (people know the fastest
  *  and slowest). A group of fewer than four trains: "three on the Elizabeth Line in that time"
  *  (Claude's draft). */
-export function trainsAnHour(a: Analysis): string | null {
-  if (a.ahead.length <= 8) return null
+export function trainsAnHour(a: Analysis, h = 4, span = 'in the next four hours'): string | null {
+  if (a.ahead.length <= 2 * h) return null
   const gs = speedGroups(a)
   const phrase = (g: Group, i: number) => {
-    const few = g.k < 4
-    const n = few ? num(g.k) : perHour(g.k)
-    const one = few ? g.k === 1 : Math.round(g.k / 4) === 1
+    const few = g.k < h
+    const n = few ? num(g.k) : perHour(g.k, h)
+    const one = few ? g.k === 1 : Math.round(g.k / h) === 1
     const time = i > 0 && i < gs.length - 1 ? ` (taking about ${num(Math.round(g.mins / 5) * 5)} minutes)` : ''
     // "An hour" after every group (John, November 18th 2026), so no figure can be read as a total.
     const all = few && i > 0 ? ' in that time' : ''
@@ -315,12 +315,12 @@ export function trainsAnHour(a: Analysis): string | null {
     if (g.kind === 'elizabeth') return `${n}${hr} on the Elizabeth Line${all}${time}`
     const co = g.company ? `${g.company} ` : ''
     const adj = g.kind === 'all' ? '' : `${g.kind} `
-    if (i === 0) return `${n} ${adj}${co}${one ? 'train' : 'trains'}${few ? '' : ' an hour'} from ${a.from} to ${a.to} in the next four hours`
+    if (i === 0) return `${n} ${adj}${co}${one ? 'train' : 'trains'}${few ? '' : ' an hour'} from ${a.from} to ${a.to} ${span}`
     return `${n} ${adj}${co}${one ? (co ? 'train' : 'one') : (co ? 'trains' : 'ones')}${hr}${all}${time}`
   }
   const ps = gs.map(phrase)
   const list = ps.length > 1 ? `${ps.slice(0, -1).join(', ')} and ${ps[ps.length - 1]}` : ps[0]
-  return `There ${gs[0].k === 1 || (gs[0].k >= 4 && Math.round(gs[0].k / 4) === 1) ? 'is' : 'are'} ${list}.`
+  return `There ${gs[0].k === 1 || (gs[0].k >= h && Math.round(gs[0].k / h) === 1) ? 'is' : 'are'} ${list}.`
 }
 
 /** What follows "Cancelled" or "Expected 6.45pm, 7 minutes late" on the same line, in the
@@ -335,11 +335,13 @@ export function why(reason: string | null, operator: string): string {
   return `. ${Cap(r.replace(/[.\s]+$/, ''))} ${co}.`
 }
 
-export function nextFour(a: Analysis): NextFour | null {
-  if (a.verdict === 'none') return null
+/** PROTOTYPE (November 24th 2026): the first and later panels pass their own opening line. */
+export type Span = { first: string | null; hours?: number; span?: string }
+export function nextFour(a: Analysis, o?: Span): NextFour | null {
+  if (a.verdict === 'none' || !a.ahead.length) return null
   const n = a.ahead.length
   const v = (k: number) => (k === 1 ? 'is' : 'are')
-  const lines = [trainsAnHour(a) ?? (n === 1 ? `There's one train from ${a.from} to ${a.to} in the next four hours.` : `There are ${num(n)} trains from ${a.from} to ${a.to} in the next four hours.`)]
+  const lines = [o ? (o.hours ? trainsAnHour(a, o.hours, o.span) : null) ?? o.first ?? '' : trainsAnHour(a) ?? (n === 1 ? `There's one train from ${a.from} to ${a.to} in the next four hours.` : `There are ${num(n)} trains from ${a.from} to ${a.to} in the next four hours.`)]
   // Trains leaving on time but expected at B more than five minutes late are said apart (fresh
   // look 2.2), so this never says they're all on time under "badly disrupted".
   const onTime = a.ahead.filter((s) => s.late !== null && s.late <= 3 && !a.arrLate.includes(s)).length
@@ -375,6 +377,7 @@ export function nextFour(a: Analysis): NextFour | null {
   const fold = !rows.length ? null : rows.length === 1 ? "Show the train that isn't on time" : `Show the ${num(rows.length)} trains that aren't on time`
   return { lines: [lines[0], lines.slice(1).join(' ')].filter(Boolean).map(tenAfterWords), rows, fold }
 }
+export { because as becauseOf }
 
 /** Platforms for each kind of train, when the trains fall into groups (John, November 18th 2026:
  *  "accurate but not all that precise"): "Most fast trains are currently going from platforms 10

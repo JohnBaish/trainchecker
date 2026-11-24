@@ -71,6 +71,14 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 24th 2026: "How do I get to my platform?", a trial and two mock-ups (branch `claude/cool-sagan-k0e2ao`, not merged; Claude Code)
+
+- **John:** can tapping a platform in Platforms give directions to it, from the data we have? Yes, mostly: the exits
+  table read the other way round (`src/lib/toPlatform.ts`, drafts), a line for each entrance (John). Trial on 12
+  stations he knows, and mock-ups A (tap a badge on the board) and B ("How do I get to my platform?" under the board),
+  behind `?mock=A|B`: `design/platform-directions/` (README with the points for John and every sentence).
+- **Checked:** `tsc -b`, lint, build; both at 1200px and 390px with touch, light and dark: no errors, no sideways scroll.
+
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 
 - **John:** reword the Share message at the top: "Good news, when the trains from Reading to Guildford were

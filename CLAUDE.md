@@ -83,6 +83,11 @@ given its own branch). Before committing there, run
   rest of the station, entrances added with "then walk to platform 4" from `platform-links.json`, "come down on
   platform 15A"); one exception file, `src/data/to-platform.json` (Reading 4 to 7: the south entrance only).
   Checks pass; `tsc -b`, lint, build; Reading 15A at 390px light and 1200px dark: no errors, no sideways scroll.
+- **John:** "Tap a platform for a rough location guide."; Reading's entrances corrected (a whole corrected reading in
+  `exits-overrides.json`, new `reading` and `exit_only`; `build_exits_table.py` rebuilt, only Reading changes, so its
+  Exits sentences change too: `check-exits` updated, awaiting John); Paddington A and B "go down", Twyford and Bath Spa
+  named (`to-platform.json`); the walk rule only at stations read from their maps. Everything about Reading, numbered,
+  with eight questions: `design/platform-directions/reading.md`. Checks pass; `tsc -b`, lint.
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

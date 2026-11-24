@@ -7,7 +7,9 @@ import type { StationExits, Way } from './exits.ts'
 const and = (xs: string[], word = 'and') => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} ${word} ${xs[xs.length - 1]}` : xs[0] ?? '')
 
 /** What an entrance is called, for "From …". */
-export function entranceName(e: StationExits, i: number): string {
+export function entranceName(e: StationExits, i: number, fix?: Fix): string {
+  const own = fix?.names?.[String(i)]
+  if (own) return own
   const [n, by, building, near] = e.x[i]
   if (!n) {
     if (e.x.length === 1) return building ? 'the entrance by the station building' : 'the entrance'
@@ -22,7 +24,7 @@ export function entranceName(e: StationExits, i: number): string {
   const side = n.match(/^(.*) \((north|south|east|west)\)$/)
   if (side) return `the ${side[2]} entrance on ${side[1]}`
   // "Eastbourne Terrace (Elizabeth line)" → "the Eastbourne Terrace entrance (Elizabeth line)".
-  const br = n.match(/^(.*) (\([^)]*\))$/)
+  const br = n.match(/^(.*) (\([^)]*\bline\))$/)
   if (br) return `the ${br[1]} entrance ${br[2]}`
   return `the ${n} entrance`
 }
@@ -61,9 +63,16 @@ const openLine = (e: StationExits, i: number) => {
 export type Links = { g: string[][][] }
 /** John's own corrections for a station (data/to-platform.json): only these entrances named on
  *  the level for these platforms (Reading 4 to 7: the south entrance on Station Hill). */
-export type Fix = { level?: Record<string, string[]> }
+export type Fix = {
+  level?: Record<string, string[]>
+  /** An entrance's name in these sentences, by its number in exits.json (Twyford's town side;
+   *  Bath Spa's two rear entrances, named alike and so said once). */
+  names?: Record<string, string>
+  /** Up or down from the entrance, where the table doesn't say (Paddington A and B: down). */
+  dir?: Record<string, 'up' | 'down'>
+}
 
-const base = (p: string) => p.replace(/[A-Z]$/, '')
+const base = (p: string) => p.replace(/(\d)[A-Z]$/, '$1')
 const has = (isl: string[], p: string) => isl.includes(p) || isl.includes(base(p))
 const levelGroup = (links: Links | undefined, p: string) => links?.g.find((grp) => grp.some((isl) => has(isl, p))) ?? null
 
@@ -79,7 +88,8 @@ function downFor(e: StationExits, i: number, via: string, own: string | null): s
 /** The words for one platform at A: null where nothing is known. */
 export function toPlatform(e: StationExits, platform: string, links?: Links, fix?: Fix): string[] | null {
   if (e.k === 'concourse') return [`Every platform is off the concourse, where the entrances are.`]
-  const ways = waysFor(e, platform)
+  const eo = new Set(e.eo ?? [])
+  const ways = waysFor(e, platform).filter((w) => !eo.has(w[0]))
   if (!ways.length) return null
   const bridge = e.w ?? 'footbridge'
   const lines: string[] = []
@@ -88,11 +98,11 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
   const only = fix?.level && Object.entries(fix.level).find(([ps]) => ps.split(',').includes(base(platform)))?.[1]
   if (only) level = level.filter((i) => only.includes(e.x[i][0] ?? ''))
   // An unnamed entrance opening off this very platform is "its own entrance" (Twyford's 4).
-  const own = e.x.length > 1 ? level.filter((i) => !e.x[i][0] && !e.x[i][2] && e.x[i][1].includes(platform)) : []
+  const own = e.x.length > 1 ? level.filter((i) => !e.x[i][0] && !fix?.names?.[String(i)] && !e.x[i][2] && e.x[i][1].includes(platform)) : []
   const by = level.filter((i) => !own.includes(i))
   const lc = e.lc ? ', by the level crossing' : ''
   if (level.length) {
-    const joined = joinNames(by.map((i) => entranceName(e, i)), 'and')
+    const joined = joinNames([...new Set(by.map((i) => entranceName(e, i, fix)))], 'and')
     const opens = by.length === 1 ? openLine(e, by[0]) : ''
     lines.push(!by.length ? `Platform ${platform} has its own entrance${lc}.`
       : own.length ? `Platform ${platform} has its own entrance, and is right by ${joined}${lc}.${opens}`
@@ -105,39 +115,41 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
   const onLevel = new Set(ways.filter((w) => w[1] === 'l').map((w) => w[0]))
   const all: Way[] = ways.filter((w) => w[1] !== 'l')
   e.x.forEach((_, i) => {
-    if (onLevel.has(i) || all.some((w) => w[0] === i)) return
+    if (eo.has(i) || onLevel.has(i) || all.some((w) => w[0] === i)) return
     const via = ['b', 's'].find((v) => Object.values(e.p).some((ws) => ws.some((w) => w[0] === i && w[1] === v)))
     if (via) all.push([i, via, null])
   })
   const rest = new Map<string, number[]>()
   for (const w of all) {
-    const s = how(w, platform, bridge, e, links)
+    const s = how(w, platform, bridge, e, links, fix)
     if (!s) continue
     rest.set(s, [...(rest.get(s) ?? []), w[0]])
   }
   for (const [s, is] of rest) {
-    lines.push(`From ${fromNames(is.map((i) => entranceName(e, i)))}, ${s}${is.length === 1 ? openLine(e, is[0]) : ''}`)
+    lines.push(`From ${fromNames([...new Set(is.map((i) => entranceName(e, i, fix)))])}, ${s}${is.length === 1 ? openLine(e, is[0]) : ''}`)
   }
   return lines
 }
 
 /** The way in, from an entrance to platform P (the stored way out, reversed); null for an added
  *  way that can't be worked out. */
-function how(w: Way, platform: string, bridge: string, e: StationExits, links?: Links): string | null {
+function how(w: Way, platform: string, bridge: string, e: StationExits, links?: Links, fix?: Fix): string | null {
   const [i, via, stored] = w
   const added = !(e.p[platform] ?? e.p[base(platform)] ?? []).some((x) => x[0] === i)
   if (via === 'b' || via === 's') {
     // "down": the platform the bridge or subway comes down by on the way out, so the first one
     // reached on the way in; left out where the entrance's own name already says it.
     const near = downFor(e, i, via, stored)
-    const at = near && !entranceName(e, i).endsWith(`platform ${near}`) ? ` by platform ${near}` : ''
+    const at = near && !entranceName(e, i, fix).endsWith(`platform ${near}`) ? ` by platform ${near}` : ''
     const thing = via === 'b' ? bridge : 'subway'
     const start = via === 'b' ? `go up to the ${bridge}${at}` : `go down to the subway${at}`
     // The bridge's other ends: where it comes down for the other entrances. If one of them is on
     // the level with this platform but isn't it, walk from there (John, Reading's platform 4).
     const far = [...new Set(Object.values(e.p).flatMap((ws) => ws.filter((x) => x[0] !== i && x[1] === via && x[2]).map((x) => x[2]!)))]
       .filter((d) => d !== near)
-    const grp = levelGroup(links, platform)
+    // Only at stations whose maps were read by eye (John, November 24th 2026: none of the six
+    // map-data stations it reached could be checked).
+    const grp = e.m ? levelGroup(links, platform) : null
     const land = grp ? far.find((d) => grp.some((isl) => isl.includes(d))) : undefined
     // On the same island as where it comes down, the bridge reaches the platform itself.
     const sameIsland = !!land && !!grp?.some((isl) => isl.includes(land) && has(isl, platform))
@@ -154,6 +166,7 @@ function how(w: Way, platform: string, bridge: string, e: StationExits, links?: 
   if (via === 'c') return `cross the concourse to platform ${platform}.`
   if (via === 'x') return `cross the line at the level crossing to platform ${platform}.`
   // Up or down: the way out went up, so the way in goes down, and the other way round.
-  const dir = stored === 'up' ? 'down' : stored === 'down' ? 'up' : e.k === 'below' ? 'up' : e.k === 'above' ? 'down' : null
+  const given = fix?.dir && Object.entries(fix.dir).find(([ps]) => ps.split(',').includes(base(platform)))?.[1]
+  const dir = given ? given : stored === 'up' ? 'down' : stored === 'down' ? 'up' : e.k === 'below' ? 'up' : e.k === 'above' ? 'down' : null
   return dir ? `go ${dir} to platform ${platform}.` : `the way in leads to platform ${platform}.`
 }

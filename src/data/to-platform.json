@@ -1,4 +1,40 @@
 {
-  "_about": "John's corrections for directions to a platform (src/lib/toPlatform.ts). level: only these entrances (their names in exits.json) named as on the level with these platforms.",
-  "RDG": { "_who": "John, November 24th 2026", "level": { "4,5,6,7": ["Station Hill (south)"] } }
+  "_about": "John's corrections for directions to a platform (src/lib/toPlatform.ts). level: only these entrances (their names in exits.json) named as on the level with these platforms. names: an entrance's name here, by its number in exits.json. dir: up or down from the entrance.",
+  "RDG": {
+    "_who": "John, November 24th 2026",
+    "level": {
+      "4,5,6": [
+        "Station Road (Edward VII)"
+      ]
+    }
+  },
+  "PAD": {
+    "_who": "John, November 24th 2026: down from the Elizabeth Line entrance",
+    "dir": {
+      "A,B": "down"
+    }
+  },
+  "TWY": {
+    "_who": "John, November 24th 2026: platform 5 names only the entrance between 4 and 5; the unnamed one by 4 is the town side",
+    "level": {
+      "5": [
+        "the exit between platforms 4 and 5"
+      ]
+    },
+    "names": {
+      "2": "the town side entrance"
+    }
+  },
+  "BTH": {
+    "_who": "John, November 24th 2026: two rear entrances near the car park on platform 1",
+    "names": {
+      "0": "the rear entrances near the car park",
+      "1": "the rear entrances near the car park"
+    },
+    "level": {
+      "2": [
+        "the bus station exit"
+      ]
+    }
+  }
 }

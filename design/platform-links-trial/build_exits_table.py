@@ -75,7 +75,7 @@ def downs(hand, osm, groups):
     others = lambda i: lv([p for k, x in enumerate(hand['x']) if k != i for p in x[1]])
     for pl, rs in hand['p'].items():
         for r in rs:
-            if r[1] not in 'bs':
+            if r[1] not in 'bs' or r[2]:      # John's own reading says where already
                 continue
             by = hand['x'][r[0]][1]
             for i, d, how, down in osm['platforms'].get(pl, []):
@@ -96,6 +96,10 @@ def main():
     hand = {}
     for f in sorted(glob.glob(os.path.join(sys.argv[2], 'maps-strict-*.json'))):
         hand.update(json.load(open(f)))
+    # John's own corrections (exits-overrides.json beside this script). A station's "reading" is his
+    # corrected version of the station map's reading, in the same shape (Reading, November 24th 2026).
+    ov = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'exits-overrides.json')))
+    hand.update({c: o['reading'] for c, o in ov.items() if not c.startswith('_') and 'reading' in o})
     out = {}
     for crs in sorted(set(osm) | set(hand)):
         if crs in SKIP or hand.get(crs, {}).get('skip'):
@@ -103,7 +107,7 @@ def main():
         if crs in hand:
             h = hand[crs]
             e = {'x': [[x['name'], x['by'], 0] for x in h['exits']],
-                 'p': {pl: [[i, v, None] for i, v in rs if 0 <= i < len(h['exits'])] for pl, rs in h['platforms'].items()},
+                 'p': {pl: [[r[0], r[1], r[2] if len(r) > 2 else None] for r in rs if 0 <= r[0] < len(h['exits'])] for pl, rs in h['platforms'].items()},
                  'k': h['kind'], 'm': 1}
             if h.get('hours'):
                 e['h'] = h['hours']
@@ -126,8 +130,7 @@ def main():
                 if r[1] == 'u' and (pl in d or '*' in d):
                     r[2] = d.get(pl, d.get('*'))
         out[crs] = e
-    # John's own corrections, applied last (exits-overrides.json beside this script).
-    ov = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'exits-overrides.json')))
+    # The rest of John's corrections, applied last.
     for crs, o in ov.items():
         if crs.startswith('_'):
             continue
@@ -150,6 +153,9 @@ def main():
             e['other'] = 1
         for old, ps in o.get('by', {}).items():
             e['x'][names.index(old)][1] = ps
+        # Exits people come out of but wouldn't go in by (Reading's Apex Plaza): never offered as a way in.
+        for name in o.get('exit_only', []):
+            e.setdefault('eo', []).append(names.index(name))
         if o.get('no_routes'):
             e['p'] = {}
         for bad in o.get('no_exit', []):

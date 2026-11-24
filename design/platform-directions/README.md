@@ -11,7 +11,7 @@ same way are joined into one line. Nothing is agreed, and nothing is on the live
   Bath Spa to Bristol at 6.24pm). On the branch, `?mock=A` or `?mock=B` in the address turns
   them on; without it the page is unchanged.
   - **A:** the platform badges on the board are buttons; tapping one opens the directions under
-    that train. A line "Tap a platform for directions." (John) sits above the board. **John chose A** (November 24th 2026).
+    that train. A line "Tap a platform for a rough location guide." (John) sits above the board. **John chose A** (November 24th 2026).
   - **B:** under the board, "How do I get to my platform?" and a button for each platform on it.
 
 Checked: `tsc -b`, lint, build; both mock-ups at 1200px light and 390px with touch, light and dark:
@@ -27,8 +27,9 @@ General rules, so they apply at every station (counted over all 1,914 stations, 
    and 15 now read like 8 to 13): 149 answers at 68 stations.
 3. **Entrances with no way stored added**, and **"cross the bridge and go down by platform 7, then
    walk to platform 4"** where the bridge's far end comes down on the level with the platform but on
-   another island (from `platform-links.json`). New lines at 85 stations; the walk itself only at
-   seven: Reading, Blackfriars, Hither Green, Lewes, Preston, Shipley and Stirling (to check).
+   another island (from `platform-links.json`). New lines at 85 stations. The walk itself only at
+   stations whose maps were read by eye (now Reading and Preston): John couldn't check the five
+   map-data stations it also reached (Blackfriars, Hither Green, Lewes, Shipley, Stirling).
 4. **"Go up to the bridge and come down on platform 15A"** where the bridge's stair is on that very
    platform (184 answers).
 
@@ -36,34 +37,40 @@ One exception, in `src/data/to-platform.json`: Reading 4 to 7 name only the sout
 Hill (the table has Forbury Road and Apex Plaza too). Question for John: are those two real entrances?
 If not, they come out of the exits table, which mends the Exits section too.
 
-## Still to check (illustration only: from the table, not checked at the stations)
+## John's answers (November 24th 2026)
 
-1. **Paddington A and B:** "the way in leads to platform A"; it should be "go down" (John's Exits wording).
-2. **Twyford 5:** "right by the entrance between platforms 4 and 5 and the entrance by platform 4".
-3. **Bath Spa 1:** its own entrance and Railway Place: one entrance or two?
-4. **Redhill 3:** the footbridge from Noke Drive; subways everywhere else.
-5. **The seven "walk" stations** above.
-6. **No steps or lifts**, as for Exits.
+- **Reading:** a corrected reading of the station in `design/platform-links-trial/exits-overrides.json`
+  (the main Station Hill entrance by 7 and 1 to 3; Station Road (Edward VII) by 4 to 6, the map's
+  "Forbury Road"; Apex Plaza an exit only, round the concourse; the north exit off the bridge), so
+  the Exits section changes too. Everything Trainchecker says about Reading, numbered, with the
+  questions still open: `reading.md` (`reading-list.ts` makes it).
+- **Paddington A and B:** "go down to platform A" (`to-platform.json`, `dir`).
+- **Twyford:** platform 5 names only the entrance between 4 and 5; the unnamed one by 4 is "the town
+  side entrance" (draft name).
+- **Bath Spa:** the two entrances on platform 1 are "the rear entrances near the car park". The map
+  also had Railway Place on the level with platform 2; left out there (for John to confirm).
+- **Redhill:** the footbridge from Noke Drive is real.
+- **The walk rule:** only at stations read from their maps (above).
 
 ## The trial
 
 ## Reading
 
-- **Platform 1:** Platform 1 is right by the town centre and Station Hill. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15, cross the bridge and go down by platform 7, then walk to platform 1.
-- **Platform 2:** Platform 2 is right by the town centre and Station Hill. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15, cross the bridge and go down by platform 7, then walk to platform 2.
-- **Platform 3:** Platform 3 is right by the town centre and Station Hill. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 3.
-- **Platform 4:** Platform 4 is right by the south entrance on Station Hill. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15, cross the bridge and go down by platform 7, then walk to platform 4.
-- **Platform 5:** Platform 5 is right by the south entrance on Station Hill. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15, cross the bridge and go down by platform 7, then walk to platform 5.
-- **Platform 6:** Platform 6 is right by the south entrance on Station Hill. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15, cross the bridge and go down by platform 7, then walk to platform 6.
-- **Platform 7:** Platform 7 is right by the south entrance on Station Hill. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 7.
-- **Platform 8:** From the town centre and Station Hill, go up to the bridge by platform 7 and cross to platform 8. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 8.
-- **Platform 9:** From the town centre and Station Hill, go up to the bridge by platform 7 and cross to platform 9. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 9.
-- **Platform 10:** From the town centre and Station Hill, go up to the bridge by platform 7 and cross to platform 10. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 10.
-- **Platform 11:** From the town centre and Station Hill, go up to the bridge by platform 7 and cross to platform 11. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 11.
-- **Platform 12:** From the town centre and Station Hill, go up to the bridge by platform 7 and cross to platform 12. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 12.
-- **Platform 13:** From the town centre and Station Hill, go up to the bridge by platform 7 and cross to platform 13. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 13.
-- **Platform 14:** From the town centre and Station Hill, go up to the bridge by platform 7 and cross to platform 14. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 14.
-- **Platform 15:** From the town centre and Station Hill, go up to the bridge by platform 7 and cross to platform 15. From the north entrance by the car park on the Caversham side, go up to the bridge and come down on platform 15.
+- **Platform 1:** Platform 1 is right by the main Station Hill entrance on the town centre side. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15, cross the bridge and go down by platform 7, then walk to platform 1.
+- **Platform 2:** Platform 2 is right by the main Station Hill entrance on the town centre side. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15, cross the bridge and go down by platform 7, then walk to platform 2.
+- **Platform 3:** Platform 3 is right by the main Station Hill entrance on the town centre side. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 3.
+- **Platform 4:** Platform 4 is right by the Station Road (Edward VII) entrance. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15, cross the bridge and go down by platform 7, then walk to platform 4.
+- **Platform 5:** Platform 5 is right by the Station Road (Edward VII) entrance. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15, cross the bridge and go down by platform 7, then walk to platform 5.
+- **Platform 6:** Platform 6 is right by the Station Road (Edward VII) entrance. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15, cross the bridge and go down by platform 7, then walk to platform 6.
+- **Platform 7:** Platform 7 is right by the main Station Hill entrance on the town centre side. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 7.
+- **Platform 8:** From the main Station Hill entrance on the town centre side, go up to the bridge by platform 7 and cross to platform 8. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 8.
+- **Platform 9:** From the main Station Hill entrance on the town centre side, go up to the bridge by platform 7 and cross to platform 9. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 9.
+- **Platform 10:** From the main Station Hill entrance on the town centre side, go up to the bridge by platform 7 and cross to platform 10. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 10.
+- **Platform 11:** From the main Station Hill entrance on the town centre side, go up to the bridge by platform 7 and cross to platform 11. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 11.
+- **Platform 12:** From the main Station Hill entrance on the town centre side, go up to the bridge by platform 7 and cross to platform 12. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 12.
+- **Platform 13:** From the main Station Hill entrance on the town centre side, go up to the bridge by platform 7 and cross to platform 13. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 13.
+- **Platform 14:** From the main Station Hill entrance on the town centre side, go up to the bridge by platform 7 and cross to platform 14. From the north entrance by the car park on the Caversham side, go up to the bridge by platform 15 and cross to platform 14.
+- **Platform 15:** From the main Station Hill entrance on the town centre side, go up to the bridge by platform 7 and cross to platform 15. From the north entrance by the car park on the Caversham side, go up to the bridge and come down on platform 15.
 
 ## London Paddington
 
@@ -80,16 +87,16 @@ If not, they come out of the exits table, which mends the Exits section too.
 - **Platform 11:** From the Praed Street, Sheldon Square or Eastbourne Terrace entrance, cross the concourse to platform 11.
 - **Platform 12:** From the Praed Street, Sheldon Square or Eastbourne Terrace entrance, cross the concourse to platform 12.
 - **Platform 14:** From the Praed Street, Sheldon Square or Eastbourne Terrace entrance, cross the concourse to platform 14.
-- **Platform A:** From the Eastbourne Terrace entrance (Elizabeth line), the way in leads to platform A.
-- **Platform B:** From the Eastbourne Terrace entrance (Elizabeth line), the way in leads to platform B.
+- **Platform A:** From the Eastbourne Terrace entrance (Elizabeth line), go down to platform A.
+- **Platform B:** From the Eastbourne Terrace entrance (Elizabeth line), go down to platform B.
 
 ## Twyford
 
-- **Platform 1:** Platform 1 is right by the Hurst Road entrance. From the entrance by platform 4, go up to the footbridge and cross to platform 1.
-- **Platform 2:** From the Hurst Road entrance, go up to the footbridge by platform 1 and cross to platform 2. From the entrance by platform 4, go up to the footbridge and cross to platform 2.
-- **Platform 3:** Platform 3 is right by the long-term car park. From the Hurst Road entrance, go up to the footbridge by platform 1 and cross to platform 3. From the entrance by platform 4, go up to the footbridge and cross to platform 3.
-- **Platform 4:** Platform 4 has its own entrance, and is right by the entrance between platforms 4 and 5. From the Hurst Road entrance, go up to the footbridge by platform 1 and cross to platform 4.
-- **Platform 5:** Platform 5 is right by the entrance between platforms 4 and 5 and the entrance by platform 4. From the Hurst Road entrance, go up to the footbridge by platform 1 and cross to platform 5.
+- **Platform 1:** Platform 1 is right by the Hurst Road entrance. From the town side entrance, go up to the footbridge by platform 4 and cross to platform 1.
+- **Platform 2:** From the Hurst Road entrance, go up to the footbridge by platform 1 and cross to platform 2. From the town side entrance, go up to the footbridge by platform 4 and cross to platform 2.
+- **Platform 3:** Platform 3 is right by the long-term car park. From the Hurst Road entrance, go up to the footbridge by platform 1 and cross to platform 3. From the town side entrance, go up to the footbridge by platform 4 and cross to platform 3.
+- **Platform 4:** Platform 4 is right by the entrance between platforms 4 and 5 and the town side entrance. From the Hurst Road entrance, go up to the footbridge by platform 1 and cross to platform 4.
+- **Platform 5:** Platform 5 is right by the entrance between platforms 4 and 5. From the Hurst Road entrance, go up to the footbridge by platform 1 and cross to platform 5.
 
 ## Oxford
 
@@ -123,7 +130,7 @@ If not, they come out of the exits table, which mends the Exits section too.
 
 ## Redhill
 
-- **Platform 0:** Platform 0 is right by the Ladbroke Grove and town centre entrances. From the Noke Drive or St Anne's Drive entrance, go down to the subway by platform 3 and come up on platform 0.
+- **Platform 0:** Platform 0 is right by the Ladbroke Grove and town centre entrances. From the Noke Drive entrance, go down to the subway by platform 3 and come up on platform 0.
 - **Platform 1:** From the town centre entrance, go down to the subway by platform 0 and come up on platform 1. From the Noke Drive or St Anne's Drive entrance, go down to the subway by platform 3 and come up on platform 1.
 - **Platform 2:** From the town centre entrance, go down to the subway by platform 0 and come up on platform 2. From the Noke Drive or St Anne's Drive entrance, go down to the subway by platform 3 and come up on platform 2.
 - **Platform 3:** Platform 3 is right by the St Anne's Drive entrance. From the Noke Drive entrance, go up to the footbridge and cross to platform 3. From the town centre entrance, go down to the subway by platform 0 and come up on platform 3.
@@ -146,8 +153,8 @@ If not, they come out of the exits table, which mends the Exits section too.
 
 ## Bath Spa
 
-- **Platform 1:** Platform 1 has its own entrance, and is right by the Railway Place entrance. From the bus station entrance, go down to the subway by platform 2 and come up on platform 1.
-- **Platform 2:** Platform 2 is right by the Railway Place and bus station entrances. From the entrance by platform 1, go down to the subway and come up on platform 2.
+- **Platform 1:** Platform 1 is right by the rear entrances near the car park. From the bus station entrance, go down to the subway by platform 2 and come up on platform 1.
+- **Platform 2:** Platform 2 is right by the bus station entrance. From the rear entrances near the car park, go down to the subway by platform 1 and come up on platform 2.
 
 ## Clapham Junction
 

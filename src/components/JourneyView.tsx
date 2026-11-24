@@ -158,7 +158,7 @@ function PlatformTrains({ a }: { a: Analysis }) {
       <summary>{p.fold} <Icon name="down" /></summary>
       {pic.before && <p className="tbefore">{pic.before}</p>}
       {pic.words.text.startsWith('The next ten') && <p className="board-kick">The next ten trains</p>}
-      {MOCK === 'A' && dirs && <p className="ptaphint">Tap a platform for directions.</p>}
+      {MOCK === 'A' && dirs && <p className="ptaphint">Tap a platform for a rough location guide.</p>}
       <Board p={pic} dirs={dirs} />
       {p.after && <p className="tafter">{p.after}</p>}
       {MOCK === 'B' && dirs && <AskPlatform pic={pic} dirs={dirs} />}

@@ -38,14 +38,18 @@ const trainsWord = (k: number) => (k === 1 ? 'train' : 'trains')
 export function firstPanel(a: Analysis, s = split(a)) {
   const f = s.first
   const k = s.running
-  const heading = s.stretched ? (k === 1 ? 'The next train' : `The next ${num(k)} trains`) : 'The next hour'
+  // The heading counts every train in the panel, cancelled ones too, so the sentence under it adds up
+  // (Peterborough to Kings Cross: three running and one cancelled is "The next four trains").
+  const all = f.ahead.length
+  const heading = s.stretched ? (all === 1 ? 'The next train' : `The next ${num(all)} trains`) : 'The next hour'
   const n = f.ahead.length
   const open = s.stretched
     ? (s.inHour === 0 ? `There are no trains in the next hour, so here ${k === 1 ? "'s the next one" : `are the next ${num(k)}`}.`
       : `${s.inHour === 1 ? "There's only one train" : `There are only ${num(s.inHour)} trains`} in the next hour, so here are the next ${num(k)}.`)
     : `There are ${num(n)} trains in the next hour.`
-  const nf = nextFour(f, { first: open })
-  return { heading, lines: nf ? nf.lines : [open], picture: trainsPicture(f), cancelled: cancelledLine(f) }
+  // Stretched: no opening sentence, the heading says it (John, November 24th 2026).
+  const nf = nextFour(f, { first: s.stretched ? null : open })
+  return { heading, lines: nf ? nf.lines : s.stretched ? [] : [open], picture: trainsPicture(f), cancelled: cancelledLine(f) }
 }
 
 /** "The 7.15pm is cancelled, because of a fault on this train." For the fold, after the board. */

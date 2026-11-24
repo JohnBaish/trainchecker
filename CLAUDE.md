@@ -107,6 +107,11 @@ given its own branch). Before committing there, run
   train an hour and about five slower ones an hour"). Done in the second panel's short wording: the rate once at the end
   ("per hour", John's word), "about" once at the start when any figure is rounded; "slower" kept (agreed November 18th).
   Checks unchanged; `tsc -b`.
+- **John:** "slower" right; "per hour" deliberate, for this panel only. The stretched first panel's opening sentence
+  ("There are only two trains in the next hour, so here are the next three.") dropped: the heading says it. Found on live
+  trains (Peterborough to Kings Cross): three running and one cancelled under "The next three trains" read "One is
+  cancelled … and two … The other one …", four trains; the heading now counts the cancelled one too ("The next four
+  trains"). Checks unchanged; `tsc -b`, lint.
 
 ### November 24th 2026: "How do I get to my platform?", tapping a platform for a rough location guide; live (branch `claude/cool-sagan-k0e2ao`, merged the same day; Claude Code)
 

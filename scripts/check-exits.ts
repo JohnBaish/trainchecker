@@ -130,5 +130,11 @@ for (const [c, e] of Object.entries(T)) for (const p of Object.keys(e.p)) {
 }
 eq('no answer names the same exit or entrance twice', repeats, [])
 
+// Lost routes restored from the map readings; unnamed exits by no platform named by the nearest platform on foot.
+eq('New Street: Navigation Street by the footbridge', T.BHM.p['1A'].some((w) => T.BHM.x[w[0]][0] === 'Navigation Street' && w[1] === 'b'), true)
+eq('Liverpool Street: Old Broad Street and Sun Street off the concourse', ['Old Broad Street', 'Sun Street'].every((n) => T.LST.p['1'].some((w) => T.LST.x[w[0]][0] === n)), true)
+eq('Ashford International: "the entrance nearest platform 3", not "the other entrance"', toPlatform(T.AFK, '4')!.join(' '), 'From the entrance nearest platform 3, go up to the footbridge and cross to platform 4.')
+eq('no "the other entrance" anywhere', Object.entries(T).filter(([, e]) => Object.keys(e.p).some((p) => (toPlatform(e, p) ?? []).join(' ').includes('the other entrance'))).map(([c]) => c), [])
+
 console.log(`check-exits: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

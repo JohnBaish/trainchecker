@@ -24,6 +24,7 @@ function baseName(e: StationExits, i: number): string {
     const twins = e.x.filter((y) => !y[0] && y[2]).length > 1
     if (building && !(twins && (by[0] ?? near))) return 'the entrance by the station building'
     const p = by[0] ?? near
+    if (!p && e.nw?.[String(i)]) return `the entrance nearest platform ${e.nw[String(i)]}`
     return p ? `the entrance by platform ${p}` : 'the other entrance'
   }
   // Names from the station maps or John: "the town centre exit" → "the town centre entrance";
@@ -41,7 +42,7 @@ function baseName(e: StationExits, i: number): string {
 /** "the Praed Street and Eastbourne Terrace entrances", "the Praed Street or Eastbourne Terrace
  *  entrance"; names that don't fit the pattern are listed in full. */
 function joinNames(names: string[], word: 'and' | 'or'): string {
-  const plain = names.length > 1 && names.every((s) => /^the [^(]* entrance$/.test(s) && !/ (by|between|on|near) /.test(s))
+  const plain = names.length > 1 && names.every((s) => /^the .* entrance$/.test(s) && !/ (by|between|on|near|at) /.test(s))
   if (!plain) return and(names, word)
   return `the ${and(names.map((s) => s.slice(4, -9)), word)} ${word === 'and' ? 'entrances' : 'entrance'}`
 }

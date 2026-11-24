@@ -26,10 +26,11 @@ export type ExitRow = [name: string | null, by: string[], building: 0 | 1, near:
 export type Way = [exit: number, via: string, down: string | null]
 /** w: John's word for the station's footbridge ("bridge" at Reading, which has shops on it);
  *  here: for an exit given a descriptive name, how to say it's right there (exit number → words). */
-export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string>; lc?: 1; say?: Record<string, string>; other?: 1; eo?: number[]; sl?: string }
+export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string>; lc?: 1; say?: Record<string, string>; other?: 1; eo?: number[]; sl?: string; nw?: Record<string, string> }
 // say: John's own words for a platform, after "Your train is due into platform 1." (Ivybridge).
 // other: by an exit on the level, also say the other one over the bridge or through the subway
 // (Southampton Central: "…is right there, or you can go over the footbridge for the town centre exit").
+// nw: for an unnamed exit by no platform, the platform it's nearest on foot ("the exit nearest platform 2").
 // sl: John's own sentence for the station as a whole (Reading).
 // eo: exits people come out of but wouldn't go in by (Reading's Apex Plaza); never offered as a way in.
 // lc: John has confirmed the exits are either side of a public level crossing (Midgham).
@@ -134,6 +135,7 @@ const target = (e: StationExits, i: number, shown?: Set<number>) => {
     return toName(x[0], !e.m && !e.here) + tag
   }
   const p = x[1][0] ?? x[3]
+  if (e.x.length > 1 && !p && e.nw?.[String(i)]) return `the exit nearest platform ${e.nw[String(i)]}`
   return e.x.length === 1 || !p ? 'the exit' : `the exit by platform ${p}`
 }
 const hoursLine = (e: StationExits, ways: Way[]) => {

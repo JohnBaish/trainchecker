@@ -55,7 +55,16 @@ def from_osm(r, labels=None):
     xs = [xs[i] for i in used]
     p = {pl: [[new[i], v, d] for i, v, d in rs if i in new] for pl, rs in p.items()}
     kind = 'by' if any(e[1] for e in xs) else 'mixed'
-    return {'x': xs, 'p': p, 'k': kind}
+    out = {'x': xs, 'p': p, 'k': kind}
+    # An unnamed exit by no platform: the platform it's nearest on foot, so it can be called "the entrance
+    # nearest platform 2" rather than "the other entrance" (John, November 24th 2026).
+    nw = {}
+    for old_i, k in new.items():
+        if xs[k][0] is None and not xs[k][1] and old_i in near:
+            nw[str(k)] = min(near[old_i].items(), key=lambda kv: (kv[1], num(kv[0])))[0]
+    if nw:
+        out['nw'] = nw
+    return out
 
 
 def downs(hand, osm, groups):
@@ -112,8 +121,9 @@ def merge_twins(e):
             if r[0] not in seen:
                 seen.add(r[0]); new.append(r)
         e['p'][pl] = new
-    if e.get('h'):
-        e['h'] = {str(into[int(k)]): v for k, v in e['h'].items()}
+    for key in ('h', 'nw'):
+        if e.get(key):
+            e[key] = {str(into[int(k)]): v for k, v in e[key].items()}
 
 
 def main():
@@ -189,6 +199,13 @@ def main():
         # Exits people come out of but wouldn't go in by (Reading's Apex Plaza): never offered as a way in.
         for name in o.get('exit_only', []):
             e.setdefault('eo', []).append(names.index(name))
+        # Routes the strict reading lost, from the by-eye readings' notes (maps-read-*.json): an exit reached the
+        # same way from every platform (New Street's Navigation Street footbridge; Liverpool Street's balcony exits).
+        for name, via in o.get('add_routes', {}).items():
+            k = names.index(name)
+            for rs in e['p'].values():
+                if not any(r[0] == k for r in rs):
+                    rs.append([k, via, None])
         if o.get('no_routes'):
             e['p'] = {}
         for bad in o.get('no_exit', []):

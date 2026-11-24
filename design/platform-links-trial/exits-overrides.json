@@ -323,5 +323,19 @@
       "Guildford Park Road": "the Guildford Park Road exit at the back"
     },
     "line": "At Guildford, the main town centre exit is by platforms 1 and 2, and the Guildford Park Road exit at the back is over the footbridge."
+  },
+  "BHM": {
+    "add_routes": {
+      "Navigation Street": "b"
+    },
+    "_who": "Claude, November 24th 2026, from the map reading (maps-read): \"via the Navigation Street footbridge, which has stairs down to the platforms\", from every platform"
+  },
+  "LST": {
+    "add_routes": {
+      "Old Broad Street": "c",
+      "Sun Street": "c",
+      "Bishopsgate (West)": "c"
+    },
+    "_who": "Claude, November 24th 2026, from the map reading: \"concourse, then up\" from every platform, as Bishopsgate (West); Bishopsgate (West) also from every platform (it was missing from some)"
   }
 }

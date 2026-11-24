@@ -138,6 +138,16 @@ given its own branch). Before committing there, run
   footbridge to platform 1."; "…there's no way through the station: go out and round by the road…"; "…platform 4 is
   just across the platform."); off (`fill` false) until John agrees; never at his corrected stations. 11 numbered
   samples in `design/platform-directions/fill-samples.md` (`fill-samples.ts`): about 840 answers would change.
+- **(3):** the map readings' notes (`maps-read-*.json`) had routes the strict reading lost: New Street's Navigation
+  Street (footbridge, every platform) and Liverpool Street's Old Broad Street, Sun Street and Bishopsgate (West)
+  (concourse, every platform), now `add_routes` in `exits-overrides.json` (new). London Bridge Street, Nottingham's
+  step-free Station Street and St Pancras's Eurostar taxi drop-off have no route in the readings: the maps needed again.
+  Names with brackets now join ("the Broadgate, … Bishopsgate (East) … entrance").
+- **(4):** `from_osm()` records `nw`, an unnamed exit-by-no-platform's nearest platform on foot (90 stations); "the
+  entrance nearest platform 3" / "the exit nearest platform 3" instead of "the other entrance". Found: 42 answers at
+  39 stations send people over a bridge or through a subway to an entrance by or nearest their own platform (29 were
+  already there; Aberdare, Ashford International): probably an entrance across a road, for John. Checks 264 + 57 + 79
+  + 40 + 76 + 36, `tsc -b`, lint, build; the Reading list unchanged. Straight to `main`.
 
 ### November 24th 2026: the Share words, verdict first; live (`main`; Claude Code)
 

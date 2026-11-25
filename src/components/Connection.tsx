@@ -2,7 +2,7 @@
 // heading, a line, and a fold ("Check trains leaving B"); inside it, step by step: where you're going next from B, which train from A you're on, and the answer
 // in a sentence, with the other trains you could change onto. A prototype: the headings, questions
 // and messages here are Claude's drafts; the answer's wording is in lib/connection.ts.
-import { useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { clock, diff, type Analysis } from '../lib/analyse.ts'
 import { answer, chipLabel, choices, firstChoice, mineOf, speeds, whichTrain, type Mine } from '../lib/connection.ts'
 import { fetchConnect, fetchPlaces } from '../lib/load.ts'
@@ -13,6 +13,7 @@ import type { Connect } from '../../api/connect.ts'
 import { StationBox } from './Chooser.tsx'
 import { Icon } from './Icon.tsx'
 import type { LinksTable } from '../lib/platformLinks.ts'
+import { rowEnd, useGridCols } from '../lib/useGridCols.ts'
 
 type Result = { s: 'idle' } | { s: 'ok'; d: Connect } | { s: 'failed' }
 const EDGE = { fine: 'good', tight: 'mixed', unlikely: 'prepared', missed: 'prepared', through: 'good', none: 'none', unknown: 'none' } as const
@@ -58,6 +59,9 @@ export function Connection({ a }: { a: Analysis }) {
     // a.taken: asked again with each "Check again".
   }, [dest, mineId, arr, a.toCrs, a.fromCrs, a.taken])
 
+  // How many trains sit side by side in the list (before any early return: it's a hook).
+  const [grid, cols] = useGridCols([open, dest, a])
+
   if (!mines.length) return null
 
   const go = () => {
@@ -90,34 +94,12 @@ export function Connection({ a }: { a: Analysis }) {
   }
   const touch = isTouch()
 
-  return (
-    <section className="card sec block connect">
-      <h3>Connections</h3>
-      <details className="advice connect-fold" onToggle={(e) => setOpen(e.currentTarget.open)}>
-      <summary>Check trains leaving {a.to} <Icon name="down" /></summary>
-      <div className="cstep">
-        <p className="cq">Where are you going next?</p>
-        <div className="cpick">
-          <StationBox label={`From ${a.to} to`} value={text} onChange={(v) => { setText(v); setError(null) }} error={error} go={go} prefer={places} />
-          <button type="button" className="btn btn-primary" onClick={go}>Next</button>
-        </div>
-      </div>
-      {dest && (
-        <div className="cstep">
-          <p className="cq">{whichTrain(a.now, mines.map(({ s }) => s))}</p>
-          <div className="cmines" role="group" aria-label={`Trains from ${a.from}`}>
-            {mines.map(({ s, m }) => (
-              <button key={m.id} type="button" className={`cmine${m.id === mineId ? ' on' : ''}`} aria-pressed={m.id === mineId}
-                onClick={() => { if (m.id !== mineId) { setResult({ s: 'idle' }); setChosen(null) } setMineId(m.id) }}>
-                <b>{t12(s.std)}</b> from {a.from}
-                <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : m.lateBy >= 1 ? `now expected into ${a.to} at ${t12(m.exp)}` : `due into ${a.to} at ${t12(m.exp)}`}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-      {dest && mineId && result.s === 'idle' && <p className="muted" role="status"><span className="spinner" aria-hidden="true"></span>Asking National Rail about trains to {nameOf(dest)}…</p>}
-      {dest && mineId && result.s === 'failed' && <p role="alert">Sorry, National Rail’s live departures couldn’t be reached just now. Please try again in a minute.</p>}
+  // The answer straight under the train you tapped, as in Exits (John, November 25th 2026); on a
+  // computer, under the end of that row.
+  const reply = !dest || !mineId ? null : (
+    <div className="tap-reply">
+      {result.s === 'idle' && <p className="muted" role="status"><span className="spinner" aria-hidden="true"></span>Asking National Rail about trains to {nameOf(dest)}…</p>}
+      {result.s === 'failed' && <p role="alert">Sorry, National Rail’s live departures couldn’t be reached just now. Please try again in a minute.</p>}
       {ans && (
         <div className="cstep" aria-live="polite">
           <div className={`card verdict state-${EDGE[ans.kind]} canswer`}><p>{ans.text}</p></div>
@@ -134,6 +116,39 @@ export function Connection({ a }: { a: Analysis }) {
           <div className="share-row in-fold">
             <button type="button" className="btn btn-secondary" onClick={share}><Icon name={touch ? 'share' : 'copy'} /> {touch ? 'Share this answer' : 'Copy this answer'}</button>
             <span className="share-status" role="status">{shared}</span>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+  const after = rowEnd(mines.findIndex(({ m }) => m.id === mineId), cols, mines.length)
+
+  return (
+    <section className="card sec block connect">
+      <h3>Connections</h3>
+      <details className="advice connect-fold" onToggle={(e) => setOpen(e.currentTarget.open)}>
+      <summary>Check trains leaving {a.to} <Icon name="down" /></summary>
+      <div className="cstep">
+        <p className="cq">Where are you going next?</p>
+        <div className="cpick">
+          <StationBox label={`From ${a.to} to`} value={text} onChange={(v) => { setText(v); setError(null) }} error={error} go={go} prefer={places} />
+          <button type="button" className="btn btn-primary" onClick={go}>Next</button>
+        </div>
+      </div>
+      {dest && (
+        <div className="cstep">
+          <p className="cq">{whichTrain(a.now, mines.map(({ s }) => s))}</p>
+          <div className="cmines" ref={grid} role="group" aria-label={`Trains from ${a.from}`}>
+            {mines.map(({ s, m }, i) => (
+              <Fragment key={m.id}>
+                <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}`} aria-pressed={m.id === mineId}
+                  onClick={() => { if (m.id !== mineId) { setResult({ s: 'idle' }); setChosen(null) } setMineId(m.id) }}>
+                  <b>{t12(s.std)}</b> from {a.from}
+                  <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : m.lateBy >= 1 ? `now expected into ${a.to} at ${t12(m.exp)}` : `due into ${a.to} at ${t12(m.exp)}`}</span>
+                </button>
+                {i === after && reply}
+              </Fragment>
+            ))}
           </div>
         </div>
       )}

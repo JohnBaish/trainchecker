@@ -21,9 +21,9 @@ await p.waitForSelector('section.exits button.cmine')
 const btns = p.locator('section.exits button.cmine')
 const tapped = btns.nth(+n - 1)
 if (touch) await tapped.tap(); else await tapped.click()
-const waitBox = await p.locator('.exit-reply').boundingBox()   // while asking
+const waitBox = await p.locator('.tap-reply').boundingBox()   // while asking
 await p.waitForSelector('.exit-answer', { timeout: 20000 })
-const ans = await p.locator('.exit-reply').boundingBox()
+const ans = await p.locator('.tap-reply').boundingBox()
 const tb = await tapped.boundingBox()
 const all = await Promise.all((await btns.all()).map((x) => x.boundingBox()))
 const below = all.filter((x) => x.y > ans.y)

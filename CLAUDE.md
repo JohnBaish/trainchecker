@@ -106,8 +106,15 @@ given its own branch). Before committing there, run
   Checked (`design/previews/arrival-board/exits-under.mjs`, live arrivals, Reading to Paddington): 390px
   dark, third train tapped, answer 9px under it with five trains below; 1200px light, three columns, second
   train tapped, answer under that row; the last train tapped, answer at the end; no errors, no sideways
-  scroll. `tsc -b`, lint, build. Connections has the same layout (its answer after the list): not changed,
-  asked John.
+  scroll. `tsc -b`, lint, build.
+- **John:** Connections the same way. Its answer (with the "Asking…" and error lines, the other trains
+  to ask about and Share) now goes under the train you tapped, or under that row on a computer. The
+  column count is shared: `src/lib/useGridCols.ts` (`useGridCols()`, `rowEnd()`); the class is now
+  `.tap-reply` for both. Checked (`connect-under.mjs`; ILLUSTRATION ONLY: Twyford to Reading for Oxford,
+  the onward trains made up from Oxford's live arrival board, as this session can't ask the departure
+  board): 390px dark and light, 1200px light (three columns): answer 9px under the tapped train or row,
+  the rest of the list below it; Exits re-run unchanged; all checks pass, `tsc -b`, lint, build; no
+  errors, no sideways scroll.
 
 ### November 25th 2026: the Live Arrival Board works (notes only, straight to `main`; Claude Code)
 

@@ -38,14 +38,14 @@
   }
  },
  "PUT": {
-  "_who": "John, November 25th 2026: one entrance, on Putney High Street; down from the footbridge to platforms 1 to 4; 2 and 3 an island. Sentences: Claude's drafts, for John to check.",
+  "_who": "John, November 25th 2026: one entrance, on Putney High Street; down from the footbridge to platforms 1 to 4. Sentences: Claude's drafts, checked by John.",
   "names": {
    "0": "the entrance on Putney High Street"
   },
   "say": {
    "1": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 1.",
-   "2": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to the island platform, for platforms 2 and 3.",
-   "3": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to the island platform, for platforms 2 and 3.",
+   "2": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 2.",
+   "3": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 3.",
    "4": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 4."
   }
  }

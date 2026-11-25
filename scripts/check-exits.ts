@@ -152,7 +152,8 @@ eq('Ashford International 3: across the line', trainLine(T.AFK, '3', false), 'Yo
 // Putney (John, November 25th 2026): one entrance, on Putney High Street; his facts, Claude's drafts.
 eq('Putney: one exit', T.PUT.x.map((x) => x[0]), ['Putney High Street'])
 eq('Putney: the station', stationLine('Putney', T.PUT), 'At Putney, there’s one way in and out, on Putney High Street, at the top of the stairs from the platforms.')
-eq('Putney 2: the way out', trainLine(T.PUT, '2', false), 'Your train is due into platform 2. Go up the stairs from the island platform to the footbridge, and along to the exit on Putney High Street.')
+eq('Putney 3: the location guide, no "island platform"', toPlatform(T.PUT, '3', undefined, (await import('../src/data/to-platform.json', { with: { type: 'json' } })).default.PUT as never)!.join(' '), 'From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 3.')
+eq('Putney 2: the way out', trainLine(T.PUT, '2', false), 'Your train is due into platform 2. Go up the stairs to the footbridge, and along to the exit on Putney High Street.')
 
 console.log(`check-exits: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

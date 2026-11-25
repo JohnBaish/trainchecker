@@ -95,6 +95,9 @@ given its own branch). Before committing there, run
   after, every changed answer). **Checked:** all checks (check-exits 83: no entrance named after its own
   platform, the six pairs listed, Aberdare, Ashford, Putney; undoing the rule made two fail), `tsc -b`, lint,
   build. Not checked in a browser.
+- **John:** "across the line" is right. "Island platform" was background, not for the wording: taken out of
+  Putney's platforms 2 and 3 (they now read as 1 and 4); the `say` option stays for the future. Checks:
+  check-exits 84 (new: Putney 3's guide has no "island platform"). Waiting for John on 1.1 to 1.5.
 
 ### November 25th 2026: the arrival board for Arrivals, Exits and Connections; live (branch `claude/clever-wozniak-j7ic52`, merged the same day; Claude Code)
 

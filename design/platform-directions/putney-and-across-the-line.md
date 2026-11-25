@@ -4,7 +4,7 @@ Drafts by Claude, for John to check. Nothing is live.
 
 ## 1. Putney
 
-John: one entrance, on Putney High Street; it leads to the footbridge, and you go down from there to platforms 1 to 4; 2 and 3 are an island; the map's Disraeli Road entrance isn't there. The sentences below are Claude's drafts from that.
+John: one entrance, on Putney High Street; it leads to the footbridge, and you go down from there to platforms 1 to 4; 2 and 3 are an island; the map's Disraeli Road entrance isn't there. The sentences below are Claude's drafts from that. John, November 25th 2026: "island platform" was background (for changing trains), not for the wording, so it's out; "across the line" agreed.
 
 1.1. The station's sentence (Exits)
    - was: At Putney, there’s an exit by platform 2.
@@ -17,16 +17,16 @@ John: one entrance, on Putney High Street; it leads to the footbridge, and you g
    - now: Go up the stairs to the footbridge, and along to the exit on Putney High Street.
 1.4. Platform 2, the location guide (tap the platform)
    - was: Platform 2 is right by the Disraeli Road entrance. From the entrance nearest platform 2, the way in leads to platform 2.
-   - now: From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to the island platform, for platforms 2 and 3.
+   - now: From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 2.
 1.5. Platform 2, Exits (after "Your train is due into platform 2.")
    - was: The exit on Disraeli Road is right there.
-   - now: Go up the stairs from the island platform to the footbridge, and along to the exit on Putney High Street.
+   - now: Go up the stairs to the footbridge, and along to the exit on Putney High Street.
 1.6. Platform 3, the location guide (tap the platform)
    - was: Platform 3 is right by the Disraeli Road entrance. From the entrance nearest platform 2, the way in leads to platform 3.
-   - now: From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to the island platform, for platforms 2 and 3.
+   - now: From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 3.
 1.7. Platform 3, Exits (after "Your train is due into platform 3.")
    - was: The exit on Disraeli Road is right there.
-   - now: Go up the stairs from the island platform to the footbridge, and along to the exit on Putney High Street.
+   - now: Go up the stairs to the footbridge, and along to the exit on Putney High Street.
 1.8. Platform 4, the location guide (tap the platform)
    - was: From the Disraeli Road entrance, or from the entrance nearest platform 2, the way in leads to platform 4.
    - now: From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 4.

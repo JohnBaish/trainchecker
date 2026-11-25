@@ -351,7 +351,7 @@
   "_who": "Claude, November 24th 2026, from National Rail's St Pancras station map: the Eurostar taxi drop-off is off the lower-level arcade, beside the Midland Road exit"
  },
  "PUT": {
-  "_who": "John, November 25th 2026: one entrance, on Putney High Street; it leads to the footbridge, and you go down from there to platforms 1 to 4; 2 and 3 are an island; the map's Disraeli Road entrance isn't there. The sentences are Claude's drafts, for John to check.",
+  "_who": "John, November 25th 2026: one entrance, on Putney High Street; it leads to the footbridge, and you go down from there to platforms 1 to 4; 2 and 3 are an island (for Connections: just across the platform; not for the wording); the map's Disraeli Road entrance isn't there. The sentences are Claude's drafts, for John to check.",
   "reading": {
    "_why": "John, November 25th 2026 (above).",
    "exits": [
@@ -395,8 +395,8 @@
   "line": "At Putney, there’s one way in and out, on Putney High Street, at the top of the stairs from the platforms.",
   "say": {
    "1": "Go up the stairs to the footbridge, and along to the exit on Putney High Street.",
-   "2": "Go up the stairs from the island platform to the footbridge, and along to the exit on Putney High Street.",
-   "3": "Go up the stairs from the island platform to the footbridge, and along to the exit on Putney High Street.",
+   "2": "Go up the stairs to the footbridge, and along to the exit on Putney High Street.",
+   "3": "Go up the stairs to the footbridge, and along to the exit on Putney High Street.",
    "4": "Go up the stairs to the footbridge, and along to the exit on Putney High Street."
   }
  }

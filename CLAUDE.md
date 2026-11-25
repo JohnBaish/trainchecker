@@ -99,6 +99,15 @@ given its own branch). Before committing there, run
   14; the Share picture read back from the clipboard, fonts loaded (`design/previews/arrival-board/`).
 - **Not checked:** the whole page with both live boards together (needs the departure key here, or the
   preview), Connections in the browser, a real phone.
+- **John (the preview, a phone):** works with Twyford to Reading; but with many trains, Exits' answer
+  appeared below the whole list, out of sight. Now it's drawn straight under the train you tapped
+  (`.exit-reply` inside the list in `Exits.tsx`; the "Asking National Rail…" and error lines too); on a
+  computer, where the trains sit in columns (counted from the grid), under the end of that row, full width.
+  Checked (`design/previews/arrival-board/exits-under.mjs`, live arrivals, Reading to Paddington): 390px
+  dark, third train tapped, answer 9px under it with five trains below; 1200px light, three columns, second
+  train tapped, answer under that row; the last train tapped, answer at the end; no errors, no sideways
+  scroll. `tsc -b`, lint, build. Connections has the same layout (its answer after the list): not changed,
+  asked John.
 
 ### November 25th 2026: the Live Arrival Board works (notes only, straight to `main`; Claude Code)
 

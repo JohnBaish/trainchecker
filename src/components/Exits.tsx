@@ -1,7 +1,7 @@
 // "Station exits" (John, November 22nd 2026), under Arrivals: where B's ways out are, then "Which
 // train are you on?" and, for that train, the way out from the platform it comes into. Left off
 // where the exits aren't known. The wording is in lib/exits.ts.
-import { useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { diff, type Analysis } from '../lib/analyse.ts'
 import { mineOf, whichTrain } from '../lib/connection.ts'
 import { heading, stationLine, trainLine, type ExitsTable } from '../lib/exits.ts'
@@ -14,6 +14,19 @@ export function Exits({ a }: { a: Analysis }) {
   const [table, setTable] = useState<ExitsTable | null>(null)
   const [mineId, setMineId] = useState<string | null>(null)
   const [got, setGot] = useState<Got>({ s: 'idle' })
+  // How many trains sit side by side in the list (one on a phone).
+  const grid = useRef<HTMLDivElement>(null)
+  const [cols, setCols] = useState(1)
+  useLayoutEffect(() => {
+    const el = grid.current
+    if (!el) return
+    const measure = () => setCols(Math.max(1, getComputedStyle(el).gridTemplateColumns.split(' ').filter(Boolean).length))
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+    // The list appears once the exits table has loaded.
+  }, [table, a])
   useEffect(() => {
     let current = true
     import('../data/exits.json').then((m) => current && setTable(m.default as unknown as ExitsTable), () => {})
@@ -41,6 +54,18 @@ export function Exits({ a }: { a: Analysis }) {
   const answer = !pick ? null
     : e.k === 'concourse' ? trainLine(e, null, ends)
     : got.s === 'ok' ? trainLine(e, got.platform, ends) : null
+  // The answer straight under the train you tapped (John, November 25th 2026: with many trains it
+  // appeared below the whole list, out of sight on a phone). On a computer the trains sit in
+  // columns, so it goes under the end of that row, across the full width.
+  const reply = !pick ? null : (
+    <div className="exit-reply">
+      {got.s === 'idle' && e.k !== 'concourse' && <p className="muted" role="status"><span className="spinner" aria-hidden="true"></span>Asking National Rail which platform it’s coming into…</p>}
+      {got.s === 'failed' && <p role="alert">Sorry, National Rail’s live arrivals couldn’t be reached just now. Please try again in a minute.</p>}
+      {answer && <p className="exit-answer" aria-live="polite">{answer}</p>}
+    </div>
+  )
+  const picked = mines.findIndex(({ m }) => m.id === mineId)
+  const after = picked < 0 ? -1 : Math.min(mines.length, Math.ceil((picked + 1) / cols) * cols) - 1
   return (
     <section className="card sec block exits">
       <h3>{heading(a.to, e)}</h3>
@@ -48,20 +73,20 @@ export function Exits({ a }: { a: Analysis }) {
       {mines.length > 0 && e.k !== 'concourse' && (
         <div className="cstep">
           <p className="cq">{whichTrain(a.now, mines.map(({ s }) => s))}</p>
-          <div className="cmines" role="group" aria-label={`Trains from ${a.from}`}>
-            {mines.map(({ s, m }) => (
-              <button key={m.id} type="button" className={`cmine${m.id === mineId ? ' on' : ''}`} aria-pressed={m.id === mineId}
-                onClick={() => { if (m.id !== mineId) setGot({ s: 'idle' }); setMineId(m.id) }}>
-                <b>{t12(s.std)}</b> from {a.from}
-                <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : `due into ${a.to} at ${t12(m.exp)}`}</span>
-              </button>
+          <div className="cmines" ref={grid} role="group" aria-label={`Trains from ${a.from}`}>
+            {mines.map(({ s, m }, i) => (
+              <Fragment key={m.id}>
+                <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}`} aria-pressed={m.id === mineId}
+                  onClick={() => { if (m.id !== mineId) setGot({ s: 'idle' }); setMineId(m.id) }}>
+                  <b>{t12(s.std)}</b> from {a.from}
+                  <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : `due into ${a.to} at ${t12(m.exp)}`}</span>
+                </button>
+                {i === after && reply}
+              </Fragment>
             ))}
           </div>
         </div>
       )}
-      {pick && got.s === 'idle' && e.k !== 'concourse' && <p className="muted" role="status"><span className="spinner" aria-hidden="true"></span>Asking National Rail which platform it’s coming into…</p>}
-      {pick && got.s === 'failed' && <p role="alert">Sorry, National Rail’s live arrivals couldn’t be reached just now. Please try again in a minute.</p>}
-      {answer && <p className="exit-answer" aria-live="polite">{answer}</p>}
     </section>
   )
 }

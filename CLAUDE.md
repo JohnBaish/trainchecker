@@ -74,6 +74,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 25th 2026: no quote while the trains load, a mock-up (branch `claude/clever-wozniak-j7ic52`, not merged; Claude Code)
+
+- **John:** a fresh journey showed the quote of the day for a moment while the data loaded; show something
+  else. Cause: the loading screen drew "Asking National Rail for the trains…" and the quote under it.
+- **Built (mock-up, behind `?load=A|B`, B when left out):** A, the line alone; B, the line and pale outlines
+  of the verdict and the two panels, pulsing gently (still where motion is turned down) (`.skel` in
+  `global.css`). The quote still shows when National Rail can't be reached. Pictures and `shoot.mjs` in
+  `design/previews/loading/` (the answer held back): 390px dark and 1200px light, no quote, no errors, no
+  sideways scroll. Checks, `tsc -b`, lint, build.
+
 ### November 25th 2026: Share under the location guide and Exits (branch `claude/clever-wozniak-j7ic52`, not merged; Claude Code)
 
 - **John:** a Share under the departures' directions (a tapped platform) and under Exits' answer, on a line

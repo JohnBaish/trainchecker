@@ -337,7 +337,7 @@ details.trains-fold { margin-top: var(--space-3); }
 .ptaphint { margin: var(--space-3) 0 0; font-size: 14px; color: var(--color-neutral-700); }
 @media (pointer: coarse) { .tapbadge { min-height: 44px; min-width: 3.4em; justify-content: center; } }
 
-/* MOCK-UP (November 25th 2026): pale outlines of the page while the trains load (option B). */
+/* Pale outlines of the page while the trains load (John, November 25th 2026, option B). */
 .skel .sk { display: block; height: 14px; margin: 10px 0; border-radius: 7px; background: var(--color-divider); animation: skpulse 1.4s ease-in-out infinite; }
 .skel .sk-h { height: 20px; width: 40%; margin-bottom: 18px; }
 .skel .verdict .sk:first-child { margin-top: 4px; }

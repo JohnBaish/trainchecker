@@ -380,11 +380,10 @@ export function JourneyView({ journey }: { journey: Journey }) {
   )
 
   if (state.s === 'loading') {
-    // MOCK-UP (November 25th 2026, for John): the quote flashed up while the trains loaded. A: the
-    // line alone; B (the default here): the line and pale outlines of the page to come.
-    const load = new URLSearchParams(location.search).get('load') === 'A' ? 'A' : 'B'
+    // The quote flashed up while the trains loaded; now the line and pale outlines of the page to
+    // come (John, November 25th 2026, option B).
     return <>{strip}<p className="dateline muted" role="status"><span className="spinner" aria-hidden="true"></span>Asking National Rail for the trains…</p>
-      {load === 'B' && <div className="skel" aria-hidden="true">
+      {<div className="skel" aria-hidden="true">
         <section className="card verdict"><span className="sk" style={{ width: '70%' }}></span><span className="sk" style={{ width: '45%' }}></span></section>
         <div className="grid">
           {[0, 1].map((k) => <section key={k} className="card sec"><span className="sk sk-h"></span><span className="sk"></span><span className="sk"></span><span className="sk" style={{ width: '60%' }}></span></section>)}

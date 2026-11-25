@@ -1,4 +1,4 @@
-// MOCK-UP (November 25th 2026): what shows while the trains load, options A and B. The answer is held
+// What shows while the trains load (November 25th 2026; John chose B, now the page; A was the line alone, its switch removed). The answer is held
 // back so the loading screen stays. Usage: node design/previews/loading/shoot.mjs A|B 390|1200 light|dark
 import { createRequire } from 'node:module'
 const { chromium } = createRequire(import.meta.url)('playwright')

@@ -74,7 +74,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 25th 2026: the arrival board for Arrivals, Exits and Connections (branch `claude/clever-wozniak-j7ic52`, not merged; Claude Code)
+### November 25th 2026: the arrival board for Arrivals, Exits and Connections; live (branch `claude/clever-wozniak-j7ic52`, merged the same day; Claude Code)
 
 - **John:** use the Live Arrival Board for all three ("the more reliable method"); key in Vercel as
   `RDM_ARR_KEY` (Secret, Production and Preview; John believes it's in).
@@ -115,6 +115,9 @@ given its own branch). Before committing there, run
   board): 390px dark and light, 1200px light (three columns): answer 9px under the tapped train or row,
   the rest of the list below it; Exits re-run unchanged; all checks pass, `tsc -b`, lint, build; no
   errors, no sideways scroll.
+- **John:** "Please merge." Checks (eight scripts, all passing), `tsc -b`, lint and build clean first;
+  fast-forwarded into `main` with this note. Not checked: the live site with both boards together, a real
+  phone.
 
 ### November 25th 2026: the Live Arrival Board works (notes only, straight to `main`; Claude Code)
 

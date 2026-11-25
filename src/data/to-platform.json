@@ -1,40 +1,52 @@
 {
-  "_about": "John's corrections for directions to a platform (src/lib/toPlatform.ts). level: only these entrances (their names in exits.json) named as on the level with these platforms. names: an entrance's name here, by its number in exits.json. dir: up or down from the entrance.",
-  "RDG": {
-    "_who": "John, November 24th 2026",
-    "level": {
-      "4,5,6": [
-        "Station Road (Edward VII)"
-      ]
-    }
-  },
-  "PAD": {
-    "_who": "John, November 24th 2026: down from the Elizabeth Line entrance",
-    "dir": {
-      "A,B": "down"
-    }
-  },
-  "TWY": {
-    "_who": "John, November 24th 2026: platform 5 names only the entrance between 4 and 5; the unnamed one by 4 is \"the entrance on the town side\"",
-    "level": {
-      "5": [
-        "the exit between platforms 4 and 5"
-      ]
-    },
-    "names": {
-      "2": "the entrance on the town side"
-    }
-  },
-  "BTH": {
-    "_who": "John, November 24th 2026: two rear entrances near the car park on platform 1; Railway Place on the level with platform 2 was a map error",
-    "names": {
-      "0": "the rear entrances near the car park",
-      "1": "the rear entrances near the car park"
-    },
-    "level": {
-      "2": [
-        "the bus station exit"
-      ]
-    }
+ "_about": "John's corrections for directions to a platform (src/lib/toPlatform.ts). level: only these entrances (their names in exits.json) named as on the level with these platforms. names: an entrance's name here, by its number in exits.json. dir: up or down from the entrance. say: John's own words for a platform, in place of the generated ones.",
+ "RDG": {
+  "_who": "John, November 24th 2026",
+  "level": {
+   "4,5,6": [
+    "Station Road (Edward VII)"
+   ]
   }
+ },
+ "PAD": {
+  "_who": "John, November 24th 2026: down from the Elizabeth Line entrance",
+  "dir": {
+   "A,B": "down"
+  }
+ },
+ "TWY": {
+  "_who": "John, November 24th 2026: platform 5 names only the entrance between 4 and 5; the unnamed one by 4 is \"the entrance on the town side\"",
+  "level": {
+   "5": [
+    "the exit between platforms 4 and 5"
+   ]
+  },
+  "names": {
+   "2": "the entrance on the town side"
+  }
+ },
+ "BTH": {
+  "_who": "John, November 24th 2026: two rear entrances near the car park on platform 1; Railway Place on the level with platform 2 was a map error",
+  "names": {
+   "0": "the rear entrances near the car park",
+   "1": "the rear entrances near the car park"
+  },
+  "level": {
+   "2": [
+    "the bus station exit"
+   ]
+  }
+ },
+ "PUT": {
+  "_who": "John, November 25th 2026: one entrance, on Putney High Street; down from the footbridge to platforms 1 to 4; 2 and 3 an island. Sentences: Claude's drafts, for John to check.",
+  "names": {
+   "0": "the entrance on Putney High Street"
+  },
+  "say": {
+   "1": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 1.",
+   "2": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to the island platform, for platforms 2 and 3.",
+   "3": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to the island platform, for platforms 2 and 3.",
+   "4": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 4."
+  }
+ }
 }

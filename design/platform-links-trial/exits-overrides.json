@@ -1,353 +1,403 @@
 {
-  "_about": "John's own corrections to the Station exits table, applied last by build_exits_table.py, so they win over the station maps and the map data. Per station: 'names' renames exits (old name: the words used after 'to', as in 'to the town centre and Station Hill'); 'here' says how to put 'is right there' for a renamed exit; 'bridge' is the word for the station's footbridge. Each entry says who and when. 'by' sets the platforms an exit is by; 'no_routes' keeps no routes (only what John knows); 'no_exit' names an exit John says isn't there (the build stops if it appears). 'add_exits' adds exits the sources missed; 'level_crossing' says the exits are either side of a public level crossing. 'say' gives John's own words for a platform, after 'Your train is due into platform N.'; 'mention_other' also names the other exit over the bridge or through the subway, from a platform with an exit on the level.",
-  "RDG": {
-    "_who": "John, November 22nd and 24th 2026 (the station's sentence and platforms 1 to 3 his words; 4 to 6 Claude's draft from his \"could do\")",
-    "bridge": "bridge",
-    "reading": {
-      "_why": "John, November 24th 2026: the main Station Hill entrance is by platform 7 and 1 to 3 (on the level with 4 to 6 too, but much nearer 1 to 3 and 7); the map's Forbury Road is Station Road (Edward VII), by 4, 5 and 6; Apex Plaza is round the concourse from 4, 5 and 6, an exit only; the north exit is at the north end of the bridge. Platforms 14 and 15 use the same bridge as 8 to 13, so it comes down by platform 7 for Station Hill (and by 15 for the north exit from 14).",
-      "exits": [
-        {
-          "name": "the main Station Hill exit on the town centre side",
-          "by": [
-            "7",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ]
-        },
-        {
-          "name": "Station Road (Edward VII)",
-          "by": [
-            "4",
-            "5",
-            "6"
-          ]
-        },
-        {
-          "name": "Apex Plaza",
-          "by": [
-            "4",
-            "5",
-            "6"
-          ]
-        },
-        {
-          "name": "the north exit by the car park on the Caversham side",
-          "by": []
-        }
-      ],
-      "platforms": {
-        "1": [
-          [
-            0,
-            "l"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "2": [
-          [
-            0,
-            "l"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "3": [
-          [
-            0,
-            "l"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "7": [
-          [
-            0,
-            "l"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "4": [
-          [
-            1,
-            "l"
-          ],
-          [
-            0,
-            "l"
-          ],
-          [
-            2,
-            "c"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "5": [
-          [
-            1,
-            "l"
-          ],
-          [
-            0,
-            "l"
-          ],
-          [
-            2,
-            "c"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "6": [
-          [
-            1,
-            "l"
-          ],
-          [
-            0,
-            "l"
-          ],
-          [
-            2,
-            "c"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "8": [
-          [
-            0,
-            "b"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "9": [
-          [
-            0,
-            "b"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "10": [
-          [
-            0,
-            "b"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "11": [
-          [
-            0,
-            "b"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "12": [
-          [
-            0,
-            "b"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "13": [
-          [
-            0,
-            "b"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ],
-        "14": [
-          [
-            0,
-            "b",
-            "7"
-          ],
-          [
-            3,
-            "b",
-            "15"
-          ]
-        ],
-        "15": [
-          [
-            0,
-            "b",
-            "7"
-          ],
-          [
-            3,
-            "b"
-          ]
-        ]
-      },
-      "kind": "mixed"
+ "_about": "John's own corrections to the Station exits table, applied last by build_exits_table.py, so they win over the station maps and the map data. Per station: 'names' renames exits (old name: the words used after 'to', as in 'to the town centre and Station Hill'); 'here' says how to put 'is right there' for a renamed exit; 'bridge' is the word for the station's footbridge. Each entry says who and when. 'by' sets the platforms an exit is by; 'no_routes' keeps no routes (only what John knows); 'no_exit' names an exit John says isn't there (the build stops if it appears). 'add_exits' adds exits the sources missed; 'level_crossing' says the exits are either side of a public level crossing. 'say' gives John's own words for a platform, after 'Your train is due into platform N.'; 'mention_other' also names the other exit over the bridge or through the subway, from a platform with an exit on the level.",
+ "RDG": {
+  "_who": "John, November 22nd and 24th 2026 (the station's sentence and platforms 1 to 3 his words; 4 to 6 Claude's draft from his \"could do\")",
+  "bridge": "bridge",
+  "reading": {
+   "_why": "John, November 24th 2026: the main Station Hill entrance is by platform 7 and 1 to 3 (on the level with 4 to 6 too, but much nearer 1 to 3 and 7); the map's Forbury Road is Station Road (Edward VII), by 4, 5 and 6; Apex Plaza is round the concourse from 4, 5 and 6, an exit only; the north exit is at the north end of the bridge. Platforms 14 and 15 use the same bridge as 8 to 13, so it comes down by platform 7 for Station Hill (and by 15 for the north exit from 14).",
+   "exits": [
+    {
+     "name": "the main Station Hill exit on the town centre side",
+     "by": [
+      "7",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ]
     },
-    "exit_only": [
-      "Apex Plaza"
-    ],
-    "line": "At Reading, the exits are on the town side by platforms 4 and 7, and on the north side down from the bridge by platform 15.",
-    "say": {
-      "1": "The main Station Hill exit on the town centre side is nearby on the same level, by platform 7, or you can go over the bridge for the north exit by the car park on the Caversham side.",
-      "2": "The main Station Hill exit on the town centre side is nearby on the same level, by platform 7, or you can go over the bridge for the north exit by the car park on the Caversham side.",
-      "3": "The main Station Hill exit on the town centre side is nearby on the same level, by platform 7, or you can go over the bridge for the north exit by the car park on the Caversham side.",
-      "4": "The exit on Station Road (Edward VII) is right there, the Apex Plaza exit is round the concourse, or you can go over the bridge for the north exit by the car park on the Caversham side.",
-      "5": "The exit on Station Road (Edward VII) is right there, the Apex Plaza exit is round the concourse, or you can go over the bridge for the north exit by the car park on the Caversham side.",
-      "6": "The exit on Station Road (Edward VII) is right there, the Apex Plaza exit is round the concourse, or you can go over the bridge for the north exit by the car park on the Caversham side."
+    {
+     "name": "Station Road (Edward VII)",
+     "by": [
+      "4",
+      "5",
+      "6"
+     ]
+    },
+    {
+     "name": "Apex Plaza",
+     "by": [
+      "4",
+      "5",
+      "6"
+     ]
+    },
+    {
+     "name": "the north exit by the car park on the Caversham side",
+     "by": []
     }
-  },
-  "SIA": {
-    "_who": "John, November 22nd 2026: the exit is definitely by platform 1, but no more detail",
-    "by": {
-      "Access Road": [
-        "1"
-      ]
-    },
-    "no_routes": true
-  },
-  "CIT": {
-    "_who": "John, November 22nd 2026: no exit from platform 1 to the north car park",
-    "no_exit": [
-      "north car park"
+   ],
+   "platforms": {
+    "1": [
+     [
+      0,
+      "l"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "2": [
+     [
+      0,
+      "l"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "3": [
+     [
+      0,
+      "l"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "7": [
+     [
+      0,
+      "l"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "4": [
+     [
+      1,
+      "l"
+     ],
+     [
+      0,
+      "l"
+     ],
+     [
+      2,
+      "c"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "5": [
+     [
+      1,
+      "l"
+     ],
+     [
+      0,
+      "l"
+     ],
+     [
+      2,
+      "c"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "6": [
+     [
+      1,
+      "l"
+     ],
+     [
+      0,
+      "l"
+     ],
+     [
+      2,
+      "c"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "8": [
+     [
+      0,
+      "b"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "9": [
+     [
+      0,
+      "b"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "10": [
+     [
+      0,
+      "b"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "11": [
+     [
+      0,
+      "b"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "12": [
+     [
+      0,
+      "b"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "13": [
+     [
+      0,
+      "b"
+     ],
+     [
+      3,
+      "b"
+     ]
+    ],
+    "14": [
+     [
+      0,
+      "b",
+      "7"
+     ],
+     [
+      3,
+      "b",
+      "15"
+     ]
+    ],
+    "15": [
+     [
+      0,
+      "b",
+      "7"
+     ],
+     [
+      3,
+      "b"
+     ]
     ]
+   },
+   "kind": "mixed"
   },
-  "MDG": {
-    "_who": "John, November 22nd 2026: exits from both platforms, either side of the level crossing (platform 1 for Newbury, 2 for Reading: National Rail's live board)",
-    "add_exits": [
-      {
-        "name": null,
-        "by": [
-          "1"
-        ]
-      }
-    ],
-    "level_crossing": true
-  },
-  "IVY": {
-    "_who": "John's Ivybridge informant via John, November 22nd 2026 (platform 2's version is Claude's draft from it); Hazel Lane is the town centre exit (John, November 22nd 2026)",
-    "say": {
-      "1": "There are two exits there, one via the platform gate to the car park and buses, and one via the footbridge exit, which is quicker on foot to the town.",
-      "2": "Go up to the footbridge: its exit is quicker on foot to the town, or cross to platform 1 and go out through the platform gate for the car park and buses."
-    },
-    "names": {
-      "Hazel Lane": "the town centre exit"
-    }
-  },
-  "SOU": {
-    "_who": "John, November 22nd 2026",
-    "names": {
-      "Blechynden Terrace": "the Blechynden Terrace exit near the Mayflower and the BBC",
-      "Western Esplanade": "the town centre exit"
-    },
-    "here": {
-      "Blechynden Terrace": "The Blechynden Terrace exit near the Mayflower and the BBC",
-      "Western Esplanade": "The town centre exit"
-    },
-    "mention_other": true
-  },
-  "STG": {
-    "_who": "John, November 22nd 2026: the main building's and Goosecroft Road's exits both suit the city centre, so neither is named for it",
-    "names": {
-      "the city centre exit": "Goosecroft Road"
-    }
-  },
-  "TWY": {
-    "_who": "John, November 22nd 2026: four exits since the rebuild (Hurst Road by platform 1; the long-term car park from platform 3 only; by platform 4 near the ticket machines; between platforms 4 and 5, on the level from both); platform 4 is the town side. Wording Claude's draft from it",
-    "names": {
-      "the car park exit": "the exit between platforms 4 and 5"
-    },
-    "add_exits": [
-      {
-        "name": "the long-term car park",
-        "by": [
-          "3"
-        ]
-      }
-    ],
-    "say": {
-      "1": "The exit on Hurst Road is right there, or you can go over the footbridge for the long-term car park, coming down by platform 3, or for the town side, coming down by platform 4.",
-      "2": "Go up to the footbridge: for Hurst Road, come down by platform 1; for the long-term car park, by platform 3; or for the town side, by platform 4.",
-      "3": "The exit to the long-term car park is right there, or you can go over the footbridge for Hurst Road, coming down by platform 1, or for the town side, coming down by platform 4.",
-      "4": "This is the town side: there’s an exit right there by the ticket machines, and another between platforms 4 and 5. Or you can go over the footbridge for Hurst Road or the long-term car park.",
-      "5": "This is the town side: there’s an exit right there between platforms 4 and 5, and another by the ticket machines on platform 4. Or you can go over the footbridge for Hurst Road or the long-term car park."
-    }
-  },
-  "PAD": {
-    "_who": "John, November 22nd 2026: the Elizabeth Line platforms' way out",
-    "say": {
-      "A": "The way out is up from the Elizabeth Line platforms to the Eastbourne Terrace exit.",
-      "B": "The way out is up from the Elizabeth Line platforms to the Eastbourne Terrace exit."
-    }
-  },
-  "GLD": {
-    "_who": "John, November 24th 2026: the names; the station's sentence is Claude's draft",
-    "names": {
-      "Walnut Tree Close": "the main town centre exit",
-      "Guildford Park Road": "the Guildford Park Road exit at the back"
-    },
-    "line": "At Guildford, the main town centre exit is by platforms 1 and 2, and the Guildford Park Road exit at the back is over the footbridge."
-  },
-  "BHM": {
-    "add_routes": {
-      "Navigation Street": "b"
-    },
-    "_who": "Claude, November 24th 2026, from the map reading (maps-read): \"via the Navigation Street footbridge, which has stairs down to the platforms\", from every platform"
-  },
-  "LST": {
-    "add_routes": {
-      "Old Broad Street": "c",
-      "Sun Street": "c",
-      "Bishopsgate (West)": "c"
-    },
-    "_who": "Claude, November 24th 2026, from the map reading: \"concourse, then up\" from every platform, as Bishopsgate (West); Bishopsgate (West) also from every platform (it was missing from some)"
-  },
-  "NOT": {
-    "same_as": {
-      "Station Street (step-free)": "Carrington Street"
-    },
-    "_who": "Claude, November 24th 2026, from National Rail's Nottingham station map: \"Step free access\" at the north-west corner of the main building, reached through it as Carrington Street is"
-  },
-  "STP": {
-    "same_as": {
-      "the Eurostar taxi drop-off": "Midland Road (south)"
-    },
-    "_who": "Claude, November 24th 2026, from National Rail's St Pancras station map: the Eurostar taxi drop-off is off the lower-level arcade, beside the Midland Road exit"
+  "exit_only": [
+   "Apex Plaza"
+  ],
+  "line": "At Reading, the exits are on the town side by platforms 4 and 7, and on the north side down from the bridge by platform 15.",
+  "say": {
+   "1": "The main Station Hill exit on the town centre side is nearby on the same level, by platform 7, or you can go over the bridge for the north exit by the car park on the Caversham side.",
+   "2": "The main Station Hill exit on the town centre side is nearby on the same level, by platform 7, or you can go over the bridge for the north exit by the car park on the Caversham side.",
+   "3": "The main Station Hill exit on the town centre side is nearby on the same level, by platform 7, or you can go over the bridge for the north exit by the car park on the Caversham side.",
+   "4": "The exit on Station Road (Edward VII) is right there, the Apex Plaza exit is round the concourse, or you can go over the bridge for the north exit by the car park on the Caversham side.",
+   "5": "The exit on Station Road (Edward VII) is right there, the Apex Plaza exit is round the concourse, or you can go over the bridge for the north exit by the car park on the Caversham side.",
+   "6": "The exit on Station Road (Edward VII) is right there, the Apex Plaza exit is round the concourse, or you can go over the bridge for the north exit by the car park on the Caversham side."
   }
+ },
+ "SIA": {
+  "_who": "John, November 22nd 2026: the exit is definitely by platform 1, but no more detail",
+  "by": {
+   "Access Road": [
+    "1"
+   ]
+  },
+  "no_routes": true
+ },
+ "CIT": {
+  "_who": "John, November 22nd 2026: no exit from platform 1 to the north car park",
+  "no_exit": [
+   "north car park"
+  ]
+ },
+ "MDG": {
+  "_who": "John, November 22nd 2026: exits from both platforms, either side of the level crossing (platform 1 for Newbury, 2 for Reading: National Rail's live board)",
+  "add_exits": [
+   {
+    "name": null,
+    "by": [
+     "1"
+    ]
+   }
+  ],
+  "level_crossing": true
+ },
+ "IVY": {
+  "_who": "John's Ivybridge informant via John, November 22nd 2026 (platform 2's version is Claude's draft from it); Hazel Lane is the town centre exit (John, November 22nd 2026)",
+  "say": {
+   "1": "There are two exits there, one via the platform gate to the car park and buses, and one via the footbridge exit, which is quicker on foot to the town.",
+   "2": "Go up to the footbridge: its exit is quicker on foot to the town, or cross to platform 1 and go out through the platform gate for the car park and buses."
+  },
+  "names": {
+   "Hazel Lane": "the town centre exit"
+  }
+ },
+ "SOU": {
+  "_who": "John, November 22nd 2026",
+  "names": {
+   "Blechynden Terrace": "the Blechynden Terrace exit near the Mayflower and the BBC",
+   "Western Esplanade": "the town centre exit"
+  },
+  "here": {
+   "Blechynden Terrace": "The Blechynden Terrace exit near the Mayflower and the BBC",
+   "Western Esplanade": "The town centre exit"
+  },
+  "mention_other": true
+ },
+ "STG": {
+  "_who": "John, November 22nd 2026: the main building's and Goosecroft Road's exits both suit the city centre, so neither is named for it",
+  "names": {
+   "the city centre exit": "Goosecroft Road"
+  }
+ },
+ "TWY": {
+  "_who": "John, November 22nd 2026: four exits since the rebuild (Hurst Road by platform 1; the long-term car park from platform 3 only; by platform 4 near the ticket machines; between platforms 4 and 5, on the level from both); platform 4 is the town side. Wording Claude's draft from it",
+  "names": {
+   "the car park exit": "the exit between platforms 4 and 5"
+  },
+  "add_exits": [
+   {
+    "name": "the long-term car park",
+    "by": [
+     "3"
+    ]
+   }
+  ],
+  "say": {
+   "1": "The exit on Hurst Road is right there, or you can go over the footbridge for the long-term car park, coming down by platform 3, or for the town side, coming down by platform 4.",
+   "2": "Go up to the footbridge: for Hurst Road, come down by platform 1; for the long-term car park, by platform 3; or for the town side, by platform 4.",
+   "3": "The exit to the long-term car park is right there, or you can go over the footbridge for Hurst Road, coming down by platform 1, or for the town side, coming down by platform 4.",
+   "4": "This is the town side: there’s an exit right there by the ticket machines, and another between platforms 4 and 5. Or you can go over the footbridge for Hurst Road or the long-term car park.",
+   "5": "This is the town side: there’s an exit right there between platforms 4 and 5, and another by the ticket machines on platform 4. Or you can go over the footbridge for Hurst Road or the long-term car park."
+  }
+ },
+ "PAD": {
+  "_who": "John, November 22nd 2026: the Elizabeth Line platforms' way out",
+  "say": {
+   "A": "The way out is up from the Elizabeth Line platforms to the Eastbourne Terrace exit.",
+   "B": "The way out is up from the Elizabeth Line platforms to the Eastbourne Terrace exit."
+  }
+ },
+ "GLD": {
+  "_who": "John, November 24th 2026: the names; the station's sentence is Claude's draft",
+  "names": {
+   "Walnut Tree Close": "the main town centre exit",
+   "Guildford Park Road": "the Guildford Park Road exit at the back"
+  },
+  "line": "At Guildford, the main town centre exit is by platforms 1 and 2, and the Guildford Park Road exit at the back is over the footbridge."
+ },
+ "BHM": {
+  "add_routes": {
+   "Navigation Street": "b"
+  },
+  "_who": "Claude, November 24th 2026, from the map reading (maps-read): \"via the Navigation Street footbridge, which has stairs down to the platforms\", from every platform"
+ },
+ "LST": {
+  "add_routes": {
+   "Old Broad Street": "c",
+   "Sun Street": "c",
+   "Bishopsgate (West)": "c"
+  },
+  "_who": "Claude, November 24th 2026, from the map reading: \"concourse, then up\" from every platform, as Bishopsgate (West); Bishopsgate (West) also from every platform (it was missing from some)"
+ },
+ "NOT": {
+  "same_as": {
+   "Station Street (step-free)": "Carrington Street"
+  },
+  "_who": "Claude, November 24th 2026, from National Rail's Nottingham station map: \"Step free access\" at the north-west corner of the main building, reached through it as Carrington Street is"
+ },
+ "STP": {
+  "same_as": {
+   "the Eurostar taxi drop-off": "Midland Road (south)"
+  },
+  "_who": "Claude, November 24th 2026, from National Rail's St Pancras station map: the Eurostar taxi drop-off is off the lower-level arcade, beside the Midland Road exit"
+ },
+ "PUT": {
+  "_who": "John, November 25th 2026: one entrance, on Putney High Street; it leads to the footbridge, and you go down from there to platforms 1 to 4; 2 and 3 are an island; the map's Disraeli Road entrance isn't there. The sentences are Claude's drafts, for John to check.",
+  "reading": {
+   "_why": "John, November 25th 2026 (above).",
+   "exits": [
+    {
+     "name": "Putney High Street",
+     "by": []
+    }
+   ],
+   "platforms": {
+    "1": [
+     [
+      0,
+      "u",
+      "up"
+     ]
+    ],
+    "2": [
+     [
+      0,
+      "u",
+      "up"
+     ]
+    ],
+    "3": [
+     [
+      0,
+      "u",
+      "up"
+     ]
+    ],
+    "4": [
+     [
+      0,
+      "u",
+      "up"
+     ]
+    ]
+   },
+   "kind": "above"
+  },
+  "line": "At Putney, there’s one way in and out, on Putney High Street, at the top of the stairs from the platforms.",
+  "say": {
+   "1": "Go up the stairs to the footbridge, and along to the exit on Putney High Street.",
+   "2": "Go up the stairs from the island platform to the footbridge, and along to the exit on Putney High Street.",
+   "3": "Go up the stairs from the island platform to the footbridge, and along to the exit on Putney High Street.",
+   "4": "Go up the stairs to the footbridge, and along to the exit on Putney High Street."
+  }
+ }
 }

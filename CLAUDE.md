@@ -74,6 +74,28 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 25th 2026: Putney's one entrance; entrances named after their own platform (branch `claude/clever-wozniak-j7ic52`, not merged; Claude Code)
+
+- **John (Putney, platform 2):** "Platform 2 is right by the Disraeli Road entrance. From the entrance nearest
+  platform 2, the way in leads to platform 2." reads as if Disraeli Road were nearer, and says platform 2
+  twice; look for others across the network. And Putney itself: one entrance, on Putney High Street, onto
+  the footbridge, down to platforms 1 to 4 (2 and 3 an island); Disraeli Road is a map error.
+- **Found:** 63 platform-guide answers at about 57 stations, and 50 Exits answers, name an entrance or exit
+  after the very platform they're about; 62 of the 63 reach it by crossing the line (footbridge or subway).
+  First tried "the other entrance" by count: `check-exits` failed it (dropped before as vague; Aberdare's "From
+  the entrance…" and Ebbw Vale's "From the other entrance" with no first one).
+- **Built (drafts):** `toPlatform.ts` (`named()`) and `exits.ts` (`target(…, asked)`): "the entrance/exit
+  across the line" where the way crosses it, else "the other", "another" or "the" by how many the answer
+  names. Putney: its own reading, `line` and `say` in `exits-overrides.json` (one exit, Putney High Street,
+  up from every platform); `to-platform.json` gains `say` (John's words for a platform's guide, new in
+  `Fix`) with Putney's four. `exits.json` rebuilt (only Putney changes). Left, for John: six answers with two
+  entrances of one street name told apart by platform (East Croydon, Haddenham, Haywards Heath ×2,
+  Whitechapel, Waterloo).
+- **Review list for John:** `design/platform-directions/putney-and-across-the-line.md` (numbered, before and
+  after, every changed answer). **Checked:** all checks (check-exits 83: no entrance named after its own
+  platform, the six pairs listed, Aberdare, Ashford, Putney; undoing the rule made two fail), `tsc -b`, lint,
+  build. Not checked in a browser.
+
 ### November 25th 2026: the arrival board for Arrivals, Exits and Connections; live (branch `claude/clever-wozniak-j7ic52`, merged the same day; Claude Code)
 
 - **John:** use the Live Arrival Board for all three ("the more reliable method"); key in Vercel as

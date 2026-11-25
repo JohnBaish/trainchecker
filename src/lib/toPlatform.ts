@@ -80,6 +80,8 @@ export type Fix = {
   names?: Record<string, string>
   /** Up or down from the entrance, where the table doesn't say (Paddington A and B: down). */
   dir?: Record<string, 'up' | 'down'>
+  /** John's own words for a platform, in place of the generated ones (Putney, November 25th 2026). */
+  say?: Record<string, string>
 }
 
 const base = (p: string) => p.replace(/(\d)[A-Z]$/, '$1')
@@ -98,6 +100,7 @@ function downFor(e: StationExits, i: number, via: string, own: string | null): s
 /** The words for one platform at A: null where nothing is known. */
 export function toPlatform(e: StationExits, platform: string, links?: Links, fix?: Fix, fill = false): string[] | null {
   if (e.k === 'concourse') return [`Every platform is off the concourse, where the entrances are.`]
+  if (fix?.say?.[platform]) return [fix.say[platform]]
   const eo = new Set(e.eo ?? [])
   const ways = waysFor(e, platform).filter((w) => !eo.has(w[0]))
   if (!ways.length) return null
@@ -153,8 +156,21 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
   }
   // The entrances this answer names: a name shared with another of them gets its platform.
   const shown = new Set([...by, ...hows.keys()])
+  // An entrance isn't named after the platform being asked about: "From the entrance nearest
+  // platform 2, the way in leads to platform 2" said it twice, and beside "Platform 2 is right by the
+  // Disraeli Road entrance" it read as if that one were further away (John, Putney, November 25th
+  // 2026). Its way in crosses the line (a footbridge or subway) in all but one case, so it's "the
+  // entrance across the line"; otherwise "the other entrance" beside one more, "another entrance"
+  // beside two or more, or "the entrance" alone. Drafts.
+  const self = new RegExp(`^the entrance (by|nearest) platform ${platform.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`)
+  const named = (i: number) => {
+    const n = withPlatform(entranceName(e, i, fix, shown), fillFrom.get(i))
+    if (!self.test(n)) return n
+    if (all.some((w) => w[0] === i && (w[1] === 'b' || w[1] === 's'))) return 'the entrance across the line'
+    return shown.size === 1 ? 'the entrance' : shown.size === 2 ? 'the other entrance' : 'another entrance'
+  }
   for (const [s, is] of rest) {
-    lines.push(`From ${fromNames([...new Set(is.map((i) => withPlatform(entranceName(e, i, fix, shown), fillFrom.get(i))))])}, ${s}${is.length === 1 ? openLine(e, is[0]) : ''}`)
+    lines.push(`From ${fromNames([...new Set(is.map(named))])}, ${s}${is.length === 1 ? openLine(e, is[0]) : ''}`)
   }
   if (level.length) {
     const joined = joinNames([...new Set(by.map((i) => entranceName(e, i, fix, shown).replace(` by platform ${platform}`, '')))], 'and')

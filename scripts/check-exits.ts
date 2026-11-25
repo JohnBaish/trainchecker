@@ -136,5 +136,23 @@ eq('Liverpool Street: Old Broad Street and Sun Street off the concourse', ['Old 
 eq('Ashford International: "the entrance nearest platform 3", not "the other entrance"', toPlatform(T.AFK, '4')!.join(' '), 'From the entrance nearest platform 3, go up to the footbridge and cross to platform 4.')
 eq('no "the other entrance" anywhere', Object.entries(T).filter(([, e]) => Object.keys(e.p).some((p) => (toPlatform(e, p) ?? []).join(' ').includes('the other entrance'))).map(([c]) => c), [])
 
+// No guide or Exits answer names an entrance or exit after the platform it's about (John, Putney,
+// November 25th 2026), except two exits of one street told apart by platform (Haddenham, Waterloo).
+const esc = (p: string) => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+const selfNamed = Object.entries(T).flatMap(([c, e]) => Object.keys(e.p).filter((p) => {
+  const g = (toPlatform(e, p) ?? []).join(' '), x = trainLine(e, p, false).replace(/^Your train is due into platform [^.]+\. /, '')
+  return new RegExp(`\\bthe (entrance|exit) (by|nearest) platform ${esc(p)}\\b(?! and)`).test(g + ' ' + x)
+}).map((p) => `${c} ${p}`))
+eq('no entrance or exit named after its own platform', selfNamed, [])
+// Two of one name, told apart by platform: left for John (November 25th 2026).
+const twins = Object.entries(T).flatMap(([c, e]) => Object.keys(e.p).filter((p) => new RegExp(`[A-Z][a-z]+ (entrance )?by platform ${esc(p)}\\b`).test((toPlatform(e, p) ?? []).join(' ') + ' ' + trainLine(e, p, false))).map((p) => `${c} ${p}`))
+eq('pairs of one name, told apart by the platform itself', twins, ['ECR 1', 'HDM 2', 'HHE 1', 'HHE 3', 'ZLW 5', 'ZWA 9'])
+eq('Aberdare 2: across the line', toPlatform(T.ABA, '2')!.join(' '), 'Platform 2 has its own entrance. From the entrance across the line, go down to the subway and come up on platform 2.')
+eq('Ashford International 3: across the line', trainLine(T.AFK, '3', false), 'Your train is due into platform 3, so you’ll want the footbridge to the exit across the line.')
+// Putney (John, November 25th 2026): one entrance, on Putney High Street; his facts, Claude's drafts.
+eq('Putney: one exit', T.PUT.x.map((x) => x[0]), ['Putney High Street'])
+eq('Putney: the station', stationLine('Putney', T.PUT), 'At Putney, there’s one way in and out, on Putney High Street, at the top of the stairs from the platforms.')
+eq('Putney 2: the way out', trainLine(T.PUT, '2', false), 'Your train is due into platform 2. Go up the stairs from the island platform to the footbridge, and along to the exit on Putney High Street.')
+
 console.log(`check-exits: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

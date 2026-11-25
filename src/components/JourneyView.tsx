@@ -100,12 +100,12 @@ type At = { station: string; hash: string; taken: string }
 function DirLines({ lines, pl, at }: { lines: string[]; pl?: string; at?: At }) {
   const box = <div className="pdirs" aria-live="polite">{lines.map((l, i) => <p key={i}>{l}</p>)}</div>
   if (!at || !pl) return box
-  // MOCK-UP: Share just below the box, on a line of its own; the words are Claude's drafts.
+  // Share just below the box, on a line of its own (John, November 25th 2026).
   return (
     <div className="pdirs-block">
       {box}
       <BoxShare taken={at.taken} w={{
-        kicker: 'PLATFORM GUIDE', heading: `Getting to platform ${pl} at ${at.station}`, text: lines.join(' '),
+        kicker: 'PLATFORM GUIDE', heading: `Getting to platform ${pl} at ${at.station}`, text: lines.join(' '), paras: lines,
         sent: `Here’s how to find platform ${pl} at ${at.station}, from Trainchecker.`, what: 'these directions',
         file: `trainchecker-platform-${pl}-${at.hash.slice(1)}.png`, hash: at.hash,
       }} />

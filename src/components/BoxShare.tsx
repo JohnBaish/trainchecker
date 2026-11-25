@@ -1,7 +1,7 @@
-// MOCK-UP (November 25th 2026, for John): Share under a box of words, the platform location guide
-// (tap a platform) and Exits once a train is chosen. The picture is the Connections answer's
-// (share.ts answerImage): the box's words in the dark colours, under a heading. The button's words,
-// the picture's heading and the words sent with it are Claude's drafts.
+// Share under a box of words (John, November 25th 2026): the platform location guide (tap a
+// platform) and Exits once a train is chosen. The picture is the Connections answer's (share.ts
+// answerImage): the box's words in the dark colours, under a heading, its paragraphs kept apart.
+// Wording agreed by John: "Share these directions" for both; the headings and words sent as drafted.
 import { useState } from 'react'
 import { clock } from '../lib/analyse.ts'
 import { dayName, t12 } from '../lib/sentences.ts'
@@ -12,6 +12,7 @@ export type BoxWords = {
   kicker: string // "PLATFORM GUIDE"
   heading: string // the picture's heading
   text: string // the box's words, as on the page
+  paras?: string[] // its paragraphs, kept apart in the picture
   sent: string // the sentence sent with the picture
   what: string // the button: "Share these directions" / "Copy these directions"
   file: string
@@ -23,7 +24,7 @@ export function BoxShare({ w, taken }: { w: BoxWords; taken: string }) {
   const touch = isTouch()
   const share = async () => {
     setSaid('')
-    const canvas = answerImage({ kicker: w.kicker, heading: w.heading, text: w.text, edge: 'none', when: `${dayName(new Date(taken))}, ${t12(clock(taken))}` })
+    const canvas = answerImage({ kicker: w.kicker, heading: w.heading, text: w.text, paras: w.paras, edge: 'none', when: `${dayName(new Date(taken))}, ${t12(clock(taken))}` })
     const r = await deliverImage(canvas, w.file, { title: `Trainchecker: ${w.heading}`, text: w.sent, url: `${location.origin}/${w.hash}` })
     setSaid(r === 'copied' ? 'Copied' : r === 'saved' ? 'Saved as a picture' : '')
   }

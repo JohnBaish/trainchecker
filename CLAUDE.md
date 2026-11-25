@@ -74,7 +74,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 25th 2026: Share under the location guide and Exits, a mock-up (branch `claude/clever-wozniak-j7ic52`, not merged; Claude Code)
+### November 25th 2026: Share under the location guide and Exits (branch `claude/clever-wozniak-j7ic52`, not merged; Claude Code)
 
 - **John:** a Share under the departures' directions (a tapped platform) and under Exits' answer, on a line
   below the box, reproducing the box; the words to think about.
@@ -89,6 +89,13 @@ given its own branch). Before committing there, run
   (6.24pm, November 17th), Exits on live arrivals from Twyford (departure side made up, illustration only);
   1200px light and 390px dark with touch; both pictures read back from the clipboard; buttons 44px on a
   phone; no errors, no sideways scroll. `tsc -b`, lint, build, checks. Not checked: a phone's share sheet.
+- **John:** "Share these directions" under Exits too; the picture keeps the paragraphs apart as on the screen
+  (`answerImage()` takes `paras`, half a line between them); the rest of the wording agreed. And Exits' trains
+  folded away: the station's sentence stays, then "Check directions from your train" with the arrow
+  (`details.exits-fold`, as Arrivals and Connections). Checked: the fold starts closed (summary 44px on a
+  phone), the answer still lands under the tapped train or row (columns measured once opened), both pictures
+  copied and read back (the guide's in two paragraphs), 1200px light and 390px dark; no errors, no sideways
+  scroll; checks, `tsc -b`, lint, build.
 
 ### November 25th 2026: Putney's one entrance; entrances named after their own platform (branch `claude/clever-wozniak-j7ic52`, not merged; Claude Code)
 

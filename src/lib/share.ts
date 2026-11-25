@@ -453,18 +453,25 @@ function hoursImage(p: ListPicture): HTMLCanvasElement {
 /** "Connections": a picture of the answer's box, in the dark colours as the lists are (John,
  *  November 21st 2026), its edge in the answer's colour. */
 const EDGE: Record<string, string> = { good: '#aebf92', mixed: '#dd8a56', prepared: '#f08a7e', none: '#b0a593' }
-export function answerImage(o: { heading: string; text: string; edge: string; when: string; kicker?: string }): HTMLCanvasElement {
+/** `paras`: the box's paragraphs, kept apart as on the page (the location guide's entrances: John,
+ *  November 25th 2026); otherwise `text` as one. */
+export function answerImage(o: { heading: string; text: string; edge: string; when: string; kicker?: string; paras?: string[] }): HTMLCanvasElement {
   const scale = 2
   const canvas = document.createElement('canvas')
   const probe = canvas.getContext('2d')!
   const textX = 110, textW = W - textX - 100
   const size = o.text.length > 520 ? 30 : 34, lh = Math.round(size * 1.45)
   probe.font = `${size}px ${FIG}`
-  const lines = wrap(probe, o.text, textW)
+  // Each paragraph's lines, then a blank half line between paragraphs ('' marks the gap).
+  const lines = (o.paras ?? [o.text]).flatMap((p, k) => [...(k ? [''] : []), ...wrap(probe, p, textW)])
+  const gapH = Math.round(lh * 0.5)
+  const ys: number[] = []
+  let yy = 0
+  for (const l of lines) { ys.push(yy); yy += l === '' ? gapH : lh }
   probe.font = `44px ${CAP}`
   const head = wrap(probe, o.heading, W - 120)
   const headTop = 110, bandTop = headTop + head.length * 54 + 24, pad = 50
-  const bandH = pad + lines.length * lh + pad - 10
+  const bandH = pad + yy + pad - 10
   const H = bandTop + bandH + 110
   canvas.width = W * scale
   canvas.height = H * scale
@@ -495,7 +502,7 @@ export function answerImage(o: { heading: string; text: string; edge: string; wh
   ctx.restore()
   ctx.fillStyle = D.text
   ctx.font = `${size}px ${FIG}`
-  lines.forEach((l, i) => ctx.fillText(l, textX, y0 + pad + size - 6 + i * lh))
+  lines.forEach((l, i) => l && ctx.fillText(l, textX, y0 + pad + size - 6 + ys[i]))
   ctx.strokeStyle = D.rule
   ctx.lineWidth = 1
   ctx.beginPath(); ctx.moveTo(60, y1 + 44); ctx.lineTo(W - 60, y1 + 44); ctx.stroke()

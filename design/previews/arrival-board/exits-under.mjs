@@ -17,6 +17,9 @@ const errors = []; p.on('pageerror', (e) => errors.push(e.message))
 await p.route('**/api/live?**', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(snap) }))
 await p.route('**/api/days**', (r) => r.fulfill({ status: 503, body: '' }))
 await p.goto(`http://localhost:4620/#${from}-${to}`)
+await p.waitForSelector('section.exits')
+const foldOpen0 = await p.locator('section.exits details.exits-fold').evaluate((d) => d.open)
+await p.locator('section.exits details.exits-fold summary').click()
 await p.waitForSelector('section.exits button.cmine')
 const btns = p.locator('section.exits button.cmine')
 const tapped = btns.nth(+n - 1)
@@ -29,7 +32,7 @@ const all = await Promise.all((await btns.all()).map((x) => x.boundingBox()))
 const below = all.filter((x) => x.y > ans.y)
 const sameRowAfter = all.filter((x) => Math.abs(x.y - tb.y) < 2 && x.x > tb.x)
 await p.locator('section.exits').screenshot({ path: out })
-console.log(JSON.stringify({ size, theme, errors, cols: new Set(all.map((x) => Math.round(x.x))).size, trains: all.length,
+console.log(JSON.stringify({ size, theme, foldStartsClosed: !foldOpen0, errors, cols: new Set(all.map((x) => Math.round(x.x))).size, trains: all.length,
   gapUnderTapped: Math.round(ans.y - (tb.y + tb.height)), lastRowBottom: Math.round(Math.max(...all.filter((x) => x.y <= tb.y + 2).map((x) => x.y + x.height))), answerTop: Math.round(ans.y),
   trainsBelowAnswer: below.length, sameRowAfterTapped: sameRowAfter.length, waitingShownInPlace: !!waitBox,
   sideways: await p.evaluate(() => document.documentElement.scrollWidth > innerWidth) }))

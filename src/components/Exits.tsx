@@ -9,6 +9,7 @@ import { fetchArrPlatform } from '../lib/load.ts'
 import { t12 } from '../lib/sentences.ts'
 import { rowEnd, useGridCols } from '../lib/useGridCols.ts'
 import { BoxShare } from './BoxShare.tsx'
+import { Icon } from './Icon.tsx'
 
 type Got = { s: 'idle' } | { s: 'ok'; platform: string | null } | { s: 'failed' }
 
@@ -53,10 +54,10 @@ export function Exits({ a }: { a: Analysis }) {
       {got.s === 'idle' && e.k !== 'concourse' && <p className="muted" role="status"><span className="spinner" aria-hidden="true"></span>Asking National Rail which platform it’s coming into…</p>}
       {got.s === 'failed' && <p role="alert">Sorry, National Rail’s live arrivals couldn’t be reached just now. Please try again in a minute.</p>}
       {answer && <p className="exit-answer" aria-live="polite">{answer}</p>}
-      {/* MOCK-UP (November 25th 2026): Share just below the answer; the words are Claude's drafts. */}
+      {/* Share just below the answer (John, November 25th 2026: "Share these directions", the rest of the wording agreed). */}
       {answer && pick && <BoxShare taken={a.taken} w={{
         kicker: 'EXITS', heading: `Arriving at ${a.to} on the ${t12(pick.s.std)} from ${a.from}`, text: answer,
-        sent: `Here’s the way out at ${a.to} from the ${t12(pick.s.std)} ${a.from} train, from Trainchecker.`, what: 'the way out',
+        sent: `Here’s the way out at ${a.to} from the ${t12(pick.s.std)} ${a.from} train, from Trainchecker.`, what: 'these directions',
         file: `trainchecker-exits-${a.fromCrs}-${a.toCrs}.png`, hash: `#${a.fromCrs}-${a.toCrs}`,
       }} />}
     </div>
@@ -67,7 +68,10 @@ export function Exits({ a }: { a: Analysis }) {
     <section className="card sec block exits">
       <h3>{heading(a.to, e)}</h3>
       <p>{stationLine(a.to, e)}</p>
+      {/* The trains folded away, as Arrivals and Connections are (John, November 25th 2026). */}
       {mines.length > 0 && e.k !== 'concourse' && (
+        <details className="advice exits-fold">
+        <summary>Check directions from your train <Icon name="down" /></summary>
         <div className="cstep">
           <p className="cq">{whichTrain(a.now, mines.map(({ s }) => s))}</p>
           <div className="cmines" ref={grid} role="group" aria-label={`Trains from ${a.from}`}>
@@ -83,6 +87,7 @@ export function Exits({ a }: { a: Analysis }) {
             ))}
           </div>
         </div>
+        </details>
       )}
     </section>
   )

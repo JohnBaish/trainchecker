@@ -42,6 +42,9 @@ if (which === 'guide') {
   btn = p.locator('.pdirs-block .box-share button')
 } else {
   sec = p.locator('section.exits')
+  const closed0 = !(await sec.locator('details.exits-fold').evaluate((d) => d.open))
+  console.log('fold starts closed:', closed0, '| line above:', (await sec.locator(':scope > p').first().textContent()).slice(0, 90))
+  await sec.locator('details.exits-fold summary').click()
   const t = sec.locator('button.cmine').first()
   if (touch) await t.tap(); else await t.click()
   await p.waitForSelector('.exit-answer', { timeout: 20000 })

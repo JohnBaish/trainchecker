@@ -124,8 +124,11 @@ function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
       ) : <>
       <div className="bhead" role="row">
         <span role="columnheader">{p.heads[0]}</span>
+        {/* Arrivals with platforms (November 25th 2026): "From Reading" over the trains, the platform on the right. */}
+        {p.heads[2] && <span role="columnheader">{p.heads[1]}</span>}
         {p.one
-          ? <span className="bone" role="columnheader">All from platform {tap && tap(p.one) ? <TapBadge pl={p.one} open={openRow === 'one'} onTap={() => toggle('one')} /> : <span className="badge">{p.one}</span>}</span>
+          ? <span className={p.heads[2] ? 'bone b3' : 'bone'} role="columnheader">All from platform {tap && tap(p.one) ? <TapBadge pl={p.one} open={openRow === 'one'} onTap={() => toggle('one')} /> : <span className="badge">{p.one}</span>}</span>
+          : p.heads[2] ? (second && <span role="columnheader" className="bright">{p.heads[2]}</span>)
           : <span role="columnheader" className={second ? 'bright' : ''}>{p.heads[1]}</span>}
       </div>
       {tap && p.one && openRow === 'one' && <DirLines lines={tap(p.one)!} />}

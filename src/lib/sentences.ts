@@ -794,11 +794,14 @@ export function platformTrains(a: Analysis): (Listing & { fold: string }) | null
 export function arrivals(a: Analysis): Listing & { heading: string } {
   const heading = `At ${a.to} from ${a.from}`
   const fromNow = (t: string) => diff(a.now, t)
-  const longest = Math.max(0, ...[...a.past, ...a.ahead].filter((t) => t.sta).map((t) => diff(t.std, t.sta!)))
-  const partial = longest >= 120
+  // From B's arrival board when there is one (November 25th 2026): it sees every train due, however
+  // long ago it left A, so the long-journey note isn't needed.
+  const pool = a.arr ?? [...a.past, ...a.ahead]
+  const longest = Math.max(0, ...pool.filter((t) => t.sta).map((t) => diff(t.std, t.sta!)))
+  const partial = !a.arr && longest >= 120
   const note = `Trains that left ${a.from} more than two hours ago aren't included, as Trainchecker can't see them.`
   const when = (t: Train) => (isTime(t.eta) ? t.eta : t.sta!)
-  const due = [...a.past, ...a.ahead].filter((t) => t.sta && !t.ata)
+  const due = pool.filter((t) => t.sta && !t.ata)
   // "Delayed" with no time: not expected at its timetabled time, so not in the list; a sentence of its
   // own after it, with the reason when there is one (John, November 18th 2026).
   const delayed = (t: Train) => !!t.eta && t.eta !== 'On time' && !isTime(t.eta)
@@ -866,7 +869,7 @@ export function listShareWords(a: Analysis, kind: 'platforms' | 'arrivals', pros
  *  of their own. */
 export type PicRow = { time: string; mid: string; late: string; platform?: string; lateBy?: number; arrow?: boolean; noPlat?: boolean }
 export type ListPicture = {
-  kicker: string; title: string; when: string; heads: [string, string]
+  kicker: string; title: string; when: string; heads: [string, string] | [string, string, string]
   one: string | null; rows: PicRow[]; note: string | null; words: { text: string; title: string; hash: string }
   /** A line above the rows: earlier trains with no platform yet (John, November 22nd 2026). */
   before?: string | null
@@ -910,7 +913,8 @@ export function platformsPicture(a: Analysis): ListPicture | null {
 export function arrivalsPicture(a: Analysis): ListPicture | null {
   const fromNow = (t: string) => diff(a.now, t)
   const when = (t: Train) => (isTime(t.eta) ? t.eta : t.sta!)
-  const due = [...a.past, ...a.ahead].filter((t) => t.sta && !t.ata && !t.cancelled)
+  const pool = a.arr ?? [...a.past, ...a.ahead]
+  const due = pool.filter((t) => t.sta && !t.ata && !t.cancelled)
   const delayed = (t: Train) => !!t.eta && t.eta !== 'On time' && !isTime(t.eta)
   const inHour = due.filter((t) => !delayed(t) && fromNow(when(t)) >= 0 && fromNow(when(t)) <= 60).sort((x, y) => fromNow(when(x)) - fromNow(when(y)))
   const held = due.filter((t) => delayed(t) && fromNow(t.sta!) >= 0 && fromNow(t.sta!) <= 60)
@@ -920,20 +924,24 @@ export function arrivalsPicture(a: Analysis): ListPicture | null {
   const shown = [...inHour.slice(0, 10), ...held.sort(bySta)]
   if (!shown.length) return null
   // The kind of train, when the journey has more than one (two "8.58am" trains can be different).
-  const kinds = speedGroups({ ...a, ahead: [...a.past, ...a.ahead] }).filter((g) => g.kind !== 'all')
+  const kinds = speedGroups({ ...a, ahead: pool }).filter((g) => g.kind !== 'all')
   const label = { fast: 'Fast', slower: 'Slower', elizabeth: 'Elizabeth Line', all: '' } as const
   const kindOf = (t: Train) => (kinds.length > 1 ? label[kinds.find((g) => g.trains.includes(t))?.kind ?? 'all'] : '')
-  const longest = Math.max(0, ...[...a.past, ...a.ahead].filter((t) => t.sta).map((t) => diff(t.std, t.sta!)))
+  const longest = a.arr ? 0 : Math.max(0, ...pool.filter((t) => t.sta).map((t) => diff(t.std, t.sta!)))
+  // The platform at B, from the arrival board, or "not yet" (November 25th 2026).
+  const plat = (t: Train): Partial<PicRow> => (!a.arr ? {} : t.platform ? { platform: t.platform } : { noPlat: true })
   const rows = shown.map((t): PicRow => {
     const late = isTime(t.eta) ? diff(t.sta!, t.eta) : 0
     const mid = [`the ${t12(t.std)}`, kindOf(t)].filter(Boolean).join(' · ')
-    if (delayed(t)) return { time: '?', mid, late: `delayed, was due ${t12(t.sta!)}, no new time yet` }
-    return late > 0 ? { time: t12(when(t)), mid, late: minutesLate(late), lateBy: late, arrow: true } : { time: t12(when(t)), mid, late: '' }
+    if (delayed(t)) return { time: '?', mid, late: `delayed, was due ${t12(t.sta!)}, no new time yet`, ...plat(t) }
+    return late > 0 ? { time: t12(when(t)), mid, late: minutesLate(late), lateBy: late, arrow: true, ...plat(t) } : { time: t12(when(t)), mid, late: '', ...plat(t) }
   })
+  const pls = rows.map((r) => r.platform)
+  const one = a.arr && rows.length > 1 && pls.every((x) => x && x === pls[0]) ? pls[0]! : null
   const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
   return {
     kicker: 'TRAINCHECKER · ARRIVALS', title: `At ${a.to} from ${a.from}`, when: at,
-    heads: ['EXPECTED IN', `FROM ${a.from.toUpperCase()}`], one: null, rows,
+    heads: a.arr ? ['EXPECTED IN', `FROM ${a.from.toUpperCase()}`, 'PLATFORM'] : ['EXPECTED IN', `FROM ${a.from.toUpperCase()}`], one, rows,
     note: longest >= 120 ? `Trains that left ${a.from} more than two hours ago aren't included, as Trainchecker can't see them.` : null,
     words: {
       text: inHour.length > 10 ? `The first ten trains due at ${a.to} from ${a.from} after ${at}, from Trainchecker.` : `The trains due at ${a.to} from ${a.from}, at ${at}, from Trainchecker.`,

@@ -59,9 +59,9 @@ given its own branch). Before committing there, run
   the changing station; its sums and sentences in `src/lib/connection.ts`). The rules in
   `src/lib/analyse.ts`, every sentence in `src/lib/sentences.ts`. `npm run dev` and `vite
   preview` serve the functions too (`vite.config.ts`); from a cloud session run them with
-  `NODE_USE_ENV_PROXY=1 RDM_LDB_KEY=proxy-injected RDM_HSP_KEY=proxy-injected RDM_KB_KEY=proxy-injected`
+  `NODE_USE_ENV_PROXY=1 RDM_LDB_KEY=proxy-injected RDM_HSP_KEY=proxy-injected RDM_KB_KEY=proxy-injected RDM_ARR_KEY=proxy-injected`
   (only the key saved here works). `npm run check`: `scripts/check-rules.ts`, `scripts/check-api.ts`,
-  `scripts/check-days.ts` and `scripts/check-connection.ts`, on the real snapshots.
+  `scripts/check-days.ts`, `scripts/check-connection.ts` and the rest (`scripts/check-arrivals.ts` for the arrival board), on the real snapshots.
   Browser checks: `design/previews/stage3/sweep.cjs` and `try.cjs` (preview on port 4620).
 - Functions run in London (`lhr1`): the incidents licence allows UK use
   only.
@@ -73,6 +73,32 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 25th 2026: the arrival board for Arrivals, Exits and Connections (branch `claude/clever-wozniak-j7ic52`, not merged; Claude Code)
+
+- **John:** use the Live Arrival Board for all three ("the more reliable method"); key in Vercel as
+  `RDM_ARR_KEY` (Secret, Production and Preview; John believes it's in).
+- **Limits** (tested): as the departure board, 25 rows a request, two hours back to two hours ahead; an
+  unknown station is HTTP 400. Fields: `sta`, `eta`, `platform` for B; A's time in `previousCallingPoints`.
+- **Built:** `api/live.ts` also asks B's arrival board for trains from A (`ARR_WINDOWS` -60, 0 and 60 for an
+  hour each; `trimArr()`), sent as `arrivals` (null without the key or if it fails, and then the page is as
+  before). `analyse.ts` keeps them apart as `a.arr` (its `platform` is B's). `arrivals()` and
+  `arrivalsPicture()` use them: each row has its platform at B (or "not yet"; "All from platform" when
+  shared), a third heading "PLATFORM", and no long-journey note (the board sees every train due). `Board`
+  and the Share picture draw the third heading. `api/connect.ts`'s platform lookup (Exits, Connections) asks
+  the arrival board when `RDM_ARR_KEY` is set, from an hour before the expected time (it goes by timetabled
+  times). Exits offers trains that end at B again when `a.arr` is there. About reworded (draft): "…and the
+  arrivals, with the platforms trains come into, from its live arrival boards…". Exits' error says "live
+  arrivals".
+- **Checked:** `npm run check` 264 + 57 + 79 + 40 + 76 + 36 + 391 + 16 (new `scripts/check-arrivals.ts`, on
+  boards saved at 11.55am and 12.01pm; breaking the platform rule and the note rule made two fail); `tsc -b`,
+  the two functions type-checked, lint, build. Browser at 1200px light and 390px dark with touch, with live
+  arrival boards and the departure side made up from them (illustration only; this session holds only the
+  arrival key): Twyford to Reading and Reading to Paddington, platforms on every row, no errors, no sideways
+  scroll; Exits from Twyford offered the 12.03pm (ending at Reading) and the real lookup answered platform
+  14; the Share picture read back from the clipboard, fonts loaded (`design/previews/arrival-board/`).
+- **Not checked:** the whole page with both live boards together (needs the departure key here, or the
+  preview), Connections in the browser, a real phone.
 
 ### November 25th 2026: the Live Arrival Board works (notes only, straight to `main`; Claude Code)
 

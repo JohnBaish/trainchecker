@@ -182,6 +182,7 @@ details.trains-fold { margin-top: var(--space-3); }
 /* A late train's note breaks only after its comma: "was due 9.04," / "running late" (John, November 20th 2026). */
 .bhead .bone { grid-column: 2 / 4; justify-self: end; display: inline-flex; align-items: center; gap: 10px; }
 .bhead .bright { grid-column: 3; justify-self: end; }
+.bhead .bone.b3 { grid-column: 3; }
 .brow { display: grid; grid-template-columns: 5.4rem 1fr auto; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--color-divider); }
 .brow:last-child { border-bottom: 0; }
 .simple .shead { margin: 0; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--color-neutral-700); display: flex; align-items: center; gap: 10px; }

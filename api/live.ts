@@ -16,6 +16,13 @@
 const BASE = 'https://api1.raildata.org.uk/1010-live-departure-board-dep1_2/LDBWS/api/20220120'
 // [start, length] in minutes from now, as in design/mockups/fetch-snapshot.mjs.
 export const WINDOWS: [number, number][] = [[-120, 60], [-60, 60], [0, 60], [60, 60], [119, 120]]
+// B's Live Arrival Board, asked only for trains that came from A (John, November 25th 2026): the
+// platform each train comes into at B, those that end there included, which the departure boards
+// can't give. Same limits as the departure board (25 rows, two hours back to two hours ahead;
+// tested November 25th 2026). Its own key (RDM_ARR_KEY); without it, or if it fails, the page
+// works as before. The last hour too, for trains running late.
+const ARR_BASE = 'https://api1.raildata.org.uk/1010-live-arrival-board-arr/LDBWS/api/20220120'
+export const ARR_WINDOWS: [number, number][] = [[-60, 60], [0, 60], [60, 60]]
 
 /** One train, with just what the page uses. Times are "HH:MM" (UK time) or National Rail's
  *  words ("On time", "Delayed", "Cancelled", "No report"). */
@@ -39,11 +46,15 @@ export type Service = {
 /** `stops`: the stations, in order, that the train with the most stops calls at between A and B, with their names
  *  (for the last week's stand-in station when National Rail's record leaves out an end: John,
  *  November 18th 2026). */
-export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route: string[]; stops: [string, string][] }
+/** `arrivals`: the trains due at B from A, from B's arrival board; each `platform` is B's, and
+ *  `std`/`etd` are A's. Null when the arrival board couldn't be had. */
+export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route: string[]; stops: [string, string][]; arrivals?: Service[] | null }
 
 type CallingPoint = { crs?: string; locationName?: string; st?: string; et?: string; at?: string; isCancelled?: boolean; cancelReason?: string; delayReason?: string }
 type RawService = {
   serviceID: string; std: string; etd?: string; platform?: string; operator?: string
+  sta?: string; eta?: string; ata?: string
+  previousCallingPoints?: { callingPoint?: CallingPoint[] }[]
   destination?: { locationName?: string }[]
   isCancelled?: boolean; cancelReason?: string; delayReason?: string
   subsequentCallingPoints?: { callingPoint?: CallingPoint[] }[]
@@ -76,6 +87,25 @@ export function trim(from: string, to: string, taken: string, boards: RawBoard[]
   return { taken, from, to, fromName: named.locationName || from, toName: named.filterLocationName || to, services: [...seen.values()], route: [...route].sort(), stops }
 }
 
+/** B's arrival boards made into one list (each train once): A's times from its stops, B's own. */
+export function trimArr(from: string, boards: RawBoard[]): Service[] {
+  const seen = new Map<string, Service>()
+  for (const board of boards) {
+    for (const s of board.trainServices || []) {
+      const a = (s.previousCallingPoints || []).flatMap((g) => g.callingPoint || []).find((c) => c.crs === from)
+      if (!a?.st || !s.sta) continue
+      seen.set(s.serviceID, {
+        id: s.serviceID, std: a.st, etd: a.at ?? a.et ?? null, platform: s.platform || null,
+        operator: s.operator || '', destination: (s.destination || []).map((x) => x.locationName).filter(Boolean).join(' and '),
+        cancelled: Boolean(s.isCancelled || a.isCancelled),
+        reason: s.cancelReason || s.delayReason || a.cancelReason || a.delayReason || null,
+        sta: s.sta, eta: s.eta ?? null, ata: s.ata ?? null,
+      })
+    }
+  }
+  return [...seen.values()]
+}
+
 const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } })
 
@@ -84,8 +114,10 @@ class BoardError extends Error {
   constructor(status: number) { super(`board ${status}`); this.status = status }
 }
 
-async function board(key: string, from: string, to: string, off: number, win: number): Promise<RawBoard> {
-  const url = `${BASE}/GetDepBoardWithDetails/${from}?numRows=150&filterCrs=${to}&filterType=to&timeOffset=${off}&timeWindow=${win}`
+async function board(key: string, from: string, to: string, off: number, win: number, arr = false): Promise<RawBoard> {
+  const url = arr
+    ? `${ARR_BASE}/GetArrBoardWithDetails/${to}?numRows=150&filterCrs=${from}&filterType=from&timeOffset=${off}&timeWindow=${win}`
+    : `${BASE}/GetDepBoardWithDetails/${from}?numRows=150&filterCrs=${to}&filterType=to&timeOffset=${off}&timeWindow=${win}`
   let last = 0
   for (let i = 0; i < 3; i++) {
     // The board refuses some default User-Agents (stage 1), so it gets its own.
@@ -111,8 +143,13 @@ export async function GET(request: Request): Promise<Response> {
   if (!key) return json({ error: 'unavailable', reason: 'no RDM_LDB_KEY setting in this deployment' }, 503)
   const taken = new Date().toISOString()
   try {
-    const boards = await Promise.all(WINDOWS.map(([off, win]) => board(key, from, to, off, win)))
-    return json(trim(from, to, taken, boards))
+    const arrKey = process.env.RDM_ARR_KEY
+    // If the arrival board fails, the page goes on without it (null), as before November 25th 2026.
+    const arrivals = arrKey
+      ? Promise.all(ARR_WINDOWS.map(([off, win]) => board(arrKey, from, to, off, win, true))).then((b) => trimArr(from, b), () => null)
+      : Promise.resolve(null)
+    const [boards, arr] = await Promise.all([Promise.all(WINDOWS.map(([off, win]) => board(key, from, to, off, win))), arrivals])
+    return json({ ...trim(from, to, taken, boards), arrivals: arr })
   } catch (e) {
     const status = e instanceof BoardError ? e.status : 0
     // National Rail answers an unknown station code with an error, not an empty board.

@@ -8,7 +8,8 @@ export type Service = {
   id: string; std: string; etd: string | null; platform: string | null; operator: string; destination: string
   cancelled: boolean; reason: string | null; sta: string | null; eta: string | null; ata: string | null
 }
-export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route?: string[]; stops?: [string, string][] }
+/** `arrivals`: from B's arrival board (api/live.ts, November 25th 2026); each `platform` is B's. */
+export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route?: string[]; stops?: [string, string][]; arrivals?: Service[] | null }
 
 export type Train = Service & {
   rel: number // minutes from now to its timetabled departure (negative: already gone)
@@ -37,6 +38,9 @@ export type Analysis = {
   /** With no train in the next four hours: the latest that left in the last two, if any, so the
    *  page can say the last one has gone (John, November 17th 2026). */
   lastGone: Train | null
+  /** The trains due at B from A, from B's arrival board, with the platform at B (`platform` here
+   *  is B's, not A's); null without it, and then Arrivals uses the departure boards as before. */
+  arr: Train[] | null
 }
 
 export const mins = (t: string) => { const [h, m] = t.split(':').map(Number); return h * 60 + m }
@@ -138,5 +142,6 @@ export function analyse(snap: Snap): Analysis {
     last: { byArrivals, tense, known: known.length, within3, lates, lateArrived, usual, worst, cancelled: pastCancelled },
     worse, platList, platKnown: platList.reduce((a, [, n]) => a + n, 0),
     lastGone: ahead.length ? null : past.filter((s) => !s.cancelled).at(-1) ?? null,
+    arr: snap.arrivals ? snap.arrivals.map((s) => ({ ...s, rel: diff(now, s.std), late: null, unknown: false })).sort((a, b) => a.rel - b.rel) : null,
   }
 }

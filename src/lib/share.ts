@@ -293,10 +293,15 @@ export function listImage(p: ListPicture): HTMLCanvasElement {
     ctx.textAlign = 'right'
     ctx.fillText('ALL FROM PLATFORM', x1 - w - 16, mid + 7)
     ctx.textAlign = 'left'
+    // Arrivals with platforms: "FROM READING" over the trains too (November 25th 2026).
+    if (p.heads[2]) ctx.fillText(p.heads[1], colX, mid + 7)
   } else {
     ctx.fillText(p.heads[0], x0, y + 14)
     const second = p.rows.some((r) => r.platform || r.noPlat)
-    if (second) { ctx.textAlign = 'right'; ctx.fillText(p.heads[1], x1, y + 14); ctx.textAlign = 'left' }
+    if (p.heads[2]) {
+      ctx.fillText(p.heads[1], colX, y + 14)
+      if (second) { ctx.textAlign = 'right'; ctx.fillText(p.heads[2], x1, y + 14); ctx.textAlign = 'left' }
+    } else if (second) { ctx.textAlign = 'right'; ctx.fillText(p.heads[1], x1, y + 14); ctx.textAlign = 'left' }
     else ctx.fillText(p.heads[1], colX, y + 14)
   }
   spaced(ctx, '0px')

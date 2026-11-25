@@ -22,9 +22,10 @@ export function Exits({ a }: { a: Analysis }) {
   // The trains you might be on, as in Connections.
   const mines = useMemo(() => [...a.past, ...a.ahead].filter((s) => !s.cancelled && s.sta && s.rel <= 120).map((s) => ({ s, m: mineOf(s) }))
     .filter(({ m, s }) => (m.exp ? diff(a.now, m.exp) >= -3 : s.rel >= -120))
-    // A train that ends here isn't offered: its platform can't be seen (John, November 22nd 2026:
-    // "we don't ask what train they're on, so then we don't have to say we don't know").
-    .filter(({ s }) => s.destination !== a.to).slice(0, 8), [a])
+    // A train that ends here isn't offered when its platform can't be seen (John, November 22nd 2026:
+    // "we don't ask what train they're on, so then we don't have to say we don't know"). With the
+    // arrival board (November 25th 2026) it can be, so every train is offered.
+    .filter(({ s }) => a.arr !== null || s.destination !== a.to).slice(0, 8), [a])
   const pick = mines.find(({ m }) => m.id === mineId)
   const e = table?.[a.toCrs]
   const arr = pick ? pick.m.exp ?? pick.m.sta ?? '' : ''
@@ -35,7 +36,8 @@ export function Exits({ a }: { a: Analysis }) {
     return () => { current = false }
   }, [mineId, arr, a.toCrs, a.fromCrs, a.taken, e])
   if (!e) return null
-  const ends = !!pick && pick.s.destination === a.to
+  // Only without the arrival board is a train that ends here one whose platform can't be seen.
+  const ends = !!pick && pick.s.destination === a.to && a.arr === null
   const answer = !pick ? null
     : e.k === 'concourse' ? trainLine(e, null, ends)
     : got.s === 'ok' ? trainLine(e, got.platform, ends) : null
@@ -58,7 +60,7 @@ export function Exits({ a }: { a: Analysis }) {
         </div>
       )}
       {pick && got.s === 'idle' && e.k !== 'concourse' && <p className="muted" role="status"><span className="spinner" aria-hidden="true"></span>Asking National Rail which platform it’s coming into…</p>}
-      {pick && got.s === 'failed' && <p role="alert">Sorry, National Rail’s live departures couldn’t be reached just now. Please try again in a minute.</p>}
+      {pick && got.s === 'failed' && <p role="alert">Sorry, National Rail’s live arrivals couldn’t be reached just now. Please try again in a minute.</p>}
       {answer && <p className="exit-answer" aria-live="polite">{answer}</p>}
     </section>
   )

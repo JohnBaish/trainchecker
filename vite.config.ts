@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // On Vercel, api/live.ts, api/week.ts and api/days.ts are served as functions. Here, `npm run
 // dev` and `vite preview` serve the same three files at the same addresses, so the page can be tried
 // against National Rail from a cloud session (the session's proxy adds the key; locally, set
-// RDM_LDB_KEY, RDM_HSP_KEY and RDM_KB_KEY). Not part of the built site.
+// RDM_LDB_KEY, RDM_HSP_KEY, RDM_KB_KEY and RDM_ARR_KEY). Not part of the built site.
 function functionsHere(): Plugin {
   const handle = (load: (f: string) => Promise<{ GET: (r: Request) => Promise<Response> }>): Connect.NextHandleFunction =>
     async (req, res, next) => {

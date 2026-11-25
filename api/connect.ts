@@ -10,8 +10,9 @@
 // GET /api/connect?at=NTA&to=TQY&from=IVY&train=10918949&arr=15:29
 //   The trains from Newton Abbot to Torquay in the next four hours, and the platform the train
 //   you're on (from Ivybridge, id starting 10918949, due in at 15:29) comes into. That platform is
-//   on Newton Abbot's own board, asked only for trains that came from Ivybridge; a train that ends
-//   at Newton Abbot isn't on it, and then the platform is null.
+//   on Newton Abbot's arrival board, asked only for trains that came from Ivybridge (since November
+//   25th 2026; without RDM_ARR_KEY, its departure board, where a train ending there is missing and
+//   the platform is null).
 //
 // GET /api/connect?at=RDG&from=MDG&train=10918949&arr=15:29&only=platform
 //   Only the platform that train comes into at Reading, for "Station exits" (November 22nd 2026).
@@ -21,6 +22,9 @@
 // scripts/check-connection.ts tries places() and trimConnect() on real boards.
 
 const BASE = 'https://api1.raildata.org.uk/1010-live-departure-board-dep1_2/LDBWS/api/20220120'
+// The platform your train comes into: B's arrival board when there's a key for it (RDM_ARR_KEY;
+// John, November 25th 2026), which has trains that end at B too; else B's departure board, as before.
+const ARR_BASE = 'https://api1.raildata.org.uk/1010-live-arrival-board-arr/LDBWS/api/20220120'
 /** [start, length] in minutes from now. */
 export const PLACE_WINDOWS: [number, number][] = [0, 15, 30, 45, 60, 75, 90, 105].map((o): [number, number] => [o, 15])
 export const ONWARD_WINDOWS: [number, number][] = [[-10, 40], [30, 30], [60, 60], [119, 120]]
@@ -87,8 +91,8 @@ class BoardError extends Error {
   constructor(status: number) { super(`board ${status}`); this.status = status }
 }
 
-async function board(key: string, at: string, off: number, win: number, filter = ''): Promise<RawBoard> {
-  const url = `${BASE}/GetDepBoardWithDetails/${at}?numRows=150${filter}&timeOffset=${off}&timeWindow=${win}`
+async function board(key: string, at: string, off: number, win: number, filter = '', arr = false): Promise<RawBoard> {
+  const url = `${arr ? `${ARR_BASE}/GetArrBoardWithDetails` : `${BASE}/GetDepBoardWithDetails`}/${at}?numRows=150${filter}&timeOffset=${off}&timeWindow=${win}`
   let last = 0
   for (let i = 0; i < 3; i++) {
     const r = await fetch(url, { headers: { 'x-apikey': key, 'User-Agent': 'trainchecker.baish.net', Accept: 'application/json' }, signal: AbortSignal.timeout(15000) })
@@ -105,12 +109,17 @@ const ukMinutes = (d: Date) => {
   return h * 60 + m
 }
 
-/** B's board for trains that came from A, from just before the train is due in. */
-function incomingBoard(key: string, at: string, from: string, arr: string, now: Date): Promise<RawBoard> {
+/** B's board for trains that came from A, around when the train is due in. The arrival board goes
+ *  by timetabled times, so it's asked from an hour before the expected time, for a late train. */
+function incomingBoard(key: string, at: string, from: string, arr: string, now: Date, arrKey?: string): Promise<RawBoard> {
   const [h, m] = arr.split(':').map(Number)
   let rel = h * 60 + m - ukMinutes(now)
   if (rel < -720) rel += 1440
   if (rel > 720) rel -= 1440
+  if (arrKey) {
+    const off = Math.max(-120, Math.min(119, rel - 60))
+    return board(arrKey, at, off, 70, `&filterCrs=${from}&filterType=from`, true)
+  }
   const off = Math.max(-120, Math.min(119, rel - 5))
   return board(key, at, off, 60, `&filterCrs=${from}&filterType=from`)
 }
@@ -124,12 +133,13 @@ export async function GET(request: Request): Promise<Response> {
   if (!ok(at)) return json({ error: 'stations' }, 400)
   const key = (globalThis as { process?: { env: Record<string, string | undefined> } }).process?.env.RDM_LDB_KEY
   if (!key) return json({ error: 'unavailable', reason: 'no RDM_LDB_KEY setting in this deployment' }, 503)
+  const arrKey = (globalThis as { process?: { env: Record<string, string | undefined> } }).process?.env.RDM_ARR_KEY
   const now = new Date()
   const taken = now.toISOString()
   try {
     if (q.get('only') === 'platform') {
       if (!ok(from) || !/^\d{6,8}$/.test(train) || !/^\d\d:\d\d$/.test(arr)) return json({ error: 'stations' }, 400)
-      const inc = await incomingBoard(key, at, from, arr, now).then((b) => [b], () => [])
+      const inc = await incomingBoard(key, at, from, arr, now, arrKey).then((b) => [b], () => [])
       return json({ taken, at, arrPlatform: trimConnect(at, at, taken, [], inc, train).arrPlatform })
     }
     if (!to) {
@@ -141,7 +151,7 @@ export async function GET(request: Request): Promise<Response> {
     let incoming: Promise<RawBoard[]> = Promise.resolve([])
     if (ok(from) && /^\d{6,8}$/.test(train) && /^\d\d:\d\d$/.test(arr)) {
       // If this board can't be had, the answer goes without the arrival platform.
-      incoming = incomingBoard(key, at, from, arr, now).then((b) => [b], () => [])
+      incoming = incomingBoard(key, at, from, arr, now, arrKey).then((b) => [b], () => [])
     }
     const [onward, inc] = await Promise.all([Promise.all(ONWARD_WINDOWS.map(([off, win]) => board(key, at, off, win, `&filterCrs=${to}&filterType=to`))), incoming])
     return json(trimConnect(at, to, taken, onward, inc, train))

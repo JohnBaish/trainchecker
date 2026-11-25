@@ -74,6 +74,22 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 25th 2026: Share under the location guide and Exits, a mock-up (branch `claude/clever-wozniak-j7ic52`, not merged; Claude Code)
+
+- **John:** a Share under the departures' directions (a tapped platform) and under Exits' answer, on a line
+  below the box, reproducing the box; the words to think about.
+- **Built (mock-up, drafts):** `src/components/BoxShare.tsx` (the button and the picture: `answerImage()` in
+  `share.ts`, now with a `kicker`); `DirLines` in `JourneyView.tsx` (the board gets `at`: the station, the
+  journey, the time); `Exits.tsx` under the answer. Drafts: "Share/Copy these directions", picture
+  "TRAINCHECKER · PLATFORM GUIDE" / "Getting to platform 11A at Reading", sent with "Here’s how to find
+  platform 11A at Reading, from Trainchecker."; "Share/Copy the way out", "TRAINCHECKER · EXITS" / "Arriving
+  at Reading on the 1.04pm from Twyford", "Here’s the way out at Reading from the 1.04pm Twyford train, from
+  Trainchecker." The guide's paragraphs run together in the picture.
+- **Checked** (`design/previews/box-share/shoot.mjs`): the guide on the saved Reading to Paddington board
+  (6.24pm, November 17th), Exits on live arrivals from Twyford (departure side made up, illustration only);
+  1200px light and 390px dark with touch; both pictures read back from the clipboard; buttons 44px on a
+  phone; no errors, no sideways scroll. `tsc -b`, lint, build, checks. Not checked: a phone's share sheet.
+
 ### November 25th 2026: Putney's one entrance; entrances named after their own platform (branch `claude/clever-wozniak-j7ic52`, not merged; Claude Code)
 
 - **John (Putney, platform 2):** "Platform 2 is right by the Disraeli Road entrance. From the entrance nearest

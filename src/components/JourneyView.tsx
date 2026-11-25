@@ -22,6 +22,7 @@ import { LastWeek } from './LastWeek.tsx'
 import { FactCard, QuoteCard } from './Tail.tsx'
 import { Connection } from './Connection.tsx'
 import { Exits } from './Exits.tsx'
+import { BoxShare } from './BoxShare.tsx'
 import { firstPanel, firstShare, laterPanel, laterShare } from '../lib/windows.ts'
 
 
@@ -93,8 +94,23 @@ function useDirs(crs: string): Dirs | null {
   return e ? (pl: string) => toPlatform(e, pl, got!.l[crs], got!.f[crs]) : null
 }
 
-function DirLines({ lines }: { lines: string[] }) {
-  return <div className="pdirs" aria-live="polite">{lines.map((l, i) => <p key={i}>{l}</p>)}</div>
+/** Where the boards' directions are for: the station they're at, for the Share (mock-up, November 25th 2026). */
+type At = { station: string; hash: string; taken: string }
+
+function DirLines({ lines, pl, at }: { lines: string[]; pl?: string; at?: At }) {
+  const box = <div className="pdirs" aria-live="polite">{lines.map((l, i) => <p key={i}>{l}</p>)}</div>
+  if (!at || !pl) return box
+  // MOCK-UP: Share just below the box, on a line of its own; the words are Claude's drafts.
+  return (
+    <div className="pdirs-block">
+      {box}
+      <BoxShare taken={at.taken} w={{
+        kicker: 'PLATFORM GUIDE', heading: `Getting to platform ${pl} at ${at.station}`, text: lines.join(' '),
+        sent: `Here’s how to find platform ${pl} at ${at.station}, from Trainchecker.`, what: 'these directions',
+        file: `trainchecker-platform-${pl}-${at.hash.slice(1)}.png`, hash: at.hash,
+      }} />
+    </div>
+  )
 }
 
 /** The platform badge is a button; its directions open under it (John, option A). */
@@ -106,7 +122,7 @@ function TapBadge({ pl, open, onTap }: { pl: string; open: boolean; onTap: () =>
   )
 }
 
-function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
+function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?: At }) {
   const [openRow, setOpenRow] = useState<string | null>(null)
   const tap = dirs ?? null
   const toggle = (k: string) => setOpenRow(openRow === k ? null : k)
@@ -118,7 +134,7 @@ function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
         // Even columns on a computer, a tile for each time on a phone (John, November 19th 2026).
         <div className="simple">
           <p className="shead">All from platform {tap && tap(p.one!) ? <TapBadge pl={p.one!} open={openRow === 'one'} onTap={() => toggle('one')} /> : <span className="badge">{p.one}</span>}</p>
-          {tap && openRow === 'one' && <DirLines lines={tap(p.one!)!} />}
+          {tap && openRow === 'one' && <DirLines lines={tap(p.one!)!} pl={p.one!} at={at} />}
           <div className="stimes" role="list">{onceAmPm(p.rows.map((r) => r.time)).map((t, i) => <b key={i} role="listitem">{t}</b>)}</div>
         </div>
       ) : <>
@@ -131,7 +147,7 @@ function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
           : p.heads[2] ? (second && <span role="columnheader" className="bright">{p.heads[2]}</span>)
           : <span role="columnheader" className={second ? 'bright' : ''}>{p.heads[1]}</span>}
       </div>
-      {tap && p.one && openRow === 'one' && <DirLines lines={tap(p.one)!} />}
+      {tap && p.one && openRow === 'one' && <DirLines lines={tap(p.one)!} pl={p.one} at={at} />}
       {p.rows.map((r, i) => (
         <div key={i} className={tap && openRow === String(i) ? 'brow open' : 'brow'} role="row">
           <span className={r.time === '?' ? 'bt q' : 'bt'} role="cell">{r.time}</span>
@@ -143,7 +159,7 @@ function Board({ p, dirs }: { p: ListPicture; dirs?: Dirs | null }) {
             ? <span role="cell" className="bcell"><TapBadge pl={r.platform} open={openRow === String(i)} onTap={() => toggle(String(i))} /></span>
             : <span className="badge" role="cell">{r.platform}</span>)}
           {r.noPlat && !p.one && <span className="bnoplat" role="cell">not yet</span>}
-          {tap && r.platform && openRow === String(i) && <DirLines lines={tap(r.platform)!} />}
+          {tap && r.platform && openRow === String(i) && <DirLines lines={tap(r.platform)!} pl={r.platform} at={at} />}
         </div>
       ))}
       </>}
@@ -232,7 +248,7 @@ function FirstPanel({ a }: { a: Analysis }) {
         <details className="advice trains-fold">
           <summary>{k === 1 ? 'Show the train and its platform' : 'Show the trains and platforms'} <Icon name="down" /></summary>
           {pic && dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
-          {pic && <Board p={pic} dirs={dirs} />}
+          {pic && <Board p={pic} dirs={dirs} at={{ station: a.from, hash: `#${a.fromCrs}-${a.toCrs}`, taken: a.taken }} />}
           {f.cancelled && <p className="tafter">{f.cancelled}</p>}
           {(() => { const sp = firstShare(a); return sp && <PicShare pic={sp} what="these trains" file="next-hour" /> })()}
         </details>
@@ -257,7 +273,7 @@ function LaterPanel({ a }: { a: Analysis }) {
         <details className="advice trains-fold">
           <summary>{pic.rows.length === 1 ? 'Show the train and its platform' : 'Show the trains and platforms'} <Icon name="down" /></summary>
           {dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
-          <Board p={pic} dirs={dirs} />
+          <Board p={pic} dirs={dirs} at={{ station: a.from, hash: `#${a.fromCrs}-${a.toCrs}`, taken: a.taken }} />
           {l.cancelled && <p className="tafter">{l.cancelled}</p>}
           {(() => { const sp = laterShare(a); return sp && <PicShare pic={sp} what="these trains" file="later" /> })()}
         </details>

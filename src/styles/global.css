@@ -329,7 +329,8 @@ details.trains-fold { margin-top: var(--space-3); }
 .bcell { justify-self: end; }
 /* A train with no platform yet, "not yet", in the two panels' boards (November 24th 2026). */
 .bnoplat { justify-self: end; min-width: 2.6em; text-align: center; font-size: 13px; color: var(--color-neutral-700); font-style: italic; }
-.brow .pdirs { grid-column: 1 / -1; }
+.brow .pdirs, .brow .pdirs-block { grid-column: 1 / -1; }
+.share-row.box-share { margin-top: var(--space-2); }
 .pdirs { margin: 4px 0 0; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--color-bg); }
 .pdirs p { margin: 0; }
 .pdirs p + p { margin-top: 8px; }

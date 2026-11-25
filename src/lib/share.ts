@@ -453,7 +453,7 @@ function hoursImage(p: ListPicture): HTMLCanvasElement {
 /** "Connections": a picture of the answer's box, in the dark colours as the lists are (John,
  *  November 21st 2026), its edge in the answer's colour. */
 const EDGE: Record<string, string> = { good: '#aebf92', mixed: '#dd8a56', prepared: '#f08a7e', none: '#b0a593' }
-export function answerImage(o: { heading: string; text: string; edge: string; when: string }): HTMLCanvasElement {
+export function answerImage(o: { heading: string; text: string; edge: string; when: string; kicker?: string }): HTMLCanvasElement {
   const scale = 2
   const canvas = document.createElement('canvas')
   const probe = canvas.getContext('2d')!
@@ -474,7 +474,7 @@ export function answerImage(o: { heading: string; text: string; edge: string; wh
   ctx.fillRect(0, 0, W, H)
   ctx.fillStyle = D.kicker
   ctx.font = `600 18px ${FIG}`
-  ctx.fillText('TRAINCHECKER · CONNECTIONS', 60, 72)
+  ctx.fillText(`TRAINCHECKER · ${o.kicker ?? 'CONNECTIONS'}`, 60, 72)
   ctx.fillStyle = D.muted
   ctx.font = `20px ${FIG}`
   ctx.textAlign = 'right'

@@ -74,6 +74,23 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 25th 2026: the Live Arrival Board works (notes only, straight to `main`; Claude Code)
+
+- **John** subscribed to the Live Arrival Board and saved its key here (secure form; the first paste was
+  refused as "Invalid ApiKey", the second works). Address:
+  `https://api1.raildata.org.uk/1010-live-arrival-board-arr/LDBWS/api/20220120/GetArrBoardWithDetails/{crs}`.
+  The plain `GetArrivalBoard` isn't routed on it (HTTP 500); the "with details" call is (200).
+- **Tested at 11.55am:** Reading from Twyford (`filterCrs=TWY&filterType=from`): the Elizabeth Line trains
+  ending at Reading arrive at platform 14, the Didcot trains at 13B. Paddington from Reading: every train with
+  its platform, those ending at Paddington included (9, 12, 2, 4, 11, 5, 10, 1, 8; Elizabeth Line A). Saved in
+  `design/mockups/snapshots/20261125-1155-arrivals/`.
+- **Licence** (John's PDF): free, global, may be passed on freely, credit "National Rail"; in
+  `design/licences-2026-11-17.md`.
+- **Key saved here now:** Live Arrival Board (it replaced the departure board's; the departure board refuses
+  it). Vercel needs it too as a new Secret variable, for Production and Preview, before anything uses it.
+- **Next, for John:** what to build with it (Arrivals, Exits and Connections for trains ending at B).
+  Nothing built yet. Tracker: Ideas for later 6.
+
 ### November 25th 2026: an arrivals board for platforms at the destination, to look into (notes only, straight to `main`; Claude Code)
 
 - **John asked:** is there definitely no way to get an arrivals board with platforms? Not with the current

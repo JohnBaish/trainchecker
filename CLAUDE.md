@@ -74,6 +74,22 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 25th 2026: an arrivals board for platforms at the destination, to look into (notes only, straight to `main`; Claude Code)
+
+- **John asked:** is there definitely no way to get an arrivals board with platforms? Not with the current
+  key: on the Live Departure Board product, `GetArrivalBoard`, `GetArrDepBoardWithDetails` and
+  `GetServiceDetails` all answer HTTP 500 "Unable to route the message to a Target Endpoint" (the
+  product routes departure calls only); `GetDepartureBoard` works.
+- **Probably available separately:** a web search summary of the openraildata wiki's list of Rail Data
+  Marketplace products names a "Live Arrival Board" and "Live Arrival and Departure Boards" (Rail
+  Delivery Group, open); the wiki page itself refused automated reading, so not seen. National Rail's
+  older arrivals board gave each train's platform at that station, including trains that end there.
+- **Next (John, later today):** find it on the Marketplace, subscribe, read its licence (watch for "UK
+  only"), save its key through the secure form; then test on Twyford to Reading and on trains ending
+  at Paddington. Would let Arrivals, Exits and Connections give the platform for trains that end at B.
+  Weaker routes: the Service Details product with a train id rebuilt for B (untested guess); Darwin
+  Push Port (needs an always-running server). Tracker: Ideas for later 6.
+
 ### November 24th 2026: Share for the two panels, counts of trains running; live (branch `claude/ecstatic-dijkstra-w0herd`, merged the same day; Claude Code)
 
 - **John:** the Share buttons back, certainly on "The next hour"; for the later panel, find a way if one works; mock-ups

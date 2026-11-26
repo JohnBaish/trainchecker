@@ -795,3 +795,42 @@ The sums and sentences are in `src/lib/connection.ts`, with the agreed answers w
     10.43am to Midgham, that's quite a wait at Reading." A late onward train keeps its time
     ("currently expected to leave four minutes late, at 9.47"). Judged on the gap after lateness, so a
     gap shrunk to tight uses the tight wording.
+
+## 14. Find my train from my location, and the train lists (November 26th 2026)
+
+All agreed by John on November 26th 2026, after trying it on a journey from Reading to Paddington.
+How it works, and the figures to tune: `design/find-my-train/README.md`.
+
+1. **The button** "Find my train from my location", at the top of the train list in Connections and
+   Exits, shown once a train in the list has left A. Under it: "Your location stays on this device."
+   While working: "Finding your location…".
+2. **The answers:** "From your location, you're probably on the 5.53pm." (chosen, as if tapped);
+   "From your location, you're probably on the 8.42pm or the 8.47pm, which are close together at the
+   moment. Please choose one below." (in time order); "You seem to be at the station still, so here's
+   the next train, the 9pm." (or "…still. Please choose the train you're planning to take."); "You
+   don't seem to be near the line from Reading to London Paddington at the moment, so please choose
+   your train below."; "None of these trains seems to be near you at the moment, so please choose
+   yours below."; "Trainchecker wasn't allowed to see where you are. You can change that in your
+   browser's settings, or choose your train below."; "Your location couldn't be found. Please try
+   again, or choose your train below." "On", not "taking", in these (John: no sentence ending in a
+   preposition).
+3. **The trains found go first**, edged in a dashed accent line, with "Or choose another" above the
+   rest. Still at A, the list shows only trains still to leave or gone in the last two minutes.
+4. **About these figures:** "Find my train from my location, in the Connections and Exits sections,
+   uses your device's location only when you tap it, and only on your device: it isn't sent to
+   Trainchecker or anyone else. It compares where you are with where each train should be by National
+   Rail's times, so it can only say which train you're probably taking. The stations' positions come
+   from National Rail, and from OpenStreetMap where the two differ."
+5. **The train lists** in Connections and Exits: every train on its way, then the next four to leave,
+   in time order (was the first eight, which could leave out the train just boarded).
+6. **Expected times say so:** the train buttons read "expected into London Paddington at 10.26am",
+   or "now expected into … at 10.31am" when a minute or more late; Arrivals "The next one is expected
+   at 4.20pm.", "Three trains are expected in the next hour." (and the other counts), "…can't say
+   which trains are expected at Plymouth in the next hour."; Arrivals' Share "Here are the trains
+   expected at London Paddington from Reading, as of …" and its picture's words. Kept as "due": a
+   timetabled time ("The one due in at 3.14pm was cancelled.", "the one due to leave Reading at
+   2.40pm", "due at 3.30pm, is delayed", "was due to go at 2.19"), and "Your train is due into
+   platform 9."
+7. **A refresh keeps your place:** the same section, the same distance down, the same folds open;
+   only after a refresh, kept in the tab's own storage. A train or station chosen inside Connections
+   or Exits isn't brought back.

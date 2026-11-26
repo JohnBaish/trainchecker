@@ -74,6 +74,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 26th 2026: "Find my train from my location", fuller lists, "expected", a refresh that keeps your place; live (branch `claude/happy-darwin-mmnd4m`, merged the same day; Claude Code)
+
+- **John's answers:** "now expected into" kept for late trains; "expected" for the next train after an hour with
+  none, the Arrivals counts and Arrivals' Share words and picture; "Your train is due into platform 9." and the
+  timetabled "due"s kept. Done in `sentences.ts` and `JourneyView.tsx`; `check-rules.ts` updated to the new wording.
+  Everything agreed today in `SPEC.md` §14. **John:** merge to `main` after as much testing as possible.
+- **Checked:** `npm run check` 264 + 57 + 84 + 40 + 84 + 36 + 394 + 16 + 128; `tsc -b`, lint, build; in the browser
+  `shoot.mjs`, `list.mjs` and `refresh.mjs` again, and a new `design/previews/find-my-train/sweep.mjs`: all 16 saved
+  boards, every fold open, at 1200px light, 390px dark and 844×390 with touch: 48 views, no errors, no sideways scroll,
+  the train buttons as counted. Then merged into `main`. Not checked: Safari on a real iPhone for the refresh, the
+  live site with both live boards (the preview has been tried by John).
+
 ### November 26th 2026: a refresh keeps your place; "expected into" on the train buttons (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
 
 - **John:** where does Refresh land? Found: wherever the browser guesses (Chromium: the top, or near the bottom when the

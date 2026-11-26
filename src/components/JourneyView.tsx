@@ -182,9 +182,9 @@ function Arrivals({ a }: { a: Analysis }) {
   )
   const known = pic.rows.filter((r) => r.time !== '?').length
   const limited = pic.words.text.startsWith('The first ten')
-  const count = !known ? '' : pic.note ? (known === 1 ? 'Trainchecker can see one train due in the next hour.' : `Trainchecker can see ${num(known)} trains due in the next hour.`)
-    : limited ? 'More than ten trains are due in the next hour.'
-    : known === 1 ? 'One train is due in the next hour.' : `${Cap(num(known))} trains are due in the next hour.`
+  const count = !known ? '' : pic.note ? (known === 1 ? 'Trainchecker can see one train expected in the next hour.' : `Trainchecker can see ${num(known)} trains expected in the next hour.`)
+    : limited ? 'More than ten trains are expected in the next hour.'
+    : known === 1 ? 'One train is expected in the next hour.' : `${Cap(num(known))} trains are expected in the next hour.`
   const late = boardSummary(pic.rows, 'arrive')
   const say = known ? [count, limited && late ? `Of the first ten, ${late[0].toLowerCase()}${late.slice(1)}` : late].filter(Boolean).join(' ') : x.prose
   return (

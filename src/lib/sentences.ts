@@ -811,7 +811,7 @@ export function arrivals(a: Analysis): Listing & { heading: string } {
       : `The ${andList(held.map((t) => sayH(t.std)))} from ${a.from}, due at ${andList(held.map((t) => sayH(t.sta!)))}, are delayed, with no new times given yet${because(held)}.`
   const plain = (text: string) => ({ heading, text: tenAfterWords(text), prose: tenAfterWords(text), blocks: null, after: null })
   if (!inHour.length && held.length) return plain(heldLine + (partial ? ' ' + note : ''))
-  if (!inHour.length && partial) return plain(`Trainchecker can only see trains that left ${a.from} in the last two hours, so it can't say which trains are due at ${a.to} in the next hour.`)
+  if (!inHour.length && partial) return plain(`Trainchecker can only see trains that left ${a.from} in the last two hours, so it can't say which trains are expected at ${a.to} in the next hour.`)
   if (!inHour.length) {
     let text = `No direct trains from ${a.from} are expected at ${a.to} in the next hour.`
     const gone = due.filter((t) => t.cancelled && fromNow(t.sta!) >= 0 && fromNow(t.sta!) <= 60).sort((x, y) => fromNow(x.sta!) - fromNow(y.sta!))
@@ -820,7 +820,7 @@ export function arrivals(a: Analysis): Listing & { heading: string } {
     else if (gone.length > 1) text += ` The ${num(gone.length)} due in at ${andList(gone.map((t) => say(t.sta!)))} were cancelled.`
     // The next one after the hour, so Station exits' list of later trains doesn't seem to argue with
     // this (John agreed, November 22nd 2026; the sentence is Claude's draft).
-    if (coming[0]) text += ` The next one is due at ${t12(when(coming[0]))}.`
+    if (coming[0]) text += ` The next one is expected at ${t12(when(coming[0]))}.`
     return plain(text)
   }
   const shown = inHour.slice(0, 10), n = inHour.length
@@ -852,7 +852,7 @@ export function arrivals(a: Analysis): Listing & { heading: string } {
  *  sentence, and the journey's link sent separately (house style §17). */
 export function listShareWords(a: Analysis, kind: 'platforms' | 'arrivals', prose: string): { text: string; title: string; hash: string } {
   const at = `${t12(a.now)} on ${dateShort(new Date(a.taken))}`
-  const head = kind === 'platforms' ? `Here are the trains from ${a.from} to ${a.to} with platforms, as of ${at}.` : `Here are the trains due at ${a.to} from ${a.from}, as of ${at}.`
+  const head = kind === 'platforms' ? `Here are the trains from ${a.from} to ${a.to} with platforms, as of ${at}.` : `Here are the trains expected at ${a.to} from ${a.from}, as of ${at}.`
   return { text: tenAfterWords(`${head} ${prose} From Trainchecker.`), title: `Trainchecker: ${a.from} to ${a.to}`, hash: `#${a.fromCrs}-${a.toCrs}` }
 }
 
@@ -939,7 +939,7 @@ export function arrivalsPicture(a: Analysis): ListPicture | null {
     heads: a.arr ? ['EXPECTED IN', `FROM ${a.from.toUpperCase()}`, 'PLATFORM'] : ['EXPECTED IN', `FROM ${a.from.toUpperCase()}`], one, rows,
     note: longest >= 120 ? `Trains that left ${a.from} more than two hours ago aren't included, as Trainchecker can't see them.` : null,
     words: {
-      text: inHour.length > 10 ? `The first ten trains due at ${a.to} from ${a.from} after ${at}, from Trainchecker.` : `The trains due at ${a.to} from ${a.from}, at ${at}, from Trainchecker.`,
+      text: inHour.length > 10 ? `The first ten trains expected at ${a.to} from ${a.from} after ${at}, from Trainchecker.` : `The trains expected at ${a.to} from ${a.from}, at ${at}, from Trainchecker.`,
       title: `Trainchecker: ${a.from} to ${a.to}`, hash: `#${a.fromCrs}-${a.toCrs}`,
     },
   }

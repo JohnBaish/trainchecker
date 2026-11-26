@@ -113,10 +113,10 @@ the next train is chosen.
 10. No location found: "Your location couldn’t be found. Please try again, or choose your train
     below." (John: "just now" deleted; the second sentence kept, to confirm.)
 
-About these figures (Claude's draft, John asked for one): "Find my train from my location, in the
+About these figures (Claude's draft, agreed with John's change, "taking" for "on", November 26th 2026): "Find my train from my location, in the
 Connections and Exits sections, uses your device’s location only when you tap it, and only on your
 device: it isn’t sent to Trainchecker or anyone else. It compares where you are with where each
-train should be by National Rail’s times, so it can only say which train you’re probably on. The
+train should be by National Rail’s times, so it can only say which train you’re probably taking. The
 stations’ positions come from National Rail, and from OpenStreetMap where the two differ."
 
 **Found while taking the pictures:** at 2.55pm on Twyford to Reading no train had left Twyford,

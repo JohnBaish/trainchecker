@@ -117,6 +117,12 @@ given its own branch). Before committing there, run
   then "PLATFORM". Its own markup in `MessageHome.tsx` (the shared `Board` unchanged elsewhere); `Icon` "right";
   `.home .home-box` columns in `global.css`. Checks, `tsc -b`, lint, build; `message-home/shoot.mjs` at 390px dark and
   1200px light: the arrow on the line with its words, no errors, no sideways scroll.
+- **John:** "6.43pm" and "Expected in" right-aligned with each other. The heading and row now share one grid
+  (`subgrid` in `global.css`), as two separate grids sized their columns differently and the row ran about 40px past
+  the box on a phone; the late note may wrap, the arrow kept with its last word. Measured at 360px and 390px with
+  touch and 1200px: heading and time end on the same pixel, platform heading and badge too, no sideways scroll.
+  John's share-message cases (left on time but late; left late; left late and made some up) drafted with the others,
+  for him: not built.
 
 ### November 26th 2026: "Find my train from my location", fuller lists, "expected", a refresh that keeps your place; live (branch `claude/happy-darwin-mmnd4m`, merged the same day; Claude Code)
 

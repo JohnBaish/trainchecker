@@ -43,7 +43,7 @@ export function MessageHome({ a }: { a: Analysis }) {
           <div className="brow" role="row">
             <span className="bmid" role="cell">
               <span>{r.mid}</span>
-              {r.late && <span className={r.arrow ? 'blate own nw' : 'blate own'}>{r.late}{r.arrow && <span className="barrow after"><Icon name="right" /></span>}</span>}
+              {r.late && <span className="blate own">{r.arrow ? <>{r.late.replace(/\s+\S+$/, ' ')}<span className="nw">{r.late.match(/\S+$/)![0]}<span className="barrow after"><Icon name="right" /></span></span></> : r.late}</span>}
             </span>
             <span className={r.time === '?' ? 'bt q' : 'bt'} role="cell">{r.time}</span>
             {r.platform && <span className="badge" role="cell">{r.platform}</span>}

@@ -74,7 +74,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 26th 2026: "Message home", for John (branch `claude/message-home`, not merged; Claude Code)
+### November 26th 2026: "Message home"; live (branch `claude/message-home`, merged the same day; Claude Code)
 
 - **John:** a section after The last week, "Message home", folded under "Check your arrival and share", with the
   same question and list as Exits (Find my train too); then Exits, then "More arrivals" (Arrivals renamed, heading
@@ -131,6 +131,9 @@ given its own branch). Before committing there, run
   under two minutes counts as on time, a change of a minute as the same; how it left unknown: by the arrival, as
   before. The picture's words unchanged. Checks: check-home 44 (every case), all checks, `tsc -b`, lint, build;
   `message-home/shoot.mjs` again: no errors, no sideways scroll.
+- **John:** "This looks great. Please merge to main." Checks (ten scripts, all passing), `tsc -b`, lint and build clean
+  first; fast-forwarded into `main` with this note. Not checked: a real phone's share sheet with the picture, live
+  boards producing every case.
 
 ### November 26th 2026: "Find my train from my location", fuller lists, "expected", a refresh that keeps your place; live (branch `claude/happy-darwin-mmnd4m`, merged the same day; Claude Code)
 

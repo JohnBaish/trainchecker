@@ -134,6 +134,9 @@ given its own branch). Before committing there, run
 - **John:** "This looks great. Please merge to main." Checks (ten scripts, all passing), `tsc -b`, lint and build clean
   first; fast-forwarded into `main` with this note. Not checked: a real phone's share sheet with the picture, live
   boards producing every case.
+- **Checked live** a few minutes after merging: trainchecker.baish.net serves the new build (Message home in it).
+  Branch tidied: "Delete merged branches" trial run 45873458570, then the real run 45873501869; `git ls-remote
+  --heads origin` shows only `main`. Tracker updated (What's built 37).
 
 ### November 26th 2026: "Find my train from my location", fuller lists, "expected", a refresh that keeps your place; live (branch `claude/happy-darwin-mmnd4m`, merged the same day; Claude Code)
 

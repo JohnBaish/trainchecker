@@ -102,8 +102,25 @@ John drafted three cases, thinking of non-stop trains, and they work for every t
   booked time at A), whatever the date in the link; the "later day" message only once it has gone from them. So a link
   sent at 11.52pm about the 11.50pm and opened at 12.10am follows the train.
 - **`scripts/check-follow.ts`** (in `npm run check`): the 14 agreed sentences word for word, the midnight cases, the link.
-- **Copying the link on a computer** (Copy puts only the picture on the clipboard): mock-ups behind `?copy=B` and
-  `?copy=C` in Message home, computer only. B: "Copy the picture", then once copied "Then, after pasting the picture:"
-  and "Copy the message and link". C: "Copy the picture", and under it, in a dashed box, "The message to send with
-  it:", the message and link, and "Copy the message and link". Wording Claude's drafts. Pictures
-  `design/previews/follow/copy-*` (`copy.mjs`); both clipboards read back: the picture, then the message and the link.
+- **On a computer, no picture** (John, November 26th 2026, after mock-ups B and C): Copy can carry a picture or words,
+  not both, so a computer gets only the message and its link, with "Copy this message" (copies both, on one line). The
+  message is the phone's turned round, with the platform when known, fixed times only so it stays true however late
+  it's read (the page's own "now between…" and "13 minutes ago" would go stale in a message); all agreed:
+  1. "The 6.11pm from Reading is expected into London Paddington at 6.54pm, on platform 9."
+  2. "… left on time but it's now running two minutes late, expected into … at 6.26pm, on platform 13."
+  3. "… is expected into London Paddington a little early, at 6.26pm, on platform 11."
+  4. "… left three minutes late, at 6.21pm, so it's expected into … at 6.43pm, on platform 11."
+  5. "… left eight minutes late, at 6.23pm, but it's made up some time so it's now expected into … at 7.14pm, on
+     platform 10, five minutes later than originally planned."
+  6. "… left three minutes late, at 5.49pm, but it's made up the time and is expected into … on time, at 6.39pm, on
+     platform 9."
+  7. "… left eight minutes late, at 6.23pm, and it's now running 12 minutes late, expected into … at 7.21pm, on
+     platform 10."
+  8. "… is due to leave on time, and it's expected into … at 6.58pm, on platform 12."
+  9. "… is expected to leave 20 minutes late, at 6.46pm, getting into … at 7.07pm, on platform 9."
+  10. "… is delayed, with no new time given yet. It was due into London Paddington at 6.58pm."
+  11. "The 5.50pm from Reading got into London Paddington at 6.21pm, on platform 12. See how the trains are doing on
+      Trainchecker: [the journey's link]"
+  Each of 1 to 10 ends "Follow its progress on Trainchecker: [link]". The phone's planning message now says "getting
+  into" too (John). Phones are otherwise unchanged (picture and share sheet). `deskFor()` in `messageHome.ts`,
+  `DeskMessage.tsx`; checks in `check-home.ts`; pictures `design/previews/follow/desk-*` (`desk.mjs`).

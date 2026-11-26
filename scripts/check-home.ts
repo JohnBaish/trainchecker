@@ -4,7 +4,7 @@
 import { readFileSync } from 'node:fs'
 import { trim } from '../api/live.ts'
 import { analyse, type Snap } from '../src/lib/analyse.ts'
-import { homeFor, sentFor, SOON } from '../src/lib/messageHome.ts'
+import { deskFor, homeFor, sentFor, SOON } from '../src/lib/messageHome.ts'
 import { kindOf, trainName } from '../src/lib/sentences.ts'
 
 let passed = 0, failed = 0
@@ -35,7 +35,7 @@ eq('late: sent (left three minutes late, two late in: the same)', late.sent, 'He
 
 // Not left: the 6.28pm, expected to leave at 6.34 (ten minutes away): planning to get.
 const plan = homeFor(a, train('18:28'), a.now)
-eq('planned: sent', plan.sent, 'I’m planning to get the 6.28pm from Reading. It’s expected to leave six minutes late, at 6.34pm, and get into London Paddington at 7.25pm, on platform 11.')
+eq('planned: sent', plan.sent, 'I’m planning to get the 6.28pm from Reading. It’s expected to leave six minutes late, at 6.34pm, getting into London Paddington at 7.25pm, on platform 11.')
 eq('planned: platform in the message', plan.sent.endsWith(', on platform 11.'), true)
 
 // The same train at 6.30 (four minutes before it's expected to leave): my train. At 6.29 (five): planning.
@@ -97,7 +97,7 @@ eq('5 made up all', msg('17:29', 0, [5, '17:19']), `${P}. It left five minutes l
 eq('6 lost more', msg('17:44', 15, [5, '17:19']), `${P}. It left five minutes late, at 5.19pm, and it’s now running 15 minutes late, expected into London Paddington at 5.44pm.`)
 eq('7 a little early', msg('17:27', -2, [0, '17:14']), `${P}, expected into London Paddington a little early, at 5.27pm.`)
 eq('8 planning, on time', msg('17:29', 0, [0, '17:14'], false, false, ', on platform 11'), 'I’m planning to get the 5.14pm from Reading, expected into London Paddington at 5.29pm, on platform 11.')
-eq('9 planning, leaving late', msg('17:44', 15, [15, '17:29'], false, false, ', on platform 11'), 'I’m planning to get the 5.14pm from Reading. It’s expected to leave 15 minutes late, at 5.29pm, and get into London Paddington at 5.44pm, on platform 11.')
+eq('9 planning, leaving late', msg('17:44', 15, [15, '17:29'], false, false, ', on platform 11'), 'I’m planning to get the 5.14pm from Reading. It’s expected to leave 15 minutes late, at 5.29pm, getting into London Paddington at 5.44pm, on platform 11.')
 eq('10 my train, not left yet', msg('17:29', 0, [0, '17:14'], true, false), `${P}. It’s due to leave on time, and it’s expected into London Paddington at 5.29pm.`)
 eq('10 my train, leaving late', msg('17:44', 15, [15, '17:29'], true, false), `${P}. It’s due to leave 15 minutes late, at 5.29pm, and it’s expected into London Paddington at 5.44pm.`)
 eq('11 one minute late leaving counts as on time', msg('17:29', 0, [1, '17:15']), `${P}, expected into London Paddington at 5.29pm.`)
@@ -105,6 +105,27 @@ eq('11 one minute late in counts as on time', msg('17:30', 1, [0, '17:14']), `${
 eq('11 a change of a minute is the same', msg('17:43', 14, [15, '17:29']), `${P}. It left 15 minutes late, at 5.29pm, so it’s expected into London Paddington at 5.43pm.`)
 eq('one minute early counts as on time', msg('17:28', -1, [0, '17:14']), `${P}, expected into London Paddington at 5.28pm.`)
 eq('not known how it left: by the arrival', msg('17:44', 15, null), `${P}, running 15 minutes late, now expected into London Paddington at 5.44pm.`)
+
+// On a computer (John, November 26th 2026): the message turned round, with the platform, then what the link is for.
+const desk = (exp: string, late: number, dep: [number, string] | null, left = true, gone = true, on = ', on platform 9') =>
+  deskFor('The 5.14pm from Reading', { from: 'Reading', to: 'London Paddington', std: '17:14', exp, late, dep: dep && { late: dep[0], at: dep[1] }, left, gone, on })
+const D = 'The 5.14pm from Reading'
+eq('desk 1 on time', desk('17:29', 0, [0, '17:14']), `${D} is expected into London Paddington at 5.29pm, on platform 9.`)
+eq('desk 2 left on time, now late', desk('17:44', 15, [0, '17:14']), `${D} left on time but it’s now running 15 minutes late, expected into London Paddington at 5.44pm, on platform 9.`)
+eq('desk 3 a little early', desk('17:27', -2, [0, '17:14']), `${D} is expected into London Paddington a little early, at 5.27pm, on platform 9.`)
+eq('desk 4 left late, the same', desk('17:44', 15, [15, '17:29']), `${D} left 15 minutes late, at 5.29pm, so it’s expected into London Paddington at 5.44pm, on platform 9.`)
+eq('desk 5 made up some', desk('17:41', 12, [15, '17:29']), `${D} left 15 minutes late, at 5.29pm, but it’s made up some time so it’s now expected into London Paddington at 5.41pm, on platform 9, 12 minutes later than originally planned.`)
+eq('desk 6 made up all', desk('17:29', 0, [5, '17:19']), `${D} left five minutes late, at 5.19pm, but it’s made up the time and is expected into London Paddington on time, at 5.29pm, on platform 9.`)
+eq('desk 7 later still', desk('17:44', 15, [5, '17:19']), `${D} left five minutes late, at 5.19pm, and it’s now running 15 minutes late, expected into London Paddington at 5.44pm, on platform 9.`)
+eq('desk 8 leaving in the four minutes', desk('17:29', 0, [0, '17:14'], true, false), `${D} is due to leave on time, and it’s expected into London Paddington at 5.29pm, on platform 9.`)
+eq('desk 9 not left, leaving late', desk('17:44', 15, [15, '17:29'], false, false), `${D} is expected to leave 15 minutes late, at 5.29pm, getting into London Paddington at 5.44pm, on platform 9.`)
+eq('desk: no platform known', desk('17:29', 0, [0, '17:14'], true, true, ''), `${D} is expected into London Paddington at 5.29pm.`)
+// On the saved board: the whole message, with what the link is for.
+eq('desk on the board: on time, follow', homeFor(a, train('18:05'), a.now).desk, 'The 6.05pm from Reading is expected into London Paddington at 6.29pm, on platform 11. Follow its progress on Trainchecker:')
+const dSnap = withArr(true), dDel = (x: Snap['services'][number]) => (x.std === '18:32' ? { ...x, etd: 'Delayed', eta: 'Delayed' } : x)
+const dA = analyse({ ...dSnap, services: dSnap.services.map(dDel), arrivals: dSnap.arrivals!.map(dDel) })
+eq('desk 10 delayed', homeFor(dA, [...dA.past, ...dA.ahead].find((t) => t.std === '18:32')!, '18:31').desk, 'The 6.32pm from Reading is delayed, with no new time given yet. It was due into London Paddington at 6.58pm. Follow its progress on Trainchecker:')
+eq('desk 11 arrived, the journey', inn.desk, 'The 5.50pm from Reading got into London Paddington at 6.21pm, on platform 11. See how the trains are doing on Trainchecker:')
 
 console.log(`check-home: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

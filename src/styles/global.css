@@ -370,9 +370,7 @@ details.trains-fold { margin-top: var(--space-3); }
 .follow-more p { margin: 0 0 var(--space-2); }
 .follow-more .btn { min-height: 44px; }
 
-/* Copying the message and link on a computer (mock-ups B and C, John, November 26th 2026). */
-.share-row.box-share.then { margin-top: var(--space-2); }
-.link-words { margin-top: var(--space-3); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px dashed var(--color-divider); }
-.link-words p { margin: 0; }
-.link-words .words { margin: var(--space-1) 0 var(--space-2); line-height: 1.5; }
-.link-words .link { color: var(--color-accent-700, var(--color-accent)); overflow-wrap: anywhere; }
+/* Message home on a computer: the message to copy, with its link (John, November 26th 2026). */
+.desk-message { padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--color-bg); }
+.desk-message p { margin: 0; line-height: 1.55; }
+.desk-message a { overflow-wrap: anywhere; }

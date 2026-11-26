@@ -142,6 +142,13 @@ given its own branch). Before committing there, run
   computer (`linkCopy` in `BoxShare.tsx`, `?copy=B|C` in Message home). New `scripts/check-follow.ts` (25: the 14
   sentences, midnight, the link) in `npm run check`. Checks (11 scripts), `tsc -b`, lint, build; `copy.mjs` at 1200px
   light and dark: both clipboards read back, no errors, no sideways scroll.
+- **John:** rethink for a computer: no box or picture, only the message (the phone's turned round, third person, with
+  the platform; "Follow its progress on Trainchecker:" and the link; arrived: "See how the trains are doing on
+  Trainchecker:" and the journey's link) and "Copy this message"; the phone's planning case "getting into" too. All 11
+  cases agreed. Built: `deskFor()` and `Home.desk` in `messageHome.ts`, `src/components/DeskMessage.tsx`, `.desk-message`;
+  B and C taken out. Checks: check-home 57 (new: every computer case, the board's own, delayed, arrived); all 11 scripts,
+  `tsc -b`, lint, build; `design/previews/follow/desk.mjs` at 1200px light and dark: no box, each message copied and read
+  back with its link; at 390px dark with touch the box and "Share this journey" as before; no errors, no sideways scroll.
 
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)

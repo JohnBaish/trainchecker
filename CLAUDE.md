@@ -85,6 +85,10 @@ given its own branch). Before committing there, run
   boards, every fold open, at 1200px light, 390px dark and 844×390 with touch: 48 views, no errors, no sideways scroll,
   the train buttons as counted. Then merged into `main`. Not checked: Safari on a real iPhone for the refresh, the
   live site with both live boards (the preview has been tried by John).
+- **Checked live** a few minutes after merging: trainchecker.baish.net serves the new build (Find my train in it), and
+  `/api/live` (Reading to Paddington, 3.55pm) sends each train's stop times (29 of 85 trains; the rest non-stop).
+  Branch tidied: "Delete merged branches" trial run 45853798481, then the real run; `git ls-remote --heads origin`
+  shows only `main`. Tracker updated.
 
 ### November 26th 2026: a refresh keeps your place; "expected into" on the train buttons (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
 

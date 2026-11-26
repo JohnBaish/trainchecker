@@ -2,7 +2,7 @@
 // platform) and Exits once a train is chosen. The picture is the Connections answer's (share.ts
 // answerImage): the box's words in the dark colours, under a heading, its paragraphs kept apart.
 // Wording agreed by John: "Share these directions" for both; the headings and words sent as drafted.
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { clock } from '../lib/analyse.ts'
 import { dayName, t12 } from '../lib/sentences.ts'
 import { answerImage, deliverImage, isTouch } from '../lib/share.ts'
@@ -22,7 +22,7 @@ export type BoxWords = {
   foot?: string // a line under the box (Message home)
 }
 
-export function BoxShare({ w, taken }: { w: BoxWords; taken: string }) {
+export function BoxShare({ w, taken, extra }: { w: BoxWords; taken: string; extra?: ReactNode }) {
   const [said, setSaid] = useState('')
   const touch = isTouch()
   const share = async () => {
@@ -34,6 +34,7 @@ export function BoxShare({ w, taken }: { w: BoxWords; taken: string }) {
   return (
     <div className="share-row box-share">
       <button type="button" className="btn btn-secondary" onClick={share}><Icon name={touch ? 'share' : 'copy'} /> {touch ? 'Share' : 'Copy'} {w.what}</button>
+      {extra}
       <span className="share-status" role="status">{said}</span>
     </div>
   )

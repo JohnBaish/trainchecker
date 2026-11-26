@@ -132,3 +132,4 @@ John drafted three cases, thinking of non-stop trains, and they work for every t
 - The journey card: "Check how all the trains on this journey are doing, including engineering work in the days ahead, recent reliability figures and bonus content." Button: "More about the route".
 - John: "should", not "will", everywhere (Message home too); "but it should make up some time, and it's currently expected into London Paddington five minutes late, at 7.14pm" (case 5, first five minutes); "as planned" rather than "on time" after "the time".
 - A long station name in the box's first heading wraps onto two lines on a phone.
+- "Check again" beside Message home's Share (and Copy on a computer) and Connections' Share; on a phone, under Share: "Sharing the journey also offers this link, which anyone can use to check the progress of your train:" with the train's link (opens in a new page).

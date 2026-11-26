@@ -15,11 +15,12 @@ import { FindMyTrain } from './FindMyTrain.tsx'
 import { Icon } from './Icon.tsx'
 import type { LinksTable } from '../lib/platformLinks.ts'
 import { rowEnd, useGridCols } from '../lib/useGridCols.ts'
+import { CheckAgain, type Again } from './CheckAgain.tsx'
 
 type Result = { s: 'idle' } | { s: 'ok'; d: Connect } | { s: 'failed' }
 const EDGE = { fine: 'good', tight: 'mixed', unlikely: 'prepared', missed: 'prepared', through: 'good', none: 'none', unknown: 'none' } as const
 
-export function Connection({ a }: { a: Analysis }) {
+export function Connection({ a, again }: { a: Analysis; again: Again }) {
   const [open, setOpen] = useState(false)
   const [text, setText] = useState('')
   const [dest, setDest] = useState<string | null>(null)
@@ -121,6 +122,7 @@ export function Connection({ a }: { a: Analysis }) {
           )}
           <div className="share-row in-fold">
             <button type="button" className="btn btn-secondary" onClick={share}><Icon name={touch ? 'share' : 'copy'} /> {touch ? 'Share this answer' : 'Copy this answer'}</button>
+            <CheckAgain {...again} />
             <span className="share-status" role="status">{shared}</span>
           </div>
         </div>

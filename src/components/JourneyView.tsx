@@ -361,6 +361,8 @@ export function JourneyView({ journey }: { journey: Journey }) {
     if (state.s === 'ok') { setRefreshing(true); setRefreshFailed(false) } else { setState({ s: 'loading' }); setDays({ s: 'loading' }) }
     setRound(round + 1)
   }
+  // The same, for the "Check again" beside Message home's and Connections' Share (John, November 26th 2026).
+  const again = { again: load, busy: refreshing, failed: refreshFailed }
   // The tab names the journey (fresh look 7.2), and goes back to index.html's title afterwards.
   const titleFrom = state.s === 'ok' ? state.a.from : nameOf(journey.from), titleTo = state.s === 'ok' ? state.a.to : nameOf(journey.to)
   useEffect(() => {
@@ -463,7 +465,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
       {/* "Connections", just under the quote (John, November 21st 2026; a prototype). No key of its
           own: it shared LastWeek's, and with two children of one key React left the old panel on the
           page after a change of journey. JourneyView is itself keyed by the journey. */}
-      {!closed && an.verdict !== 'none' && <Connection a={an} />}
+      {!closed && an.verdict !== 'none' && <Connection a={an} again={again} />}
       {/* Across the full width, so a computer shows no gap beside it (John, November 17th
           2026, after trying the preview); after the quote (John, stage 4). */}
       {(an.verdict !== 'none' || (an.lastGone && !closed)) && <section className="card sec block"><h3>The last two hours</h3><p>{lastTwoLines(an).join(' ')}</p></section>}
@@ -473,7 +475,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
         <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth && endOut} noRecord={noRecord} standIn={stand ? { ...stand, left: stand.side === 'to' ? an.to : an.from } : null} others={others} />
       )}
       {/* Message home, then Exits, then More arrivals (John, November 26th 2026). */}
-      {(an.verdict !== 'none' || (an.lastGone && !closed)) && <MessageHome a={an} />}
+      {(an.verdict !== 'none' || (an.lastGone && !closed)) && <MessageHome a={an} again={again} />}
       {(an.verdict !== 'none' || (an.lastGone && !closed)) && <Exits a={an} />}
       {(an.verdict !== 'none' || (an.lastGone && !closed)) && <Arrivals a={an} />}
       {/* Fact of the journey, last, just above "About these figures" (John, November 22nd 2026; it

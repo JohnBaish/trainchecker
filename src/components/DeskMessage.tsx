@@ -1,9 +1,9 @@
 // Message home on a computer (John, November 26th 2026): Copy there can carry only a picture or words, not both, so the
 // computer gets the message alone, with its link, and "Copy this message" copies them together.
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Icon } from './Icon.tsx'
 
-export function DeskMessage({ text, url }: { text: string; url: string }) {
+export function DeskMessage({ text, url, extra }: { text: string; url: string; extra?: ReactNode }) {
   const [said, setSaid] = useState('')
   const copy = async () => {
     setSaid('')
@@ -19,6 +19,7 @@ export function DeskMessage({ text, url }: { text: string; url: string }) {
       <p>{text} <a href={url}>{url}</a></p>
       <div className="share-row box-share">
         <button type="button" className="btn btn-secondary" onClick={copy}><Icon name="copy" /> Copy this message</button>
+        {extra}
         <span className="share-status" role="status">{said}</span>
       </div>
     </div>

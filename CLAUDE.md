@@ -163,6 +163,15 @@ given its own branch). Before committing there, run
   box (and the follow page's), a long station name ("From Exeter St Davids", John's iPhone) now wraps rather than
   running into "Expected in" (`.home .home-box .bhead`). Checks: check-home 61, check-follow 29; all 11 scripts,
   `tsc -b`, lint, build; a long name at 390px dark and 360px light: no overlap, no sideways scroll.
+- **John:** "Check again" beside Message home's "Share this journey" (and beside "Copy this message" on a computer)
+  and beside Connections' "Share this answer", so the time a train is expected in can be checked later in the journey
+  without going back to the top (`CheckAgain.tsx`; the same as the top button, which it shares `load` with; a failed
+  check says so beside it). Under Message home's Share on a phone, while the train isn't in yet: "Sharing the journey
+  also offers this link, which anyone can use to check the progress of your train:" and the train's link, opening in
+  a new page. Checked (the saved boards, a later board given on the second ask: illustration only): Check again asks
+  again, keeps the train chosen and the place on the page, Connections asks again for its onward trains too; the link
+  opens the train's page in a new page; buttons 44px on a phone; 390px dark and 1200px light; no errors, no sideways
+  scroll. All 11 scripts, `tsc -b`, lint, build.
 
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)

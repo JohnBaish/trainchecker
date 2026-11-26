@@ -378,3 +378,6 @@ details.trains-fold { margin-top: var(--space-3); }
    on a phone rather than running into "Expected in" (John, November 26th 2026); the headings sit on its last line. */
 .home .home-box .bhead { align-items: end; }
 .home .home-box .bhead > span:first-child { white-space: normal; }
+/* Message home on a phone: the train's own link, shown under Share (John, November 26th 2026). */
+.home .follow-link { margin: var(--space-2) 0 0; line-height: 1.5; }
+.home .follow-link a { overflow-wrap: anywhere; }

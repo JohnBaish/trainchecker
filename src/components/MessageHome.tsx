@@ -15,8 +15,9 @@ import { FindMyTrain } from './FindMyTrain.tsx'
 import { DeskMessage } from './DeskMessage.tsx'
 import { isTouch } from '../lib/share.ts'
 import { Icon } from './Icon.tsx'
+import { CheckAgain, type Again } from './CheckAgain.tsx'
 
-export function MessageHome({ a }: { a: Analysis }) {
+export function MessageHome({ a, again }: { a: Analysis; again: Again }) {
   const [mineId, setMineId] = useState<string | null>(null)
   // The trains "Find my train from my location" found near you (full ids), marked in the list.
   const [near, setNear] = useState<string[]>([])
@@ -40,7 +41,7 @@ export function MessageHome({ a }: { a: Analysis }) {
   const r = home?.row
   // On a computer (John, November 26th 2026): no box and no picture, only the message to copy, with its link.
   const reply = home && !isTouch() ? (
-    <div className="tap-reply"><DeskMessage text={home.desk} url={`${location.origin}/${link}`} /></div>
+    <div className="tap-reply"><DeskMessage text={home.desk} url={`${location.origin}/${link}`} extra={<CheckAgain {...again} />} /></div>
   ) : !home || !r ? null : (
     <div className="tap-reply">
       <div className="home-box">
@@ -66,7 +67,9 @@ export function MessageHome({ a }: { a: Analysis }) {
         file: `trainchecker-my-train-${a.fromCrs}-${a.toCrs}.png`, hash: link,
         title: `Trainchecker: my train from ${a.from}`, when: '',
         foot: `Checked at ${t12(clock(a.taken))} on ${dateShort(new Date(a.taken))}`,
-      }} />
+      }} extra={<CheckAgain {...again} />} />
+      {/* The train's own page, offered here too, so it's clear what sharing sends (John, November 26th 2026). */}
+      {follows && <p className="small muted follow-link">Sharing the journey also offers this link, which anyone can use to check the progress of your train: <a href={`${location.origin}/${link}`} target="_blank" rel="noopener">{`${location.origin}/${link}`}</a></p>}
     </div>
   )
   // The trains found go first, with "Or choose another" above the rest, as in Exits.

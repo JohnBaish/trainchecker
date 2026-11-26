@@ -91,6 +91,10 @@ given its own branch). Before committing there, run
   6.24pm, arrival board made up from the departures, illustration only): on time, late, planned and arrived, at
   1200px light and 390px dark, each picture read back from the clipboard; no errors, no sideways scroll, button 44px
   on a phone. Not checked: a real phone's share sheet, live boards.
+- **John:** the delayed and late-and-planned drafts agreed; a train expected to leave in the next four minutes is
+  "my train", not "planning to get" (`SOON` in `messageHome.ts`; "Delayed" with no time stays "planning"). New
+  `scripts/check-home.ts` (14). For the arrived row, option B mocked up beside A (`box-arrived-B-*`, the heading
+  "GOT IN" and no "arrived"; made by editing the page, illustration only), for John to choose.
 
 ### November 26th 2026: "Find my train from my location", fuller lists, "expected", a refresh that keeps your place; live (branch `claude/happy-darwin-mmnd4m`, merged the same day; Claude Code)
 

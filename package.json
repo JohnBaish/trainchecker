@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "check": "node scripts/check-rules.ts && node scripts/check-api.ts && node scripts/check-days.ts && node scripts/check-connection.ts && node scripts/check-exits.ts && node scripts/check-facts.ts && node scripts/check-windows.ts && node scripts/check-arrivals.ts && node scripts/check-find.ts"
+    "check": "node scripts/check-rules.ts && node scripts/check-api.ts && node scripts/check-days.ts && node scripts/check-connection.ts && node scripts/check-exits.ts && node scripts/check-facts.ts && node scripts/check-windows.ts && node scripts/check-arrivals.ts && node scripts/check-find.ts && node scripts/check-home.ts"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",

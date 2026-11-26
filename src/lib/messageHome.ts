@@ -22,6 +22,9 @@ export type Home = {
   fromArr: boolean
 }
 
+/** Minutes before a train leaves when it becomes "my train". */
+export const SOON = 4
+
 const minutes = (k: number) => `${num(k)} ${k === 1 ? 'minute' : 'minutes'}`
 const LABEL = { fast: 'Fast', slower: 'Slower', elizabeth: 'Elizabeth Line', all: '' } as const
 
@@ -30,7 +33,9 @@ export function homeFor(a: Analysis, t: Train, now: string): Home {
   const src = twin ?? t
   const platform = twin?.platform ?? null
   const to = a.to, from = a.from
-  const left = !t.unknown && t.etd !== 'Delayed' && diff(now, isTime(t.etd) ? t.etd : t.std) < 0
+  // "My train" once it has left, or is expected to leave in the next four minutes (John, November 26th
+  // 2026); before that, "I'm planning to get".
+  const left = !t.unknown && t.etd !== 'Delayed' && diff(now, isTime(t.etd) ? t.etd : t.std) <= SOON
   const arrived = isTime(src.ata) || src.ata === 'On time'
   const sta = src.sta ?? t.sta!
   const exp = arrived ? (isTime(src.ata) ? src.ata : sta) : isTime(src.eta) ? src.eta : src.eta === 'On time' || src.eta == null ? sta : null

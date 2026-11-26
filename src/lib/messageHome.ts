@@ -7,7 +7,7 @@
 // train not on B's arrival board yet (it reaches only about two hours ahead) falls back to the
 // departure board's time at B, with no platform.
 import { diff, isTime, type Analysis, type Train } from './analyse.ts'
-import { kindOf, num, t12, type PicRow } from './sentences.ts'
+import { boardKind, num, t12, type PicRow } from './sentences.ts'
 
 export type Home = {
   /** The train's line, as a row of the arrivals board. */
@@ -40,7 +40,7 @@ export function homeFor(a: Analysis, t: Train, now: string): Home {
   const exp = arrived ? (isTime(src.ata) ? src.ata : sta) : isTime(src.eta) ? src.eta : src.eta === 'On time' || src.eta == null ? sta : null
   const late = exp ? diff(sta, exp) : 0
   // As the train lists and boards say it, from every train on the board (not only those still to leave).
-  const kind = kindOf(a)(t)
+  const kind = boardKind(a)(t)
   const on = platform ? `, on platform ${platform}` : ''
   const heading = `The ${t12(t.std)} from ${from}`
   const row: PicRow = {
@@ -57,8 +57,8 @@ export function homeFor(a: Analysis, t: Train, now: string): Home {
     sent = left ? `Here’s my train from ${from}, which is delayed, with no new time given yet. It was due into ${to} at ${t12(sta)}.`
       : `I’m planning to get the ${t12(t.std)} from ${from}, which is delayed, with no new time given yet. It was due into ${to} at ${t12(sta)}${on}.`
   } else if (arrived) {
-    // Draft: already in.
-    line = `Got into ${to} at ${t12(exp)}${on}.`
+    // Already in (John, November 26th 2026): "Arrived into …" in the picture; the message keeps "got into", for variety.
+    line = `Arrived into ${to} at ${t12(exp)}${on}.`
     sent = `Here’s my train from ${from}, which got into ${to} at ${t12(exp)}.`
   } else if (late > 0) {
     // John's "running six minutes late, now expected into…".

@@ -41,14 +41,6 @@ for (const v of VIEWS) {
     const row = await p.locator('.home .home-box').innerText()
     console.log(`  ${name} (${time}): ${row.replace(/\n+/g, ' | ')}`)
     await p.locator('.home .tap-reply').screenshot({ path: `${out}/box-${name}-${tag}.png` })
-    if (name === 'arrived') {
-      // Option B for John (a mock-up made by editing the page, ILLUSTRATION ONLY): the heading "GOT IN" and no "arrived".
-      await p.evaluate(() => {
-        const h = document.querySelector('.home .bhead > *'); if (h) h.textContent = 'GOT IN'
-        document.querySelectorAll('.home .home-box .blate').forEach((e) => e.remove())
-      })
-      await p.locator('.home .tap-reply').screenshot({ path: `${out}/box-arrived-B-${tag}.png` })
-    }
     if (tag === '1200-light') {
       // The words and title the share sends: read from the function the button calls, via the clipboard picture.
       await p.locator('.home .box-share button').click()

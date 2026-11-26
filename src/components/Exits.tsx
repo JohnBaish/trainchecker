@@ -6,7 +6,7 @@ import { diff, type Analysis } from '../lib/analyse.ts'
 import { mineOf, shownTrains, whichTrain } from '../lib/connection.ts'
 import { heading, stationLine, trainLine, type ExitsTable } from '../lib/exits.ts'
 import { fetchArrPlatform } from '../lib/load.ts'
-import { kindOf, t12 } from '../lib/sentences.ts'
+import { apart, t12 } from '../lib/sentences.ts'
 import { rowEnd, useGridCols } from '../lib/useGridCols.ts'
 import { BoxShare } from './BoxShare.tsx'
 import { FindMyTrain } from './FindMyTrain.tsx'
@@ -72,8 +72,8 @@ export function Exits({ a }: { a: Analysis }) {
   // rest (John, November 26th 2026); each list puts the answer under its own row.
   const found = all.filter(({ s }) => near.includes(s.id))
   const rest = mines.filter(({ s }) => !near.includes(s.id))
-  // Fast, slower or Elizabeth Line, when the journey has more than one kind (two "4.42pm"s told apart).
-  const kind = kindOf(a, all.map(({ s }) => s))
+  // The company, where another company's train leaves at the same time (two "7.48pm"s told apart).
+  const kind = apart(all.map(({ s }) => s))
   const list = (l: typeof mines) => {
     const after = rowEnd(l.findIndex(({ m }) => m.id === mineId), cols, l.length)
     return l.map(({ s, m }, i) => (

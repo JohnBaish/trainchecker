@@ -1126,28 +1126,27 @@ export function standInLine(left: string, s: { name: string; side: 'from' | 'to'
 
 type Named = { id: string; std: string; operator: string }
 
-/** What tells a train in a list apart (John, November 26th 2026: two "4.42pm"s in the train lists of
- *  Connections, Message home and Exits, one taking 23 minutes and one 40). Its kind ("Fast",
- *  "Slower", "Elizabeth Line", as the boards say) when the journey has more than one; and where
- *  another train in `among` leaves at the same time with the same kind (or none), its company too,
- *  if theirs differ (Liverpool Street to Stratford: "Greater Anglia" and "Elizabeth Line" at 7.48pm). */
-export function kindOf(a: Analysis, among: Named[] = []): (t: Named) => string {
+/** The kind of each train as the boards say it ("Fast", "Slower", "Elizabeth Line"), from every train on
+ *  the board, when the journey has more than one kind; otherwise ''. Used by Message home's line from the
+ *  arrivals board. */
+export function boardKind(a: Analysis): (t: { id: string }) => string {
   const groups = speedGroups({ ...a, ahead: [...a.past, ...a.ahead] }).filter((g) => g.kind !== 'all')
   const label = { fast: 'Fast', slower: 'Slower', elizabeth: 'Elizabeth Line', all: '' } as const
-  const kind = (t: { id: string }) => (groups.length < 2 ? '' : label[groups.find((g) => g.trains.some((x) => x.id === t.id))?.kind ?? 'all'])
-  const co = (t: Named) => companyName(t.operator) ?? t.operator
-  return (t) => {
-    const k = kind(t)
-    const twins = among.filter((x) => x.id !== t.id && x.std === t.std && kind(x) === k)
-    const c = twins.length && twins.every((x) => co(x) !== co(t)) && co(t) !== k ? co(t) : ''
-    return [k, c].filter(Boolean).join(' · ')
-  }
+  return (t) => (groups.length < 2 ? '' : label[groups.find((g) => g.trains.some((x) => x.id === t.id))?.kind ?? 'all'])
 }
 
-/** "the 4.42pm", or where another train in `among` leaves at the same time, "the 4.42pm slower train"
- *  ("the 7.48pm Greater Anglia train"). */
-export function trainName(t: Named, among: Named[], label: (t: Named) => string): string {
-  const k = label(t).split(' · ').pop()!
-  const twin = among.some((x) => x.id !== t.id && x.std === t.std)
-  return twin && k ? `the ${t12(t.std)} ${/^(Fast|Slower)$/.test(k) ? k.toLowerCase() : k} train` : `the ${t12(t.std)}`
+/** What tells a train in a list apart from another leaving at the same time (John, November 26th 2026:
+ *  two "4.42pm"s from Reading). Its company ("Elizabeth Line", "Greater Anglia") when another train in
+ *  `among` leaves at the same time and is run by a different company; otherwise nothing (two trains of
+ *  one company are told apart by when they get in, not by "fast" or "slower"). */
+export function apart(among: Named[]): (t: Named) => string {
+  const co = (t: Named) => companyName(t.operator) ?? t.operator
+  return (t) => (among.some((x) => x.id !== t.id && x.std === t.std && co(x) !== co(t)) ? co(t) : '')
+}
+
+/** "the 4.42pm", or where another train in `among` leaves at the same time from another company,
+ *  "the 4.42pm Elizabeth Line train". */
+export function trainName(t: Named, among: Named[]): string {
+  const c = apart(among)(t)
+  return c ? `the ${t12(t.std)} ${c} train` : `the ${t12(t.std)}`
 }

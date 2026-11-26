@@ -74,6 +74,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 26th 2026: "Find my train from my location": John's wording, found trains first, About (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
+
+- **John:** "This looks great"; wording changes ("From your location", "at the moment", "Finding your location…", no
+  station name at A, "Your location couldn’t be found."); the trains found listed first with "Or choose another" above
+  the rest (also done for one train and the next at A: Claude's choice, told to John); an About paragraph (Claude's
+  draft, in `Tail.tsx`). All in `design/find-my-train/README.md`. He'll try it on his phone on a journey within the hour.
+- **Checked:** all checks (check-find 76), `tsc -b`, lint, build; every answer again in the browser (`shoot.mjs`):
+  the wording, the found trains first, no errors, no sideways scroll, button 44px. Not checked: a real phone or train.
+
 ### November 26th 2026: "Find my train from my location" on the page, for John (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
 
 - **John:** carry on to mock-ups. Built into the page: `src/components/FindMyTrain.tsx` in Connections and Exits,

@@ -320,6 +320,7 @@ details.trains-fold { margin-top: var(--space-3); }
 .findme p { margin: var(--space-2) 0 0; }
 .findme .findme-said { font-weight: 600; }
 .connect .cmine.near:not(.on), .exits .cmine.near:not(.on) { border: 1px dashed var(--color-accent); }
+.connect .cor, .exits .cor { margin: var(--space-3) 0 var(--space-2); }
 .connect .canswer { margin: 0 0 var(--space-3); background: var(--color-bg); }
 /* Station exits' answer (November 22nd 2026): a quiet box, as Connections' answer without its coloured edge. */
 .tap-reply { grid-column: 1 / -1; }

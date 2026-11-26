@@ -91,25 +91,33 @@ and works out the answer. With one train, that train is chosen, as if tapped, an
 appears under it. With two, both are edged in a dashed accent line and you choose. Still at A,
 the next train is chosen.
 
-**Wording, all Claude's drafts:**
+**Wording (John's changes, November 26th 2026; 2, 6 and the About paragraph are Claude's drafts):**
 
 1. The button: "Find my train from my location" (John's).
-2. Under it before tapping: "Your location stays on this device."
-3. While finding: "Finding where you are…"
-4. One: "From where you are, you’re probably on the 5.53pm."
-5. Two: "From where you are, you’re probably on the 8.42pm or the 8.47pm, which are close
-   together just now. Please choose one below." (In time order.)
-6. At A: "You seem to be at Reading still, so here’s the next train, the 9pm." (With no train
-   still to leave: "You seem to be at Reading still. Please choose the train you’re planning to
-   take.")
-7. Off the line: "You don’t seem to be near the line from Reading to London Paddington just now,
-   so please choose your train below."
-8. No train near: "None of these trains seems to be near you just now, so please choose yours
-   below."
+2. Under it before tapping: "Your location stays on this device." (agreed)
+3. While finding: "Finding your location…" (John)
+4. One: "From your location, you’re probably on the 5.53pm." (John)
+5. Two: "From your location, you’re probably on the 8.42pm or the 8.47pm, which are close
+   together at the moment. Please choose one below." (In time order.) The trains found are moved to
+   the top of the list, with "Or choose another" above the rest (John); Claude did the same for one
+   train and for the next train at A, so the answer is never out of sight further down.
+6. At A: "You seem to be at the station still, so here’s the next train, the 9pm." (John: delete
+   "Reading"; "the station" is Claude's reading of that.) With no train still to leave: "You seem
+   to be at the station still. Please choose the train you’re planning to take."
+7. Off the line: "You don’t seem to be near the line from Reading to London Paddington at the
+   moment, so please choose your train below." (John)
+8. No train near: "None of these trains seems to be near you at the moment, so please choose yours
+   below." (John)
 9. Not allowed: "Trainchecker wasn’t allowed to see where you are. You can change that in your
-   browser’s settings, or choose your train below."
-10. No location found: "Your location couldn’t be found just now. Please try again, or choose
-    your train below."
+   browser’s settings, or choose your train below." (agreed)
+10. No location found: "Your location couldn’t be found. Please try again, or choose your train
+    below." (John: "just now" deleted; the second sentence kept, to confirm.)
+
+About these figures (Claude's draft, John asked for one): "Find my train from my location, in the
+Connections and Exits sections, uses your device’s location only when you tap it, and only on your
+device: it isn’t sent to Trainchecker or anyone else. It compares where you are with where each
+train should be by National Rail’s times, so it can only say which train you’re probably on. The
+stations’ positions come from National Rail, and from OpenStreetMap where the two differ."
 
 **Found while taking the pictures:** at 2.55pm on Twyford to Reading no train had left Twyford,
 so the button rightly stays hidden; the Connections pictures set the clock to 3.11pm
@@ -117,5 +125,4 @@ so the button rightly stays hidden; the Connections pictures set the clock to 3.
 give "one of these two" there. The saved boards predate the arrival board, so for Exits the
 pictures make one up from the departures (illustration only).
 
-**Not done yet:** About doesn't mention it (it says nothing is sent; the location isn't either,
-but a sentence about it may be wanted); not tried on a real phone or on a real train.
+**Not done yet:** tried on a real phone on a real train (John, on a journey on November 26th).

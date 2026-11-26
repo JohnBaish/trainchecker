@@ -2,7 +2,9 @@
 // button at the top of the train list in Connections and Exits that narrows down which train
 // you're on. The sums are in lib/findTrain.ts; your position is used only here, on the device,
 // and never sent anywhere. Shown only when at least one train in the list has left A (where none
-// has, where you are can't tell them apart). The wording here is Claude's draft, for John.
+// has, where you are can't tell them apart). The wording: Claude's drafts with John's changes
+// (November 26th 2026; design/find-my-train/README.md). The trains found are moved to the top of
+// the list, with "Or choose another" above the rest (John).
 import { useState } from 'react'
 import { diff, isTime, type Analysis, type Service } from '../lib/analyse.ts'
 import { findTrain, ukMinutes, type Found, type Positions } from '../lib/findTrain.ts'
@@ -23,19 +25,19 @@ const gone = (now: string, t: Service) => t.etd !== 'Delayed' && diff(now, isTim
 function said(st: State, a: Analysis, trains: Service[]): string | null {
   const time = (id: string | null) => t12(trains.find((t) => t.id === id)?.std ?? '')
   if (st.s === 'denied') return 'Trainchecker wasn’t allowed to see where you are. You can change that in your browser’s settings, or choose your train below.'
-  if (st.s === 'lost') return 'Your location couldn’t be found just now. Please try again, or choose your train below.'
+  if (st.s === 'lost') return 'Your location couldn’t be found. Please try again, or choose your train below.'
   if (st.s !== 'done') return null
   const f = st.found
   switch (f.kind) {
-    case 'one': return `From where you are, you’re probably on the ${time(f.id)}.`
+    case 'one': return `From your location, you’re probably on the ${time(f.id)}.`
     case 'two': {
       // In time order, as the list is ("the 3.03pm or the 3.07pm"), not nearer first.
       const [p, q] = [...f.ids].sort((x, y) => diff(trains.find((t) => t.id === y)!.std, trains.find((t) => t.id === x)!.std))
-      return `From where you are, you’re probably on the ${time(p)} or the ${time(q)}, which are close together just now. Please choose one below.`
+      return `From your location, you’re probably on the ${time(p)} or the ${time(q)}, which are close together at the moment. Please choose one below.`
     }
-    case 'atA': return f.next ? `You seem to be at ${a.from} still, so here’s the next train, the ${time(f.next)}.` : `You seem to be at ${a.from} still. Please choose the train you’re planning to take.`
-    case 'far': return `You don’t seem to be near the line from ${a.from} to ${a.to} just now, so please choose your train below.`
-    case 'none': return 'None of these trains seems to be near you just now, so please choose yours below.'
+    case 'atA': return f.next ? `You seem to be at the station still, so here’s the next train, the ${time(f.next)}.` : 'You seem to be at the station still. Please choose the train you’re planning to take.'
+    case 'far': return `You don’t seem to be near the line from ${a.from} to ${a.to} at the moment, so please choose your train below.`
+    case 'none': return 'None of these trains seems to be near you at the moment, so please choose yours below.'
   }
 }
 
@@ -72,7 +74,7 @@ export function FindMyTrain({ a, trains, onFound }: { a: Analysis; trains: Servi
         <Icon name="locate" /> Find my train from my location
       </button>
       {st.s === 'idle' && <p className="small muted">Your location stays on this device.</p>}
-      {st.s === 'busy' && <p className="small muted" role="status"><span className="spinner" aria-hidden="true"></span>Finding where you are…</p>}
+      {st.s === 'busy' && <p className="small muted" role="status"><span className="spinner" aria-hidden="true"></span>Finding your location…</p>}
       {text && <p className="findme-said" role="status">{text}</p>}
     </div>
   )

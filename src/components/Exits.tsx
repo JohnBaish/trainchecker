@@ -65,8 +65,23 @@ export function Exits({ a }: { a: Analysis }) {
       }} />}
     </div>
   )
-  const picked = mines.findIndex(({ m }) => m.id === mineId)
-  const after = rowEnd(picked, cols, mines.length)
+  // The trains "Find my train from my location" found go first, with "Or choose another" above the
+  // rest (John, November 26th 2026); each list puts the answer under its own row.
+  const found = mines.filter(({ s }) => near.includes(s.id))
+  const rest = mines.filter(({ s }) => !near.includes(s.id))
+  const list = (l: typeof mines) => {
+    const after = rowEnd(l.findIndex(({ m }) => m.id === mineId), cols, l.length)
+    return l.map(({ s, m }, i) => (
+      <Fragment key={m.id}>
+        <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}${near.includes(s.id) ? ' near' : ''}`} aria-pressed={m.id === mineId}
+          onClick={() => { if (m.id !== mineId) setGot({ s: 'idle' }); setMineId(m.id) }}>
+          <b>{t12(s.std)}</b> from {a.from}
+          <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : `due into ${a.to} at ${t12(m.exp)}`}</span>
+        </button>
+        {i === after && reply}
+      </Fragment>
+    ))
+  }
   return (
     <section className="card sec block exits">
       <h3>{heading(a.to, e)}</h3>
@@ -82,18 +97,9 @@ export function Exits({ a }: { a: Analysis }) {
             const m = mines.find(({ s }) => s.id === pick)?.m
             if (m) { if (m.id !== mineId) setGot({ s: 'idle' }); setMineId(m.id) }
           }} />
-          <div className="cmines" ref={grid} role="group" aria-label={`Trains from ${a.from}`}>
-            {mines.map(({ s, m }, i) => (
-              <Fragment key={m.id}>
-                <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}${near.includes(s.id) ? ' near' : ''}`} aria-pressed={m.id === mineId}
-                  onClick={() => { if (m.id !== mineId) setGot({ s: 'idle' }); setMineId(m.id) }}>
-                  <b>{t12(s.std)}</b> from {a.from}
-                  <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : `due into ${a.to} at ${t12(m.exp)}`}</span>
-                </button>
-                {i === after && reply}
-              </Fragment>
-            ))}
-          </div>
+          {found.length > 0 && <div className="cmines" role="group" aria-label={`Trains near you from ${a.from}`}>{list(found)}</div>}
+          {found.length > 0 && rest.length > 0 && <p className="small muted cor">Or choose another</p>}
+          <div className="cmines" ref={grid} role="group" aria-label={`Trains from ${a.from}`}>{list(rest)}</div>
         </div>
         </details>
       )}

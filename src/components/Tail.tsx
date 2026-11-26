@@ -100,6 +100,8 @@ export function Tail({ about = true, quote = true }: { about?: boolean; quote?: 
           <p>The directions between platforms in the Connections section, and the ways out in the Station exits section, come from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>, with National Rail’s station maps for the larger stations.</p>
           {/* Fact of the journey (Claude's draft, with John's changes, November 22nd 2026). */}
           <p>The Fact of the Journey is something near one stretch of line between two stations on your journey, picked at random each time you visit. Left and right are as the train is going. Facing backwards? Look the other way. The stretches of line come from OpenStreetMap; the facts were checked against Historic England’s list of historic places, Wikipedia and other sources (contains Historic England data © Historic England 2026).</p>
+          {/* Find my train from my location (Claude's draft, November 26th 2026). */}
+          <p>Find my train from my location, in the Connections and Exits sections, uses your device’s location only when you tap it, and only on your device: it isn’t sent to Trainchecker or anyone else. It compares where you are with where each train should be by National Rail’s times, so it can only say which train you’re probably on. The stations’ positions come from National Rail, and from OpenStreetMap where the two differ.</p>
         </section>
       )}
       <footer className="footer-notice">

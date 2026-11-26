@@ -32,6 +32,9 @@ export type Analysis = {
   /** Expected to leave on time but reach B more than five minutes late. */
   arrLate: Train[]
   affected: number; allowance: number; verdict: Kind; badly: boolean
+  /** The train that will leave next (by expected time), when it's cancelled, more than five minutes late or
+   *  "Delayed" with no time; and whether that alone made the verdict "a mixed bag" (John, November 26th 2026). */
+  nextBad: Train | null; byNext: boolean
   why: { twoOfThree: boolean; gap: number | null; noTrains: boolean }
   last: { byArrivals: boolean; tense: Tense; known: number; within3: number; lates: number[]; lateArrived: boolean[]; usual: number | null; worst: number | null; cancelled: Train[] }
   worse: boolean
@@ -111,6 +114,14 @@ export function analyse(snap: Snap): Analysis {
   // cancellation on a very busy line isn't "Be prepared" on its own (fresh look 2.5, John).
   if (badly || (cancelled.length >= 3 && cancelled.length * 20 > ahead.length)) verdict = 'prepared'
   if (ahead.length === 0) verdict = 'none'
+  // Never "Good news" when the train that will leave next is cancelled, more than five minutes late or
+  // "Delayed" with no time (John, November 26th 2026, after Birmingham New Street to Cardiff Central: on a
+  // line with one or two trains an hour, the one train the rule allows is the one you're about to catch).
+  const leavesAt = (s: Train) => (!s.cancelled && s.late !== null && s.late > 0 && isTime(s.etd) ? diff(now, s.etd) : s.rel)
+  const firstOut = [...ahead].sort((x, y) => leavesAt(x) - leavesAt(y))[0]
+  const nextBad = firstOut && (firstOut.cancelled || firstOut.unknown || (firstOut.late ?? 0) > 5) ? firstOut : null
+  const byNext = verdict === 'good' && !!nextBad
+  if (byNext) verdict = 'mixed'
 
   // The last two hours: arrivals at B; on long journeys (fewer than three arrived), the trains
   // that left A, each by its actual or expected arrival (O1, John).
@@ -144,7 +155,7 @@ export function analyse(snap: Snap): Analysis {
 
   return {
     now, from: snap.fromName, to: snap.toName, fromCrs: snap.from, toCrs: snap.to, taken: snap.taken, route: snap.route ?? [], stops: snap.stops ?? [],
-    ahead, past, cancelled, late5, unknown, arrLate, affected, allowance, verdict, badly,
+    ahead, past, cancelled, late5, unknown, arrLate, affected, allowance, verdict, badly, nextBad, byNext,
     why: { twoOfThree, gap, noTrains },
     last: { byArrivals, tense, known: known.length, within3, lates, lateArrived, usual, worst, cancelled: pastCancelled },
     worse, platList, platKnown: platList.reduce((a, [, n]) => a + n, 0),

@@ -76,7 +76,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 26th 2026: a late train still waiting at A was counted as gone (branch `fix/late-train-still-to-leave`; Claude Code)
+### November 26th 2026: a late train still waiting at A was counted as gone; live (branch `fix/late-train-still-to-leave`, merged the same day; Claude Code)
 
 - **John (photos, Birmingham New Street to Cardiff Central at 6.22pm; a second report of the same kind):** "Good
   news", "The next train … expected to be on time", while the 6.12pm was still on platform 11, expected at 6.30.
@@ -94,6 +94,18 @@ given its own branch). Before committing there, run
   after, "One is expected to be more than five minutes late". Not checked: Birmingham's own board (not saved).
 - **Still "Good news":** the agreed rule allows one train in ten (or one, under 20 trains) to be late or cancelled,
   so a quiet line with the next train late still reads "running well". For John.
+- **John:** "Yes please" to merging. Checks, `tsc -b` and build clean first; pushed to `main` (a72e151). Checked live:
+  trainchecker.baish.net serves the same build (`index-CxvsGjOA.js`, built here from a72e151).
+- **John:** yes to never "Good news" when "the next train expected to leave" (by expected time) is cancelled, more
+  than five minutes late or "Delayed". Built, not merged: `nextBad` and `byNext` in `analyse()`; `nextSaid()` in
+  `sentences.ts` (Claude's drafts): "It's a mixed bag: most trains from London Kings Cross to York are running this
+  evening, but the next one, the 8.03pm, is running 18 minutes late, now expected to leave at 8.21pm." ("is
+  cancelled"; "is delayed, with no new time given yet"; "…, and one more is cancelled" / "running late" / "cancelled
+  or running late"); Share: "Most were running, but the next one, the 8.03pm, was running 18 minutes late, then
+  expected to leave at 8.21pm." Checks: check-rules 267 (new: late, five minutes still good, "Delayed", cancelled,
+  the share words, a late train that another leaves before); Liverpool Street to Stratford at 8.59pm (the 9pm
+  cancelled) now "a mixed bag", so its comparison with the mock-up code is skipped. Sweep of the saved boards, the
+  clock moved back up to two hours in tens (illustration only): 6 of 208 views change, 132 still "Good news".
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)
 

@@ -53,7 +53,8 @@ for (const f of files) {
   const s = raw(f)
   const a = analyse(snapOf(s))
   const m = M.analyse(s)
-  eq(`${f}: verdict kind`, a.verdict, m.verdict)
+  // Not "Good news" when the next train to leave is cancelled or late (John, November 26th 2026), new since the mock-ups.
+  if (!a.byNext) eq(`${f}: verdict kind`, a.verdict, m.verdict)
   // The last train gone (November 17th 2026) is new since the mock-ups.
   // Since November 17th 2026 (stage 4) the verdict never gives the last two hours (they stay in
   // their own box), so where the mock-ups added them, only the first line matches.
@@ -62,7 +63,7 @@ for (const f of files) {
   // The mock-up code counted a late train still to leave as gone (fixed November 26th 2026, John: Birmingham to
   // Cardiff); on the boards with one, the page is checked by the sentences below instead.
   const waitingNow = a.ahead.some((t) => t.rel < 0)
-  if (!a.lastGone && !waitingNow) eq(`${f}: verdict`, lineText(verdict(a).lines), a.worse ? mv.slice(0, 1) : mv)
+  if (!a.lastGone && !waitingNow && !a.byNext) eq(`${f}: verdict`, lineText(verdict(a).lines), a.worse ? mv.slice(0, 1) : mv)
   // Since November 18th 2026 (John): "a fault on the train" in the summary; the list keeps "this".
   const mn = S.nextFour(m)
   // "…expected to be on time" since November 18th 2026 (John, stage 5).
@@ -456,6 +457,27 @@ eq('was due: pm once, kept across midday, on the hour', [dueSay('12:53', '12:47'
   eq('late train once its expected time has passed: gone', [gone.past.some((x) => x.std === '18:26'), gone.ahead.some((x) => x.std === '18:26')], [true, false])
   const delayed = analyse({ ...snapOf(s), services: snapOf(s).services.map((x) => (x.std === '18:15' ? { ...x, etd: 'Delayed' } : x)) })
   eq('"Delayed" with no time, its time passed: still ahead', delayed.ahead.some((x) => x.std === '18:15' && x.unknown), true)
+}
+// Never "Good news" when the train that will leave next is cancelled, more than five minutes late or "Delayed"
+// (John, November 26th 2026, after Birmingham New Street to Cardiff Central). Made-up lateness on the saved Kings
+// Cross to York board, its clock moved to 8.13pm, ten minutes after the 8.03pm was due.
+{
+  const s = raw('20261117-1947-KGX-YRK.json')
+  const at = new Date(new Date(s.taken).getTime() + 26 * 60e3).toISOString() // 8.13pm
+  const base = snapOf(s)
+  const with8 = (ch: Partial<Snap['services'][number]>) => analyse({ ...base, taken: at, services: base.services.map((x) => (x.std === '20:03' ? { ...x, ...ch } : x)) })
+  const late = with8({ etd: '20:21' })
+  eq('next train late: "a mixed bag", naming it', [late.verdict, late.byNext, lineText(verdict(late).lines)[0]], ['mixed', true, "<b>It's a mixed bag:</b> most trains from London Kings Cross to York are running this evening, but the next one, the 8.03pm, is running 18 minutes late, now expected to leave at 8.21pm."])
+  eq('next train late: the share words', shareWords(late).text, "It's a mixed bag for trains from London Kings Cross to York, according to a check at 8.13pm on November 17th. Most were running, but the next one, the 8.03pm, was running 18 minutes late, then expected to leave at 8.21pm. From Trainchecker.")
+  eq('next train five minutes late: still good news', with8({ etd: '20:08' }).verdict, 'good')
+  eq('next train "Delayed": "a mixed bag"', lineText(verdict(with8({ etd: 'Delayed' })).lines)[0].endsWith('but the next one, the 8.03pm, is delayed, with no new time given yet.'), true)
+  // Cancelled: its booked time still to come, so the clock goes back to 7.55pm.
+  const cancelled = analyse({ ...base, taken: new Date(new Date(s.taken).getTime() + 8 * 60e3).toISOString(), services: base.services.map((x) => (x.std === '20:03' ? { ...x, cancelled: true } : x)) })
+  eq('next train cancelled: "a mixed bag"', lineText(verdict(cancelled).lines)[0].endsWith('but the next one, the 8.03pm, is cancelled.'), true)
+  // The 8.03pm now expected at 8.40pm: the 8.33pm, on time, leaves first, so it's the next one (John: "the next train
+  // expected to leave").
+  const overtaken = with8({ etd: '20:40' })
+  eq('a late train that another leaves before: not the next one', [overtaken.byNext, overtaken.nextBad, overtaken.verdict], [false, null, 'good'])
 }
 console.log(`check-rules: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

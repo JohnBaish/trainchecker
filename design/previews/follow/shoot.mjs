@@ -1,8 +1,7 @@
 // "Follow my progress" mock-ups (John, November 26th 2026) on the saved board, Reading to Paddington at 6.24pm on
 // November 17th 2026, the page's clock set to then. The arrival board (and so the platforms at Paddington) is made
 // up from the departures, and some trains are changed to show cases the board didn't have (marked "made up"):
-// ILLUSTRATION ONLY. Each case: the train's page at 1200px light and 390px dark with touch; option A (words only)
-// for two cases; then Message home's share on a phone, the words and link it sends caught. vite preview on 4620.
+// ILLUSTRATION ONLY. Each case: the train's page at 1200px light and 390px dark with touch (option B, John); then Message home's share on a phone, the words and link it sends caught. vite preview on 4620.
 // Usage: node design/previews/follow/shoot.mjs <out-dir>
 import { readFileSync, writeFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
@@ -47,13 +46,13 @@ for (const v of VIEWS) {
   const { tag, ...opts } = v
   const ctx = await b.newContext(opts)
   for (const [name, std, id, change, day] of CASES) {
-    for (const mock of name.startsWith('1-on-time-between') || name.startsWith('9-') ? ['B', 'A'] : ['B']) {
+    for (const mock of ['B']) {
       const p = await ctx.newPage()
       const errors = []
       p.on('pageerror', (e) => errors.push(e.message))
       await p.addInitScript(clockAt)
       await p.route('**/api/live?**', (q) => q.fulfill({ status: 200, contentType: 'application/json', body: body(id, change) }))
-      await p.goto(`http://localhost:4620/?mock=${mock}#RDG-PAD/follow/${std}-${id}-${day ?? DAY}`)
+      await p.goto(`http://localhost:4620/#RDG-PAD/follow/${std}-${id}-${day ?? DAY}`)
       await p.locator('.follow, .follow-more').first().waitFor()
       const text = await p.locator('.follow p').first().innerText().catch(() => '(no box)')
       const side = await p.evaluate(() => document.documentElement.scrollWidth - innerWidth)

@@ -1,7 +1,7 @@
 // "Follow my progress" (John, November 26th 2026): the page the link in Message home's share opens, about one
 // train: a heading, when it was checked with "Check again" (it doesn't update by itself, John), the sentences
-// (lib/follow.ts) in a box, and the journey's full page below. MOCK-UP, for John: `?mock=A` shows the words
-// alone in the box, `?mock=B` (or none) the words and the train's line as Message home shows it.
+// (lib/follow.ts) in a box with the train's line as Message home shows it (option B, John, November 26th 2026),
+// and the journey's full page below.
 import { useCallback, useEffect, useState } from 'react'
 import { analyse, type Analysis } from '../lib/analyse.ts'
 import { followFor, ukDay, type FollowLink } from '../lib/follow.ts'
@@ -17,7 +17,6 @@ export function FollowView({ link }: { link: FollowLink }) {
   const [state, setState] = useState<State>({ s: 'loading' })
   const [busy, setBusy] = useState(false)
   const [refreshFailed, setRefreshFailed] = useState(false)
-  const mock = new URLSearchParams(location.search).get('mock') === 'A' ? 'A' : 'B'
   const load = useCallback(() => {
     fetchLive(link.from, link.to)
       .then((snap) => { setState({ s: 'ok', a: analyse(snap) }); setRefreshFailed(false) })
@@ -68,7 +67,7 @@ export function FollowView({ link }: { link: FollowLink }) {
       </div>
       <section className={`card verdict follow state-${f.tone}`}>
         <p>{f.text}</p>
-        {mock === 'B' && l && (
+        {l && (
           <div className="home"><div className="home-box">
             <div className="board" role="table">
               <div className="bhead" role="row">

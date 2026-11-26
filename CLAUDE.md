@@ -134,6 +134,9 @@ given its own branch). Before committing there, run
   board of November 17th, arrival board made up, some cases made up: illustration only): 14 cases at 1200px light
   and 390px dark, no errors, no sideways scroll; Message home's share caught on a phone and its link opened. Found
   and fixed: "on platform / 9." split over two lines, "late" alone on a line. Not checked: a real phone, live boards.
+- **John:** option B (the words and the train's line; the `?mock=` switch and option A taken out); the drafts kept for
+  now ("I need to keep checking it"); a way to send the link with Copy on a computer, and what the midnight gap would
+  look like: both explained, for him. Checks, `tsc -b`, lint, build; `shoot.mjs` again: no errors, no sideways scroll.
 
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)

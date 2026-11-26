@@ -7,7 +7,7 @@
 // train not on B's arrival board yet (it reaches only about two hours ahead) falls back to the
 // departure board's time at B, with no platform.
 import { diff, isTime, type Analysis, type Train } from './analyse.ts'
-import { boardKind, num, t12, type PicRow } from './sentences.ts'
+import { kindOf, num, otherCompany, t12, type PicRow } from './sentences.ts'
 
 export type Home = {
   /** The train's line, as a row of the arrivals board. */
@@ -40,9 +40,11 @@ export function homeFor(a: Analysis, t: Train, now: string): Home {
   const exp = arrived ? (isTime(src.ata) ? src.ata : sta) : isTime(src.eta) ? src.eta : src.eta === 'On time' || src.eta == null ? sta : null
   const late = exp ? diff(sta, exp) : 0
   // As the train lists and boards say it, from every train on the board (not only those still to leave).
-  const kind = boardKind(a)(t)
+  const kind = kindOf(a)(t)
   const on = platform ? `, on platform ${platform}` : ''
-  const heading = `The ${t12(t.std)} from ${from}`
+  // "The 4.47pm Elizabeth Line train from Reading" where another company's train leaves at the same time.
+  const co = otherCompany(t, [...a.past, ...a.ahead])
+  const heading = co ? `The ${t12(t.std)} ${co} train from ${from}` : `The ${t12(t.std)} from ${from}`
   const row: PicRow = {
     time: exp ? t12(exp) : '?',
     mid: [`the ${t12(t.std)}`, kind].filter(Boolean).join(' · '),

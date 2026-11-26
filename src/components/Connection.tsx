@@ -6,7 +6,7 @@ import { Fragment, useEffect, useMemo, useState } from 'react'
 import { clock, diff, type Analysis } from '../lib/analyse.ts'
 import { answer, chipLabel, choices, firstChoice, mineOf, shownTrains, speeds, whichTrain, type Mine } from '../lib/connection.ts'
 import { fetchConnect, fetchPlaces } from '../lib/load.ts'
-import { apart, dayName, t12 } from '../lib/sentences.ts'
+import { dayName, kindOf, t12 } from '../lib/sentences.ts'
 import { answerImage, deliverImage, isTouch } from '../lib/share.ts'
 import { nameOf, resolve } from '../lib/stations.ts'
 import type { Connect } from '../../api/connect.ts'
@@ -131,8 +131,8 @@ export function Connection({ a }: { a: Analysis }) {
   // rest (John, November 26th 2026); each list puts the answer under its own row.
   const found = all.filter(({ s }) => near.includes(s.id))
   const rest = mines.filter(({ s }) => !near.includes(s.id))
-  // The company, where another company's train leaves at the same time (two "7.48pm"s told apart).
-  const kind = apart(all.map(({ s }) => s))
+  // Fast, slower or Elizabeth Line, when the journey has more than one kind (two "4.42pm"s told apart).
+  const kind = kindOf(a, all.map(({ s }) => s))
   const list = (l: typeof mines) => {
     const after = rowEnd(l.findIndex(({ m }) => m.id === mineId), cols, l.length)
     return l.map(({ s, m }, i) => (

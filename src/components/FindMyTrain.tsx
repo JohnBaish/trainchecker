@@ -8,7 +8,7 @@
 import { useState } from 'react'
 import { diff, isTime, type Analysis, type Service } from '../lib/analyse.ts'
 import { findTrain, rel, ukMinutes, type Found, type Positions } from '../lib/findTrain.ts'
-import { t12, trainName } from '../lib/sentences.ts'
+import { kindOf, t12, trainName } from '../lib/sentences.ts'
 import { Icon } from './Icon.tsx'
 
 type State =
@@ -23,8 +23,9 @@ const gone = (now: string, t: Service) => t.etd !== 'Delayed' && diff(now, isTim
 
 /** The sentence for what was found. */
 function said(st: State, a: Analysis, trains: Service[]): string | null {
-  // "the 4.42pm", or "the 4.42pm Elizabeth Line train" where another company's train leaves at the same time.
-  const name = (id: string | null) => { const t = trains.find((x) => x.id === id); return t ? trainName(t, trains) : '' }
+  // "the 4.42pm", or "the 4.42pm slower train" where another train in the list leaves at the same time.
+  const kind = kindOf(a, trains)
+  const name = (id: string | null) => { const t = trains.find((x) => x.id === id); return t ? trainName(t, trains, kind) : '' }
   if (st.s === 'denied') return 'Trainchecker wasn’t allowed to see where you are. You can change that in your browser’s settings, or choose your train below.'
   if (st.s === 'lost') return 'Your location couldn’t be found. Please try again, or choose your train below.'
   if (st.s !== 'done') return null

@@ -7,7 +7,7 @@ import { Fragment, useMemo, useState } from 'react'
 import { clock, diff, type Analysis } from '../lib/analyse.ts'
 import { mineOf, shownTrains, whichTrain } from '../lib/connection.ts'
 import { homeFor } from '../lib/messageHome.ts'
-import { apart, dateShort, type ListPicture, t12 } from '../lib/sentences.ts'
+import { dateShort, kindOf, type ListPicture, t12 } from '../lib/sentences.ts'
 import { rowEnd, useGridCols } from '../lib/useGridCols.ts'
 import { BoxShare } from './BoxShare.tsx'
 import { FindMyTrain } from './FindMyTrain.tsx'
@@ -47,8 +47,8 @@ export function MessageHome({ a }: { a: Analysis }) {
   // The trains found go first, with "Or choose another" above the rest, as in Exits.
   const found = all.filter(({ s }) => near.includes(s.id))
   const rest = mines.filter(({ s }) => !near.includes(s.id))
-  // The company, where another company's train leaves at the same time (two "7.48pm"s told apart).
-  const kind = apart(all.map(({ s }) => s))
+  // Fast, slower or Elizabeth Line, when the journey has more than one kind (two "4.42pm"s told apart).
+  const kind = kindOf(a, all.map(({ s }) => s))
   const list = (l: typeof mines) => {
     const after = rowEnd(l.findIndex(({ m }) => m.id === mineId), cols, l.length)
     return l.map(({ s, m }, i) => (

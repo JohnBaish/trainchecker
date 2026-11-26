@@ -105,13 +105,13 @@ given its own branch). Before committing there, run
   `design/previews/same-time/shoot.mjs` (the 8.59pm board's two 9.04pms, clock 9.06 and 9.08pm, a pretend location
   between Reading and Twyford; arrivals made up, illustration only) at 390px dark and 1200px light: the sentences
   above, no errors, no sideways scroll. Connections' list not photographed (needs a change station; same code).
-- **John:** no "fast" or "slower" in the lists or sentences for trains of one company: those are told apart by when
-  they get in; a different company (or the Elizabeth Line) named just before "train", and on the button, only where
-  another company's train leaves at the same time (`apart()`, `trainName()` in `sentences.ts`; "the 4.47pm Elizabeth
-  Line train", "the 7.48pm Greater Anglia train"). Message home's line keeps the board's kind (`boardKind()`), as the
-  arrivals board shows it. Arrived: A (the row as built); the picture reads "Arrived into London Paddington at 6.21pm,
-  on platform 12."; the message keeps "which got into…" (John, for variety). Option B mock-up removed. Checks:
-  check-home 24, all checks, `tsc -b`, lint, build; both preview runs again: no errors, no sideways scroll.
+- **John:** the share picture's heading has no "fast" or "slower"; where another company's train leaves at the same
+  time, the company just before "train" ("The 4.47pm Elizabeth Line train from Reading"; `otherCompany()` in
+  `sentences.ts`), otherwise "The 4.42pm from Reading". (A first reading applied this to the lists too; John: only
+  the heading, so the lists keep "· Fast"/"· Slower".) Arrived: A (the row as built); the picture reads "Arrived into
+  London Paddington at 6.21pm, on platform 12."; the message keeps "which got into…" (John, for variety). Option B
+  mock-up removed. Checks: check-home 28, all checks, `tsc -b`, lint, build; both preview runs again: no errors, no
+  sideways scroll.
 
 ### November 26th 2026: "Find my train from my location", fuller lists, "expected", a refresh that keeps your place; live (branch `claude/happy-darwin-mmnd4m`, merged the same day; Claude Code)
 

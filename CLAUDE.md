@@ -74,6 +74,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 26th 2026: "Find my train from my location", looked into (notes only, straight to `main`; Claude Code)
+
+- **John:** a button at the top of the train lists in Connections and Exits, "Find my train from my location", only to
+  narrow down which train you're on; two trains too close to tell apart offered both. The idea and its limits in
+  `design/find-my-train/README.md`. Nothing built.
+- **Checked:** the Knowledgebase Stations feed gives a map position for all 2,616 stations (half within 39 metres of
+  the OpenStreetMap track's station ends, 99 in 100 within 320 metres); two wrong in the feed (Burnham-on-Crouch in
+  the North Sea, Canary Wharf (Elizabeth line) with its longitude's sign wrong).
+- Key saved here now: Knowledgebase Stations (it replaced the Live Arrival Board's).
+
 ### November 26th 2026: "am" or "pm" once, in lists and ranges; live (branch `claude/lucid-feynman-lbfd8l`, merged the same day; Claude Code)
 
 - **John (iPhone, the fold under a panel):** "The 6.44am, 6.48am, 7.14am … are cancelled" should say "am" once, as

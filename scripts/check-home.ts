@@ -86,14 +86,16 @@ eq('arrived: words', inn.line, 'Arrived into London Paddington at 6.21pm, on pla
 eq('arrived: sent', inn.sent, 'Here’s my train from Reading, which got into London Paddington at 6.21pm.')
 
 // The message's cases (John, November 26th 2026), illustration-only times: due to leave 5.14pm, due in 5.29pm.
-const msg = (exp: string, late: number, dep: [number, string] | null, left = true, gone = true, on = '') =>
-  sentFor({ from: 'Reading', to: 'London Paddington', std: '17:14', exp, late, dep: dep && { late: dep[0], at: dep[1] }, left, gone, on })
+const msg = (exp: string, late: number, dep: [number, string] | null, left = true, gone = true, on = '', soon = false) =>
+  sentFor({ from: 'Reading', to: 'London Paddington', std: '17:14', exp, late, dep: dep && { late: dep[0], at: dep[1] }, left, gone, soon, on })
 const P = 'Here’s my train from Reading'
 eq('1 on time', msg('17:29', 0, [0, '17:14']), `${P}, expected into London Paddington at 5.29pm.`)
 eq('2 left on time, now late', msg('17:44', 15, [0, '17:14']), `${P}. It left on time but it’s now running 15 minutes late, expected into London Paddington at 5.44pm.`)
 eq('3 left late, the same', msg('17:44', 15, [15, '17:29']), `${P}. It left 15 minutes late, at 5.29pm, so it’s expected into London Paddington at 5.44pm.`)
 eq('4 made up some', msg('17:41', 12, [15, '17:29']), `${P}. It left 15 minutes late, at 5.29pm, but it’s made up some time so it’s now expected into London Paddington at 5.41pm, 12 minutes later than originally planned.`)
-eq('5 made up all', msg('17:29', 0, [5, '17:19']), `${P}. It left five minutes late, at 5.19pm, but it’s made up the time and is expected into London Paddington on time, at 5.29pm.`)
+eq('5 made up all', msg('17:29', 0, [5, '17:19']), `${P}. It left five minutes late, at 5.19pm, but it’s made up the time and is expected into London Paddington as planned, at 5.29pm.`)
+eq('5 made up all, left under five minutes ago', msg('17:29', 0, [5, '17:19'], true, true, '', true), `${P}. It left five minutes late, at 5.19pm, but it should make up the time and is expected into London Paddington as planned, at 5.29pm.`)
+eq('4 made up some, left under five minutes ago', msg('17:41', 12, [15, '17:29'], true, true, '', true), `${P}. It left 15 minutes late, at 5.29pm, but it should make up some time, and it’s currently expected into London Paddington at 5.41pm, 12 minutes later than originally planned.`)
 eq('6 lost more', msg('17:44', 15, [5, '17:19']), `${P}. It left five minutes late, at 5.19pm, and it’s now running 15 minutes late, expected into London Paddington at 5.44pm.`)
 eq('7 a little early', msg('17:27', -2, [0, '17:14']), `${P}, expected into London Paddington a little early, at 5.27pm.`)
 eq('8 planning, on time', msg('17:29', 0, [0, '17:14'], false, false, ', on platform 11'), 'I’m planning to get the 5.14pm from Reading, expected into London Paddington at 5.29pm, on platform 11.')
@@ -107,15 +109,17 @@ eq('one minute early counts as on time', msg('17:28', -1, [0, '17:14']), `${P}, 
 eq('not known how it left: by the arrival', msg('17:44', 15, null), `${P}, running 15 minutes late, now expected into London Paddington at 5.44pm.`)
 
 // On a computer (John, November 26th 2026): the message turned round, with the platform, then what the link is for.
-const desk = (exp: string, late: number, dep: [number, string] | null, left = true, gone = true, on = ', on platform 9') =>
-  deskFor('The 5.14pm from Reading', { from: 'Reading', to: 'London Paddington', std: '17:14', exp, late, dep: dep && { late: dep[0], at: dep[1] }, left, gone, on })
+const desk = (exp: string, late: number, dep: [number, string] | null, left = true, gone = true, on = ', on platform 9', soon = false) =>
+  deskFor('The 5.14pm from Reading', { from: 'Reading', to: 'London Paddington', std: '17:14', exp, late, dep: dep && { late: dep[0], at: dep[1] }, left, gone, soon, on })
 const D = 'The 5.14pm from Reading'
 eq('desk 1 on time', desk('17:29', 0, [0, '17:14']), `${D} is expected into London Paddington at 5.29pm, on platform 9.`)
 eq('desk 2 left on time, now late', desk('17:44', 15, [0, '17:14']), `${D} left on time but it’s now running 15 minutes late, expected into London Paddington at 5.44pm, on platform 9.`)
 eq('desk 3 a little early', desk('17:27', -2, [0, '17:14']), `${D} is expected into London Paddington a little early, at 5.27pm, on platform 9.`)
 eq('desk 4 left late, the same', desk('17:44', 15, [15, '17:29']), `${D} left 15 minutes late, at 5.29pm, so it’s expected into London Paddington at 5.44pm, on platform 9.`)
 eq('desk 5 made up some', desk('17:41', 12, [15, '17:29']), `${D} left 15 minutes late, at 5.29pm, but it’s made up some time so it’s now expected into London Paddington at 5.41pm, on platform 9, 12 minutes later than originally planned.`)
-eq('desk 6 made up all', desk('17:29', 0, [5, '17:19']), `${D} left five minutes late, at 5.19pm, but it’s made up the time and is expected into London Paddington on time, at 5.29pm, on platform 9.`)
+eq('desk 6 made up all', desk('17:29', 0, [5, '17:19']), `${D} left five minutes late, at 5.19pm, but it’s made up the time and is expected into London Paddington as planned, at 5.29pm, on platform 9.`)
+eq('desk 6, left under five minutes ago', desk('17:29', 0, [5, '17:19'], true, true, ', on platform 9', true), `${D} left five minutes late, at 5.19pm, but it should make up the time and is expected into London Paddington as planned, at 5.29pm, on platform 9.`)
+eq('desk 5, left under five minutes ago', desk('17:41', 12, [15, '17:29'], true, true, ', on platform 9', true), `${D} left 15 minutes late, at 5.29pm, but it should make up some time, and it’s currently expected into London Paddington at 5.41pm, on platform 9, 12 minutes later than originally planned.`)
 eq('desk 7 later still', desk('17:44', 15, [5, '17:19']), `${D} left five minutes late, at 5.19pm, and it’s now running 15 minutes late, expected into London Paddington at 5.44pm, on platform 9.`)
 eq('desk 8 leaving in the four minutes', desk('17:29', 0, [0, '17:14'], true, false), `${D} is due to leave on time, and it’s expected into London Paddington at 5.29pm, on platform 9.`)
 eq('desk 9 not left, leaving late', desk('17:44', 15, [15, '17:29'], false, false), `${D} is expected to leave 15 minutes late, at 5.29pm, getting into London Paddington at 5.44pm, on platform 9.`)

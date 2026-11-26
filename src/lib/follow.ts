@@ -151,10 +151,12 @@ export function followFor(a: Analysis, l: FollowLink, today: string): Follow {
     else rest = `${gone} and it’s ${cur}.` // 1 (John)
   } else {
     const leftLate = `It left ${minutes(d.late)} late, at ${t12(d.at)},`
+    // In the first five minutes after it left, "it should make up …": it can't have made up much yet; and "as planned",
+    // not "on time", after "the time" (John, November 26th 2026).
+    const soon = diff(d.at, a.now) < 5
     if (Math.abs(late - d.late) <= 1) rest = `${leftLate} so it’s ${cur}.` // 3 (John)
-    // In the first five minutes after it left, "it will make up the time": it can't have made up much yet (John).
-    else if (!lateArr && diff(d.at, a.now) < 5) rest = `${leftLate} but it will make up the time, and it’s currently expected into ${to} ${early ? 'a little early' : 'on time'}, at ${t12(exp)}${on}.` // 6, early on
-    else if (!lateArr) rest = `${leftLate} but it’s made up the time, and it’s currently expected into ${to} ${early ? 'a little early' : 'on time'}, at ${t12(exp)}${on}.` // 6
+    else if (!lateArr) rest = `${leftLate} but it${soon ? ' should make' : '’s made'} up the time, and it’s currently expected into ${to} ${early ? 'a little early' : 'as planned'}, at ${t12(exp)}${on}.` // 6
+    else if (late < d.late && soon) rest = `${leftLate} but it should make up some time, and it’s currently expected into ${to} ${minutes(late)} late, at ${t12(exp)}${on}.` // 5, early on
     else if (late < d.late) rest = `${leftLate} but it’s made up some time, and it’s now running ${minutes(late)} late, ${cur}.` // 5
     else rest = `${leftLate} and it’s now running ${minutes(late)} late, ${cur}.` // 7
   }

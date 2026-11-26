@@ -156,6 +156,13 @@ given its own branch). Before committing there, run
   the days ahead, recent reliability figures and bonus content." and the button "More about the route". Checks:
   check-follow 28; all 11 scripts, `tsc -b`, lint, build; `shoot.mjs` again and the new case at 1200px light and 390px
   dark: no errors, no sideways scroll. For John: case 5 ("made up some time") and Message home's messages unchanged.
+- **John:** "should" rather than "will" in all cases: in the first five minutes after leaving, "but it should make up
+  the time" and (Claude's draft, agreed) "but it should make up some time, and it's currently expected into London
+  Paddington five minutes late, at 7.14pm", on the follow page and in Message home's phone and computer messages
+  (`soon` in `messageHome.ts`); after "the time", "as planned" rather than "on time" (all three). In Message home's
+  box (and the follow page's), a long station name ("From Exeter St Davids", John's iPhone) now wraps rather than
+  running into "Expected in" (`.home .home-box .bhead`). Checks: check-home 61, check-follow 29; all 11 scripts,
+  `tsc -b`, lint, build; a long name at 390px dark and 360px light: no overlap, no sideways scroll.
 
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)

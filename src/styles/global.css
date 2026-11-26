@@ -374,3 +374,7 @@ details.trains-fold { margin-top: var(--space-3); }
 .desk-message { padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--color-bg); }
 .desk-message p { margin: 0; line-height: 1.55; }
 .desk-message a { overflow-wrap: anywhere; }
+/* Message home's box and the followed train's box: a long station name ("From Exeter St Davids") wraps onto two lines
+   on a phone rather than running into "Expected in" (John, November 26th 2026); the headings sit on its last line. */
+.home .home-box .bhead { align-items: end; }
+.home .home-box .bhead > span:first-child { white-space: normal; }

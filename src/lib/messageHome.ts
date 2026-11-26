@@ -73,7 +73,9 @@ export function homeFor(a: Analysis, t: Train, now: string): Home {
   } else {
     // The picture's words go by the arrival alone.
     line = late > 0 ? `Running ${minutes(late)} late, now expected into ${to} at ${t12(exp)}${on}.` : `Expected into ${to} at ${t12(exp)}${on}.`
-    const o = { from, to, std: t.std, exp, late, dep: depart(t), left, gone: gone(t, now), on }
+    const dep = depart(t)
+    // Left under five minutes ago: "it should make up the time", not "it's made up the time" (John, November 26th 2026).
+    const o = { from, to, std: t.std, exp, late, dep, left, gone: gone(t, now), soon: !!dep && diff(dep.at, now) < 5, on }
     sent = sentFor(o)
     desk = deskFor(heading, o) + follow
   }
@@ -93,7 +95,7 @@ const gone = (t: Train, now: string) => { const d = depart(t); return !!d && dif
  *  26th 2026, case 11). */
 const ON_TIME = 2
 
-type Said = { from: string; to: string; std: string; exp: string; late: number; dep: { late: number; at: string } | null; left: boolean; gone: boolean; on: string }
+type Said = { from: string; to: string; std: string; exp: string; late: number; dep: { late: number; at: string } | null; left: boolean; gone: boolean; soon: boolean; on: string }
 
 /** The computer's message (John, November 26th 2026): the phone's cases turned round, "The 6.11pm from Reading …",
  *  with the platform wherever it's known. All agreed by John. */
@@ -116,7 +118,9 @@ export function deskFor(name: string, o: Said): string {
     return `${name} is expected ${into}${on}.` // 1
   }
   if (Math.abs(late - depLate.late) <= 1) return `${name} left ${leftLate}, so it’s expected ${into}${on}.` // 4
-  if (!lateArr) return `${name} left ${leftLate}, but it’s made up the time and is expected into ${to} ${early ? 'a little early' : 'on time'}, at ${t12(exp)}${on}.` // 6
+  // "as planned", not "on time", after "the time" (John, November 26th 2026).
+  if (!lateArr) return `${name} left ${leftLate}, but it${o.soon ? ' should make' : '’s made'} up the time and is expected into ${to} ${early ? 'a little early' : 'as planned'}, at ${t12(exp)}${on}.` // 6
+  if (late < depLate.late && o.soon) return `${name} left ${leftLate}, but it should make up some time, and it’s currently expected ${into}${on}, ${minutes(late)} later than originally planned.` // 5, early on
   if (late < depLate.late) return `${name} left ${leftLate}, but it’s made up some time so it’s now expected ${into}${on}, ${minutes(late)} later than originally planned.` // 5
   return `${name} left ${leftLate}, and it’s now running ${minutes(late)} late, expected ${into}${on}.` // 7
 }
@@ -145,7 +149,8 @@ export function sentFor(o: Said): string {
     return `${mine}, expected ${into}.` // 1
   }
   if (Math.abs(late - depLate.late) <= 1) return `${mine}. It left ${leftLate}, so it’s expected ${into}.` // 3
-  if (!lateArr) return `${mine}. It left ${leftLate}, but it’s made up the time and is expected into ${to} ${early ? 'a little early' : 'on time'}, at ${t12(exp)}.` // 5
+  if (!lateArr) return `${mine}. It left ${leftLate}, but it${o.soon ? ' should make' : '’s made'} up the time and is expected into ${to} ${early ? 'a little early' : 'as planned'}, at ${t12(exp)}.` // 5
+  if (late < depLate.late && o.soon) return `${mine}. It left ${leftLate}, but it should make up some time, and it’s currently expected ${into}, ${minutes(late)} later than originally planned.` // 4, early on
   if (late < depLate.late) return `${mine}. It left ${leftLate}, but it’s made up some time so it’s now expected ${into}, ${minutes(late)} later than originally planned.` // 4
   return `${mine}. It left ${leftLate}, and it’s now running ${minutes(late)} late, expected ${into}.` // 6
 }

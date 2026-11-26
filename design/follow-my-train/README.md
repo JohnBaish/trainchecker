@@ -128,5 +128,7 @@ John drafted three cases, thinking of non-stop trains, and they work for every t
 ## John's notes on the preview (November 26th 2026)
 
 - Platform: "not yet" in a third column when the train is on B's arrival board with no platform; nothing when it isn't on that board.
-- Case 6 in the first five minutes after the train left: "It left three minutes late, at 6.21pm, but it will make up the time, and it's currently expected into London Paddington on time, at 6.40pm." (after five minutes, "it's made up the time", as before).
+- Case 6 in the first five minutes after the train left: "It left three minutes late, at 6.21pm, but it should make up the time, and it's currently expected into London Paddington as planned, at 6.40pm." (after five minutes, "it's made up the time", as before).
 - The journey card: "Check how all the trains on this journey are doing, including engineering work in the days ahead, recent reliability figures and bonus content." Button: "More about the route".
+- John: "should", not "will", everywhere (Message home too); "but it should make up some time, and it's currently expected into London Paddington five minutes late, at 7.14pm" (case 5, first five minutes); "as planned" rather than "on time" after "the time".
+- A long station name in the box's first heading wraps onto two lines on a phone.

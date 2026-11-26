@@ -79,7 +79,7 @@ await p.locator('.home summary').click()
 const sent = []
 for (const time of ['6.11pm', '6.26pm', '5.50pm']) {
   await p.locator('.home .cmine', { has: p.locator('b', { hasText: new RegExp(`^${time.replace('.', '\\.')}$`) }) }).first().click()
-  await p.locator('.home .box-share button').click()
+  await p.locator('.home .box-share button', { hasText: 'Share' }).click()
   await p.waitForFunction(() => window.__sent)
   const w = await p.evaluate(() => { const w = window.__sent; window.__sent = null; return w })
   sent.push(`${time}: ${w.text}\n   ${w.url}`)

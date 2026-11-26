@@ -35,7 +35,7 @@ for (const scheme of ['light', 'dark']) {
     const reply = p.locator('.home .tap-reply')
     await reply.scrollIntoViewIfNeeded()
     const boxes = await p.locator('.home .home-box').count()
-    await p.locator('.home .desk-message button').click()
+    await p.locator('.home .desk-message button', { hasText: 'Copy' }).click()
     await p.locator('.home .desk-message .share-status', { hasText: 'Copied' }).waitFor()
     const words = await p.evaluate(() => navigator.clipboard.readText())
     await reply.screenshot({ path: `${out}/desk-${name}-1200-${scheme}.png` })
@@ -52,7 +52,7 @@ for (const scheme of ['light', 'dark']) {
   await reply.scrollIntoViewIfNeeded()
   await reply.screenshot({ path: `${out}/desk-phone-unchanged-390-dark.png` })
   const side = await p.evaluate(() => document.documentElement.scrollWidth - innerWidth)
-  console.log(`390 dark phone: box shown ${await p.locator('.home .home-box').count()}, message shown ${await p.locator('.home .desk-message').count()}, button "${(await p.locator('.home .box-share button').innerText()).trim()}", sideways ${side}, errors ${errors.length}`)
+  console.log(`390 dark phone: box shown ${await p.locator('.home .home-box').count()}, message shown ${await p.locator('.home .desk-message').count()}, button "${(await p.locator('.home .box-share button', { hasText: 'Share' }).innerText()).trim()}", sideways ${side}, errors ${errors.length}`)
   await ctx.close()
 }
 await b.close()

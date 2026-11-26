@@ -178,6 +178,9 @@ given its own branch). Before committing there, run
 - **John:** the line under Share reworded: "“Share this journey” also sends this link, which anyone can use to check
   the progress of your train." with "this link" the link itself (opens in a new page); "sends" Claude's word for John's
   "offers". Checked at 390px dark: the line, the link opening the train's page; no errors, no sideways scroll.
+- **John:** on the train's page, the time and "Check again" now under the box (the page is short); the journey card
+  "Check how all the trains on this route are doing, …". The preview scripts now pick the Share and Copy buttons by
+  name (Check again sits beside them). `shoot.mjs` and `desk.mjs` again: no errors, no sideways scroll.
 
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)

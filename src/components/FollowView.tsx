@@ -39,7 +39,7 @@ export function FollowView({ link }: { link: FollowLink }) {
     <section className="card follow-more">
       <div className="card-kicker">Trains to check</div>
       <h3>{fromName} to {toName}</h3>
-      <p className="muted">Check how all the trains on this journey are doing, including engineering work in the days ahead, recent reliability figures and bonus content.</p>
+      <p className="muted">Check how all the trains on this route are doing, including engineering work in the days ahead, recent reliability figures and bonus content.</p>
       <a className="btn btn-secondary" href={hashOf({ from: link.from, to: link.to })}>More about the route <Icon name="right" /></a>
     </section>
   )
@@ -58,13 +58,6 @@ export function FollowView({ link }: { link: FollowLink }) {
   return (
     <>
       {head}
-      <div className="dateline">
-        <p className="muted">{dayName(new Date(a.taken))}, {t12(a.now)}. Live from National Rail.</p>
-        <button type="button" className="btn btn-ghost" onClick={again} disabled={busy}>
-          {busy ? <><span className="spinner" aria-hidden="true"></span>Checking…</> : <><Icon name="refresh" /> Check again</>}
-        </button>
-        {refreshFailed && <p className="muted small" role="status">Sorry, National Rail couldn’t be reached just now, so this is where the train was before.</p>}
-      </div>
       <section className={`card verdict follow state-${f.tone}`}>
         <p>{f.text}</p>
         {l && (
@@ -85,6 +78,14 @@ export function FollowView({ link }: { link: FollowLink }) {
           </div></div>
         )}
       </section>
+      {/* Under the box, not above it: the page is short, and it's checked again and again (John, November 26th 2026). */}
+      <div className="dateline">
+        <p className="muted">{dayName(new Date(a.taken))}, {t12(a.now)}. Live from National Rail.</p>
+        <button type="button" className="btn btn-ghost" onClick={again} disabled={busy}>
+          {busy ? <><span className="spinner" aria-hidden="true"></span>Checking…</> : <><Icon name="refresh" /> Check again</>}
+        </button>
+        {refreshFailed && <p className="muted small" role="status">Sorry, National Rail couldn’t be reached just now, so this is where the train was before.</p>}
+      </div>
       {more}
     </>
   )

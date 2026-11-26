@@ -74,6 +74,24 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 26th 2026: "Message home", for John (branch `claude/message-home`, not merged; Claude Code)
+
+- **John:** a section after The last week, "Message home", folded under "Check your arrival and share", with the
+  same question and list as Exits (Find my train too); then Exits, then "More arrivals" (Arrivals renamed, heading
+  only). Choosing a train shows its line from B's arrival board in a box, with "Share this journey" ("Copy" on a
+  computer). Picture (John): "TRAINCHECKER · MY TRAIN", "The 10.02am from Reading", "Expected into London Paddington
+  at 10.26am, on platform 11.", "Checked at …". Sent with "Here's my train from Reading, expected into …" ("running
+  six minutes late, now expected into …" when late); not yet left: "I'm planning to get the 10.02am from Reading,
+  expected into … , on platform 11." (platform only when known).
+- **Built:** `src/lib/messageHome.ts` (`homeFor()`: the line matched to B's arrival board by the id's first eight
+  characters, its platform B's; without it, the departure board's time and no platform), `src/components/MessageHome.tsx`,
+  `Board` exported from `JourneyView.tsx`, `answerImage()` takes a `foot`, `BoxShare` takes `title`, `when`, `foot`.
+  Drafts (Claude's, for John): delayed with no time, already arrived ("Got into … at …", row "arrived" under "EXPECTED IN").
+- **Checked:** all checks, `tsc -b`, lint, build; `design/previews/message-home/shoot.mjs` (Reading to Paddington at
+  6.24pm, arrival board made up from the departures, illustration only): on time, late, planned and arrived, at
+  1200px light and 390px dark, each picture read back from the clipboard; no errors, no sideways scroll, button 44px
+  on a phone. Not checked: a real phone's share sheet, live boards.
+
 ### November 26th 2026: "Find my train from my location", fuller lists, "expected", a refresh that keeps your place; live (branch `claude/happy-darwin-mmnd4m`, merged the same day; Claude Code)
 
 - **John's answers:** "now expected into" kept for late trains; "expected" for the next train after an hour with

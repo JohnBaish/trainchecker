@@ -455,7 +455,8 @@ function hoursImage(p: ListPicture): HTMLCanvasElement {
 const EDGE: Record<string, string> = { good: '#aebf92', mixed: '#dd8a56', prepared: '#f08a7e', none: '#b0a593' }
 /** `paras`: the box's paragraphs, kept apart as on the page (the location guide's entrances: John,
  *  November 25th 2026); otherwise `text` as one. */
-export function answerImage(o: { heading: string; text: string; edge: string; when: string; kicker?: string; paras?: string[] }): HTMLCanvasElement {
+/** `foot`: a line under the box (Message home's "Checked at 10.07am on November 26th"); `when` may then be ''. */
+export function answerImage(o: { heading: string; text: string; edge: string; when: string; kicker?: string; paras?: string[]; foot?: string }): HTMLCanvasElement {
   const scale = 2
   const canvas = document.createElement('canvas')
   const probe = canvas.getContext('2d')!
@@ -472,7 +473,8 @@ export function answerImage(o: { heading: string; text: string; edge: string; wh
   const head = wrap(probe, o.heading, W - 120)
   const headTop = 110, bandTop = headTop + head.length * 54 + 24, pad = 50
   const bandH = pad + yy + pad - 10
-  const H = bandTop + bandH + 110
+  const footH = o.foot ? 56 : 0
+  const H = bandTop + bandH + 110 + footH
   canvas.width = W * scale
   canvas.height = H * scale
   const ctx = canvas.getContext('2d')!
@@ -503,16 +505,23 @@ export function answerImage(o: { heading: string; text: string; edge: string; wh
   ctx.fillStyle = D.text
   ctx.font = `${size}px ${FIG}`
   lines.forEach((l, i) => l && ctx.fillText(l, textX, y0 + pad + size - 6 + ys[i]))
+  // Message home's "Checked at …" line under the box.
+  if (o.foot) {
+    ctx.fillStyle = D.muted
+    ctx.font = `24px ${FIG}`
+    ctx.fillText(o.foot, 60, y1 + 48)
+  }
+  const fy = y1 + footH
   ctx.strokeStyle = D.rule
   ctx.lineWidth = 1
-  ctx.beginPath(); ctx.moveTo(60, y1 + 44); ctx.lineTo(W - 60, y1 + 44); ctx.stroke()
+  ctx.beginPath(); ctx.moveTo(60, fy + 44); ctx.lineTo(W - 60, fy + 44); ctx.stroke()
   ctx.fillStyle = D.kicker
   ctx.font = `30px ${CAP}`
-  ctx.fillText('Trainchecker', 60, y1 + 88)
+  ctx.fillText('Trainchecker', 60, fy + 88)
   ctx.fillStyle = D.muted
   ctx.font = `20px ${FIG}`
   ctx.textAlign = 'right'
-  ctx.fillText('trainchecker.baish.net', W - 60, y1 + 86)
+  ctx.fillText('trainchecker.baish.net', W - 60, fy + 86)
   ctx.textAlign = 'left'
   return canvas
 }

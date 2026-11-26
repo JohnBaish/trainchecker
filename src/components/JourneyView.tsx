@@ -22,6 +22,7 @@ import { DaysAhead, type DaysState } from './DaysAhead.tsx'
 import { LastWeek } from './LastWeek.tsx'
 import { FactCard, QuoteCard } from './Tail.tsx'
 import { Connection } from './Connection.tsx'
+import { MessageHome } from './MessageHome.tsx'
 import { Exits } from './Exits.tsx'
 import { BoxShare } from './BoxShare.tsx'
 import { firstPanel, firstShare, laterPanel, laterShare } from '../lib/windows.ts'
@@ -123,7 +124,7 @@ function TapBadge({ pl, open, onTap }: { pl: string; open: boolean; onTap: () =>
   )
 }
 
-function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?: At }) {
+export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?: At }) {
   const [openRow, setOpenRow] = useState<string | null>(null)
   const tap = dirs ?? null
   const toggle = (k: string) => setOpenRow(openRow === k ? null : k)
@@ -176,7 +177,7 @@ function Arrivals({ a }: { a: Analysis }) {
   const pic = arrivalsPicture(a)
   if (!pic) return (
     <section className="card sec block">
-      <h3>Arrivals</h3>
+      <h3>More arrivals</h3>
       <p>{x.text}</p>
     </section>
   )
@@ -189,7 +190,7 @@ function Arrivals({ a }: { a: Analysis }) {
   const say = known ? [count, limited && late ? `Of the first ten, ${late[0].toLowerCase()}${late.slice(1)}` : late].filter(Boolean).join(' ') : x.prose
   return (
     <section className="card sec block">
-      <h3>Arrivals</h3>
+      <h3>More arrivals</h3>
       <p>{say}</p>
       <details className="advice arrivals-fold">
         <summary>{x.heading} <Icon name="down" /></summary>
@@ -471,8 +472,10 @@ export function JourneyView({ journey }: { journey: Journey }) {
       {(an.verdict !== 'none' || (an.lastGone && !closed)) && (
         <LastWeek key={hashOf(journey)} from={journey.from} to={journey.to} fromName={an.from} toName={an.to} elizabeth={elizabeth && endOut} noRecord={noRecord} standIn={stand ? { ...stand, left: stand.side === 'to' ? an.to : an.from } : null} others={others} />
       )}
-      {(an.verdict !== 'none' || (an.lastGone && !closed)) && <Arrivals a={an} />}
+      {/* Message home, then Exits, then More arrivals (John, November 26th 2026). */}
+      {(an.verdict !== 'none' || (an.lastGone && !closed)) && <MessageHome a={an} />}
       {(an.verdict !== 'none' || (an.lastGone && !closed)) && <Exits a={an} />}
+      {(an.verdict !== 'none' || (an.lastGone && !closed)) && <Arrivals a={an} />}
       {/* Fact of the journey, last, just above "About these figures" (John, November 22nd 2026; it
           was under the quote). Only with a train in the next four hours (not once the last one has
           gone: John), as its stops say which way the journey goes. */}

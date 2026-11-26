@@ -17,6 +17,9 @@ export type BoxWords = {
   what: string // the button: "Share these directions" / "Copy these directions"
   file: string
   hash: string // the journey, for the link sent with it
+  title?: string // the share's title, when not "Trainchecker: " and the heading
+  when?: string // top right of the picture, when not the day and time ('' for none)
+  foot?: string // a line under the box (Message home)
 }
 
 export function BoxShare({ w, taken }: { w: BoxWords; taken: string }) {
@@ -24,8 +27,8 @@ export function BoxShare({ w, taken }: { w: BoxWords; taken: string }) {
   const touch = isTouch()
   const share = async () => {
     setSaid('')
-    const canvas = answerImage({ kicker: w.kicker, heading: w.heading, text: w.text, paras: w.paras, edge: 'none', when: `${dayName(new Date(taken))}, ${t12(clock(taken))}` })
-    const r = await deliverImage(canvas, w.file, { title: `Trainchecker: ${w.heading}`, text: w.sent, url: `${location.origin}/${w.hash}` })
+    const canvas = answerImage({ kicker: w.kicker, heading: w.heading, text: w.text, paras: w.paras, edge: 'none', when: w.when ?? `${dayName(new Date(taken))}, ${t12(clock(taken))}`, foot: w.foot })
+    const r = await deliverImage(canvas, w.file, { title: w.title ?? `Trainchecker: ${w.heading}`, text: w.sent, url: `${location.origin}/${w.hash}` })
     setSaid(r === 'copied' ? 'Copied' : r === 'saved' ? 'Saved as a picture' : '')
   }
   return (

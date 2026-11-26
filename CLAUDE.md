@@ -76,6 +76,25 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 26th 2026: a late train still waiting at A was counted as gone (branch `fix/late-train-still-to-leave`; Claude Code)
+
+- **John (photos, Birmingham New Street to Cardiff Central at 6.22pm; a second report of the same kind):** "Good
+  news", "The next train … expected to be on time", while the 6.12pm was still on platform 11, expected at 6.30.
+  Cause: `analyse.ts` sorted trains into gone and still to leave by the timetabled time only, so a late train
+  whose time had passed was "gone": left out of the verdict, the panels and the late count.
+- **Fixed:** a train whose timetabled time has passed but is expected to leave from now on, or shows "Delayed" with
+  no time, counts as still to leave (`waiting` in `analyse()`). The panels already went by expected times.
+- **Found:** the saved boards had it too: Manchester Piccadilly to the Airport at 6.24pm on November 17th (the 6.18pm,
+  expected at 6.30), Bath Spa to Bristol (6.23pm, expected 6.25), Paddington to Reading (6.20pm, expected 6.24).
+- **Checked:** five new checks in `check-rules.ts` (a late train ahead and first; gone once its expected time passes;
+  "Delayed"); the older checks that changed now say what's true (Manchester "of the next 31 … three running late",
+  Bath "two of the 19") or keep testing what they were for (`ids()` and `asLeft()`); the comparison with the
+  mock-up code skipped on boards with such a train. All ten scripts pass, `tsc -b`, lint, build. Recreated on Kings
+  Cross to York (made up: due 8.03pm, expected 8.21pm, clock 8.13pm): before, "They're all expected to be on time";
+  after, "One is expected to be more than five minutes late". Not checked: Birmingham's own board (not saved).
+- **Still "Good news":** the agreed rule allows one train in ten (or one, under 20 trains) to be late or cancelled,
+  so a quiet line with the next train late still reads "running well". For John.
+
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)
 
 - **John:** Message home's message ending "Follow my progress on Trainchecker:" with a link to a page about that

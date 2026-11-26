@@ -61,8 +61,13 @@ export function analyse(snap: Snap): Analysis {
   // Sorted by minutes from now, not by clock time, so trains after midnight come last (the
   // other stage 1 fault).
   const all: Train[] = snap.services.map((s) => ({ ...s, rel: diff(now, s.std), late: null, unknown: false })).sort((a, b) => a.rel - b.rel)
-  const past = all.filter((s) => s.rel < 0 && s.rel >= -120)
-  const ahead = all.filter((s) => s.rel >= 0 && s.rel <= 240)
+  // A train whose timetabled time has passed but which hasn't left is still to leave: running late and
+  // expected to go from now on, or "Delayed" with no time given (John, Birmingham New Street to Cardiff
+  // Central at 6.22pm on November 26th 2026: the 6.12pm, expected at 6.30, was counted as gone, so the
+  // page said the next train was on time).
+  const waiting = (s: Service) => !s.cancelled && (isTime(s.etd) ? diff(now, s.etd) >= 0 : s.etd === 'Delayed')
+  const past = all.filter((s) => s.rel < 0 && s.rel >= -120 && !waiting(s))
+  const ahead = all.filter((s) => (s.rel >= 0 && s.rel <= 240) || (s.rel < 0 && s.rel >= -120 && waiting(s)))
 
   // The next four hours: how late each is expected to leave.
   for (const s of ahead) {

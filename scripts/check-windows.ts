@@ -44,10 +44,12 @@ for (const f of files) for (const back of [0, 30, 60, 90, 120]) {
   eq(`${f} -${back}: "in that time" only after "more"`, /in that time/.test(l.replace(/more in that time/g, '')), false)
 }
 
+// Since November 26th 2026 (John, Birmingham to Cardiff) a late train still waiting at A counts as still to leave:
+// Bath Spa's 6.23pm (expected 6.25) and Paddington's 6.20pm (expected 6.24) are on these boards at 6.24pm.
 const bth = A('20261117-1824-BTH-BRI.json'), rdgPad = A('20261117-1824-RDG-PAD.json'), padRdg = A('20261117-1824-PAD-RDG.json')
 const eusMkc = A('20261117-2059-EUS-MKC.json'), kgxYrk = A('20261117-1947-KGX-YRK.json'), tvp = A('20261118-0822-TVP-PAD.json')
 
-eq('the next hour: running trains counted, the cancelled one "more" (John)', firstPanel(bth).lines.join(' '), 'There are three trains in the next hour. One more is cancelled, because of a passenger being taken ill on a train. The rest are expected to be on time.')
+eq('the next hour: running trains counted, the cancelled one "more" (John)', firstPanel(bth).lines.join(' '), 'There are four trains in the next hour. One more is cancelled, because of a passenger being taken ill on a train. The rest are expected to be on time.')
 const manMia = A('20261117-1824-MAN-MIA.json')
 eq('later: the rate of trains running, "Seven more in that time" (John)', laterPanel(manMia).lines.join(' '), 'There are five trains per hour. Seven more in that time are cancelled, mostly because of a fault with the signalling system, and one is expected to be more than five minutes late, because of a passenger being taken ill on a train. The rest are expected to be on time.')
 eq('the next hour: the platforms line (John)', [firstPanel(bth).platLine, firstPanel(A('20261117-1824-RDG-PAD.json')).platLine], ['Platforms have been announced for all of these: platform 1.', 'Platforms have been announced for all of these: from platforms 10, 11 and 14.'])
@@ -68,7 +70,7 @@ eq('stretched: heading, no opening sentence (John)', [firstPanel(kgxYrk).heading
 eq('stretched: "Later"', laterPanel(kgxYrk).lines[0], 'There are two more trains in the next four hours.')
 eq('stretched, nothing later', [firstPanel(tvp).heading, laterPanel(tvp).lines[0]], ['The next three trains', 'There are no more direct trains from Tiverton Parkway to London Paddington in the next four hours.'])
 const pp = firstPanel(padRdg).picture!
-eq('"not yet" for a train with no platform', [pp.rows.length, pp.rows.filter((r) => (r as { noPlat?: boolean }).noPlat).length, pp.rows[4].time], [12, 7, '6.50pm'])
+eq('"not yet" for a train with no platform', [pp.rows.length, pp.rows.filter((r) => (r as { noPlat?: boolean }).noPlat).length, pp.rows[4].time], [13, 7, '6.48pm'])
 eq('one platform for all: in the heading', firstPanel(tvp).picture!.one, '2')
 
 console.log(`check-windows: ${passed} passed, ${failed} failed`)

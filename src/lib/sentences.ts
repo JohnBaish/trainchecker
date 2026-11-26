@@ -225,8 +225,9 @@ function nextSaid(a: Analysis, tense: 'present' | 'past'): string {
   const t = a.nextBad!
   const past = tense === 'past'
   const is = past ? 'was' : 'is'
-  // Cancelled and "Delayed" are Claude's drafts in John's pattern.
-  const what = t.cancelled ? `the next one, scheduled for ${t12(t.std)}, ${is} cancelled.`
+  // "Delayed" is Claude's draft in John's pattern.
+  // Cancelled (John, November 26th 2026): said only until its booked time, when it moves into the last two hours.
+  const what = t.cancelled ? `the train scheduled to leave at ${t12(t.std)} was cancelled.`
     : t.unknown ? `the next one to leave, originally scheduled for ${t12(t.std)}, ${is} delayed, with no new time given yet.`
     : `the next one to leave, originally scheduled for ${t12(t.std)}, ${is} running ${num(t.late!)} minutes late. ${past ? 'It was then' : 'It\'s now'} expected to go at ${t12(t.etd!)}.`
   const others = [...a.cancelled, ...a.late5, ...a.unknown].filter((x) => x.id !== t.id)

@@ -108,7 +108,8 @@ given its own branch). Before committing there, run
   clock moved back up to two hours in tens (illustration only): 6 of 208 views change, 132 still "Good news".
 - **John:** the booked and expected times both said, as we're often checking after a train's booked time: "…but the
   next one to leave, originally scheduled for 8.03pm, is running 18 minutes late. It's now expected to go at
-  8.21pm." (his words); in the same pattern (Claude's drafts) "the next one, scheduled for 8.03pm, is cancelled.",
+  8.21pm." (his words); in the same pattern (Claude's drafts) "the train scheduled to leave at 8.03pm was cancelled." (John; said only until its booked time, then it's in
+  the last two hours),
   "the next one to leave, originally scheduled for 8.03pm, is delayed, with no new time given yet.", others as a
   sentence of their own ("Four more are running late."); Share "…was running 18 minutes late. It was then expected to
   go at 8.21pm." And still "Good news" when another train taking about as long (within five minutes, or a fifth of

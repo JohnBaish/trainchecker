@@ -473,7 +473,11 @@ eq('was due: pm once, kept across midday, on the hour', [dueSay('12:53', '12:47'
   eq('next train "Delayed": "a mixed bag"', lineText(verdict(with8({ etd: 'Delayed' })).lines)[0].endsWith('but the next one to leave, originally scheduled for 8.03pm, is delayed, with no new time given yet.'), true)
   // Cancelled: its booked time still to come, so the clock goes back to 7.55pm.
   const cancelled = analyse({ ...base, taken: new Date(new Date(s.taken).getTime() + 8 * 60e3).toISOString(), services: base.services.map((x) => (x.std === '20:03' ? { ...x, cancelled: true } : x)) })
-  eq('next train cancelled: "a mixed bag"', lineText(verdict(cancelled).lines)[0].endsWith('but the next one, scheduled for 8.03pm, is cancelled.'), true)
+  eq('next train cancelled: the share words too', shareWords(cancelled).text.includes('Most were running, but the train scheduled to leave at 8.03pm was cancelled. From'), true)
+  // Once its booked time has passed, a cancelled train has gone (it moves into the last two hours).
+  const after = analyse({ ...base, taken: at, services: base.services.map((x) => (x.std === '20:03' ? { ...x, cancelled: true } : x)) })
+  eq('next train cancelled, its booked time passed: no longer the next one', [after.byNext, after.ahead.some((x) => x.std === '20:03')], [false, false])
+  eq('next train cancelled: "a mixed bag"', lineText(verdict(cancelled).lines)[0].endsWith('but the train scheduled to leave at 8.03pm was cancelled.'), true)
   // The 8.03pm now expected at 8.40pm: the 8.33pm, on time, leaves first, so it's the next one (John: "the next train
   // expected to leave").
   const overtaken = with8({ etd: '20:40' })

@@ -124,3 +124,9 @@ John drafted three cases, thinking of non-stop trains, and they work for every t
   Each of 1 to 10 ends "Follow its progress on Trainchecker: [link]". The phone's planning message now says "getting
   into" too (John). Phones are otherwise unchanged (picture and share sheet). `deskFor()` in `messageHome.ts`,
   `DeskMessage.tsx`; checks in `check-home.ts`; pictures `design/previews/follow/desk-*` (`desk.mjs`).
+
+## John's notes on the preview (November 26th 2026)
+
+- Platform: "not yet" in a third column when the train is on B's arrival board with no platform; nothing when it isn't on that board.
+- Case 6 in the first five minutes after the train left: "It left three minutes late, at 6.21pm, but it will make up the time, and it's currently expected into London Paddington on time, at 6.40pm." (after five minutes, "it's made up the time", as before).
+- The journey card: "Check how all the trains on this journey are doing, including engineering work in the days ahead, recent reliability figures and bonus content." Button: "More about the route".

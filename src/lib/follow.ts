@@ -42,7 +42,7 @@ export type Follow = {
   /** How it's doing, for the box's edge: on time, late, or cancelled (or no colour). */
   tone: 'good' | 'mixed' | 'prepared' | 'none'
   /** The train's line, for the box: when it's expected in, and how late, and the platform at B. */
-  line: { exp: string | null; late: string; platform: string | null; arrived: boolean } | null
+  line: { exp: string | null; late: string; platform: string | null; noPlat: boolean; arrived: boolean } | null
 }
 
 /** Under two minutes either way counts as on time, and a change of one minute as no change (as Message home). */
@@ -101,7 +101,10 @@ export function followFor(a: Analysis, l: FollowLink, today: string): Follow {
   const exp = arrived ? (isTime(ata) ? ata : sta) : isTime(eta) ? eta : eta === 'On time' || eta == null ? sta : null
   const late = exp ? diff(sta, exp) : 0
   const lateArr = late >= ON_TIME, early = late <= -ON_TIME
-  const line = { exp, platform, arrived, late: !exp ? 'delayed, no new time yet' : arrived ? (lateArr ? `got in ${minutes(late)} late` : 'got in') : lateArr ? `${minutes(late)} late` : early ? 'a little early' : 'on time' }
+  // On B's arrival board but no platform given yet: "not yet" (as Message home), so it's clear it isn't known yet
+  // rather than left out (John, November 26th 2026). Not on that board at all: nothing said about the platform.
+  const noPlat = !!arr && !platform && !arrived
+  const line = { exp, platform, noPlat, arrived, late: !exp ? 'delayed, no new time yet' : arrived ? (lateArr ? `got in ${minutes(late)} late` : 'got in') : lateArr ? `${minutes(late)} late` : early ? 'a little early' : 'on time' }
   const tone = !exp || lateArr ? 'mixed' as const : 'good' as const
 
   if (arrived) {
@@ -149,6 +152,8 @@ export function followFor(a: Analysis, l: FollowLink, today: string): Follow {
   } else {
     const leftLate = `It left ${minutes(d.late)} late, at ${t12(d.at)},`
     if (Math.abs(late - d.late) <= 1) rest = `${leftLate} so it’s ${cur}.` // 3 (John)
+    // In the first five minutes after it left, "it will make up the time": it can't have made up much yet (John).
+    else if (!lateArr && diff(d.at, a.now) < 5) rest = `${leftLate} but it will make up the time, and it’s currently expected into ${to} ${early ? 'a little early' : 'on time'}, at ${t12(exp)}${on}.` // 6, early on
     else if (!lateArr) rest = `${leftLate} but it’s made up the time, and it’s currently expected into ${to} ${early ? 'a little early' : 'on time'}, at ${t12(exp)}${on}.` // 6
     else if (late < d.late) rest = `${leftLate} but it’s made up some time, and it’s now running ${minutes(late)} late, ${cur}.` // 5
     else rest = `${leftLate} and it’s now running ${minutes(late)} late, ${cur}.` // 7

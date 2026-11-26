@@ -35,6 +35,7 @@ eq('3: left late, still as late', say('18:18', '10802537'), 'The 6.18pm train fr
 eq('4: a little early', say('18:05', '10802565', { eta: '18:26' }), 'The 6.05pm train from Reading to London Paddington is on its way. It left on time, 19 minutes ago, and it’s running a little early, currently expected into London Paddington at 6.26pm, on platform 11.')
 eq('5: made up some time', say('18:15', '10780583', { eta: '19:14' }), 'The 6.15pm Elizabeth Line train from Reading to London Paddington is on its way, now between Reading and Twyford. It left eight minutes late, at 6.23pm, but it’s made up some time, and it’s now running five minutes late, currently expected into London Paddington at 7.14pm, on platform 10.')
 eq('6: made up the time', say('17:46', '10780561'), 'The 5.46pm train from Reading to London Paddington is on its way, now between Hayes & Harlington and Southall. It left three minutes late, at 5.49pm, but it’s made up the time, and it’s currently expected into London Paddington on time, at 6.39pm, on platform 9.')
+eq('6: made up the time, left under five minutes ago: "will" (John, November 26th 2026; made up)', say('18:18', '10802537', { eta: '18:40' }), 'The 6.18pm train from Reading to London Paddington is on its way. It left three minutes late, at 6.21pm, but it will make up the time, and it’s currently expected into London Paddington on time, at 6.40pm, on platform 11.')
 eq('7: later still', say('18:15', '10780583', { eta: '19:21' }), 'The 6.15pm Elizabeth Line train from Reading to London Paddington is on its way, now between Reading and Twyford. It left eight minutes late, at 6.23pm, and it’s now running 12 minutes late, currently expected into London Paddington at 7.21pm, on platform 10.')
 eq('8: how long ago', [0, 1, 13, 60, 70, 125].map(ago), ['just now', 'a minute ago', '13 minutes ago', 'an hour ago', 'an hour and 10 minutes ago', 'two hours and five minutes ago'])
 eq('9: not left yet, late', say('18:26', '10802460'), 'The 6.26pm train from Reading to London Paddington hasn’t left yet. It’s expected to leave 20 minutes late, at 6.46pm, and get into London Paddington 13 minutes late, at 7.07pm, on platform 9.')
@@ -45,6 +46,16 @@ eq('12: cancelled, with the reason', say('18:33', '10781476', { cancelled: true,
 eq('13: a later day, gone from the boards', say('18:11', '99999999', null, '20261116'), 'This link was for the 6.11pm train from Reading to London Paddington on November 16th. It’s no longer being followed.')
 eq('14: not on the boards', say('18:40', '12345678'), 'Trainchecker can’t find the 6.40pm train from Reading to London Paddington on National Rail’s boards at the moment. Please check again later.')
 eq('14: long after its time', followFor(board('x', null), link('16:00', '12345678'), '20261117').text, 'The 4pm train from Reading to London Paddington is no longer on National Rail’s boards, so it will have finished its journey.')
+
+// The platform: "not yet" when B's arrival board has the train but no platform; nothing when it hasn't the train.
+{
+  const a = board('x', null)
+  const noP = { ...a, arr: a.arr!.map((x) => (x.id.startsWith('10781475') ? { ...x, platform: null } : x)) }
+  const f = followFor(noP, link('18:11', '10781475'), '20261117')
+  eq('platform: on the arrival board, none yet: "not yet"', [f.line?.platform, f.line?.noPlat, f.text.includes('platform')], [null, true, false])
+  const g = followFor({ ...a, arr: a.arr!.filter((x) => !x.id.startsWith('10781475')) }, link('18:11', '10781475'), '20261117')
+  eq('platform: not on the arrival board: nothing said', [g.line?.platform, g.line?.noPlat], [null, false])
+}
 
 // Across midnight (John, November 26th 2026): a link made on one day, opened just after midnight while the train is
 // still on the boards, follows it; once it has gone from them, the later-day message.

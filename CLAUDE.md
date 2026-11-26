@@ -149,6 +149,13 @@ given its own branch). Before committing there, run
   B and C taken out. Checks: check-home 57 (new: every computer case, the board's own, delayed, arrived); all 11 scripts,
   `tsc -b`, lint, build; `design/previews/follow/desk.mjs` at 1200px light and dark: no box, each message copied and read
   back with its link; at 390px dark with touch the box and "Share this journey" as before; no errors, no sideways scroll.
+- **John (the preview, the 8.47pm from Reading):** (1) the platform: shown only when Paddington's arrival board gives
+  one; now "not yet" in a third column when the train is on that board without one (`noPlat`), nothing when it isn't
+  on it; (2) left late but on time again, in the first five minutes after leaving: "but it will make up the time"
+  (case 6); (3) the journey card: "Check how all the trains on this journey are doing, including engineering work in
+  the days ahead, recent reliability figures and bonus content." and the button "More about the route". Checks:
+  check-follow 28; all 11 scripts, `tsc -b`, lint, build; `shoot.mjs` again and the new case at 1200px light and 390px
+  dark: no errors, no sideways scroll. For John: case 5 ("made up some time") and Message home's messages unchanged.
 
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)

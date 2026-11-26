@@ -34,13 +34,13 @@ export function FollowView({ link }: { link: FollowLink }) {
       <div><div className="card-kicker">Following a train</div><h2>{f?.heading ?? `The ${t12(link.std)} from ${fromName}`}</h2></div>
     </section>
   )
-  // The journey's full page, below (John: "if we can make it look nice"). Draft wording.
+  // The journey's full page, below (John: "if we can make it look nice"; wording John's, November 26th 2026).
   const more = (
     <section className="card follow-more">
       <div className="card-kicker">Trains to check</div>
       <h3>{fromName} to {toName}</h3>
-      <p className="muted">How all the trains on this journey are doing: the next hour, platforms, the last two hours, and engineering work in the days ahead.</p>
-      <a className="btn btn-secondary" href={hashOf({ from: link.from, to: link.to })}>See the whole journey <Icon name="right" /></a>
+      <p className="muted">Check how all the trains on this journey are doing, including engineering work in the days ahead, recent reliability figures and bonus content.</p>
+      <a className="btn btn-secondary" href={hashOf({ from: link.from, to: link.to })}>More about the route <Icon name="right" /></a>
     </section>
   )
 
@@ -73,12 +73,13 @@ export function FollowView({ link }: { link: FollowLink }) {
               <div className="bhead" role="row">
                 <span role="columnheader">From {a.from}</span>
                 <span role="columnheader">{l.arrived ? 'Got in' : 'Expected in'}</span>
-                {l.platform && <span role="columnheader" className="bright">Platform</span>}
+                {(l.platform || l.noPlat) && <span role="columnheader" className="bright">Platform</span>}
               </div>
               <div className="brow" role="row">
                 <span className="bmid" role="cell"><span>The {t12(link.std)}</span>{lateNote && <span className="blate own">{lateNote.replace(/\s+\S+$/, ' ')}<span className="nw">{lateNote.match(/\S+$/)![0]}</span></span>}</span>
                 <span className={l.exp ? 'bt' : 'bt q'} role="cell">{l.exp ? t12(l.exp) : '?'}</span>
                 {l.platform && <span className="badge" role="cell">{l.platform}</span>}
+                {l.noPlat && <span className="bnoplat" role="cell">not yet</span>}
               </div>
             </div>
           </div></div>

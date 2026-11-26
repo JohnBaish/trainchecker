@@ -201,7 +201,7 @@ export function verdict(a: Analysis): Verdict {
   if (kind === 'good') {
     lines.push({ bold: 'Good news:', text: a.worse ? ` ${journey} are leaving on time ${when}.` : ` ${journey} are running well ${when}.` })
   } else if (kind === 'mixed' && a.byNext) {
-    lines.push({ bold: "It's a mixed bag:", text: ` most ${journey} are running ${when}, but ${nextSaid(a, 'present')}.` })
+    lines.push({ bold: "It's a mixed bag:", text: ` most ${journey} are running ${when}, but ${nextSaid(a, 'present')}` })
   } else if (kind === 'mixed') {
     const bits: string[] = []
     if (a.cancelled.length) bits.push(`${num(a.cancelled.length)} ${a.cancelled.length === 1 ? 'is' : 'are'} cancelled`)
@@ -217,20 +217,23 @@ export function verdict(a: Analysis): Verdict {
   return { kind, lines: lines.map((l) => ({ ...l, text: tenAfterWords(l.text) })) }
 }
 
-/** "the next one, the 6.12pm, is running 18 minutes late, now expected to leave at 6.30pm", and any other train
- *  not on time ("and one more is cancelled"): "a mixed bag" because of the train that will leave next (John,
- *  November 26th 2026). Claude's draft wording. */
+/** "the next one to leave, originally scheduled for 8.03pm, is running 18 minutes late. It's now expected to go at
+ *  8.21pm." (John, November 26th 2026: we're often checking after a train's booked time, so its booked and expected
+ *  times both need saying), then any other train not on time as a sentence of its own ("One more is cancelled.").
+ *  "A mixed bag" because of the train that will leave next. Ends with a full stop. */
 function nextSaid(a: Analysis, tense: 'present' | 'past'): string {
   const t = a.nextBad!
-  const is = tense === 'past' ? 'was' : 'is'
-  const what = t.cancelled ? `${is} cancelled`
-    : t.unknown ? `${is} delayed, with no new time given yet`
-    : `${is} running ${num(t.late!)} minutes late, ${tense === 'past' ? 'then' : 'now'} expected to leave at ${t12(t.etd!)}`
+  const past = tense === 'past'
+  const is = past ? 'was' : 'is'
+  // Cancelled and "Delayed" are Claude's drafts in John's pattern.
+  const what = t.cancelled ? `the next one, scheduled for ${t12(t.std)}, ${is} cancelled.`
+    : t.unknown ? `the next one to leave, originally scheduled for ${t12(t.std)}, ${is} delayed, with no new time given yet.`
+    : `the next one to leave, originally scheduled for ${t12(t.std)}, ${is} running ${num(t.late!)} minutes late. ${past ? 'It was then' : 'It\'s now'} expected to go at ${t12(t.etd!)}.`
   const others = [...a.cancelled, ...a.late5, ...a.unknown].filter((x) => x.id !== t.id)
   const c = others.filter((x) => x.cancelled).length, l = others.length - c
-  const be = (k: number) => (tense === 'past' ? (k === 1 ? 'was' : 'were') : k === 1 ? 'is' : 'are')
-  const more = !others.length ? '' : `, and ${num(others.length)} more ${be(others.length)} ${!l ? 'cancelled' : !c ? 'running late' : 'cancelled or running late'}`
-  return `the next one, the ${t12(t.std)}, ${what}${more}`
+  const be = (k: number) => (past ? (k === 1 ? 'was' : 'were') : k === 1 ? 'is' : 'are')
+  const more = !others.length ? '' : ` ${Cap(num(others.length))} more ${be(others.length)} ${!l ? 'cancelled' : !c ? 'running late' : 'cancelled or running late'}.`
+  return what + more
 }
 
 /** How many of n: "all four", "both", or the number (fresh look 2.3). */
@@ -566,7 +569,7 @@ export function shareWords(a: Analysis): { text: string; title: string; hash: st
       : `, though ${num(L.cancelled.length)} trains were cancelled in the couple of hours before`
     text = `Good news, when the trains from ${a.from} to ${a.to} were checked at ${at} they were ${a.worse ? 'leaving on time' : 'running well'}${why}.`
   } else if (a.verdict === 'mixed' && a.byNext) {
-    text = `It's a mixed bag for trains from ${a.from} to ${a.to}, according to a check at ${at}. Most were running, but ${nextSaid(a, 'past')}.`
+    text = `It's a mixed bag for trains from ${a.from} to ${a.to}, according to a check at ${at}. Most were running, but ${nextSaid(a, 'past')}`
   } else if (a.verdict === 'mixed') {
     const bits: string[] = []
     if (a.cancelled.length) bits.push(`${num(a.cancelled.length)} ${was(a.cancelled.length)} cancelled`)

@@ -119,7 +119,14 @@ export function analyse(snap: Snap): Analysis {
   // line with one or two trains an hour, the one train the rule allows is the one you're about to catch).
   const leavesAt = (s: Train) => (!s.cancelled && s.late !== null && s.late > 0 && isTime(s.etd) ? diff(now, s.etd) : s.rel)
   const firstOut = [...ahead].sort((x, y) => leavesAt(x) - leavesAt(y))[0]
-  const nextBad = firstOut && (firstOut.cancelled || firstOut.unknown || (firstOut.late ?? 0) > 5) ? firstOut : null
+  // Unless another train taking about as long (within five minutes, or a fifth of the journey) is on time and leaves
+  // in the next five minutes: then it's still good news (John, November 26th 2026: Liverpool Street to Stratford,
+  // trains every few minutes).
+  const took = (s: Train) => (s.sta ? diff(s.std, s.sta) : null)
+  const alike = (x: Train, y: Train) => { const a = took(x), b = took(y); return a !== null && b !== null && Math.abs(a - b) <= Math.max(5, b / 5) }
+  const nextOff = firstOut && (firstOut.cancelled || firstOut.unknown || (firstOut.late ?? 0) > 5) ? firstOut : null
+  const covered = !!nextOff && ahead.some((s) => s !== nextOff && !s.cancelled && !s.unknown && (s.late ?? 0) <= 5 && leavesAt(s) >= 0 && leavesAt(s) <= 5 && alike(s, nextOff))
+  const nextBad = covered ? null : nextOff
   const byNext = verdict === 'good' && !!nextBad
   if (byNext) verdict = 'mixed'
 

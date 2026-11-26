@@ -467,16 +467,22 @@ eq('was due: pm once, kept across midday, on the hour', [dueSay('12:53', '12:47'
   const base = snapOf(s)
   const with8 = (ch: Partial<Snap['services'][number]>) => analyse({ ...base, taken: at, services: base.services.map((x) => (x.std === '20:03' ? { ...x, ...ch } : x)) })
   const late = with8({ etd: '20:21' })
-  eq('next train late: "a mixed bag", naming it', [late.verdict, late.byNext, lineText(verdict(late).lines)[0]], ['mixed', true, "<b>It's a mixed bag:</b> most trains from London Kings Cross to York are running this evening, but the next one, the 8.03pm, is running 18 minutes late, now expected to leave at 8.21pm."])
-  eq('next train late: the share words', shareWords(late).text, "It's a mixed bag for trains from London Kings Cross to York, according to a check at 8.13pm on November 17th. Most were running, but the next one, the 8.03pm, was running 18 minutes late, then expected to leave at 8.21pm. From Trainchecker.")
+  eq('next train late: "a mixed bag", naming it', [late.verdict, late.byNext, lineText(verdict(late).lines)[0]], ['mixed', true, "<b>It's a mixed bag:</b> most trains from London Kings Cross to York are running this evening, but the next one to leave, originally scheduled for 8.03pm, is running 18 minutes late. It's now expected to go at 8.21pm."])
+  eq('next train late: the share words', shareWords(late).text, "It's a mixed bag for trains from London Kings Cross to York, according to a check at 8.13pm on November 17th. Most were running, but the next one to leave, originally scheduled for 8.03pm, was running 18 minutes late. It was then expected to go at 8.21pm. From Trainchecker.")
   eq('next train five minutes late: still good news', with8({ etd: '20:08' }).verdict, 'good')
-  eq('next train "Delayed": "a mixed bag"', lineText(verdict(with8({ etd: 'Delayed' })).lines)[0].endsWith('but the next one, the 8.03pm, is delayed, with no new time given yet.'), true)
+  eq('next train "Delayed": "a mixed bag"', lineText(verdict(with8({ etd: 'Delayed' })).lines)[0].endsWith('but the next one to leave, originally scheduled for 8.03pm, is delayed, with no new time given yet.'), true)
   // Cancelled: its booked time still to come, so the clock goes back to 7.55pm.
   const cancelled = analyse({ ...base, taken: new Date(new Date(s.taken).getTime() + 8 * 60e3).toISOString(), services: base.services.map((x) => (x.std === '20:03' ? { ...x, cancelled: true } : x)) })
-  eq('next train cancelled: "a mixed bag"', lineText(verdict(cancelled).lines)[0].endsWith('but the next one, the 8.03pm, is cancelled.'), true)
+  eq('next train cancelled: "a mixed bag"', lineText(verdict(cancelled).lines)[0].endsWith('but the next one, scheduled for 8.03pm, is cancelled.'), true)
   // The 8.03pm now expected at 8.40pm: the 8.33pm, on time, leaves first, so it's the next one (John: "the next train
   // expected to leave").
   const overtaken = with8({ etd: '20:40' })
+  // Liverpool Street to Stratford at 8.59pm: the 9pm is cancelled, but the 9.02pm, taking about as long, leaves within
+  // five minutes, so it's still good news (John, November 26th 2026).
+  const lst = analyse(snapOf(raw('20261117-2059-LST-SRA.json')))
+  eq('next train cancelled, another like it within five minutes: still good news (John)', [lst.verdict, lst.byNext], ['good', false])
+  const lstAlone = analyse({ ...snapOf(raw('20261117-2059-LST-SRA.json')), services: snapOf(raw('20261117-2059-LST-SRA.json')).services.filter((x) => !(x.std > '21:00' && x.std <= '21:05')) })
+  eq('the same, with no other train in the five minutes: "a mixed bag"', [lstAlone.verdict, lstAlone.byNext], ['mixed', true])
   eq('a late train that another leaves before: not the next one', [overtaken.byNext, overtaken.nextBad, overtaken.verdict], [false, null, 'good'])
 }
 console.log(`check-rules: ${passed} passed, ${failed} failed`)

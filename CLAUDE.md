@@ -106,6 +106,16 @@ given its own branch). Before committing there, run
   the share words, a late train that another leaves before); Liverpool Street to Stratford at 8.59pm (the 9pm
   cancelled) now "a mixed bag", so its comparison with the mock-up code is skipped. Sweep of the saved boards, the
   clock moved back up to two hours in tens (illustration only): 6 of 208 views change, 132 still "Good news".
+- **John:** the booked and expected times both said, as we're often checking after a train's booked time: "…but the
+  next one to leave, originally scheduled for 8.03pm, is running 18 minutes late. It's now expected to go at
+  8.21pm." (his words); in the same pattern (Claude's drafts) "the next one, scheduled for 8.03pm, is cancelled.",
+  "the next one to leave, originally scheduled for 8.03pm, is delayed, with no new time given yet.", others as a
+  sentence of their own ("Four more are running late."); Share "…was running 18 minutes late. It was then expected to
+  go at 8.21pm." And still "Good news" when another train taking about as long (within five minutes, or a fifth of
+  the journey) is on time and leaves in the next five minutes (John: Liverpool Street to Stratford, the 9pm cancelled,
+  the 9.02 and 9.03 just behind). Checks: check-rules 271 (new: Liverpool Street good, and "a mixed bag" with the next
+  two removed); sweep: 4 of 208 views now change, 134 "Good news". **John asked:** a late train still waiting shows in
+  "Show the train that isn't on time" (yes, since the first fix: "8.03pm · Expected 8.21pm, 18 minutes late").
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)
 

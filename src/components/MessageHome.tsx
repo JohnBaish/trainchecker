@@ -60,6 +60,8 @@ export function MessageHome({ a }: { a: Analysis }) {
         kicker: 'MY TRAIN', heading: home.heading, text: home.line, sent: follows ? `${home.sent} Follow my progress on Trainchecker:` : home.sent, what: 'this journey',
         file: `trainchecker-my-train-${a.fromCrs}-${a.toCrs}.png`, hash: link,
         title: `Trainchecker: my train from ${a.from}`, when: '',
+        // MOCK-UP: ?copy=B or ?copy=C (John, November 26th 2026).
+        linkCopy: (['B', 'C'] as const).find((x) => new URLSearchParams(location.search).get('copy') === x),
         foot: `Checked at ${t12(clock(a.taken))} on ${dateShort(new Date(a.taken))}`,
       }} />
     </div>

@@ -59,20 +59,23 @@ export function ago(n: number): string {
   return m ? `${hours} and ${minutes(m)} ago` : `${hours} ago`
 }
 
-const sameTrain = (id: string) => (t: { id: string }) => t.id.slice(0, 8) === id
+/** The train the link names: the same id (its first eight characters) and the same booked time at A, so a train
+ *  with the same id on another day can't be taken for it. */
+const sameTrain = (l: FollowLink) => (t: { id: string; std: string }) => t.id.slice(0, 8) === l.id && t.std === l.std
 
 export function followFor(a: Analysis, l: FollowLink, today: string): Follow {
   const all = [...a.past, ...a.ahead]
-  const dep = all.find(sameTrain(l.id)) as Train | undefined
-  const arr = a.arr?.find(sameTrain(l.id))
+  const dep = all.find(sameTrain(l)) as Train | undefined
+  const arr = a.arr?.find(sameTrain(l))
   const src = dep ?? arr
   const from = a.from, to = a.to
   const co = src ? otherCompany(src, all) : ''
   const name = `The ${t12(l.std)}${co ? ` ${co}` : ''} train`
   const heading = `The ${t12(l.std)}${co ? ` ${co} train` : ''} from ${from}`
   const base = { heading, line: null, tone: 'none' as const }
-  if (l.date !== today) {
-    // Draft: a link opened on a later day.
+  // A link opened on a later day, once the train has gone from the boards. While it's still on them it's followed
+  // whatever the date: sent at 11.52pm about the 11.50pm, opened at 12.10am (John, November 26th 2026).
+  if (!src && l.date !== today) {
     return { ...base, state: 'stale', text: `This link was for the ${t12(l.std)} train from ${from} to ${to} on ${daySaid(l.date)}. It’s no longer being followed.` }
   }
   if (!src) {

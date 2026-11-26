@@ -137,6 +137,11 @@ given its own branch). Before committing there, run
 - **John:** option B (the words and the train's line; the `?mock=` switch and option A taken out); the drafts kept for
   now ("I need to keep checking it"); a way to send the link with Copy on a computer, and what the midnight gap would
   look like: both explained, for him. Checks, `tsc -b`, lint, build; `shoot.mjs` again: no errors, no sideways scroll.
+- **John:** the wording of 1 to 14 agreed; the midnight fix (a train still on the boards is followed whatever the
+  link's date; `sameTrain()` matches id and booked time); mock-ups of B and C for copying the message and link on a
+  computer (`linkCopy` in `BoxShare.tsx`, `?copy=B|C` in Message home). New `scripts/check-follow.ts` (25: the 14
+  sentences, midnight, the link) in `npm run check`. Checks (11 scripts), `tsc -b`, lint, build; `copy.mjs` at 1200px
+  light and dark: both clipboards read back, no errors, no sideways scroll.
 
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)

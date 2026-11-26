@@ -46,7 +46,7 @@ and when it's expected into B, on which platform.
   movements, perhaps the Realtime Trains API) isn't needed for now; the first two need a server
   running all the time, and the third's terms haven't been checked.
 
-## The sentences (John, November 26th 2026)
+## The sentences (John, November 26th 2026; all 14 agreed: "The wording of 1-14 is excellent")
 
 John drafted three cases, thinking of non-stop trains, and they work for every train. Agreed: one word order,
 "The 5.05pm train from Reading to London Paddington is on its way" (14); where it is goes in that first sentence,
@@ -94,3 +94,16 @@ John drafted three cases, thinking of non-stop trains, and they work for every t
 - **For John:** on a computer, Message home's "Copy" puts only the picture on the clipboard, so the link (and the
   sentence) only travel from a phone's share sheet. A train timetabled just before midnight and followed after it
   would read as "a later day". About these figures shows under the page, as on every page.
+
+## Later the same day (John, November 26th 2026)
+
+- **Option B** for the page (the words and the train's line); the switch and option A taken out.
+- **Across midnight:** the train is followed whenever it's still on National Rail's boards (matched by its id and its
+  booked time at A), whatever the date in the link; the "later day" message only once it has gone from them. So a link
+  sent at 11.52pm about the 11.50pm and opened at 12.10am follows the train.
+- **`scripts/check-follow.ts`** (in `npm run check`): the 14 agreed sentences word for word, the midnight cases, the link.
+- **Copying the link on a computer** (Copy puts only the picture on the clipboard): mock-ups behind `?copy=B` and
+  `?copy=C` in Message home, computer only. B: "Copy the picture", then once copied "Then, after pasting the picture:"
+  and "Copy the message and link". C: "Copy the picture", and under it, in a dashed box, "The message to send with
+  it:", the message and link, and "Copy the message and link". Wording Claude's drafts. Pictures
+  `design/previews/follow/copy-*` (`copy.mjs`); both clipboards read back: the picture, then the message and the link.

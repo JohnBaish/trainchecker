@@ -11,6 +11,7 @@ import { answerImage, deliverImage, isTouch } from '../lib/share.ts'
 import { nameOf, resolve } from '../lib/stations.ts'
 import type { Connect } from '../../api/connect.ts'
 import { StationBox } from './Chooser.tsx'
+import { FindMyTrain } from './FindMyTrain.tsx'
 import { Icon } from './Icon.tsx'
 import type { LinksTable } from '../lib/platformLinks.ts'
 import { rowEnd, useGridCols } from '../lib/useGridCols.ts'
@@ -28,6 +29,8 @@ export function Connection({ a }: { a: Analysis }) {
   const [places, setPlaces] = useState<Set<string> | undefined>(undefined)
   const [result, setResult] = useState<Result>({ s: 'idle' })
   const [shared, setShared] = useState('')
+  // The trains "Find my train from my location" found near you (full ids), marked in the list.
+  const [near, setNear] = useState<string[]>([])
   // How the changing station's platforms connect, loaded only once the card is opened.
   const [links, setLinks] = useState<LinksTable | null>(null)
   useEffect(() => {
@@ -138,10 +141,15 @@ export function Connection({ a }: { a: Analysis }) {
       {dest && (
         <div className="cstep">
           <p className="cq">{whichTrain(a.now, mines.map(({ s }) => s))}</p>
+          <FindMyTrain a={a} trains={mines.map(({ s }) => s)} onFound={(pick, ids) => {
+            setNear(ids)
+            const m = mines.find(({ s }) => s.id === pick)?.m
+            if (m) { if (m.id !== mineId) { setResult({ s: 'idle' }); setChosen(null) } setMineId(m.id) }
+          }} />
           <div className="cmines" ref={grid} role="group" aria-label={`Trains from ${a.from}`}>
             {mines.map(({ s, m }, i) => (
               <Fragment key={m.id}>
-                <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}`} aria-pressed={m.id === mineId}
+                <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}${near.includes(s.id) ? ' near' : ''}`} aria-pressed={m.id === mineId}
                   onClick={() => { if (m.id !== mineId) { setResult({ s: 'idle' }); setChosen(null) } setMineId(m.id) }}>
                   <b>{t12(s.std)}</b> from {a.from}
                   <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : m.lateBy >= 1 ? `now expected into ${a.to} at ${t12(m.exp)}` : `due into ${a.to} at ${t12(m.exp)}`}</span>

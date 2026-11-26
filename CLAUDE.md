@@ -74,6 +74,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 26th 2026: "Find my train from my location" on the page, for John (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
+
+- **John:** carry on to mock-ups. Built into the page: `src/components/FindMyTrain.tsx` in Connections and Exits,
+  between the question and the trains; shown only when a train in the list has left A. One train: chosen; two: both
+  edged (dashed accent) and you choose; at A: the next train chosen. Every sentence is Claude's draft, numbered in
+  `design/find-my-train/README.md`; pictures in `design/previews/find-my-train/` (`shoot.mjs`).
+- **Checked:** all checks (check-find 76), `tsc -b`, lint, build; every answer in the browser at 390px light, and
+  three at 390px dark and 1200px light: no errors, no sideways scroll, button 44px. Not checked: a real phone or train.
+
 ### November 26th 2026: "Find my train from my location": the matching (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
 
 - **John:** build the matching first. `scripts/build-positions.ts` and `src/data/station-pos.json` (every station's

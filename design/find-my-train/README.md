@@ -77,7 +77,45 @@ Manchester, Kings Cross to Edinburgh, Tiverton Parkway: always one). The sweep p
 exactly where the times say, so it shows the sums work, not how a real phone on a real train
 does; that needs a journey.
 
-## Next
+## On the page, for John to look at (November 26th 2026, same branch; not merged)
 
-Mock-ups of the button and its answers in Connections and Exits, with draft wording for each
-answer (`far`, `atA`, `one`, `two`, `none`, and the phone saying no or not knowing).
+Built into the real page (`src/components/FindMyTrain.tsx`, in both `Connection.tsx` and
+`Exits.tsx`), between the question and the list of trains. Shown only when at least one train in
+the list has already left A and the browser can give a location. Pictures in
+`design/previews/find-my-train/` (`shoot.mjs`: saved boards, the page's clock set to when each
+was saved, a pretend location given to the browser): every answer at 390px light, and the first
+three at 390px dark and 1200px light too.
+
+What happens: tapping the button asks for the location (only then), loads the station positions,
+and works out the answer. With one train, that train is chosen, as if tapped, and its answer
+appears under it. With two, both are edged in a dashed accent line and you choose. Still at A,
+the next train is chosen.
+
+**Wording, all Claude's drafts:**
+
+1. The button: "Find my train from my location" (John's).
+2. Under it before tapping: "Your location stays on this device."
+3. While finding: "Finding where you are…"
+4. One: "From where you are, you’re probably on the 5.53pm."
+5. Two: "From where you are, you’re probably on the 8.42pm or the 8.47pm, which are close
+   together just now. Please choose one below." (In time order.)
+6. At A: "You seem to be at Reading still, so here’s the next train, the 9pm." (With no train
+   still to leave: "You seem to be at Reading still. Please choose the train you’re planning to
+   take.")
+7. Off the line: "You don’t seem to be near the line from Reading to London Paddington just now,
+   so please choose your train below."
+8. No train near: "None of these trains seems to be near you just now, so please choose yours
+   below."
+9. Not allowed: "Trainchecker wasn’t allowed to see where you are. You can change that in your
+   browser’s settings, or choose your train below."
+10. No location found: "Your location couldn’t be found just now. Please try again, or choose
+    your train below."
+
+**Found while taking the pictures:** at 2.55pm on Twyford to Reading no train had left Twyford,
+so the button rightly stays hidden; the Connections pictures set the clock to 3.11pm
+(illustration only). Twyford to Reading takes about eight minutes, so trains four minutes apart
+give "one of these two" there. The saved boards predate the arrival board, so for Exits the
+pictures make one up from the departures (illustration only).
+
+**Not done yet:** About doesn't mention it (it says nothing is sent; the location isn't either,
+but a sentence about it may be wanted); not tried on a real phone or on a real train.

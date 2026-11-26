@@ -9,6 +9,7 @@ import { fetchArrPlatform } from '../lib/load.ts'
 import { t12 } from '../lib/sentences.ts'
 import { rowEnd, useGridCols } from '../lib/useGridCols.ts'
 import { BoxShare } from './BoxShare.tsx'
+import { FindMyTrain } from './FindMyTrain.tsx'
 import { Icon } from './Icon.tsx'
 
 type Got = { s: 'idle' } | { s: 'ok'; platform: string | null } | { s: 'failed' }
@@ -17,6 +18,8 @@ export function Exits({ a }: { a: Analysis }) {
   const [table, setTable] = useState<ExitsTable | null>(null)
   const [mineId, setMineId] = useState<string | null>(null)
   const [got, setGot] = useState<Got>({ s: 'idle' })
+  // The trains "Find my train from my location" found near you (full ids), marked in the list.
+  const [near, setNear] = useState<string[]>([])
   // How many trains sit side by side in the list (one on a phone).
   const [grid, cols] = useGridCols([table, a])
   useEffect(() => {
@@ -74,10 +77,15 @@ export function Exits({ a }: { a: Analysis }) {
         <summary>Check directions from your train <Icon name="down" /></summary>
         <div className="cstep">
           <p className="cq">{whichTrain(a.now, mines.map(({ s }) => s))}</p>
+          <FindMyTrain a={a} trains={mines.map(({ s }) => s)} onFound={(pick, ids) => {
+            setNear(ids)
+            const m = mines.find(({ s }) => s.id === pick)?.m
+            if (m) { if (m.id !== mineId) setGot({ s: 'idle' }); setMineId(m.id) }
+          }} />
           <div className="cmines" ref={grid} role="group" aria-label={`Trains from ${a.from}`}>
             {mines.map(({ s, m }, i) => (
               <Fragment key={m.id}>
-                <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}`} aria-pressed={m.id === mineId}
+                <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}${near.includes(s.id) ? ' near' : ''}`} aria-pressed={m.id === mineId}
                   onClick={() => { if (m.id !== mineId) setGot({ s: 'idle' }); setMineId(m.id) }}>
                   <b>{t12(s.std)}</b> from {a.from}
                   <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : `due into ${a.to} at ${t12(m.exp)}`}</span>

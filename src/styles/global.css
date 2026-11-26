@@ -313,6 +313,13 @@ details.trains-fold { margin-top: var(--space-3); }
 .connect .cmine, .exits .cmine { cursor: pointer; font: inherit; color: var(--color-text); text-align: left; min-height: 44px; padding: 10px 14px; border-radius: var(--radius-md); background: var(--color-bg); border: 1px solid var(--color-divider); display: flex; flex-wrap: wrap; column-gap: 6px; align-items: baseline; }
 .connect .cmine span, .exits .cmine span { flex-basis: 100%; }
 .connect .cmine.on, .connect .chip.on, .exits .cmine.on { border-color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
+/* "Find my train from my location" (November 26th 2026): the button at the top of the list, a line
+   under it, and the trains found near you edged in the accent colour (dashed until one is chosen). */
+.findme { margin: 0 0 var(--space-3); }
+.findme .btn { min-height: 44px; }
+.findme p { margin: var(--space-2) 0 0; }
+.findme .findme-said { font-weight: 600; }
+.connect .cmine.near:not(.on), .exits .cmine.near:not(.on) { border: 1px dashed var(--color-accent); }
 .connect .canswer { margin: 0 0 var(--space-3); background: var(--color-bg); }
 /* Station exits' answer (November 22nd 2026): a quiet box, as Connections' answer without its coloured edge. */
 .tap-reply { grid-column: 1 / -1; }

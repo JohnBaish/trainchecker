@@ -20,7 +20,7 @@ export type Fix = { lat: number; lon: number; accuracy: number }
 /** What's needed of each train in the list (a Service). */
 export type Candidate = {
   id: string; std: string; etd: string | null; sta: string | null; eta: string | null; ata: string | null
-  calls?: [string, string, string | null][]
+  calls?: [string, string, string | null, (0 | 1)?][]
 }
 export type Found =
   /** Not near the line between A and B. */

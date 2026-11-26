@@ -1,0 +1,6 @@
+6.11pm: Here’s my train from Reading, expected into London Paddington at 6.54pm. Follow my progress on Trainchecker:
+   http://localhost:4620/#RDG-PAD/follow/1811-10781475-20261117
+6.26pm: I’m planning to get the 6.26pm from Reading. It’s expected to leave 20 minutes late, at 6.46pm, and get into London Paddington at 7.07pm, on platform 9. Follow my progress on Trainchecker:
+   http://localhost:4620/#RDG-PAD/follow/1826-10802460-20261117
+5.50pm: Here’s my train from Reading, which got into London Paddington at 6.21pm.
+   http://localhost:4620/#RDG-PAD

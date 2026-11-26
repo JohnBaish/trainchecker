@@ -38,10 +38,11 @@ export type Service = {
   sta: string | null // timetabled arrival at B
   eta: string | null // expected arrival at B
   ata: string | null // actual arrival at B, once there
-  /** Its stops between A and B, in order: [code, timetabled, actual or expected]. The third is
-   *  "HH:MM", or null when the board gives no time there ("Delayed", "No report", or nothing).
-   *  For "Find my train from my location" (John, November 26th 2026). */
-  calls?: [string, string, string | null][]
+  /** Its stops between A and B, in order: [code, timetabled, actual or expected, passed]. The third is
+   *  "HH:MM", or null when the board gives no time there ("Delayed", "No report", or nothing); the
+   *  fourth is 1 once the train has passed it (the board gives an actual time, or "No report").
+   *  For "Find my train from my location" and "Follow my progress" (John, November 26th 2026). */
+  calls?: Call[]
 }
 
 /** `route`: every station the trains from A call at before B (John, November 18th 2026: work
@@ -53,6 +54,9 @@ export type Service = {
 /** `arrivals`: the trains due at B from A, from B's arrival board; each `platform` is B's, and
  *  `std`/`etd` are A's. Null when the arrival board couldn't be had. */
 export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route: string[]; stops: [string, string][]; arrivals?: Service[] | null }
+
+/** A stop: [code, timetabled, actual or expected, passed (1) or not (0)]. */
+export type Call = [string, string, string | null, 0 | 1]
 
 type CallingPoint = { crs?: string; locationName?: string; st?: string; et?: string; at?: string; isCancelled?: boolean; cancelReason?: string; delayReason?: string }
 type RawService = {
@@ -71,6 +75,9 @@ function best(c: CallingPoint): string | null {
   if (c.at) return hhmm(c.at) ?? (c.at === 'On time' ? c.st ?? null : null)
   return hhmm(c.et) ?? (c.et === 'On time' ? c.st ?? null : null)
 }
+
+/** A train's stops between A and B, as `calls`. */
+const callsOf = (cps: CallingPoint[]): Call[] => cps.filter((c) => c.crs && c.st && !c.isCancelled).map((c) => [c.crs!, c.st!, best(c), c.at ? 1 : 0])
 
 /** The boards' answers, made into one list of trains (each once), with names for A and B. */
 export function trim(from: string, to: string, taken: string, boards: RawBoard[]): Snap {
@@ -91,7 +98,7 @@ export function trim(from: string, to: string, taken: string, boards: RawBoard[]
         cancelled: Boolean(s.isCancelled || p.isCancelled),
         reason: s.cancelReason || p.cancelReason || s.delayReason || p.delayReason || null,
         sta: p.st || null, eta: p.et || null, ata: p.at || null,
-        calls: (at >= 0 ? cps.slice(0, at) : []).filter((c) => c.crs && c.st && !c.isCancelled).map((c) => [c.crs!, c.st!, best(c)]),
+        calls: callsOf(at >= 0 ? cps.slice(0, at) : []),
       })
     }
   }
@@ -104,7 +111,9 @@ export function trimArr(from: string, boards: RawBoard[]): Service[] {
   const seen = new Map<string, Service>()
   for (const board of boards) {
     for (const s of board.trainServices || []) {
-      const a = (s.previousCallingPoints || []).flatMap((g) => g.callingPoint || []).find((c) => c.crs === from)
+      const cps = (s.previousCallingPoints || []).flatMap((g) => g.callingPoint || [])
+      const i = cps.findIndex((c) => c.crs === from)
+      const a = cps[i]
       if (!a?.st || !s.sta) continue
       seen.set(s.serviceID, {
         id: s.serviceID, std: a.st, etd: a.at ?? a.et ?? null, platform: s.platform || null,
@@ -112,6 +121,8 @@ export function trimArr(from: string, boards: RawBoard[]): Service[] {
         cancelled: Boolean(s.isCancelled || a.isCancelled),
         reason: s.cancelReason || s.delayReason || a.cancelReason || a.delayReason || null,
         sta: s.sta, eta: s.eta ?? null, ata: s.ata ?? null,
+        // Its stops after A, for "Follow my progress" when the train has gone from A's board.
+        calls: callsOf(cps.slice(i + 1)),
       })
     }
   }

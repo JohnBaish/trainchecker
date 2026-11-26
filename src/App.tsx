@@ -1,6 +1,8 @@
 import { Component, useEffect, useState, type ReactNode } from 'react'
 import { parseHash, hashOf, type Journey } from './lib/route.ts'
 import { Chooser } from './components/Chooser.tsx'
+import { FollowView } from './components/FollowView.tsx'
+import { followHash, parseFollow, type FollowLink } from './lib/follow.ts'
 import { JourneyView } from './components/JourneyView.tsx'
 import { INTRO, Tail } from './components/Tail.tsx'
 import { ThemeSwitch } from './components/ThemeSwitch.tsx'
@@ -26,9 +28,12 @@ class SafetyNet extends Component<{ children: ReactNode }, { failed: boolean }> 
 
 export default function App() {
   const [journey, setJourney] = useState<Journey | null>(() => parseHash(location.hash))
+  // "Follow my progress" (John, November 26th 2026): #RDG-PAD/follow/1805-10781475-20261126, one train's page.
+  const [follow, setFollow] = useState<FollowLink | null>(() => parseFollow(location.hash))
   useEffect(() => {
     const onHash = () => {
       setJourney(parseHash(location.hash))
+      setFollow(parseFollow(location.hash))
       window.scrollTo(0, 0)
     }
     window.addEventListener('hashchange', onHash)
@@ -41,15 +46,15 @@ export default function App() {
         <ThemeSwitch />
       </nav>
       <main className="col screen">
-        <SafetyNet key={journey ? hashOf(journey) : 'first'}>
-          {journey ? <JourneyView key={hashOf(journey)} journey={journey} /> : (
+        <SafetyNet key={follow ? followHash(follow) : journey ? hashOf(journey) : 'first'}>
+          {follow ? <FollowView key={followHash(follow)} link={follow} /> : journey ? <JourneyView key={hashOf(journey)} journey={journey} /> : (
             <>
               <Chooser first />
               <p className="intro">{INTRO}</p>
             </>
           )}
         </SafetyNet>
-        <Tail quote={!journey} />
+        <Tail quote={!journey && !follow} />
       </main>
     </>
   )

@@ -8,7 +8,7 @@ export type Service = {
   id: string; std: string; etd: string | null; platform: string | null; operator: string; destination: string
   cancelled: boolean; reason: string | null; sta: string | null; eta: string | null; ata: string | null
   /** Stops between A and B: [code, timetabled, actual or expected "HH:MM" or null] (api/live.ts). */
-  calls?: [string, string, string | null][]
+  calls?: [string, string, string | null, (0 | 1)?][]
 }
 /** `arrivals`: from B's arrival board (api/live.ts, November 25th 2026); each `platform` is B's. */
 export type Snap = { taken: string; from: string; to: string; fromName: string; toName: string; services: Service[]; route?: string[]; stops?: [string, string][]; arrivals?: Service[] | null }

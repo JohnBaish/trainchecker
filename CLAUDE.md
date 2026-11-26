@@ -36,7 +36,7 @@ given its own branch). Before committing there, run
    On the page as "Fact of the Journey" since November 22nd 2026: after any change to the items, run
    `design/passes-near/to_site.py` (COVERAGE.md step 8), or the change doesn't reach the page.
 8. `design/follow-my-train/README.md`: "Follow my progress", a link in Message home's Share to a page
-   about the train you're on; John's decisions of November 26th 2026, nothing built.
+   about the train you're on; John's decisions of November 26th 2026; mock-ups on `claude/dreamy-keller-gb9xf7`.
 
 ## Key points
 
@@ -75,6 +75,20 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 26th 2026: "Follow my progress": the sentences agreed, the page mocked up (branch `claude/dreamy-keller-gb9xf7`, not merged; Claude Code)
+
+- **John:** his three drafts work for every train; one word order ("The 5.05pm train from Reading to London
+  Paddington is on its way"), where it is in that sentence (", now between Twyford and Maidenhead"; nothing on a
+  non-stop run), the platform at the end only when known. The rest drafted; all in `design/follow-my-train/README.md`.
+- **Built (mock-up):** `src/lib/follow.ts`, `src/components/FollowView.tsx` (`?mock=A` words only, B with the
+  train's line), the `#RDG-PAD/follow/…` route in `App.tsx`; Message home's share ends "Follow my progress on
+  Trainchecker:" with the train's link until it's in; `api/live.ts`'s `calls` mark stops passed (`Call`), and the
+  arrival board's trains carry their stops.
+- **Checked:** all checks (ten scripts), `tsc -b`, lint, build; `design/previews/follow/shoot.mjs` (the 6.24pm
+  board of November 17th, arrival board made up, some cases made up: illustration only): 14 cases at 1200px light
+  and 390px dark, no errors, no sideways scroll; Message home's share caught on a phone and its link opened. Found
+  and fixed: "on platform / 9." split over two lines, "late" alone on a line. Not checked: a real phone, live boards.
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)
 

@@ -6,6 +6,7 @@
 import { Fragment, useMemo, useState } from 'react'
 import { clock, diff, type Analysis } from '../lib/analyse.ts'
 import { mineOf, shownTrains, whichTrain } from '../lib/connection.ts'
+import { followHash, ukDay } from '../lib/follow.ts'
 import { homeFor } from '../lib/messageHome.ts'
 import { dateShort, kindOf, t12 } from '../lib/sentences.ts'
 import { rowEnd, useGridCols } from '../lib/useGridCols.ts'
@@ -27,6 +28,10 @@ export function MessageHome({ a }: { a: Analysis }) {
   if (!all.length) return null
   const pick = all.find(({ m }) => m.id === mineId)
   const home = pick ? homeFor(a, pick.s, a.now) : null
+  // "Follow my progress" (John, November 26th 2026): until the train is in, the message ends with a link to
+  // that train's own page, not the journey's.
+  const follows = !!pick && !!home && !home.row.late.startsWith('arrived')
+  const link = pick && follows ? followHash({ from: a.fromCrs, to: a.toCrs, std: pick.s.std, id: pick.s.id.slice(0, 8), date: ukDay(new Date(a.taken)) }) : `#${a.fromCrs}-${a.toCrs}`
   // The train's line, laid out for this box (John, November 26th 2026, on his phone): the train first ("The
   // 5.05pm · Fast", and how late with an arrow pointing on to the time), then when it's expected in, then the
   // platform, read left to right.
@@ -52,8 +57,8 @@ export function MessageHome({ a }: { a: Analysis }) {
         </div>
       </div>
       <BoxShare taken={a.taken} w={{
-        kicker: 'MY TRAIN', heading: home.heading, text: home.line, sent: home.sent, what: 'this journey',
-        file: `trainchecker-my-train-${a.fromCrs}-${a.toCrs}.png`, hash: `#${a.fromCrs}-${a.toCrs}`,
+        kicker: 'MY TRAIN', heading: home.heading, text: home.line, sent: follows ? `${home.sent} Follow my progress on Trainchecker:` : home.sent, what: 'this journey',
+        file: `trainchecker-my-train-${a.fromCrs}-${a.toCrs}.png`, hash: link,
         title: `Trainchecker: my train from ${a.from}`, when: '',
         foot: `Checked at ${t12(clock(a.taken))} on ${dateShort(new Date(a.taken))}`,
       }} />

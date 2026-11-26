@@ -46,6 +46,51 @@ and when it's expected into B, on which platform.
   movements, perhaps the Realtime Trains API) isn't needed for now; the first two need a server
   running all the time, and the third's terms haven't been checked.
 
-## Next
+## The sentences (John, November 26th 2026)
 
-Mock-ups, when John says: the train page in its cases, and the link to the full journey.
+John drafted three cases, thinking of non-stop trains, and they work for every train. Agreed: one word order,
+"The 5.05pm train from Reading to London Paddington is on its way" (14); where it is goes in that first sentence,
+", now between Twyford and Maidenhead", and on a non-stop run the sentence just ends (15, 16: "now", not a second
+"currently"); the platform at the end, only when known (17). The rest are Claude's drafts, built in
+`src/lib/follow.ts`:
+
+1. (John) Left on time, on time now: "…It left on time, 13 minutes ago, and it's currently expected into London
+   Paddington at 6.54pm, on platform 9."
+2. (John) Left on time, now late: "…but it's now running two minutes late, currently expected into…"
+3. (John) Left late, still as late: "…It left three minutes late, at 6.21pm, so it's currently expected into…"
+4. A little early: "…and it's running a little early, currently expected into…"
+5. Left late, made up some time: "…but it's made up some time, and it's now running five minutes late, currently
+   expected into…" (changed from the first draft, so the platform stays at the end)
+6. Left late, made up all of it: "…but it's made up the time, and it's currently expected into London Paddington
+   on time, at 6.39pm, on platform 9."
+7. Left late, later still: "…and it's now running 12 minutes late, currently expected into…"
+8. "It left on time just now", "a minute ago", "an hour and 10 minutes ago".
+9. Not left yet: "…hasn't left yet. It's expected to leave 20 minutes late, at 6.46pm, and get into London
+   Paddington 13 minutes late, at 7.07pm, on platform 9." ("…leave on time and get into … at …" when on time)
+10. Delayed, no new time: "…is delayed, with no new time given yet. It was due to leave Reading at 6.32pm and get
+    into London Paddington at 6.58pm."
+11. Arrived: "The 5.50pm train from Reading got into London Paddington eight minutes late, at 6.21pm, on platform 12."
+12. Cancelled: "…has been cancelled because of a fault on a train." (the reason only when National Rail gives one)
+13. A later day: "This link was for the 6.11pm train from Reading to London Paddington on November 16th. It's no
+    longer being followed."
+14. Not on the boards: "Trainchecker can't find the 6.40pm train … at the moment. Please check again later.", or,
+    more than two hours after its time, "…is no longer on National Rail's boards, so it will have finished its journey."
+
+## The mock-ups (branch `claude/dreamy-keller-gb9xf7`, November 26th 2026)
+
+- **Built for real, on the branch:** `src/lib/follow.ts` (the link and the sentences), `src/components/FollowView.tsx`
+  (the page), the route in `App.tsx`, and Message home's share: until the train is in, its sentence ends "Follow my
+  progress on Trainchecker:" and the link is the train's page (an arrived train keeps the journey link).
+  `api/live.ts`'s `calls` now mark each stop passed, and the arrival board's trains carry their stops too, for a
+  train that has gone from A's board.
+- **The page:** "FOLLOWING A TRAIN" / "The 6.11pm from Reading"; the time checked with "Check again"; the sentences
+  in a box edged by how it's doing (green on time, orange late, red cancelled); below, "TRAINS TO CHECK" / "Reading
+  to London Paddington", a line about the journey page and "See the whole journey" (drafts). `?mock=A` shows the
+  words alone in the box, B (the default) the words and the train's line as Message home shows it.
+- **Pictures** in `design/previews/follow/` (`shoot.mjs`): every case at 1200px light and 390px dark with touch,
+  option A for two; on the saved Reading to Paddington board at 6.24pm on November 17th, the arrival board made up
+  from it and some trains changed for the cases it didn't have (illustration only). `message-home-sends.txt`: what
+  Message home's share sends.
+- **For John:** on a computer, Message home's "Copy" puts only the picture on the clipboard, so the link (and the
+  sentence) only travel from a phone's share sheet. A train timetabled just before midnight and followed after it
+  would read as "a later day". About these figures shows under the page, as on every page.

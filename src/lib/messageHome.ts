@@ -7,7 +7,7 @@
 // train not on B's arrival board yet (it reaches only about two hours ahead) falls back to the
 // departure board's time at B, with no platform.
 import { diff, isTime, type Analysis, type Train } from './analyse.ts'
-import { num, speedGroups, t12, type PicRow } from './sentences.ts'
+import { kindOf, num, t12, type PicRow } from './sentences.ts'
 
 export type Home = {
   /** The train's line, as a row of the arrivals board. */
@@ -26,7 +26,6 @@ export type Home = {
 export const SOON = 4
 
 const minutes = (k: number) => `${num(k)} ${k === 1 ? 'minute' : 'minutes'}`
-const LABEL = { fast: 'Fast', slower: 'Slower', elizabeth: 'Elizabeth Line', all: '' } as const
 
 export function homeFor(a: Analysis, t: Train, now: string): Home {
   const twin = a.arr?.find((x) => x.id.slice(0, 8) === t.id.slice(0, 8))
@@ -40,8 +39,8 @@ export function homeFor(a: Analysis, t: Train, now: string): Home {
   const sta = src.sta ?? t.sta!
   const exp = arrived ? (isTime(src.ata) ? src.ata : sta) : isTime(src.eta) ? src.eta : src.eta === 'On time' || src.eta == null ? sta : null
   const late = exp ? diff(sta, exp) : 0
-  const groups = speedGroups(a).filter((g) => g.kind !== 'all')
-  const kind = groups.length > 1 ? LABEL[groups.find((g) => g.trains.some((x) => x.id === t.id))?.kind ?? 'all'] : ''
+  // As the train lists and boards say it, from every train on the board (not only those still to leave).
+  const kind = kindOf(a)(t)
   const on = platform ? `, on platform ${platform}` : ''
   const heading = `The ${t12(t.std)} from ${from}`
   const row: PicRow = {

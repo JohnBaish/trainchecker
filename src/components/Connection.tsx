@@ -6,7 +6,7 @@ import { Fragment, useEffect, useMemo, useState } from 'react'
 import { clock, diff, type Analysis } from '../lib/analyse.ts'
 import { answer, chipLabel, choices, firstChoice, mineOf, shownTrains, speeds, whichTrain, type Mine } from '../lib/connection.ts'
 import { fetchConnect, fetchPlaces } from '../lib/load.ts'
-import { dayName, t12 } from '../lib/sentences.ts'
+import { dayName, kindOf, t12 } from '../lib/sentences.ts'
 import { answerImage, deliverImage, isTouch } from '../lib/share.ts'
 import { nameOf, resolve } from '../lib/stations.ts'
 import type { Connect } from '../../api/connect.ts'
@@ -131,13 +131,15 @@ export function Connection({ a }: { a: Analysis }) {
   // rest (John, November 26th 2026); each list puts the answer under its own row.
   const found = all.filter(({ s }) => near.includes(s.id))
   const rest = mines.filter(({ s }) => !near.includes(s.id))
+  // Fast, slower or Elizabeth Line, when the journey has more than one kind (two "4.42pm"s told apart).
+  const kind = kindOf(a, all.map(({ s }) => s))
   const list = (l: typeof mines) => {
     const after = rowEnd(l.findIndex(({ m }) => m.id === mineId), cols, l.length)
     return l.map(({ s, m }, i) => (
       <Fragment key={m.id}>
         <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}${near.includes(s.id) ? ' near' : ''}`} aria-pressed={m.id === mineId}
           onClick={() => { if (m.id !== mineId) { setResult({ s: 'idle' }); setChosen(null) } setMineId(m.id) }}>
-          <b>{t12(s.std)}</b> from {a.from}
+          <b>{t12(s.std)}</b> from {a.from}{kind(s) && <span className="ckind">{'· '}{kind(s)}</span>}
           <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : m.lateBy >= 1 ? `now expected into ${a.to} at ${t12(m.exp)}` : `expected into ${a.to} at ${t12(m.exp)}`}</span>
         </button>
         {i === after && reply}

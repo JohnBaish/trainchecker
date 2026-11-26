@@ -95,6 +95,16 @@ given its own branch). Before committing there, run
   "my train", not "planning to get" (`SOON` in `messageHome.ts`; "Delayed" with no time stays "planning"). New
   `scripts/check-home.ts` (14). For the arrived row, option B mocked up beside A (`box-arrived-B-*`, the heading
   "GOT IN" and no "arrived"; made by editing the page, illustration only), for John to choose.
+- **John (live, Reading to Paddington):** Find my train said "the 4.42pm or the 4.42pm", over two buttons alike
+  (a slower train and a fast one). Now in Connections, Message home and Exits: each button names its kind as the
+  boards do ("· Fast", "· Slower", "· Elizabeth Line", when the journey has more than one), and a train sharing its
+  time with another of the same kind adds its company (Liverpool Street to Stratford: Greater Anglia, Elizabeth
+  Line); two found at the same time: "…you’re probably on one of the 4.42pm trains. Please choose one below." (John);
+  one found, or the next at A, with a twin: "the 9.04pm slower train". `kindOf()` and `trainName()` in
+  `sentences.ts`; Message home's row uses `kindOf()` too (it had missed trains already gone). Checks: check-home 23;
+  `design/previews/same-time/shoot.mjs` (the 8.59pm board's two 9.04pms, clock 9.06 and 9.08pm, a pretend location
+  between Reading and Twyford; arrivals made up, illustration only) at 390px dark and 1200px light: the sentences
+  above, no errors, no sideways scroll. Connections' list not photographed (needs a change station; same code).
 
 ### November 26th 2026: "Find my train from my location", fuller lists, "expected", a refresh that keeps your place; live (branch `claude/happy-darwin-mmnd4m`, merged the same day; Claude Code)
 

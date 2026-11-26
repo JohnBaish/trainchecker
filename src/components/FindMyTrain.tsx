@@ -8,7 +8,7 @@
 import { useState } from 'react'
 import { diff, isTime, type Analysis, type Service } from '../lib/analyse.ts'
 import { findTrain, rel, ukMinutes, type Found, type Positions } from '../lib/findTrain.ts'
-import { t12 } from '../lib/sentences.ts'
+import { kindOf, t12, trainName } from '../lib/sentences.ts'
 import { Icon } from './Icon.tsx'
 
 type State =
@@ -23,19 +23,24 @@ const gone = (now: string, t: Service) => t.etd !== 'Delayed' && diff(now, isTim
 
 /** The sentence for what was found. */
 function said(st: State, a: Analysis, trains: Service[]): string | null {
-  const time = (id: string | null) => t12(trains.find((t) => t.id === id)?.std ?? '')
+  // "the 4.42pm", or "the 4.42pm slower train" where another train in the list leaves at the same time.
+  const kind = kindOf(a, trains)
+  const name = (id: string | null) => { const t = trains.find((x) => x.id === id); return t ? trainName(t, trains, kind) : '' }
   if (st.s === 'denied') return 'Trainchecker wasn’t allowed to see where you are. You can change that in your browser’s settings, or choose your train below.'
   if (st.s === 'lost') return 'Your location couldn’t be found. Please try again, or choose your train below.'
   if (st.s !== 'done') return null
   const f = st.found
   switch (f.kind) {
-    case 'one': return `From your location, you’re probably on the ${time(f.id)}.`
+    case 'one': return `From your location, you’re probably on ${name(f.id)}.`
     case 'two': {
       // In time order, as the list is ("the 3.03pm or the 3.07pm"), not nearer first.
       const [p, q] = [...f.ids].sort((x, y) => diff(trains.find((t) => t.id === y)!.std, trains.find((t) => t.id === x)!.std))
-      return `From your location, you’re probably on the ${time(p)} or the ${time(q)}, which are close together at the moment. Please choose one below.`
+      const tp = trains.find((t) => t.id === p)!, tq = trains.find((t) => t.id === q)!
+      // Two leaving at the same time (John, November 26th 2026): "one of the 4.42pm trains".
+      if (tp.std === tq.std) return `From your location, you’re probably on one of the ${t12(tp.std)} trains. Please choose one below.`
+      return `From your location, you’re probably on the ${t12(tp.std)} or the ${t12(tq.std)}, which are close together at the moment. Please choose one below.`
     }
-    case 'atA': return f.next ? `You seem to be at the station still, so here’s the next train, the ${time(f.next)}.` : 'You seem to be at the station still. Please choose the train you’re planning to take.'
+    case 'atA': return f.next ? `You seem to be at the station still, so here’s the next train, ${name(f.next)}.` : 'You seem to be at the station still. Please choose the train you’re planning to take.'
     case 'far': return `You don’t seem to be near the line from ${a.from} to ${a.to} at the moment, so please choose your train below.`
     case 'none': return 'None of these trains seems to be near you at the moment, so please choose yours below.'
   }

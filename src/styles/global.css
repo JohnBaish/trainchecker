@@ -312,6 +312,7 @@ details.trains-fold { margin-top: var(--space-3); }
 .connect .cmines, .exits .cmines { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: var(--space-2); }
 .connect .cmine, .exits .cmine { cursor: pointer; font: inherit; color: var(--color-text); text-align: left; min-height: 44px; padding: 10px 14px; border-radius: var(--radius-md); background: var(--color-bg); border: 1px solid var(--color-divider); display: flex; flex-wrap: wrap; column-gap: 6px; align-items: baseline; }
 .connect .cmine span, .exits .cmine span { flex-basis: 100%; }
+.connect .cmine .ckind, .exits .cmine .ckind { flex-basis: auto; }
 .connect .cmine.on, .connect .chip.on, .exits .cmine.on { border-color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
 /* "Find my train from my location" (November 26th 2026): the button at the top of the list, a line
    under it, and the trains found near you edged in the accent colour (dashed until one is chosen). */

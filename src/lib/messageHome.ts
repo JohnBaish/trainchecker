@@ -63,15 +63,52 @@ export function homeFor(a: Analysis, t: Train, now: string): Home {
     // Already in (John, November 26th 2026): "Arrived into …" in the picture; the message keeps "got into", for variety.
     line = `Arrived into ${to} at ${t12(exp)}${on}.`
     sent = `Here’s my train from ${from}, which got into ${to} at ${t12(exp)}.`
-  } else if (late > 0) {
-    // John's "running six minutes late, now expected into…".
-    line = `Running ${minutes(late)} late, now expected into ${to} at ${t12(exp)}${on}.`
-    sent = left ? `Here’s my train from ${from}, running ${minutes(late)} late, now expected into ${to} at ${t12(exp)}.`
-      : `I’m planning to get the ${t12(t.std)} from ${from}, running ${minutes(late)} late, now expected into ${to} at ${t12(exp)}${on}.`
   } else {
-    line = `Expected into ${to} at ${t12(exp)}${on}.`
-    sent = left ? `Here’s my train from ${from}, expected into ${to} at ${t12(exp)}.`
-      : `I’m planning to get the ${t12(t.std)} from ${from}, expected into ${to} at ${t12(exp)}${on}.`
+    // The picture's words go by the arrival alone.
+    line = late > 0 ? `Running ${minutes(late)} late, now expected into ${to} at ${t12(exp)}${on}.` : `Expected into ${to} at ${t12(exp)}${on}.`
+    sent = sentFor({ from, to, std: t.std, exp, late, dep: depart(t), left, gone: gone(t, now), on })
   }
   return { row, heading, line, sent, fromArr: !!twin }
+}
+
+/** How late the train left, or is expected to leave, A, in minutes ("On time" is 0); null when not known. */
+function depart(t: Train): { late: number; at: string } | null {
+  if (t.etd === 'On time') return { late: 0, at: t.std }
+  if (isTime(t.etd)) return { late: diff(t.std, t.etd), at: t.etd }
+  return null
+}
+/** Whether it has actually left A (not only within the four minutes). */
+const gone = (t: Train, now: string) => { const d = depart(t); return !!d && diff(now, d.at) < 0 }
+
+/** Under two minutes either way counts as on time, and a change of one minute as no change (John, November
+ *  26th 2026, case 11). */
+const ON_TIME = 2
+
+/** The message sent with the picture, for a train still on its way (John, November 26th 2026, cases 1 to 10). */
+export function sentFor(o: { from: string; to: string; std: string; exp: string; late: number; dep: { late: number; at: string } | null; left: boolean; gone: boolean; on: string }): string {
+  const { from, to, exp, late, dep, on } = o
+  const into = `into ${to} at ${t12(exp)}`
+  const lateArr = late >= ON_TIME, early = late <= -ON_TIME
+  const depLate = dep && dep.late >= ON_TIME ? dep : null
+  const leftLate = depLate ? `${minutes(depLate.late)} late, at ${t12(depLate.at)}` : ''
+  if (!o.left) {
+    // 8 and 9, and (agreed earlier) a train leaving on time that's expected in late.
+    if (depLate) return `I’m planning to get the ${t12(o.std)} from ${from}. It’s expected to leave ${leftLate}, and get ${into}${on}.`
+    if (lateArr) return `I’m planning to get the ${t12(o.std)} from ${from}, running ${minutes(late)} late, now expected ${into}${on}.`
+    return `I’m planning to get the ${t12(o.std)} from ${from}, expected ${into}${on}.`
+  }
+  const mine = `Here’s my train from ${from}`
+  // 10: "my train" in the four minutes before it leaves.
+  if (!o.gone) return `${mine}. It’s due to leave ${depLate ? leftLate : 'on time'}, and it’s expected ${into}.`
+  // Not known how late it left: by the arrival alone, as before.
+  if (!dep) return lateArr ? `${mine}, running ${minutes(late)} late, now expected ${into}.` : `${mine}, expected ${into}.`
+  if (!depLate) {
+    if (lateArr) return `${mine}. It left on time but it’s now running ${minutes(late)} late, expected ${into}.` // 2
+    if (early) return `${mine}, expected into ${to} a little early, at ${t12(exp)}.` // 7
+    return `${mine}, expected ${into}.` // 1
+  }
+  if (Math.abs(late - depLate.late) <= 1) return `${mine}. It left ${leftLate}, so it’s expected ${into}.` // 3
+  if (!lateArr) return `${mine}. It left ${leftLate}, but it’s made up the time and is expected into ${to} ${early ? 'a little early' : 'on time'}, at ${t12(exp)}.` // 5
+  if (late < depLate.late) return `${mine}. It left ${leftLate}, but it’s made up some time so it’s now expected ${into}, ${minutes(late)} later than originally planned.` // 4
+  return `${mine}. It left ${leftLate}, and it’s now running ${minutes(late)} late, expected ${into}.` // 6
 }

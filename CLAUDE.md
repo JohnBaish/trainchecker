@@ -123,6 +123,14 @@ given its own branch). Before committing there, run
   touch and 1200px: heading and time end on the same pixel, platform heading and badge too, no sideways scroll.
   John's share-message cases (left on time but late; left late; left late and made some up) drafted with the others,
   for him: not built.
+- **John:** the message sent with the picture, cases 1 to 11 agreed as drafted (`sentFor()` in `messageHome.ts`, from
+  how late the train left A, from the departure board, and how late it's expected in): left on time ("expected
+  into…", "It left on time but it's now running … late", "a little early"); left late ("so it's expected…", "but it's
+  made up some time … later than originally planned", "made up the time … on time", "and it's now running … late");
+  planning ("It's expected to leave … late, at …, and get into…"); within the four minutes ("It's due to leave …");
+  under two minutes counts as on time, a change of a minute as the same; how it left unknown: by the arrival, as
+  before. The picture's words unchanged. Checks: check-home 44 (every case), all checks, `tsc -b`, lint, build;
+  `message-home/shoot.mjs` again: no errors, no sideways scroll.
 
 ### November 26th 2026: "Find my train from my location", fuller lists, "expected", a refresh that keeps your place; live (branch `claude/happy-darwin-mmnd4m`, merged the same day; Claude Code)
 

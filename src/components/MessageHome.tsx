@@ -7,12 +7,11 @@ import { Fragment, useMemo, useState } from 'react'
 import { clock, diff, type Analysis } from '../lib/analyse.ts'
 import { mineOf, shownTrains, whichTrain } from '../lib/connection.ts'
 import { homeFor } from '../lib/messageHome.ts'
-import { dateShort, kindOf, type ListPicture, t12 } from '../lib/sentences.ts'
+import { dateShort, kindOf, t12 } from '../lib/sentences.ts'
 import { rowEnd, useGridCols } from '../lib/useGridCols.ts'
 import { BoxShare } from './BoxShare.tsx'
 import { FindMyTrain } from './FindMyTrain.tsx'
 import { Icon } from './Icon.tsx'
-import { Board } from './JourneyView.tsx'
 
 export function MessageHome({ a }: { a: Analysis }) {
   const [mineId, setMineId] = useState<string | null>(null)
@@ -28,14 +27,30 @@ export function MessageHome({ a }: { a: Analysis }) {
   if (!all.length) return null
   const pick = all.find(({ m }) => m.id === mineId)
   const home = pick ? homeFor(a, pick.s, a.now) : null
-  const from = a.from.toUpperCase()
-  const board: ListPicture | null = home && {
-    kicker: '', title: '', when: '', one: null, note: null, words: { text: '', title: '', hash: '' },
-    heads: home.fromArr ? ['EXPECTED IN', `FROM ${from}`, 'PLATFORM'] : ['EXPECTED IN', `FROM ${from}`], rows: [home.row],
-  }
-  const reply = !home || !board ? null : (
+  // The train's line, laid out for this box (John, November 26th 2026, on his phone): the train first ("The
+  // 5.05pm · Fast", and how late with an arrow pointing on to the time), then when it's expected in, then the
+  // platform, read left to right.
+  const r = home?.row
+  const reply = !home || !r ? null : (
     <div className="tap-reply">
-      <div className="home-box"><Board p={board} /></div>
+      <div className="home-box">
+        <div className="board" role="table">
+          <div className="bhead" role="row">
+            <span role="columnheader">From {a.from}</span>
+            <span role="columnheader">Expected in</span>
+            {home.fromArr && <span role="columnheader" className="bright">Platform</span>}
+          </div>
+          <div className="brow" role="row">
+            <span className="bmid" role="cell">
+              <span>{r.mid}</span>
+              {r.late && <span className={r.arrow ? 'blate own nw' : 'blate own'}>{r.late}{r.arrow && <span className="barrow after"><Icon name="right" /></span>}</span>}
+            </span>
+            <span className={r.time === '?' ? 'bt q' : 'bt'} role="cell">{r.time}</span>
+            {r.platform && <span className="badge" role="cell">{r.platform}</span>}
+            {r.noPlat && <span className="bnoplat" role="cell">not yet</span>}
+          </div>
+        </div>
+      </div>
       <BoxShare taken={a.taken} w={{
         kicker: 'MY TRAIN', heading: home.heading, text: home.line, sent: home.sent, what: 'this journey',
         file: `trainchecker-my-train-${a.fromCrs}-${a.toCrs}.png`, hash: `#${a.fromCrs}-${a.toCrs}`,

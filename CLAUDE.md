@@ -112,6 +112,11 @@ given its own branch). Before committing there, run
   London Paddington at 6.21pm, on platform 12."; the message keeps "which got into…" (John, for variety). Option B
   mock-up removed. Checks: check-home 28, all checks, `tsc -b`, lint, build; both preview runs again: no errors, no
   sideways scroll.
+- **John (iPhone, the preview):** in Message home's box the first two columns swapped: "FROM READING" first ("The
+  5.05pm · Fast", capital T, and how late with the arrow now pointing right, on to the time), then "EXPECTED IN",
+  then "PLATFORM". Its own markup in `MessageHome.tsx` (the shared `Board` unchanged elsewhere); `Icon` "right";
+  `.home .home-box` columns in `global.css`. Checks, `tsc -b`, lint, build; `message-home/shoot.mjs` at 390px dark and
+  1200px light: the arrow on the line with its words, no errors, no sideways scroll.
 
 ### November 26th 2026: "Find my train from my location", fuller lists, "expected", a refresh that keeps your place; live (branch `claude/happy-darwin-mmnd4m`, merged the same day; Claude Code)
 

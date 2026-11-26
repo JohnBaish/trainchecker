@@ -47,7 +47,8 @@ export function homeFor(a: Analysis, t: Train, now: string): Home {
   const heading = co ? `The ${t12(t.std)} ${co} train from ${from}` : `The ${t12(t.std)} from ${from}`
   const row: PicRow = {
     time: exp ? t12(exp) : '?',
-    mid: [`the ${t12(t.std)}`, kind].filter(Boolean).join(' · '),
+    // "The 5.05pm" first in Message home's box, the time it's expected in after it (John, November 26th 2026).
+    mid: [`The ${t12(t.std)}`, kind].filter(Boolean).join(' · '),
     late: !exp ? `delayed, was due ${t12(sta)}, no new time yet` : arrived ? 'arrived' : late > 0 ? `${minutes(late)} late` : '',
     ...(late > 0 && exp && !arrived ? { lateBy: late, arrow: true } : {}),
     ...(twin ? (platform ? { platform } : { noPlat: true }) : {}),

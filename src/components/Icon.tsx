@@ -6,6 +6,7 @@ const PATHS = {
   copy: <><rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></>,
   down: <path d="m6 9 6 6 6-6" />,
   left: <><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></>,
+  right: <><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></>,
   clear: <><path d="M18 6 6 18" /><path d="m6 6 12 12" /></>,
   locate: <><path d="M2 12h3" /><path d="M19 12h3" /><path d="M12 2v3" /><path d="M12 19v3" /><circle cx="12" cy="12" r="7" /><circle cx="12" cy="12" r="3" /></>,
   refresh: <><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></>,

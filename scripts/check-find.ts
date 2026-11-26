@@ -12,7 +12,7 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { trim, type RawBoard } from '../api/live.ts'
 import { analyse, diff, isTime, mins, type Analysis } from '../src/lib/analyse.ts'
-import { mineOf } from '../src/lib/connection.ts'
+import { mineOf, NEXT_TO_LEAVE, shownTrains } from '../src/lib/connection.ts'
 import { findTrain, ukMinutes, type Candidate, type Fix, type Positions } from '../src/lib/findTrain.ts'
 
 const verbose = process.argv.includes('-v')
@@ -122,6 +122,24 @@ const run = (b: Board, fix: Fix, now = b.now) => findTrain(fix, now, b.a.fromCrs
     `Reading to Paddington, out of Reading at 9.04pm, every train looked at: ${said(b, r)}`)
   const old = findTrain(along(b, 'RDG', 'TWY', 0.55), mins('21:04'), 'RDG', 'PAD', b.stops, b.trains.slice(0, 8), pos)
   ok(old.kind === 'one', `…and with only the first eight, as before, the 9.01pm can't be offered: ${said(b, old)}`)
+}
+
+// ---- The list offered in Connections and Exits (John, November 26th 2026): every train on its way, then the next four. ----
+for (const f of readdirSync(dir).filter((f) => /^\d{8}-\d{4}-[A-Z]{3}-[A-Z]{3}\.json$/.test(f))) {
+  const b = load(f)
+  const left = (t: Candidate) => t.etd !== 'Delayed' && diff(b.a.now, isTime(t.etd) ? t.etd : t.std) < 0
+  const shown = shownTrains(b.a.now, b.trains, (t) => t)
+  const gone = b.trains.filter(left), next = b.trains.filter((t) => !left(t))
+  ok(gone.every((t) => shown.includes(t)), `${f}: every train on its way is offered`)
+  ok(shown.filter((t) => !left(t)).length === Math.min(NEXT_TO_LEAVE, next.length), `${f}: the next ${NEXT_TO_LEAVE} to leave are offered`)
+  ok(shown.every((t, i) => i === 0 || b.trains.indexOf(shown[i - 1]) < b.trains.indexOf(t)), `${f}: in time order`)
+}
+{
+  // The rush-hour board: the train that left most recently (6.18pm) was ninth or later before.
+  const b = load('20261117-1824-RDG-PAD.json')
+  const shown = shownTrains(b.a.now, b.trains, (t) => t)
+  ok(shown.some((t) => t.std === '18:18') && !b.trains.slice(0, 8).some((t) => t.std === '18:18'),
+    `Reading to Paddington at 6.24pm: the 6.18pm is offered now (${shown.length} trains), and wasn't in the first eight`)
 }
 
 // ---- 2. The sweep ----

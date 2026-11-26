@@ -4,7 +4,7 @@
 // and messages here are Claude's drafts; the answer's wording is in lib/connection.ts.
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { clock, diff, type Analysis } from '../lib/analyse.ts'
-import { answer, chipLabel, choices, firstChoice, mineOf, speeds, whichTrain, type Mine } from '../lib/connection.ts'
+import { answer, chipLabel, choices, firstChoice, mineOf, shownTrains, speeds, whichTrain, type Mine } from '../lib/connection.ts'
 import { fetchConnect, fetchPlaces } from '../lib/load.ts'
 import { dayName, t12 } from '../lib/sentences.ts'
 import { answerImage, deliverImage, isTouch } from '../lib/share.ts'
@@ -46,7 +46,7 @@ export function Connection({ a }: { a: Analysis }) {
     .filter(({ m, s }) => (m.exp ? diff(a.now, m.exp) >= -3 : s.rel >= -120)), [a])
   // What the list shows: the first eight, or at A only the trains still to leave (FindMyTrain).
   const [only, setOnly] = useState<string[] | null>(null)
-  const mines = useMemo(() => (only ? all.filter(({ s }) => only.includes(s.id)) : all).slice(0, 8), [all, only])
+  const mines = useMemo(() => (only ? all.filter(({ s }) => only.includes(s.id)).slice(0, 8) : shownTrains(a.now, all, ({ s }) => s)), [all, only, a.now])
   const mine: Mine | null = all.find(({ m }) => m.id === mineId)?.m ?? null
 
   useEffect(() => {

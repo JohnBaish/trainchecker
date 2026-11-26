@@ -3,7 +3,7 @@
 // where the exits aren't known. The wording is in lib/exits.ts.
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { diff, type Analysis } from '../lib/analyse.ts'
-import { mineOf, whichTrain } from '../lib/connection.ts'
+import { mineOf, shownTrains, whichTrain } from '../lib/connection.ts'
 import { heading, stationLine, trainLine, type ExitsTable } from '../lib/exits.ts'
 import { fetchArrPlatform } from '../lib/load.ts'
 import { t12 } from '../lib/sentences.ts'
@@ -36,7 +36,7 @@ export function Exits({ a }: { a: Analysis }) {
     .filter(({ s }) => a.arr !== null || s.destination !== a.to), [a])
   // What the list shows: the first eight, or at A only the trains still to leave (FindMyTrain).
   const [only, setOnly] = useState<string[] | null>(null)
-  const mines = useMemo(() => (only ? all.filter(({ s }) => only.includes(s.id)) : all).slice(0, 8), [all, only])
+  const mines = useMemo(() => (only ? all.filter(({ s }) => only.includes(s.id)).slice(0, 8) : shownTrains(a.now, all, ({ s }) => s)), [all, only, a.now])
   const pick = all.find(({ m }) => m.id === mineId)
   const e = table?.[a.toCrs]
   const arr = pick ? pick.m.exp ?? pick.m.sta ?? '' : ''
@@ -79,7 +79,7 @@ export function Exits({ a }: { a: Analysis }) {
         <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}${near.includes(s.id) ? ' near' : ''}`} aria-pressed={m.id === mineId}
           onClick={() => { if (m.id !== mineId) setGot({ s: 'idle' }); setMineId(m.id) }}>
           <b>{t12(s.std)}</b> from {a.from}
-          <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : `due into ${a.to} at ${t12(m.exp)}`}</span>
+          <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : m.lateBy >= 1 ? `now expected into ${a.to} at ${t12(m.exp)}` : `due into ${a.to} at ${t12(m.exp)}`}</span>
         </button>
         {i === after && reply}
       </Fragment>

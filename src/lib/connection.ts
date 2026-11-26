@@ -248,6 +248,19 @@ export function answer(o: Asked): Answer {
   return { kind, text: text + far }
 }
 
+/** The trains offered in Connections and Exits (John, November 26th 2026, on the train out of Reading:
+ *  the first eight were older trains still on their way, so the one just gone couldn't be chosen):
+ *  every train that has left A and is still on its way (or got in within the last three minutes,
+ *  filtered before this), then the next NEXT_TO_LEAVE to leave, in time order. "Left" as in
+ *  whichTrain(): the expected departure (or timetabled) has passed; "Delayed" with no time hasn't. */
+export const NEXT_TO_LEAVE = 4
+export function shownTrains<T>(now: string, items: T[], train: (x: T) => { std: string; etd: string | null; unknown?: boolean }): T[] {
+  const left = (x: T) => { const t = train(x); return !t.unknown && t.etd !== 'Delayed' && diff(now, isTime(t.etd) ? t.etd : t.std) < 0 }
+  const next = new Set(items.filter((x) => !left(x)).slice(0, NEXT_TO_LEAVE))
+  // Kept in the list's own (timetabled) order.
+  return items.filter((x) => left(x) || next.has(x))
+}
+
 /** The question above the list of trains you might be on (John, November 22nd 2026): "planning to
  *  take" when none has left A yet, "on" when they all have, both otherwise. A train has left once
  *  its expected departure (or timetabled, when it has no time) has passed; one delayed with no

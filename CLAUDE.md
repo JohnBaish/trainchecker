@@ -74,6 +74,21 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 26th 2026: Connections and Exits offer every train on its way; Exits says "now expected" (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
+
+- **John:** the list should hold every train on its way and the next ones to leave, in time order ("Good solution").
+  It held the first eight, so on a busy line the train that had just left couldn't be chosen (Reading to Paddington at
+  6.24pm and 8.59pm: the latest gone wasn't in the eight). `shownTrains()` and `NEXT_TO_LEAVE` (four) in
+  `connection.ts`: every train that has left A and is still on its way (or got in within three minutes), then the next
+  four, in timetabled order; at A, Find my train's list as before. Saved boards: 3 to 11 trains, 15 or 16 at rush hour.
+- **John asked** whether Exits' "due into London Paddington at 10.26am" is the timetabled or expected time: expected,
+  but it didn't say when a train was late. Now as Connections: "now expected into London Paddington at …" when a minute
+  or more late.
+- **Checked:** check-find 128 (new: every board, every train on its way offered, the next four, time order; the 6.18pm
+  at 6.24pm offered and not in the old eight); all checks, `tsc -b`, lint, build; Exits on the 6.24pm board
+  (`design/previews/find-my-train/list.mjs`, arrival board made up, illustration only) at 390px dark and 1200px light:
+  15 trains, "now expected" on the late ones, no errors, no sideways scroll. Not checked: a real phone.
+
 ### November 26th 2026: "Find my train from my location": still at A, only trains still to leave (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
 
 - **John (iPhone, at Reading at 10.02am, Reading to Paddington):** "You seem to be at the station still. Please choose

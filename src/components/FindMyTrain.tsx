@@ -7,7 +7,7 @@
 // the list, with "Or choose another" above the rest (John).
 import { useState } from 'react'
 import { diff, isTime, type Analysis, type Service } from '../lib/analyse.ts'
-import { findTrain, ukMinutes, type Found, type Positions } from '../lib/findTrain.ts'
+import { findTrain, rel, ukMinutes, type Found, type Positions } from '../lib/findTrain.ts'
 import { t12 } from '../lib/sentences.ts'
 import { Icon } from './Icon.tsx'
 
@@ -41,14 +41,21 @@ function said(st: State, a: Analysis, trains: Service[]): string | null {
   }
 }
 
-/** `onFound` gets the train to choose (one, or the next at A) and the trains to mark (two). */
-export function FindMyTrain({ a, trains, onFound }: { a: Analysis; trains: Service[]; onFound: (pick: string | null, near: string[]) => void }) {
+/** Still at A, the list shows only trains still to leave, or that left in the last JUST_GONE
+ *  minutes (John, November 26th 2026, on the train at Reading: at 10.02 the list was all trains
+ *  that had gone). A train "Delayed" with no time hasn't left. */
+export const JUST_GONE = 2
+
+/** `onFound` gets the train to choose (one, or the next at A), the trains to mark (two), and, at A,
+ *  the trains to show instead of the usual list (null: the usual list). `trains` is every train
+ *  the list could hold, not just the eight it shows. */
+export function FindMyTrain({ a, trains, onFound }: { a: Analysis; trains: Service[]; onFound: (pick: string | null, near: string[], only: string[] | null) => void }) {
   const [st, setSt] = useState<State>({ s: 'idle' })
   if (typeof navigator === 'undefined' || !navigator.geolocation || !trains.some((t) => gone(a.now, t))) return null
 
   const find = () => {
     setSt({ s: 'busy' })
-    onFound(null, [])
+    onFound(null, [], null)
     const pos = import('../data/station-pos.json').then((m) => m.default as unknown as Positions)
     navigator.geolocation.getCurrentPosition(
       async (p) => {
@@ -56,9 +63,13 @@ export function FindMyTrain({ a, trains, onFound }: { a: Analysis; trains: Servi
           const found = findTrain({ lat: p.coords.latitude, lon: p.coords.longitude, accuracy: p.coords.accuracy }, ukMinutes(new Date()),
             a.fromCrs, a.toCrs, a.stops.map(([c]) => c), trains, await pos)
           setSt({ s: 'done', found })
-          if (found.kind === 'one') onFound(found.id, [found.id])
-          else if (found.kind === 'two') onFound(null, found.ids)
-          else if (found.kind === 'atA' && found.next) onFound(found.next, [found.next])
+          if (found.kind === 'one') onFound(found.id, [found.id], null)
+          else if (found.kind === 'two') onFound(null, found.ids, null)
+          else if (found.kind === 'atA') {
+            const now = ukMinutes(new Date())
+            const only = trains.filter((t) => t.etd === 'Delayed' || rel(now, isTime(t.etd) ? t.etd : t.std) >= -JUST_GONE).map((t) => t.id)
+            onFound(found.next, found.next ? [found.next] : [], only.length ? only : null)
+          }
         } catch {
           setSt({ s: 'lost' })
         }

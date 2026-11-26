@@ -42,9 +42,12 @@ export function Connection({ a }: { a: Analysis }) {
 
   // The trains you might be on: not cancelled, leaving A within two hours, and still on their way or
   // arrived within the last three minutes (John, November 21st 2026).
-  const mines = useMemo(() => [...a.past, ...a.ahead].filter((s) => !s.cancelled && s.sta && s.rel <= 120).map((s) => ({ s, m: mineOf(s) }))
-    .filter(({ m, s }) => (m.exp ? diff(a.now, m.exp) >= -3 : s.rel >= -120)).slice(0, 8), [a])
-  const mine: Mine | null = mines.find(({ m }) => m.id === mineId)?.m ?? null
+  const all = useMemo(() => [...a.past, ...a.ahead].filter((s) => !s.cancelled && s.sta && s.rel <= 120).map((s) => ({ s, m: mineOf(s) }))
+    .filter(({ m, s }) => (m.exp ? diff(a.now, m.exp) >= -3 : s.rel >= -120)), [a])
+  // What the list shows: the first eight, or at A only the trains still to leave (FindMyTrain).
+  const [only, setOnly] = useState<string[] | null>(null)
+  const mines = useMemo(() => (only ? all.filter(({ s }) => only.includes(s.id)) : all).slice(0, 8), [all, only])
+  const mine: Mine | null = all.find(({ m }) => m.id === mineId)?.m ?? null
 
   useEffect(() => {
     if (!open) return
@@ -88,7 +91,7 @@ export function Connection({ a }: { a: Analysis }) {
     if (!ans || result.s !== 'ok') return
     setShared('')
     const d = result.d, taken = new Date(d.taken)
-    const left = mines.find(({ m }) => m.id === mineId)?.s.std
+    const left = all.find(({ m }) => m.id === mineId)?.s.std
     // The heading is John's (November 21st 2026).
     const canvas = answerImage({ heading: `Changing at ${a.to} for ${d.toName}${left ? ` from the ${t12(left)} ${a.from} train` : ''}`, text: ans.text, edge: EDGE[ans.kind], when: `${dayName(taken)}, ${t12(clock(d.taken))}` })
     const r = await deliverImage(canvas, `trainchecker-connection-${a.fromCrs}-${a.toCrs}-${d.to}.png`,
@@ -126,7 +129,7 @@ export function Connection({ a }: { a: Analysis }) {
   )
   // The trains "Find my train from my location" found go first, with "Or choose another" above the
   // rest (John, November 26th 2026); each list puts the answer under its own row.
-  const found = mines.filter(({ s }) => near.includes(s.id))
+  const found = all.filter(({ s }) => near.includes(s.id))
   const rest = mines.filter(({ s }) => !near.includes(s.id))
   const list = (l: typeof mines) => {
     const after = rowEnd(l.findIndex(({ m }) => m.id === mineId), cols, l.length)
@@ -157,9 +160,10 @@ export function Connection({ a }: { a: Analysis }) {
       {dest && (
         <div className="cstep">
           <p className="cq">{whichTrain(a.now, mines.map(({ s }) => s))}</p>
-          <FindMyTrain a={a} trains={mines.map(({ s }) => s)} onFound={(pick, ids) => {
+          <FindMyTrain a={a} trains={all.map(({ s }) => s)} onFound={(pick, ids, show) => {
             setNear(ids)
-            const m = mines.find(({ s }) => s.id === pick)?.m
+            setOnly(show)
+            const m = all.find(({ s }) => s.id === pick)?.m
             if (m) { if (m.id !== mineId) { setResult({ s: 'idle' }); setChosen(null) } setMineId(m.id) }
           }} />
           {found.length > 0 && <div className="cmines" role="group" aria-label={`Trains near you from ${a.from}`}>{list(found)}</div>}

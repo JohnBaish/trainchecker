@@ -74,6 +74,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 26th 2026: "Find my train from my location": still at A, only trains still to leave (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
+
+- **John (iPhone, at Reading at 10.02am, Reading to Paddington):** "You seem to be at the station still. Please choose
+  the train you're planning to take." over a list of trains that had all gone. Cause: the list holds the first eight
+  trains, and at 10.02 all eight had left, so the next one wasn't among them and couldn't be chosen. **John:** at A, show
+  trains that haven't left, or left very recently.
+- **Built:** the matching gets every train, not just the eight shown; at A the list shows only trains still to leave or
+  gone in the last two minutes (`JUST_GONE` in `FindMyTrain.tsx`; "Delayed" with no time counts as not gone), the next
+  one chosen; the question then reads "Which train are you planning to take?". "On" kept in the answers (John).
+- **Checked:** all checks (check-find 76), `tsc -b`, lint, build; `shoot.mjs` again: at Reading at 8.59pm the 9pm chosen
+  and only later trains below it; the other answers unchanged; no errors, no sideways scroll. Not checked: a real phone.
+
 ### November 26th 2026: "Find my train from my location": John's wording, found trains first, About (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
 
 - **John:** "This looks great"; wording changes ("From your location", "at the moment", "Finding your location…", no

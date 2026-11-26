@@ -47,7 +47,7 @@ export function ukMinutes(d: Date): number {
 }
 
 /** Minutes from now to a clock time, wrapped to -12h..+12h (so just after midnight works). */
-function rel(now: number, t: string): number {
+export function rel(now: number, t: string): number {
   let d = mins(t) - now
   if (d < -720) d += 1440
   if (d > 720) d -= 1440

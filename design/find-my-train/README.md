@@ -125,4 +125,7 @@ so the button rightly stays hidden; the Connections pictures set the clock to 3.
 give "one of these two" there. The saved boards predate the arrival board, so for Exits the
 pictures make one up from the departures (illustration only).
 
+**Still at A (John, at Reading, November 26th 2026):** the list then shows only trains still to leave, or gone
+in the last two minutes, and the next is chosen; the matching looks at every train, not just the eight shown.
+
 **Not done yet:** tried on a real phone on a real train (John, on a journey on November 26th).

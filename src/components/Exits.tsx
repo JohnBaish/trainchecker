@@ -28,13 +28,16 @@ export function Exits({ a }: { a: Analysis }) {
     return () => { current = false }
   }, [])
   // The trains you might be on, as in Connections.
-  const mines = useMemo(() => [...a.past, ...a.ahead].filter((s) => !s.cancelled && s.sta && s.rel <= 120).map((s) => ({ s, m: mineOf(s) }))
+  const all = useMemo(() => [...a.past, ...a.ahead].filter((s) => !s.cancelled && s.sta && s.rel <= 120).map((s) => ({ s, m: mineOf(s) }))
     .filter(({ m, s }) => (m.exp ? diff(a.now, m.exp) >= -3 : s.rel >= -120))
     // A train that ends here isn't offered when its platform can't be seen (John, November 22nd 2026:
     // "we don't ask what train they're on, so then we don't have to say we don't know"). With the
     // arrival board (November 25th 2026) it can be, so every train is offered.
-    .filter(({ s }) => a.arr !== null || s.destination !== a.to).slice(0, 8), [a])
-  const pick = mines.find(({ m }) => m.id === mineId)
+    .filter(({ s }) => a.arr !== null || s.destination !== a.to), [a])
+  // What the list shows: the first eight, or at A only the trains still to leave (FindMyTrain).
+  const [only, setOnly] = useState<string[] | null>(null)
+  const mines = useMemo(() => (only ? all.filter(({ s }) => only.includes(s.id)) : all).slice(0, 8), [all, only])
+  const pick = all.find(({ m }) => m.id === mineId)
   const e = table?.[a.toCrs]
   const arr = pick ? pick.m.exp ?? pick.m.sta ?? '' : ''
   useEffect(() => {
@@ -67,7 +70,7 @@ export function Exits({ a }: { a: Analysis }) {
   )
   // The trains "Find my train from my location" found go first, with "Or choose another" above the
   // rest (John, November 26th 2026); each list puts the answer under its own row.
-  const found = mines.filter(({ s }) => near.includes(s.id))
+  const found = all.filter(({ s }) => near.includes(s.id))
   const rest = mines.filter(({ s }) => !near.includes(s.id))
   const list = (l: typeof mines) => {
     const after = rowEnd(l.findIndex(({ m }) => m.id === mineId), cols, l.length)
@@ -92,9 +95,10 @@ export function Exits({ a }: { a: Analysis }) {
         <summary>Check directions from your train <Icon name="down" /></summary>
         <div className="cstep">
           <p className="cq">{whichTrain(a.now, mines.map(({ s }) => s))}</p>
-          <FindMyTrain a={a} trains={mines.map(({ s }) => s)} onFound={(pick, ids) => {
+          <FindMyTrain a={a} trains={all.map(({ s }) => s)} onFound={(pick, ids, show) => {
             setNear(ids)
-            const m = mines.find(({ s }) => s.id === pick)?.m
+            setOnly(show)
+            const m = all.find(({ s }) => s.id === pick)?.m
             if (m) { if (m.id !== mineId) setGot({ s: 'idle' }); setMineId(m.id) }
           }} />
           {found.length > 0 && <div className="cmines" role="group" aria-label={`Trains near you from ${a.from}`}>{list(found)}</div>}

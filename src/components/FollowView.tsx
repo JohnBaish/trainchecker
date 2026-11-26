@@ -58,6 +58,9 @@ export function FollowView({ link }: { link: FollowLink }) {
   return (
     <>
       {head}
+      <div className="dateline">
+        <p className="muted">{dayName(new Date(a.taken))}, {t12(a.now)}. Live from National Rail.</p>
+      </div>
       <section className={`card verdict follow state-${f.tone}`}>
         <p>{f.text}</p>
         {l && (
@@ -78,9 +81,9 @@ export function FollowView({ link }: { link: FollowLink }) {
           </div></div>
         )}
       </section>
-      {/* Under the box, not above it: the page is short, and it's checked again and again (John, November 26th 2026). */}
-      <div className="dateline">
-        <p className="muted">{dayName(new Date(a.taken))}, {t12(a.now)}. Live from National Rail.</p>
+      {/* "Check again" under the box (the page is short, and it's checked again and again); the time stays above it,
+          under the heading (John, November 26th 2026). */}
+      <div className="dateline follow-again">
         <button type="button" className="btn btn-ghost" onClick={again} disabled={busy}>
           {busy ? <><span className="spinner" aria-hidden="true"></span>Checking…</> : <><Icon name="refresh" /> Check again</>}
         </button>

@@ -74,6 +74,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 26th 2026: "am" once in the cancelled trains' sentence (branch `claude/lucid-feynman-lbfd8l`, not merged; Claude Code)
+
+- **John (iPhone, the fold under a panel):** "The 6.44am, 6.48am, 7.14am … are cancelled" should say "am" once, as
+  the rest of the page does. `cancelledLine()` in `windows.ts` now uses `clockSay()` and `andList()` (both exported
+  from `sentences.ts`): "The 6.44am, 6.48, 7.14 … are cancelled", "pm" again only when it changes, "7pm" kept.
+- **Checked:** `npm run check` (check-windows 393: Manchester Piccadilly's two lists, Liverpool Street's "9pm and
+  9.28"); `tsc -b`, lint, build.
+- **Found, for John (not changed):** National Rail's summaries in "The days ahead" ("The 8.40am and 9.10am London
+  Bridge to Sutton trains", "8.25am, 9.25am and 10.25am"); ranges ("between 6.24pm and 7.24pm" in the first panel's
+  Share words, "7.24pm to 10.24pm" in the later picture, while its rows say "7.24 to 8.24pm"); the boards' rows.
+
 ### November 25th 2026: no quote while the trains load; live (branch `claude/clever-wozniak-j7ic52`, merged the same day; Claude Code)
 
 - **John:** a fresh journey showed the quote of the day for a moment while the data loaded; show something

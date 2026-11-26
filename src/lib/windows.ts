@@ -3,7 +3,7 @@
 // the next three trains when the hour has fewer ("The next three trains"); then the rest, "The
 // following three hours", or "Later" when the first panel was stretched. No train is in both.
 import { diff, isTime, type Analysis, type Train } from './analyse.ts'
-import { Cap, becauseOf, dateShort, earlierLine, nextFour, num, speedGroups, t12, trainsAnHour, type ListPicture, type NextFour, type PicRow } from './sentences.ts'
+import { Cap, andList, becauseOf, clockSay, dateShort, earlierLine, nextFour, num, speedGroups, t12, trainsAnHour, type ListPicture, type NextFour, type PicRow } from './sentences.ts'
 
 /** When a train is expected to leave, in minutes from now (a cancelled one: its timetabled time). */
 const leaves = (a: Analysis, t: Train) => diff(a.now, !t.cancelled && t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std)
@@ -51,11 +51,15 @@ export function firstPanel(a: Analysis, s = split(a)) {
   return { heading, lines: nf ? nf.lines : s.stretched ? [] : [open], platLine: platformsLine(f, ''), picture: trainsPicture(f), cancelled: cancelledLine(f) }
 }
 
-/** "The 7.15pm is cancelled, because of a fault on this train." For the fold, after the board. */
+/** "The 7.15pm is cancelled, because of a fault on this train." or "The 6.44am, 6.48, 7.14 and 7.18 are
+ *  cancelled, …". For the fold, after the board. */
 function cancelledLine(f: Analysis): string | null {
   const c = f.cancelled
   if (!c.length) return null
-  return c.length === 1 ? `The ${t12(c[0].std)} is cancelled${becauseOf(c)}.` : `The ${c.map((t) => t12(t.std)).join(', ').replace(/, ([^,]*)$/, ' and $1')} are cancelled${becauseOf(c)}.`
+  if (c.length === 1) return `The ${t12(c[0].std)} is cancelled${becauseOf(c)}.`
+  // "am" or "pm" said once, again only when it changes (John, November 26th 2026).
+  const say = clockSay()
+  return `The ${andList(c.map((t) => say(t.std)))} are cancelled${becauseOf(c)}.`
 }
 
 /** Every running train in the first panel, each with its platform or "not yet". */

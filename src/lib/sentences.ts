@@ -685,7 +685,7 @@ export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind:
 
 // ---- The trains with platforms, and arrivals (John, November 18th 2026) ----
 
-const andList = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}` : xs[0])
+export const andList = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}` : xs[0])
 
 /** A list as the page lays it out (John's option D, November 18th 2026): a lead line, then the
  *  times in bold, each with something to say on its own line, the rest run together with dots. */
@@ -695,7 +695,7 @@ export type Listing = { text: string; blocks: ListBlock[] | null; after: string 
 
 /** Times in reading order, "am" or "pm" said once and again only when it changes; on the hour it
  *  stays ("9pm"), as a bare "9" could read as a count (John, November 18th 2026). */
-function clockSay() {
+export function clockSay() {
   let last = ''
   return (hhmm: string) => {
     const s = t12(hhmm)

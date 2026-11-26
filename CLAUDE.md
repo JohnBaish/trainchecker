@@ -76,7 +76,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 26th 2026: a late train still waiting at A was counted as gone; live (branch `fix/late-train-still-to-leave`, merged the same day; Claude Code)
+### November 26th 2026: a late train still waiting at A was counted as gone; "Good news" not with the next train late; live (branch `fix/late-train-still-to-leave`, merged the same day; Claude Code)
 
 - **John (photos, Birmingham New Street to Cardiff Central at 6.22pm; a second report of the same kind):** "Good
   news", "The next train … expected to be on time", while the 6.12pm was still on platform 11, expected at 6.30.
@@ -117,6 +117,9 @@ given its own branch). Before committing there, run
   the 9.02 and 9.03 just behind). Checks: check-rules 271 (new: Liverpool Street good, and "a mixed bag" with the next
   two removed); sweep: 4 of 208 views now change, 134 "Good news". **John asked:** a late train still waiting shows in
   "Show the train that isn't on time" (yes, since the first fix: "8.03pm · Expected 8.21pm, 18 minutes late").
+- **John:** "Yes please" to merging. All ten checks, `tsc -b`, lint and build clean first; pushed to `main` (6be6fce).
+  Checked live: trainchecker.baish.net serves the same build (`index-jiNR1mdI.js`, built here from 6be6fce). The
+  branch was never pushed, so nothing to tidy. Merged into `claude/dreamy-keller-gb9xf7` (Follow my progress).
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)
 

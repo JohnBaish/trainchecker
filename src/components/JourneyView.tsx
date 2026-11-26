@@ -362,7 +362,7 @@ export function JourneyView({ journey }: { journey: Journey }) {
     setRound(round + 1)
   }
   // The same, for the "Check again" beside Message home's and Connections' Share (John, November 26th 2026).
-  const again = { again: load, busy: refreshing, failed: refreshFailed }
+  const again = { again: load, busy: refreshing, failed: refreshFailed, at: state.s === 'ok' ? t12(state.a.now) : '' }
   // The tab names the journey (fresh look 7.2), and goes back to index.html's title afterwards.
   const titleFrom = state.s === 'ok' ? state.a.from : nameOf(journey.from), titleTo = state.s === 'ok' ? state.a.to : nameOf(journey.to)
   useEffect(() => {

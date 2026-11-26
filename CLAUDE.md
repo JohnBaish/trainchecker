@@ -172,6 +172,9 @@ given its own branch). Before committing there, run
   again, keeps the train chosen and the place on the page, Connections asks again for its onward trains too; the link
   opens the train's page in a new page; buttons 44px on a phone; 390px dark and 1200px light; no errors, no sideways
   scroll. All 11 scripts, `tsc -b`, lint, build.
+- **John:** "Checked at 6.24pm." beside each of those Check again buttons (its own line under them on a phone), so it's
+  clear the check has happened; it changes with each check. Checked as before: 390px dark and 1200px light, Message home
+  and Connections, no errors, no sideways scroll.
 
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)

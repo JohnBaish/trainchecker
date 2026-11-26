@@ -53,13 +53,17 @@ for (const f of files) {
   const s = raw(f)
   const a = analyse(snapOf(s))
   const m = M.analyse(s)
-  eq(`${f}: verdict kind`, a.verdict, m.verdict)
+  // Not "Good news" when the next train to leave is cancelled or late (John, November 26th 2026), new since the mock-ups.
+  if (!a.byNext) eq(`${f}: verdict kind`, a.verdict, m.verdict)
   // The last train gone (November 17th 2026) is new since the mock-ups.
   // Since November 17th 2026 (stage 4) the verdict never gives the last two hours (they stay in
   // their own box), so where the mock-ups added them, only the first line matches.
   // "…– please try another." since November 18th 2026 (John).
   const mv: string[] = (S.verdict(m).lines as string[]).map((l) => l.replace('if you know part of the route, try that.', 'please try another.'))
-  if (!a.lastGone) eq(`${f}: verdict`, lineText(verdict(a).lines), a.worse ? mv.slice(0, 1) : mv)
+  // The mock-up code counted a late train still to leave as gone (fixed November 26th 2026, John: Birmingham to
+  // Cardiff); on the boards with one, the page is checked by the sentences below instead.
+  const waitingNow = a.ahead.some((t) => t.rel < 0)
+  if (!a.lastGone && !waitingNow && !a.byNext) eq(`${f}: verdict`, lineText(verdict(a).lines), a.worse ? mv.slice(0, 1) : mv)
   // Since November 18th 2026 (John): "a fault on the train" in the summary; the list keeps "this".
   const mn = S.nextFour(m)
   // "…expected to be on time" since November 18th 2026 (John, stage 5).
@@ -69,7 +73,7 @@ for (const f of files) {
   const nf = nextFour(a)
   const cmp = nf && { ...nf, lines: a.ahead.length > 8 ? nf.lines.slice(1) : nf.lines, rows: nf.rows.map(({ why: _w, ...r }) => r) }
   if (mn && a.ahead.length > 8) mn.lines = mn.lines.slice(1)
-  eq(`${f}: next four hours`, cmp, mn)
+  if (!waitingNow) eq(`${f}: next four hours`, cmp, mn)
   // Platforms differ from the mock-ups only where one or two are known (November 17th 2026).
   // "Currently" rather than "At the moment" (John, November 18th 2026).
   const mp = (S.platforms(m) as string | null)?.replace(/^At the moment, most trains are going from platform (\S+)\.$/, 'Trains are currently going from platform $1.').replace(/^At the moment, (\w)/, (_: string, c: string) => c.toUpperCase()).replace(/ (are|is) going/, ' $1 currently going')
@@ -95,8 +99,8 @@ const rdgPad = A('RDG-PAD'), manMia = A('MAN-MIA'), kgxYrk = A('KGX-YRK'), bthBr
 eq('good news', lineText(verdict(padRdg).lines), ['<b>Good news:</b> trains from London Paddington to Reading are running well this evening.'])
 eq('leaving on time (P4; the last two hours in their own box, John, stage 4)', lineText(verdict(rdgPad).lines), ['<b>Good news:</b> trains from Reading to London Paddington are leaving on time this evening.'])
 eq('mixed bag: the last two hours in their own box (John, stage 4)', [bthBri.worse, verdict(bthBri).lines.length], [true, 1])
-eq('mixed bag', lineText(verdict(bthBri).lines)[0], "<b>It's a mixed bag:</b> most trains from Bath Spa to Bristol Temple Meads are running this evening, but two of the 18 in the next four hours are cancelled.")
-eq('be prepared', lineText(verdict(manMia).lines), ['<b>Be prepared:</b> trains from Manchester Piccadilly to Manchester Airport are disrupted this evening. Of the next 30, 10 are cancelled and two are running late, mostly because of a fault with the signalling system.'])
+eq('mixed bag', lineText(verdict(bthBri).lines)[0], "<b>It's a mixed bag:</b> most trains from Bath Spa to Bristol Temple Meads are running this evening, but two of the 19 in the next four hours are cancelled.")
+eq('be prepared', lineText(verdict(manMia).lines), ['<b>Be prepared:</b> trains from Manchester Piccadilly to Manchester Airport are disrupted this evening. Of the next 31, 10 are cancelled and three are running late, mostly because of a fault with the signalling system.'])
 eq('no direct train (O7)', lineText(verdict(rdgCbg).lines), [
   "We can't find a direct train from Reading to Cambridge in the next four hours.",
   'Trainchecker only covers direct journeys – please try another.',
@@ -106,9 +110,9 @@ eq('long journey (O1, John)', lastTwoLines(kgxYrk), [
   'The other is set to be six minutes late.',
 ])
 eq('share (P2, reworded November 24th)', shareWords(rdgPad).text, "Good news, when the trains from Reading to London Paddington were checked at 6.24pm on November 17th they were leaving on time, though only half of the trains in the couple of hours before got there within three minutes of their planned time. From Trainchecker.")
-eq('share: mixed bag (John, November 24th)', shareWords(bthBri).text, "It's a mixed bag for trains from Bath Spa to Bristol Temple Meads, according to a check at 6.24pm on November 17th. Most were running, but two of the 18 in the next four hours were cancelled. From Trainchecker.")
+eq('share: mixed bag (John, November 24th)', shareWords(bthBri).text, "It's a mixed bag for trains from Bath Spa to Bristol Temple Meads, according to a check at 6.24pm on November 17th. Most were running, but two of the 19 in the next four hours were cancelled. From Trainchecker.")
 eq('share: running well (John, November 24th)', shareWords(padRdg).text, "Good news, when the trains from London Paddington to Reading were checked at 6.24pm on November 17th they were running well. From Trainchecker.")
-eq('share: be prepared (John, November 24th)', shareWords(manMia).text, "Be prepared for the train journey from Manchester Piccadilly to Manchester Airport. At 6.24pm on November 17th a check showed that, of the next 30 trains, 10 were cancelled and two were running late, mostly because of a fault with the signalling system. From Trainchecker.")
+eq('share: be prepared (John, November 24th)', shareWords(manMia).text, "Be prepared for the train journey from Manchester Piccadilly to Manchester Airport. At 6.24pm on November 17th a check showed that, of the next 31 trains, 10 were cancelled and three were running late, mostly because of a fault with the signalling system. From Trainchecker.")
 eq('share link and title', [shareWords(rdgPad).hash, shareWords(rdgPad).title], ['#RDG-PAD', 'Trainchecker: Reading to London Paddington'])
 eq('fold', nextFour(rdgPad)!.fold, "Show the three trains that aren't on time")
 
@@ -147,7 +151,11 @@ function changed(id: string, edit: (sv: Snap['services'], a: Analysis) => void):
   edit(snap.services, analyse(snap))
   return analyse(snap)
 }
-const ids = (a: Analysis) => a.ahead.map((t) => t.id)
+// The trains whose timetabled time is still to come (a late train whose time has passed is left alone, so these
+// checks keep testing what they were written for).
+const ids = (a: Analysis) => a.ahead.filter((t) => t.rel >= 0).map((t) => t.id)
+// As if the late trains still waiting at A had already gone, for checks about the order of platforms.
+const asLeft = (sv: Snap['services'], a: Analysis) => { for (const t of a.ahead.filter((x) => x.rel < 0)) sv.find((x) => x.id === t.id)!.etd = 'On time' }
 const twoCancelled = changed('PAD-RDG', (sv, a) => { for (const id of ids(a).slice(0, 2)) sv.find((t) => t.id === id)!.cancelled = true })
 eq('two of the next three cancelled: badly disrupted', [twoCancelled.why.twoOfThree, twoCancelled.badly, twoCancelled.verdict], [true, true, 'prepared'])
 eq('two of the next three cancelled: the words', lineText(verdict(twoCancelled).lines)[0].includes('are badly disrupted'), true)
@@ -228,12 +236,12 @@ eq('platforms fold: ten, late ones in time order, by kind, "Of the next ten trai
   "Of the next ten trains, fast ones are leaving at 6.32pm (platform 11A), 6.39 (was due to go at 6.36, platform 10A), 6.43 (platform 11), 6.46 (was due to go at 6.26, platform 14A), 6.49 (platform 10A) and 6.54 (platform 11), a slower one from platform 15A at 6.33, and Elizabeth Line trains from platforms 13 and 14 at 6.34 (was due to go at 6.28), 6.45 and 6.59.")
 // More than ten (John, November 19th 2026): "The next ten trains are leaving at:", no sentence about the rest.
 const bthP = platformTrains(analyse(snapOf(raw('20261117-1824-BTH-BRI.json'))))!
-eq('platforms fold: more than ten, "The next ten trains" (John)', [bthP.text, bthP.blocks![0].lead, bthP.after], ['The next ten trains are leaving from platform 1 at 6.38pm, 6.48, 7.23, 7.38, 7.49, 7.54, 7.59, 8.15, 8.23 and 8.40.', 'The next ten trains are leaving from platform 1 at:', null])
+eq('platforms fold: more than ten, "The next ten trains" (John)', [bthP.text, bthP.blocks![0].lead, bthP.after], ['The next ten trains are leaving from platform 1 at 6.25pm (was due to go at 6.23), 6.38, 6.48, 7.23, 7.38, 7.49, 7.54, 7.59, 8.15 and 8.23.', 'The next ten trains are leaving from platform 1 at:', null])
 eq('platforms fold: grouped, "The next ten trains" first, in bold (John)', platformTrains(rdgPad)!.blocks!.slice(0, 2).map((b) => [b.lead, !!b.head]), [['The next ten trains', true], ['Fast trains:', false]])
 eq('platforms fold: fast trains on 10 and 11 (10A as 10, John)', platformTrains(rp9)!.text.split(', slower')[0], 'Of the next ten trains, fast ones are leaving from platforms 10 and 11 at 9.01pm, 9.10 (was due to go at 9.04), 9.12, 9.23, 9.26 and 9.43')
 eq('platforms fold: one of a kind ("a slower one")', platformTrains(analyse(snapOf(raw('20261117-2059-PAD-RDG.json'))))!.text, 'Fast trains are leaving at 9.02pm (platform 4) and 9.04 (platform 8), a slower one from platform 10 at 9.08, and Elizabeth Line trains from platform B at 9.17, 9.47 and 10.17.')
 eq('platforms fold: one platform for all, said once (John)', platformTrains(A('TVP-PAD'))!.text, 'There are trains leaving from platform 2 at 9.30am, 10.30 and 11.29.')
-eq('platforms fold: two platforms for three or more, said once (John)', platformTrains(manMia)!.text, 'There are trains leaving from platforms 9 and 13 at 6.36pm, 6.37 (was due to go at 6.28), 6.51, 7.04 and 7.18.')
+eq('platforms fold: two platforms for three or more, said once (John)', platformTrains(manMia)!.text, 'There are trains leaving from platforms 9 and 13 at 6.30pm (was due to go at 6.18), 6.36, 6.37 (was due to go at 6.28), 6.51, 7.04 and 7.18.')
 eq('platforms fold: two trains, two platforms, each its own', platformTrains(mdg)!.text, 'There are trains leaving at 9.13am (platform 12A) and 10.12 (platform 2).')
 eq('platforms fold: cancelled left out', platformTrains(manMia)!.text.includes('6.28pm'), false)
 eq('arrivals: the brackets in sequence (John)', arrivals(rp9).text.split('), ').slice(0, 3).join('), ') + ')',
@@ -407,7 +415,7 @@ eq('stations: suggestions', [suggest('paddington')[0][1], suggest('man')[0][1], 
   eq('picture: platforms, a delayed train "?" at the bottom with its platform', [pp2.rows[pp2.rows.length - 1].time, pp2.rows[pp2.rows.length - 1].late, !!pp2.rows[pp2.rows.length - 1].platform, /the \d/.test(pp2.rows[pp2.rows.length - 1].mid)], ['?', 'delayed, no new time yet', true, true])
 }
 // The boards' sentence (John, November 19th 2026, option B; Claude's draft wording).
-eq('board: all on time', boardSummary(platformsPicture(analyse(snapOf(raw('20261117-1824-BTH-BRI.json'))))!.rows, 'leave'), "They're all expected to leave on time.")
+eq('board: all on time', boardSummary(platformsPicture(analyse(snapOf(raw('20261117-1824-BTH-BRI.json'))))!.rows, 'leave'), 'Nine are expected to leave on time, and one is running two minutes late.')
 eq('board: some late, a range', boardSummary(platformsPicture(rdgPad)!.rows, 'leave'), 'Seven are expected to leave on time, and three are running between three and 20 minutes late.')
 eq('board: arrivals, one late', boardSummary([{ time: '9.01pm', mid: '', late: '' }, { time: '9.10pm', mid: '', late: 'running three minutes late', lateBy: 3 }], 'arrive'), 'One is expected on time, and one is running three minutes late.')
 eq('board: a delayed one with no time is left out of the count', boardSummary([{ time: '9.01pm', mid: '', late: '' }, { time: '?', mid: '', late: 'delayed, no new time yet' }], 'arrive'), "It's expected on time.")
@@ -423,15 +431,63 @@ eq('was due: pm once, kept across midday, on the hour', [dueSay('12:53', '12:47'
 // Earlier trains with no platform yet (John, November 22nd 2026, option A): at Paddington the
 // Elizabeth Line's platform B is shown an hour ahead, the main line's much later.
 {
-  const onlyB = changed('PAD-RDG', (sv) => { for (const t of sv) if (t.platform && t.platform !== 'B') t.platform = null })
+  const onlyB = changed('PAD-RDG', (sv, a) => { asLeft(sv, a); for (const t of sv) if (t.platform && t.platform !== 'B') t.platform = null })
   eq('platforms: only the Elizabeth Line announced, "So far" (John)', platforms(onlyB), 'So far, platforms have only been announced for the Elizabeth Line trains, which are going from platform B.')
   eq('platforms: the earlier trains listed above the board', /^\w+ earlier trains, (at|from) \d/.test(earlierLine(onlyB) ?? ''), true)
   eq('platforms: the line in the picture and the share words', [platformsPicture(onlyB)!.before === earlierLine(onlyB), platformTrains(onlyB)!.prose.startsWith(earlierLine(onlyB)!)], [true, true])
-  const bth = changed('BTH-BRI', (sv, a) => { for (const id of ids(a).slice(0, 2)) sv.find((t) => t.id === id)!.platform = null })
+  const bth = changed('BTH-BRI', (sv, a) => { asLeft(sv, a); for (const id of ids(a).slice(0, 2)) sv.find((t) => t.id === id)!.platform = null })
   const two = bth.ahead.filter((t) => !t.cancelled).slice(0, 2).map((t) => t12(t.std))
   eq('platforms: one kind, later trains only', platforms(bth)!.startsWith('So far, platforms have only been announced for later trains: from '), true)
   eq('platforms: two earlier trains, "am"/"pm" once', earlierLine(bth), `Two earlier trains, at ${two[0]} and ${two[1].replace(/(am|pm)$/, '')}, don't have platforms yet.`)
   eq('platforms: none earlier, no line (the saved boards)', files.filter((f) => /^\d+-\d+-[A-Z]+-[A-Z]+\.json$/.test(f)).map((f) => earlierLine(analyse(snapOf(raw(f))))).every((x) => x === null), true)
+}
+// A late train that hasn't left yet is still to leave (John, Birmingham New Street to Cardiff Central at
+// 6.22pm on November 26th 2026: the 6.12pm, expected at 6.30, was counted as gone). On the saved Reading
+// to Paddington board, the 6.26pm is expected at 6.46: with the clock moved to 6.30pm it must still be
+// ahead, the first train, 20 minutes late; at 6.50pm (gone at 6.46) it isn't.
+{
+  const s = raw('20261117-1824-RDG-PAD.json')
+  const moved = (m: number) => analyse({ ...snapOf(s), taken: new Date(new Date(s.taken).getTime() + m * 60e3).toISOString() })
+  const late = moved(6)
+  const t = late.ahead.find((x) => x.std === '18:26')
+  eq('late train not yet left: still ahead (John, Birmingham to Cardiff)', [!!t, late.past.some((x) => x.std === '18:26')], [true, false])
+  eq('late train not yet left: first of the trains ahead, 20 minutes late', [late.ahead[0].std, t?.late], ['18:26', 20])
+  eq('late train not yet left: counted in the late trains', late.late5.some((x) => x.std === '18:26'), true)
+  const gone = moved(26)
+  eq('late train once its expected time has passed: gone', [gone.past.some((x) => x.std === '18:26'), gone.ahead.some((x) => x.std === '18:26')], [true, false])
+  const delayed = analyse({ ...snapOf(s), services: snapOf(s).services.map((x) => (x.std === '18:15' ? { ...x, etd: 'Delayed' } : x)) })
+  eq('"Delayed" with no time, its time passed: still ahead', delayed.ahead.some((x) => x.std === '18:15' && x.unknown), true)
+}
+// Never "Good news" when the train that will leave next is cancelled, more than five minutes late or "Delayed"
+// (John, November 26th 2026, after Birmingham New Street to Cardiff Central). Made-up lateness on the saved Kings
+// Cross to York board, its clock moved to 8.13pm, ten minutes after the 8.03pm was due.
+{
+  const s = raw('20261117-1947-KGX-YRK.json')
+  const at = new Date(new Date(s.taken).getTime() + 26 * 60e3).toISOString() // 8.13pm
+  const base = snapOf(s)
+  const with8 = (ch: Partial<Snap['services'][number]>) => analyse({ ...base, taken: at, services: base.services.map((x) => (x.std === '20:03' ? { ...x, ...ch } : x)) })
+  const late = with8({ etd: '20:21' })
+  eq('next train late: "a mixed bag", naming it', [late.verdict, late.byNext, lineText(verdict(late).lines)[0]], ['mixed', true, "<b>It's a mixed bag:</b> most trains from London Kings Cross to York are running this evening, but the next one to leave, originally scheduled for 8.03pm, is running 18 minutes late. It's now expected to go at 8.21pm."])
+  eq('next train late: the share words', shareWords(late).text, "It's a mixed bag for trains from London Kings Cross to York, according to a check at 8.13pm on November 17th. Most were running, but the next one to leave, originally scheduled for 8.03pm, was running 18 minutes late. It was then expected to go at 8.21pm. From Trainchecker.")
+  eq('next train five minutes late: still good news', with8({ etd: '20:08' }).verdict, 'good')
+  eq('next train "Delayed": "a mixed bag"', lineText(verdict(with8({ etd: 'Delayed' })).lines)[0].endsWith('but the next one to leave, originally scheduled for 8.03pm, is delayed, with no new time given yet.'), true)
+  // Cancelled: its booked time still to come, so the clock goes back to 7.55pm.
+  const cancelled = analyse({ ...base, taken: new Date(new Date(s.taken).getTime() + 8 * 60e3).toISOString(), services: base.services.map((x) => (x.std === '20:03' ? { ...x, cancelled: true } : x)) })
+  eq('next train cancelled: the share words too', shareWords(cancelled).text.includes('Most were running, but the next one, scheduled for 8.03pm, was cancelled. From'), true)
+  // Once its booked time has passed, a cancelled train has gone (it moves into the last two hours).
+  const after = analyse({ ...base, taken: at, services: base.services.map((x) => (x.std === '20:03' ? { ...x, cancelled: true } : x)) })
+  eq('next train cancelled, its booked time passed: no longer the next one', [after.byNext, after.ahead.some((x) => x.std === '20:03')], [false, false])
+  eq('next train cancelled: "a mixed bag"', lineText(verdict(cancelled).lines)[0].endsWith('but the next one, scheduled for 8.03pm, is cancelled.'), true)
+  // The 8.03pm now expected at 8.40pm: the 8.33pm, on time, leaves first, so it's the next one (John: "the next train
+  // expected to leave").
+  const overtaken = with8({ etd: '20:40' })
+  // Liverpool Street to Stratford at 8.59pm: the 9pm is cancelled, but the 9.02pm, taking about as long, leaves within
+  // five minutes, so it's still good news (John, November 26th 2026).
+  const lst = analyse(snapOf(raw('20261117-2059-LST-SRA.json')))
+  eq('next train cancelled, another like it within five minutes: still good news (John)', [lst.verdict, lst.byNext], ['good', false])
+  const lstAlone = analyse({ ...snapOf(raw('20261117-2059-LST-SRA.json')), services: snapOf(raw('20261117-2059-LST-SRA.json')).services.filter((x) => !(x.std > '21:00' && x.std <= '21:05')) })
+  eq('the same, with no other train in the five minutes: "a mixed bag"', [lstAlone.verdict, lstAlone.byNext], ['mixed', true])
+  eq('a late train that another leaves before: not the next one', [overtaken.byNext, overtaken.nextBad, overtaken.verdict], [false, null, 'good'])
 }
 console.log(`check-rules: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

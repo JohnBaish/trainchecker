@@ -32,6 +32,9 @@ export type Analysis = {
   /** Expected to leave on time but reach B more than five minutes late. */
   arrLate: Train[]
   affected: number; allowance: number; verdict: Kind; badly: boolean
+  /** The train that will leave next (by expected time), when it's cancelled, more than five minutes late or
+   *  "Delayed" with no time; and whether that alone made the verdict "a mixed bag" (John, November 26th 2026). */
+  nextBad: Train | null; byNext: boolean
   why: { twoOfThree: boolean; gap: number | null; noTrains: boolean }
   last: { byArrivals: boolean; tense: Tense; known: number; within3: number; lates: number[]; lateArrived: boolean[]; usual: number | null; worst: number | null; cancelled: Train[] }
   worse: boolean
@@ -61,8 +64,13 @@ export function analyse(snap: Snap): Analysis {
   // Sorted by minutes from now, not by clock time, so trains after midnight come last (the
   // other stage 1 fault).
   const all: Train[] = snap.services.map((s) => ({ ...s, rel: diff(now, s.std), late: null, unknown: false })).sort((a, b) => a.rel - b.rel)
-  const past = all.filter((s) => s.rel < 0 && s.rel >= -120)
-  const ahead = all.filter((s) => s.rel >= 0 && s.rel <= 240)
+  // A train whose timetabled time has passed but which hasn't left is still to leave: running late and
+  // expected to go from now on, or "Delayed" with no time given (John, Birmingham New Street to Cardiff
+  // Central at 6.22pm on November 26th 2026: the 6.12pm, expected at 6.30, was counted as gone, so the
+  // page said the next train was on time).
+  const waiting = (s: Service) => !s.cancelled && (isTime(s.etd) ? diff(now, s.etd) >= 0 : s.etd === 'Delayed')
+  const past = all.filter((s) => s.rel < 0 && s.rel >= -120 && !waiting(s))
+  const ahead = all.filter((s) => (s.rel >= 0 && s.rel <= 240) || (s.rel < 0 && s.rel >= -120 && waiting(s)))
 
   // The next four hours: how late each is expected to leave.
   for (const s of ahead) {
@@ -106,6 +114,21 @@ export function analyse(snap: Snap): Analysis {
   // cancellation on a very busy line isn't "Be prepared" on its own (fresh look 2.5, John).
   if (badly || (cancelled.length >= 3 && cancelled.length * 20 > ahead.length)) verdict = 'prepared'
   if (ahead.length === 0) verdict = 'none'
+  // Never "Good news" when the train that will leave next is cancelled, more than five minutes late or
+  // "Delayed" with no time (John, November 26th 2026, after Birmingham New Street to Cardiff Central: on a
+  // line with one or two trains an hour, the one train the rule allows is the one you're about to catch).
+  const leavesAt = (s: Train) => (!s.cancelled && s.late !== null && s.late > 0 && isTime(s.etd) ? diff(now, s.etd) : s.rel)
+  const firstOut = [...ahead].sort((x, y) => leavesAt(x) - leavesAt(y))[0]
+  // Unless another train taking about as long (within five minutes, or a fifth of the journey) is on time and leaves
+  // in the next five minutes: then it's still good news (John, November 26th 2026: Liverpool Street to Stratford,
+  // trains every few minutes).
+  const took = (s: Train) => (s.sta ? diff(s.std, s.sta) : null)
+  const alike = (x: Train, y: Train) => { const a = took(x), b = took(y); return a !== null && b !== null && Math.abs(a - b) <= Math.max(5, b / 5) }
+  const nextOff = firstOut && (firstOut.cancelled || firstOut.unknown || (firstOut.late ?? 0) > 5) ? firstOut : null
+  const covered = !!nextOff && ahead.some((s) => s !== nextOff && !s.cancelled && !s.unknown && (s.late ?? 0) <= 5 && leavesAt(s) >= 0 && leavesAt(s) <= 5 && alike(s, nextOff))
+  const nextBad = covered ? null : nextOff
+  const byNext = verdict === 'good' && !!nextBad
+  if (byNext) verdict = 'mixed'
 
   // The last two hours: arrivals at B; on long journeys (fewer than three arrived), the trains
   // that left A, each by its actual or expected arrival (O1, John).
@@ -139,7 +162,7 @@ export function analyse(snap: Snap): Analysis {
 
   return {
     now, from: snap.fromName, to: snap.toName, fromCrs: snap.from, toCrs: snap.to, taken: snap.taken, route: snap.route ?? [], stops: snap.stops ?? [],
-    ahead, past, cancelled, late5, unknown, arrLate, affected, allowance, verdict, badly,
+    ahead, past, cancelled, late5, unknown, arrLate, affected, allowance, verdict, badly, nextBad, byNext,
     why: { twoOfThree, gap, noTrains },
     last: { byArrivals, tense, known: known.length, within3, lates, lateArrived, usual, worst, cancelled: pastCancelled },
     worse, platList, platKnown: platList.reduce((a, [, n]) => a + n, 0),

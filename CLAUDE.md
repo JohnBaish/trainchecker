@@ -175,6 +175,9 @@ given its own branch). Before committing there, run
 - **John:** "Checked at 6.24pm." beside each of those Check again buttons (its own line under them on a phone), so it's
   clear the check has happened; it changes with each check. Checked as before: 390px dark and 1200px light, Message home
   and Connections, no errors, no sideways scroll.
+- **John:** the line under Share reworded: "“Share this journey” also sends this link, which anyone can use to check
+  the progress of your train." with "this link" the link itself (opens in a new page); "sends" Claude's word for John's
+  "offers". Checked at 390px dark: the line, the link opening the train's page; no errors, no sideways scroll.
 
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)

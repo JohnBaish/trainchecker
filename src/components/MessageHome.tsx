@@ -69,7 +69,7 @@ export function MessageHome({ a, again }: { a: Analysis; again: Again }) {
         foot: `Checked at ${t12(clock(a.taken))} on ${dateShort(new Date(a.taken))}`,
       }} extra={<CheckAgain {...again} />} />
       {/* The train's own page, offered here too, so it's clear what sharing sends (John, November 26th 2026). */}
-      {follows && <p className="small muted follow-link">Sharing the journey also offers this link, which anyone can use to check the progress of your train: <a href={`${location.origin}/${link}`} target="_blank" rel="noopener">{`${location.origin}/${link}`}</a></p>}
+      {follows && <p className="small muted follow-link">“Share this journey” also sends <a href={`${location.origin}/${link}`} target="_blank" rel="noopener">this link</a>, which anyone can use to check the progress of your train.</p>}
     </div>
   )
   // The trains found go first, with "Or choose another" above the rest, as in Exits.

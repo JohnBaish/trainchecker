@@ -37,7 +37,7 @@ export function FollowView({ link }: { link: FollowLink }) {
   // The journey's full page, below (John: "if we can make it look nice"; wording John's, November 26th 2026).
   const more = (
     <section className="card follow-more">
-      <div className="card-kicker">Trains to check</div>
+      <div className="card-kicker">Trainchecker</div>
       <h3>{fromName} to {toName}</h3>
       <p className="muted">Check how all the trains on this route are doing, including engineering work in the days ahead, recent reliability figures and bonus content.</p>
       <a className="btn btn-secondary" href={hashOf({ from: link.from, to: link.to })}>More about the route <Icon name="right" /></a>
@@ -58,8 +58,8 @@ export function FollowView({ link }: { link: FollowLink }) {
   return (
     <>
       {head}
-      <div className="dateline">
-        <p className="muted">{dayName(new Date(a.taken))}, {t12(a.now)}. Live from National Rail.</p>
+      <div className="dateline follow-date">
+        <p className="muted">{dayName(new Date(a.taken))}, {t12(a.now)}. <span className="nr">Live from National Rail.</span></p>
       </div>
       <section className={`card verdict follow state-${f.tone}`}>
         <p>{f.text}</p>

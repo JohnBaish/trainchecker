@@ -381,3 +381,6 @@ details.trains-fold { margin-top: var(--space-3); }
 /* Message home on a phone: the train's own link, shown under Share (John, November 26th 2026). */
 .home .follow-link { margin: var(--space-2) 0 0; line-height: 1.5; }
 .home .follow-link a { overflow-wrap: anywhere; }
+/* The train's page on a phone: "Live from National Rail." on a line of its own, as it splits anyway (John, November
+   26th 2026). */
+@media (max-width: 720px) { .follow-date .nr { display: block; } }

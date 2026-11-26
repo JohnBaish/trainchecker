@@ -121,7 +121,7 @@ given its own branch). Before committing there, run
   Checked live: trainchecker.baish.net serves the same build (`index-jiNR1mdI.js`, built here from 6be6fce). The
   branch was never pushed, so nothing to tidy. Merged into `claude/dreamy-keller-gb9xf7` (Follow my progress).
 
-### November 26th 2026: "Follow my progress": the sentences agreed, the page mocked up (branch `claude/dreamy-keller-gb9xf7`, not merged; Claude Code)
+### November 26th 2026: "Follow my progress"; live (branch `claude/dreamy-keller-gb9xf7`, merged the same day; Claude Code)
 
 - **John:** his three drafts work for every train; one word order ("The 5.05pm train from Reading to London
   Paddington is on its way"), where it is in that sentence (", now between Twyford and Maidenhead"; nothing on a
@@ -183,6 +183,9 @@ given its own branch). Before committing there, run
   name (Check again sits beside them). `shoot.mjs` and `desk.mjs` again: no errors, no sideways scroll.
 - **John:** the time line ("Tuesday …, 6.24pm. Live from National Rail.") back above the box, under the heading; only
   "Check again" under the box. `shoot.mjs` again: no errors, no sideways scroll.
+- **John:** on a phone, "Live from National Rail." on its own line under the time; the journey card's kicker
+  "TRAINCHECKER" (was "TRAINS TO CHECK"). Then "let's merge". All 11 check scripts, `tsc -b`, lint and build clean first;
+  `shoot.mjs` and `desk.mjs`: no errors, no sideways scroll. Not checked: a real phone's share sheet, live boards.
 
 
 ### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)

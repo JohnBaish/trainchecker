@@ -38,6 +38,10 @@ export type Service = {
   sta: string | null // timetabled arrival at B
   eta: string | null // expected arrival at B
   ata: string | null // actual arrival at B, once there
+  /** Its stops between A and B, in order: [code, timetabled, actual or expected]. The third is
+   *  "HH:MM", or null when the board gives no time there ("Delayed", "No report", or nothing).
+   *  For "Find my train from my location" (John, November 26th 2026). */
+  calls?: [string, string, string | null][]
 }
 
 /** `route`: every station the trains from A call at before B (John, November 18th 2026: work
@@ -61,6 +65,13 @@ type RawService = {
 }
 export type RawBoard = { locationName?: string; filterLocationName?: string; trainServices?: RawService[] | null }
 
+const hhmm = (t?: string) => (t && /^\d\d:\d\d$/.test(t) ? t : null)
+/** A stop's actual time once passed, else its expected time; "On time" is the timetabled time. */
+function best(c: CallingPoint): string | null {
+  if (c.at) return hhmm(c.at) ?? (c.at === 'On time' ? c.st ?? null : null)
+  return hhmm(c.et) ?? (c.et === 'On time' ? c.st ?? null : null)
+}
+
 /** The boards' answers, made into one list of trains (each once), with names for A and B. */
 export function trim(from: string, to: string, taken: string, boards: RawBoard[]): Snap {
   const seen = new Map<string, Service>()
@@ -80,6 +91,7 @@ export function trim(from: string, to: string, taken: string, boards: RawBoard[]
         cancelled: Boolean(s.isCancelled || p.isCancelled),
         reason: s.cancelReason || p.cancelReason || s.delayReason || p.delayReason || null,
         sta: p.st || null, eta: p.et || null, ata: p.at || null,
+        calls: (at >= 0 ? cps.slice(0, at) : []).filter((c) => c.crs && c.st && !c.isCancelled).map((c) => [c.crs!, c.st!, best(c)]),
       })
     }
   }

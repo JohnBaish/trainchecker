@@ -74,6 +74,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 26th 2026: "Find my train from my location": the matching (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
+
+- **John:** build the matching first. `scripts/build-positions.ts` and `src/data/station-pos.json` (every station's
+  position, the track's where the feed is more than 500 metres out); `api/live.ts` keeps each train's stop times
+  (`calls`, about 1 KB more compressed); `src/lib/findTrain.ts` (`far`, `atA`, `one`, `two`, `none`). Details and
+  the figures to tune in `design/find-my-train/README.md`. Nothing on the page yet.
+- **Checked:** `npm run check` 264 + 57 + 84 + 40 + 84 + 36 + 394 + 16 + 76 (new `scripts/check-find.ts`: 13 cases
+  by hand on the saved boards, and a sweep of 63 trains between stations: all offered, 34 alone, 29 with one other
+  train within four minutes); `tsc -b`, lint, build. Found by the checks: two faults in the checks themselves, not
+  the matching (fixed). Not checked: a real phone on a real train.
+
 ### November 26th 2026: "Find my train from my location", looked into (notes only, straight to `main`; Claude Code)
 
 - **John:** a button at the top of the train lists in Connections and Exits, "Find my train from my location", only to

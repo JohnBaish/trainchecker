@@ -44,7 +44,40 @@ Further out than the rest, perhaps worth taking from the map instead: Hawarden B
 1.3 km), Euxton Balshaw Lane (1.2 km), Kings Heath (830 m), Beaulieu Park (620 m), Okehampton
 (580 m), Kirkstall Forge (570 m). Not looked into why.
 
+## The matching, built and checked (November 26th 2026, branch `claude/happy-darwin-mmnd4m`; nothing on the page yet)
+
+John: "Yes please" to building the matching first. What's there:
+
+- `scripts/build-positions.ts` makes `src/data/station-pos.json` (all 2,616 stations, 67 KB,
+  28 KB compressed; to be loaded only when the button is tapped). Where the feed and the track
+  differ by more than 500 metres the track's position is used: the eight stations above.
+- `api/live.ts` now keeps each train's times at its stops between A and B (`calls`: code,
+  timetabled, actual or expected). The answer grows by about 1 KB compressed (Reading to
+  Paddington: 1.9 KB to 3.2 KB). Nothing on the page uses it yet.
+- `src/lib/findTrain.ts`: `findTrain()` answers `far`, `atA` (with the next train), `one`,
+  `two` or `none`. Each train is drawn through the route's stations (the train with the most
+  stops), so a fast train follows the track's bends too; stations it passes without stopping get
+  a time by distance. A train counts as yours within four minutes (`TOL`), a little more when the
+  phone is unsure. "At A" is within 400 metres, or the phone's uncertainty if more. "Off the
+  line" is more than 2 km off it, or 1.5 times the phone's uncertainty, or 15% of a long
+  stretch (drawn straight between stations). All these figures are Claude's, to tune on journeys.
+- `scripts/check-find.ts` (in `npm run check`; `-v` prints the sweep): 76 checks. By hand, from
+  the boards' times: still at Reading (the 9pm next), near Reading with the phone unsure,
+  Birmingham and 5 km north of Maidenhead (off the line), Heald Green at 6.24pm (the 6.04pm),
+  Gatley to Heald Green, Taunton at 7.48pm (the 6.03pm), Exeter St Davids with no train near,
+  Hungerford to Bedwyn (the stopping 6.36pm, not the fast 6.03pm), Dunbar in Scotland at 10.08pm,
+  Doncaster at 7.39pm (the 6pm, not the 6.30pm passing through), Pewsey at 8.14am. Then a sweep
+  of every train between stations when each of the 16 boards was saved, placed where its times
+  put it: 63 trains, all offered; 34 alone, 29 with one other train.
+
+**For John:** the sweep's second trains were all within four minutes of you, most within two and
+a half: Reading to Paddington's fast and slower trains, and Liverpool Street to Stratford's, run
+that close, so "one of these two" will be common on busy lines and rare elsewhere (Euston to
+Manchester, Kings Cross to Edinburgh, Tiverton Parkway: always one). The sweep places you
+exactly where the times say, so it shows the sums work, not how a real phone on a real train
+does; that needs a journey.
+
 ## Next
 
-Not decided: build the matching first and check it on saved boards with a pretend position,
-then mock-ups; the real test is John on a journey.
+Mock-ups of the button and its answers in Connections and Exits, with draft wording for each
+answer (`far`, `atA`, `one`, `two`, `none`, and the phone saying no or not knowing).

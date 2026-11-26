@@ -74,16 +74,21 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 26th 2026: "am" once in the cancelled trains' sentence (branch `claude/lucid-feynman-lbfd8l`, not merged; Claude Code)
+### November 26th 2026: "am" or "pm" once, in lists and ranges; live (branch `claude/lucid-feynman-lbfd8l`, merged the same day; Claude Code)
 
 - **John (iPhone, the fold under a panel):** "The 6.44am, 6.48am, 7.14am … are cancelled" should say "am" once, as
-  the rest of the page does. `cancelledLine()` in `windows.ts` now uses `clockSay()` and `andList()` (both exported
-  from `sentences.ts`): "The 6.44am, 6.48, 7.14 … are cancelled", "pm" again only when it changes, "7pm" kept.
-- **Checked:** `npm run check` (check-windows 393: Manchester Piccadilly's two lists, Liverpool Street's "9pm and
-  9.28"); `tsc -b`, lint, build.
-- **Found, for John (not changed):** National Rail's summaries in "The days ahead" ("The 8.40am and 9.10am London
-  Bridge to Sutton trains", "8.25am, 9.25am and 10.25am"); ranges ("between 6.24pm and 7.24pm" in the first panel's
-  Share words, "7.24pm to 10.24pm" in the later picture, while its rows say "7.24 to 8.24pm"); the boards' rows.
+  the rest of the page does. `cancelledLine()` in `windows.ts` now uses `clockSay()` and `andList()`: "The 6.44am,
+  6.48, 7.14 … are cancelled", "pm" again only when it changes, "7pm" kept.
+- **John, on what else was found:** (1) National Rail's times in "The days ahead" the same way; (2) ranges as
+  "7.24 to 8.24pm" throughout; (3) the boards' rows left as they are. `SPEC.md` §12.31.
+- **Built:** `src/lib/timesSaid.ts` (`onceSay()`, `rangeSay()`), used by `clockSay()`, Connections' `clockOnce()`
+  and `houseStyle()` in `incidents.ts` (`chainSay()`: a range is "between … and", "from … to/until" or two times
+  joined by "to"/"until"; anything else a list). Ranges changed: the first panel's Share words and picture, the
+  later picture's period, hour by hour's words, the earlier-trains line ("from 7.36 to 8.10am"), the last week
+  ("between 6.40 and 7.10pm"). A range keeps both where it changes or starts on the hour.
+- **Checked:** `npm run check` 264 + 57 + 84 + 40 + 84 + 36 + 394 + 16 (new: Manchester's two cancelled lists,
+  Liverpool Street's "9pm and 9.28", the first panel's ranges, five of National Rail's); `tsc -b`, lint, build.
+  Not checked in a browser (text only).
 
 ### November 25th 2026: no quote while the trains load; live (branch `claude/clever-wozniak-j7ic52`, merged the same day; Claude Code)
 

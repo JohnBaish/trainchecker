@@ -713,16 +713,23 @@ they differ.
     three or more trains and a real majority. Share at the foot of each panel's "Show the trains and
     platforms" fold ("Copy these trains" on a computer, "Share these trains" on a phone):
     - the next hour: a picture of its board, "not yet" for a train with no platform, headed "THE NEXT
-      HOUR · 6.24pm to 7.24pm on November 17th", with "The trains from A to B leaving between 6.24pm and
+      HOUR · 6.24 to 7.24pm on November 17th", with "The trains from A to B leaving between 6.24 and
       7.24pm on November 17th, with the platforms announced so far, from Trainchecker." (stretched: "The
       next three trains from A to B after 7.47pm on November 17th, …");
     - the following three hours: hour by hour, the panel's sentence then a row per hour, "7.24 to
       8.24pm" on the left, the trains running on the right ("four trains"; "no trains running", "no
       trains"), and under them in orange "one of these is late, three more are cancelled" ("it's running
-      late" for a single train), with "The trains from A to B, hour by hour, from 7.24pm to 10.24pm on
+      late" for a single train), with "The trains from A to B, hour by hour, from 7.24 to 10.24pm on
       November 17th, from Trainchecker."; when the first panel was stretched, the few later trains
       themselves, with "The later trains from A to B, up to 11.47pm on November 17th, with the platforms
       announced so far, from Trainchecker."
+
+31. **"am" or "pm" once** (John, November 26th 2026). A list says it with the first time and again only
+    when it changes ("The 6.44am, 6.48, 7.14 and 7.18 are cancelled"); a range says it at the end ("6.24
+    to 7.24pm", "between 6.40 and 7.10pm"). Both keep it where it changes ("between 11.35pm and 5.15am")
+    and on the hour ("7pm", "between 5pm and 5.30pm"). National Rail's times in "The days ahead" too
+    ("The 8.40am and 9.10 London Bridge to Sutton trains", "between 9.10 and 9.40am"). The boards' rows
+    keep it on every row, like a station departure board.
 
 ## 13. Connections (November 21st 2026)
 

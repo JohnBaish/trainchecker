@@ -6,6 +6,8 @@
 // Sentences new in stage 3 (not on the mock-ups) were agreed by John on November 17th 2026 too.
 
 import { diff, isTime, type Analysis, type Train } from './analyse.ts'
+import { onceSay, rangeSay } from './timesSaid.ts'
+export { rangeSay }
 
 const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 /** One to nine as words, 10 and above as digits (house style §13). */
@@ -458,9 +460,10 @@ export function earlierLine(a: Analysis): string | null {
   const ts = earlierNoPlatform(a)
   if (!ts.length) return null
   const say = clockSay()
-  const times = ts.map((t) => say(t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std))
+  const raw = ts.map((t) => (t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std))
+  const times = raw.map(say)
   if (ts.length === 1) return `One earlier train, at ${times[0]}, doesn't have a platform yet.`
-  const when = ts.length > 6 ? `from ${times[0]} to ${times[times.length - 1]}` : `at ${andList(times)}`
+  const when = ts.length > 6 ? `from ${rangeSay(t12(raw[0]), t12(raw[raw.length - 1]))}` : `at ${andList(times)}`
   return tenAfterWords(`${Cap(num(ts.length))} earlier trains, ${when}, don't have platforms yet.`)
 }
 
@@ -651,7 +654,7 @@ export function loadingLine(kind: DayKind, hour: number): string {
  *  "Elizabeth Line trains": John, November 18th 2026). */
 export function lastWeekText(c: WeekCounts, o: { from: string; to: string; kind: DayKind; days: Date[]; start: string; end: string; noun?: [string, string] }): string {
   const [one, many] = o.noun ?? ['train', 'trains']
-  const between = `between ${t12(o.start)} and ${t12(o.end)}`
+  const between = `between ${rangeSay(t12(o.start), t12(o.end), ' and ')}`
   const ds = o.days
   // The days as we'd say them (John, November 18th 2026; no dates): "Last Saturday", "From last
   // Monday to Friday" (on a Monday), "On the weekdays from last Wednesday until yesterday".
@@ -696,16 +699,8 @@ export type Listing = { text: string; blocks: ListBlock[] | null; after: string 
 /** Times in reading order, "am" or "pm" said once and again only when it changes; on the hour it
  *  stays ("9pm"), as a bare "9" could read as a count (John, November 18th 2026). */
 export function clockSay() {
-  let last = ''
-  return (hhmm: string) => {
-    const s = t12(hhmm)
-    if (s === 'midday' || s === 'midnight') { last = s === 'midday' ? 'pm' : 'am'; return s }
-    const m = s.match(/^(.*?)(am|pm)$/)
-    if (!m) return s
-    const out = s.includes('.') && last === m[2] ? m[1] : s
-    last = m[2]
-    return out
-  }
+  const once = onceSay()
+  return (hhmm: string) => once(t12(hhmm))
 }
 const said = (r: TimeRow) => `${r.time}${r.note ? ` (${r.note})` : ''}`
 

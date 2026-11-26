@@ -301,7 +301,7 @@ eq('the last week: no trains', lastWeekText({ n: 0, w3: 0, w10: 0, w30: 0, w120:
 const mm = count(JSON.parse(readFileSync(new URL('20261117-hsp-MAN-MIA-1840-1910.json', dir), 'utf8')))
 // Cancelled trains didn't leave (John, November 18th 2026): counted apart.
 eq('the last week: one ran, three cancelled', lastWeekText(mm, { ...one, from: 'Manchester Piccadilly', to: 'Manchester Airport', start: '18:40', end: '19:10' }),
-  'Last Saturday, the only train that ran from Manchester Piccadilly between 6.40pm and 7.10pm was less than 10 minutes late getting to Manchester Airport. Three more were cancelled.')
+  'Last Saturday, the only train that ran from Manchester Piccadilly between 6.40 and 7.10pm was less than 10 minutes late getting to Manchester Airport. Three more were cancelled.')
 // The trains not on time, as counts following on from the on-time ones (John, November 18th 2026).
 const others = (n: number, w3: number, w10: number, w30: number, w120 = w30) => lastWeekOthers(n, w3, w10, w30, w120)
 eq('not on time: Totnes (John)', others(5, 2, 4, 5), 'Another two were less than 10 minutes late, and the other one was 10 to 30 minutes late.')

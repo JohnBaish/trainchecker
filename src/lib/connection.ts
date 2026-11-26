@@ -2,6 +2,7 @@
 // from A to B and changing at B for C. The wording of the four answers and the smaller pieces was
 // drafted by Claude on real boards and edited by John the same day; anything marked "draft" below
 // is Claude's and not yet agreed. scripts/check-connection.ts holds the agreed sentences.
+import { onceSay } from './timesSaid.ts'
 import { diff, isTime, type Service } from './analyse.ts'
 import { dueSay, num, t12 } from './sentences.ts'
 import type { Onward } from '../../api/connect.ts'
@@ -89,14 +90,8 @@ export const aWait = (n: number) => (n >= 60 ? `a wait of ${longWait(n)}` : `${n
 
 /** "pm" said with the first time and again only when it changes. */
 function clockOnce() {
-  let last = ''
-  return (hhmm: string) => {
-    const s = t12(hhmm), m = s.match(/^(.*?)(am|pm)$/)
-    if (!m) { last = s === 'midday' ? 'pm' : 'am'; return s }
-    const out = s.includes('.') && last === m[2] ? m[1] : s
-    last = m[2]
-    return out
-  }
+  const once = onceSay()
+  return (hhmm: string) => once(t12(hhmm))
 }
 
 export type Answer = { kind: Band | 'through' | 'none' | 'unknown'; text: string }

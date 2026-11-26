@@ -3,7 +3,7 @@
 // the next three trains when the hour has fewer ("The next three trains"); then the rest, "The
 // following three hours", or "Later" when the first panel was stretched. No train is in both.
 import { diff, isTime, type Analysis, type Train } from './analyse.ts'
-import { Cap, andList, becauseOf, clockSay, dateShort, earlierLine, nextFour, num, speedGroups, t12, trainsAnHour, type ListPicture, type NextFour, type PicRow } from './sentences.ts'
+import { Cap, andList, becauseOf, clockSay, dateShort, rangeSay, earlierLine, nextFour, num, speedGroups, t12, trainsAnHour, type ListPicture, type NextFour, type PicRow } from './sentences.ts'
 
 /** When a train is expected to leave, in minutes from now (a cancelled one: its timetabled time). */
 const leaves = (a: Analysis, t: Train) => diff(a.now, !t.cancelled && t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std)
@@ -134,15 +134,15 @@ export function firstShare(a: Analysis, s = split(a)): ListPicture | null {
   const head = firstPanel(a, s).heading
   const text = s.stretched
     ? `${head} from ${a.from} to ${a.to} after ${now} on ${date}, with the platforms announced so far, from Trainchecker.`
-    : `The trains from ${a.from} to ${a.to} leaving between ${now} and ${t12(plus(a.now, 60))} on ${date}, with the platforms announced so far, from Trainchecker.`
-  return { ...pic, kicker: `TRAINCHECKER · ${head.toUpperCase()}`, when: s.stretched ? `after ${now} on ${date}` : `${now} to ${t12(plus(a.now, 60))} on ${date}`, words: words(text, a) }
+    : `The trains from ${a.from} to ${a.to} leaving between ${rangeSay(now, t12(plus(a.now, 60)), ' and ')} on ${date}, with the platforms announced so far, from Trainchecker.`
+  return { ...pic, kicker: `TRAINCHECKER · ${head.toUpperCase()}`, when: s.stretched ? `after ${now} on ${date}` : `${rangeSay(now, t12(plus(a.now, 60)))} on ${date}`, words: words(text, a) }
 }
 
 /** The later panel's period, as said in its picture: "7.24pm to 10.24pm on November 17th", or, stretched,
  *  "after the 9.03pm, up to 11.47pm on November 17th". */
 function laterWhen(a: Analysis, s: Split) {
   const date = dateShort(new Date(a.taken)), end = t12(plus(a.now, 240))
-  return s.stretched ? `up to ${end} on ${date}` : `${t12(plus(a.now, 60))} to ${end} on ${date}`
+  return s.stretched ? `up to ${end} on ${date}` : `${rangeSay(t12(plus(a.now, 60)), end)} on ${date}`
 }
 
 /** The later panel's picture (John, November 24th 2026): hour by hour, each row the hour, the trains
@@ -163,9 +163,7 @@ export function laterShare(a: Analysis, s = split(a)): ListPicture | null {
   const start = 60
   const rows: PicRow[] = []
   const range = (f: number, t: number) => {
-    const a1 = t12(plus(a.now, f)), a2 = t12(plus(a.now, t))
-    const m1 = a1.match(/^(.*?)(am|pm)$/), m2 = a2.match(/(am|pm)$/)
-    return `${m1 && m2 && m1[2] === m2[1] && /\./.test(a1) ? m1[1] : a1} to ${a2}`
+    return rangeSay(t12(plus(a.now, f)), t12(plus(a.now, t)))
   }
   for (let from = start; from < 240; from += 60) {
     const to = Math.min(from + 60, 240)

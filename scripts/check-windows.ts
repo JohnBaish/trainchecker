@@ -4,7 +4,7 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { trim, type RawBoard } from '../api/live.ts'
 import { analyse, type Analysis } from '../src/lib/analyse.ts'
-import { firstPanel, laterPanel, laterShare, split } from '../src/lib/windows.ts'
+import { firstPanel, firstShare, laterPanel, laterShare, split } from '../src/lib/windows.ts'
 
 let passed = 0, failed = 0
 function eq(what: string, got: unknown, want: unknown) {
@@ -53,7 +53,8 @@ eq('later: the rate of trains running, "Seven more in that time" (John)', laterP
 eq('the next hour: the platforms line (John)', [firstPanel(bth).platLine, firstPanel(A('20261117-1824-RDG-PAD.json')).platLine], ['Platforms have been announced for all of these: platform 1.', 'Platforms have been announced for all of these: from platforms 10, 11 and 14.'])
 eq('two trains on two platforms: not "mostly"', firstPanel(A('20261118-0822-RDG-MDG.json')).platLine, 'Platforms have been announced for two of these: from platforms 2 and 12A.')
 eq('hour by hour: running on the right, "of these" late, "more" cancelled (John)', laterShare(manMia)!.rows.map((r) => [r.time, r.mid, r.late]), [['7.24 to 8.24pm', 'four trains', 'one of these is late, three more are cancelled'], ['8.24 to 9.24pm', 'six trains', 'two more are cancelled'], ['9.24 to 10.24pm', 'five trains', 'two more are cancelled']])
-eq('hour by hour: the words (John: commas)', laterShare(manMia)!.words.text, 'The trains from Manchester Piccadilly to Manchester Airport, hour by hour, from 7.24pm to 10.24pm on November 17th, from Trainchecker.')
+eq('ranges: "pm" once, at the end (John, November 26th 2026)', [firstShare(manMia)!.words.text, firstShare(manMia)!.when], ['The trains from Manchester Piccadilly to Manchester Airport leaving between 6.24 and 7.24pm on November 17th, with the platforms announced so far, from Trainchecker.', '6.24 to 7.24pm on November 17th'])
+eq('hour by hour: the words (John: commas)', laterShare(manMia)!.words.text, 'The trains from Manchester Piccadilly to Manchester Airport, hour by hour, from 7.24 to 10.24pm on November 17th, from Trainchecker.')
 eq('stretched: the later trains themselves, not hours (John, (b))', laterShare(A('20261117-1947-KGX-YRK.json'))!.layout, undefined)
 eq('cancelled: under the board, not on it', [firstPanel(bth).cancelled, firstPanel(bth).picture!.rows.some((r) => r.time === '7.13pm')], ['The 7.13pm is cancelled, because of a passenger being taken ill on a train.', false])
 eq('cancelled: "pm" said once, kept on the hour (John, November 26th 2026)', [firstPanel(manMia).cancelled, laterPanel(manMia).cancelled], ['The 6.47pm, 6.55 and 7pm are cancelled, because of a fault with the signalling system at Gatley and a fault with the signalling system.', 'The 7.28pm, 7.47, 7.55, 8.47, 8.55, 9.47 and 9.55 are cancelled, mostly because of a fault with the signalling system.'])

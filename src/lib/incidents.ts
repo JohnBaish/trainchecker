@@ -8,6 +8,7 @@
 // (/ via)"; one amended train counts only in its own direction. Tested on the feed in stage 4
 // (design/incidents-trial-2026-11-17.md).
 
+import { onceSay, rangeSay } from './timesSaid.ts'
 import STATIONS from '../data/stations.json' with { type: 'json' }
 
 import type { Days, Incident, Item } from '../../api/days.ts'
@@ -316,6 +317,21 @@ const DATE = `${DAY} \\d{1,2}(?: ${MONTH})?(?: \\d{4})?`
 const ordinal = (d: number) => d + (d % 10 === 1 && d !== 11 ? 'st' : d % 10 === 2 && d !== 12 ? 'nd' : d % 10 === 3 && d !== 13 ? 'rd' : 'th')
 const clock12 = (h: number, m: number) => (m === 0 && h === 12 ? 'midday' : m === 0 && h === 0 ? 'midnight' : `${h % 12 || 12}${m ? '.' + String(m).padStart(2, '0') : ''}${h < 12 ? 'am' : 'pm'}`)
 
+/** Two or more times together (John, November 26th 2026): a list says "am" or "pm" once, at the
+ *  start ("8.25am, 9.25 and 10.25"); a range once, at the end ("between 9.10 and 11.30am"). A range is
+ *  "between … and", "from … to/until", or two times joined by "to" or "until". */
+const T24 = '(?:[01]\\d|2[0-3]):[0-5]\\d'
+const CHAIN = new RegExp(`(\\b(?:between|from)(?: approximately)? )?\\b(${T24}(?:(?:, | and | or | & | to | until )${T24})+)\\b`, 'gi')
+const to12 = (t: string) => clock12(+t.slice(0, 2), +t.slice(3, 5))
+function chainSay(_: string, lead: string | undefined, chain: string): string {
+  const bits = chain.split(/(, | and | or | & | to | until )/)
+  const times = bits.filter((_, i) => i % 2 === 0).map(to12)
+  const sep = bits[1]
+  if (times.length === 2 && (sep === ' to ' || sep === ' until ' || (lead && sep === ' and '))) return `${lead ?? ''}${rangeSay(times[0], times[1], sep)}`
+  const say = onceSay()
+  return `${lead ?? ''}${bits.map((b, i) => (i % 2 === 0 ? say(times[i / 2]) : b)).join('')}`
+}
+
 /** A summary as the page shows it (matching always uses National Rail's own words):
  *  1. the date at the end dropped, as the line above says when ("…on Sunday 22 November",
  *     "…from Monday 16 to Thursday 19 November"), but "until further notice" kept;
@@ -351,5 +367,6 @@ export function houseStyle(t: string): string {
     // Tuesday November 17th" (fresh look 5.2).
     .replace(new RegExp(`\\b(${DAY}) (\\d{1,2}) (to|and|until) (${DAY}) (\\d{1,2}) (${MONTH})`, 'g'), (_, d1, n1, w, d2, n2, m) => `${d1} ${n1} ${m} ${w} ${d2} ${n2} ${m}`)
     .replace(new RegExp(`\\b(${DAY}) (\\d{1,2}) (${MONTH})(?: (\\d{4}))?`, 'g'), (_, d, n, m, y) => `${d} ${m} ${ordinal(+n)}${y ? ' ' + y : ''}`)
+    .replace(CHAIN, chainSay)
     .replace(/\b([01]\d|2[0-3]):([0-5]\d)\b/g, (_, h, m) => clock12(+h, +m)))
 }

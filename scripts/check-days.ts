@@ -186,5 +186,11 @@ eq('summaries: nothing lost or broken on any real item', days.items.filter((i) =
   eq('gone: a train that starts elsewhere is kept (Slough to Reading at 8.23am)', at('SLO', 'RDG', 'Slough', 'Reading', '2026-11-22T08:23:00Z').some(([s]) => s.startsWith('Amended 12.34am')), at('SLO', 'RDG', 'Slough', 'Reading', '2026-11-22T00:20:00Z').some(([s]) => s.startsWith('Amended 12.34am')))
   eq('gone: not on an earlier day of the item (the saved feed, Sunday\'s item on the Wednesday)', gist(it(/via London Paddington on Sunday/), 'PAD', 'RDG', new Date('2026-11-18T08:23:00Z'))[1], 'The 6.38am London Paddington to Reading service will not run.')
 }
+// "am" or "pm" once in National Rail's times (John, November 26th 2026): a list at the start, a range at the end.
+eq('times: a list says "am" once', houseStyle('Amended 08:40 and 09:10 London Bridge to Sutton trains'), 'Amended 8.40am and 9.10 London Bridge to Sutton trains')
+eq('times: a longer list, "pm" again when it changes', houseStyle('06:38, 07:08, 22:54 and 23:24'), '6.38am, 7.08, 10.54pm and 11.24')
+eq('times: a range says it at the end', houseStyle('between 09:10 and 09:40'), 'between 9.10 and 9.40am')
+eq('times: a range across midday keeps both', houseStyle('Between 09:15 and 21:15'), 'Between 9.15am and 9.15pm')
+eq('times: a range from the hour keeps both', houseStyle('Between 02:00 and 07:55'), 'Between 2am and 7.55am')
 console.log(`check-days: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

@@ -83,7 +83,12 @@ given its own branch). Before committing there, run
 - **Built:** the matching gets every train, not just the eight shown; at A the list shows only trains still to leave or
   gone in the last two minutes (`JUST_GONE` in `FindMyTrain.tsx`; "Delayed" with no time counts as not gone), the next
   one chosen; the question then reads "Which train are you planning to take?". "On" kept in the answers (John).
-- **Checked:** all checks (check-find 76), `tsc -b`, lint, build; `shoot.mjs` again: at Reading at 8.59pm the 9pm chosen
+- **John (on the train, Butts Hill Road bridge between Reading and Twyford, 10.05am):** "None of these trains seems to be
+  near you", over the eight trains from 9.16 to 9.46am; his left at about 10.02. The same cause: the matching was given only
+  the eight on screen. Fixed by the same change; a new check recreates it on the 8.59pm board (the 9.01pm ninth: with
+  every train, "the 9pm or the 9.01pm"; with the first eight, the 9pm alone). Found: the list itself can't offer a
+  train that left recently on a busy line (the first eight are older trains still on their way), for John.
+- **Checked:** all checks (check-find 79), `tsc -b`, lint, build; `shoot.mjs` again: at Reading at 8.59pm the 9pm chosen
   and only later trains below it; the other answers unchanged; no errors, no sideways scroll. Not checked: a real phone.
 
 ### November 26th 2026: "Find my train from my location": John's wording, found trains first, About (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)

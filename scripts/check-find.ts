@@ -110,6 +110,20 @@ const run = (b: Board, fix: Fix, now = b.now) => findTrain(fix, now, b.a.fromCrs
   ok(r.kind === 'one' && std(b, r.id) === '06:53', `Tiverton Parkway to Paddington, at Pewsey at 8.14am: ${said(b, r)}`)
 }
 
+{
+  // John, November 26th 2026, out of Reading at 10.05am: the list showed its first eight trains, which had all
+  // gone long before his, so the matching (given only those) said none was near. Here: the 8.59pm board's first
+  // eight run up to the 9pm; the 9.01pm is ninth. Half way to Twyford at 9.04pm, every train must be looked at.
+  const b = load('20261117-2059-RDG-PAD.json')
+  const nine = b.trains.findIndex((t) => t.std === '21:01')
+  ok(nine >= 8, `Reading to Paddington: the 9.01pm is ninth or later in the list (${nine + 1})`)
+  const r = run(b, along(b, 'RDG', 'TWY', 0.55), mins('21:04'))
+  ok(r.kind === 'two' && r.ids.some((id) => std(b, id) === '21:01') && r.ids.some((id) => std(b, id) === '21:00'),
+    `Reading to Paddington, out of Reading at 9.04pm, every train looked at: ${said(b, r)}`)
+  const old = findTrain(along(b, 'RDG', 'TWY', 0.55), mins('21:04'), 'RDG', 'PAD', b.stops, b.trains.slice(0, 8), pos)
+  ok(old.kind === 'one', `…and with only the first eight, as before, the 9.01pm can't be offered: ${said(b, old)}`)
+}
+
 // ---- 2. The sweep ----
 const files = readdirSync(dir).filter((f) => /^\d{8}-\d{4}-[A-Z]{3}-[A-Z]{3}\.json$/.test(f))
 let tried = 0, one = 0, two = 0

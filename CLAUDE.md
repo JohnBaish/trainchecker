@@ -35,6 +35,8 @@ given its own branch). Before committing there, run
    are done (`design/passes-near/COVERAGE.md`; what remains is upkeep when the network is rebuilt).
    On the page as "Fact of the Journey" since November 22nd 2026: after any change to the items, run
    `design/passes-near/to_site.py` (COVERAGE.md step 8), or the change doesn't reach the page.
+8. `design/follow-my-train/README.md`: "Follow my progress", a link in Message home's Share to a page
+   about the train you're on; John's decisions of November 26th 2026, nothing built.
 
 ## Key points
 
@@ -73,6 +75,15 @@ given its own branch). Before committing there, run
   copies.
 
 ## Log
+
+### November 26th 2026: "Follow my progress", an idea for Message home's Share, talked through (notes only, straight to `main`; Claude Code)
+
+- **John:** Message home's message ending "Follow my progress on Trainchecker:" with a link to a page about that
+  train ("currently between X and Y … expected into B at …, on platform …"). His answers: only the stops it calls
+  at (no location on a non-stop run; the box carries Message home's shared words instead); the link after the "#";
+  "Check again", not updating by itself; the train plus a link to the full journey (to see in mock-ups); "my
+  progress" for now; planning messages carry the link too. All in `design/follow-my-train/README.md`. Nothing
+  built; mock-ups next, when John says.
 
 ### November 26th 2026: "Message home"; live (branch `claude/message-home`, merged the same day; Claude Code)
 

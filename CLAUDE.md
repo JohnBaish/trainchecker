@@ -74,6 +74,22 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 26th 2026: a refresh keeps your place; "expected into" on the train buttons (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
+
+- **John:** where does Refresh land? Found: wherever the browser guesses (Chromium: the top, or near the bottom when the
+  trains take half a second, as the folds start closed and the page is shorter; John: Safari on an iPhone the same).
+  **John:** option 2, back to where you were. Built: `src/lib/keepPlace.ts` (`useKeepPlace()`, in `JourneyView.tsx`):
+  notes the section at the top of the screen, how far into it, and the open folds, in the tab's session storage
+  (stays on the device, goes with the tab); after a refresh only, reopens them and scrolls back; anything you do
+  yourself stops it. Not kept: a train or station chosen in Connections or Exits, or Find my train's answer.
+- **John:** "expected into" on Connections' and Exits' train buttons even when on time (the time was always the
+  expected one). Done; "now expected into" kept for late trains, to confirm. The other places with "due" or
+  "expected" listed for John, not changed.
+- **Checked:** all checks, `tsc -b`, lint, build; `design/previews/find-my-train/refresh.mjs` (Reading to Paddington at
+  6.24pm, National Rail answering after 600ms): Exits, Connections and the last week at 390px light and 1200px dark,
+  each back to the same pixel after a refresh, folds open again, a fresh visit at the top, no errors, no sideways
+  scroll. Not checked: Safari on a real iPhone.
+
 ### November 26th 2026: Connections and Exits offer every train on its way; Exits says "now expected" (branch `claude/happy-darwin-mmnd4m`, not merged; Claude Code)
 
 - **John:** the list should hold every train on its way and the next ones to leave, in time order ("Good solution").

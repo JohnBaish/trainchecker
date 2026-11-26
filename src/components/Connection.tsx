@@ -138,7 +138,7 @@ export function Connection({ a }: { a: Analysis }) {
         <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}${near.includes(s.id) ? ' near' : ''}`} aria-pressed={m.id === mineId}
           onClick={() => { if (m.id !== mineId) { setResult({ s: 'idle' }); setChosen(null) } setMineId(m.id) }}>
           <b>{t12(s.std)}</b> from {a.from}
-          <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : m.lateBy >= 1 ? `now expected into ${a.to} at ${t12(m.exp)}` : `due into ${a.to} at ${t12(m.exp)}`}</span>
+          <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : m.lateBy >= 1 ? `now expected into ${a.to} at ${t12(m.exp)}` : `expected into ${a.to} at ${t12(m.exp)}`}</span>
         </button>
         {i === after && reply}
       </Fragment>

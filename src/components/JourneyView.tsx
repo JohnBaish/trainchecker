@@ -4,6 +4,7 @@
 // on a computer (John, November 24th 2026; before that, "The next four hours" and "Platforms": see
 // git history before the merge of `claude/ecstatic-dijkstra-w0herd`); the quote of the day; "The last two hours" across the full
 // width; "The days ahead" (DaysAhead.tsx); "The last week"; Arrivals; Exits; Fact of the Journey.
+import { useKeepPlace } from '../lib/keepPlace.ts'
 import { useEffect, useState } from 'react'
 import { analyse, type Analysis } from '../lib/analyse.ts'
 import { fetchDays, fetchLive } from '../lib/load.ts'
@@ -319,6 +320,8 @@ function ShareJourney({ a, text }: { a: Analysis; text?: string }) {
 
 export function JourneyView({ journey }: { journey: Journey }) {
   const [state, setState] = useState<State>({ s: 'loading' })
+  // Back to the same section, with the same folds open, after a refresh (John, November 26th 2026).
+  useKeepPlace(hashOf(journey), state.s === 'ok')
   // "Check again" keeps the page showing (and the last week's answer, and any open folds) while it
   // asks again (fresh look 6.1, John, November 18th 2026).
   const [refreshing, setRefreshing] = useState(false)

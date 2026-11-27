@@ -400,3 +400,13 @@ details.trains-fold { margin-top: var(--space-3); }
   .ap-line { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-bottom: 10px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--color-neutral-700); }
   .ap-sentence { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; }
 }
+/* ?allplat=2: the tap hint (and the directions) under "All from platform" on a phone; above on a computer. */
+.ap-phone { display: none; }
+@media (max-width: 720px) {
+  .ap-desk { display: none; }
+  .ap-phone { display: block; }
+  p.ptaphint.ap-phone { margin: 0 0 12px; }
+  .ap-sentence { margin-bottom: 4px; }
+  .simple .ptaphint.ap-phone { margin-top: 4px; }
+}
+@media (max-width: 720px) { .ap-dirs { margin-bottom: 16px; } }

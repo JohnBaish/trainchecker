@@ -24,6 +24,7 @@ await p.waitForSelector('.grid', { timeout: 8000 })
 const card = p.locator('.grid > *').first()
 await card.locator('details summary').first().click()
 await p.waitForTimeout(400)
+if (process.env.TAP) { await card.locator('.board button:visible').first().click(); await p.waitForTimeout(400) }
 const wide = await p.evaluate(() => document.documentElement.scrollWidth > innerWidth)
 const out = new URL(`./coaches-${process.env.TAG ?? ''}${opt}-${size}-${theme}.png`, import.meta.url).pathname
 await card.screenshot({ path: out })

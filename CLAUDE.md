@@ -97,6 +97,13 @@ given its own branch). Before committing there, run
   LEAVE"; 2, "All from platform [3]" in ordinary type above it (no full stop: it stood apart after the badge's tap
   area). Newton Abbot at 390px, dark and light, with and without the coaches; Bath to Bristol's tiles (no heading)
   unaffected. Checks, `tsc -b`, lint, build; no errors, no sideways scroll.
+- **John:** option 2 with the coaches is best; the "Tap “3”…" line under "All from platform [3]". Done for option 2,
+  phones only: the panels still draw it above the list on a computer (`ap-desk`), the list draws a phone copy under the
+  line (`ap-phone`, `Board`'s new `hint`); the directions now open under that line too; both panels; the tiles layout's
+  hint moves under its own "ALL FROM PLATFORM [2]" (still capitals there, for John). Checked: Newton Abbot and Tiverton
+  Parkway (tiles) at 390px, the badge tapped and not; Newton Abbot at 1200px pixel-identical to before; checks, `tsc -b`,
+  lint, build; no errors, no sideways scroll. Not photographed: "More arrivals" with one platform (its board would get
+  the same line; no saved board has that).
 
 ### November 27th 2026: what the departure board gives that the page doesn't use (notes only, straight to `main`; Claude Code)
 

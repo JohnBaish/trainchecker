@@ -128,12 +128,13 @@ function TapBadge({ pl, open, onTap }: { pl: string; open: boolean; onTap: () =>
 const coachMock = (): string | null => { try { const m = new URLSearchParams(location.search).get('coaches'); return m && /^[123]$/.test(m) ? m : null } catch { return null } }
 /** MOCK-UP (November 27th 2026): on a phone, "All from platform" away from the column heading, `?allplat=1|2`. */
 const allPlatMock = (): string | null => { try { const m = new URLSearchParams(location.search).get('allplat'); return m && /^[12]$/.test(m) ? m : null } catch { return null } }
+const tapHint = (pic: ListPicture) => pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'
 const coachWords = (n: number) => `${n} ${n === 1 ? 'coach' : 'coaches'}`
 function CoachBar({ n }: { n: number }) {
   return <span className="coachbar" role="img" aria-label={coachWords(n)}>{Array.from({ length: n }, (_, i) => <i key={i} />)}</span>
 }
 
-export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?: At }) {
+export function Board({ p, dirs, at, hint }: { p: ListPicture; dirs?: Dirs | null; at?: At; hint?: string }) {
   const cm = coachMock()
   const ap = allPlatMock()
   const [openRow, setOpenRow] = useState<string | null>(null)
@@ -148,6 +149,7 @@ export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?
         // Even columns on a computer, a tile for each time on a phone (John, November 19th 2026).
         <div className="simple">
           <p className="shead">All from platform {tap && tap(p.one!) ? <TapBadge pl={p.one!} open={openRow === 'one'} onTap={() => toggle('one')} /> : <span className="badge">{p.one}</span>}</p>
+          {hint && ap === '2' && <p className="ptaphint ap-phone">{hint}</p>}
           {tap && openRow === 'one' && <DirLines lines={tap(p.one!)!} pl={p.one!} at={at} />}
           <div className="stimes" role="list">{onceAmPm(p.rows.map((r) => r.time)).map((t, i) => <b key={i} role="listitem">{t}</b>)}</div>
         </div>
@@ -156,7 +158,11 @@ export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?
         const b = tap && tap(p.one) ? <TapBadge pl={p.one} open={openRow === 'one'} onTap={() => toggle('one')} /> : <span className="badge">{p.one}</span>
         return ap === '1'
           ? <div className="ap-line">All from platform {b}</div>
-          : <p className="ap-sentence">All from platform {b}</p>
+          : <>
+            <p className="ap-sentence">All from platform {b}</p>
+            {hint && <p className="ptaphint ap-phone">{hint}</p>}
+            {tap && openRow === 'one' && <div className="ap-phone ap-dirs"><DirLines lines={tap(p.one)!} pl={p.one} at={at} /></div>}
+          </>
       })()}
       <div className={ap && p.one ? 'bhead ap' : 'bhead'} role="row">
         <span role="columnheader">{p.heads[0]}</span>
@@ -167,7 +173,7 @@ export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?
           : p.heads[2] ? (second && <span role="columnheader" className="bright">{p.heads[2]}</span>)
           : <span role="columnheader" className={second ? 'bright' : ''}>{p.heads[1]}</span>}
       </div>
-      {tap && p.one && openRow === 'one' && <DirLines lines={tap(p.one)!} pl={p.one} at={at} />}
+      {tap && p.one && openRow === 'one' && <div className={ap === '2' ? 'ap-desk' : undefined}><DirLines lines={tap(p.one)!} pl={p.one} at={at} /></div>}
       {p.rows.map((r, i) => {
         const c = cm && r.coaches ? r.coaches : 0
         const mid = cm === '1' && c ? [r.mid, coachWords(c)].filter(Boolean).join(' · ') : r.mid
@@ -275,8 +281,8 @@ function FirstPanel({ a }: { a: Analysis }) {
       {(pic || f.cancelled) && (
         <details className="advice trains-fold">
           <summary>{k === 1 ? 'Show the train and its platform' : 'Show the trains and platforms'} <Icon name="down" /></summary>
-          {pic && dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
-          {pic && <Board p={pic} dirs={dirs} at={{ station: a.from, hash: `#${a.fromCrs}-${a.toCrs}`, taken: a.taken }} />}
+          {pic && dirs && <p className={allPlatMock() === '2' && pic.one ? 'ptaphint ap-desk' : 'ptaphint'}>{tapHint(pic)}</p>}
+          {pic && <Board p={pic} dirs={dirs} hint={dirs ? tapHint(pic) : undefined} at={{ station: a.from, hash: `#${a.fromCrs}-${a.toCrs}`, taken: a.taken }} />}
           {f.cancelled && <p className="tafter">{f.cancelled}</p>}
           {(() => { const sp = firstShare(a); return sp && <PicShare pic={sp} what="these trains" file="next-hour" /> })()}
         </details>
@@ -300,8 +306,8 @@ function LaterPanel({ a }: { a: Analysis }) {
       {pic && (
         <details className="advice trains-fold">
           <summary>{pic.rows.length === 1 ? 'Show the train and its platform' : 'Show the trains and platforms'} <Icon name="down" /></summary>
-          {dirs && <p className="ptaphint">{pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'}</p>}
-          <Board p={pic} dirs={dirs} at={{ station: a.from, hash: `#${a.fromCrs}-${a.toCrs}`, taken: a.taken }} />
+          {dirs && <p className={allPlatMock() === '2' && pic.one ? 'ptaphint ap-desk' : 'ptaphint'}>{tapHint(pic)}</p>}
+          <Board p={pic} dirs={dirs} hint={dirs ? tapHint(pic) : undefined} at={{ station: a.from, hash: `#${a.fromCrs}-${a.toCrs}`, taken: a.taken }} />
           {l.cancelled && <p className="tafter">{l.cancelled}</p>}
           {(() => { const sp = laterShare(a); return sp && <PicShare pic={sp} what="these trains" file="later" /> })()}
         </details>

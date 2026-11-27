@@ -104,6 +104,13 @@ given its own branch). Before committing there, run
   Parkway (tiles) at 390px, the badge tapped and not; Newton Abbot at 1200px pixel-identical to before; checks, `tsc -b`,
   lint, build; no errors, no sideways scroll. Not photographed: "More arrivals" with one platform (its board would get
   the same line; no saved board has that).
+- **John (six numbered journeys, on a computer and his phone):** counts only in the first panel, not "The following
+  three hours" (`noCoaches`); no count until a train has a platform ("not usable until we have a platform number");
+  short trains not marked ("you know where to look"); the counts on a busy line are good. Asked: tiles with counts?
+  Yes: a small line under each time (`.tcoach`), so a one-platform list keeps its tiles. The tiles' own "ALL FROM
+  PLATFORM" in ordinary type on a phone behind `?tilehead=2`, for John to compare. Checked: Twyford to Henley and Euston
+  to Milton Keynes (live boards saved at 4.56pm), Reading to Paddington (12 counts in the first panel, none in the
+  second); checks, `tsc -b`, lint, build; no errors, no sideways scroll.
 
 ### November 27th 2026: what the departure board gives that the page doesn't use (notes only, straight to `main`; Claude Code)
 

@@ -410,3 +410,8 @@ details.trains-fold { margin-top: var(--space-3); }
   .simple .ptaphint.ap-phone { margin-top: 4px; }
 }
 @media (max-width: 720px) { .ap-dirs { margin-bottom: 16px; } }
+/* MOCK-UP: a coach count under the time in a tile; ?tilehead=2: the tiles' heading in ordinary type on a phone. */
+.stimes .tcoach { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; color: var(--color-neutral-700); }
+@media (max-width: 720px) {
+  .simple .shead.th2 { font-size: inherit; letter-spacing: 0; text-transform: none; font-weight: 400; color: var(--color-text); gap: 8px; }
+}

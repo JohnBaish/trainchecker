@@ -76,7 +76,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 27th 2026: "right there" only within 60 metres (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
+### November 27th 2026: "right there" only within 60 metres; live (branch `claude/peaceful-maxwell-1vv2r2`, merged the same day; Claude Code)
 
 - **John:** after the 287 "right there" answers to an exit by another platform were assessed (the map data's own
   walking distances: 103 up to 30 metres, 108 to 60, 56 to 120, 15 over, 5 unmeasured), keep "right there" up to 60
@@ -92,6 +92,8 @@ given its own branch). Before committing there, run
 - **Checked:** the table rebuilt; against `main`, only those 72 platforms' answers change; check-exits 94 (Bare Lane at
   18 metres still "right there", Bloxwich, Beckenham Junction, the guide, a sweep of every `far` platform); all 11 check
   scripts, `tsc -b`, lint, build. Not checked in a browser (text only).
+- **John:** merge. He doesn't know Darlington, so its two unnamed entrances by platform 4 stay as they are ("the entrance
+  on the level by platform 4" in the guide). Checks, `tsc -b`, lint and build clean first.
 
 ### November 27th 2026: Exeter St Davids, one exit; live (branch `claude/peaceful-maxwell-1vv2r2`, merged the same day; Claude Code)
 

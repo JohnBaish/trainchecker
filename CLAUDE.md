@@ -76,6 +76,15 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: "in front of one" in the summaries (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
+
+- **John (iPhone, Reading to Paddington at 6.42pm):** "…because of a late running train being in front of this one and
+  police dealing with an incident…": in the summaries only, "in front of one". `summaryReason()` in `sentences.ts`
+  (as "this train" became "the train" on November 18th); the train list keeps National Rail's "this one". The only
+  "this one" reason in the saved boards (96 times).
+- **Checked:** all 11 check scripts (check-rules 296: the new wording, and the list keeping "this one"), `tsc -b`,
+  lint, build. Not checked in a browser (text only).
+
 ### November 27th 2026: the number of coaches in "The next hour"; "All from platform" on a phone; live (branch `claude/brave-ride-p0g282`, merged the same day; Claude Code)
 
 - **John:** how could the coaches be shown without spoiling "The next hour"? Mock-ups of 1 (in the grey line, "Fast ·

@@ -62,8 +62,11 @@ export function reasonText(r: string | null): string | null {
 }
 
 /** A reason as the summaries give it: "a fault on this train" becomes "a fault on the train",
- *  which reads better in a list of reasons (John, November 18th 2026). The train list keeps "this". */
-const summaryReason = (r: string | null) => reasonText(r)?.replace(/\bthis (train|service)\b/gi, 'the $1') ?? null
+ *  which reads better in a list of reasons (John, November 18th 2026), and "a late running train
+ *  being in front of this one" becomes "…in front of one" (John, November 27th 2026). The train
+ *  list keeps "this". */
+export const summaryReason = (r: string | null) =>
+  reasonText(r)?.replace(/\bthis (train|service)\b/gi, 'the $1').replace(/\bin front of this one\b/gi, 'in front of one') ?? null
 
 /** The most common reason among some trains, if one covers at least half of them. Reasons that
  *  differ only by a place ("…signalling system" and "…signalling system at Gatley") count as

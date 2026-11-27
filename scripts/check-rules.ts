@@ -16,7 +16,7 @@ import { analyse, diff, type Snap, type Analysis } from '../src/lib/analyse.ts'
 import {
   standIn, standInLine, standInMixedLine, tenAfterWords, verdict, nextFour, platforms, platformsByKind, lastTwoLines, shareWords, share, lastWeekOthers, lastWeekText, weekFor, t12, dayName,
   hourLabel, HOURS, quoteShareText, earlierLine, kindLine, platformTrains, arrivals, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type Line,
-  dueSay,
+  dueSay, summaryReason, reasonText,
 } from '../src/lib/sentences.ts'
 import { quoteOfTheDay, QUOTES } from '../src/data/quotes.ts'
 import { STATIONS, resolve, suggest, complete } from '../src/lib/stations.ts'
@@ -67,7 +67,7 @@ for (const f of files) {
   // Since November 18th 2026 (John): "a fault on the train" in the summary; the list keeps "this".
   const mn = S.nextFour(m)
   // "…expected to be on time" since November 18th 2026 (John, stage 5).
-  if (mn) mn.lines = mn.lines.map((l: string) => l.replace(/\bthis train\b/g, 'the train').replace('All are expected on time.', "They're all expected to be on time.").replace('Both are expected on time.', 'Both of them are expected to be on time.').replace("It's expected on time.", "It's expected to be on time.").replace('The rest are expected on time.', 'The rest are expected to be on time.').replace('The other is expected on time.', 'The other one is expected to be on time.'))
+  if (mn) mn.lines = mn.lines.map((l: string) => l.replace(/\bthis train\b/g, 'the train').replace(/\bin front of this one\b/g, 'in front of one').replace('All are expected on time.', "They're all expected to be on time.").replace('Both are expected on time.', 'Both of them are expected to be on time.').replace("It's expected on time.", "It's expected to be on time.").replace('The rest are expected on time.', 'The rest are expected to be on time.').replace('The other is expected on time.', 'The other one is expected to be on time.'))
   // Since November 18th 2026 (John): trains an hour when there are more than eight, and each
   // listed train's reason and company after its status (`why`), so those are left out here.
   const nf = nextFour(a)
@@ -489,5 +489,9 @@ eq('was due: pm once, kept across midday, on the hour', [dueSay('12:53', '12:47'
   eq('the same, with no other train in the five minutes: "a mixed bag"', [lstAlone.verdict, lstAlone.byNext], ['mixed', true])
   eq('a late train that another leaves before: not the next one', [overtaken.byNext, overtaken.nextBad, overtaken.verdict], [false, null, 'good'])
 }
+// "in front of one" in the summaries; the train list keeps "this one" (John, November 27th 2026).
+eq('summary reason: in front of one', summaryReason('This service has been delayed by a late running train being in front of this one'), 'a late running train being in front of one')
+eq('train list keeps this one', reasonText('This service has been delayed by a late running train being in front of this one'), 'a late running train being in front of this one')
 console.log(`check-rules: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)
+

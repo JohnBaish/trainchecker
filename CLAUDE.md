@@ -76,7 +76,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 27th 2026: "Slower (by 16 minutes)" on the boards (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
+### November 27th 2026: "Slower (by 16 minutes)" on the boards; live (branch `claude/peaceful-maxwell-1vv2r2`, merged the same day; Claude Code)
 
 - **John (iPhone, the preview):** "Slower (by 15 minutes)"; not rounded. `kindLabel()` and `slowerBy()` in
   `sentences.ts`: each slower train's own journey time to B minus the fast trains' usual (middle) time in the same
@@ -89,8 +89,9 @@ given its own branch). Before committing there, run
 - **Checked:** all 11 check scripts (check-windows 486: the three boards, `slowerBy()`), `tsc -b`, lint, build;
   `design/previews/slower/shoot.mjs` at 390px dark and 1200px light on those three boards: no errors, no sideways
   scroll, the longest label wraps cleanly on a phone.
+- **John:** "Yes please." Both changes merged into `main` (fast-forward); checks, `tsc -b`, lint and build clean first.
 
-### November 27th 2026: "in front of one" in the summaries (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
+### November 27th 2026: "in front of one" in the summaries; live (branch `claude/peaceful-maxwell-1vv2r2`, merged the same day; Claude Code)
 
 - **John (iPhone, Reading to Paddington at 6.42pm):** "…because of a late running train being in front of this one and
   police dealing with an incident…": in the summaries only, "in front of one". `summaryReason()` in `sentences.ts`

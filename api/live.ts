@@ -43,6 +43,8 @@ export type Service = {
    *  fourth is 1 once the train has passed it (the board gives an actual time, or "No report").
    *  For "Find my train from my location" and "Follow my progress" (John, November 26th 2026). */
   calls?: Call[]
+  /** Coaches leaving A (the board's `length`; 0 there means not given). MOCK-UP, November 27th 2026. */
+  coaches?: number | null
 }
 
 /** `route`: every station the trains from A call at before B (John, November 18th 2026: work
@@ -64,7 +66,7 @@ type RawService = {
   sta?: string; eta?: string; ata?: string
   previousCallingPoints?: { callingPoint?: CallingPoint[] }[]
   destination?: { locationName?: string }[]
-  isCancelled?: boolean; cancelReason?: string; delayReason?: string
+  isCancelled?: boolean; cancelReason?: string; delayReason?: string; length?: number
   subsequentCallingPoints?: { callingPoint?: CallingPoint[] }[]
 }
 export type RawBoard = { locationName?: string; filterLocationName?: string; trainServices?: RawService[] | null }
@@ -95,7 +97,7 @@ export function trim(from: string, to: string, taken: string, boards: RawBoard[]
       seen.set(s.serviceID, {
         id: s.serviceID, std: s.std, etd: s.etd ?? null, platform: s.platform || null,
         operator: s.operator || '', destination: (s.destination || []).map((x) => x.locationName).filter(Boolean).join(' and '),
-        cancelled: Boolean(s.isCancelled || p.isCancelled),
+        cancelled: Boolean(s.isCancelled || p.isCancelled), coaches: s.length || null,
         reason: s.cancelReason || p.cancelReason || s.delayReason || p.delayReason || null,
         sta: p.st || null, eta: p.et || null, ata: p.at || null,
         calls: callsOf(at >= 0 ? cps.slice(0, at) : []),

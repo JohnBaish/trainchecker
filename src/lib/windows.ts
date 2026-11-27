@@ -72,8 +72,8 @@ export function trainsPicture(f: Analysis): ListPicture | null {
   const rows = [...ts.filter((t) => !t.unknown), ...ts.filter((t) => t.unknown)].map((t): PicRow => {
     const late = t.late !== null && t.late > 0 && isTime(t.etd)
     const p = t.platform ?? undefined
-    if (t.unknown) return { time: '?', mid: [kindOf(t), `the ${t12(t.std)}`].filter(Boolean).join(' · '), late: 'delayed, no new time yet', platform: p, noPlat: !p }
-    return { time: t12(late ? t.etd! : t.std), mid: kindOf(t), late: late ? `was due to go at ${t12(t.std).replace(/(am|pm)$/, '')}` : '', platform: p, lateBy: late ? t.late! : undefined, noPlat: !p }
+    if (t.unknown) return { time: '?', mid: [kindOf(t), `the ${t12(t.std)}`].filter(Boolean).join(' · '), late: 'delayed, no new time yet', platform: p, noPlat: !p, coaches: t.coaches ?? undefined }
+    return { time: t12(late ? t.etd! : t.std), mid: kindOf(t), late: late ? `was due to go at ${t12(t.std).replace(/(am|pm)$/, '')}` : '', platform: p, lateBy: late ? t.late! : undefined, noPlat: !p, coaches: t.coaches ?? undefined }
   })
   const one = rows.length > 1 && rows.every((r) => r.platform && r.platform === rows[0].platform) ? rows[0].platform! : null
   const at = `${t12(f.now)} on ${dateShort(new Date(f.taken))}`

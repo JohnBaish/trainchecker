@@ -76,6 +76,17 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: the number of coaches in "The next hour", three mock-ups (branch `claude/brave-ride-p0g282`, not merged; Claude Code)
+
+- **John:** how could the coaches be shown without spoiling "The next hour"? Mock-ups of 1 (in the grey line, "Fast ·
+  8 coaches"), 2 (small under the platform) and 3 (a block for each coach), behind `?coaches=1|2|3` (nothing without
+  it). `api/live.ts` sends `coaches` (the board's `length`, 0 as null); `trainsPicture()` puts it on each row;
+  `Board` and `.bstack`/`.coachbar` draw it. Option 4 (a sentence only for short or dividing trains) not mocked up.
+- **Checked:** every check script, `tsc -b`, lint, build; `design/previews/coaches/shoot.mjs` on the saved Reading to
+  Paddington board (6.24pm, November 17th; its real counts, 4 to 10 coaches; none for the Elizabeth Line) at 1200px
+  light and 390px dark: no errors, no sideways scroll. Labels in digits ("8 coaches"), as in the boards' other labels;
+  for John. The Share picture unchanged.
+
 ### November 27th 2026: what the departure board gives that the page doesn't use (notes only, straight to `main`; Claude Code)
 
 - **John asked.** Live boards from 34 big stations at 3.40pm (`design/mockups/snapshots/20261127-unused-fields/`;

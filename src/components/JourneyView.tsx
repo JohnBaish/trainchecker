@@ -124,7 +124,15 @@ function TapBadge({ pl, open, onTap }: { pl: string; open: boolean; onTap: () =>
   )
 }
 
+/** MOCK-UP (November 27th 2026): three ways of showing the coaches, `?coaches=1|2|3`; without it, none. */
+const coachMock = (): string | null => { try { const m = new URLSearchParams(location.search).get('coaches'); return m && /^[123]$/.test(m) ? m : null } catch { return null } }
+const coachWords = (n: number) => `${n} ${n === 1 ? 'coach' : 'coaches'}`
+function CoachBar({ n }: { n: number }) {
+  return <span className="coachbar" role="img" aria-label={coachWords(n)}>{Array.from({ length: n }, (_, i) => <i key={i} />)}</span>
+}
+
 export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?: At }) {
+  const cm = coachMock()
   const [openRow, setOpenRow] = useState<string | null>(null)
   const tap = dirs ?? null
   const toggle = (k: string) => setOpenRow(openRow === k ? null : k)
@@ -150,20 +158,26 @@ export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?
           : <span role="columnheader" className={second ? 'bright' : ''}>{p.heads[1]}</span>}
       </div>
       {tap && p.one && openRow === 'one' && <DirLines lines={tap(p.one)!} pl={p.one} at={at} />}
-      {p.rows.map((r, i) => (
+      {p.rows.map((r, i) => {
+        const c = cm && r.coaches ? r.coaches : 0
+        const mid = cm === '1' && c ? [r.mid, coachWords(c)].filter(Boolean).join(' · ') : r.mid
+        const plat = r.platform && !p.one ? (tap && tap(r.platform)
+            ? <span role="cell" className="bcell"><TapBadge pl={r.platform} open={openRow === String(i)} onTap={() => toggle(String(i))} /></span>
+            : <span className="badge" role="cell">{r.platform}</span>)
+          : r.noPlat && !p.one ? <span className="bnoplat" role="cell">not yet</span> : null
+        return (
         <div key={i} className={tap && openRow === String(i) ? 'brow open' : 'brow'} role="row">
           <span className={r.time === '?' ? 'bt q' : 'bt'} role="cell">{r.time}</span>
           <span className="bmid" role="cell">
-            {r.mid && <span>{r.mid}</span>}
-            {r.late && <span className={r.arrow ? 'blate own' : 'blate'}>{r.mid && !r.arrow && <span className="bsep" aria-hidden="true">{'\u00a0· '}</span>}{r.arrow && <span className="barrow"><Icon name="left" /></span>}{r.late.split(/(?<=,) /).map((x, j) => <span key={j} className="nw">{j ? ' ' : ''}{x}</span>)}</span>}
+            {mid && <span>{mid}</span>}
+            {cm === '3' && c ? <CoachBar n={c} /> : null}
+            {r.late && <span className={r.arrow ? 'blate own' : 'blate'}>{mid && !r.arrow && <span className="bsep" aria-hidden="true">{'\u00a0· '}</span>}{r.arrow && <span className="barrow"><Icon name="left" /></span>}{r.late.split(/(?<=,) /).map((x, j) => <span key={j} className="nw">{j ? ' ' : ''}{x}</span>)}</span>}
           </span>
-          {r.platform && !p.one && (tap && tap(r.platform)
-            ? <span role="cell" className="bcell"><TapBadge pl={r.platform} open={openRow === String(i)} onTap={() => toggle(String(i))} /></span>
-            : <span className="badge" role="cell">{r.platform}</span>)}
-          {r.noPlat && !p.one && <span className="bnoplat" role="cell">not yet</span>}
+          {cm === '2' && c && plat ? <span className="bstack">{plat}<span className="bcoaches">{coachWords(c)}</span></span> : plat}
           {tap && r.platform && openRow === String(i) && <DirLines lines={tap(r.platform)!} pl={r.platform} at={at} />}
         </div>
-      ))}
+        )
+      })}
       </>}
       {p.note && <p className="tafter">{p.note}</p>}
     </div>

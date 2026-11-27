@@ -384,3 +384,11 @@ details.trains-fold { margin-top: var(--space-3); }
 /* The train's page on a phone: "Live from National Rail." on a line of its own, as it splits anyway (John, November
    26th 2026). */
 @media (max-width: 720px) { .follow-date .nr { display: block; } }
+
+/* MOCK-UP (November 27th 2026): coaches, ?coaches=2 (under the platform) and ?coaches=3 (a drawing). */
+.bstack { justify-self: end; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.bstack > .badge, .bstack > .bcell, .bstack > .bnoplat { justify-self: auto; }
+.bcoaches { font-size: 12px; color: var(--color-neutral-700); white-space: nowrap; }
+.coachbar { display: inline-flex; gap: 2px; vertical-align: middle; align-self: center; }
+.bmid > span + .coachbar { margin-left: 8px; }
+.coachbar i { display: block; width: 7px; height: 10px; border-radius: 2px; background: currentColor; opacity: 0.55; }

@@ -86,6 +86,12 @@ given its own branch). Before committing there, run
   Paddington board (6.24pm, November 17th; its real counts, 4 to 10 coaches; none for the Elizabeth Line) at 1200px
   light and 390px dark: no errors, no sideways scroll. Labels in digits ("8 coaches"), as in the boards' other labels;
   for John. The Share picture unchanged.
+- **John:** option 2, "exactly where you'd be looking"; height differences fine. On Newton Abbot to Paddington (all from
+  platform 3) no counts showed, though the board gives them (9, 5, 10): with one platform there's no badge on the rows.
+  Now the count stands where the badge would be, and a list that would be tiles keeps its rows when it has counts.
+  Checked on a live Newton Abbot board (3.59pm, saved) and Bath to Bristol, 1200px light and 390px dark: no errors, no
+  sideways scroll. Found, not changed: on a phone "EXPECTED TO LEAVE ALL FROM PLATFORM" runs together (already so
+  without the switch).
 
 ### November 27th 2026: what the departure board gives that the page doesn't use (notes only, straight to `main`; Claude Code)
 

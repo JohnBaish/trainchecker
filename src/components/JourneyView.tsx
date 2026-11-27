@@ -137,7 +137,8 @@ export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?
   const tap = dirs ?? null
   const toggle = (k: string) => setOpenRow(openRow === k ? null : k)
   const second = p.rows.some((r) => r.platform || r.noPlat)
-  const simple = !!p.one && p.rows.every((r) => !r.mid && !r.late)
+  // MOCK-UP: with the coaches under the platform, a list with counts keeps its rows (no tiles).
+  const simple = !!p.one && p.rows.every((r) => !r.mid && !r.late) && !(cm === '2' && p.rows.some((r) => r.coaches))
   return (
     <div className="board" role={simple ? undefined : 'table'}>
       {simple ? (
@@ -164,7 +165,9 @@ export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?
         const plat = r.platform && !p.one ? (tap && tap(r.platform)
             ? <span role="cell" className="bcell"><TapBadge pl={r.platform} open={openRow === String(i)} onTap={() => toggle(String(i))} /></span>
             : <span className="badge" role="cell">{r.platform}</span>)
-          : r.noPlat && !p.one ? <span className="bnoplat" role="cell">not yet</span> : null
+          : r.noPlat && !p.one ? <span className="bnoplat" role="cell">not yet</span>
+          // MOCK-UP: all from one platform (said once at the top): the count stands where the badge would be.
+          : cm === '2' && c && p.one ? <span className="bcoaches bstack" role="cell">{coachWords(c)}</span> : null
         return (
         <div key={i} className={tap && openRow === String(i) ? 'brow open' : 'brow'} role="row">
           <span className={r.time === '?' ? 'bt q' : 'bt'} role="cell">{r.time}</span>
@@ -173,7 +176,7 @@ export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?
             {cm === '3' && c ? <CoachBar n={c} /> : null}
             {r.late && <span className={r.arrow ? 'blate own' : 'blate'}>{mid && !r.arrow && <span className="bsep" aria-hidden="true">{'\u00a0· '}</span>}{r.arrow && <span className="barrow"><Icon name="left" /></span>}{r.late.split(/(?<=,) /).map((x, j) => <span key={j} className="nw">{j ? ' ' : ''}{x}</span>)}</span>}
           </span>
-          {cm === '2' && c && plat ? <span className="bstack">{plat}<span className="bcoaches">{coachWords(c)}</span></span> : plat}
+          {cm === '2' && c && plat && !p.one ? <span className="bstack">{plat}<span className="bcoaches">{coachWords(c)}</span></span> : plat}
           {tap && r.platform && openRow === String(i) && <DirLines lines={tap(r.platform)!} pl={r.platform} at={at} />}
         </div>
         )

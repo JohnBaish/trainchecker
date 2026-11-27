@@ -6,7 +6,7 @@ import { createRequire } from 'node:module'
 import { trim } from '../../../api/live.ts'
 const { chromium } = createRequire(import.meta.url)('playwright')
 const [opt, size, theme] = process.argv.slice(2)
-const file = '20261117-1824-RDG-PAD.json'
+const file = process.env.SNAP || '20261117-1824-RDG-PAD.json'
 const s = JSON.parse(readFileSync(new URL(`../../mockups/snapshots/${file}`, import.meta.url), 'utf8'))
 const snap = trim(s.from, s.to, s.taken, s.boards.map((b) => b.board))
 const b = await chromium.launch()
@@ -24,7 +24,7 @@ const card = p.locator('.grid > *').first()
 await card.locator('details summary').first().click()
 await p.waitForTimeout(400)
 const wide = await p.evaluate(() => document.documentElement.scrollWidth > innerWidth)
-const out = new URL(`./coaches-${opt}-${size}-${theme}.png`, import.meta.url).pathname
+const out = new URL(`./coaches-${process.env.TAG ?? ''}${opt}-${size}-${theme}.png`, import.meta.url).pathname
 await card.screenshot({ path: out })
 console.log(opt, size, theme, 'errors', errors.length, 'sideways', wide, 'rows', await card.locator('.brow').count())
 await b.close()

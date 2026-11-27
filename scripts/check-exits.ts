@@ -165,20 +165,51 @@ eq('Exeter Central 3: the bridge comes down by the platform both exits are by', 
   const bad: string[] = []
   for (const [k, e] of Object.entries(T)) for (const p of Object.keys(e.p ?? {})) {
     const t = trainLine(e, p, false)
-    const m = t.match(/either way: .*by platform ([0-9A-Z]+), or .*by platform ([0-9A-Z]+)\./)
+    const m = t.match(/either way: [^.]*by platform ([0-9A-Z]+), or [^.]*by platform ([0-9A-Z]+)\./)
     if (m && m[1] === m[2]) bad.push(`${k} ${p}`)
     if (/either way: to (.+), or to \1\./.test(t)) bad.push(`${k} ${p} (same twice)`)
   }
   eq('sweep: no "either way" to the same platform', bad, [])
 }
 // "Right there" only within 60 metres; "a short walk along" over 60, "a walk along" over 120 (John, November 27th 2026).
-eq('Bare Lane 1 (18 m): right there', trainLine(T.BAR, '1', false), 'Your train is due into platform 1. The exit on Bare Lane is right there.')
-eq('Bloxwich 1 (84 m): a short walk', trainLine(T.BLX, '1', false), 'Your train is due into platform 1. It’s a short walk along to the exit on Croxdene Avenue by platform 2, on the same level.')
+// Bare Lane 1 (18 m) and Bloxwich 1 (84 m) were the examples here; both are now in doubt (below), as the
+// platform links say platform 2 is across the line from 1 (a level crossing, a footbridge).
 eq('Beckenham Junction 1 (233 m): a walk', trainLine(T.BKJ, '1', false), 'Your train is due into platform 1. It’s a walk along to the car park exit by platform 2, on the same level, or you can go over the footbridge for the exit by platform 4.')
-eq('Bloxwich 1: the platform guide', toPlatform(T.BLX, '1')!.join(' '), 'From the Croxdene Avenue entrance by platform 2, it’s a short walk along to platform 1, on the same level.')
+// In doubt (John, November 27th 2026: "simplify everything enough to make what we say true even if it's less
+// detailed"): the Exits table says on the level, the platform links say across the line; only where the exit is.
+eq('in doubt: Bare Lane 1', trainLine(T.BAR, '1', false), 'Your train is due into platform 1. There’s an exit on Bare Lane by platform 2.')
+eq('in doubt: Bloxwich 1', trainLine(T.BLX, '1', false), 'Your train is due into platform 1. There’s an exit on Croxdene Avenue by platform 2.')
+eq('in doubt: Bloxwich 1, the platform guide', toPlatform(T.BLX, '1')!.join(' '), 'The Croxdene Avenue entrance is by platform 2.')
+eq('in doubt: Maidenhead 5, the other ways kept', trainLine(T.MAI, '5', false), 'Your train is due into platform 5. The exit on King Street is right there, or you can go through the subway for Courtlands. There’s also an exit on Braywick Road by platform 1.')
+eq('in doubt: Maidenhead, the station', stationLine('Maidenhead', T.MAI), 'At Maidenhead, there are exits by platforms 1 and 5.')
+eq('in doubt: Maryland 2, two exits by one platform', trainLine(T.MYL, '2', false), 'Your train is due into platform 2. There’s an exit on Manbey Park Road by platform 1. The university exit and Forest Lane are by platform 4.')
+eq('in doubt: Maryland 2, the platform guide', toPlatform(T.MYL, '2')!.join(' '), 'The Manbey Park Road entrance is by platform 1. The university and Forest Lane entrances are by platform 4.')
+eq('in doubt: Inverness 1, an unmeasured walk is not "right there"', trainLine(T.INV, '1', false), 'Your train is due into platform 1. The city centre exit is by platform 2, on the same level. The car park exit is by platform 6.')
+{
+  const bad: string[] = []
+  for (const [k, e] of Object.entries(T)) for (const [p, ks0] of Object.entries(e.dq ?? {})) {
+    // An exit of the same name the platform reaches itself (Bilbrook's two Duck Lanes): nothing to add.
+    const ks = ks0.filter((i) => !e.x.some((y, j) => j !== i && y[0] === e.x[i][0] && (e.p[p] ?? []).some((w) => w[0] === j && !ks0.includes(j))))
+    if (!ks.length) continue
+    const t = trainLine(e, p, false)
+    for (const i of ks) if (e.x[i][0] && new RegExp(`${e.x[i][0].replace(/[()]/g, '.')}[^.]* is right there`).test(t)) bad.push(`${k} ${p}`)
+    if (!/by platform/.test(t)) bad.push(`${k} ${p} (no platform said)`)
+  }
+  eq('sweep: no exit in doubt is "right there"', bad, [])
+}
+// Hersham (John, November 27th 2026): two entrances on Molesey Road, either side of the railway bridge.
+eq('Hersham: the station', stationLine('Hersham', T.HER), 'At Hersham, there’s an exit by each platform, both on Molesey Road, either side of the railway bridge.')
+eq('Hersham 1 and 2: the way out', ['1', '2'].map((p) => trainLine(T.HER, p, false)), ['Your train is due into platform 1. The exit to Molesey Road is right there, down the steps.', 'Your train is due into platform 2. The exit to Molesey Road is right there, down the steps.'])
+{
+  const fix = (await import('../src/data/to-platform.json', { with: { type: 'json' } })).default.HER as never
+  eq('Hersham 1 and 2: the platform guide', ['1', '2'].map((p) => toPlatform(T.HER, p, undefined, fix)!.join(' ')), ['Platform 1’s entrance is on Molesey Road, on the Walton Park side of the railway bridge. Go up the steps.', 'Platform 2’s entrance is on Molesey Road, on the other side of the railway bridge from Walton Park. Go up the steps.'])
+}
+eq('Hersham: not in doubt (John’s corrections)', T.HER.dq, undefined)
+eq('Bilbrook 2: the same road the other side, not repeated', trainLine(T.BBK, '2', false), 'Your train is due into platform 2. The exit on Duck Lane is right there.')
 {
   const bad: string[] = []
   for (const [k, e] of Object.entries(T)) for (const p of Object.keys(e.far ?? {})) {
+    if (e.dq?.[p]) continue // in doubt: only where the exit is (John, November 27th 2026)
     if (/right there/.test(trainLine(e, p, false))) bad.push(`${k} ${p} exits`)
     if (!/(a|short) walk along to platform/.test((toPlatform(e, p) ?? []).join(' '))) bad.push(`${k} ${p} guide`)
   }

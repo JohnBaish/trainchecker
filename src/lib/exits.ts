@@ -26,13 +26,16 @@ export type ExitRow = [name: string | null, by: string[], building: 0 | 1, near:
 export type Way = [exit: number, via: string, down: string | null]
 /** w: John's word for the station's footbridge ("bridge" at Reading, which has shops on it);
  *  here: for an exit given a descriptive name, how to say it's right there (exit number → words). */
-export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string>; lc?: 1; say?: Record<string, string>; other?: 1; eo?: number[]; sl?: string; nw?: Record<string, string>; far?: Record<string, number> }
+export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string>; lc?: 1; say?: Record<string, string>; other?: 1; eo?: number[]; sl?: string; nw?: Record<string, string>; far?: Record<string, number>; dq?: Record<string, number[]> }
 // say: John's own words for a platform, after "Your train is due into platform 1." (Ivybridge).
 // other: by an exit on the level, also say the other one over the bridge or through the subway
 // (Southampton Central: "…is right there, or you can go over the footbridge for the town centre exit").
 // nw: for an unnamed exit by no platform, the platform it's nearest on foot ("the exit nearest platform 2").
 // sl: John's own sentence for the station as a whole (Reading).
 // eo: exits people come out of but wouldn't go in by (Reading's Apex Plaza); never offered as a way in.
+// dq: level ways from a platform that the platform links contradict (the exit's platform is across the line
+// there), so one of the two tables is wrong; only where the exit is is said, not the way to it (John,
+// November 27th 2026: "simplify everything enough to make what we say true even if it's less detailed").
 // lc: John has confirmed the exits are either side of a public level crossing (Midgham).
 export type ExitsTable = Record<string, StationExits>
 
@@ -83,9 +86,15 @@ export function stationLine(name: string, e: StationExits): string {
   // Every platform with its own exit (Midgham, Dean, Darsham: John, November 22nd 2026).
   const all = new Set([...Object.keys(e.p), ...e.x.flatMap((x) => x[1])])
   if (!one && all.size >= 2 && e.x.every((x) => x[1].length) && [...all].every((p) => e.x.some((x) => x[1].includes(p)))
-    && Object.values(e.p).every((ws) => ws[0]?.[1] === 'l'))
+    && Object.entries(e.p).every(([p, ws]) => ws.filter((w) => !(w[1] === 'l' && e.dq?.[p]?.includes(w[0])))[0]?.[1] === 'l'))
     return `At ${name}, there’s an exit by each platform${e.lc ? ', either side of the level crossing' : ''}.`
   // Every exit by the same one platform: "both exits", "all the exits" (John, November 22nd 2026).
+  // In doubt (dq): an exit may be missing from the map, so not "the exit is", "both exits are" (Hersham).
+  if (e.dq) {
+    if (one) return `At ${name}, there’s an exit by ${plats(by)}.`
+    if (by.length === 1) return `At ${name}, there are ${numberWord(e.x.length)} exits by platform ${by[0]}.`
+    return `At ${name}, there are exits by ${plats(by)}.`
+  }
   if (!one && by.length === 1) return `At ${name}, ${e.x.length === 2 ? 'both exits are' : 'all the exits are'} by platform ${by[0]}.`
   if (one) return `At ${name}, the exit is by ${e.x[0][2] ? `the station building on ${plats(by)}` : plats(by)}.`
   return `At ${name}, the exits are by ${plats(by)}.`
@@ -175,6 +184,40 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
     const i = e.x.findIndex((x) => x[1].includes(platform))
     if (i >= 0) ways = [[i, 'l', null]]
   }
+  // Ways in doubt (dq): only where the exit is, not the way to it (John, November 27th 2026). Drafts.
+  const doubt = e.dq?.[e.p[platform] ? platform : platform.replace(/[A-Z]$/, '')] ?? []
+  const trimmed = ways.length > 0 && doubt.length > 0
+  if (doubt.length) ways = ways.filter((w) => !(w[1] === 'l' && doubt.includes(w[0])))
+  // Not one with the same name as an exit this platform still reaches: the same road on the other side of
+  // the line (Bilbrook's Duck Lane, Riddlesdown's Lower Barn Road, as at Hersham), which adds nothing.
+  const kept = new Set(ways.map((w) => e.x[w[0]][0]).filter(Boolean))
+  const reached = new Set(ways.map((w) => w[0]))
+  const whereOnly = exitsWhere(e, doubt.filter((k) => !kept.has(e.x[k][0]) && !reached.has(k)))
+  if (trimmed && !ways.length) return `${start} ${whereOnly}`
+  if (trimmed && whereOnly) return `${trainLineFrom(e, platform, ways, start, true)} ${whereOnly.replace(/^There’s an exit/, 'There’s also an exit')}`
+  return trainLineFrom(e, platform, ways, start, trimmed)
+}
+
+/** "There’s an exit on Braywick Road by platform 1.", "The town centre exit is by platform 2.", and for
+ *  more than one by the same platform "The university exit and Forest Lane are by platform 4." (Maryland). */
+function exitsWhere(e: StationExits, ks: number[]): string {
+  const groups = new Map<string, number[]>()
+  for (const k of ks) groups.set(e.x[k][1][0] ?? '', [...(groups.get(e.x[k][1][0] ?? '') ?? []), k])
+  return [...groups].sort((a, b) => byNum(a[0], b[0])).map(([p, is]) => {
+    const at = p ? ` by platform ${p}` : ' there'
+    const one = (k: number) => (e.x[k][0] ? toName(e.x[k][0]!, !e.m && !e.here) : null)
+    if (is.length > 1) {
+      const t = and(is.map((k) => one(k) ?? 'an exit'))
+      return `${t[0].toUpperCase()}${t.slice(1)} are${at}.`
+    }
+    const t = one(is[0])
+    if (!t) return `There’s an exit${p ? at : ''}.`
+    if (/^the .* exit$/.test(t)) return `${t[0].toUpperCase()}${t.slice(1)} is${at}.`
+    return `There’s an exit ${/^the /.test(t) ? 'to' : 'on'} ${t}${p ? at : ''}.`
+  }).join(' ')
+}
+
+function trainLineFrom(e: StationExits, platform: string, ways: Way[], start: string, trimmed: boolean): string {
   // No route known from this platform: say only what is known, the station's own sentence without
   // "At Midgham," (John, November 22nd 2026: show what we know, don't say what we don't).
   if (!ways.length) {
@@ -194,7 +237,15 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
     const here = e.here?.[String(i)]
     // An exit by another platform more than 60 metres' walk away isn't "right there": "a short walk along", or
     // over 120 metres "a walk along" (John, November 27th 2026; the metres from the map data's paths).
-    const far = e.far?.[e.p[platform] ? platform : platform.replace(/[A-Z]$/, '')]
+    const far = trimmed ? undefined : e.far?.[e.p[platform] ? platform : platform.replace(/[A-Z]$/, '')]
+    // With a way in doubt taken out, the next exit's walk wasn't measured: where it is, not "right there"
+    // (Inverness's 1: the city centre exit, by platform 2). Draft.
+    if (trimmed && x[1].length && !x[1].includes(platform)) {
+      const it = nm ? (here ?? hereName(nm, !e.m)) : 'There’s an exit'
+      const at = /\bplatform\b/.test(it) ? '' : ` by platform ${x[1][0]}`
+      return nm ? `${start} ${it} is${at}, on the same level${by}${also}.${hoursLine(e, [ways[0]])}`
+        : `${start} ${it}${at}, on the same level${by}.${hoursLine(e, [ways[0]])}`
+    }
     if (far) {
       const lc = (t: string) => t[0].toLowerCase() + t.slice(1)
       const it = nm ? lc(here ?? hereName(nm, !e.m)) : 'the exit'

@@ -461,5 +461,19 @@
   "say": {
    "2": "It’s a short walk along to the exit by platform 1, on the same level."
   }
+ },
+ "HER": {
+  "_who": "John, November 27th 2026: two entrances on Molesey Road, either side of the railway bridge over it, with steps up to each platform: platform 1's on the Walton Park side, platform 2's on the other side; the map data had only platform 1's. Sentences Claude's drafts, agreed by John.",
+  "reading": {
+   "_why": "John, November 27th 2026 (above).",
+   "exits": [{"name": "Molesey Road", "by": ["1"]}, {"name": "Molesey Road", "by": ["2"]}],
+   "platforms": {"1": [[0, "l"]], "2": [[1, "l"]]},
+   "kind": "by"
+  },
+  "line": "At Hersham, there’s an exit by each platform, both on Molesey Road, either side of the railway bridge.",
+  "say": {
+   "1": "The exit to Molesey Road is right there, down the steps.",
+   "2": "The exit to Molesey Road is right there, down the steps."
+  }
  }
 }

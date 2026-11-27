@@ -76,6 +76,37 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: Hersham corrected; exits in doubt say only where the exit is; live (`claude/festive-cori-16zxt6`, merged the same day; Claude Code)
+
+- **John (Hersham):** two entrances on Molesey Road, either side of the railway bridge over it, steps up to each
+  platform: platform 1's on the Walton Park side, platform 2's on the other. The map data had only platform 1's.
+  Now in the corrections files (`exits-overrides.json` reading, `line`, `say`; `to-platform.json` `say`;
+  `links-overrides.json` `road`, new, applied as `rw` by `apply_links_overrides.py`): "At Hersham, there’s an exit by
+  each platform, both on Molesey Road, either side of the railway bridge."; "The exit to Molesey Road is right there,
+  down the steps."; "Platform 1’s entrance is on Molesey Road, on the Walton Park side of the railway bridge. Go up the
+  steps." / "Platform 2’s entrance is on Molesey Road, on the other side of the railway bridge from Walton Park. Go up
+  the steps."; Connections "…which means taking the steps down and going round by the road under the railway bridge"
+  (John's words; the rest Claude's drafts, agreed by John).
+- **Found:** the same disagreement elsewhere: the Exits table says a platform reaches an exit on the level, the
+  platform links say that exit's platform is across the line. 163 level ways at 141 stations (Hersham and Exeter St
+  Davids now corrected). Their passenger numbers from the Office of Rail and Road (estimates of station usage, April
+  2025 to March 2026, published November 19th 2026; `dataportal.orr.gov.uk` added to the Default environment).
+- **John:** "simplify everything enough to make what we say true even if it's less detailed". Built:
+  `mark_disagreements()` in `build_exits_table.py` writes `dq` into both tables (not at stations in
+  `exits-overrides.json`); Exits says only where a doubtful exit is ("There’s an exit on Braywick Road by platform 1.",
+  "The university exit and Forest Lane are by platform 4.", "There’s also …" after the other ways); the station line
+  "there’s an exit by" / "there are exits by"; the guide "The Braywick Road entrance is by platform 1."; Connections
+  says nothing about the walk between those groups; a doubtful exit isn't mentioned where the platform already reaches
+  one of the same name (Bilbrook's Duck Lane) or the same entrance another way (Bath Spa); an unmeasured level walk
+  after one is taken out is "by platform 2, on the same level", not "right there" (Inverness). Drafts.
+- **Review list:** `design/platform-directions/in-doubt.md` (142 stations, busiest first, numbered, every answer
+  before and after: 556 in all).
+- **Checked:** every answer compared with live `main`; the tables rebuilt twice, identical; check-exits 105 (Bare
+  Lane and Bloxwich, examples of the 60-metre rule, are now in doubt, so their checks changed; new: Maidenhead,
+  Maryland, Inverness, Hersham, Bilbrook, a sweep that no exit in doubt is "right there"), check-connection 43; all
+  11 check scripts, `tsc -b`, lint, build. Not checked in a browser (text only).
+- **John:** merge to `main` (said before the build).
+
 ### November 27th 2026: "right there" only within 60 metres; live (branch `claude/peaceful-maxwell-1vv2r2`, merged the same day; Claude Code)
 
 - **John:** after the 287 "right there" answers to an exit by another platform were assessed (the map data's own

@@ -55,5 +55,12 @@
    "1": "Platform 1 is right by the entrance.",
    "2": "From the entrance by the station building, walk along to platform 2, on the same level."
   }
+ },
+ "HER": {
+  "_who": "John, November 27th 2026: two entrances on Molesey Road, either side of the railway bridge. Sentences Claude's drafts, agreed by John.",
+  "say": {
+   "1": "Platform 1’s entrance is on Molesey Road, on the Walton Park side of the railway bridge. Go up the steps.",
+   "2": "Platform 2’s entrance is on Molesey Road, on the other side of the railway bridge from Walton Park. Go up the steps."
+  }
  }
 }

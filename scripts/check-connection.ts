@@ -114,10 +114,17 @@ eq('the same platform: nothing added', withLinks(same, 'NTA').text, same.a.text)
 eq('without the table, the agreed sentences are unchanged', answer({ now: NOW, from: 'Ivybridge', at: fine.d.atName, to: fine.d.toName, mine: fine.mine, arrPlatform: fine.d.arrPlatform, trains: fine.d.trains, chosen: null }).text, fine.a.text)
 // Each kind, on the real table.
 eq('the kinds', [
-  howToGet(links.BTH, '1', '2'), howToGet(links.RDG, '9', '8'), howToGet(links.RDG, '4', '7'), howToGet(links.RDW, '1', '2'),
-  howToGet(links.MDG, '1', '2'), howToGet(links.PAD, '1', '6'), howToGet(links.MAI, '1', '4'), howToGet(links.TWY, '1', '4'),
+  howToGet(links.ADV, '1', '2'), howToGet(links.RDG, '9', '8'), howToGet(links.RDG, '4', '7'), howToGet(links.RDW, '1', '2'),
+  howToGet(links.MDG, '1', '2'), howToGet(links.PAD, '1', '6'), howToGet(links.AHV, '1', '2'), howToGet(links.TWY, '1', '4'),
 ], ['through the subway', 'just across the platform', 'on the same level', 'which means going out of the station and round by the road',
   'across the level crossing', 'over the footbridge or round through the concourse', 'through the subway', 'over the footbridge'])
+// In doubt (John, November 27th 2026): the Exits table says these platforms are on the level with an exit's
+// platform, the links say across the line; one is wrong, so nothing is said. Bath Spa 1 to 2 (subway; John
+// has said its Railway Place on platform 2 is a map error), Maidenhead 1 to 5 (subway).
+eq('in doubt: nothing said', [howToGet(links.BTH, '1', '2'), howToGet(links.MAI, '1', '5'), howToGet(links.MAI, '1', '4')], ['', '', ''])
+eq('in doubt only between those groups: Maidenhead 4 to 5 still said', howToGet(links.MAI, '4', '5') !== '', true)
+// Hersham: John's words for going round (November 27th 2026).
+eq('Hersham: round under the bridge', howToGet(links.HER, '1', '2'), 'which means taking the steps down and going round by the road under the railway bridge')
 eq('either, at Clapham Junction (1 to 3)', howToGet(links.CLJ, '1', '3'), 'over the footbridge or through the subway')
 eq('9A to 9B, a platform not on the map, or no table: nothing', [howToGet(links.RDG, '9A', '9B'), howToGet(links.RDG, '99', '1'), howToGet(undefined, '1', '2'), howToGet(links.RDG, '8', '8')], ['', '', '', ''])
 const made: StationLinks = { g: [[['1']], [['2']], [['3']], [['4']]], x: 'bsxu?r' }

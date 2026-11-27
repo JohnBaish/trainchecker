@@ -4,5 +4,9 @@
     "_who": "John, November 24th 2026: platform 3 is round a small corner from 7, not across the platform from it; Reading's footbridge is \"the bridge\"",
     "islands": [["1", "2"], ["3"], ["7"], ["4"], ["5", "6"]],
     "w": "bridge"
+  },
+  "HER": {
+    "_who": "John, November 27th 2026: between the platforms, down the steps and round by Molesey Road, under the railway bridge",
+    "road": "which means taking the steps down and going round by the road under the railway bridge"
   }
 }

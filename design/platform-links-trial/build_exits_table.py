@@ -130,6 +130,58 @@ def merge_twins(e):
             e[key] = {str(into[int(k)]): v for k, v in e[key].items()}
 
 
+def mark_disagreements(out, links, ov, links_path):
+    """Where the two tables disagree (John, November 27th 2026: "simplify everything enough to make what we
+    say true even if it's less detailed"): this table says a platform reaches an exit on the level, but the
+    platform links say the exit's platform is in another level group, across the line. One of them is wrong,
+    and the map alone can't say which, so neither claim is made. Marks, in this table, dq: {platform: [exit,
+    ...]}, the level ways in doubt; and in the platform links, dq: ["i-j"], the level groups whose walk
+    between them is in doubt (for Connections). Not at a station John has corrected in the
+    Exits corrections (exits-overrides.json): his own say for the routes there. Hersham found it (John,
+    November 27th 2026)."""
+    fixed = {c for c in ov if not c.startswith('_')}
+    strip = lambda p: p.rstrip('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
+
+    def grp(st, label):
+        for k in (label, strip(label)):
+            if not k:
+                continue
+            for g, islands in enumerate(st['g']):
+                if any(k in isl for isl in islands):
+                    return g
+        return None
+    pairs = {}
+    for crs, e in out.items():
+        e.pop('dq', None)
+        st = links.get(crs)
+        if not st or crs in fixed:
+            continue
+        dq = {}
+        for pl, rs in e['p'].items():
+            gp = grp(st, pl)
+            if gp is None:
+                continue
+            for r in rs:
+                if r[1] != 'l' or not e['x'][r[0]][1]:
+                    continue
+                gs = [g for g in (grp(st, b) for b in e['x'][r[0]][1]) if g is not None]
+                if not gs or gp in gs:
+                    continue
+                dq.setdefault(pl, []).append(r[0])
+                pairs.setdefault(crs, set()).add('-'.join(map(str, sorted((gp, gs[0])))))
+        if dq:
+            e['dq'] = dq
+    if links_path:
+        for crs, st in links.items():
+            st.pop('dq', None)
+            if crs in pairs:
+                st['dq'] = sorted(pairs[crs])
+        with open(links_path, 'w') as fh:
+            json.dump(links, fh, separators=(',', ':'), sort_keys=True, ensure_ascii=False)
+    print(f"in doubt: {sum(len(v) for e in out.values() for v in e.get('dq', {}).values())} level ways at "
+          f"{sum(1 for e in out.values() if e.get('dq'))} stations", file=sys.stderr)
+
+
 def main():
     osm = json.load(open(sys.argv[1]))
     # Exits named by what's near them ("the town centre exit"), from name_exits.py, beside exits.json.
@@ -245,6 +297,7 @@ def main():
                         far[pl] = round(d[pl])
         if far:
             e['far'] = far
+    mark_disagreements(out, links, ov, sys.argv[4] if len(sys.argv) > 4 else None)
     with open(sys.argv[3], 'w') as fh:
         json.dump(out, fh, separators=(',', ':'), sort_keys=True, ensure_ascii=False)
     print(f"{len(out)} stations; {sum(1 for v in out.values() if v.get('m'))} from station maps", file=sys.stderr)

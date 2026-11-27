@@ -102,8 +102,24 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
   if (e.k === 'concourse') return [`Every platform is off the concourse, where the entrances are.`]
   if (fix?.say?.[platform]) return [fix.say[platform]]
   const eo = new Set(e.eo ?? [])
-  const ways = waysFor(e, platform).filter((w) => !eo.has(w[0]))
-  if (!ways.length) return null
+  // Ways in doubt (dq, as in Exits): say only where the entrance is, not that it's "right by" this platform
+  // (John, November 27th 2026). Drafts.
+  const doubt = e.dq?.[e.p[platform] ? platform : base(platform)] ?? []
+  const ways = waysFor(e, platform).filter((w) => !eo.has(w[0]) && !(w[1] === 'l' && doubt.includes(w[0])))
+  const groups = new Map<string, number[]>()
+  // Not one this answer already reaches another way (Bath Spa's rear entrances, by the subway), nor one with
+  // the same name as an entrance kept (the same road the other side of the line: Bilbrook's Duck Lane).
+  const kept = new Set(ways.map((w) => e.x[w[0]][0]).filter(Boolean))
+  const reached = new Set(ways.map((w) => w[0]))
+  const keptNames = new Set([...reached].map((j) => entranceName(e, j, fix)))
+  for (const i of doubt) if (!eo.has(i) && !reached.has(i) && !kept.has(e.x[i][0]) && !keptNames.has(entranceName(e, i, fix))) groups.set(e.x[i][1][0] ?? '', [...(groups.get(e.x[i][1][0] ?? '') ?? []), i])
+  const whereOnly = [...groups].sort((a, b) => (parseInt(a[0], 10) || 999) - (parseInt(b[0], 10) || 999)).map(([p, is]) => {
+    const ns = is.map((i) => entranceName(e, i, fix))
+    if (ns.length === 1 && /\bplatform\b/.test(ns[0])) return `There’s ${ns[0].replace(/^the /, 'an ')}.`
+    const t = joinNames(ns.map((n) => n.replace(/ by platform \S+$/, '')), 'and')
+    return `${t[0].toUpperCase()}${t.slice(1)} ${ns.length > 1 || /entrances\b/.test(t) ? 'are' : 'is'}${p ? ` by platform ${p}` : ' there'}.`
+  })
+  if (!ways.length) return whereOnly.length ? whereOnly : null
   const bridge = e.w ?? 'footbridge'
   const lines: string[] = []
   // On the level first: "Platform 4 is by the Forbury Road and Apex Plaza entrances."
@@ -121,7 +137,7 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
   const onLevel = new Set(ways.filter((w) => w[1] === 'l').map((w) => w[0]))
   const all: Way[] = ways.filter((w) => w[1] !== 'l')
   e.x.forEach((_, i) => {
-    if (eo.has(i) || onLevel.has(i) || all.some((w) => w[0] === i)) return
+    if (eo.has(i) || onLevel.has(i) || doubt.includes(i) || all.some((w) => w[0] === i)) return
     const via = ['b', 's'].find((v) => Object.values(e.p).some((ws) => ws.some((w) => w[0] === i && w[1] === v)))
     if (via) all.push([i, via, null])
   })
@@ -196,7 +212,7 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
     if (farLine) lines.unshift(farLine)
     if (first) lines.unshift(first)
   }
-  return lines
+  return [...lines, ...whereOnly]
 }
 
 const withPlatform = (name: string, q?: string) => (q && !/platform/.test(name) ? `${name} by platform ${q}` : name)

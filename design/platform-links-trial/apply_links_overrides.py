@@ -19,7 +19,9 @@ for crs, o in ov.items():
                 if have != want:
                     sys.exit(f'{crs}: the islands given ({sorted(want)}) are not one level group in the table ({sorted(have)})')
                 st['g'][g] = o['islands']
-    if 'w' in o:
+    if "road" in o:
+        st["rw"] = o["road"]
+    if "w" in o:
         st['w'] = o['w']
 with open(path, 'w') as fh:
     json.dump(t, fh, separators=(',', ':'), sort_keys=True, ensure_ascii=False)

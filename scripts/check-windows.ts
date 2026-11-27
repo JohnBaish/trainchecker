@@ -5,6 +5,7 @@ import { readFileSync, readdirSync } from 'node:fs'
 import { trim, type RawBoard } from '../api/live.ts'
 import { analyse, type Analysis } from '../src/lib/analyse.ts'
 import { firstPanel, firstShare, laterPanel, laterShare, split } from '../src/lib/windows.ts'
+import { slowerBy } from '../src/lib/sentences.ts'
 
 let passed = 0, failed = 0
 function eq(what: string, got: unknown, want: unknown) {
@@ -87,5 +88,11 @@ eq('one platform for all: in the heading', firstPanel(tvp).picture!.one, '2')
   eq('Euston: rows with no platform yet are marked so (the page shows no count on them)', er.every((r) => r.platform || r.noPlat), true)
 }
 
+// "Slower (by 15 minutes)", exact, against the fast trains' usual time (John, November 27th 2026).
+const slowRows = (a: Analysis) => [firstPanel(a), laterPanel(a)].flatMap((p) => p.picture?.rows ?? []).filter((r) => /Slower/.test(r.mid)).map((r) => `${r.time} ${r.mid}`)
+eq('slower: by how much, Reading to Paddington', slowRows(A('20261117-1824-RDG-PAD.json')).slice(0, 3), ['6.33pm Slower (by 14 minutes)', '7.11pm Slower (by 15 minutes)', '7.42pm Slower (by 16 minutes)'])
+eq('slower: under ten minutes in words', slowRows(A('20261127-1640-EUS-MKC.json')).includes('6.26pm Slower (by nine minutes)'), true)
+eq('slower: over an hour', slowRows(A('20261117-1947-PAD-PLY.json')), ['11.45pm Slower (by two hours and 19 minutes)'])
+eq('slowerBy: one minute, an hour', [slowerBy(1), slowerBy(60), slowerBy(61), slowerBy(75)], ['one minute', 'an hour', 'an hour and one minute', 'an hour and 15 minutes'])
 console.log(`check-windows: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

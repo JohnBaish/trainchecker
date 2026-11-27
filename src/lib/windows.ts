@@ -3,7 +3,7 @@
 // the next three trains when the hour has fewer ("The next three trains"); then the rest, "The
 // following three hours", or "Later" when the first panel was stretched. No train is in both.
 import { diff, isTime, type Analysis, type Train } from './analyse.ts'
-import { Cap, andList, becauseOf, clockSay, dateShort, rangeSay, earlierLine, nextFour, num, speedGroups, t12, trainsAnHour, type ListPicture, type NextFour, type PicRow } from './sentences.ts'
+import { Cap, andList, becauseOf, clockSay, dateShort, rangeSay, earlierLine, kindLabel, nextFour, num, speedGroups, t12, trainsAnHour, type ListPicture, type NextFour, type PicRow } from './sentences.ts'
 
 /** When a train is expected to leave, in minutes from now (a cancelled one: its timetabled time). */
 const leaves = (a: Analysis, t: Train) => diff(a.now, !t.cancelled && t.late !== null && t.late > 0 && isTime(t.etd) ? t.etd : t.std)
@@ -67,8 +67,7 @@ export function trainsPicture(f: Analysis): ListPicture | null {
   const ts = f.ahead.filter((t) => !t.cancelled).sort((x, y) => leaves(f, x) - leaves(f, y))
   if (!ts.length) return null
   const groups = speedGroups(f).filter((g) => g.kind !== 'all')
-  const label = { fast: 'Fast', slower: 'Slower', elizabeth: 'Elizabeth Line', all: '' } as const
-  const kindOf = (t: Train) => (groups.length > 1 ? label[groups.find((g) => g.trains.includes(t))?.kind ?? 'all'] : '')
+  const kindOf = kindLabel(groups)
   const rows = [...ts.filter((t) => !t.unknown), ...ts.filter((t) => t.unknown)].map((t): PicRow => {
     const late = t.late !== null && t.late > 0 && isTime(t.etd)
     const p = t.platform ?? undefined

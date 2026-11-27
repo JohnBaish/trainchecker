@@ -318,6 +318,30 @@ export function speedGroups(a: Analysis): Group[] {
   return groups.map(({ k, kind, company, mins, trains }) => ({ k, kind, company: kind === 'elizabeth' ? 'Elizabeth Line' : named ? company : null, mins, trains }))
 }
 
+/** How much slower a slower train is than the usual fast one, in minutes as they are (John, November 27th
+ *  2026: no rounding): "16 minutes", "nine minutes", "an hour and 19 minutes", "two hours and 19 minutes". */
+export function slowerBy(m: number): string {
+  const mins = (n: number) => (n === 1 ? 'one minute' : `${num(n)} minutes`)
+  const r = Math.max(1, Math.round(m))
+  if (r < 60) return mins(r)
+  const h = Math.floor(r / 60), rest = r % 60
+  return `${h === 1 ? 'an hour' : `${num(h)} hours`}${rest ? ` and ${mins(rest)}` : ''}`
+}
+
+/** The kind of train for a board's row, when the journey has more than one kind: "Fast", "Elizabeth Line", or
+ *  "Slower (by 15 minutes)" against the fast trains' usual journey time (John, November 27th 2026; plain
+ *  "Slower" when there's no fast train to compare with, or no arrival time). */
+export function kindLabel(groups: Group[]): (t: Train) => string {
+  const label = { fast: 'Fast', slower: 'Slower', elizabeth: 'Elizabeth Line', all: '' } as const
+  const fast = groups.find((g) => g.kind === 'fast')
+  return (t) => {
+    if (groups.length < 2) return ''
+    const kind = groups.find((g) => g.trains.includes(t))?.kind ?? 'all'
+    if (kind === 'slower' && fast && t.sta && t.std) return `Slower (by ${slowerBy(diff(t.std, t.sta) - fast.mins)})`
+    return label[kind]
+  }
+}
+
 /** "about eight" a hour from k trains in four hours ("about" unless exact); fewer than four: the
  *  real count, "three … in all". */
 const perHour = (k: number, h = 4) => (k % h ? 'about ' : '') + num(Math.round(k / h))
@@ -914,10 +938,9 @@ export function platformsPicture(a: Analysis): ListPicture | null {
   if (!ts.length) return null
   const first = ts.slice(0, 10), limited = ts.length > 10
   const groups = speedGroups(a).filter((g) => g.kind !== 'all' && first.some((t) => g.trains.includes(t)))
-  const label = { fast: 'Fast', slower: 'Slower', elizabeth: 'Elizabeth Line', all: '' } as const
   // A delayed train with no time: "?" for its time, at the bottom, so the times above run in
   // order (John, November 19th 2026).
-  const kindOf = (t: Train) => (groups.length > 1 ? label[groups.find((g) => g.trains.includes(t))?.kind ?? 'all'] : '')
+  const kindOf = kindLabel(groups)
   const rows = [...first.filter((t) => !t.unknown), ...first.filter((t) => t.unknown)].map((t): PicRow => {
     const late = t.late !== null && t.late > 0 && isTime(t.etd)
     if (t.unknown) return { time: '?', mid: [kindOf(t), `the ${t12(t.std)}`].filter(Boolean).join(' · '), late: NO_TIME, platform: t.platform! }
@@ -947,8 +970,7 @@ export function arrivalsPicture(a: Analysis): ListPicture | null {
   if (!shown.length) return null
   // The kind of train, when the journey has more than one (two "8.58am" trains can be different).
   const kinds = speedGroups({ ...a, ahead: pool }).filter((g) => g.kind !== 'all')
-  const label = { fast: 'Fast', slower: 'Slower', elizabeth: 'Elizabeth Line', all: '' } as const
-  const kindOf = (t: Train) => (kinds.length > 1 ? label[kinds.find((g) => g.trains.includes(t))?.kind ?? 'all'] : '')
+  const kindOf = kindLabel(kinds)
   const longest = a.arr ? 0 : Math.max(0, ...pool.filter((t) => t.sta).map((t) => diff(t.std, t.sta!)))
   // The platform at B, from the arrival board, or "not yet" (November 25th 2026).
   const plat = (t: Train): Partial<PicRow> => (!a.arr ? {} : t.platform ? { platform: t.platform } : { noPlat: true })

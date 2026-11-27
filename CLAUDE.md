@@ -76,13 +76,27 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: "Slower (by 16 minutes)" on the boards (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
+
+- **John (iPhone, the preview):** "Slower (by 15 minutes)"; not rounded. `kindLabel()` and `slowerBy()` in
+  `sentences.ts`: each slower train's own journey time to B minus the fast trains' usual (middle) time in the same
+  board, exact minutes, one to nine in words, "an hour and …" / "two hours and …" over 60; plain "Slower" when the
+  board has no fast train or the train has no arrival time. Used by both panels' boards (`trainsPicture()`, so their
+  Share pictures too), `arrivalsPicture()` ("More arrivals") and `platformsPicture()`. Buttons and sentences
+  elsewhere unchanged ("· Slower", "the 9.04pm slower train").
+- **Saved boards:** Reading to Paddington 14 to 19 minutes; Euston to Milton Keynes nine to 35; Paddington to
+  Plymouth's 11.45pm "by two hours and 19 minutes".
+- **Checked:** all 11 check scripts (check-windows 486: the three boards, `slowerBy()`), `tsc -b`, lint, build;
+  `design/previews/slower/shoot.mjs` at 390px dark and 1200px light on those three boards: no errors, no sideways
+  scroll, the longest label wraps cleanly on a phone.
+
 ### November 27th 2026: "in front of one" in the summaries (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
 
 - **John (iPhone, Reading to Paddington at 6.42pm):** "…because of a late running train being in front of this one and
   police dealing with an incident…": in the summaries only, "in front of one". `summaryReason()` in `sentences.ts`
   (as "this train" became "the train" on November 18th); the train list keeps National Rail's "this one". The only
   "this one" reason in the saved boards (96 times).
-- **Checked:** all 11 check scripts (check-rules 296: the new wording, and the list keeping "this one"), `tsc -b`,
+- **Checked:** all 11 check scripts (check-rules 294: the new wording, and the list keeping "this one"), `tsc -b`,
   lint, build. Not checked in a browser (text only).
 
 ### November 27th 2026: the number of coaches in "The next hour"; "All from platform" on a phone; live (branch `claude/brave-ride-p0g282`, merged the same day; Claude Code)

@@ -76,7 +76,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 27th 2026: the number of coaches in "The next hour", three mock-ups (branch `claude/brave-ride-p0g282`, not merged; Claude Code)
+### November 27th 2026: the number of coaches in "The next hour"; "All from platform" on a phone; live (branch `claude/brave-ride-p0g282`, merged the same day; Claude Code)
 
 - **John:** how could the coaches be shown without spoiling "The next hour"? Mock-ups of 1 (in the grey line, "Fast ·
   8 coaches"), 2 (small under the platform) and 3 (a block for each coach), behind `?coaches=1|2|3` (nothing without
@@ -117,7 +117,11 @@ given its own branch). Before committing there, run
   `check-windows` (482: the counts on Reading to Paddington's rows, none for 0, Newton Abbot's three, Euston's rows).
   All 11 check scripts, `tsc -b`, lint, build; Reading to Paddington, Newton Abbot (and with "3" tapped), Twyford to
   Henley, Euston to Milton Keynes and Bath to Bristol at 390px dark and 1200px light, and four of them at 844×390:
-  no errors, no sideways scroll, counts only in the first panel. Not merged; for John's word.
+  no errors, no sideways scroll, counts only in the first panel.
+- **John:** "Please merge." Checks, `tsc -b`, lint and build clean first; fast-forwarded into `main` (bbdb37b). Checked
+  live: trainchecker.baish.net serves the same build (`index-CFHWT0Cq.js`, built here from bbdb37b), and `/api/live`
+  (Reading to Paddington, 5.07pm) sends counts for 77 of 86 trains. Branch tidied: "Delete merged branches" trial run
+  46039334204, then the real run 46039378783. Tracker updated (What's built 41, Decisions made 18).
 
 ### November 27th 2026: what the departure board gives that the page doesn't use (notes only, straight to `main`; Claude Code)
 

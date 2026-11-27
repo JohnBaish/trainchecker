@@ -349,6 +349,22 @@ drawing. Show the options at 16, 32, 48 and 96px in a row of browser tabs
 beside the other tools' icons (Hindcaster's `design/favicon-options.html`),
 and check at 16px which ones still read.
 
+**Home Screen icon and name** (John, November 27th 2026, from Trainchecker).
+iPhones don't use an SVG favicon for "Add to Home Screen": without more,
+they draw the first letter on a dark square and offer the whole search
+`<title>` as the name. So every tool also has, in each HTML entry point:
+`<link rel="apple-touch-icon" href="/apple-touch-icon.png" />` (a 180×180
+PNG in `public/`) and `<meta name="apple-mobile-web-app-title"
+content="Name" />` (the tool's short name; the `<title>` stays as it is for
+search). The icon is a full square with no transparency, as the iPhone
+rounds the corners itself: for Trainchecker, John chose the favicon's
+drawing large on the cream page colour, with no disc or ring, as it reads
+best among other apps at that size. Draw it from the favicon with a small
+script (Trainchecker's `design/home-icon/icons.mjs`), show the options
+pasted onto a screenshot of John's own Home Screen if he sends one, and
+remember an icon already added keeps its old picture until it's deleted and
+added again.
+
 **Link-preview images** (`og:image`, 1200×630): cream background,
 illustration 440×440 at (96, 95), tool name in Caprasimo 72px and a
 one-line tagline at (592, 225). Start from `design/og-clockmaker.html`
@@ -749,7 +765,7 @@ started this way.
 7. Draft the spec and plan, ask the numbered questions, record John's
    answers beside them, and build nothing visible until he agrees.
 8. Before building pages, show mock-ups at 1200px and 390px; before wiring
-   in a favicon or preview image, show the options (§7).
+   in a favicon, Home Screen icon or preview image, show the options (§7).
 9. Build dark mode in from the start (§2; John, 2026-10-29, so don't ask):
    the agreed dark colours and switch, following the device's setting, and
    mock-ups in both themes.

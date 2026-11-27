@@ -213,6 +213,25 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
   if (same.length >= 2 && same[0][0] !== same[1][0]) {
     const [a, b] = same
     const pair = new Set([a[0], b[0]])
+    // Both exits reached by coming down (or up) at the same platform: not "either way", but one way, then a
+    // choice there (John, November 27th 2026, Exeter St Davids: Isambard Parade and Kingdom Mews, both by
+    // platform 1). Draft wording.
+    const byA = e.x[a[0]][1], byB = e.x[b[0]][1]
+    // Where the bridge comes down isn't stored for an exit by just one platform: it's that platform.
+    const lands = (w: Way) => w[2] ?? (e.x[w[0]][1].length === 1 ? e.x[w[0]][1][0] : null)
+    const meet = lands(a) && lands(a) === lands(b) ? lands(a) : !a[2] && !b[2] && byA.length && byA.join() === byB.join() ? byA[0] : null
+    // Two exits that can't be told apart (both unnamed, by no platform): one way to them, not "either way".
+    const ta = target(e, a[0], pair, platform)
+    if (!meet && ta === target(e, b[0], pair, platform)) {
+      return `${start} Go ${via === 'b' ? `up to the ${bridge}` : 'down to the subway'} for ${ta.replace(/^the exit\b/, 'the exits')}.${hoursLine(e, same.slice(0, 2))}`
+    }
+    if (meet) {
+      const go = via === 'b' ? `Go up to the ${bridge} and come down by platform ${meet}` : `Go down to the subway and come up by platform ${meet}`
+      const names = [target(e, a[0], pair, platform), target(e, b[0], pair, platform)]
+      const named = names.filter((t) => !/^the exit\b/.test(t) || /^the exit to\b/.test(t))
+      const end = named.length === 2 ? ` for ${named[0]} or ${named[1]}` : named.length === 1 ? ` for ${named[0]} or the other exit there` : e.x.length === 2 ? ', where both exits are' : ', where there are two exits'
+      return `${start} ${go}${end}.${hoursLine(e, same.slice(0, 2))}`
+    }
     const said = (w: Way) => w[2] && !target(e, w[0], pair, platform).endsWith(`platform ${w[2]}`)
     const one = `to ${target(e, a[0], pair, platform)}${said(a) ? `, ${off} by platform ${a[2]}` : ''}`
     const two = `to ${target(e, b[0], pair, platform)}${said(b) ? `, ${said(a) ? offAgain : off} by platform ${b[2]}` : ''}`

@@ -155,5 +155,19 @@ eq('Putney: the station', stationLine('Putney', T.PUT), 'At Putney, there’s on
 eq('Putney 3: the location guide, no "island platform"', toPlatform(T.PUT, '3', undefined, (await import('../src/data/to-platform.json', { with: { type: 'json' } })).default.PUT as never)!.join(' '), 'From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 3.')
 eq('Putney 2: the way out', trainLine(T.PUT, '2', false), 'Your train is due into platform 2. Go up the stairs to the footbridge, and along to the exit on Putney High Street.')
 
+// Both exits at one platform: one way, then a choice there, never "either way" (John, November 27th 2026).
+eq('Exeter St Davids 6: both exits by platform 1', trainLine(T.EXD, '6', false), 'Your train is due into platform 6. Go up to the footbridge and come down by platform 1 for Isambard Parade or Kingdom Mews.')
+eq('Bath Spa 2: two unnamed exits by platform 1', trainLine(T.BAT, '2', false), 'Your train is due into platform 2. Go up to the footbridge and come down by platform 1, where both exits are.')
+eq('Exeter Central 3: the bridge comes down by the platform both exits are by', trainLine(T.EXC, '3', false), 'Your train is due into platform 3. Go up to the footbridge and come down by platform 2 for the city centre exit or the shopping centre exit.')
+{
+  const bad: string[] = []
+  for (const [k, e] of Object.entries(T)) for (const p of Object.keys(e.p ?? {})) {
+    const t = trainLine(e, p, false)
+    const m = t.match(/either way: .*by platform ([0-9A-Z]+), or .*by platform ([0-9A-Z]+)\./)
+    if (m && m[1] === m[2]) bad.push(`${k} ${p}`)
+    if (/either way: to (.+), or to \1\./.test(t)) bad.push(`${k} ${p} (same twice)`)
+  }
+  eq('sweep: no "either way" to the same platform', bad, [])
+}
 console.log(`check-exits: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

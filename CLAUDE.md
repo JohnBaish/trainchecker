@@ -76,6 +76,25 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: Exits: "either way" only when the two ways part (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
+
+- **John (iPhone, Ivybridge to Exeter St Davids, platform 6B):** "Go up to the footbridge, where you can turn either
+  way: to Isambard Parade, coming down from the bridge by platform 1, or to Kingdom Mews, coming down by platform 1."
+  Both exits are by platform 1, so there's no turning either way; check for others.
+- **Found:** 224 answers at 132 stations with the same fault, some worse ("to the exit by platform 1, or to the exit by
+  platform 1" at Bath Spa and Bedford; "to the exit across the line, or to the exit across the line" at Woodhouse and
+  three others).
+- **Built (drafts):** `trainLine()` in `exits.ts`: where both ways come down (or up) at the same platform, or both exits
+  are by that one platform: "Go up to the footbridge and come down by platform 1 for Isambard Parade or Kingdom Mews."
+  (138); one named: "…for Geron Way or the other exit there." (62); none named: "…, where both exits are." (or "where
+  there are two exits" at a station with more) (20); two unnamed exits by no platform: "Go up to the footbridge for the
+  exits across the line." (4). The 434 real "either way" answers (the two ways come down at different platforms)
+  unchanged.
+- **Checked:** every exit answer before and after: only those 224 change; check-exits 88 (Exeter St Davids, Bath Spa,
+  Exeter Central, and a sweep that fails on any "either way" to one platform or the same exit twice: it found Croy,
+  Lostock Gralam and the unnamed pairs, now fixed); all 11 check scripts, `tsc -b`, lint, build. Not checked in a
+  browser (text only).
+
 ### November 27th 2026: "Slower (by 16 minutes)" on the boards; live (branch `claude/peaceful-maxwell-1vv2r2`, merged the same day; Claude Code)
 
 - **John (iPhone, the preview):** "Slower (by 15 minutes)"; not rounded. `kindLabel()` and `slowerBy()` in

@@ -76,6 +76,22 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: the Service Details product looked into, for Platforms (notes only, straight to `main`; Claude Code)
+
+- **John** subscribed to Service Details (new to him, not to the Marketplace) and saved its key here (secure form):
+  `https://api1.raildata.org.uk/1010-service-details1_2/LDBWS/api/20220120/GetServiceDetails/{serviceid}`, `x-apikey`.
+- **Tested at 3.37pm** (answers in `design/mockups/snapshots/20261127-1537-service-details/`): one train, by the
+  `serviceID` from a board. It gives the platform at that station only; the calling points have times and coach
+  counts but no platforms. The ID can be rebuilt for another station on the route (first eight digits, then that
+  station's own code): the 3.42pm from Reading gave 15A at Reading, 4 at Twyford, 11 at Paddington (where it ends);
+  the Elizabeth Line's code at Paddington is `PADTLL__`, not `PADTON__` (HTTP 500 with the wrong one). Codes aren't in
+  the answer or in our station list; they show only in board IDs. An ID stops working once the train is off the
+  boards (the 1.35pm, in at Paddington at 2.18pm: HTTP 500 at 3.37pm).
+- **For Platforms:** nothing new. The departure board already gives A's platform, coach count and (sometimes) the
+  formation, and the arrival board B's platform. Possible later uses: a platform at a changing station that isn't B,
+  or the follow page asking for one train instead of two boards. For John.
+- Key saved here now: Service Details.
+
 ### November 27th 2026: a journey planner looked into; not taken further (notes only, straight to `main`; Claude Code)
 
 - **John:** what would a Journey Planner at the bottom, after the Fact of the Journey, take (future

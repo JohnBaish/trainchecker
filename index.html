@@ -23,9 +23,11 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <!-- Home Screen (John, November 27th 2026, option A): iPhones don't use the SVG favicon, so
          "Add to Home Screen" needs this 180 by 180 picture (made by design/home-icon/icons.mjs), and
-         the short name, or it offers the whole <title> above. -->
+         the short name, or it offers the whole <title> above. The manifest (trial, November 27th 2026) gives
+         the name again and asks for the site's front page, not the journey on screen, as the start. -->
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Trainchecker" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <!-- Dark mode: set before the page draws, so there's no flash of the wrong colours. A
          choice kept by the switch wins; otherwise the device's own setting (house style §2).
          The same key and rule as src/lib/theme.ts. -->

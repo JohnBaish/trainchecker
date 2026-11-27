@@ -1,0 +1,10 @@
+{
+  "name": "Trainchecker",
+  "short_name": "Trainchecker",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5ead8",
+  "theme_color": "#f5ead8",
+  "icons": [{ "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }]
+}

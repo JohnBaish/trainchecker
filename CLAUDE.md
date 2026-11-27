@@ -76,6 +76,22 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: Exeter St Davids, one exit (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
+
+- **John:** only one exit, called "the exit" (the map's Isambard Parade and Kingdom Mews are one way out); Version A
+  (by the station building) with Putney-style wording for the station's line and the platform 1 guide; platform 2 is on
+  the same level as platform 1, a short walk from the exit.
+- **Built:** `EXD` in `exits-overrides.json` (a `reading`: one exit by platform 1, at the building; 1 and 2 on the level,
+  3 to 6 by the footbridge down at 1; `line`; `say` for 2: "It’s a short walk along to the exit by platform 1, on the same
+  level." (Claude's draft from John's words)); `build_exits_table.py` now takes `building` in a reading's exits;
+  `to-platform.json` `EXD` (`say` for 1: "Platform 1 is right by the entrance."; for 2: "From the entrance by the station
+  building, walk along to platform 2, on the same level.", the guide's own phrase). Rebuilt: before the change the
+  rebuild matched the live table exactly; after it, only Exeter St Davids differs.
+- **Found, for John:** 286 Exits answers at 242 stations say an exit is "right there" when it's by another platform
+  reached on the level (by the platform links: 103 just across the platform, 50 on the same level, 33 a level crossing,
+  42 a footbridge and 12 a subway (the two tables disagree), 24 out and round by the road, 22 not known). Not changed.
+- **Checked:** check-exits 89 (the station's line, platforms 1, 2 and 6B); all 11 check scripts, `tsc -b`, lint, build.
+
 ### November 27th 2026: Exits: "either way" only when the two ways part (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
 
 - **John (iPhone, Ivybridge to Exeter St Davids, platform 6B):** "Go up to the footbridge, where you can turn either

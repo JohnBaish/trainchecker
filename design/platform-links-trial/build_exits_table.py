@@ -146,7 +146,7 @@ def main():
             continue
         if crs in hand:
             h = hand[crs]
-            e = {'x': [[x['name'], x['by'], 0] for x in h['exits']],
+            e = {'x': [[x['name'], x['by'], 1 if x.get('building') else 0] for x in h['exits']],
                  'p': {pl: [[r[0], r[1], r[2] if len(r) > 2 else None] for r in rs if 0 <= r[0] < len(h['exits'])] for pl, rs in h['platforms'].items()},
                  'k': h['kind'], 'm': 1}
             if h.get('hours'):

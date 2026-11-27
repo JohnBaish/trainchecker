@@ -399,5 +399,67 @@
    "3": "Go up the stairs to the footbridge, and along to the exit on Putney High Street.",
    "4": "Go up the stairs to the footbridge, and along to the exit on Putney High Street."
   }
+ },
+ "EXD": {
+  "_who": "John, November 27th 2026: one exit, by the station building on platform 1 (the map's Isambard Parade and Kingdom Mews are one way out); platform 2 is on the same level as platform 1, a short walk from the exit. Version A with Putney-style wording for the station's line; sentences Claude's drafts from John's words.",
+  "reading": {
+   "_why": "John, November 27th 2026 (above).",
+   "exits": [
+    {
+     "name": null,
+     "by": [
+      "1"
+     ],
+     "building": 1
+    }
+   ],
+   "platforms": {
+    "1": [
+     [
+      0,
+      "l"
+     ]
+    ],
+    "2": [
+     [
+      0,
+      "l"
+     ]
+    ],
+    "3": [
+     [
+      0,
+      "b",
+      "1"
+     ]
+    ],
+    "4": [
+     [
+      0,
+      "b",
+      "1"
+     ]
+    ],
+    "5": [
+     [
+      0,
+      "b",
+      "1"
+     ]
+    ],
+    "6": [
+     [
+      0,
+      "b",
+      "1"
+     ]
+    ]
+   },
+   "kind": "by"
+  },
+  "line": "At Exeter St Davids, there’s one way in and out, by the station building on platform 1.",
+  "say": {
+   "2": "It’s a short walk along to the exit by platform 1, on the same level."
+  }
  }
 }

@@ -48,5 +48,12 @@
    "3": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 3.",
    "4": "From the entrance on Putney High Street, walk onto the footbridge and go down the stairs to platform 4."
   }
+ },
+ "EXD": {
+  "_who": "John, November 27th 2026: one entrance, by the station building on platform 1 (Putney-style wording).",
+  "say": {
+   "1": "Platform 1 is right by the entrance.",
+   "2": "From the entrance by the station building, walk along to platform 2, on the same level."
+  }
  }
 }

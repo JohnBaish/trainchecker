@@ -173,11 +173,28 @@ export function toPlatform(e: StationExits, platform: string, links?: Links, fix
     lines.push(`From ${fromNames([...new Set(is.map(named))])}, ${s}${is.length === 1 ? openLine(e, is[0]) : ''}`)
   }
   if (level.length) {
-    const joined = joinNames([...new Set(by.map((i) => entranceName(e, i, fix, shown).replace(` by platform ${platform}`, '')))], 'and')
-    const opens = by.length === 1 ? openLine(e, by[0]) : ''
-    lines.unshift(!by.length || joined === 'the entrance' ? `Platform ${platform} has its own entrance${lc}.`
+    // An entrance by another platform more than 60 metres' walk away isn't "right by" this one: "a short walk
+    // along", or over 120 metres "a walk along" (John, November 27th 2026; as in Exits).
+    const farM = e.far?.[e.p[platform] ? platform : platform.replace(/[A-Z]$/, '')]
+    const farI = farM ? (e.p[platform] ?? e.p[platform.replace(/[A-Z]$/, '')])?.[0]?.[0] : undefined
+    const near = farI !== undefined && by.includes(farI) ? by.filter((i) => i !== farI) : by
+    let farLine = ''
+    if (farI !== undefined && near !== by) {
+      let n = entranceName(e, farI, fix, shown)
+      const at = /\bplatform\b/.test(n) ? '' : ` by platform ${e.x[farI][1][0]}`
+      // Another entrance already called the same (Darlington's two unnamed entrances by platform 4): this
+      // one is the one on the level. Draft.
+      if (lines.some((l) => l.startsWith(`From ${n}${at},`))) n = n.replace(/^the entrance\b/, 'the entrance on the level')
+      farLine = `From ${n}${at}, it’s ${farM! > 120 ? 'a walk' : 'a short walk'} along to platform ${platform}, on the same level.${openLine(e, farI)}`
+    }
+    const joined = joinNames([...new Set(near.map((i) => entranceName(e, i, fix, shown).replace(` by platform ${platform}`, '')))], 'and')
+    const opens = near.length === 1 ? openLine(e, near[0]) : ''
+    const first = farLine && !near.length && !own.length ? null
+      : !near.length || joined === 'the entrance' ? `Platform ${platform} has its own entrance${lc}.`
       : own.length ? `Platform ${platform} has its own entrance, and is right by ${joined}${lc}.${opens}`
-      : `Platform ${platform} is right by ${joined}${lc}.${opens}`)
+      : `Platform ${platform} is right by ${joined}${lc}.${opens}`
+    if (farLine) lines.unshift(farLine)
+    if (first) lines.unshift(first)
   }
   return lines
 }

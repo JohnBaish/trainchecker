@@ -38,12 +38,15 @@ def from_osm(r, labels=None):
         by = sorted(e['by'], key=lambda pl: (near.get(k, {}).get(pl, 1e9), num(pl)))
         xs.append([names[0] if names else None, by, 1 if e.get('building') else 0])
     p = {}
+    dist = {}
     for pl, routes in r['platforms'].items():
         out = []
         for i, d, how, down in routes:
             v = VIA.get(how[0], 'u')
             if v == 'x':          # a path meeting a track may be a barrow crossing: never say it
                 continue
+            if not out:
+                dist[pl] = d       # how far the nearest way out is, in metres along the map's paths
             out.append([i, v, down if v in 'bs' else None])
         if out:
             p[pl] = out
@@ -64,6 +67,7 @@ def from_osm(r, labels=None):
             nw[str(k)] = min(near[old_i].items(), key=lambda kv: (kv[1], num(kv[0])))[0]
     if nw:
         out['nw'] = nw
+    out['_d'] = {pl: dd for pl, dd in dist.items() if pl in p}
     return out
 
 
@@ -219,6 +223,28 @@ def main():
         for bad in o.get('no_exit', []):
             if any(bad.lower() in (x[0] or '').lower() for x in e['x']):
                 sys.exit(f'{crs}: an exit "{bad}" is in the table, but John says there is none')
+    # A walk along the platforms to an exit by another platform, on the level: how far, so the sentence can say
+    # "a short walk along" over 60 metres and "a walk along" over 120, rather than "right there" (John, November
+    # 27th 2026). Only from the map data's measured paths; kept to the nearest metre, only where it's over 60.
+    for e in out.values():
+        d = e.pop('_d', None)
+        if not d or e.get('m'):
+            continue
+        far = {}
+        for pl, rs in e['p'].items():
+            if rs and rs[0][1] == 'l' and pl in d and d[pl] > 60:
+                by = e['x'][rs[0][0]][1]
+                if by and pl not in by:
+                    # The platform has an exit of its own: that one is "right there", whatever the measured walk to
+                    # the other (Bramley's platform 1 and Century Fields; the walks are measured from one point on
+                    # a long platform), so it goes first and no distance is kept.
+                    mine = next((k for k, x in enumerate(e['x']) if pl in x[1]), None)
+                    if mine is not None:
+                        rs[:] = [[mine, 'l', None]] + [r for r in rs if r[0] != mine]
+                    else:
+                        far[pl] = round(d[pl])
+        if far:
+            e['far'] = far
     with open(sys.argv[3], 'w') as fh:
         json.dump(out, fh, separators=(',', ':'), sort_keys=True, ensure_ascii=False)
     print(f"{len(out)} stations; {sum(1 for v in out.values() if v.get('m'))} from station maps", file=sys.stderr)

@@ -26,7 +26,7 @@ export type ExitRow = [name: string | null, by: string[], building: 0 | 1, near:
 export type Way = [exit: number, via: string, down: string | null]
 /** w: John's word for the station's footbridge ("bridge" at Reading, which has shops on it);
  *  here: for an exit given a descriptive name, how to say it's right there (exit number → words). */
-export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string>; lc?: 1; say?: Record<string, string>; other?: 1; eo?: number[]; sl?: string; nw?: Record<string, string> }
+export type StationExits = { x: ExitRow[]; p: Record<string, Way[]>; k: 'by' | 'concourse' | 'above' | 'below' | 'mixed'; h?: Record<string, string>; m?: 1; w?: string; here?: Record<string, string>; lc?: 1; say?: Record<string, string>; other?: 1; eo?: number[]; sl?: string; nw?: Record<string, string>; far?: Record<string, number> }
 // say: John's own words for a platform, after "Your train is due into platform 1." (Ivybridge).
 // other: by an exit on the level, also say the other one over the bridge or through the subway
 // (Southampton Central: "…is right there, or you can go over the footbridge for the town centre exit").
@@ -185,14 +185,23 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
   if (via === 'l') {
     const x = e.x[i]
     const by = e.lc ? ', by the level crossing' : ''
-    if (!x[0]) return `${start} ${e.x.length === 1 ? 'The exit is' : 'There’s an exit'} right there${by}.${hoursLine(e, [ways[0]])}`
-    // "Rectory Hill (platform 1)" names it for the station's list; from that platform it's just Rectory Hill.
-    const nm = x[0].replace(/ \(platform [0-9A-Za-z]+( side)?\)$/, '')
-    const here = e.here?.[String(i)]
     // The other exit over the bridge or through the subway, everywhere (John, November 22nd 2026:
     // "even if we only have street names", so people can look on a map for the one that suits them).
     const alt = ways.find((w) => w[0] !== i && (w[1] === 'b' || w[1] === 's'))
     const also = alt ? `, or you can go ${alt[1] === 'b' ? `over the ${e.w ?? 'footbridge'}` : 'through the subway'} for ${target(e, alt[0], new Set([i, alt[0]]), platform)}` : ''
+    // "Rectory Hill (platform 1)" names it for the station's list; from that platform it's just Rectory Hill.
+    const nm = x[0]?.replace(/ \(platform [0-9A-Za-z]+( side)?\)$/, '') ?? null
+    const here = e.here?.[String(i)]
+    // An exit by another platform more than 60 metres' walk away isn't "right there": "a short walk along", or
+    // over 120 metres "a walk along" (John, November 27th 2026; the metres from the map data's paths).
+    const far = e.far?.[e.p[platform] ? platform : platform.replace(/[A-Z]$/, '')]
+    if (far) {
+      const lc = (t: string) => t[0].toLowerCase() + t.slice(1)
+      const it = nm ? lc(here ?? hereName(nm, !e.m)) : 'the exit'
+      const at = /\bplatform\b/.test(it) ? '' : ` by platform ${x[1][0]}`
+      return `${start} It’s ${far > 120 ? 'a walk' : 'a short walk'} along to ${it}${at}, on the same level${by}${nm ? also : ''}.${hoursLine(e, [ways[0]])}`
+    }
+    if (!nm) return `${start} ${e.x.length === 1 ? 'The exit is' : 'There’s an exit'} right there${by}.${hoursLine(e, [ways[0]])}`
     return `${start} ${here ?? hereName(nm, !e.m)} is right there${by}${also}.${hoursLine(e, [ways[0]])}`
   }
   if (via === 'c') return `${start} The exits are across the concourse at the end of the platform.${hoursLine(e, ways)}` // Draft

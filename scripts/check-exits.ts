@@ -171,5 +171,18 @@ eq('Exeter Central 3: the bridge comes down by the platform both exits are by', 
   }
   eq('sweep: no "either way" to the same platform', bad, [])
 }
+// "Right there" only within 60 metres; "a short walk along" over 60, "a walk along" over 120 (John, November 27th 2026).
+eq('Bare Lane 1 (18 m): right there', trainLine(T.BAR, '1', false), 'Your train is due into platform 1. The exit on Bare Lane is right there.')
+eq('Bloxwich 1 (84 m): a short walk', trainLine(T.BLX, '1', false), 'Your train is due into platform 1. It’s a short walk along to the exit on Croxdene Avenue by platform 2, on the same level.')
+eq('Beckenham Junction 1 (233 m): a walk', trainLine(T.BKJ, '1', false), 'Your train is due into platform 1. It’s a walk along to the car park exit by platform 2, on the same level, or you can go over the footbridge for the exit by platform 4.')
+eq('Bloxwich 1: the platform guide', toPlatform(T.BLX, '1')!.join(' '), 'From the Croxdene Avenue entrance by platform 2, it’s a short walk along to platform 1, on the same level.')
+{
+  const bad: string[] = []
+  for (const [k, e] of Object.entries(T)) for (const p of Object.keys(e.far ?? {})) {
+    if (/right there/.test(trainLine(e, p, false))) bad.push(`${k} ${p} exits`)
+    if (!/(a|short) walk along to platform/.test((toPlatform(e, p) ?? []).join(' '))) bad.push(`${k} ${p} guide`)
+  }
+  eq('sweep: every exit over 60 metres away is a walk, not "right there"', bad, [])
+}
 console.log(`check-exits: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

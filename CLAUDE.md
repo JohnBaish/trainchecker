@@ -76,6 +76,23 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: "right there" only within 60 metres (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
+
+- **John:** after the 287 "right there" answers to an exit by another platform were assessed (the map data's own
+  walking distances: 103 up to 30 metres, 108 to 60, 56 to 120, 15 over, 5 unmeasured), keep "right there" up to 60
+  metres; over 60 "It's a short walk along to … by platform 2, on the same level."; over 120 "a walk along"; leave the
+  five unmeasured. (The level crossing and "out and round by the road" groups were from the platform-to-platform table,
+  not the walk to the exit: most are short.)
+- **Built:** `build_exits_table.py` keeps the nearest way out's distance and writes `far` (platform → metres, over 60,
+  map-data stations only); where the platform has an exit of its own, that one goes first instead and no distance is
+  kept (Bramley (West Yorkshire), East Didsbury, Foxton, Pencoed). `trainLine()` (`exits.ts`) and `toPlatform()`
+  ("From the Croxdene Avenue entrance by platform 2, it's a short walk along to platform 1, on the same level.") use it;
+  "the entrance on the level by platform 4" where another entrance has the same name (Darlington; draft).
+- **Review list:** `design/platform-directions/walk-along.md` (72 platforms, numbered, before and after, Exits and guide).
+- **Checked:** the table rebuilt; against `main`, only those 72 platforms' answers change; check-exits 94 (Bare Lane at
+  18 metres still "right there", Bloxwich, Beckenham Junction, the guide, a sweep of every `far` platform); all 11 check
+  scripts, `tsc -b`, lint, build. Not checked in a browser (text only).
+
 ### November 27th 2026: Exeter St Davids, one exit; live (branch `claude/peaceful-maxwell-1vv2r2`, merged the same day; Claude Code)
 
 - **John:** only one exit, called "the exit" (the map's Isambard Parade and Kingdom Mews are one way out); Version A

@@ -73,5 +73,19 @@ const pp = firstPanel(padRdg).picture!
 eq('"not yet" for a train with no platform', [pp.rows.length, pp.rows.filter((r) => (r as { noPlat?: boolean }).noPlat).length, pp.rows[4].time], [13, 7, '6.48pm'])
 eq('one platform for all: in the heading', firstPanel(tvp).picture!.one, '2')
 
+// Coaches (John, November 27th 2026): each row carries the board's count; 0 on the board is none.
+{
+  const rp = A('20261117-1824-RDG-PAD.json')
+  const rows = firstPanel(rp).picture!.rows
+  eq('Reading to Paddington: coaches on the rows', rows.map((r) => r.coaches ?? null), [4, 8, null, 5, 9, null, 5, 5, 8, null, 10, 5, 4, 9, 9])
+  const el = rp.ahead.filter((t) => t.operator === 'Elizabeth Line')
+  eq('Elizabeth Line with 0 on the board: no count', el.every((t) => t.coaches === null), true)
+  const nta = A('20261127-1558-NTA-PAD.json')
+  eq('Newton Abbot: one platform, counts on every row', [firstPanel(nta).picture!.one, firstPanel(nta).picture!.rows.map((r) => r.coaches)], ['3', [9, 5, 10]])
+  const eus = A('20261127-1640-EUS-MKC.json')
+  const er = firstPanel(eus).picture!.rows
+  eq('Euston: rows with no platform yet are marked so (the page shows no count on them)', er.every((r) => r.platform || r.noPlat), true)
+}
+
 console.log(`check-windows: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

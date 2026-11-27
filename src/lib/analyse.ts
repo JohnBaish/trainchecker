@@ -9,7 +9,7 @@ export type Service = {
   cancelled: boolean; reason: string | null; sta: string | null; eta: string | null; ata: string | null
   /** Stops between A and B: [code, timetabled, actual or expected "HH:MM" or null] (api/live.ts). */
   calls?: [string, string, string | null, (0 | 1)?][]
-  /** Coaches leaving A, when the board gives it (MOCK-UP, November 27th 2026). */
+  /** Coaches leaving A, when the board gives it (John, November 27th 2026). */
   coaches?: number | null
 }
 /** `arrivals`: from B's arrival board (api/live.ts, November 25th 2026); each `platform` is B's. */

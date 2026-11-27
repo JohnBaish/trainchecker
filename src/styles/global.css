@@ -385,33 +385,21 @@ details.trains-fold { margin-top: var(--space-3); }
    26th 2026). */
 @media (max-width: 720px) { .follow-date .nr { display: block; } }
 
-/* MOCK-UP (November 27th 2026): coaches, ?coaches=2 (under the platform) and ?coaches=3 (a drawing). */
+/* Coaches (John, November 27th 2026): small under the platform badge, or where it would be, or under a tile's time. */
 .bstack { justify-self: end; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .bstack > .badge, .bstack > .bcell, .bstack > .bnoplat { justify-self: auto; }
 .bcoaches { font-size: 12px; color: var(--color-neutral-700); white-space: nowrap; }
-.coachbar { display: inline-flex; gap: 2px; vertical-align: middle; align-self: center; }
-.bmid > span + .coachbar { margin-left: 8px; }
-.coachbar i { display: block; width: 7px; height: 10px; border-radius: 2px; background: currentColor; opacity: 0.55; }
-
-/* MOCK-UP (November 27th 2026): ?allplat=1 (its own capitals line) and ?allplat=2 (a sentence), phones only. */
-.ap-line, .ap-sentence { display: none; }
-@media (max-width: 720px) {
-  .bhead.ap .bone { display: none; }
-  .ap-line { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-bottom: 10px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--color-neutral-700); }
-  .ap-sentence { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; }
-}
-/* ?allplat=2: the tap hint (and the directions) under "All from platform" on a phone; above on a computer. */
-.ap-phone { display: none; }
-@media (max-width: 720px) {
-  .ap-desk { display: none; }
-  .ap-phone { display: block; }
-  p.ptaphint.ap-phone { margin: 0 0 12px; }
-  .ap-sentence { margin-bottom: 4px; }
-  .simple .ptaphint.ap-phone { margin-top: 4px; }
-}
-@media (max-width: 720px) { .ap-dirs { margin-bottom: 16px; } }
-/* MOCK-UP: a coach count under the time in a tile; ?tilehead=2: the tiles' heading in ordinary type on a phone. */
 .stimes .tcoach { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; color: var(--color-neutral-700); }
+/* One platform for all (John, November 27th 2026): on a phone "All from platform [3]" in ordinary type on its own
+   line, the tap hint and the directions under it; on a computer it stays in the heading row as before. */
+.one-line, .on-phone { display: none; }
 @media (max-width: 720px) {
-  .simple .shead.th2 { font-size: inherit; letter-spacing: 0; text-transform: none; font-weight: 400; color: var(--color-text); gap: 8px; }
+  .bhead.has-one .bone { display: none; }
+  .one-line { display: flex; align-items: center; gap: 8px; margin: 0 0 4px; }
+  .on-computer { display: none; }
+  .on-phone { display: block; }
+  p.ptaphint.on-phone { margin: 0 0 12px; }
+  .simple .ptaphint.on-phone { margin-top: 4px; }
+  .one-dirs { margin-bottom: 16px; }
+  .simple .shead { font-size: inherit; letter-spacing: 0; text-transform: none; font-weight: 400; color: var(--color-text); gap: 8px; }
 }

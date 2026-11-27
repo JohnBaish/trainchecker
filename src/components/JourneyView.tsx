@@ -11,7 +11,7 @@ import { fetchDays, fetchLive } from '../lib/load.ts'
 import { closedNow, forJourney } from '../lib/incidents.ts'
 import { hashOf, remember, type Journey } from '../lib/route.ts'
 import { useIsNarrow } from '../lib/responsive.ts'
-import { NO_RECORD_AT, arrivals, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type ListPicture, Cap, num, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
+import { NO_RECORD_AT, arrivals, listShareWords, platformsPicture, arrivalsPicture, boardSummary, type ListPicture, type PicRow, Cap, num, companyName, standIn, closedShare, closedVerdict, dayName, disruptionAdvice, lastTwoLines, shareWords, t12, verdict, type NextFour } from '../lib/sentences.ts'
 import { deliverImage, isTouch, listFileName, listImage, shareText } from '../lib/share.ts'
 import { nameOf } from '../lib/stations.ts'
 import { toPlatform, type Fix, type Links } from '../lib/toPlatform.ts'
@@ -124,78 +124,64 @@ function TapBadge({ pl, open, onTap }: { pl: string; open: boolean; onTap: () =>
   )
 }
 
-/** MOCK-UP (November 27th 2026): three ways of showing the coaches, `?coaches=1|2|3`; without it, none. */
-const coachMock = (): string | null => { try { const m = new URLSearchParams(location.search).get('coaches'); return m && /^[123]$/.test(m) ? m : null } catch { return null } }
-/** MOCK-UP (November 27th 2026): on a phone, "All from platform" away from the column heading, `?allplat=1|2`. */
-const allPlatMock = (): string | null => { try { const m = new URLSearchParams(location.search).get('allplat'); return m && /^[12]$/.test(m) ? m : null } catch { return null } }
 const tapHint = (pic: ListPicture) => pic.one ? `Tap “${pic.one}” for a rough platform location guide.` : 'Tap a platform for a rough location guide.'
-/** MOCK-UP (November 27th 2026): the tiles' "All from platform" in ordinary type on a phone, `?tilehead=2`. */
-const tileHeadMock = (): boolean => { try { return new URLSearchParams(location.search).get('tilehead') === '2' } catch { return false } }
 const coachWords = (n: number) => `${n} ${n === 1 ? 'coach' : 'coaches'}`
-function CoachBar({ n }: { n: number }) {
-  return <span className="coachbar" role="img" aria-label={coachWords(n)}>{Array.from({ length: n }, (_, i) => <i key={i} />)}</span>
-}
 
+/** The trains as a board. Coaches (John, November 27th 2026): the count from the departure board, small under
+ *  the platform (or where the badge would be when they all share one, or under the time in a tile); only in the
+ *  first panel (`noCoaches` for the later one) and only once a train has a platform. With one platform for all,
+ *  a phone says "All from platform [3]" on its own line, the tap hint and the directions under it (the heading
+ *  row read as one sentence: "EXPECTED TO LEAVE ALL FROM PLATFORM"); a computer keeps it in the heading row. */
 export function Board({ p, dirs, at, hint, noCoaches }: { p: ListPicture; dirs?: Dirs | null; at?: At; hint?: string; noCoaches?: boolean }) {
-  // MOCK-UP: the coaches only in the first panel (John, November 27th 2026).
-  const cm = noCoaches ? null : coachMock()
-  const ap = allPlatMock()
   const [openRow, setOpenRow] = useState<string | null>(null)
   const tap = dirs ?? null
   const toggle = (k: string) => setOpenRow(openRow === k ? null : k)
   const second = p.rows.some((r) => r.platform || r.noPlat)
-  // MOCK-UP: with the coaches under the platform, a list with counts keeps its rows (no tiles).
   const simple = !!p.one && p.rows.every((r) => !r.mid && !r.late)
+  const count = (r: PicRow) => (!noCoaches && r.coaches && (r.platform || p.one) ? r.coaches : 0)
+  const oneBadge = () => tap && tap(p.one!) ? <TapBadge pl={p.one!} open={openRow === 'one'} onTap={() => toggle('one')} /> : <span className="badge">{p.one}</span>
   return (
     <div className="board" role={simple ? undefined : 'table'}>
       {simple ? (
         // Even columns on a computer, a tile for each time on a phone (John, November 19th 2026).
         <div className="simple">
-          <p className={tileHeadMock() ? 'shead th2' : 'shead'}>All from platform {tap && tap(p.one!) ? <TapBadge pl={p.one!} open={openRow === 'one'} onTap={() => toggle('one')} /> : <span className="badge">{p.one}</span>}</p>
-          {hint && ap === '2' && <p className="ptaphint ap-phone">{hint}</p>}
+          <p className="shead">All from platform {oneBadge()}</p>
+          {hint && <p className="ptaphint on-phone">{hint}</p>}
           {tap && openRow === 'one' && <DirLines lines={tap(p.one!)!} pl={p.one!} at={at} />}
-          <div className="stimes" role="list">{onceAmPm(p.rows.map((r) => r.time)).map((t, i) => <b key={i} role="listitem">{t}{cm === '2' && p.rows[i].coaches ? <span className="tcoach">{coachWords(p.rows[i].coaches!)}</span> : null}</b>)}</div>
+          <div className="stimes" role="list">{onceAmPm(p.rows.map((r) => r.time)).map((t, i) => { const c = count(p.rows[i]); return <b key={i} role="listitem">{t}{c ? <span className="tcoach">{coachWords(c)}</span> : null}</b> })}</div>
         </div>
       ) : <>
-      {ap && p.one && (() => {
-        const b = tap && tap(p.one) ? <TapBadge pl={p.one} open={openRow === 'one'} onTap={() => toggle('one')} /> : <span className="badge">{p.one}</span>
-        return ap === '1'
-          ? <div className="ap-line">All from platform {b}</div>
-          : <>
-            <p className="ap-sentence">All from platform {b}</p>
-            {hint && <p className="ptaphint ap-phone">{hint}</p>}
-            {tap && openRow === 'one' && <div className="ap-phone ap-dirs"><DirLines lines={tap(p.one)!} pl={p.one} at={at} /></div>}
-          </>
-      })()}
-      <div className={ap && p.one ? 'bhead ap' : 'bhead'} role="row">
+      {p.one && <>
+        <p className="one-line">All from platform {oneBadge()}</p>
+        {hint && <p className="ptaphint on-phone">{hint}</p>}
+        {tap && openRow === 'one' && <div className="on-phone one-dirs"><DirLines lines={tap(p.one)!} pl={p.one} at={at} /></div>}
+      </>}
+      <div className={p.one ? 'bhead has-one' : 'bhead'} role="row">
         <span role="columnheader">{p.heads[0]}</span>
         {/* Arrivals with platforms (November 25th 2026): "From Reading" over the trains, the platform on the right. */}
         {p.heads[2] && <span role="columnheader">{p.heads[1]}</span>}
         {p.one
-          ? <span className={p.heads[2] ? 'bone b3' : 'bone'} role="columnheader">All from platform {tap && tap(p.one) ? <TapBadge pl={p.one} open={openRow === 'one'} onTap={() => toggle('one')} /> : <span className="badge">{p.one}</span>}</span>
+          ? <span className={p.heads[2] ? 'bone b3' : 'bone'} role="columnheader">All from platform {oneBadge()}</span>
           : p.heads[2] ? (second && <span role="columnheader" className="bright">{p.heads[2]}</span>)
           : <span role="columnheader" className={second ? 'bright' : ''}>{p.heads[1]}</span>}
       </div>
-      {tap && p.one && openRow === 'one' && <div className={ap === '2' ? 'ap-desk' : undefined}><DirLines lines={tap(p.one)!} pl={p.one} at={at} /></div>}
+      {tap && p.one && openRow === 'one' && <div className="on-computer"><DirLines lines={tap(p.one)!} pl={p.one} at={at} /></div>}
       {p.rows.map((r, i) => {
-        // MOCK-UP: no count until the train has a platform (John, November 27th 2026).
-        const c = cm && r.coaches && (r.platform || p.one) ? r.coaches : 0
-        const mid = cm === '1' && c ? [r.mid, coachWords(c)].filter(Boolean).join(' · ') : r.mid
+        const c = count(r)
         const plat = r.platform && !p.one ? (tap && tap(r.platform)
             ? <span role="cell" className="bcell"><TapBadge pl={r.platform} open={openRow === String(i)} onTap={() => toggle(String(i))} /></span>
             : <span className="badge" role="cell">{r.platform}</span>)
           : r.noPlat && !p.one ? <span className="bnoplat" role="cell">not yet</span>
-          // MOCK-UP: all from one platform (said once at the top): the count stands where the badge would be.
-          : cm === '2' && c && p.one ? <span className="bcoaches bstack" role="cell">{coachWords(c)}</span> : null
+          // One platform for all, said at the top: the count stands where the badge would be.
+          : c && p.one ? <span className="bcoaches bstack" role="cell">{coachWords(c)}</span> : null
         return (
         <div key={i} className={tap && openRow === String(i) ? 'brow open' : 'brow'} role="row">
           <span className={r.time === '?' ? 'bt q' : 'bt'} role="cell">{r.time}</span>
           <span className="bmid" role="cell">
-            {mid && <span>{mid}</span>}
-            {cm === '3' && c ? <CoachBar n={c} /> : null}
-            {r.late && <span className={r.arrow ? 'blate own' : 'blate'}>{mid && !r.arrow && <span className="bsep" aria-hidden="true">{'\u00a0· '}</span>}{r.arrow && <span className="barrow"><Icon name="left" /></span>}{r.late.split(/(?<=,) /).map((x, j) => <span key={j} className="nw">{j ? ' ' : ''}{x}</span>)}</span>}
+            {r.mid && <span>{r.mid}</span>}
+            {r.late && <span className={r.arrow ? 'blate own' : 'blate'}>{r.mid && !r.arrow && <span className="bsep" aria-hidden="true">{'\u00a0· '}</span>}{r.arrow && <span className="barrow"><Icon name="left" /></span>}{r.late.split(/(?<=,) /).map((x, j) => <span key={j} className="nw">{j ? ' ' : ''}{x}</span>)}</span>}
           </span>
-          {cm === '2' && c && plat && !p.one ? <span className="bstack">{plat}<span className="bcoaches">{coachWords(c)}</span></span> : plat}
+          {c && plat && !p.one ? <span className="bstack">{plat}<span className="bcoaches">{coachWords(c)}</span></span> : plat}
           {tap && r.platform && openRow === String(i) && <DirLines lines={tap(r.platform)!} pl={r.platform} at={at} />}
         </div>
         )
@@ -285,7 +271,7 @@ function FirstPanel({ a }: { a: Analysis }) {
       {(pic || f.cancelled) && (
         <details className="advice trains-fold">
           <summary>{k === 1 ? 'Show the train and its platform' : 'Show the trains and platforms'} <Icon name="down" /></summary>
-          {pic && dirs && <p className={allPlatMock() === '2' && pic.one ? 'ptaphint ap-desk' : 'ptaphint'}>{tapHint(pic)}</p>}
+          {pic && dirs && <p className={pic.one ? 'ptaphint on-computer' : 'ptaphint'}>{tapHint(pic)}</p>}
           {pic && <Board p={pic} dirs={dirs} hint={dirs ? tapHint(pic) : undefined} at={{ station: a.from, hash: `#${a.fromCrs}-${a.toCrs}`, taken: a.taken }} />}
           {f.cancelled && <p className="tafter">{f.cancelled}</p>}
           {(() => { const sp = firstShare(a); return sp && <PicShare pic={sp} what="these trains" file="next-hour" /> })()}
@@ -310,7 +296,7 @@ function LaterPanel({ a }: { a: Analysis }) {
       {pic && (
         <details className="advice trains-fold">
           <summary>{pic.rows.length === 1 ? 'Show the train and its platform' : 'Show the trains and platforms'} <Icon name="down" /></summary>
-          {dirs && <p className={allPlatMock() === '2' && pic.one ? 'ptaphint ap-desk' : 'ptaphint'}>{tapHint(pic)}</p>}
+          {dirs && <p className={pic.one ? 'ptaphint on-computer' : 'ptaphint'}>{tapHint(pic)}</p>}
           <Board p={pic} dirs={dirs} noCoaches hint={dirs ? tapHint(pic) : undefined} at={{ station: a.from, hash: `#${a.fromCrs}-${a.toCrs}`, taken: a.taken }} />
           {l.cancelled && <p className="tafter">{l.cancelled}</p>}
           {(() => { const sp = laterShare(a); return sp && <PicShare pic={sp} what="these trains" file="later" /> })()}

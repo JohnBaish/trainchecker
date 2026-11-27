@@ -111,6 +111,13 @@ given its own branch). Before committing there, run
   PLATFORM" in ordinary type on a phone behind `?tilehead=2`, for John to compare. Checked: Twyford to Henley and Euston
   to Milton Keynes (live boards saved at 4.56pm), Reading to Paddington (12 counts in the first panel, none in the
   second); checks, `tsc -b`, lint, build; no errors, no sideways scroll.
+- **John:** ordinary type, in the page's normal text colour, for the tiles' heading too. Made the page: the
+  `?coaches=`, `?allplat=` and `?tilehead=` switches and options 1 and 3 taken out (`Board` in `JourneyView.tsx`,
+  `.one-line`, `.on-phone`, `.on-computer`, `.bstack`, `.tcoach` in `global.css`); `SPEC.md` §15. New checks in
+  `check-windows` (482: the counts on Reading to Paddington's rows, none for 0, Newton Abbot's three, Euston's rows).
+  All 11 check scripts, `tsc -b`, lint, build; Reading to Paddington, Newton Abbot (and with "3" tapped), Twyford to
+  Henley, Euston to Milton Keynes and Bath to Bristol at 390px dark and 1200px light, and four of them at 844×390:
+  no errors, no sideways scroll, counts only in the first panel. Not merged; for John's word.
 
 ### November 27th 2026: what the departure board gives that the page doesn't use (notes only, straight to `main`; Claude Code)
 

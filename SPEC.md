@@ -834,3 +834,19 @@ How it works, and the figures to tune: `design/find-my-train/README.md`.
 7. **A refresh keeps your place:** the same section, the same distance down, the same folds open;
    only after a refresh, kept in the tab's own storage. A train or station chosen inside Connections
    or Exits isn't brought back.
+
+## 15. Coaches, and one platform for all on a phone (November 27th 2026)
+
+1. **The number of coaches** (the departure board's `length`) in "The next hour" (or "The next three trains") only,
+   not in the later panel: small, grey, "8 coaches", under the platform badge, "exactly where you'd be looking".
+   Rows of different heights are fine.
+2. **Only once a train has a platform:** a "not yet" row has no count ("not really usable until we have a platform
+   number"). Nothing is said where the board gives no count (some companies never do; some trains only sometimes).
+3. **Short trains aren't marked:** "if you care how many coaches there are, you know where to look."
+4. **All from one platform:** the count stands where the badge would be; in the tiles layout, a small line under each
+   time ("3 coaches").
+5. **On a phone, one platform for all:** "All from platform [3]" in ordinary type and the page's normal text colour,
+   on its own line above the list (the heading row read as one sentence, "EXPECTED TO LEAVE ALL FROM PLATFORM"); the
+   "Tap “3”…" line under it, and the directions open under that. The tiles layout's heading the same. A computer keeps
+   the heading row as before.
+6. The Share pictures are unchanged (no coaches).

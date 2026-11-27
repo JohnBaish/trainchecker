@@ -43,7 +43,7 @@ export type Service = {
    *  fourth is 1 once the train has passed it (the board gives an actual time, or "No report").
    *  For "Find my train from my location" and "Follow my progress" (John, November 26th 2026). */
   calls?: Call[]
-  /** Coaches leaving A (the board's `length`; 0 there means not given). MOCK-UP, November 27th 2026. */
+  /** Coaches leaving A (the board's `length`; 0 there means not given), shown in "The next hour" (John, November 27th 2026). */
   coaches?: number | null
 }
 

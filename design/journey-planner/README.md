@@ -27,8 +27,23 @@ finding times and connections for future journeys (not just today's live trains)
    public journey planner. **John: not taking this further for now**, and not writing to the
    Rail Delivery Group to ask (November 27th 2026). Files not downloaded or looked at.
 3. **Someone else's data or planner** (a converted timetable on Transitland, from Interline;
-   Transitous, a free planner on open data). Licences and reliability not checked. A planner
-   run by someone else would mean sending visitors' journeys to them.
+   Transitous, a free planner on open data). Transitous ruled out by John (it would mean sending
+   visitors' journeys to someone else). Transitland: below.
+
+### Option 3: Transitland's UK rail feed, looked at the same day
+
+Transitland's own pages refuse automated reading (a Cloudflare check) and its data service needs a
+key, so John sent screenshots, and the feed's entry was read from GitHub
+(`transitland/transitland-atlas`, `feeds/gtfs-source-feeds.transit.land.dmfr.json`, id `f-uk~rail`):
+- "United Kingdom rail feed converted into GTFS by Interline"; it replaces an older feed called
+  "rail delivery group planar gtfs", so it's made from the Rail Delivery Group's timetable.
+- Transitland's licence summary: attribution needed ("Powered by National Rail Enquiries"); derived
+  products, redistribution and commercial use all "yes". No licence named or linked.
+- The download needs a Transitland key (`token`).
+- **The catch:** that summary is Transitland's own, and it doesn't match the licence the Rail
+  Delivery Group now gives for the same timetable ("research & analysis purposes only"). The
+  attribution wording looks like the older National Rail open-data terms, so the summary may date
+  from those. Which applies to a copy passed on by Interline isn't known (not checked).
 
 ## If it's picked up again
 

@@ -7,7 +7,7 @@ import { deliverImage, factFileName, factImage, quoteFileName, quoteImage } from
 import { journeyFacts, pickFact, type PnData } from '../lib/passesNear.ts'
 import { Icon } from './Icon.tsx'
 
-export const INTRO = "Trainchecker tells you, in plain English, how the trains from one station to another are running: the next four hours, which platforms they're leaving from, how the last two hours went, any engineering work before the end of the weekend and, if you ask, how they ran over the last week. For journeys with no change of train, for now."
+export const INTRO = "Trainchecker tells you, in plain English, how the trains from one station to another are running: what's coming up, how they've been doing, and any engineering work before the end of the weekend. It can also help on the way: your platform, a connection, the way out, plus a message home saying when you'll arrive and how to check on the progress of your train."
 
 const ABOUT = [
   'Trainchecker looks at trains that go straight from one station to the other, with no change. “On time” means within three minutes of the timetable.',

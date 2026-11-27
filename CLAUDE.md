@@ -76,6 +76,16 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: new opening words; live (`main`; Claude Code)
+
+- **John:** the words before you choose a journey were out of date. Now (his choice of drafts, then his own ending):
+  "Trainchecker tells you, in plain English, how the trains from one station to another are running: what's coming
+  up, how they've been doing, and any engineering work before the end of the weekend. It can also help on the way:
+  your platform, a connection, the way out, plus a message home saying when you'll arrive and how to check on the
+  progress of your train." "For journeys with no change of train, for now." dropped (John). `INTRO` in `Tail.tsx`.
+- **Checked:** all 11 check scripts, `tsc -b`, lint, build; the first page at 1200px light, 390px dark and 844×390
+  with touch: the new words, no errors, no sideways scroll.
+
 ### November 27th 2026: a web app manifest, so the Home Screen name and start are right; live (`main`; Claude Code)
 
 - **John (iPhone, after the icon went live):** the icon came through but the name was still the long title.

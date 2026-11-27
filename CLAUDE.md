@@ -92,6 +92,11 @@ given its own branch). Before committing there, run
   Checked on a live Newton Abbot board (3.59pm, saved) and Bath to Bristol, 1200px light and 390px dark: no errors, no
   sideways scroll. Found, not changed: on a phone "EXPECTED TO LEAVE ALL FROM PLATFORM" runs together (already so
   without the switch).
+- **John:** he read that heading as one badly written sentence; mock up both ways out. Behind `?allplat=1|2`, phones
+  only (720px and under; computers unchanged): 1, "ALL FROM PLATFORM [3]" on its own capitals line above "EXPECTED TO
+  LEAVE"; 2, "All from platform [3]" in ordinary type above it (no full stop: it stood apart after the badge's tap
+  area). Newton Abbot at 390px, dark and light, with and without the coaches; Bath to Bristol's tiles (no heading)
+  unaffected. Checks, `tsc -b`, lint, build; no errors, no sideways scroll.
 
 ### November 27th 2026: what the departure board gives that the page doesn't use (notes only, straight to `main`; Claude Code)
 

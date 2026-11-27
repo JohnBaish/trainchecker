@@ -392,3 +392,11 @@ details.trains-fold { margin-top: var(--space-3); }
 .coachbar { display: inline-flex; gap: 2px; vertical-align: middle; align-self: center; }
 .bmid > span + .coachbar { margin-left: 8px; }
 .coachbar i { display: block; width: 7px; height: 10px; border-radius: 2px; background: currentColor; opacity: 0.55; }
+
+/* MOCK-UP (November 27th 2026): ?allplat=1 (its own capitals line) and ?allplat=2 (a sentence), phones only. */
+.ap-line, .ap-sentence { display: none; }
+@media (max-width: 720px) {
+  .bhead.ap .bone { display: none; }
+  .ap-line { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-bottom: 10px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--color-neutral-700); }
+  .ap-sentence { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; }
+}

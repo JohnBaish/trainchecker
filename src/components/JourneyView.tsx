@@ -126,6 +126,8 @@ function TapBadge({ pl, open, onTap }: { pl: string; open: boolean; onTap: () =>
 
 /** MOCK-UP (November 27th 2026): three ways of showing the coaches, `?coaches=1|2|3`; without it, none. */
 const coachMock = (): string | null => { try { const m = new URLSearchParams(location.search).get('coaches'); return m && /^[123]$/.test(m) ? m : null } catch { return null } }
+/** MOCK-UP (November 27th 2026): on a phone, "All from platform" away from the column heading, `?allplat=1|2`. */
+const allPlatMock = (): string | null => { try { const m = new URLSearchParams(location.search).get('allplat'); return m && /^[12]$/.test(m) ? m : null } catch { return null } }
 const coachWords = (n: number) => `${n} ${n === 1 ? 'coach' : 'coaches'}`
 function CoachBar({ n }: { n: number }) {
   return <span className="coachbar" role="img" aria-label={coachWords(n)}>{Array.from({ length: n }, (_, i) => <i key={i} />)}</span>
@@ -133,6 +135,7 @@ function CoachBar({ n }: { n: number }) {
 
 export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?: At }) {
   const cm = coachMock()
+  const ap = allPlatMock()
   const [openRow, setOpenRow] = useState<string | null>(null)
   const tap = dirs ?? null
   const toggle = (k: string) => setOpenRow(openRow === k ? null : k)
@@ -149,7 +152,13 @@ export function Board({ p, dirs, at }: { p: ListPicture; dirs?: Dirs | null; at?
           <div className="stimes" role="list">{onceAmPm(p.rows.map((r) => r.time)).map((t, i) => <b key={i} role="listitem">{t}</b>)}</div>
         </div>
       ) : <>
-      <div className="bhead" role="row">
+      {ap && p.one && (() => {
+        const b = tap && tap(p.one) ? <TapBadge pl={p.one} open={openRow === 'one'} onTap={() => toggle('one')} /> : <span className="badge">{p.one}</span>
+        return ap === '1'
+          ? <div className="ap-line">All from platform {b}</div>
+          : <p className="ap-sentence">All from platform {b}</p>
+      })()}
+      <div className={ap && p.one ? 'bhead ap' : 'bhead'} role="row">
         <span role="columnheader">{p.heads[0]}</span>
         {/* Arrivals with platforms (November 25th 2026): "From Reading" over the trains, the platform on the right. */}
         {p.heads[2] && <span role="columnheader">{p.heads[1]}</span>}

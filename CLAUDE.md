@@ -76,6 +76,22 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: what the departure board gives that the page doesn't use (notes only, straight to `main`; Claude Code)
+
+- **John asked.** Live boards from 34 big stations at 3.40pm (`design/mockups/snapshots/20261127-unused-fields/`;
+  three refused with HTTP 429 when 34 were asked at once, fine one at a time), with the 108 saved boards.
+- **Unused:** coaches (`length`, most companies; none from LNR & WMR, CrossCountry, Overground, Heathrow Express;
+  also stop by stop, so a train dividing shows: Victoria to Dover 8, then 4 from Faversham); the coach layout
+  (`formation`, only Southeastern and the Elizabeth Line: each coach's number, toilet and whether it's working, and
+  how full it is, as a percentage, at A only, on 4 of 48 such trains; all "Standard" class); station messages
+  (`nrccMessages`, 24 at the 34 stations: lifts and escalators out of order, the Tube strike, delays); buses
+  (`busServices`: RailAir to Heathrow, Leeds Bradford Airport; replacement buses would come here too, not seen
+  today: `api/live.ts` reads trains only); a train now ending or starting short (`currentDestinations`,
+  `currentOrigins`); `futureCancellation`/`futureDelay` (13 trains); diversions at stops (`affectedByDiversion`,
+  `rerouteDelay`); `isReverseFormation` and `detachFront` (one each). Found: one Southeastern train listed 8 coaches
+  with `length` 7.
+- Key saved here now: Live Departure Board.
+
 ### November 27th 2026: the Service Details product looked into, for Platforms (notes only, straight to `main`; Claude Code)
 
 - **John** subscribed to Service Details (new to him, not to the Marketplace) and saved its key here (secure form):

@@ -76,6 +76,19 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: a Home Screen icon and short name; live (`main`; Claude Code)
+
+- **John (iPhone, "Add to Home Screen"):** the icon came out as a plain "T" and the name as the whole search title.
+  iPhones don't use an SVG favicon; Motoracer's own icon works as Tenniserver's does (a separate PNG). Three options
+  (`design/home-icon/`, `icons.mjs`; shown on John's own Home Screen in `on-iphone-*.png`); **John: A**, the train
+  large on cream, no ring.
+- **Built:** `public/apple-touch-icon.png` (180 by 180, option A) and, in `index.html`, `rel="apple-touch-icon"` and
+  `apple-mobile-web-app-title` "Trainchecker" (the `<title>` unchanged for search). Merged straight to `main` at
+  John's word.
+- **Checked:** build, `tsc -b`, lint, every check script; `vite preview` serves the icon (200, image/png) and the
+  page has both tags. Not checked: a real iPhone (an icon already added keeps its old picture: delete it and add it
+  again).
+
 ### November 26th 2026: a late train still waiting at A was counted as gone; "Good news" not with the next train late; live (branch `fix/late-train-still-to-leave`, merged the same day; Claude Code)
 
 - **John (photos, Birmingham New Street to Cardiff Central at 6.22pm; a second report of the same kind):** "Good

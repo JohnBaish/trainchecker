@@ -76,6 +76,14 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: a web app manifest, so the Home Screen name and start are right; live (`main`; Claude Code)
+
+- **John (iPhone, after the icon went live):** the icon came through but the name was still the long title.
+  `public/manifest.webmanifest` (name "Trainchecker", start and scope "/", the icon) and a link to it in
+  `index.html`, tried first on the branch preview: John found the name now "Trainchecker", and the Home Screen icon
+  opening the front page even when added from a journey (`#RDG-PAD`). Merged at his word. The same is going into the
+  other sites (house style §7).
+
 ### November 27th 2026: a Home Screen icon and short name; live (`main`; Claude Code)
 
 - **John (iPhone, "Add to Home Screen"):** the icon came out as a plain "T" and the name as the whole search title.

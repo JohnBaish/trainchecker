@@ -76,7 +76,7 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 27th 2026: Exeter St Davids, one exit (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
+### November 27th 2026: Exeter St Davids, one exit; live (branch `claude/peaceful-maxwell-1vv2r2`, merged the same day; Claude Code)
 
 - **John:** only one exit, called "the exit" (the map's Isambard Parade and Kingdom Mews are one way out); Version A
   (by the station building) with Putney-style wording for the station's line and the platform 1 guide; platform 2 is on
@@ -91,8 +91,9 @@ given its own branch). Before committing there, run
   reached on the level (by the platform links: 103 just across the platform, 50 on the same level, 33 a level crossing,
   42 a footbridge and 12 a subway (the two tables disagree), 24 out and round by the road, 22 not known). Not changed.
 - **Checked:** check-exits 89 (the station's line, platforms 1, 2 and 6B); all 11 check scripts, `tsc -b`, lint, build.
+- **John:** merge (with the "either way" fix), then look at the 286. Checks, `tsc -b`, lint and build clean first.
 
-### November 27th 2026: Exits: "either way" only when the two ways part (branch `claude/peaceful-maxwell-1vv2r2`, not merged; Claude Code)
+### November 27th 2026: Exits: "either way" only when the two ways part; live (branch `claude/peaceful-maxwell-1vv2r2`, merged the same day; Claude Code)
 
 - **John (iPhone, Ivybridge to Exeter St Davids, platform 6B):** "Go up to the footbridge, where you can turn either
   way: to Isambard Parade, coming down from the bridge by platform 1, or to Kingdom Mews, coming down by platform 1."

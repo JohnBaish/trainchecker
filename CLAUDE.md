@@ -76,6 +76,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 27th 2026: a journey planner looked into; not taken further (notes only, straight to `main`; Claude Code)
+
+- **John:** what would a Journey Planner at the bottom, after the Fact of the Journey, take (future
+  journeys, with connections)? Three routes: National Rail's Online Journey Planner (formal licence,
+  charged when last listed; said to be coming to the Rail Data Marketplace, unconfirmed); our own
+  planner from the Rail Delivery Group's timetable files; someone else's data or planner.
+- John subscribed to "Timetable – Full Refresh – Daily" (a file, no key). Its licence, and that of
+  "Changes Only – Daily" (the same text): free, but "for research & analysis purposes only". Both
+  read that as not covering a public planner. **John:** not taking it further for now, and not
+  asking the Rail Delivery Group. Notes in `design/journey-planner/README.md` and
+  `design/licences-2026-11-17.md`.
+
 ### November 27th 2026: new opening words; live (`main`; Claude Code)
 
 - **John:** the words before you choose a journey were out of date. Now (his choice of drafts, then his own ending):

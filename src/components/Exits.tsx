@@ -74,14 +74,27 @@ export function Exits({ a }: { a: Analysis }) {
   const rest = mines.filter(({ s }) => !near.includes(s.id))
   // Fast, slower or Elizabeth Line, when the journey has more than one kind (two "4.42pm"s told apart).
   const kind = kindOf(a, all.map(({ s }) => s))
+  // MOCK-UP (November 28th 2026, for John): each train's platform at B, from the arrival board, on its button.
+  // ?mock=A a line under the time; ?mock=B the boards' badge at the right. To come out once chosen.
+  const mock = new URLSearchParams(location.search).get('mock')
+  const platOf = (id: string) => a.arr?.find((x) => x.id.slice(0, 8) === id.slice(0, 8))?.platform ?? null
   const list = (l: typeof mines) => {
     const after = rowEnd(l.findIndex(({ m }) => m.id === mineId), cols, l.length)
     return l.map(({ s, m }, i) => (
       <Fragment key={m.id}>
         <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}${near.includes(s.id) ? ' near' : ''}`} aria-pressed={m.id === mineId}
           onClick={() => { if (m.id !== mineId) setGot({ s: 'idle' }); setMineId(m.id) }}>
+          {mock === 'B' ? (
+            <span className="mockb">
+              <span><b>{t12(s.std)}</b> from {a.from}{kind(s) && <span className="ckind">{' · '}{kind(s)}</span>}
+                <span className="muted small mline">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : m.lateBy >= 1 ? `now expected into ${a.to} at ${t12(m.exp)}` : `expected into ${a.to} at ${t12(m.exp)}`}</span></span>
+              {platOf(s.id) ? <span className="badge" aria-label={`platform ${platOf(s.id)}`}>{platOf(s.id)}</span> : <span className="bnoplat">not yet</span>}
+            </span>
+          ) : <>
           <b>{t12(s.std)}</b> from {a.from}{kind(s) && <span className="ckind">{'· '}{kind(s)}</span>}
           <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : m.lateBy >= 1 ? `now expected into ${a.to} at ${t12(m.exp)}` : `expected into ${a.to} at ${t12(m.exp)}`}</span>
+          {mock === 'A' && <span className="small mplat">{platOf(s.id) ? <>Platform <b>{platOf(s.id)}</b></> : <span className="muted">Platform not announced yet</span>}</span>}
+          </>}
         </button>
         {i === after && reply}
       </Fragment>

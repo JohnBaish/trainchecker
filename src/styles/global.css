@@ -403,3 +403,10 @@ details.trains-fold { margin-top: var(--space-3); }
   .one-dirs { margin-bottom: 16px; }
   .simple .shead { font-size: inherit; letter-spacing: 0; text-transform: none; font-weight: 400; color: var(--color-text); gap: 8px; }
 }
+
+/* MOCK-UP (November 28th 2026): platform on Exits' train buttons, ?mock=A|B. */
+.exits .cmine .mockb { flex-basis: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.exits .cmine .mockb > span:first-child { flex-basis: auto; }
+.exits .cmine .mline { display: block; }
+.exits .cmine .mockb .badge, .exits .cmine .mockb .bnoplat { flex: none; flex-basis: auto; }
+.exits .cmine .mplat { margin-top: 2px; }

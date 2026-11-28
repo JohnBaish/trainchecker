@@ -2,7 +2,7 @@
 // (src/data/exits.json): the sentences John agreed, and the stations he knows.
 import { toPlatform } from '../src/lib/toPlatform.ts'
 import t from '../src/data/exits.json' with { type: 'json' }
-import { heading, stationLine, trainLine, type ExitsTable } from '../src/lib/exits.ts'
+import { heading, platformWayOut, sharedPlatform, stationLine, trainLine, type ExitsTable } from '../src/lib/exits.ts'
 import { whichTrain } from '../src/lib/connection.ts'
 
 let passed = 0, failed = 0
@@ -215,5 +215,13 @@ eq('Bilbrook 2: the same road the other side, not repeated', trainLine(T.BBK, '2
   }
   eq('sweep: every exit over 60 metres away is a walk, not "right there"', bad, [])
 }
+// One platform for every train whose platform has been announced (John, November 28th 2026).
+eq('shared: two or more on one platform', sharedPlatform(['2', null, '2', null])?.line, 'All the trains whose platforms have been announced are coming into platform 2.')
+eq('shared: only one announced', sharedPlatform([null, '3', null])?.line, 'The only train whose platform has been announced is coming into platform 3.')
+eq('shared: none announced', sharedPlatform([null, null]), null)
+eq('shared: two platforms', sharedPlatform(['2', '3']), null)
+eq('shared: 10 and 10A are different platforms', sharedPlatform(['10', '10A']), null)
+eq('shared: the way out from Reading 4, without "Your train is due"', platformWayOut(T.RDG, '4'), trainLine(T.RDG, '4', false).replace('Your train is due into platform 4. ', ''))
+eq('shared: every station and platform reads as a sentence', Object.entries(T).flatMap(([c, e]) => Object.keys(e.p).map((p) => [c, p, platformWayOut(e, p)])).filter(([, , w]) => !/^[A-Z“].*[.!]$/.test(w) || /Your train/.test(w)).slice(0, 5), [])
 console.log(`check-exits: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

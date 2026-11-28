@@ -306,3 +306,28 @@ function trainLineFrom(e: StationExits, platform: string, ways: Way[], start: st
   const also = alt ? `, or the ${alt[1] === 'b' ? bridge : 'subway'} to ${target(e, alt[0], shown, platform)}` : ''
   return `Your train is due into platform ${platform}, so you’ll want the ${thing} to ${t}${down && !t.endsWith(`platform ${down}`) ? `, ${off} by platform ${down}` : ''}${also}.${hoursLine(e, [ways[0]])}`
 }
+
+/** When the trains in Exits' list whose platforms have been announced all share one (John, November
+ *  28th 2026): "All the trains whose platforms have been announced are coming into platform 2.", or for
+ *  a single train "The only train whose platform has been announced is coming into platform 2.". Null
+ *  when none is announced or they're on different platforms. */
+export function sharedPlatform(platforms: (string | null)[]): { platform: string; line: string } | null {
+  const known = platforms.filter((p): p is string => !!p)
+  if (!known.length || new Set(known).size > 1) return null
+  const platform = known[0]
+  return {
+    platform,
+    line: known.length === 1
+      ? `The only train whose platform has been announced is coming into platform ${platform}.`
+      : `All the trains whose platforms have been announced are coming into platform ${platform}.`,
+  }
+}
+
+/** The way out from a platform, as trainLine() gives it for a train, without "Your train is due into
+ *  platform 2." (the line above has said which platform); "…, so you’ll want the footbridge…" becomes
+ *  "You’ll want the footbridge…". */
+export function platformWayOut(e: StationExits, platform: string): string {
+  return trainLine(e, platform, false)
+    .replace(/^Your train is due into platform [^.,]+\.\s*/, '')
+    .replace(/^Your train is due into platform [^.,]+, so you’ll want/, 'You’ll want')
+}

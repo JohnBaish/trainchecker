@@ -76,6 +76,26 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 28th 2026: Exits says when the announced trains share one platform (branch `claude/gallant-lovelace-0hzixi`, not merged; Claude Code)
+
+- **John:** when every train in Exits' list whose platform has been announced is coming into the same one, say so
+  first, with the way out from it. Agreed: count the trains in the list (not those already in); two or more:
+  "All the trains whose platforms have been announced are coming into platform 2."; one: "The only train whose
+  platform has been announced is coming into platform 2."; then the way out from that platform, with "Share these
+  directions"; then "Check if your train’s platform has been confirmed." (in place of "Which train are you on…?"),
+  Find my train and the list as now. Different platforms, none announced, or a concourse station: unchanged.
+  `sharedPlatform()` and `platformWayOut()` in `exits.ts` (the train answer without "Your train is due into
+  platform 2."; "…, so you’ll want the footbridge" becomes "You’ll want the footbridge"). Share (drafts): heading
+  "Arriving at Bristol Temple Meads on platform 3", sent with "Here’s the way out at … from platform 3, from
+  Trainchecker.".
+- **Not taken up (John):** each train button showing its platform (mock-ups A and B); kept, with the reasons, in
+  `design/previews/exits-platform/README.md`.
+- **Checked:** `npm run check` (check-exits 112: the two lines, none, two platforms, 10 and 10A, every platform at
+  every station reads as a sentence; this found the "so you’ll want" case); `tsc -b`, lint, build;
+  `design/previews/exits-platform/shared.mjs` (Bath Spa to Bristol, arrivals made up, illustration only) at 390px
+  dark and 1200px light: all, one and mixed cases, the picture read back from the clipboard; no errors, no sideways
+  scroll.
+
 ### November 27th 2026: Hersham corrected; exits in doubt say only where the exit is; live (`claude/festive-cori-16zxt6`, merged the same day; Claude Code)
 
 - **John (Hersham):** two entrances on Molesey Road, either side of the railway bridge over it, steps up to each

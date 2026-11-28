@@ -328,6 +328,8 @@ details.trains-fold { margin-top: var(--space-3); }
 .tap-reply > p { margin: 0; }
 .tap-reply > .cstep:first-child { margin-top: 0; }
 .exits .exit-answer { margin: 0; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--color-bg); }
+.exits .exit-shared { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4); }
+.exits .exit-shared > p:first-child { margin: 0; }
 /* Message home: the train's line from the arrivals board, in a box (November 26th 2026). */
 .home .home-box { padding: var(--space-2) var(--space-4) var(--space-3); border-radius: var(--radius-md); background: var(--color-bg); }
 .home .home-box .board { margin-top: 0; }
@@ -403,10 +405,3 @@ details.trains-fold { margin-top: var(--space-3); }
   .one-dirs { margin-bottom: 16px; }
   .simple .shead { font-size: inherit; letter-spacing: 0; text-transform: none; font-weight: 400; color: var(--color-text); gap: 8px; }
 }
-
-/* MOCK-UP (November 28th 2026): platform on Exits' train buttons, ?mock=A|B. */
-.exits .cmine .mockb { flex-basis: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.exits .cmine .mockb > span:first-child { flex-basis: auto; }
-.exits .cmine .mline { display: block; }
-.exits .cmine .mockb .badge, .exits .cmine .mockb .bnoplat { flex: none; flex-basis: auto; }
-.exits .cmine .mplat { margin-top: 2px; }

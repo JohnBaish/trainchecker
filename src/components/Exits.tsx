@@ -4,7 +4,7 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { diff, type Analysis } from '../lib/analyse.ts'
 import { mineOf, shownTrains, whichTrain } from '../lib/connection.ts'
-import { heading, stationLine, trainLine, type ExitsTable } from '../lib/exits.ts'
+import { heading, platformWayOut, sharedPlatform, stationLine, trainLine, type ExitsTable } from '../lib/exits.ts'
 import { fetchArrPlatform } from '../lib/load.ts'
 import { kindOf, t12 } from '../lib/sentences.ts'
 import { rowEnd, useGridCols } from '../lib/useGridCols.ts'
@@ -74,27 +74,20 @@ export function Exits({ a }: { a: Analysis }) {
   const rest = mines.filter(({ s }) => !near.includes(s.id))
   // Fast, slower or Elizabeth Line, when the journey has more than one kind (two "4.42pm"s told apart).
   const kind = kindOf(a, all.map(({ s }) => s))
-  // MOCK-UP (November 28th 2026, for John): each train's platform at B, from the arrival board, on its button.
-  // ?mock=A a line under the time; ?mock=B the boards' badge at the right. To come out once chosen.
-  const mock = new URLSearchParams(location.search).get('mock')
+  // The trains in the list whose platforms have been announced, from the arrival board (John, November
+  // 28th 2026): if they all share one, say so first, with the way out from it. Trains that have already
+  // got in aren't counted ("are coming into").
   const platOf = (id: string) => a.arr?.find((x) => x.id.slice(0, 8) === id.slice(0, 8))?.platform ?? null
+  const shared = e.k === 'concourse' ? null : sharedPlatform(mines.filter(({ m }) => !m.arrived).map(({ s }) => platOf(s.id)))
+  const sharedWay = shared ? platformWayOut(e, shared.platform) : ''
   const list = (l: typeof mines) => {
     const after = rowEnd(l.findIndex(({ m }) => m.id === mineId), cols, l.length)
     return l.map(({ s, m }, i) => (
       <Fragment key={m.id}>
         <button type="button" className={`cmine${m.id === mineId ? ' on' : ''}${near.includes(s.id) ? ' near' : ''}`} aria-pressed={m.id === mineId}
           onClick={() => { if (m.id !== mineId) setGot({ s: 'idle' }); setMineId(m.id) }}>
-          {mock === 'B' ? (
-            <span className="mockb">
-              <span><b>{t12(s.std)}</b> from {a.from}{kind(s) && <span className="ckind">{' · '}{kind(s)}</span>}
-                <span className="muted small mline">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : m.lateBy >= 1 ? `now expected into ${a.to} at ${t12(m.exp)}` : `expected into ${a.to} at ${t12(m.exp)}`}</span></span>
-              {platOf(s.id) ? <span className="badge" aria-label={`platform ${platOf(s.id)}`}>{platOf(s.id)}</span> : <span className="bnoplat">not yet</span>}
-            </span>
-          ) : <>
           <b>{t12(s.std)}</b> from {a.from}{kind(s) && <span className="ckind">{'· '}{kind(s)}</span>}
           <span className="muted small">{!m.exp ? 'delayed, no time given yet' : m.arrived ? `got in at ${t12(m.exp)}` : m.lateBy >= 1 ? `now expected into ${a.to} at ${t12(m.exp)}` : `expected into ${a.to} at ${t12(m.exp)}`}</span>
-          {mock === 'A' && <span className="small mplat">{platOf(s.id) ? <>Platform <b>{platOf(s.id)}</b></> : <span className="muted">Platform not announced yet</span>}</span>}
-          </>}
         </button>
         {i === after && reply}
       </Fragment>
@@ -109,7 +102,16 @@ export function Exits({ a }: { a: Analysis }) {
         <details className="advice exits-fold">
         <summary>Check directions from your train <Icon name="down" /></summary>
         <div className="cstep">
-          <p className="cq">{whichTrain(a.now, mines.map(({ s }) => s))}</p>
+          {shared && <div className="exit-shared">
+            <p>{shared.line}</p>
+            {sharedWay && <p className="exit-answer">{sharedWay}</p>}
+            {sharedWay && <BoxShare taken={a.taken} w={{
+              kicker: 'EXITS', heading: `Arriving at ${a.to} on platform ${shared.platform}`, text: `${shared.line} ${sharedWay}`, paras: [shared.line, sharedWay],
+              sent: `Here’s the way out at ${a.to} from platform ${shared.platform}, from Trainchecker.`, what: 'these directions',
+              file: `trainchecker-exits-${a.fromCrs}-${a.toCrs}.png`, hash: `#${a.fromCrs}-${a.toCrs}`,
+            }} />}
+          </div>}
+          <p className="cq">{shared ? 'Check if your train’s platform has been confirmed.' : whichTrain(a.now, mines.map(({ s }) => s))}</p>
           <FindMyTrain a={a} trains={all.map(({ s }) => s)} onFound={(pick, ids, show) => {
             setNear(ids)
             setOnly(show)

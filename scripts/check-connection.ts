@@ -119,9 +119,10 @@ eq('the kinds', [
 ], ['through the subway', 'just across the platform', 'on the same level', 'which means going out of the station and round by the road',
   'across the level crossing', 'over the footbridge or round through the concourse', 'through the subway', 'over the footbridge'])
 // In doubt (John, November 27th 2026): the Exits table says these platforms are on the level with an exit's
-// platform, the links say across the line; one is wrong, so nothing is said. Bath Spa 1 to 2 (subway; John
-// has said its Railway Place on platform 2 is a map error), Maidenhead 1 to 5 (subway).
-eq('in doubt: nothing said', [howToGet(links.BTH, '1', '2'), howToGet(links.MAI, '1', '5'), howToGet(links.MAI, '1', '4')], ['', '', ''])
+// platform, the links say across the line; one is wrong, so nothing is said. Maidenhead 1 to 5 (subway).
+eq('in doubt: nothing said', [howToGet(links.MAI, '1', '5'), howToGet(links.MAI, '1', '4')], ['', ''])
+// Bath Spa, no longer in doubt once John described it (November 28th 2026): platform 1 only by the subway.
+eq('Bath Spa: 1 to 2 through the subway', [howToGet(links.BTH, '1', '2'), howToGet(links.BTH, '2', '1')], ['through the subway', 'through the subway'])
 eq('in doubt only between those groups: Maidenhead 4 to 5 still said', howToGet(links.MAI, '4', '5') !== '', true)
 // Hersham: John's words for going round (November 27th 2026).
 eq('Hersham: round under the bridge', howToGet(links.HER, '1', '2'), 'which means taking the steps down and going round by the road under the railway bridge')

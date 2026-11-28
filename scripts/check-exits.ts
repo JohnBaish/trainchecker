@@ -90,7 +90,7 @@ eq('Ivybridge: platform 1 (John\'s informant)', trainLine(T.IVY, '1', false),
 eq('Ivybridge: platform 2', trainLine(T.IVY, '2', false).startsWith('Your train is due into platform 2. Go up to the footbridge'), true)
 // Names that read oddly after "for" or before "is right there" (John: trap as many as we can).
 eq('a place takes "the … exit"', trainLine(T.BRI, '3', false).endsWith('or you can go through the subway for the University of Bristol exit.'), true)
-eq('"the car park" after "The exit to"', /The exit on the /.test(Object.values(T).flatMap((e) => Object.keys(e.p).map((p) => trainLine(e, p, false))).join(' ')), false)
+eq('"the car park" after "The exit to"', /The exit on the (?!city side)/.test(Object.values(T).flatMap((e) => Object.keys(e.p).map((p) => trainLine(e, p, false))).join(' ')), false)
 eq('map data street names untouched ("The Ridgeway")', Object.values(T).flatMap((e) => Object.keys(e.p).map((p) => trainLine(e, p, false))).some((s) => /the The /.test(s)), false)
 eq('the other exit everywhere, even with only a street name (John)', trainLine(T.WOF, '1', false),
   'Your train is due into platform 1. The exit on Foregate Street is right there, or you can go through the subway for Pierpoint Street.')
@@ -159,6 +159,11 @@ eq('Putney 2: the way out', trainLine(T.PUT, '2', false), 'Your train is due int
 // Exeter St Davids: one exit, by the station building on platform 1 (John, November 27th 2026).
 eq('Exeter St Davids: the station', stationLine('Exeter St Davids', T.EXD), 'At Exeter St Davids, there’s one way in and out, by the station building on platform 1.')
 eq('Exeter St Davids 1, 2, 6B: the way out', ['1', '2', '6B'].map((p) => trainLine(T.EXD, p, false)), ['Your train is due into platform 1. The exit is right there.', 'Your train is due into platform 2. It’s a short walk along to the exit by platform 1, on the same level.', 'Your train is due into platform 6B, so you’ll want the footbridge to the exit, coming down from the bridge by platform 1.'])
+// Bath Spa (John, November 28th 2026): the exit on the city side by platform 2; platform 1 only by the subway or the exits at the back.
+eq('Bath Spa: the station', stationLine('Bath Spa', T.BTH), 'At Bath Spa, the main exit is on the city side by platform 2, and there are exits at the back by platform 1, near the car park.')
+eq('Bath Spa: platform 1', trainLine(T.BTH, '1', false), 'Your train is due into platform 1. The exits at the back, near the car park, are right there, or you can go through the subway for the exit on the city side.')
+eq('Bath Spa: platform 2', trainLine(T.BTH, '2', false), 'Your train is due into platform 2. The exit on the city side is right there, or you can go through the subway for the exits at the back, near the car park.')
+eq('Bath Spa: the location guide, platform 1', toPlatform(T.BTH, '1', undefined, (await import('../src/data/to-platform.json', { with: { type: 'json' } })).default.BTH as never)!.join(' '), 'Platform 1 is right by the entrances at the back, near the car park. From the entrance on the city side, go down to the subway by platform 2 and come up on platform 1.')
 eq('Bath Spa 2: two unnamed exits by platform 1', trainLine(T.BAT, '2', false), 'Your train is due into platform 2. Go up to the footbridge and come down by platform 1, where both exits are.')
 eq('Exeter Central 3: the bridge comes down by the platform both exits are by', trainLine(T.EXC, '3', false), 'Your train is due into platform 3. Go up to the footbridge and come down by platform 2 for the city centre exit or the shopping centre exit.')
 {

@@ -26,15 +26,10 @@
   }
  },
  "BTH": {
-  "_who": "John, November 24th 2026: two rear entrances near the car park on platform 1; Railway Place on the level with platform 2 was a map error",
+  "_who": "John, November 24th and 28th 2026: platform 1 is reached only by the subway or by the entrances at the back, near the car park; the main entrance is on the city side by platform 2.",
   "names": {
-   "0": "the rear entrances near the car park",
-   "1": "the rear entrances near the car park"
-  },
-  "level": {
-   "2": [
-    "the bus station exit"
-   ]
+   "0": "the entrances at the back, near the car park",
+   "1": "the entrance on the city side"
   }
  },
  "PUT": {

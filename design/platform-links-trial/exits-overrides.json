@@ -475,5 +475,16 @@
    "1": "The exit to Molesey Road is right there, down the steps.",
    "2": "The exit to Molesey Road is right there, down the steps."
   }
+ },
+ "BTH": {
+  "_who": "John, November 28th 2026: the main exit is on the city side by platform 2; platform 1 is reached only by the subway or by the entrances at the back, near the car park (the map's Railway Place and the unnamed exit beside it; no one calls it Railway Place). \"The exit on the city side\" rather than the bus station exit: \"that saves one thought\". The station's line is John's.",
+  "reading": {
+   "_why": "John, November 28th 2026 (above).",
+   "exits": [{"name": "the exits at the back, near the car park", "by": ["1"]}, {"name": "the exit on the city side", "by": ["2"]}],
+   "platforms": {"1": [[0, "l"], [1, "s", "2"]], "2": [[1, "l"], [0, "s", "1"]]},
+   "kind": "by"
+  },
+  "say": {"1": "The exits at the back, near the car park, are right there, or you can go through the subway for the exit on the city side."},
+  "line": "At Bath Spa, the main exit is on the city side by platform 2, and there are exits at the back by platform 1, near the car park."
  }
 }

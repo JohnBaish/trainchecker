@@ -28,7 +28,7 @@
   "road": "which means taking the steps down and going round by the road under the railway bridge"
  },
  "PAD": {
-  "_who": "John, November 28th 2026: platforms next to each other are 2 and 3, 4 and 5, 6 and 7, 8 and 9, 10 and 11; any other two of 1 to 12, onto the concourse and round; 14 by the small footbridge (onto platform 8 for the concourse); the Elizabeth Line out through Eastbourne Terrace. pairs: [from, to, words], first match wins, both ways unless both are given.",
+  "_who": "John, November 28th 2026: platforms next to each other are 2 and 3, 4 and 5, 6 and 7, 8 and 9, 10 and 11; any other two of 1 to 12, onto the concourse and round; 14 by the small footbridge (onto platform 8 for the concourse); the Elizabeth Line out through Eastbourne Terrace. pairs: [from, to, words], first match wins, both ways unless both are given. John, November 28th 2026 (later): the small footbridge meets the main footbridge by platform 8, so 1 to 7 and 14 go by the footbridges; 10 to 12 and 1 to 9: the concourse or the footbridges.",
   "pairs": [
    [
     "2",
@@ -79,6 +79,44 @@
     "11",
     "10",
     "just across the platform"
+   ],
+   [
+    [
+     "10",
+     "11",
+     "12"
+    ],
+    [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9"
+    ],
+    "which means going onto the concourse and round, or over the footbridges"
+   ],
+   [
+    [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9"
+    ],
+    [
+     "10",
+     "11",
+     "12"
+    ],
+    "which means going onto the concourse and round, or over the footbridges"
    ],
    [
     [
@@ -150,7 +188,7 @@
      "6",
      "7"
     ],
-    "which means going over the small footbridge onto platform 8, then onto the concourse and round"
+    "which means going over the smaller footbridge onto the main footbridge, and down the steps"
    ],
    [
     [
@@ -165,7 +203,7 @@
     [
      "14"
     ],
-    "which means going onto the concourse and round to platform 8, then over the small footbridge"
+    "which means going up to the main footbridge halfway along the platform, across to the platform 8 end and over the smaller footbridge"
    ],
    [
     [

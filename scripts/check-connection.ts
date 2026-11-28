@@ -157,8 +157,9 @@ eq('the table has only stations in the list', Object.keys(links).every((c) => /^
 }
 // Paddington in John's words (November 28th 2026): pairs given by him come first, A and B included.
 eq('Paddington: next to each other', [howToGet(links.PAD, '2', '3'), howToGet(links.PAD, '11', '10')], ['just across the platform', 'just across the platform'])
-eq('Paddington: round the concourse', [howToGet(links.PAD, '1', '5'), howToGet(links.PAD, '9', '10'), howToGet(links.PAD, '9B', '12')], Array(3).fill('which means going onto the concourse and round'))
-eq('Paddington: platform 14', [howToGet(links.PAD, '12', '14'), howToGet(links.PAD, '14', '5'), howToGet(links.PAD, '5', '14')], ['over the small footbridge', 'which means going over the small footbridge onto platform 8, then onto the concourse and round', 'which means going onto the concourse and round to platform 8, then over the small footbridge'])
+eq('Paddington: round the concourse', [howToGet(links.PAD, '1', '5'), howToGet(links.PAD, '2', '9B'), howToGet(links.PAD, '12', '10')], Array(3).fill('which means going onto the concourse and round'))
+eq('Paddington: platform 14', [howToGet(links.PAD, '12', '14'), howToGet(links.PAD, '14', '5'), howToGet(links.PAD, '5', '14')], ['over the small footbridge', 'which means going over the smaller footbridge onto the main footbridge, and down the steps', 'which means going up to the main footbridge halfway along the platform, across to the platform 8 end and over the smaller footbridge'])
+eq('Paddington: 10 to 12 and 1 to 9, the concourse or the footbridges', [howToGet(links.PAD, '9', '10'), howToGet(links.PAD, '11A', '3')], Array(2).fill('which means going onto the concourse and round, or over the footbridges'))
 eq('Paddington: the Elizabeth Line', [howToGet(links.PAD, '8', 'A'), howToGet(links.PAD, 'B', '11')], ['which means going out through the Eastbourne Terrace exit and in at the Elizabeth Line entrance next to it', 'which means going up to Eastbourne Terrace and in at the main station’s entrance there'])
 console.log(`check-connection: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

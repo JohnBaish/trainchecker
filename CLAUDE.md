@@ -76,6 +76,20 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 28th 2026: Paddington's two footbridges meet; live (`main`; Claude Code)
+
+- **John:** the small footbridge is right by the platform 8 end of the main one. So platform 14's guide, in his words:
+  "…From the concourse it’s a longer walk: go halfway along platform 1 or platform 8, up the steps to the main
+  footbridge, and across the smaller footbridge to platform 14."; "main" and "smaller" where both come up together.
+  Exits 14: "…cross the smaller footbridge onto the main footbridge, then go down the steps to platform 8 for Praed
+  Street, or to platform 1 for Eastbourne Terrace, and walk along it to the concourse." Connections: 14 → 1 to 7
+  "…over the smaller footbridge onto the main footbridge, and down the steps" (the draft's "and down to platform 5"
+  would have repeated the platform); 1 to 7 → 14 "…up to the main footbridge halfway along the platform, across to the
+  platform 8 end and over the smaller footbridge"; 10 to 12 and 1 to 9 "…onto the concourse and round, or over the
+  footbridges" (option c). Agreed and merged at his word.
+- **Checked:** only Paddington changes in the tables; check-exits 125, check-connection 49; all 11 scripts, `tsc -b`,
+  lint, build.
+
 ### November 28th 2026: Paddington in John's words; live (branch `claude/gallant-lovelace-0hzixi`, merged the same day; Claude Code)
 
 - **John:** the station map's reading had Sheldon Square by platform 1 and two ways to it. Now, from his description:

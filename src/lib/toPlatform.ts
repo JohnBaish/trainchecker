@@ -101,6 +101,9 @@ function downFor(e: StationExits, i: number, via: string, own: string | null): s
 export function toPlatform(e: StationExits, platform: string, links?: Links, fix?: Fix, fill = false): string[] | null {
   if (e.k === 'concourse') return [`Every platform is off the concourse, where the entrances are.`]
   if (fix?.say?.[platform]) return [fix.say[platform]]
+  // A lettered platform (9B) takes its platform's own words, with its label (Paddington, November 28th 2026).
+  const plain = platform.replace(/[A-Za-z]+$/, '')
+  if (plain && plain !== platform && fix?.say?.[plain]) return [fix.say[plain].replace(new RegExp(`(platform) ${plain}\\b`, 'gi'), `$1 ${platform}`)]
   const eo = new Set(e.eo ?? [])
   // Ways in doubt (dq, as in Exits): say only where the entrance is, not that it's "right by" this platform
   // (John, November 27th 2026). Drafts.

@@ -9,7 +9,9 @@
 // dq: pairs of level groups ("0-1") whose walk between them is in doubt, as the Exits table says otherwise;
 // nothing is said for those (John, November 27th 2026: say less, but say what's true). rw: John's own words
 // for going round by the road (Hersham: "…under the railway bridge").
-export type StationLinks = { g: string[][][]; x: string; w?: string; dq?: string[]; rw?: string }
+// pr: John's own words for particular pairs of platforms, [from, to, words], the first match winning (Paddington,
+// November 28th 2026); they come before everything else, and cover platforms the map doesn't have (A and B).
+export type StationLinks = { g: string[][][]; x: string; w?: string; dq?: string[]; rw?: string; pr?: [string[], string[], string][] }
 export type LinksTable = Record<string, StationLinks>
 
 const WORDS: Record<string, string> = {
@@ -38,6 +40,11 @@ function find(st: StationLinks, label: string): [number, number] | null {
 /** The words for getting from platform `from` to platform `to`, or '' when the table can't say. */
 export function howToGet(st: StationLinks | null | undefined, from: string, to: string): string {
   if (!st || !from || !to || from === to) return ''
+  if (st.pr) {
+    const is = (list: string[], label: string) => list.includes(label) || list.includes(label.replace(/[A-Za-z]+$/, ''))
+    const rule = st.pr.find(([f, t]) => is(f, from) && is(t, to))
+    if (rule) return rule[2]
+  }
   const a = find(st, from), b = find(st, to)
   if (!a || !b) return ''
   // The same platform on the map (9A and 9B, say): nothing for now (John, November 21st 2026).

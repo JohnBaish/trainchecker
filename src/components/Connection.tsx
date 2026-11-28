@@ -37,7 +37,7 @@ export function Connection({ a, again }: { a: Analysis; again: Again }) {
   useEffect(() => {
     if (!open || links) return
     let current = true
-    import('../data/platform-links.json').then((m) => current && setLinks(m.default as LinksTable), () => {})
+    import('../data/platform-links.json').then((m) => current && setLinks(m.default as unknown as LinksTable), () => {})
     return () => { current = false }
   }, [open, links])
 

@@ -176,7 +176,15 @@ export function trainLine(e: StationExits, platform: string | null, ends: boolea
       : 'The platform for your train hasn’t been announced yet. Check again nearer the time.'
   }
   const start = `Your train is due into platform ${platform}.`
-  if (e.say?.[platform]) return `${start} ${e.say[platform]}`
+  // John's words for the whole answer, opening included, where they begin "Your train" (Paddington's "platform 1,
+  // the one with the big clock"); otherwise his words follow the usual opening.
+  if (e.say?.[platform]) return e.say[platform].startsWith('Your train') ? e.say[platform] : `${start} ${e.say[platform]}`
+  // A lettered platform (9B) takes its platform's own words, with its label.
+  const plain = platform.replace(/[A-Za-z]+$/, '')
+  if (plain && plain !== platform && e.say?.[plain]) {
+    const own = e.say[plain].replace(new RegExp(`(platform) ${plain}\\b`, 'gi'), `$1 ${platform}`)
+    return own.startsWith('Your train') ? own : `${start} ${own}`
+  }
   let ways = (e.p[platform] ?? e.p[platform.replace(/[A-Z]$/, '')] ?? [])
   // An exit that opens off this platform is right there, even where no route is stored (Southend
   // Airport: John, "the exit is by platform 1").
@@ -328,6 +336,6 @@ export function sharedPlatform(platforms: (string | null)[]): { platform: string
  *  "You’ll want the footbridge…". */
 export function platformWayOut(e: StationExits, platform: string): string {
   return trainLine(e, platform, false)
-    .replace(/^Your train is due into platform [^.,]+\.\s*/, '')
     .replace(/^Your train is due into platform [^.,]+, so you’ll want/, 'You’ll want')
+    .replace(/^Your train is due into platform [^.]+\.\s*/, '')
 }

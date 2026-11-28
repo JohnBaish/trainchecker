@@ -115,7 +115,7 @@ eq('without the table, the agreed sentences are unchanged', answer({ now: NOW, f
 // Each kind, on the real table.
 eq('the kinds', [
   howToGet(links.ADV, '1', '2'), howToGet(links.RDG, '9', '8'), howToGet(links.RDG, '4', '7'), howToGet(links.RDW, '1', '2'),
-  howToGet(links.MDG, '1', '2'), howToGet(links.PAD, '1', '6'), howToGet(links.AHV, '1', '2'), howToGet(links.TWY, '1', '4'),
+  howToGet(links.MDG, '1', '2'), howToGet(links.KGX, '0', '8'), howToGet(links.AHV, '1', '2'), howToGet(links.TWY, '1', '4'),
 ], ['through the subway', 'just across the platform', 'on the same level', 'which means going out of the station and round by the road',
   'across the level crossing', 'over the footbridge or round through the concourse', 'through the subway', 'over the footbridge'])
 // In doubt (John, November 27th 2026): the Exits table says these platforms are on the level with an exit's
@@ -155,5 +155,10 @@ eq('the table has only stations in the list', Object.keys(links).every((c) => /^
   eq('long wait: the onward train late keeps its time', ask2({ from: '16:15', late: true }).includes('the Torquay train is currently expected to leave four minutes late, at 4.49 from platform 2'), true)
   eq('40 minutes or less: "you should be fine" as before', ask2({ from: '16:00' }).startsWith('If you’re planning to get the 4.05pm to Torquay, you should be fine. You’ll have 36 minutes to change trains.'), true)
 }
+// Paddington in John's words (November 28th 2026): pairs given by him come first, A and B included.
+eq('Paddington: next to each other', [howToGet(links.PAD, '2', '3'), howToGet(links.PAD, '11', '10')], ['just across the platform', 'just across the platform'])
+eq('Paddington: round the concourse', [howToGet(links.PAD, '1', '5'), howToGet(links.PAD, '9', '10'), howToGet(links.PAD, '9B', '12')], Array(3).fill('which means going onto the concourse and round'))
+eq('Paddington: platform 14', [howToGet(links.PAD, '12', '14'), howToGet(links.PAD, '14', '5'), howToGet(links.PAD, '5', '14')], ['over the small footbridge', 'which means going over the small footbridge onto platform 8, then onto the concourse and round', 'which means going onto the concourse and round to platform 8, then over the small footbridge'])
+eq('Paddington: the Elizabeth Line', [howToGet(links.PAD, '8', 'A'), howToGet(links.PAD, 'B', '11')], ['which means going out through the Eastbourne Terrace exit and in at the Elizabeth Line entrance next to it', 'which means going up to Eastbourne Terrace and in at the main station’s entrance there'])
 console.log(`check-connection: ${passed} passed, ${failed} failed`)
 if (failed) process.exit(1)

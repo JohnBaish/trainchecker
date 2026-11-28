@@ -21,6 +21,11 @@ for crs, o in ov.items():
                 st['g'][g] = o['islands']
     if "road" in o:
         st["rw"] = o["road"]
+    # John's own words for particular pairs of platforms (Paddington, November 28th 2026): [from, to, words],
+    # the first rule that matches wins; a platform may be given alone or as a list.
+    if "pairs" in o:
+        lst = lambda v: v if isinstance(v, list) else [v]
+        st["pr"] = [[lst(a), lst(b), w] for a, b, w in o["pairs"]]
     if "w" in o:
         st['w'] = o['w']
 with open(path, 'w') as fh:

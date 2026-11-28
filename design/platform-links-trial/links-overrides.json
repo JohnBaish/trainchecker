@@ -1,12 +1,216 @@
 {
-  "_about": "John's corrections to src/data/platform-links.json, applied by apply_links_overrides.py after build_table.py. islands: the station's islands as they really are (each group's list replaced where it holds these platforms). w: the word for the station's footbridge.",
-  "RDG": {
-    "_who": "John, November 24th 2026: platform 3 is round a small corner from 7, not across the platform from it; Reading's footbridge is \"the bridge\"",
-    "islands": [["1", "2"], ["3"], ["7"], ["4"], ["5", "6"]],
-    "w": "bridge"
-  },
-  "HER": {
-    "_who": "John, November 27th 2026: between the platforms, down the steps and round by Molesey Road, under the railway bridge",
-    "road": "which means taking the steps down and going round by the road under the railway bridge"
-  }
+ "_about": "John's corrections to src/data/platform-links.json, applied by apply_links_overrides.py after build_table.py. islands: the station's islands as they really are (each group's list replaced where it holds these platforms). w: the word for the station's footbridge.",
+ "RDG": {
+  "_who": "John, November 24th 2026: platform 3 is round a small corner from 7, not across the platform from it; Reading's footbridge is \"the bridge\"",
+  "islands": [
+   [
+    "1",
+    "2"
+   ],
+   [
+    "3"
+   ],
+   [
+    "7"
+   ],
+   [
+    "4"
+   ],
+   [
+    "5",
+    "6"
+   ]
+  ],
+  "w": "bridge"
+ },
+ "HER": {
+  "_who": "John, November 27th 2026: between the platforms, down the steps and round by Molesey Road, under the railway bridge",
+  "road": "which means taking the steps down and going round by the road under the railway bridge"
+ },
+ "PAD": {
+  "_who": "John, November 28th 2026: platforms next to each other are 2 and 3, 4 and 5, 6 and 7, 8 and 9, 10 and 11; any other two of 1 to 12, onto the concourse and round; 14 by the small footbridge (onto platform 8 for the concourse); the Elizabeth Line out through Eastbourne Terrace. pairs: [from, to, words], first match wins, both ways unless both are given.",
+  "pairs": [
+   [
+    "2",
+    "3",
+    "just across the platform"
+   ],
+   [
+    "4",
+    "5",
+    "just across the platform"
+   ],
+   [
+    "6",
+    "7",
+    "just across the platform"
+   ],
+   [
+    "8",
+    "9",
+    "just across the platform"
+   ],
+   [
+    "10",
+    "11",
+    "just across the platform"
+   ],
+   [
+    "3",
+    "2",
+    "just across the platform"
+   ],
+   [
+    "5",
+    "4",
+    "just across the platform"
+   ],
+   [
+    "7",
+    "6",
+    "just across the platform"
+   ],
+   [
+    "9",
+    "8",
+    "just across the platform"
+   ],
+   [
+    "11",
+    "10",
+    "just across the platform"
+   ],
+   [
+    [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12"
+    ],
+    [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12"
+    ],
+    "which means going onto the concourse and round"
+   ],
+   [
+    [
+     "14"
+    ],
+    [
+     "8",
+     "9",
+     "10",
+     "11",
+     "12"
+    ],
+    "over the small footbridge"
+   ],
+   [
+    [
+     "8",
+     "9",
+     "10",
+     "11",
+     "12"
+    ],
+    [
+     "14"
+    ],
+    "over the small footbridge"
+   ],
+   [
+    [
+     "14"
+    ],
+    [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7"
+    ],
+    "which means going over the small footbridge onto platform 8, then onto the concourse and round"
+   ],
+   [
+    [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7"
+    ],
+    [
+     "14"
+    ],
+    "which means going onto the concourse and round to platform 8, then over the small footbridge"
+   ],
+   [
+    [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12",
+     "14"
+    ],
+    [
+     "A",
+     "B"
+    ],
+    "which means going out through the Eastbourne Terrace exit and in at the Elizabeth Line entrance next to it"
+   ],
+   [
+    [
+     "A",
+     "B"
+    ],
+    [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "10",
+     "11",
+     "12",
+     "14"
+    ],
+    "which means going up to Eastbourne Terrace and in at the main station’s entrance there"
+   ]
+  ]
+ }
 }

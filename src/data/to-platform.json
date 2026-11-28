@@ -9,9 +9,23 @@
   }
  },
  "PAD": {
-  "_who": "John, November 24th 2026: down from the Elizabeth Line entrance",
-  "dir": {
-   "A,B": "down"
+  "_who": "John, November 24th and 28th 2026: Paddington in full (see exits-overrides.json).",
+  "say": {
+   "1": "Platform 1, with the big clock, is right by the Eastbourne Terrace entrance. From the Praed Street entrance, cross the concourse to platform 1. From the back entrance by the canal and the Hammersmith and City Line, take the footbridge and come down the steps halfway along platform 1. There are no ticket gates for platform 1.",
+   "2": "From the Praed Street or Eastbourne Terrace entrance, cross the concourse to platform 2. From the back entrance by the canal and the Hammersmith and City Line, take the footbridge and come down the steps halfway along platform 2.",
+   "3": "From the Praed Street or Eastbourne Terrace entrance, cross the concourse to platform 3. From the back entrance by the canal and the Hammersmith and City Line, take the footbridge and come down the steps halfway along platform 3.",
+   "4": "From the Praed Street or Eastbourne Terrace entrance, cross the concourse to platform 4. From the back entrance by the canal and the Hammersmith and City Line, take the footbridge and come down the steps halfway along platform 4.",
+   "5": "From the Praed Street or Eastbourne Terrace entrance, cross the concourse to platform 5. From the back entrance by the canal and the Hammersmith and City Line, take the footbridge and come down the steps halfway along platform 5.",
+   "6": "From the Praed Street or Eastbourne Terrace entrance, cross the concourse to platform 6. From the back entrance by the canal and the Hammersmith and City Line, take the footbridge and come down the steps halfway along platform 6.",
+   "7": "From the Praed Street or Eastbourne Terrace entrance, cross the concourse to platform 7. From the back entrance by the canal and the Hammersmith and City Line, take the footbridge and come down the steps halfway along platform 7.",
+   "8": "Platform 8 is by Burger King. From the Praed Street or Eastbourne Terrace entrance, cross the concourse to platform 8. From the back entrance by the canal and the Hammersmith and City Line, take the footbridge and come down the steps halfway along platform 8. There are no ticket gates for platform 8.",
+   "9": "Platform 9 is right by the Praed Street entrance. From the Eastbourne Terrace entrance, cross the concourse to platform 9. From the back entrance by the canal and the Hammersmith and City Line, take the footbridge and come down the steps halfway along platform 9.",
+   "10": "Platform 10 is right by the Praed Street entrance. From the Eastbourne Terrace entrance, cross the concourse to platform 10. From the back entrance by the canal and the Hammersmith and City Line, take the small footbridge round the corner and come down near the far end of platform 10.",
+   "11": "Platform 11 is right by the Praed Street entrance. From the Eastbourne Terrace entrance, cross the concourse to platform 11. From the back entrance by the canal and the Hammersmith and City Line, take the small footbridge round the corner and come down near the far end of platform 11.",
+   "12": "Platform 12 is right by the Praed Street entrance. From the Eastbourne Terrace entrance, cross the concourse to platform 12. From the back entrance by the canal and the Hammersmith and City Line, take the small footbridge round the corner and come down near the far end of platform 12.",
+   "14": "From the back entrance by the canal and the Hammersmith and City Line, take the small footbridge round the corner to platform 14. From the concourse it’s a longer walk: go along platform 8 to the small footbridge and cross it to platform 14.",
+   "A": "From the Elizabeth Line entrance on Eastbourne Terrace, go down to platform A.",
+   "B": "From the Elizabeth Line entrance on Eastbourne Terrace, go down to platform B."
   }
  },
  "TWY": {

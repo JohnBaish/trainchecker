@@ -76,6 +76,26 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 28th 2026: Paddington in John's words; live (branch `claude/gallant-lovelace-0hzixi`, merged the same day; Claude Code)
+
+- **John:** the station map's reading had Sheldon Square by platform 1 and two ways to it. Now, from his description:
+  Praed Street by 9 and 10, Eastbourne Terrace by 1; "the back exit by the canal and the Hammersmith and City Line" (the
+  canal exit after its first mention) by a footbridge halfway along 1 to 9, or a small footbridge near the far end of 10 to
+  12; platform 14 starts at the small footbridge (to the concourse: over it and along platform 8); no ticket gates for 1
+  and 8; platform 1 "the one with the big clock", 8 "by Burger King"; the tube entrance in front of 3 and 4 (Bakerloo,
+  Circle and District; Bakerloo quicker by Praed Street from 8 to 14), the Hammersmith and City by the canal exit; the
+  Elizabeth Line by Eastbourne Terrace. Every line drafted and agreed with him, numbered, in this thread.
+- **Built:** `PAD` in `exits-overrides.json` (`line` and a `say` for every platform; a `say` starting "Your train" now
+  replaces the usual opening, in `trainLine()`), `to-platform.json` (a `say` for every platform), and `links-overrides.json`
+  (`pairs`, new: John's words for pairs of platforms, applied as `pr` and checked first in `howToGet()`; A and B
+  included). A lettered platform (9B) takes its platform's own words with its label, in Exits and the guide.
+  `platformWayOut()` drops the whole first sentence. Connections reads "…which means going onto the concourse and round"
+  (without "to platform 5", which the sentence has already said); 1 to 7 → 14: "…onto the concourse and round to platform
+  8, then over the small footbridge" (Claude's, the reverse of John's 14 → 5).
+- **Checked:** the tables rebuilt, only Paddington changes; check-exits 125, check-connection 48 (the kinds example moved
+  to King's Cross); all 11 scripts, `tsc -b`, lint, build; `design/previews/exits-platform/paddington.mjs` (Reading to
+  Paddington, arrivals made up, illustration only) at 390px dark and 1200px light: no errors, no sideways scroll.
+
 ### November 28th 2026: Bath Spa in John's words; live (branch `claude/gallant-lovelace-0hzixi`, merged the same day; Claude Code)
 
 - **John:** the November 24th correction was in the location guide only, so Exits still said "Railway Place"

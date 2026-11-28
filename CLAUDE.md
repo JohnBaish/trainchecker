@@ -76,7 +76,18 @@ given its own branch). Before committing there, run
 
 ## Log
 
-### November 28th 2026: Exits says when the announced trains share one platform (branch `claude/gallant-lovelace-0hzixi`, not merged; Claude Code)
+### November 28th 2026: Bath Spa in John's words; live (branch `claude/gallant-lovelace-0hzixi`, merged the same day; Claude Code)
+
+- **John:** the November 24th correction was in the location guide only, so Exits still said "Railway Place"
+  (no one calls it that) and "the bus station exit". Now: the main exit is on the city side by platform 2 ("saves
+  one thought": "where's the bus station?"); platform 1 is reached only by the subway or by the exits at the back,
+  near the car park. A whole reading in `exits-overrides.json` (with John's station line and platform 1's `say`),
+  the guide's names in `to-platform.json` ("entrance" there); the table rebuilt, only Bath Spa changes. No longer
+  in doubt, so Connections says "through the subway" between 1 and 2 again. Every line shown to John and agreed.
+- **Checked:** check-exits 116 (the station, both platforms, the guide), check-connection 44; the check for "The exit
+  on the …" now allows "the city side".
+
+### November 28th 2026: Exits says when the announced trains share one platform; live (branch `claude/gallant-lovelace-0hzixi`, merged the same day; Claude Code)
 
 - **John:** when every train in Exits' list whose platform has been announced is coming into the same one, say so
   first, with the way out from it. Agreed: count the trains in the list (not those already in); two or more:

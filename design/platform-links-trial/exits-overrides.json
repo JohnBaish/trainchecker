@@ -500,5 +500,16 @@
   },
   "say": {"1": "The exits at the back, near the car park, are right there, or you can go through the subway for the exit on the city side."},
   "line": "At Bath Spa, the main exit is on the city side by platform 2, and there are exits at the back by platform 1, near the car park."
+ },
+ "PMH": {
+  "_who": "John, November 28th 2026: one exit, by platform 1 (no Clock Street entrance; the footbridge left out as confusing); platform 2 not used; 4 and 5 next to each other. His words.",
+  "reading": {
+   "_why": "John, November 28th 2026 (above).",
+   "exits": [{"name": null, "by": ["1"]}],
+   "platforms": {"1": [[0, "l"]], "3": [[0, "l"]], "4": [[0, "l"]], "5": [[0, "l"]]},
+   "kind": "by"
+  },
+  "line": "At Portsmouth Harbour, the exit is by platform 1.",
+  "say": {"1": "The exit is right there.", "3": "Walk to the end of the platform and round to your right, to the exit on platform 1.", "4": "Walk to the end of the platform and round to your right, to the exit on platform 1.", "5": "Walk to the end of the platform and round to your right, to the exit on platform 1."}
  }
 }

@@ -2,6 +2,8 @@
 // (src/data/exits.json): the sentences John agreed, and the stations he knows.
 import { toPlatform } from '../src/lib/toPlatform.ts'
 import t from '../src/data/exits.json' with { type: 'json' }
+import links from '../src/data/platform-links.json' with { type: 'json' }
+import fixes from '../src/data/to-platform.json' with { type: 'json' }
 import { heading, platformWayOut, sharedPlatform, stationLine, trainLine, type ExitsTable } from '../src/lib/exits.ts'
 import { whichTrain } from '../src/lib/connection.ts'
 
@@ -42,6 +44,12 @@ eq('Paddington 9B: platform 9’s words, its own label', trainLine(T.PAD, '9B', 
 eq('Paddington: the shared line drops the opening', platformWayOut(T.PAD, '1').startsWith('The Eastbourne Terrace exit is right there'), true)
 eq('Paddington 14: the guide', toPlatform(T.PAD, '14', undefined, (await import('../src/data/to-platform.json', { with: { type: 'json' } })).default.PAD as never)!.join(' '), 'From the back entrance by the canal and the Hammersmith and City Line, take the small footbridge round the corner to platform 14. From the concourse it’s a longer walk: go halfway along platform 1 or platform 8, up the steps to the main footbridge, and across the smaller footbridge to platform 14.')
 eq('Paddington 9B: the guide in platform 9’s words', toPlatform(T.PAD, '9B', undefined, (await import('../src/data/to-platform.json', { with: { type: 'json' } })).default.PAD as never)!.join(' ').startsWith('Platform 9B is right by the Praed Street entrance.'), true)
+// Portsmouth Harbour (John, November 28th 2026), and "the entrance on The Hard", never "the the The".
+const pmhFix = (await import('../src/data/to-platform.json', { with: { type: 'json' } })).default.PMH as never
+eq('Portsmouth Harbour: the station', stationLine('Portsmouth Harbour', T.PMH), 'At Portsmouth Harbour, the exit is by platform 1.')
+eq('Portsmouth Harbour: platforms 1 and 4', [trainLine(T.PMH, '1', false), trainLine(T.PMH, '4', false)], ['Your train is due into platform 1. The exit is right there.', 'Your train is due into platform 4. Walk to the end of the platform and round to your right, to the exit on platform 1.'])
+eq('Portsmouth Harbour: the guide, platform 5', toPlatform(T.PMH, '5', undefined, pmhFix)!.join(' '), 'From the main station entrance, walk towards your right and round to platform 5.')
+eq('no “the The” in any guide answer', Object.entries(T).flatMap(([c, e]) => Object.keys(e.p).map((p) => toPlatform(e, p, (links as never as Record<string, never>)[c], (fixes as unknown as Record<string, never>)[c])?.join(' ') ?? '')).filter((x) => /\bthe The\b/.test(x)).slice(0, 3), [])
 const padFix = (await import('../src/data/to-platform.json', { with: { type: 'json' } })).default.PAD as never
 eq('no “Sheldon Square” left at Paddington', JSON.stringify(['1','2','3','4','5','6','7','8','9','10','11','12','14','A','B'].map((p) => [trainLine(T.PAD, p, false), toPlatform(T.PAD, p, undefined, padFix)])).includes('Sheldon'), false)
 // Up or down where the station map shows which; never "up or down" (John, November 22nd 2026).
@@ -145,7 +153,7 @@ eq('no answer names the same exit or entrance twice', repeats, [])
 eq('New Street: Navigation Street by the footbridge', T.BHM.p['1A'].some((w) => T.BHM.x[w[0]][0] === 'Navigation Street' && w[1] === 'b'), true)
 eq('Liverpool Street: Old Broad Street and Sun Street off the concourse', ['Old Broad Street', 'Sun Street'].every((n) => T.LST.p['1'].some((w) => T.LST.x[w[0]][0] === n)), true)
 eq('Ashford International: "the entrance nearest platform 3", not "the other entrance"', toPlatform(T.AFK, '4')!.join(' '), 'From the entrance nearest platform 3, go up to the footbridge and cross to platform 4.')
-eq('no "the other entrance" anywhere', Object.entries(T).filter(([, e]) => Object.keys(e.p).some((p) => (toPlatform(e, p) ?? []).join(' ').includes('the other entrance'))).map(([c]) => c), [])
+eq('no "the other entrance" anywhere', Object.entries(T).filter(([, e]) => Object.keys(e.p).some((p) => (toPlatform(e, p) ?? []).join(' ').replace(/the other entrance on /g, '').includes('the other entrance'))).map(([c]) => c), [])
 
 // No guide or Exits answer names an entrance or exit after the platform it's about (John, Putney,
 // November 25th 2026), except two exits of one street told apart by platform (Haddenham, Waterloo).

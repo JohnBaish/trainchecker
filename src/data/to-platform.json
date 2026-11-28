@@ -71,5 +71,14 @@
    "1": "Platform 1’s entrance is on Molesey Road, on the Walton Park side of the railway bridge. Go up the steps.",
    "2": "Platform 2’s entrance is on Molesey Road, on the other side of the railway bridge from Walton Park. Go up the steps."
   }
+ },
+ "PMH": {
+  "_who": "John, November 28th 2026: one entrance, by platform 1; his words for 3 to 5 (platform 1's is Claude's).",
+  "say": {
+   "1": "Platform 1 is right by the main station entrance.",
+   "3": "From the main station entrance, walk towards your right and round to platform 3.",
+   "4": "From the main station entrance, walk towards your right and round to platform 4.",
+   "5": "From the main station entrance, walk towards your right and round to platform 5."
+  }
  }
 }

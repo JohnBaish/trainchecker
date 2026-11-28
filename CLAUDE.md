@@ -76,6 +76,21 @@ given its own branch). Before committing there, run
 
 ## Log
 
+### November 28th 2026: Portsmouth Harbour in John's words; "the entrance on The Hard"; live (`main`; Claude Code)
+
+- **John:** one exit, by platform 1 (no Clock Street entrance; the footbridge left out as confusing); platform 2 not
+  used; 4 and 5 next to each other. His words: "At Portsmouth Harbour, the exit is by platform 1."; Exits 1 "The exit is
+  right there."; 3 to 5 "Walk to the end of the platform and round to your right, to the exit on platform 1."; guide
+  "From the main station entrance, walk towards your right and round to platform 3." (platform 1's "Platform 1 is right
+  by the main station entrance." is Claude's); Connections 4 and 5 "just across the platform", the others "…which means
+  walking to the end of the platform and round" (without "to platform 3", as at Paddington). `PMH` in the three
+  corrections files; the tables rebuilt, only Portsmouth Harbour changes.
+- **"the The":** a road whose name starts "The" read "the The Hard entrance" in the guide (49 answers at 25 stations:
+  The Hard, The Causeway, The Broadway and others). `baseName()` in `toPlatform.ts` now gives "the entrance on The
+  Hard"; twins read "the other entrance on The Broadway" (Ealing Broadway). Exits already said "the exit on The Hard".
+- **Checked:** check-exits 129 (Portsmouth Harbour, a sweep for "the The"), check-connection 50; all 11 scripts,
+  `tsc -b`, lint, build. Agreed and merged at John's word.
+
 ### November 28th 2026: Paddington's two footbridges meet; live (`main`; Claude Code)
 
 - **John:** the small footbridge is right by the platform 8 end of the main one. So platform 14's guide, in his words:

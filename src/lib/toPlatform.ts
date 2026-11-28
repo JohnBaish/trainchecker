@@ -30,6 +30,9 @@ function baseName(e: StationExits, i: number): string {
   // Names from the station maps or John: "the town centre exit" → "the town centre entrance";
   // "the long-term car park" reads as it is ("From the long-term car park").
   if (/^the /.test(n)) return n.replace(/\bexit\b/, 'entrance')
+  // A road whose name starts "The" (Portsmouth Harbour's The Hard): "the entrance on The Hard", not
+  // "the The Hard entrance" (John, November 28th 2026; 49 answers at 25 stations).
+  if (/^The /.test(n)) return `the entrance on ${n}`
   // "Station Approach (north)" → "the north entrance on Station Approach".
   const side = n.match(/^(.*) \((north|south|east|west)\)$/)
   if (side) return `the ${side[2]} entrance on ${side[1]}`
